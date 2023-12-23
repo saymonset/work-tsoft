@@ -1,0 +1,51 @@
+
+
+accesos
+
+acceso al drive de yasmin
+
+
+Luis Nieto
+
+
+usuario: ext.luis.nieto@tsoftglobal.com
+
+Este es el que funciona
+
+usuario:  ext.luis.nieto@tsoftlatam.com
+contraseña: qNt84b3V796q
+
+
+#bitbucket en local fronteend
+https://bitbucket.org/tsoftglobal/evergreen-valmer/src/master/
+git clone https://LuisNC@bitbucket.org/tsoftglobal/evergreen-valmer.git
+evergreen-valmer
+rama a valmer_services_01f
+
+verion node 
+Versión de Node.js 18.17.0 o posterior
+
+
+backend 
+
+https://drive.google.com/drive/folders/1IRnue8caUg5LxmunS-G0LDwO5Nv1gnk7
+
+redhat.ova es lamaquina virtual
+
+Simón se me olvidó decirte que una vez ingreses a la maquina virtual te va a pedir usuario y contraseña. Son estos:
+Usuario: root
+Contraseña: admin123
+
+
+saymon_set0
+
+yazmin velasquez
+
+
+inicio/ambientacion/vm-redhat
+
+https://outlook.office.com/mail/
+
+Repo:
+
+https://tsoftlatam-my.sharepoint.com/:f:/g/personal/jazmin_velazquez_tsoftglobal_com/EhrPFVpWji1JqmR7oVG6080BHBHoaTTCpQH_hxb0X921EA?email=ext.luis.nieto%40tsoftglobal.com&e=ocNQ4r
