@@ -22,110 +22,102 @@ export const TasasForm = ({d_fecha}: any) => {
             <div className="px-3">
                 <div className="form-cols-4">
 
-                    <form onSubmit={(e) => handleSubmit(e, 'formTasHistPriCet', d_fecha)}>
-                    
-                        <div className="grid grid-cols-1">
-                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Hist Primaria Cetes</span>
-                            <div className="form-input">
-                                <input
-                                    type="text"
-                                    name="n_cetes28"
-                                    id="n_cetes28"
-                                    value={forms['formTasHistPriCet']?.['n_cetes28'] || ''}
-                                    onChange={handleChange('formTasHistPriCet')}
-                                    required
-                                />
-                                <label htmlFor="n_cetes28">
-                                    CETES 28
-                                </label>
-                            </div>
-                            <div className="form-input">
-                                <input
-                                    type="text"
-                                    name="n_cetes91"
-                                    id="n_cetes91"
-                                    value={forms['formTasHistPriCet']?.['n_cetes91'] || ''}
-                                    onChange={handleChange('formTasHistPriCet')}
-                                    required
-                                />
-                                <label htmlFor="n_cetes91">
-                                    CETES 91
-                                </label>
-                            </div>
-                            <div className="form-input">
-                                <input
-                                    type="text"
-                                    name="n_cetes182"
-                                    id="n_cetes182"
-                                    value={forms['formTasHistPriCet']?.['n_cetes182'] || ''}
-                                    onChange={handleChange('formTasHistPriCet')}
-                                    required
-                                />
-                                <label htmlFor="n_cetes182">
-                                    CETES 182
-                                </label>
-                            </div>
-                            <div className="form-input">
-                                <input
-                                    type="text"
-                                    name="n_cetes364"
-                                    id="n_cetes364"
-                                    value={forms['formTasHistPriCet']?.['n_cetes364'] || ''}
-                                    onChange={handleChange('formTasHistPriCet')}
-                                    required
-                                />
-                                <label htmlFor="n_cetes364">
-                                    CETES 364
-                                </label>
-                            </div>
-                            <div className="text-center text-xs text-cyan-700 my-3">
-                                <button type="submit"
-                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
-                                        ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
-                                    <ButtonContent name='Guardar' loading={loadingSave}/>
-                                </button>
-                            </div>
+                <form onSubmit={(e) => handleSubmit(e, 'formTasHistPriCet', d_fecha)}>
+                        <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Hist Primaria Cetes</span>
+                        <div className="form-input">
+                            <input
+                                type="text"
+                                name="n_cetes28"
+                                id="n_cetes28"
+                                value={forms['formTasHistPriCet']?.['n_cetes28'] || ''}
+                                onChange={handleChange('formTasHistPriCet')}
+                                required
+                            />
+                            <label htmlFor="n_cetes28">
+                                CETES 28
+                            </label>
                         </div>
+                        <div className="form-input">
+                            <input
+                                type="text"
+                                name="n_cetes91"
+                                id="n_cetes91"
+                                value={forms['formTasHistPriCet']?.['n_cetes91'] || ''}
+                                onChange={handleChange('formTasHistPriCet')}
+                                required
+                            />
+                            <label htmlFor="n_cetes91">
+                                CETES 91
+                            </label>
+                        </div>
+                        <div className="form-input">
+                            <input
+                                type="text"
+                                name="n_cetes182"
+                                id="n_cetes182"
+                                value={forms['formTasHistPriCet']?.['n_cetes182'] || ''}
+                                onChange={handleChange('formTasHistPriCet')}
+                                required
+                            />
+                            <label htmlFor="n_cetes182">
+                                CETES 182
+                            </label>
+                        </div>
+                        <div className="form-input">
+                            <input
+                                type="text"
+                                name="n_cetes364"
+                                id="n_cetes364"
+                                value={forms['formTasHistPriCet']?.['n_cetes364'] || ''}
+                                onChange={handleChange('formTasHistPriCet')}
+                                required
+                            />
+                            <label htmlFor="n_cetes364">
+                                CETES 364
+                            </label>
+                        </div>
+                        <button type="submit"
+                                className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
+                                ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
+                            <ButtonContent name='Guardar' loading={loadingSave}/>
+                        </button>
                     </form>
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTaHiFoGu', d_fecha)}>
-                        <div className="grid grid-cols-1">
-                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Hist Fondeo Guber</span>
-                            <div className="form-input">
-                                <input
-                                    type="text"
-                                    name="n_fguber28"
-                                    id="n_fguber28"
-                                    value={forms['formTaHiFoGu']?.['n_fguber28'] || ''}
-                                    onChange={handleChange('formTaHiFoGu')}
-                                    required
-                                />
-                                <label htmlFor="n_fguber28">
-                                    Max Fondeo Vs Cetes 28
-                                </label>
-                            </div>
-                            <div className="form-input">
-                                <input
-                                    type="text"
-                                    name="n_fguber91"
-                                    id="n_fguber91"
-                                    value={forms['formTaHiFoGu']?.['n_fguber91'] || ''}
-                                    onChange={handleChange('formTaHiFoGu')}
-                                    required
-                                />
-                                <label htmlFor="n_fguber91">
-                                    Max Fondeo Vs Cetes 91
-                                </label>
-                            </div>
-                            <div className="text-center text-xs text-cyan-700 my-3">
-                                <button type="submit"
-                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
-                                        ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
-                                    <ButtonContent name='Guardar' loading={loadingSave}/>
-                                </button>
-                            </div>
+                        <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Hist Fondeo Guber</span>
+                        <div className="form-input">
+                            <input
+                                type="text"
+                                name="n_fguber28"
+                                id="n_fguber28"
+                                value={forms['formTaHiFoGu']?.['n_fguber28'] || ''}
+                                onChange={handleChange('formTaHiFoGu')}
+                                required
+                            />
+                            <label htmlFor="n_fguber28">
+                                Max Fondeo Vs Cetes 28
+                            </label>
                         </div>
+                        <div className="form-input">
+                            <input
+                                type="text"
+                                name="n_fguber91"
+                                id="n_fguber91"
+                                value={forms['formTaHiFoGu']?.['n_fguber91'] || ''}
+                                onChange={handleChange('formTaHiFoGu')}
+                                required
+                            />
+                            <label htmlFor="n_fguber91">
+                                Max Fondeo Vs Cetes 91
+                            </label>
+                        </div>
+                        <button type="submit"
+                                className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
+                                ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
+                            <ButtonContent name='Guardar' loading={loadingSave}/>
+                        </button>
                     </form>
+
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTasaTIIE', d_fecha)}>
@@ -875,7 +867,7 @@ export const TasasForm = ({d_fecha}: any) => {
                             <div className="p-1 bg-cyan-700 text-white text-center">
                                 <span>Actualiza UDIS</span>
                             </div>
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-2 gap-1">
                                 <div className="relative z-0 w-full my-3">
                                     <textarea
                                         className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent

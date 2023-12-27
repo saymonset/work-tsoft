@@ -63,7 +63,7 @@ export const Tasas = () => {
                     </button>
                 </div>
             </div>
-            <div className="mt-8">
+            <div className="mt-2">
                 <TasasForm d_fecha = {currentDate} />
             </div>
         </>
