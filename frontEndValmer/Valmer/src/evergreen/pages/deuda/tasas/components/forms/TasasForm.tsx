@@ -24,7 +24,6 @@ export const TasasForm = ({d_fecha}: any) => {
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTasHistPriCet', d_fecha)}>
                     
-                        <div className="grid grid-cols-1">
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Hist Primaria Cetes</span>
                             <div className="form-input">
                                 <input
@@ -85,11 +84,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
-                        </div>
                     </form>
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTaHiFoGu', d_fecha)}>
-                        <div className="grid grid-cols-1">
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Hist Fondeo Guber</span>
                             <div className="form-input">
                                 <input
@@ -124,13 +121,11 @@ export const TasasForm = ({d_fecha}: any) => {
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
-                        </div>
                     </form>
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTasaTIIE', d_fecha)}>
-                        <div className="grid grid-cols-1">
-                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas TIIE</span>
+                        <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas TIIE</span>
                             <div className="form-input">
                                 <input
                                     type="text"
@@ -177,11 +172,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
-                        </div>
                     </form>
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTaTreYi5y', d_fecha)}>
-                        <div className="grid grid-cols-1">
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasa Treasury Yield 5Y</span>
                             <div className="form-input">
                                 <input
@@ -203,12 +196,10 @@ export const TasasForm = ({d_fecha}: any) => {
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
-                        </div>
                     </form>
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTaFoGu', d_fecha)}>
-                        <div className="grid grid-cols-1">
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Fondeo Guber</span>
                             <div className="form-input">
                                 <input
@@ -257,12 +248,10 @@ export const TasasForm = ({d_fecha}: any) => {
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
-                        </div>
                     </form>
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formFonGuBanx', d_fecha)}>
-                        <div className="grid grid-cols-1">
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Fondeo Guber Banxico</span>
                             <div className="form-input">
                                 <input
@@ -336,12 +325,10 @@ export const TasasForm = ({d_fecha}: any) => {
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
-                        </div>
                     </form>
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formEuribor', d_fecha)}>
-                        <div className="grid grid-cols-1">
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Euribor</span>
                             <div className="form-input">
                                 <input
@@ -376,12 +363,10 @@ export const TasasForm = ({d_fecha}: any) => {
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
-                        </div>
                     </form>
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTaSwa5Y6M3M', d_fecha)}>
-                        <div className="grid grid-cols-1">
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasa Swap 5Y 6M 3M</span>
                             <div className="form-input">
                                 <input
@@ -403,12 +388,10 @@ export const TasasForm = ({d_fecha}: any) => {
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
-                        </div>
                     </form>
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTaFoBa', d_fecha)}>
-                        <div className="grid grid-cols-1">
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasa Fondeo Bancario</span>
                             <div className="form-input">
                                 <input
@@ -430,12 +413,10 @@ export const TasasForm = ({d_fecha}: any) => {
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
-                        </div>
                     </form>
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formBancBanx', d_fecha)}>
-                        <div className="grid grid-cols-1">
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Fondeo Bancario Banxico</span>
                             <div className="form-input">
                                 <input
@@ -509,7 +490,6 @@ export const TasasForm = ({d_fecha}: any) => {
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
-                        </div>
                     </form>
 
 
@@ -524,7 +504,6 @@ export const TasasForm = ({d_fecha}: any) => {
                     </div>
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTaIruFeFu', d_fecha)}>
-                        <div className="grid grid-cols-1">
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasa IRUSD Fed Funds</span>
                             <div className="form-input">
                                 <input
@@ -546,12 +525,10 @@ export const TasasForm = ({d_fecha}: any) => {
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
-                        </div>
                     </form>
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTermSofr', d_fecha)}>
-                        <div className="grid grid-cols-1">
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Term SOFR</span>
                             <div className="form-input">
                                 <input
@@ -612,12 +589,10 @@ export const TasasForm = ({d_fecha}: any) => {
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
-                        </div>
                     </form>
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTiieFon1d', d_fecha)}>
-                        <div className="grid grid-cols-1">
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasa Tiie Fondeo 1D</span>
                             <div className="form-input">
                                 <input
@@ -639,12 +614,10 @@ export const TasasForm = ({d_fecha}: any) => {
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
-                        </div>
                     </form>
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formUsdSofr', d_fecha)}>
-                        <div className="grid grid-cols-1">
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasa USD SOFR</span>
                             <div className="form-input">
                                 <input
@@ -666,11 +639,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
-                        </div>
                     </form>
 
                     <form onSubmit={(e) => handleSubmit(e, 'formIpcMexbol', d_fecha)}>
-                        <div className="grid grid-cols-1">
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">IPC MEXBOL</span>
                             <div className="form-input">
                                 <input
@@ -692,11 +663,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
-                        </div>
                     </form>
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTIIEF', d_fecha)}>
-                        <div className="grid grid-cols-1">
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">TIIE de Fondeo Compuesto</span>
                             <div className="form-input">
                                 <input
@@ -770,11 +739,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
-                        </div>
                     </form>
 
                     <form onSubmit={(e) => handleSubmit(e, 'formAjustSofr', d_fecha)}>
-                        <div className="grid grid-cols-1">
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Ajustadas de SOFR</span>
                             <div className="form-input">
                                 <input
@@ -867,7 +834,6 @@ export const TasasForm = ({d_fecha}: any) => {
                                     <ButtonContent name='Actualizar' loading={loadingSave}/>
                                 </button>
                             </div>
-                        </div>
                     </form>
 
                     <Modal isOpen={isOpenUdi} onClose={handleCloseUdi} title="">
