@@ -1,0 +1,5 @@
+export * from './ProcesoHeader'
+export * from './insumos'
+export * from './proceso'
+export * from './contribuidores'
+export * from './admonCarteras'

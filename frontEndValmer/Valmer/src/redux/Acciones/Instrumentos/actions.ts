@@ -1,0 +1,20 @@
+import {createAction} from "@reduxjs/toolkit";
+import {Acciones, Catalogo, DividendosData, IsFieldRequiredAccInst, RespAccInstData} from "../../../model";
+
+export const updateSelectedTvAcc = createAction<string>('UPDATE_SELECTED_TV_ACC')
+export const updateSelectedEmisoraAcc = createAction<string>('UPDATE_SELECTED_EMISORA_ACC')
+export const updateSelectedSerieAcc = createAction<string>('UPDATE_SELECTED_SERIE_ACC')
+export const updateTvAccInst = createAction<string[]>('UPDATE_TV_ACC_INST')
+export const updateEmisoraAccInst = createAction<string[]>('UPDATE_EMISORA_ACC_INST')
+export const updateSerieAccInst = createAction<string[]>('UPDATE_SERIE_ACC_INST')
+export const updateConsultaDataAccInst = createAction<RespAccInstData>('UPDATE_CONSULTA_DATA_ACC_INST')
+export const updateCatalogAcc = createAction<Catalogo[]>('UPDATE_CATALOG_ACC_INST')
+export const updateDividendosTable = createAction<DividendosData[]>('UPDATE_DIVIDENDOS_TABLE')
+export const updateTriggerEraseAcc = createAction<boolean>('UPDATE_TRIGGER_ERASE_ACC')
+export const updateShowCarRvAcc = createAction<boolean>('UPDATE_SHOW_CAR_RV_ACC')
+export const updateNewFormInst = createAction<boolean>('UPDATE_NEW_FORM_INST')
+export const updateShowPrecalc = createAction<boolean>('UPDATE_SHOW_PRECALC')
+export const updateRequiredFieldAccInst = createAction<IsFieldRequiredAccInst>('UPDATE_REQUIRED_FIELD_ACC')
+export const updateRequiredTvAcc = createAction<boolean>('UPDATE_REQUIRED_TV_ACC')
+export const updateRequiredEmisoraAcc = createAction<boolean>('UPDATE_REQUIRED_EMISORA_ACC')
+export const updateRequiredSerieAcc = createAction<boolean>('UPDATE_REQUIRED_SERIE_ACC')

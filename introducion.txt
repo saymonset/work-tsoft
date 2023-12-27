@@ -2,18 +2,35 @@
 
 accesos
 
+capital.humano@TSOFT.net
+factura
+40 000 pesos mexicanos
+
 acceso al drive de yasmin
+
+VPN bolsa , esperar
 
 
 Luis Nieto
 
-
+No trabajar con este uuario
 usuario: ext.luis.nieto@tsoftglobal.com
+ 
 
 Este es el que funciona
 
 usuario:  ext.luis.nieto@tsoftlatam.com
 contraseña: qNt84b3V796q
+
+Fuentes FrontEnd, loguearse con usuario:  ext.luis.nieto@tsoftlatam.com
+
+https://bitbucket.org/tsoftglobal/evergreen-valmer/src/master/
+
+ReHat bajarlo con oraclefedora@gmail.com de
+https://drive.google.com/drive/folders/1IRnue8caUg5LxmunS-G0LDwO5Nv1gnk7?usp=drive_link
+
+Intranet  vaalmer -> bolsa mexicana
+  Migracion de vaalmer a bolsa mexicana
 
 
 #bitbucket en local fronteend
@@ -25,8 +42,19 @@ rama a valmer_services_01f
 verion node 
 Versión de Node.js 18.17.0 o posterior
 
+Miguel angel Vales -> back
+
+Matias, Noe, Noe Vasquez, Manuel Baranoski, Noel Ezequiel -> Front end
+
 
 backend 
+
+Ejecutar siempre:
+ dhclient eth0
+
+ En cada de inicio de sesión, es necesario ejecutar el comando "dhclient eth0" para que la máquina virtual tenga salida a internet y se pueda acceder a ella por SSH, en caso de requerirse
+
+ 
 
 https://drive.google.com/drive/folders/1IRnue8caUg5LxmunS-G0LDwO5Nv1gnk7
 

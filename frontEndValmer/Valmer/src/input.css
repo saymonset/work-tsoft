@@ -1,0 +1,426 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container-flex {
+    @apply flex flex-wrap bg-slate-50;
+}
+
+.duration-900 {
+    transition-duration: 900ms;
+}
+
+.container-form {
+    @apply p-2 w-full border border-slate-300 mb-1;
+}
+
+.translate-x-100 {
+    transform: translate(63%);
+}
+.tableEuro {
+    border: 0;
+    width: 100%;
+    height: 500px;
+}
+
+/** Inicio estilos botones */
+.btn {
+    @apply border-solid border-2 border-cyan-700 hover:border-green-700 bg-cyan-700 hover:bg-green-700 text-white py-1 rounded-md px-3 mx-1 font-bold;
+}
+
+.btn-light {
+    @apply border-solid border-2 border-cyan-700 hover:border-green-700 text-cyan-700 hover:text-green-700 rounded-md px-3 mx-1 font-bold
+}
+
+.btn-icon {
+    @apply bg-cyan-700 hover:bg-green-700 text-white py-1 rounded-md px-3 mx-1;
+}
+
+.btn-icon span {
+    @apply ml-2;
+}
+
+.btn-link {
+    @apply text-cyan-700 hover:text-cyan-900;
+}
+/** Fin estilos botones */
+
+/** Inicio estilos Paginador */
+.paginador {
+    @apply text-center
+}
+
+.paginador button {
+    @apply px-4 mx-10 border border-solid border-cyan-700 hover:bg-cyan-700 hover:text-white text-cyan-700
+}
+
+.paginador button.disabled {
+    @apply pointer-events-none opacity-20
+}
+
+.paginador span {
+    @apply text-cyan-800
+}
+/** Fin estilos Paginador */
+
+/** Inicio estilos Panel */
+.panel {
+    @apply flex flex-col items-start mt-2 border-solid border border-slate-300 bg-slate-100;
+}
+
+.panel-header {
+    @apply flex space-x-1 ml-2 mt-2;
+}
+
+.panel-button {
+    @apply py-1 px-3 border-slate-300 border-l border-r border-t;
+}
+
+.panel-button-active {
+    @apply text-cyan-700 bg-slate-50 pointer-events-none;
+}
+
+.panel-button-inactive {
+    @apply bg-cyan-700 hover:bg-green-700 text-white;
+}
+
+.panel-body {
+    @apply w-full p-2 bg-slate-50;
+}
+/** Fin estilos Panel */
+
+/** Inicio estilos Acordeon */
+.acordeon-header {
+    @apply w-full py-1 px-2 border border-slate-300;
+}
+
+.acordeon-header-active {
+    @apply bg-slate-50 text-cyan-700;
+}
+
+.acordeon-header-inactive {
+    @apply bg-cyan-700 hover:bg-green-700 text-slate-50 mb-1;
+}
+
+.acordeon-button {
+    @apply w-full text-start;
+}
+
+.acordeon-button span {
+    @apply ml-2;
+}
+
+.acordeon-button-icon {
+    @apply text-slate-800;
+}
+
+.acordeon-body {
+    @apply p-2 w-full border border-slate-300 mb-1;
+}
+/** Fin estilos Acordeon */
+
+/** Inico estilos Formularios */
+.form {
+    @apply px-3 mb-5;
+}
+
+.form-title {
+    @apply bg-cyan-700 px-1 mt-4 text-slate-50;
+}
+
+.form-title-card {
+    @apply bg-cyan-700 text-slate-50 px-1;
+}
+
+.form-label {
+    @apply text-xs text-cyan-700 my-3;
+}
+
+.form-cols-1 {
+    @apply grid grid-cols-1 gap-4;
+}
+
+.form-col-1 {
+    @apply grid grid-cols-1;
+}
+
+.form-cols-2 {
+    @apply grid grid-cols-2 gap-4;
+}
+
+.form-col-2 {
+    @apply grid grid-cols-2;
+}
+
+.form-cols-3 {
+    @apply grid grid-cols-3 gap-4;
+}
+
+.form-cols-4 {
+    @apply grid grid-cols-4 gap-4;
+}
+
+.form-cols-5 {
+    @apply grid grid-cols-5 gap-4;
+}
+
+.form-cols-6 {
+    @apply grid grid-cols-6 gap-4;
+}
+
+.form-select,
+.form-input,
+.form-date,
+.form-text-area {
+    @apply relative my-3;
+}
+
+.form-select select,
+.form-text-area textarea {
+    @apply block py-2.5 px-0 w-full 
+    text-sm text-gray-900 bg-transparent 
+    border-0 border-b-2 appearance-none 
+    border-gray-600 focus:border-cyan-700 
+    focus:outline-none focus:ring-0;
+}
+
+.form-text-area textarea {
+    @apply mt-1;
+}
+
+.form-select label {
+    @apply font-medium absolute text-sm transform top-3 scale-75 -translate-y-6 origin-[0];
+}
+
+.form-select select:focus ~ label {
+    font-weight: 500;
+    color: rgb(14 116 144);
+}
+
+.form-input input{
+    @apply block py-2.5 px-0 w-full text-sm
+    bg-transparent border-0
+    border-b-2 appearance-none
+    text-slate-900 border-gray-600
+    focus:outline-none focus:ring-0
+    focus:border-cyan-700;
+
+}
+
+
+.form-input label,
+.form-text-area label{
+    @apply font-medium absolute text-sm text-gray-900 transform top-3 origin-[0] -translate-y-6 scale-75
+}
+
+.form-input input:focus ~ label,
+.form-text-area textarea:focus ~ label {
+    font-weight: 500;
+    left: 0;
+    color: rgb(14 116 144);
+    transform: translate(0, -1.5rem) scaleX(.75) scaleY(.75);
+}
+
+.form-check {
+    @apply flex items-center my-3 h-full;
+}
+
+.form-check input {
+    @apply w-4 h-4 text-cyan-700 rounded focus:ring-cyan-700 ring-offset-gray-800 bg-gray-700 border-gray-600;
+}
+
+.form-check label {
+    @apply ml-2 text-sm font-medium text-gray-900;
+}
+
+.form-check input:hover ~ label {
+    font-weight: 700;
+    color: rgb(14 116 144);
+}
+
+.form-check input:checked ~ label {
+    font-weight: 700;
+    color: rgb(14 116 144);
+}
+
+.form-date input {
+    @apply block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-slate-900 border-gray-600 focus:border-cyan-700 focus:outline-none focus:ring-0;
+}
+
+.form-date label {
+    @apply font-medium absolute text-sm transform top-3 scale-75 -translate-y-6 origin-[0];
+}
+
+.form-date input:focus ~ label {
+    font-weight: 500;
+    color: rgb(14 116 144);
+}
+
+/** Fin estilos Formularios */
+
+/** Inicio estilos Tablas */
+table {
+    @apply border-separate border-spacing-1 text-sm;
+}
+
+.table .thead {
+    @apply text-white bg-cyan-700;
+}
+
+.table .tbody {
+    @apply text-center;
+}
+
+.table .tbody .tr {
+    @apply even:bg-gray-300 hover:bg-cyan-600 hover:text-white;
+}
+
+.table .tbody .tr-editable:hover span{
+    @apply text-green-400
+}
+
+.table .tbody .tr-editable {
+    @apply even:bg-gray-300 hover:bg-cyan-600 hover:text-black;
+}
+
+.table .tbody .tr-editable input{
+    @apply border border-cyan-700
+}
+/** Fin estilos Tablas */
+
+/** Inicio estilos Modal */
+.modal-container {
+    @apply grid grid-cols-1 mt-1;
+}
+
+.modal-title {
+    @apply p-1 bg-cyan-700 text-white text-center;
+}
+
+.modal-body {
+    @apply flex flex-col text-sm mt-3;
+}
+
+.modal-footer {
+    @apply flex justify-end mt-4 px-3;
+}
+/** Fin estilos Modal */
+
+/** Inicio estilos Linea */
+.container-line {
+    @apply grid grid-cols-1 gap-4
+}
+
+.line {
+    @apply border-gray-300 border my-5
+}
+/** Fin estilos Linea */
+
+/** Inicio estilos Card */
+.card {
+    @apply bg-white rounded-lg shadow-xl border-2 border-gray-100
+}
+
+.card img {
+    @apply w-full h-64 object-cover rounded-t-lg
+}
+
+.card .head {
+    @apply p-4 border-b-2 flex justify-between
+}
+
+.card .head span {
+    @apply font-semibold text-gray-400
+}
+
+.card .body {
+    @apply px-3 py-4
+}
+
+.card .body h2 {
+    @apply text-xl font-bold
+}
+
+.card .body p {
+    @apply text-gray-700
+}
+
+.card .body .center {
+    @apply flex justify-between
+}
+
+.card .body a {
+    @apply text-blue-500 hover:underline
+}
+
+.card .footer {
+    @apply p-4 border-t-2 flex justify-end
+}
+
+.card-img {
+    @apply w-full
+}
+
+.card-img img {
+    @apply w-full h-32 object-cover rounded-lg
+}
+/** Fin estilos Card */
+
+.form-dialog {
+    padding: 10px;
+}
+
+.form-dialog select,
+.form-dialog input {
+    @apply
+    text-sm text-gray-900 bg-transparent
+    border-0 border-b-2 appearance-none 
+    border-gray-600 focus:border-cyan-700
+    focus:outline-none focus:ring-0;
+    vertical-align: center;
+}
+
+.form-dialog label{
+    @apply text-sm text-gray-900 bg-transparent appearance-none;
+    font-stretch: extra-condensed;
+    font-size: small;
+}
+
+.form-cols-13 {
+    display: flex;
+    width: 100%;
+}
+
+.form-cols-13 label {
+    flex: 0 0 15%;
+    padding: 3px 0 3px 0;
+}
+
+.form-cols-13 select {
+    flex: 1;
+}
+
+.form-cols-22 {
+    display: flex;
+    width: 100%;
+}
+
+.form-cols-22 label {
+    flex: 0 0 30%;
+    padding: 3px 0 3px 0;
+}
+
+.form-cols-22 select,
+.form-cols-22 input {
+    flex: 1;
+}
+
+/* Estilos para el menú y submenús */
+li:hover ul {
+    display: block;
+    cursor: pointer;
+}
+
+.menu {
+    @apply border border-cyan-600 bg-white hover:bg-green-600 text-cyan-700 hover:text-white hover:font-bold px-1 block
+}
