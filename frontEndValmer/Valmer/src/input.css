@@ -169,10 +169,13 @@
 }
 
 .form-select,
-.form-input,
 .form-date,
 .form-text-area {
     @apply relative my-3;
+}
+
+.form-input {
+    @apply relative my-2;
 }
 
 .form-select select,
