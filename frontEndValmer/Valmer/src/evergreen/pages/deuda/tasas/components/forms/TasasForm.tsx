@@ -50,7 +50,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTasHistPriCet')}
                                     required
                                 />
-                                <label htmlFor="n_cetes91">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_cetes91">
                                     CETES 91
                                 </label>
                             </div>
@@ -63,7 +63,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTasHistPriCet')}
                                     required
                                 />
-                                <label htmlFor="n_cetes182">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_cetes182">
                                     CETES 182
                                 </label>
                             </div>
@@ -76,7 +76,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTasHistPriCet')}
                                     required
                                 />
-                                <label htmlFor="n_cetes364">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_cetes364">
                                     CETES 364
                                 </label>
                             </div>
@@ -100,7 +100,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTaHiFoGu')}
                                     required
                                 />
-                                <label htmlFor="n_fguber28">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_fguber28">
                                     Max Fondeo Vs Cetes 28
                                 </label>
                             </div>
@@ -113,7 +113,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTaHiFoGu')}
                                     required
                                 />
-                                <label htmlFor="n_fguber91">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_fguber91">
                                     Max Fondeo Vs Cetes 91
                                 </label>
                             </div>
@@ -138,7 +138,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTasaTIIE')}
                                     required
                                 />
-                                <label htmlFor="n_tiie28">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tiie28">
                                     TIIE28
                                 </label>
                             </div>
@@ -151,7 +151,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTasaTIIE')}
                                     required
                                 />
-                                <label htmlFor="n_tiie91">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tiie91">
                                     TIIE91
                                 </label>
                             </div>
@@ -164,7 +164,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTasaTIIE')}
                                     required
                                 />
-                                <label htmlFor="n_tiie182">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tiie182">
                                     TIIE182
                                 </label>
                             </div>
@@ -188,7 +188,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTaTreYi5y')}
                                     required
                                 />
-                                <label htmlFor="n_treasury_5y">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_treasury_5y">
                                     TREASURY 5Y
                                 </label>
                             </div>
@@ -213,7 +213,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTaFoGu')}
                                     required
                                 />
-                                <label htmlFor="n_fguber28d">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_fguber28d">
                                     Fondo Guber 28
                                 </label>
                             </div>
@@ -226,7 +226,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTaFoGu')}
                                     required
                                 />
-                                <label htmlFor="n_fguber91d">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_fguber91d">
                                     Fondo Guber 91
                                 </label>
                             </div>
@@ -240,7 +240,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTaFoGu')}
                                     required
                                 />
-                                <label htmlFor="n_fguber">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_fguber">
                                     Fondo Guber
                                 </label>
                             </div>
@@ -265,7 +265,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formFonGuBanx')}
                                     required
                                 />
-                                <label htmlFor="n_apertura_guber">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_apertura_guber">
                                     Apertura
                                 </label>
                             </div>
@@ -278,7 +278,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formFonGuBanx')}
                                     required
                                 />
-                                <label htmlFor="n_min_guber">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_min_guber">
                                     Minimo
                                 </label>
                             </div>
@@ -291,7 +291,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formFonGuBanx')}
                                     required
                                 />
-                                <label htmlFor="n_max_guber">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_max_guber">
                                     Maximo
                                 </label>
                             </div>
@@ -304,7 +304,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formFonGuBanx')}
                                     required
                                 />
-                                <label htmlFor="n_cierre_guber">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_cierre_guber">
                                     Cierre
                                 </label>
                             </div>
@@ -317,7 +317,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formFonGuBanx')}
                                     required
                                 />
-                                <label htmlFor="n_pond_guber">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_pond_guber">
                                     Ponderado
                                 </label>
                             </div>
@@ -342,7 +342,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formEuribor')}
                                     required
                                 />
-                                <label htmlFor="n_euribor">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_euribor">
                                     EURIBOR 3M
                                 </label>
                             </div>
@@ -355,7 +355,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formEuribor')}
                                     required
                                 />
-                                <label htmlFor="n_euribor6m">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_euribor6m">
                                     EURIBOR 6M
                                 </label>
                             </div>
@@ -380,7 +380,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTaSwa5Y6M3M')}
                                     required
                                 />
-                                <label htmlFor="n_swap_5y_6m_3m">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_swap_5y_6m_3m">
                                     Swap 5Y 6M 3M
                                 </label>
                             </div>
@@ -405,7 +405,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTaFoBa')}
                                     required
                                 />
-                                <label htmlFor="n_fbanc">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_fbanc">
                                     Fondeo Bancario
                                 </label>
                             </div>
@@ -430,7 +430,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formBancBanx')}
                                     required
                                 />
-                                <label htmlFor="n_apertura_banc">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_apertura_banc">
                                     Apertura
                                 </label>
                             </div>
@@ -443,7 +443,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formBancBanx')}
                                     required
                                 />
-                                <label htmlFor="n_min_banc">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_min_banc">
                                     Minimo
                                 </label>
                             </div>
@@ -456,7 +456,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formBancBanx')}
                                     required
                                 />
-                                <label htmlFor="n_max_banc">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_max_banc">
                                     Maximo
                                 </label>
                             </div>
@@ -469,7 +469,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formBancBanx')}
                                     required
                                 />
-                                <label htmlFor="n_cierre_banc">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_cierre_banc">
                                     Cierre
                                 </label>
                             </div>
@@ -482,7 +482,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formBancBanx')}
                                     required
                                 />
-                                <label htmlFor="n_pond_banc">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_pond_banc">
                                     Ponderado
                                 </label>
                             </div>
@@ -517,7 +517,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTaIruFeFu')}
                                     required
                                 />
-                                <label htmlFor="n_irusd_fed_funds">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_irusd_fed_funds">
                                     IRUSD_FED_FUNDS
                                 </label>
                             </div>
@@ -542,7 +542,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTermSofr')}
                                     required
                                 />
-                                <label htmlFor="n_tsofr1M">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tsofr1M">
                                     1M
                                 </label>
                             </div>
@@ -555,7 +555,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTermSofr')}
                                     required
                                 />
-                                <label htmlFor="n_tsofr3M">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tsofr3M">
                                     3M
                                 </label>
                             </div>
@@ -568,7 +568,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTermSofr')}
                                     required
                                 />
-                                <label htmlFor="n_tsofr6M">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tsofr6M">
                                     6M
                                 </label>
                             </div>
@@ -581,7 +581,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTermSofr')}
                                     required
                                 />
-                                <label htmlFor="n_tsofr12M">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tsofr12M">
                                     12M
                                 </label>
                             </div>
@@ -606,7 +606,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTiieFon1d')}
                                     required
                                 />
-                                <label htmlFor="n_tiie_fondeo_1d">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tiie_fondeo_1d">
                                     Tiie Fondeo 1D
                                 </label>
                             </div>
@@ -631,7 +631,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formUsdSofr')}
                                     required
                                 />
-                                <label htmlFor="n_sofr">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_sofr">
                                     SOFR 1D
                                 </label>
                             </div>
@@ -655,7 +655,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formIpcMexbol')}
                                     required
                                 />
-                                <label htmlFor="n_ipc_mexbol">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_ipc_mexbol">
                                     IPC MEXBOL
                                 </label>
                             </div>
@@ -679,7 +679,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTIIEF')}
                                     required
                                 />
-                                <label htmlFor="n_ind_tiief_nat">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_ind_tiief_nat">
                                     IND TIIEF NAT
                                 </label>
                             </div>
@@ -692,7 +692,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTIIEF')}
                                     required
                                 />
-                                <label htmlFor="n_ind_tiief_banc">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_ind_tiief_banc">
                                     IND TIIEF BANC
                                 </label>
                             </div>
@@ -705,7 +705,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTIIEF')}
                                     required
                                 />
-                                <label htmlFor="n_tiief_28_acum">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tiief_28_acum">
                                     TIIEF 28 ACUM
                                 </label>
                             </div>
@@ -718,7 +718,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTIIEF')}
                                     required
                                 />
-                                <label htmlFor="n_tiief_91_acum">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tiief_91_acum">
                                     TIIEF 91 ACUM
                                 </label>
                             </div>
@@ -731,7 +731,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onChange={handleChange('formTIIEF')}
                                     required
                                 />
-                                <label htmlFor="n_tiief_182_acum">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tiief_182_acum">
                                     TIIEF 182 ACUM
                                 </label>
                             </div>
@@ -756,7 +756,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     disabled
                                     required
                                 />
-                                <label htmlFor="n_adjtsofr1W">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_adjtsofr1W">
                                     ADJ SOFR 1W
                                 </label>
                             </div>
@@ -770,7 +770,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     disabled
                                     required
                                 />
-                                <label htmlFor="n_adjtsofr1M">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_adjtsofr1M">
                                     ADJ SOFR 1M
                                 </label>
                             </div>
@@ -784,7 +784,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     disabled
                                     required
                                 />
-                                <label htmlFor="n_adjtsofr2M">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_adjtsofr2M">
                                     ADJ SOFR 2M
                                 </label>
                             </div>
@@ -798,7 +798,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     disabled
                                     required
                                 />
-                                <label htmlFor="n_adjtsofr3M">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_adjtsofr3M">
                                     ADJ SOFR 3M
                                 </label>
                             </div>
@@ -812,7 +812,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     disabled
                                     required
                                 />
-                                <label htmlFor="n_adjtsofr6M">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_adjtsofr6M">
                                     ADJ SOFR 3M
                                 </label>
                             </div>
@@ -826,7 +826,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     disabled
                                     required
                                 />
-                                <label htmlFor="n_adjtsofr12M">
+                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_adjtsofr12M">
                                     ADJ SOFR 12M
                                 </label>
                             </div>
