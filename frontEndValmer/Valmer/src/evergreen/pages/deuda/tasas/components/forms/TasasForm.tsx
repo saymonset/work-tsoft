@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {useTasasForm, useTasasFormData} from "./hooks";
 import {ButtonContent, Modal} from "../../../../../../shared";
 
@@ -16,6 +16,16 @@ export const TasasForm = ({d_fecha}: any) => {
 
     const {forms, loadingSave, handleSubmit, handleChange} = useTasasForm()
 
+    const [focusedInput, setFocusedInput] = useState<string>("");
+
+    const handleFocus = (inputName: string) => {
+        setFocusedInput(inputName);
+    }
+
+    const handleBlur = () => {
+        setFocusedInput("");
+    }
+    
     return (
         <div className={`p-2 w-full border border-slate-300 mb-1 animate__animated animate__fadeIn`}>
 
@@ -26,14 +36,16 @@ export const TasasForm = ({d_fecha}: any) => {
                     
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Hist Primaria Cetes</span>
                             <div className="form-input" style={{ paddingTop: '0rem', paddingBottom: '0rem' }}>
-                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
+                                <input 
                                     type="text"
                                     name="n_cetes28"
-
                                     id="n_cetes28"
                                     value={forms['formTasHistPriCet']?.['n_cetes28'] || ''}
                                     onChange={handleChange('formTasHistPriCet')}
                                     required
+                                    onFocus={() => handleFocus('n_cetes28')}
+                                    onBlur={handleBlur}
+                                    style={!focusedInput || focusedInput !== 'n_cetes28' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
                                 />
                                 <label 
                                     style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
@@ -42,39 +54,48 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                                 </div>
                             <div className="form-input">
-                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
+                                <input
                                     type="text"
                                     name="n_cetes91"
                                     id="n_cetes91"
                                     value={forms['formTasHistPriCet']?.['n_cetes91'] || ''}
                                     onChange={handleChange('formTasHistPriCet')}
                                     required
+                                    onFocus={() => handleFocus('n_cetes91')}
+                                    onBlur={handleBlur}
+                                    style={!focusedInput || focusedInput !== 'n_cetes91' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
                                 />
                                 <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_cetes91">
                                     CETES 91
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
+                                <input 
                                     type="text"
                                     name="n_cetes182"
                                     id="n_cetes182"
                                     value={forms['formTasHistPriCet']?.['n_cetes182'] || ''}
                                     onChange={handleChange('formTasHistPriCet')}
                                     required
+                                    onFocus={() => handleFocus('n_cetes182')}
+                                    onBlur={handleBlur}
+                                    style={!focusedInput || focusedInput !== 'n_cetes182' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
                                 />
                                 <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_cetes182">
                                     CETES 182
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
+                                <input 
                                     type="text"
                                     name="n_cetes364"
                                     id="n_cetes364"
                                     value={forms['formTasHistPriCet']?.['n_cetes364'] || ''}
                                     onChange={handleChange('formTasHistPriCet')}
                                     required
+                                    onFocus={() => handleFocus('n_cetes364')}
+                                    onBlur={handleBlur}
+                                    style={!focusedInput || focusedInput !== 'n_cetes364' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
                                 />
                                 <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_cetes364">
                                     CETES 364
@@ -92,26 +113,33 @@ export const TasasForm = ({d_fecha}: any) => {
                     <form onSubmit={(e) => handleSubmit(e, 'formTaHiFoGu', d_fecha)}>
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Hist Fondeo Guber</span>
                             <div className="form-input">
-                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
+                                <input 
                                     type="text"
                                     name="n_fguber28"
                                     id="n_fguber28"
                                     value={forms['formTaHiFoGu']?.['n_fguber28'] || ''}
                                     onChange={handleChange('formTaHiFoGu')}
                                     required
+                                    onFocus={() => handleFocus('n_fguber28')}
+                                    onBlur={handleBlur}
+                                    style={!focusedInput || focusedInput !== 'n_fguber28' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
                                 />
                                 <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_fguber28">
                                     Max Fondeo Vs Cetes 28
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
+                                <input 
                                     type="text"
                                     name="n_fguber91"
                                     id="n_fguber91"
                                     value={forms['formTaHiFoGu']?.['n_fguber91'] || ''}
                                     onChange={handleChange('formTaHiFoGu')}
                                     required
+                                    onFocus={() => handleFocus('n_fguber91')}
+                                    onBlur={handleBlur}
+                                    style={!focusedInput || focusedInput !== 'n_fguber91' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    
                                 />
                                 <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_fguber91">
                                     Max Fondeo Vs Cetes 91
