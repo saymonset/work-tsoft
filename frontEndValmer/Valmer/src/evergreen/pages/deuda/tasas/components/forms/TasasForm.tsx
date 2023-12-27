@@ -25,21 +25,24 @@ export const TasasForm = ({d_fecha}: any) => {
                     <form onSubmit={(e) => handleSubmit(e, 'formTasHistPriCet', d_fecha)}>
                     
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Hist Primaria Cetes</span>
-                            <div className="form-input">
-                                <input
+                            <div className="form-input" style={{ paddingTop: '0rem', paddingBottom: '0rem' }}>
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_cetes28"
+
                                     id="n_cetes28"
                                     value={forms['formTasHistPriCet']?.['n_cetes28'] || ''}
                                     onChange={handleChange('formTasHistPriCet')}
                                     required
                                 />
-                                <label htmlFor="n_cetes28">
+                                <label 
+                                    style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
+                                    htmlFor="n_cetes28">
                                     CETES 28
                                 </label>
-                            </div>
+                                </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_cetes91"
                                     id="n_cetes91"
@@ -52,7 +55,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_cetes182"
                                     id="n_cetes182"
@@ -65,7 +68,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_cetes364"
                                     id="n_cetes364"
@@ -89,7 +92,7 @@ export const TasasForm = ({d_fecha}: any) => {
                     <form onSubmit={(e) => handleSubmit(e, 'formTaHiFoGu', d_fecha)}>
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Hist Fondeo Guber</span>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_fguber28"
                                     id="n_fguber28"
@@ -102,7 +105,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_fguber91"
                                     id="n_fguber91"
@@ -127,7 +130,7 @@ export const TasasForm = ({d_fecha}: any) => {
                     <form onSubmit={(e) => handleSubmit(e, 'formTasaTIIE', d_fecha)}>
                         <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas TIIE</span>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_tiie28"
                                     id="n_tiie28"
@@ -140,7 +143,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_tiie91"
                                     id="n_tiie91"
@@ -153,7 +156,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_tiie182"
                                     id="n_tiie182"
@@ -177,7 +180,7 @@ export const TasasForm = ({d_fecha}: any) => {
                     <form onSubmit={(e) => handleSubmit(e, 'formTaTreYi5y', d_fecha)}>
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasa Treasury Yield 5Y</span>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_treasury_5y"
                                     id="n_treasury_5y"
@@ -202,7 +205,7 @@ export const TasasForm = ({d_fecha}: any) => {
                     <form onSubmit={(e) => handleSubmit(e, 'formTaFoGu', d_fecha)}>
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Fondeo Guber</span>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_fguber28d"
                                     id="n_fguber28d"
@@ -215,7 +218,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_fguber91d"
                                     id="n_fguber91d"
@@ -228,7 +231,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_fguber"
                                     id="n_fguber"
@@ -254,7 +257,7 @@ export const TasasForm = ({d_fecha}: any) => {
                     <form onSubmit={(e) => handleSubmit(e, 'formFonGuBanx', d_fecha)}>
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Fondeo Guber Banxico</span>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_apertura_guber"
                                     id="n_apertura_guber"
@@ -267,7 +270,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_min_guber"
                                     id="n_min_guber"
@@ -280,7 +283,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_max_guber"
                                     id="n_max_guber"
@@ -293,7 +296,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_cierre_guber"
                                     id="n_cierre_guber"
@@ -306,7 +309,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_pond_guber"
                                     id="n_pond_guber"
@@ -331,7 +334,7 @@ export const TasasForm = ({d_fecha}: any) => {
                     <form onSubmit={(e) => handleSubmit(e, 'formEuribor', d_fecha)}>
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Euribor</span>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_euribor"
                                     id="n_euribor"
@@ -344,7 +347,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_euribor6m"
                                     id="n_euribor6m"
@@ -369,7 +372,7 @@ export const TasasForm = ({d_fecha}: any) => {
                     <form onSubmit={(e) => handleSubmit(e, 'formTaSwa5Y6M3M', d_fecha)}>
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasa Swap 5Y 6M 3M</span>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_swap_5y_6m_3m"
                                     id="n_swap_5y_6m_3m"
@@ -394,7 +397,7 @@ export const TasasForm = ({d_fecha}: any) => {
                     <form onSubmit={(e) => handleSubmit(e, 'formTaFoBa', d_fecha)}>
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasa Fondeo Bancario</span>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_fbanc"
                                     id="n_fbanc"
@@ -419,7 +422,7 @@ export const TasasForm = ({d_fecha}: any) => {
                     <form onSubmit={(e) => handleSubmit(e, 'formBancBanx', d_fecha)}>
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Fondeo Bancario Banxico</span>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_apertura_banc"
                                     id="n_apertura_banc"
@@ -432,7 +435,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_min_banc"
                                     id="n_min_banc"
@@ -445,7 +448,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_max_banc"
                                     id="n_max_banc"
@@ -458,7 +461,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_cierre_banc"
                                     id="n_cierre_banc"
@@ -471,7 +474,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_pond_banc"
                                     id="n_pond_banc"
@@ -506,7 +509,7 @@ export const TasasForm = ({d_fecha}: any) => {
                     <form onSubmit={(e) => handleSubmit(e, 'formTaIruFeFu', d_fecha)}>
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasa IRUSD Fed Funds</span>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_irusd_fed_funds"
                                     id="n_irusd_fed_funds"
@@ -531,7 +534,7 @@ export const TasasForm = ({d_fecha}: any) => {
                     <form onSubmit={(e) => handleSubmit(e, 'formTermSofr', d_fecha)}>
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Term SOFR</span>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_tsofr1M"
                                     id="n_tsofr1M"
@@ -544,7 +547,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_tsofr3M"
                                     id="n_tsofr3M"
@@ -557,7 +560,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_tsofr6M"
                                     id="n_tsofr6M"
@@ -570,7 +573,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_tsofr12M"
                                     id="n_tsofr12M"
@@ -595,7 +598,7 @@ export const TasasForm = ({d_fecha}: any) => {
                     <form onSubmit={(e) => handleSubmit(e, 'formTiieFon1d', d_fecha)}>
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasa Tiie Fondeo 1D</span>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_tiie_fondeo_1d"
                                     id="n_tiie_fondeo_1d"
@@ -620,7 +623,7 @@ export const TasasForm = ({d_fecha}: any) => {
                     <form onSubmit={(e) => handleSubmit(e, 'formUsdSofr', d_fecha)}>
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasa USD SOFR</span>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_sofr"
                                     id="n_sofr"
@@ -644,7 +647,7 @@ export const TasasForm = ({d_fecha}: any) => {
                     <form onSubmit={(e) => handleSubmit(e, 'formIpcMexbol', d_fecha)}>
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">IPC MEXBOL</span>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_ipc_mexbol"
                                     id="n_ipc_mexbol"
@@ -668,7 +671,7 @@ export const TasasForm = ({d_fecha}: any) => {
                     <form onSubmit={(e) => handleSubmit(e, 'formTIIEF', d_fecha)}>
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">TIIE de Fondeo Compuesto</span>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_ind_tiief_nat"
                                     id="n_ind_tiief_nat"
@@ -681,7 +684,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_ind_tiief_banc"
                                     id="n_ind_tiief_banc"
@@ -694,7 +697,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_tiief_28_acum"
                                     id="n_tiief_28_acum"
@@ -707,7 +710,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_tiief_91_acum"
                                     id="n_tiief_91_acum"
@@ -720,7 +723,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_tiief_182_acum"
                                     id="n_tiief_182_acum"
@@ -744,7 +747,7 @@ export const TasasForm = ({d_fecha}: any) => {
                     <form onSubmit={(e) => handleSubmit(e, 'formAjustSofr', d_fecha)}>
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Ajustadas de SOFR</span>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_adjtsofr1W"
                                     id="n_adjtsofr1W"
@@ -758,7 +761,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_adjtsofr1M"
                                     id="n_adjtsofr1M"
@@ -772,7 +775,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_adjtsofr2M"
                                     id="n_adjtsofr2M"
@@ -786,7 +789,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_adjtsofr3M"
                                     id="n_adjtsofr3M"
@@ -800,7 +803,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_adjtsofr6M"
                                     id="n_adjtsofr6M"
@@ -814,7 +817,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input
+                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     type="text"
                                     name="n_adjtsofr12M"
                                     id="n_adjtsofr12M"

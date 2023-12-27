@@ -178,6 +178,7 @@
     @apply relative my-2;
 }
 
+
 .form-select select,
 .form-text-area textarea {
     @apply block py-2.5 px-0 w-full 
