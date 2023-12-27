@@ -77,7 +77,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     CETES 364
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-3">
+                            <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -114,7 +114,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     Max Fondeo Vs Cetes 91
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-3">
+                            <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -165,7 +165,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     TIIE182
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-3">
+                            <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -189,7 +189,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     TREASURY 5Y
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-3">
+                            <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -241,7 +241,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     Fondo Guber
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-3">
+                            <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -318,7 +318,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     Ponderado
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-3">
+                            <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -356,7 +356,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     EURIBOR 6M
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-3">
+                            <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -381,7 +381,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     Swap 5Y 6M 3M
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-3">
+                            <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -406,7 +406,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     Fondeo Bancario
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-3">
+                            <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -483,7 +483,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     Ponderado
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-3">
+                            <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -518,7 +518,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     IRUSD_FED_FUNDS
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-3">
+                            <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -582,7 +582,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     12M
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-3">
+                            <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -607,7 +607,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     Tiie Fondeo 1D
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-3">
+                            <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -632,7 +632,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     SOFR 1D
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-3">
+                            <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -656,7 +656,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     IPC MEXBOL
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-3">
+                            <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -732,7 +732,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     TIIEF 182 ACUM
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-3">
+                            <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -827,7 +827,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     ADJ SOFR 12M
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-3">
+                            <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -865,7 +865,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                             Formato Fecha (YYYY-MM-DD)
                                         </div>
 
-                                        <div className="text-center text-xs text-cyan-700 my-3">
+                                        <div className="text-center text-xs text-cyan-700 my-0">
                                             Layout (FECHA -tab- VALOR UDI)
                                         </div>
                                     </div>
