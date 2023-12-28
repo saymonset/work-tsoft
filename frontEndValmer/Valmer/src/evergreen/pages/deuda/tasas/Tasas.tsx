@@ -40,10 +40,10 @@ export const Tasas = () => {
                     <label
                         htmlFor="lastRegCoupon"
                         className="peer-focus:font-medium absolute text-sm text-gray-900 dark:text-gray-900
-                          duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+                          duration-300 transform -translate-y-6 scale-75 top-4 -z-10 origin-[0]
                           peer-focus:left-0 peer-focus:text-cyan-700 peer-focus:dark:text-cyan-700
                           peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75
-                          peer-focus:-translate-y-6"
+                          peer-focus:-translate-y-6 "
                     >
                         Fecha
                     </label>
@@ -63,7 +63,7 @@ export const Tasas = () => {
                     </button>
                 </div>
             </div>
-            <div className="mt-2">
+            <div className="mt-0">
                 <TasasForm d_fecha = {currentDate} />
             </div>
         </>

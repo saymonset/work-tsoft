@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import {useTasasForm, useTasasFormData} from "./hooks";
 import {ButtonContent, Modal} from "../../../../../../shared";
 
+
+
 export const TasasForm = ({d_fecha}: any) => {
 
     const {
@@ -27,15 +29,14 @@ export const TasasForm = ({d_fecha}: any) => {
     }
     
     return (
-        <div className={`p-2 w-full border border-slate-300 mb-1 animate__animated animate__fadeIn`}>
+        <div className={`p-0     w-full border border-slate-300 mb-1 animate__animated animate__fadeIn`}>
 
             <div className="px-3">
                 <div className="form-cols-4">
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTasHistPriCet', d_fecha)}>
-                    
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Hist Primaria Cetes</span>
-                            <div className="form-input" style={{ paddingTop: '0rem', paddingBottom: '0rem' }}>
+                            <div className="form-input" >
                                 <input 
                                     type="text"
                                     name="n_cetes28"
@@ -48,7 +49,6 @@ export const TasasForm = ({d_fecha}: any) => {
                                     style={!focusedInput || focusedInput !== 'n_cetes28' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
                                 />
                                 <label 
-                                    style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
                                     htmlFor="n_cetes28">
                                     CETES 28
                                 </label>
@@ -65,7 +65,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onBlur={handleBlur}
                                     style={!focusedInput || focusedInput !== 'n_cetes91' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_cetes91">
+                                <label   htmlFor="n_cetes91">
                                     CETES 91
                                 </label>
                             </div>
@@ -81,7 +81,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onBlur={handleBlur}
                                     style={!focusedInput || focusedInput !== 'n_cetes182' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_cetes182">
+                                <label    htmlFor="n_cetes182">
                                     CETES 182
                                 </label>
                             </div>
@@ -97,7 +97,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     onBlur={handleBlur}
                                     style={!focusedInput || focusedInput !== 'n_cetes364' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_cetes364">
+                                <label   htmlFor="n_cetes364">
                                     CETES 364
                                 </label>
                             </div>
