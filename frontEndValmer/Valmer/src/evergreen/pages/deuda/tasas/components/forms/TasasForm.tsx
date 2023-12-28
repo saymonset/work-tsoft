@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {useTasasForm, useTasasFormData} from "./hooks";
 import {ButtonContent, Modal} from "../../../../../../shared";
+import { useBigInput } from "./hooks/useBigInput";
 
 
 
@@ -16,17 +17,21 @@ export const TasasForm = ({d_fecha}: any) => {
         handleOpenUdi,
         handleChargeUdi} = useTasasFormData()
 
-    const {forms, loadingSave, handleSubmit, handleChange} = useTasasForm()
+    const {forms, loadingSave, handleSubmit, handleChange} = useTasasForm();
+
+    const {  handleFocus,
+             handleBlur,
+             sendStyle} = useBigInput();
 
     const [focusedInput, setFocusedInput] = useState<string>("");
 
-    const handleFocus = (inputName: string) => {
-        setFocusedInput(inputName);
-    }
+    // const handleFocus = (inputName: string) => {
+    //     setFocusedInput(inputName);
+    // }
 
-    const handleBlur = () => {
-        setFocusedInput("");
-    }
+    // const handleBlur = () => {
+    //     setFocusedInput("");
+    // }
     
     return (
         <div className={`p-0     w-full border border-slate-300 mb-1 animate__animated animate__fadeIn`}>
@@ -46,7 +51,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_cetes28')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_cetes28' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_cetes28')}
                                 />
                                 <label 
                                     htmlFor="n_cetes28">
@@ -63,7 +68,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_cetes91')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_cetes91' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_cetes91')}
                                 />
                                 <label   htmlFor="n_cetes91">
                                     CETES 91
@@ -79,7 +84,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_cetes182')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_cetes182' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_cetes182')}
                                 />
                                 <label    htmlFor="n_cetes182">
                                     CETES 182
@@ -95,7 +100,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_cetes364')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_cetes364' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_cetes364')}
                                 />
                                 <label   htmlFor="n_cetes364">
                                     CETES 364
@@ -122,9 +127,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_fguber28')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_fguber28' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_fguber28')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_fguber28">
+                                <label  htmlFor="n_fguber28">
                                     Max Fondeo Vs Cetes 28
                                 </label>
                             </div>
@@ -138,7 +143,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_fguber91')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_fguber91' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_fguber91')}
                                     
                                 />
                                 <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_fguber91">
@@ -167,9 +172,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_tiie28')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_tiie28' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_tiie28')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tiie28">
+                                <label  htmlFor="n_tiie28">
                                     TIIE28
                                 </label>
                             </div>
@@ -183,10 +188,10 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_tiie91')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_tiie91' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_tiie91')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tiie91">
-                                    TIIE91
+                                <label htmlFor="n_tiie91">
+                                    TIIE91 
                                 </label>
                             </div>
                             <div className="form-input">
@@ -199,9 +204,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_tiie182')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_tiie182' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_tiie182')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tiie182">
+                                <label  htmlFor="n_tiie182">
                                     TIIE182
                                 </label>
                             </div>
@@ -226,7 +231,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_treasury_5y')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_treasury_5y' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_treasury_5y')}
                                 />
                                 <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_treasury_5y">
                                     TREASURY 5Y
@@ -254,9 +259,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_fguber28d')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_fguber28d' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_fguber28d')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_fguber28d">
+                                <label   htmlFor="n_fguber28d">
                                     Fondo Guber 28
                                 </label>
                             </div>
@@ -270,9 +275,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_fguber91d')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_fguber91d' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_fguber91d')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_fguber91d">
+                                <label  htmlFor="n_fguber91d">
                                     Fondo Guber 91
                                 </label>
                             </div>
@@ -287,9 +292,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_fguber')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_fguber' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_fguber')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_fguber">
+                                <label htmlFor="n_fguber">
                                     Fondo Guber
                                 </label>
                             </div>
@@ -315,14 +320,14 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_apertura_guber')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_apertura_guber' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_apertura_guber')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_apertura_guber">
+                                <label htmlFor="n_apertura_guber">
                                     Apertura
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input style={{ paddingTop: '0rem', paddingBottom: '0rem' }}
+                                <input 
                                     type="text"
                                     name="n_min_guber"
                                     id="n_min_guber"
@@ -331,9 +336,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_min_guber')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_min_guber' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_min_guber')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_min_guber">
+                                <label  htmlFor="n_min_guber">
                                     Minimo
                                 </label>
                             </div>
@@ -347,9 +352,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_max_guber')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_max_guber' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_max_guber')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_max_guber">
+                                <label htmlFor="n_max_guber">
                                     Maximo
                                 </label>
                             </div>
@@ -363,9 +368,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_cierre_guber')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_cierre_guber' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_cierre_guber')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_cierre_guber">
+                                <label htmlFor="n_cierre_guber">
                                     Cierre
                                 </label>
                             </div>
@@ -379,9 +384,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_pond_guber')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_pond_guber' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_pond_guber')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_pond_guber">
+                                <label htmlFor="n_pond_guber">
                                     Ponderado
                                 </label>
                             </div>
@@ -407,9 +412,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_euribor')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_euribor' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_euribor')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_euribor">
+                                <label  htmlFor="n_euribor">
                                     EURIBOR 3M
                                 </label>
                             </div>
@@ -423,9 +428,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_euribor6m')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_euribor6m' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_euribor6m')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_euribor6m">
+                                <label  htmlFor="n_euribor6m">
                                     EURIBOR 6M
                                 </label>
                             </div>
@@ -451,9 +456,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_swap_5y_6m_3m')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_swap_5y_6m_3m' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_swap_5y_6m_3m')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_swap_5y_6m_3m">
+                                <label htmlFor="n_swap_5y_6m_3m">
                                     Swap 5Y 6M 3M
                                 </label>
                             </div>
@@ -479,9 +484,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_fbanc')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_fbanc' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_fbanc')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_fbanc">
+                                <label htmlFor="n_fbanc">
                                     Fondeo Bancario
                                 </label>
                             </div>
@@ -507,9 +512,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_apertura_banc')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_apertura_banc' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_apertura_banc')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_apertura_banc">
+                                <label  htmlFor="n_apertura_banc">
                                     Apertura
                                 </label>
                             </div>
@@ -523,9 +528,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_min_banc')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_min_banc' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
-                                />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_min_banc">
+                                    style={sendStyle('n_min_banc')}
+                                    />
+                                <label  htmlFor="n_min_banc">
                                     Minimo
                                 </label>
                             </div>
@@ -539,9 +544,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_max_banc')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_max_banc' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_max_banc')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_max_banc">
+                                <label  htmlFor="n_max_banc">
                                     Maximo
                                 </label>
                             </div>
@@ -555,9 +560,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_cierre_banc')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_cierre_banc' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_cierre_banc')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_cierre_banc">
+                                <label  htmlFor="n_cierre_banc">
                                     Cierre
                                 </label>
                             </div>
@@ -571,9 +576,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_pond_banc')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_pond_banc' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_pond_banc')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_pond_banc">
+                                <label htmlFor="n_pond_banc">
                                     Ponderado
                                 </label>
                             </div>
@@ -609,9 +614,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_irusd_fed_funds')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_irusd_fed_funds' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_irusd_fed_funds')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_irusd_fed_funds">
+                                <label htmlFor="n_irusd_fed_funds">
                                     IRUSD_FED_FUNDS
                                 </label>
                             </div>
@@ -637,9 +642,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_tsofr1M')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_tsofr1M' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_tsofr1M')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tsofr1M">
+                                <label htmlFor="n_tsofr1M">
                                     1M
                                 </label>
                             </div>
@@ -653,9 +658,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_tsofr3M')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_tsofr3M' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_tsofr3M')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tsofr3M">
+                                <label  htmlFor="n_tsofr3M">
                                     3M
                                 </label>
                             </div>
@@ -669,9 +674,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_tsofr6M')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_tsofr6M' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_tsofr6M')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tsofr6M">
+                                <label  htmlFor="n_tsofr6M">
                                     6M
                                 </label>
                             </div>
@@ -685,9 +690,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_tsofr12M')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_tsofr12M' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_tsofr12M')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tsofr12M">
+                                <label  htmlFor="n_tsofr12M">
                                     12M
                                 </label>
                             </div>
@@ -713,9 +718,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_tiie_fondeo_1d')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_tiie_fondeo_1d' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_tiie_fondeo_1d')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tiie_fondeo_1d">
+                                <label htmlFor="n_tiie_fondeo_1d">
                                     Tiie Fondeo 1D
                                 </label>
                             </div>
@@ -741,9 +746,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_sofr')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_sofr' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_sofr')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_sofr">
+                                <label  htmlFor="n_sofr">
                                     SOFR 1D
                                 </label>
                             </div>
@@ -768,9 +773,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_ipc_mexbol')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_ipc_mexbol' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_ipc_mexbol')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_ipc_mexbol">
+                                <label htmlFor="n_ipc_mexbol">
                                     IPC MEXBOL
                                 </label>
                             </div>
@@ -795,9 +800,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_ind_tiief_nat')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_ind_tiief_nat' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_ind_tiief_nat')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_ind_tiief_nat">
+                                <label  htmlFor="n_ind_tiief_nat">
                                     IND TIIEF NAT
                                 </label>
                             </div>
@@ -811,9 +816,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_ind_tiief_banc')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_ind_tiief_banc' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_ind_tiief_banc')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_ind_tiief_banc">
+                                <label  htmlFor="n_ind_tiief_banc">
                                     IND TIIEF BANC
                                 </label>
                             </div>
@@ -827,9 +832,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_tiief_28_acum')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_tiief_28_acum' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_tiief_28_acum')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tiief_28_acum">
+                                <label  htmlFor="n_tiief_28_acum">
                                     TIIEF 28 ACUM
                                 </label>
                             </div>
@@ -843,9 +848,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_tiief_91_acum')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_tiief_91_acum' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_tiief_91_acum')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tiief_91_acum">
+                                <label  htmlFor="n_tiief_91_acum">
                                     TIIEF 91 ACUM
                                 </label>
                             </div>
@@ -859,9 +864,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_tiief_182_acum')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_tiief_182_acum' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_tiief_182_acum')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_tiief_182_acum">
+                                <label  htmlFor="n_tiief_182_acum">
                                     TIIEF 182 ACUM
                                 </label>
                             </div>
@@ -887,9 +892,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_adjtsofr1W')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_adjtsofr1W' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_adjtsofr1W')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_adjtsofr1W">
+                                <label  htmlFor="n_adjtsofr1W">
                                     ADJ SOFR 1W
                                 </label>
                             </div>
@@ -904,9 +909,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_adjtsofr1M')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_adjtsofr1M' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_adjtsofr1M')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_adjtsofr1M">
+                                <label htmlFor="n_adjtsofr1M">
                                     ADJ SOFR 1M
                                 </label>
                             </div>
@@ -921,9 +926,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_adjtsofr2M')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_adjtsofr2M' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_adjtsofr2M')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_adjtsofr2M">
+                                <label htmlFor="n_adjtsofr2M">
                                     ADJ SOFR 2M
                                 </label>
                             </div>
@@ -938,9 +943,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_adjtsofr3M')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_adjtsofr3M' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_adjtsofr3M')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_adjtsofr3M">
+                                <label htmlFor="n_adjtsofr3M">
                                     ADJ SOFR 3M
                                 </label>
                             </div>
@@ -955,9 +960,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_adjtsofr6M')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_adjtsofr6M' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_adjtsofr6M')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_adjtsofr6M">
+                                <label htmlFor="n_adjtsofr6M">
                                     ADJ SOFR 3M
                                 </label>
                             </div>
@@ -972,9 +977,9 @@ export const TasasForm = ({d_fecha}: any) => {
                                     required
                                     onFocus={() => handleFocus('n_adjtsofr12M')}
                                     onBlur={handleBlur}
-                                    style={!focusedInput || focusedInput !== 'n_adjtsofr12M' ? { paddingTop: '0rem', paddingBottom: '0rem' } : {}}
+                                    style={sendStyle('n_adjtsofr12M')}
                                 />
-                                <label  style={{ paddingTop: '0rem', paddingBottom: '0rem' }}   htmlFor="n_adjtsofr12M">
+                                <label  htmlFor="n_adjtsofr12M">
                                     ADJ SOFR 12M
                                 </label>
                             </div>
