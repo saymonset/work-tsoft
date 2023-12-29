@@ -3,8 +3,6 @@ import {useTasasForm, useTasasFormData} from "./hooks";
 import {ButtonContent, Modal} from "../../../../../../shared";
 import { useBigInput } from "./hooks/useBigInput";
 
-
-
 export const TasasForm = ({d_fecha}: any) => {
 
     const {
@@ -17,23 +15,22 @@ export const TasasForm = ({d_fecha}: any) => {
         handleOpenUdi,
         handleChargeUdi} = useTasasFormData()
 
-    const {forms, loadingSave, handleSubmit, handleChange} = useTasasForm();
+    const {forms, loadingSave, handleSubmit, handleChange} = useTasasForm()
 
     const {  handleFocus,
              handleBlur,
              sendStyle} = useBigInput();
-
-    const [focusedInput, setFocusedInput] = useState<string>("");
-
-    
     return (
         <div className={`p-0     w-full border border-slate-300 mb-1 animate__animated animate__fadeIn`}>
 
             <div className="px-3">
-                <div className="form-cols-4">
+                <div className="form-cols-6">
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTasHistPriCet', d_fecha)}>
-                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Hist Primaria Cetes</span>
+                    
+                        <div className="form-titlet">
+                            <span >Tasas Hist Primaria Cetes</span>
+                        </div>    
                             <div className="form-input" >
                                 <input 
                                     type="text"
@@ -68,7 +65,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </label>
                             </div>
                             <div className="form-input">
-                                <input 
+                                <input
                                     type="text"
                                     name="n_cetes182"
                                     id="n_cetes182"
@@ -101,7 +98,7 @@ export const TasasForm = ({d_fecha}: any) => {
                             </div>
                             <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
-                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
+                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
@@ -109,9 +106,11 @@ export const TasasForm = ({d_fecha}: any) => {
                     </form>
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTaHiFoGu', d_fecha)}>
-                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Hist Fondeo Guber</span>
+                        <div className="form-titlet">
+                            <span >Tasas Hist Fondeo Guber</span>
+                        </div>    
                             <div className="form-input">
-                                <input 
+                                <input
                                     type="text"
                                     name="n_fguber28"
                                     id="n_fguber28"
@@ -145,7 +144,7 @@ export const TasasForm = ({d_fecha}: any) => {
                             </div>
                             <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
-                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
+                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
@@ -154,7 +153,9 @@ export const TasasForm = ({d_fecha}: any) => {
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTasaTIIE', d_fecha)}>
-                        <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas TIIE</span>
+                        <div className="form-titlet">
+                            <span >Tasas TIIE</span>
+                        </div>    
                             <div className="form-input">
                                 <input 
                                     type="text"
@@ -205,7 +206,7 @@ export const TasasForm = ({d_fecha}: any) => {
                             </div>
                             <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
-                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
+                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
@@ -213,7 +214,9 @@ export const TasasForm = ({d_fecha}: any) => {
                     </form>
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTaTreYi5y', d_fecha)}>
-                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasa Treasury Yield 5Y</span>
+                        <div className="form-titlet">
+                            <span >Tasa Treasury Yield 5Y</span>
+                        </div>    
                             <div className="form-input">
                                 <input 
                                     type="text"
@@ -232,7 +235,7 @@ export const TasasForm = ({d_fecha}: any) => {
                             </div>
                             <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
-                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
+                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
@@ -241,7 +244,9 @@ export const TasasForm = ({d_fecha}: any) => {
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTaFoGu', d_fecha)}>
-                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Fondeo Guber</span>
+                        <div className="form-titlet">
+                            <span >Tasas Fondeo Guber</span>
+                        </div>
                             <div className="form-input">
                                 <input 
                                     type="text"
@@ -293,7 +298,7 @@ export const TasasForm = ({d_fecha}: any) => {
                             </div>
                             <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
-                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
+                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
@@ -302,7 +307,9 @@ export const TasasForm = ({d_fecha}: any) => {
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formFonGuBanx', d_fecha)}>
-                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">Fondeo Guber Banxico</span>
+                        <div className="form-titlet">
+                            <span >Fondeo Guber Banxico</span>
+                        </div>
                             <div className="form-input">
                                 <input 
                                     type="text"
@@ -385,7 +392,7 @@ export const TasasForm = ({d_fecha}: any) => {
                             </div>
                             <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
-                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
+                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
@@ -394,7 +401,9 @@ export const TasasForm = ({d_fecha}: any) => {
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formEuribor', d_fecha)}>
-                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Euribor</span>
+                        <div className="form-titlet">
+                            <span >Tasas Euribor</span>
+                        </div>    
                             <div className="form-input">
                                 <input 
                                     type="text"
@@ -429,7 +438,7 @@ export const TasasForm = ({d_fecha}: any) => {
                             </div>
                             <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
-                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
+                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
@@ -438,9 +447,11 @@ export const TasasForm = ({d_fecha}: any) => {
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTaSwa5Y6M3M', d_fecha)}>
-                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasa Swap 5Y 6M 3M</span>
+                        <div className="form-titlet">
+                            <span >Tasa Swap 5Y 6M 3M</span>
+                        </div>    
                             <div className="form-input">
-                                <input 
+                                <input
                                     type="text"
                                     name="n_swap_5y_6m_3m"
                                     id="n_swap_5y_6m_3m"
@@ -457,7 +468,7 @@ export const TasasForm = ({d_fecha}: any) => {
                             </div>
                             <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
-                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
+                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
@@ -466,7 +477,9 @@ export const TasasForm = ({d_fecha}: any) => {
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTaFoBa', d_fecha)}>
-                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasa Fondeo Bancario</span>
+                        <div className="form-titlet">
+                            <span >Tasa Fondeo Bancario</span>
+                        </div>    
                             <div className="form-input">
                                 <input 
                                     type="text"
@@ -485,7 +498,7 @@ export const TasasForm = ({d_fecha}: any) => {
                             </div>
                             <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
-                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
+                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
@@ -494,9 +507,11 @@ export const TasasForm = ({d_fecha}: any) => {
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formBancBanx', d_fecha)}>
-                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">Fondeo Bancario Banxico</span>
+                        <div className="form-titlet">
+                            <span >Fondeo Bancario Banxico</span>
+                        </div>    
                             <div className="form-input">
-                                <input 
+                                <input
                                     type="text"
                                     name="n_apertura_banc"
                                     id="n_apertura_banc"
@@ -577,7 +592,7 @@ export const TasasForm = ({d_fecha}: any) => {
                             </div>
                             <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
-                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
+                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
@@ -587,16 +602,18 @@ export const TasasForm = ({d_fecha}: any) => {
 
                     <div className="grid grid-rows-6 grid-cols-1">
                         <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas UDIS</span>
+                    </div>    
                         <div className="text-center text-xs text-cyan-700">
-                            <button className='bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md'
+                            <button className='bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md'
                                     onClick={handleOpenUdi}>
                                 <span>Carga UDIS</span>
                             </button>
                         </div>
-                    </div>
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTaIruFeFu', d_fecha)}>
-                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasa IRUSD Fed Funds</span>
+                        <div className="form-titlet">
+                            <span >Tasa IRUSD Fed Funds</span>
+                        </div>    
                             <div className="form-input">
                                 <input 
                                     type="text"
@@ -615,7 +632,7 @@ export const TasasForm = ({d_fecha}: any) => {
                             </div>
                             <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
-                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
+                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
@@ -624,7 +641,9 @@ export const TasasForm = ({d_fecha}: any) => {
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTermSofr', d_fecha)}>
-                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">Term SOFR</span>
+                        <div className="form-titlet">
+                            <span >Term SOFR</span>
+                        </div>    
                             <div className="form-input">
                                 <input 
                                     type="text"
@@ -691,16 +710,19 @@ export const TasasForm = ({d_fecha}: any) => {
                             </div>
                             <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
-                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
+                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
+                        
                     </form>
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTiieFon1d', d_fecha)}>
-                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasa Tiie Fondeo 1D</span>
+                        <div className="form-titlet">
+                            <span >Tasa Tiie Fondeo 1D</span>
+                        </div>    
                             <div className="form-input">
                                 <input 
                                     type="text"
@@ -719,16 +741,19 @@ export const TasasForm = ({d_fecha}: any) => {
                             </div>
                             <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
-                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
+                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
+                        
                     </form>
 
 
                     <form onSubmit={(e) => handleSubmit(e, 'formUsdSofr', d_fecha)}>
-                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasa USD SOFR</span>
+                        <div className="form-titlet">
+                            <span >Tasa USD SOFR</span>
+                        </div>    
                             <div className="form-input">
                                 <input 
                                     type="text"
@@ -747,15 +772,18 @@ export const TasasForm = ({d_fecha}: any) => {
                             </div>
                             <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
-                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
+                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
+                        
                     </form>
 
                     <form onSubmit={(e) => handleSubmit(e, 'formIpcMexbol', d_fecha)}>
-                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">IPC MEXBOL</span>
+                        <div className="form-titlet">
+                            <span >IPC MEXBOL</span>
+                        </div>    
                             <div className="form-input">
                                 <input 
                                     type="text"
@@ -774,15 +802,18 @@ export const TasasForm = ({d_fecha}: any) => {
                             </div>
                             <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
-                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
+                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
+                        
                     </form>
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTIIEF', d_fecha)}>
-                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">TIIE de Fondeo Compuesto</span>
+                        <div className="form-titlet">
+                            <span >TIIE de Fondeo Compuesto</span>
+                        </div>    
                             <div className="form-input">
                                 <input 
                                     type="text"
@@ -865,15 +896,18 @@ export const TasasForm = ({d_fecha}: any) => {
                             </div>
                             <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
-                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
+                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
                                     <ButtonContent name='Guardar' loading={loadingSave}/>
                                 </button>
                             </div>
+                        
                     </form>
 
                     <form onSubmit={(e) => handleSubmit(e, 'formAjustSofr', d_fecha)}>
-                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">Ajustadas de SOFR</span>
+                        <div className="form-titlet">
+                            <span >Ajustadas de SOFR</span>
+                        </div>    
                             <div className="form-input">
                                 <input 
                                     type="text"
@@ -978,15 +1012,16 @@ export const TasasForm = ({d_fecha}: any) => {
                             </div>
                             <div className="text-center text-xs text-cyan-700 my-0">
                                 <button type="submit"
-                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md 
+                                        className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
                                     <ButtonContent name='Actualizar' loading={loadingSave}/>
                                 </button>
                             </div>
+                        
                     </form>
 
                     <Modal isOpen={isOpenUdi} onClose={handleCloseUdi} title="">
-                        <div className="grid grid-cols-1 mt-1">
+                        <div className="form-titlet">
                             <div className="p-1 bg-cyan-700 text-white text-center">
                                 <span>Actualiza UDIS</span>
                             </div>
@@ -1005,7 +1040,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                 </div>
                                 <div className="relative z-0 w-full my-3">
                                     <div className="text-center text-lg text-cyan-700 my-3">
-                                        <button className='bg-cyan-700 hover:bg-green-700 text-white py-1 px-3 rounded-md'
+                                        <button className='bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md'
                                                 onClick={handleChargeUdi}>
                                             <ButtonContent name="Cargar" loading={loadingUdi}></ButtonContent>
                                         </button>
