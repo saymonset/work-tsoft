@@ -13,6 +13,7 @@ export interface ColumnEditCat {
     DisabledFieldForm?: boolean;
     isReadOnly ?: boolean;
     isReadOnlyEdit ?: boolean;
+    columnIndex?: number;
 }
 
 export interface PropsEdit {

@@ -149,6 +149,11 @@ export const useHandleDataUserWeb = () => {
         }
     }, [triggerLink]);
 
+    useEffect(() => {
+        dispatch(updateInfoUser({} as InfoUser))
+        dispatch(updateUriInfo({} as UriInfo))
+    }, [])
+
     const handleClickInstitucion = (e: any) => {
         setSelectedSector(0)
         setSelectedNombre(0)

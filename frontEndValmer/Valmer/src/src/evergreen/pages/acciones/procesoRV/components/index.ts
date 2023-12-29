@@ -1,6 +1,0 @@
-export * from './actualizabd'
-export * from './caterv'
-export * from './consultas'
-export * from './procesorv'
-export * from './salidas'
-export * from './ProcesoHeader'

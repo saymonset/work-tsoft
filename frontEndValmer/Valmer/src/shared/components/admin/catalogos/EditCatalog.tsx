@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React from "react";
 import {PropsEdit,} from "../../../../model";
 import {BarLoader, MoonLoader} from "react-spinners";
 import {ButtonContent} from "../../ButtonContent";
@@ -111,7 +111,8 @@ export const EditCatalog = ({nameCatalog, setShowTable, columns, edit}: PropsEdi
                                                 type,
                                                 catalog,
                                                 isReadOnly,
-                                                isReadOnlyEdit},
+                                                isReadOnlyEdit,
+                                                columnIndex},
                                                 index,
                                                  ) => {
 
@@ -146,12 +147,12 @@ export const EditCatalog = ({nameCatalog, setShowTable, columns, edit}: PropsEdi
                                                     className="mt-8 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
                                                     border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
-                                                    value={validSelectValue(name.toLowerCase())}
+                                                    value={validSelectValue(name.toLowerCase(), catalog)}
                                                     onChange={handleChange}
                                             >
                                                 <option value="default">...</option>
                                                 {getCatalogs(catalogStatic, catalog).map((column) => (
-                                                    <option key={column[0]} value={column[0]}>
+                                                    <option key={column[columnIndex ?? 0]} value={column[columnIndex ?? 0]}>
                                                         {column[1]}
                                                     </option>
                                                 ))}

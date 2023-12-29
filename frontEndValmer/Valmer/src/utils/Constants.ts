@@ -806,11 +806,11 @@ export const DataCatCau = [
         {
                 text: 'CAU_ESCALAMIENTO',
                 columns: [
-                        { name: 'N_SERVICIO', type: 'select', catalog: ""},
+                        { name: 'N_SERVICIO', type: 'select', catalog: "CAU_SERVICIOS"},
                         { name: 'S_SERVICIO', type: 'input', DisabledFieldForm: true},
-                        { name: 'S_JEFE', field: "N_JEFE", type: 'select', catalog: "" },
-                        { name: 'N_AVISO1', columnName: 'N_AVISO1(horas)', type: 'input' },
-                        { name: 'N_AVISO2', columnName: 'N_AVISO2(horas)', type: 'input' }
+                        { name: 'S_JEFE', field: "N_JEFE", type: 'select', catalog: "SEG_USUARIOS" },
+                        { name: 'N_AVISO1', field: "N_AVISO 1", columnName: 'N_AVISO1(horas)', type: 'input', isReadOnly: false, isReadOnlyEdit: false  },
+                        { name: 'N_AVISO2', field: "N_AVISO 2", columnName: 'N_AVISO2(horas)', type: 'input' , isReadOnly: false, isReadOnlyEdit: false }
                 ]
         },
         {
@@ -824,7 +824,7 @@ export const DataCatCau = [
                 text: 'CAU_SERVICIOS',
                 columns: [
                         { name: 'N_SERVICIO', type: 'input' },
-                        { name: 'S_AREA', columnName: 'N_AREA', field: "N_AREA", type: 'select', catalog: "" },
+                        { name: 'S_AREA', columnName: 'N_AREA', field: "N_AREA", type: 'select', catalog: "CAU_AREA" },
                         { name: 'S_SERVICIO', type: 'input' }
                 ]
         },
@@ -845,9 +845,9 @@ export const DataCatCau = [
         {
                 text: 'CAU_USUARIOS',
                 columns: [
-                        { name: 'N_USUARIO', type: 'select', catalog: "" },
-                        { name: 'S_SERVICIO', columnName: 'N_SERVICIO', type: 'select', catalog: "" },
-                        { name: 'S_ENCARGADO', columnName: 'N_ENCARGADO', type: 'select', catalog: "" }
+                        { name: 'N_USUARIO', type: 'select', catalog: "SEG_USUARIOS" },
+                        { name: 'S_SERVICIO', columnName: 'N_SERVICIO', type: 'select', catalog: "CAU_SERVICIOS" },
+                        { name: 'S_ENCARGADO', columnName: 'N_ENCARGADO', type: 'select', catalog: "CAU_ENCARGADO" }
                 ]
         }
 ];
@@ -914,7 +914,7 @@ export const DataCatArchivos = [
         {
                 text: 'ARCHIVOS_CAT_CMRM',
                 columns: [
-                        { name: 'N_CMRM', type: 'input', isReadOnly: false, isReadOnlyEdit: true },
+                        { name: 'N_CMRM', type: 'input', isReadOnly: true, isReadOnlyEdit: true },
                         { name: 'N_MINIMO', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
                         { name: 'N_MAXIMO', type: 'input', isReadOnly: false, isReadOnlyEdit: false }
                 ]
@@ -984,7 +984,7 @@ export const DataCatArchivos = [
         {
                 text: 'CAT_INSTR_EMISOR_FIRA',
                 columns: [
-                        { name: 'N_ID', type: 'input', isReadOnly: false, isReadOnlyEdit: true },
+                        { name: 'N_ID', type: 'input', isReadOnly: true, isReadOnlyEdit: true },
                         { name: 'N_EMISOR', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
                         { name: 'S_INSTRUMENTO', type: 'input', isReadOnly: true, isReadOnlyEdit: true }
                 ]
@@ -992,8 +992,8 @@ export const DataCatArchivos = [
         {
                 text: 'CAT_MISMO_EMISOR_FIRA',
                 columns: [
-                        { name: 'N_EMISOR', type: 'input' },
-                        { name: 'S_EMISOR', type: 'input' }
+                        { name: 'N_EMISOR', type: 'input', isReadOnly: true, isReadOnlyEdit: true  },
+                        { name: 'S_EMISOR', type: 'input', isReadOnly: false, isReadOnlyEdit: false }
                 ]
         },
         {
@@ -1077,16 +1077,16 @@ export const DataCatBrokers = [
                 text: 'BROKER_CONFIG_ARCHIVOS',
                 columns: [
                         { name: 'N_ID_ARCHIVO', type: 'input' },
-                        { name: 'N_ID_BROKER', type: 'input' },
+                        { name: 'N_ID_BROKER', type: 'select', catalog: "" },
                         { name: 'S_IP_FTP', type: 'input' },
-                        { name: 'S_TIPO_FTP', type: 'input' },
+                        { name: 'S_TIPO_FTP', type: 'select', catalog: "tipo-ftp"},
                         { name: 'S_USER_FTP', type: 'input' },
                         { name: 'S_PWD_FTP', type: 'input' },
                         { name: 'S_DIR_FTP', type: 'input' },
                         { name: 'S_ARCH_FTP', type: 'input' },
-                        { name: 'S_OPERACION', type: 'input' },
-                        { name: 'B_PRELIMINAR', type: 'input' },
-                        { name: 'B_DEFINITIVO', type: 'input' },
+                        { name: 'S_OPERACION', type: 'select', catalog: "tipo-operacion" },
+                        { name: 'B_PRELIMINAR', type: 'select', catalog: "bandera" },
+                        { name: 'B_DEFINITIVO', type: 'select', catalog: "bandera" },
                         { name: 'S_NOMBRE_ARCHIVO', type: 'input' },
                         { name: 'N_CAMBIO_HORA_ARCH', type: 'input' },
                         { name: 'S_NOM_PROCESO', type: 'input' },
@@ -1138,9 +1138,9 @@ export const DataPerfilInstrumento = [
         {
                 text: 'PERFIL_INSTRUMENTO_CLAS_FONDOS',
                 columns: [
-                        { name: 'S_TV', type: 'input' },
-                        { name: 'S_EMISORA', type: 'input' },
-                        { name: 'N_CLASIFICACION', type: 'input' }
+                        { name: 'S_TV', type: 'input', isReadOnly: false },
+                        { name: 'S_EMISORA', type: 'input', isReadOnly: false },
+                        { name: 'N_CLASIFICACION', type: 'input', isReadOnly: false }
                 ],
                 edit: true
         },
@@ -1156,9 +1156,9 @@ export const DataPerfilInstrumento = [
         {
                 text: 'PERFIL_INSTRUMENTO_INST_EXC',
                 columns: [
-                        { name: 'S_TV', type: 'input' },
-                        { name: 'B_PERFIL', type: 'input' },
-                        { name: 'B_LIQUIDEZ', type: 'input' }
+                        { name: 'S_TV', type: 'input', isReadOnly: false  },
+                        { name: 'B_PERFIL', type: 'input' , isReadOnly: false },
+                        { name: 'B_LIQUIDEZ', type: 'input' , isReadOnly: false }
                 ],
                 edit: true
         },
@@ -1267,8 +1267,8 @@ export const DataCatBaseAccionaria = [
                 text: 'BACC_SUBRAMO_ING',
                 columns: [
                         { name: 'N_SUBRAMO_ING', type: 'input' },
-                        { name: 'N_CLASIFICACION_SECTORIAL', type: 'input' },
-                        { name: 'S_DESCRIPCION', type: 'input' }
+                        { name: 'S_DESCRIPCION', columnName: "N_CLASIFICACION_SECTORIAL", field: "N_CLASIFICACION_SECTORIAL", type: 'select', catalog: "CLASIFICACION_SECTORIAL", columnIndex: 1},
+                        { name: 'S_DESCR', field: "S_DESCRIPCION", type: 'input' }
                 ]
         },
         {
@@ -1335,8 +1335,8 @@ export const DataCatClassSec = [
                 text: 'INEGI_RAMO',
                 columns: [
                         { name: 'N_INEGI_RAMO', type: 'input', isReadOnly: true },
-                        { name: 'S_NOMCORTO', type: 'input' },
-                        { name: 'S_DESCRIPCION', type: 'input' },
+                        { name: 'S_NOMCORTO', type: 'input' , isReadOnly: false},
+                        { name: 'S_DESCRIPCION', type: 'input', isReadOnly: false },
                         { name: 'N_INEGI_DIVISION', type: 'select', catalog: "INEGI_SECTOR"}
                 ]
         },
@@ -1344,16 +1344,16 @@ export const DataCatClassSec = [
                 text: 'INEGI_SECTOR',
                 columns: [
                         { name: 'N_INEGI_SECTOR', type: 'input', isReadOnly: true },
-                        { name: 'S_NOMCORTO', type: 'input' },
-                        { name: 'S_DESCRIPCION', type: 'input' }
+                        { name: 'S_NOMCORTO', type: 'input', isReadOnly: false },
+                        { name: 'S_DESCRIPCION', type: 'input' , isReadOnly: false}
                 ]
         },
         {
                 text: 'INEGI_SUBGRUPO',
                 columns: [
                         { name: 'N_INEGI_SUBGRUPO', type: 'input', isReadOnly: true },
-                        { name: 'S_NOMCORTO', type: 'input' },
-                        { name: 'S_DESCRIPCION', type: 'input' }
+                        { name: 'S_NOMCORTO', type: 'input', isReadOnly: false },
+                        { name: 'S_DESCRIPCION', type: 'input', isReadOnly: false }
                 ]
         },
 ];

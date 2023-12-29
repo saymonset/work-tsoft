@@ -50,7 +50,7 @@ export const ProcesoForm = () => {
                         </button>
                     </div>
                     <div
-                        className="bg-gray-900 text-green-500 p-2 w-3/4 resize-y overflow-auto"
+                        className="bg-gray-900 text-green-500 p-2 w-3/4 resize-y overflow-auto max-h-[30rem]"
                         dangerouslySetInnerHTML={{ __html: log }}
                         style={{ minHeight: '30rem' }}
                     />

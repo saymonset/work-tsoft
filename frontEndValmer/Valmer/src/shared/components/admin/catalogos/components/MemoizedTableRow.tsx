@@ -5,24 +5,28 @@ export const MemoizedTableRow = React.memo(({
                                                 registro,
                                                 columns,
                                                 handleRowClick,
-                                                edit } : MemoizedTableProps) => {
+                                                edit
+                                            } : MemoizedTableProps) => {
     return (
         <tr>
             {edit && (
                 <td key="editar"
-                    className="border px-4 py-2 flex items-center justify-center">
-                    <i className="fa-solid fa-pen-to-square"></i>
+                    className="border px-4 py-2 flex items-center justify-center cursor-pointer"
+                    onClick={() => handleRowClick(registro)}>
+                    <i className="fa-solid fa-pen-to-square text-blue-700"></i>
                 </td>
             )}
-            {columns.map((column, index) => (
-                <td key={column.name} className="border px-4 py-2"
-                    style={index === 0 ? {width: '100px'} : {}}
-                    onClick={index === 0 ? () => handleRowClick(registro) : undefined}>
-                <span className={`${index === 0 ? 'cursor-pointer text-blue-500 text-center' : ''}`}>
-                    {(registro as RegistroEdit)[column.name.toLowerCase()]}
-                </span>
-                </td>
-            ))}
+            {columns.map((column, index) => {
+                const isClickable = !edit && index === 0;
+                return (
+                    <td key={column.name} className={`border px-4 py-2 ${isClickable ? 'cursor-pointer text-blue-500' : ''}`}
+                        onClick={isClickable ? () => handleRowClick(registro) : undefined}>
+                        <span className={`${isClickable ? 'text-center' : ''}`}>
+                            {(registro as RegistroEdit)[column.name.toLowerCase()]}
+                        </span>
+                    </td>
+                );
+            })}
         </tr>
     );
 });

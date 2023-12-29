@@ -102,13 +102,13 @@ export const CauForm = ({
                                         <label htmlFor="s_correo">CORREO</label>
                                     </div>
                                 </div>
-                                { !isCerrados &&
+                                {!isCerrados &&
                                     <div className="-my-3">
                                         <div className="form-input">
                                             <input type="text"
-                                                name="s_telefono"
-                                                value={queryFolio.s_telefono ?? ""}
-                                                readOnly/>
+                                                   name="s_telefono"
+                                                   value={queryFolio.s_telefono ?? ""}
+                                                   readOnly/>
                                             <label htmlFor="s_telefono">TELEFONO</label>
                                         </div>
                                     </div>
@@ -136,16 +136,16 @@ export const CauForm = ({
                                         </div>
                                     )
                                 }
-                                {isCerrados && 
-                                <div className="-my-3">
-                                    <div className="form-input">
-                                        <input type="text"
-                                            name="s_atendio"
-                                            value={queryFolio.s_atendio ?? ""}
-                                            readOnly/>
-                                        <label htmlFor="s_atendio">ATENDIO</label>
+                                {isCerrados &&
+                                    <div className="-my-3">
+                                        <div className="form-input">
+                                            <input type="text"
+                                                   name="s_atendio"
+                                                   value={queryFolio.s_atendio ?? ""}
+                                                   readOnly/>
+                                            <label htmlFor="s_atendio">ATENDIO</label>
+                                        </div>
                                     </div>
-                                </div>
                                 }
                                 <div className="-my-3">
                                     <div className="form-select">
@@ -162,8 +162,35 @@ export const CauForm = ({
                                         <label htmlFor="n_status">STATUS</label>
                                     </div>
                                 </div>
+                                {queryFolio.n_status === "3" && (
+                                    <>
+                                        <div className="-my-3">
+                                            <div className="form-date">
+                                                <input
+                                                    type="date"
+                                                    name="d_fecha_estimada"
+                                                    value={queryFolio.d_fecha_estimada}
+                                                    onChange={handleChange}
+                                                />
+                                                <label htmlFor="d_fecha_estimada">
+                                                    Fecha Estimada
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div className="-my-3">
+                                            <div className="form-text-area">
+                                    <textarea name="s_observaciones"
+                                              value={queryFolio.s_observaciones ?? ""}
+                                              readOnly>
+                                    </textarea>
+                                                <label htmlFor="s_observaciones">Observaciones</label>
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+
                             </div>
-                            {isEdit && (
+                            {isEdit && queryFolio.muestra_boton_grabar && (
                                 <div className="mt-5 animate__animated animate__fadeIn">
                                     <button type="button"
                                             className="btn"

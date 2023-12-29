@@ -12,6 +12,7 @@ export const CauTable = ({
     handleClickFolio,
     handleClickFolioCerrados
 }: CauTableProps) => {
+
     const isCerrados = status === "Cerrados";
     const isModificacion = status === "Modificación";
 

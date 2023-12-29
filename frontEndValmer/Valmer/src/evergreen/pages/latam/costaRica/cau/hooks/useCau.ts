@@ -133,8 +133,6 @@ export const useCau = () => {
     };
 
     const handleServicio = (servicio: string) => {
-
-        console.log(servicio)
         const selectCatalog = catalog.find((item) =>
             item.catalogo === "INTRANET.CR_CAU_SERVICIOS");
 

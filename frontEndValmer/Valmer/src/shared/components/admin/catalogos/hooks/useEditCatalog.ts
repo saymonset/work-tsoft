@@ -114,6 +114,7 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
     }, [columns]);
 
     const handleNew = useCallback(async () => {
+
         updateState({ loadingNewId: true, isNew: true });
         const response : ResponseConstCatAdmin = await fetchDataGetRet(
             "/catalogos/obtiene-nuevo-id",
@@ -128,14 +129,12 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
             [key.toLowerCase()]: (response.body as any)[key].toString(),
         }));
 
-        // Encuentra el índice del primer campo editable
         const firstEditableIndex = sortedColumns.findIndex(column =>
             !column.DisabledFieldForm &&
             !column.isReadOnly &&
             column.type === "input"
         );
 
-        // Enfoca el campo si es encontrado
         if (firstEditableIndex !== -1 && inputRefs.current[firstEditableIndex]) {
             // @ts-ignore
             inputRefs.current[firstEditableIndex].focus();
@@ -240,6 +239,15 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
 
         const { id, ...request } = registroSeleccionado;
 
+        // Verificar si el catálogo es 'bacc_subramo_ing'
+        if (nameCatalog.toLowerCase() === 'bacc_subramo_ing') {
+            // Encontrar el valor de 's_descripcion' y agregar 'n_clasificacion_sectorial'
+            const sDescripcionValue = request['s_descripcion'];
+            if (sDescripcionValue) {
+                request['n_clasificacion_sectorial'] = sDescripcionValue;
+            }
+        }
+
         await fetchDataPost(
             "/catalogos/guardar-catalogo",
             " al guardar catalogo",
@@ -264,12 +272,33 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
         [registroSeleccionado]
     );
 
+    // const validSelectValue = useCallback(
+    //     (value: string) => {
+    //         return registroSeleccionado?.[value] ?? "";
+    //     },
+    //     [registroSeleccionado]
+    // );
+
     const validSelectValue = useCallback(
-        (name: string) => {
-            return registroSeleccionado?.[name] ?? "";
+        (value: string, catalogName: string | undefined) => {
+
+            const currentValue = registroSeleccionado?.[value];
+
+            if (!isNaN(Number(currentValue))) {
+                return currentValue;
+            }
+
+            const foundCatalog = catalogStatic.find(catalog => catalog.catalogo === catalogName);
+            if (foundCatalog) {
+                const foundKey = Object.keys(foundCatalog.registros).find(key => foundCatalog.registros[key] === currentValue);
+                return foundKey ?? currentValue;
+            }
+
+            return currentValue ?? "";
         },
         [registroSeleccionado]
     );
+
 
     const registros = useMemo(() => {
         return state.catalogs?.map((catalog, index) => ({
