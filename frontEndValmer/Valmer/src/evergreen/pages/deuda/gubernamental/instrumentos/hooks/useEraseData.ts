@@ -37,6 +37,8 @@ export const useEraseData = () => {
         handleLimpiarClick()
     }, [])
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const requeridosGuber: any = {
         s_tv: useRef<HTMLInputSelectNull>(null),
         s_emisora: useRef<HTMLInputSelectNull>(null),
@@ -119,7 +121,25 @@ export const useEraseData = () => {
     
     const handleCalculator = async  (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        console.log(' Vamos muy bien saymonsss');
+        // if (!isValidSelection(selectedTv, selectedEmisora, selectedSerie)) return;
+
+        // setInstrument(`${selectedTv}_${selectedEmisora}_${selectedSerie}`);
+        // setLoading(true);
+        // let data = { sEmisora: selectedEmisora, sSerie: selectedSerie, sTv: selectedTv };
+
+        try {
+            // const response =
+            //     await valmerApi.get("/instrumentos/eurobonos/calculadora-precios",
+            //     { params: data });
+            // handleApiResponse(response, selectedTv, selectedEmisora, selectedSerie);
+        } catch (error: any) {
+            // if (error.message.includes('Network Error')) {
+            //     await showAlert('error', 'Error', 'No hay conexión con el servidor');
+            // }
+        } finally {
+        //    setLoading(false);
+            setIsModalOpen(true);
+        }
     };
 
     const handleNuevaSerieClick = async () => {
@@ -171,11 +191,18 @@ export const useEraseData = () => {
         eraseSerieEmisora();
     };
 
+    const handleModalClose = () => {
+        setIsModalOpen(false);
+    }
+
     return {loadingSubmit, 
             requeridosGuber, 
             handleSubmit, 
             handleLimpiarClick, 
             handleNuevoClick, 
             handleNuevaSerieClick,
-            handleCalculator}
+            handleCalculator,
+            isModalOpen,
+            handleModalClose
+        }
 }
