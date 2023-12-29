@@ -10,7 +10,7 @@ export const EditCatalog = ({nameCatalog, setShowTable, columns, edit}: PropsEdi
 
     const {
         isNew, selectRef,
-        inputRef,
+        inputRefs, sortedColumns,
         loadingNomCorto,
         registros,
         loadingSave, loadingDelete,
@@ -21,12 +21,6 @@ export const EditCatalog = ({nameCatalog, setShowTable, columns, edit}: PropsEdi
         handleSave, handleDelete,
         validInputValue, validSelectValue
     } = useEditCatalog({nameCatalog, columns})
-
-    const sortedColumns = useMemo(() => {
-        return columns
-            .filter(column => !column.DisabledFieldForm)
-            .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-    }, [columns]);
 
 
 
@@ -130,7 +124,9 @@ export const EditCatalog = ({nameCatalog, setShowTable, columns, edit}: PropsEdi
                                     {type === "input" ? (
                                             <div className="form-input">
                                                 <input
-                                                    ref={inputRef}
+                                                    ref={el => {
+                                                        if (el) inputRefs.current[index] = el;
+                                                    }}
                                                     className="mt-8"
                                                     type="text"
                                                     name={name.toLowerCase()}

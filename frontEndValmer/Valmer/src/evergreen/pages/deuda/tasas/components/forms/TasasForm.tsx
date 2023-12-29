@@ -30,10 +30,10 @@ export const TasasForm = ({d_fecha}: any) => {
         <div className={`p-0     w-full border border-slate-300 mb-1 animate__animated animate__fadeIn`}>
 
             <div className="px-3">
-                <div className="form-cols-6">
+                <div className="form-cols-4">
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTasHistPriCet', d_fecha)}>
-                                <span>Tasas Hist Primaria Cetes</span>
+                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas Hist Primaria Cetes</span>
                             <div className="form-input" >
                                 <input 
                                     type="text"

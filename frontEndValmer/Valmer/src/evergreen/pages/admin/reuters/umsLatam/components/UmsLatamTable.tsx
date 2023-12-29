@@ -1,37 +1,37 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { MoonLoader } from "react-spinners";
-import {RegistrosUMSMexCat,IUmsMexCat} from '../../Models'
+import { RegistrosUMSMexCat, IUmsMexCat } from '../../Models'
 
 
 interface Table {
-    onOpenDelete: () => void
-    onOpenEdit: (e:  React.MouseEvent<HTMLElement>) => void
+    onOpenDelete: (sisin: string) => void
+    onOpenEdit: (e: React.MouseEvent<HTMLElement>) => void
     tableData: IUmsMexCat
-    loadingData : boolean
-    totaPages : number
-    getDataTable : (numRegistros: number, position: number, txt_buscar : string, id_reu_formato : number) => Promise< void>
+    loadingData: boolean
+    totaPages: number
+    getDataTable: (numRegistros: number, position: number, txt_buscar: string, id_reu_formato: number) => Promise<void>
 }
 
 
-export const UmsLatamTable:React.FC<Table> = ({onOpenDelete, onOpenEdit,tableData,loadingData,totaPages,getDataTable}) => {
-    const [ position, setPosition ] = useState(0);
+export const UmsLatamTable: React.FC<Table> = ({ onOpenDelete, onOpenEdit, tableData, loadingData, totaPages, getDataTable }) => {
+    const [position, setPosition] = useState(0);
     const checkReload = useRef(true);
-    const [ numRegistros, setNumRegistros ] = useState(12);
+    const [numRegistros, setNumRegistros] = useState(12);
 
     useEffect(() => {
         if (checkReload.current) {
-           checkReload.current = false
-           getDataTable( numRegistros, position,'',9018).then()
-          }
+            checkReload.current = false
+            getDataTable(numRegistros, position, '', 9018).then()
+        }
     }, [])
-    
+
     const goToPage = (newPosition: number) => {
         setPosition(newPosition);
-        getDataTable(numRegistros,newPosition,'',9018);
+        getDataTable(numRegistros, newPosition, '', 9018);
     };
 
 
-    if (loadingData || !tableData|| !tableData.body.registros) {
+    if (loadingData || !tableData || !tableData.body.registros) {
         return (
             <div className="flex justify-center items-center h-[256px]">
                 {loadingData ? (
@@ -57,33 +57,33 @@ export const UmsLatamTable:React.FC<Table> = ({onOpenDelete, onOpenEdit,tableDat
                         </tr>
                     </thead>
                     <tbody>
-                    {tableData.body.registros.map((registro :  RegistrosUMSMexCat, index :  number) => (
+                        {tableData.body.registros.map((registro: RegistrosUMSMexCat, index: number) => (
                             <tr key={index}>
-                            <td className='action'>
-                                <button
-                                    onClick={onOpenDelete}
-                                >
-                                    <i className="fa-regular fa-trash-can text-xl text-cyan-700"></i>
-                                </button>
-                            </td>
+                                <td className='action'>
+                                    <button
+                                        onClick={() => onOpenDelete(registro.S_ISIN)}
+                                    >
+                                        <i className="fa-regular fa-trash-can text-xl text-cyan-700"></i>
+                                    </button>
+                                </td>
                                 <td>{registro.S_ISIN}</td>
                                 <td>{registro.S_RIC_FORMATO}</td>
                                 <td>{registro.S_PROVEDOR}</td>
                                 <td className='action-edit'>
-                                <tr>
-                                    <td>
-                                        <button
-                                            data-sisin ={registro.S_ISIN}
-                                            data-ricformato ={registro.S_RIC_FORMATO}
-                                            data-proveedor={registro.S_PROVEDOR}
-                                            onClick={onOpenEdit}
-                                        >
-                                            <i className="fa fa-file-pen text-xl text-cyan-700"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>
+                                            <button
+                                                data-sisin={registro.S_ISIN}
+                                                data-ricformato={registro.S_RIC_FORMATO}
+                                                data-proveedor={registro.S_PROVEDOR}
+                                                onClick={onOpenEdit}
+                                            >
+                                                <i className="fa fa-file-pen text-xl text-cyan-700"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
 
-                            </td>                                
+                                </td>
                             </tr>
                         ))}
                     </tbody>
@@ -98,7 +98,7 @@ export const UmsLatamTable:React.FC<Table> = ({onOpenDelete, onOpenEdit,tableDat
                         Página {position / numRegistros + 1} de {totaPages}
                     </span>
                     <button className={`hover:text-black ${totaPages === 1 ? 'disabled:text-inherit opacity-50 disabled:pointer-events-none' : ''}`}
-                            onClick={() => goToPage(position + numRegistros)} disabled={position + numRegistros >= tableData.body.total_registros}>
+                        onClick={() => goToPage(position + numRegistros)} disabled={position + numRegistros >= tableData.body.total_registros}>
                         Siguiente
                     </button>
                 </div>

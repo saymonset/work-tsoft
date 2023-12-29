@@ -3,6 +3,9 @@ import { BarLoader } from "react-spinners";
 import DataClientForm from "./DataClientForm";
 import { GroupsForm } from "./GroupsForm";
 import { useGetConsultaInfoMail } from "../hooks/useGetConsultaInfoMail";
+import { updateInfoTableMail } from "../../../../../../redux";
+import { useDispatch } from "react-redux";
+import { InfoClienteMail } from "../../../../../../model";
 
 interface MailClientesFormProps {
   selectedNCliente: number | null;
@@ -24,6 +27,7 @@ export const MailClientesForm: React.FC<MailClientesFormProps> = ({
     }
     
     const [formData, setFormData] = useState(formDataEmpty);
+    const dispatch = useDispatch()
   
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       const { name, value } = e.target;
@@ -39,6 +43,10 @@ export const MailClientesForm: React.FC<MailClientesFormProps> = ({
       }
       setFormData(formDataEmpty);
     }, [selectedNCliente, selectedEmpresa]);
+
+    useEffect(() => {
+      dispatch(updateInfoTableMail({} as InfoClienteMail))
+    }, [])
     
     useEffect(() => {
         if (infoTableMail?.body && infoTableMail.body.length > 0) {

@@ -48,6 +48,7 @@ export const useProceso = () => {
     const [isFetchDataGetLogModal, setIsFetchDataGetLogModal] = useState(false);
     const [loadingLogBoxModal, setLoadingLogBoxModal] = useState(false)
     const [logModal, setLogModal] = useState<string[]>([]);
+    const [isOutputs, setIsOutputs] = useState(false)
 
 
     const dispatch = useDispatch()
@@ -113,6 +114,7 @@ export const useProceso = () => {
     const handleUpdatePrices = async () => {
         dispatch(updateIsShowLogBoxProc(false));
         setLoadingPrices(true)
+        setIsOutputs(false)
         await fetchDataGetSave(
             "/internacional/proceso-eurobonos/actualiza-precios",
             " se genero un error en actualiza-precios",
@@ -130,6 +132,7 @@ export const useProceso = () => {
     const handleCalculateRates = async () => {
         dispatch(updateIsShowLogBoxProc(false));
         setLoadingCalculateRates(true)
+        setIsOutputs(false)
 
         await fetchDataGetSave(
             "/internacional/proceso-eurobonos/calcula-tasas",
@@ -139,6 +142,8 @@ export const useProceso = () => {
                 s_user: userEncoded(),
             })
 
+        setIsFetchDataGetLog(true);
+        dispatch(updateIsShowLogBoxProc(true));
         setLoadingCalculateRates(false)
         handleChange("cbx_Calcular_Tasas", false)
     };
@@ -146,6 +151,7 @@ export const useProceso = () => {
     const handleCalculatePrices = async () => {
         dispatch(updateIsShowLogBoxProc(false));
         setLoadingCalculatePrices(true)
+        setIsOutputs(false)
 
         await fetchDataGetSave(
             "/internacional/proceso-eurobonos/calcula-precios",
@@ -163,6 +169,7 @@ export const useProceso = () => {
 
     const handleOutputs = async () => {
         dispatch(updateIsShowLogBoxProc(false));
+        setIsOutputs(true)
         setLoadingOutputs(true)
 
         const params = {
@@ -241,6 +248,7 @@ export const useProceso = () => {
         isShowLogBoxProc,
         isShowLogBoxProcModal,
         isOpenEdit,
+        isOutputs,
         loadingPrices,
         loadingCalculateRates,
         loadingCalculatePrices,
@@ -250,10 +258,10 @@ export const useProceso = () => {
         checkCalculaPrecios,
         checkSalidas,
         tableOutputs,
+        isCheckboxChecked,
         handleOpenLogModal,
         handleOpenCarga,
         handleCloseEdit,
-        isCheckboxChecked,
         handleChange,
         handleLogCsv,
         handleUpdatePrices,

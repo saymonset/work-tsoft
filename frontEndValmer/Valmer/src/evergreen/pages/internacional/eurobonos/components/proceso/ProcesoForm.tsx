@@ -18,6 +18,7 @@ export const ProcesoForm = () => {
         isShowLogBoxProc,
         isShowLogBoxProcModal,
         isOpenEdit,
+        isOutputs,
         loadingPrices,
         loadingCalculateRates,
         loadingCalculatePrices,
@@ -54,19 +55,17 @@ export const ProcesoForm = () => {
                         style={{ minHeight: '30rem' }}
                     />
 
-                    <div className="mt-12 w-1/8">
+                    {isOutputs && (<div className="mt-12 w-1/8">
                         <button
                             className="w-44 bg-cyan-700 hover:bg-green-700 text-white py-1 rounded-md px-3"
                             onClick={handleOpenCarga}>
                             <ButtonContent name="Produccion" loading={loadingProd}/>
                         </button>
-                    </div>
+                    </div>)}
                 </div>
             );
 
-        }
-        else
-        {
+        } else {
             return <p>No hay registros de log disponibles.</p>;
         }
     };
@@ -180,7 +179,7 @@ export const ProcesoForm = () => {
                                         type="checkbox"
                                         name="cbx_Salidas"
                                         checked={isCheckboxChecked.cbx_Salidas}
-                                        onClick={()=>handleChange("cbx_Salidas", isCheckboxChecked.cbx_Salidas)}
+                                        onClick={()=> handleChange("cbx_Salidas", isCheckboxChecked.cbx_Salidas)}
                                     />
                                     <button
                                         className="w-44 bg-cyan-700 hover:bg-green-700
@@ -196,7 +195,7 @@ export const ProcesoForm = () => {
                 </td>
                 <td>
                     {isShowLogBoxProc && (
-                        <div className="flex mb-44 justify-center items-center h-full">
+                        <div className="flex mb-44 mr-44 justify-center items-center ">
                             {loadingLogBox ? (
                                 <MoonLoader color="#0e7490" loading={true} speedMultiplier={0.5} size={80} />
                             ) : renderLogContent()}

@@ -1,11 +1,8 @@
-import { useState } from 'react'
 import { TitleDate, Modal } from "../../../../../shared"
 import { UmsMexCatTable } from './components/UmsMexCatTable'
 import { useUmsMexCat } from '../hooks/useUmsMexCat'
 
 export const UmsMexCat = () => {
-    const [isinToDelete, setIsinToDelete] = useState<string | null>(null);
-
     const {
         tableData,
         loadingData,
@@ -14,33 +11,46 @@ export const UmsMexCat = () => {
         downloadCsvFile,
         textSearch,
         HandleChangeBuscar,
-        handleKeyDown,
-        searchText,
         handleOpenCarga,
         handleOpenEdit,
         isOpenCarga,
         handleCloseCarga,
         isOpenEdit,
         handleCloseEdit,
-        handleSubmitForm,
         registro,
         handleChangeForm,
         isOpenDelete,
         handleCloseDelete,
         setOpenDelete,
-        deletebyIsin
+        deletebyIsin,
+        handleOpenDelete,
+        setOpenEdit,
+        saveDataUser,
+        isinToDelete
     } = useUmsMexCat();
 
-    const handleOpenDelete = (sisinToDelete: string) => {
-        setIsinToDelete(sisinToDelete);
-        setOpenDelete(true);
-    };
+    const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        setOpenEdit(false)
+        await saveDataUser(registro, 9017)
+        await getDataTable(12, 0, textSearch, 9017)
+    }
+
+    const searchText = async () => {
+        await getDataTable(12, 0, textSearch, 9017)
+    }
 
     const deleteByISIN = async (isinToDelete: string | null) => {
         setOpenDelete(false);
         await deletebyIsin(9017, isinToDelete)
         await getDataTable(12, 0, '', 9017)
     }
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            searchText();
+        }
+    };
 
     return (
         <>

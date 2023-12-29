@@ -394,12 +394,3 @@ export interface IsFieldModifiedFvDdGobIns  {
 }
 
 
-
-export interface CalProps {
-    isModalOpen: boolean
-    instrument: string
-    selectedTv: string
-    selectedEmisora: string
-    selectedSerie: string
-    handleModalClose: () => void
-}

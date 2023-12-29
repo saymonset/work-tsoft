@@ -5,7 +5,8 @@ export const TitleDate = ({title}: any) => {
     return (
         <>
             <div className="flex">
-                <div className="flex-1  ml-8 text-cyan-700 text-2xl font-semibold">
+                {/* <div className="flex-1  ml-8 text-cyan-700 text-2xl font-semibold"  style={{ fontSize: '1rem' }}> */}
+                <div className="flex-1  ml-8 text-cyan-700 text-xl font-semibold">
                     {title}
                 </div>
                 <div className="flex-1 mr-6  text-right text-cyan-700 text-lg font-bold">
@@ -13,7 +14,7 @@ export const TitleDate = ({title}: any) => {
                 </div>
             </div>
             <div className="grid grid-cols-1 gap-2">
-                <div className="border-gray-300 border my-1"></div>
+                <div className="border-gray-300 border mt-1 mb-3"></div>
             </div>
         </>
     )

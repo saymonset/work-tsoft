@@ -543,7 +543,7 @@ export const DataCatCostaRica = [
         {
                 text: 'CR_BASE_CALCULO',
                 columns: [
-                        { name: 'N_BASE_CALCULO', type: 'input' },
+                        { name: 'N_BASE_CALCULO', type: 'input', isReadOnly: true },
                         { name: 'S_NOMCORTO', type: 'input' },
                         { name: 'S_DESCRIPCION', type: 'input' }
                 ]
@@ -551,7 +551,7 @@ export const DataCatCostaRica = [
         {
                 text: 'CR_CLASIFICACION_RIESGO',
                 columns: [
-                        { name: 'N_CLASIFICACION_RIESGO', type: 'input' },
+                        { name: 'N_CLASIFICACION_RIESGO', type: 'input', isReadOnly: true },
                         { name: 'S_NOMCORTO', type: 'input' },
                         { name: 'S_DESCRIPCION', type: 'input' }
                 ]
@@ -1122,16 +1122,16 @@ export const DataPerfilInstrumento = [
         {
                 text: 'PERFIL_INSTRUMENTO_ADRS',
                 columns: [
-                        { name: 'S_INSTR_ADR', type: 'input' },
-                        { name: 'S_INSTR_REF', type: 'input' }
+                        { name: 'S_INSTR_ADR', type: 'input', isReadOnly: false },
+                        { name: 'S_INSTR_REF', type: 'input', isReadOnly: false }
                 ],
                 edit: true
         },
         {
                 text: 'PERFIL_INSTRUMENTO_CAT_FONDOS',
                 columns: [
-                        { name: 'N_CLASIFICACION', type: 'input' },
-                        { name: 'S_DESCRIPCION', type: 'input' }
+                        { name: 'N_CLASIFICACION', type: 'input', isReadOnly: false },
+                        { name: 'S_DESCRIPCION', type: 'input', isReadOnly: false }
                 ],
                 edit: true
         },
@@ -1147,9 +1147,9 @@ export const DataPerfilInstrumento = [
         {
                 text: 'PERFIL_INSTRUMENTO_FONDO_SERIE',
                 columns: [
-                        { name: 'S_TV', type: 'input' },
-                        { name: 'S_EMISORA', type: 'input' },
-                        { name: 'S_SERIE', type: 'input' }
+                        { name: 'S_TV', type: 'input', isReadOnly: false },
+                        { name: 'S_EMISORA', type: 'input', isReadOnly: false },
+                        { name: 'S_SERIE', type: 'input', isReadOnly: false }
                 ],
                 edit: true
         },
@@ -1188,11 +1188,11 @@ export const DataPerfilInstrumento = [
         {
                 text: 'PERFIL_INSTRUMENTO_SCOTIA',
                 columns: [
-                        { name: 'N_TIPO_CATALOGO', type: 'input' },
-                        { name: 'S_TV', type: 'input' },
-                        { name: 'S_EMISORA', type: 'input' },
-                        { name: 'S_SERIE', type: 'input' },
-                        { name: 'S_CODIGO_TECH', type: 'input' }
+                        { name: 'N_TIPO_CATALOGO', type: 'input', isReadOnly: false },
+                        { name: 'S_TV', type: 'input', isReadOnly: false },
+                        { name: 'S_EMISORA', type: 'input', isReadOnly: false },
+                        { name: 'S_SERIE', type: 'input', isReadOnly: false },
+                        { name: 'S_CODIGO_TECH', type: 'input' , isReadOnly: false}
                 ],
                 edit: true
         }
@@ -1317,7 +1317,7 @@ export const DataCatClassSec = [
         {
                 text: 'INEGI_DIVISION',
                 columns: [
-                        { name: 'N_INEGI_DIVISION', type: 'input' },
+                        { name: 'N_INEGI_DIVISION', type: 'input', isReadOnly: true },
                         { name: 'S_NOMCORTO', type: 'input' },
                         { name: 'S_DESCRIPCION', type: 'input' },
                         { name: 'N_INEGI_SECTOR', type: 'select', catalog: "INEGI_SECTOR"}
@@ -1326,7 +1326,7 @@ export const DataCatClassSec = [
         {
                 text: 'INEGI_GRUPO',
                 columns: [
-                        { name: 'N_INEGI_GRUPO', type: 'input' },
+                        { name: 'N_INEGI_GRUPO', type: 'input', isReadOnly: true },
                         { name: 'S_NOMCORTO', type: 'input' },
                         { name: 'S_DESCRIPCION', type: 'input' }
                 ]
@@ -1334,7 +1334,7 @@ export const DataCatClassSec = [
         {
                 text: 'INEGI_RAMO',
                 columns: [
-                        { name: 'N_INEGI_RAMO', type: 'input' },
+                        { name: 'N_INEGI_RAMO', type: 'input', isReadOnly: true },
                         { name: 'S_NOMCORTO', type: 'input' },
                         { name: 'S_DESCRIPCION', type: 'input' },
                         { name: 'N_INEGI_DIVISION', type: 'select', catalog: "INEGI_SECTOR"}
@@ -1343,7 +1343,7 @@ export const DataCatClassSec = [
         {
                 text: 'INEGI_SECTOR',
                 columns: [
-                        { name: 'N_INEGI_SECTOR', type: 'input' },
+                        { name: 'N_INEGI_SECTOR', type: 'input', isReadOnly: true },
                         { name: 'S_NOMCORTO', type: 'input' },
                         { name: 'S_DESCRIPCION', type: 'input' }
                 ]
@@ -1351,7 +1351,7 @@ export const DataCatClassSec = [
         {
                 text: 'INEGI_SUBGRUPO',
                 columns: [
-                        { name: 'N_INEGI_SUBGRUPO', type: 'input' },
+                        { name: 'N_INEGI_SUBGRUPO', type: 'input', isReadOnly: true },
                         { name: 'S_NOMCORTO', type: 'input' },
                         { name: 'S_DESCRIPCION', type: 'input' }
                 ]
