@@ -142,7 +142,7 @@ export const useCalifInstForm = () => {
     const handleGuardar = async () => {
         setLoadingSave(true)
         await fetchDataPost(
-            isFondos ? "calificaciones/instrumentos/actualiza-info" : "calificaciones/instrumentos/actualiza-info",
+            isFondos ? "calificaciones/instrumentos/fondos/actualiza-info" : "calificaciones/instrumentos/actualiza-info",
             " al guardar instrumento",
             consultaData,
             {s_user: userEncoded()}

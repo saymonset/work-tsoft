@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fetchDataGetRet, downloadFileGET } from "../../../../../utils";
+import { fetchDataGetRet } from "../../../../../utils";
 import { ILiqLatam, RegistrosLiqLatam } from '../Models'
 import { Base64 } from 'js-base64'
 import fileDownload from 'js-file-download'
@@ -110,9 +110,8 @@ export const useliqLatamCat = () => {
 
   const downloadCsvFile = async (n_cbo_pais: number) => {
     try {
-      const response = await downloadFileGET(
+      const response = await fetchDataGetRet(
         "/reuters/liquidez/descargar-csv/?n_cbo_pais=" + n_cbo_pais,
-        "Descargar archivo",
         " al descargar archivo csv",
         {}
       )
@@ -146,7 +145,7 @@ export const useliqLatamCat = () => {
     const sIsin: string | null = e.currentTarget.getAttribute("data-sisin")
     const instrumento: string | null = e.currentTarget.getAttribute("data-instrumento")
     const ric: string | null = e.currentTarget.getAttribute("data-sric")
-    const stipo: string | null = e.currentTarget.getAttribute("data-instrumento")
+    const stipo: string | null = e.currentTarget.getAttribute("data-stipo")
     setOpenEdit(true);
     setRegistro({
       id_reu_formato: n_cbo_pais,
@@ -198,6 +197,12 @@ export const useliqLatamCat = () => {
     await getDataTable(n_cbo_pais, 12, 0, textSearch)
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      searchText();
+    }
+  };
+
   return {
     tableData,
     loadingData,
@@ -221,6 +226,7 @@ export const useliqLatamCat = () => {
     handleChangeForm,
     handleSubmitForm,
     deleteByISIN,
-    textSearch
+    textSearch,
+    handleKeyDown
   }
 }

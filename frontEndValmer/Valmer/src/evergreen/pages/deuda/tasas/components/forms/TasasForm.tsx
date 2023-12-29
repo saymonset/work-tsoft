@@ -25,13 +25,6 @@ export const TasasForm = ({d_fecha}: any) => {
 
     const [focusedInput, setFocusedInput] = useState<string>("");
 
-    // const handleFocus = (inputName: string) => {
-    //     setFocusedInput(inputName);
-    // }
-
-    // const handleBlur = () => {
-    //     setFocusedInput("");
-    // }
     
     return (
         <div className={`p-0     w-full border border-slate-300 mb-1 animate__animated animate__fadeIn`}>

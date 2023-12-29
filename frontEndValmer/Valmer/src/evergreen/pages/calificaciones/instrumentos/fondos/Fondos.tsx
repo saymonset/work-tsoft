@@ -3,10 +3,14 @@ import { CalifInstForm, CalifInstFormHeader } from "../components"
 import { MoonLoader } from "react-spinners"
 import { FormInstProps } from "../../../../../model"
 import { HocRestricted } from "../../../restrictedAccess"
+import { useEffect } from "react"
 
 export const Fondos = (props: FormInstProps) => {
 
-    props.setIsFondos(true)
+    useEffect(() => {
+        props.handleLimpiar()
+        props.setIsFondos(true)
+    }, [])
 
     const title = "Calificaciones Fondos"
 

@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import {fetchDataGet, getCurrentDate} from "../../../../../utils";
 import {updateConsultaTasas} from "../../../../../redux";
@@ -34,6 +34,10 @@ export const useTasas = () => {
             setTriggerErase(false)
         }, 10);
     }
+
+    useEffect(() => {
+        handleEraseData()
+    }, [])
 
     return {
         triggerErase,

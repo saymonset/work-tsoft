@@ -15,43 +15,41 @@ export const Panel: React.FC<PanelProps> = ({ currentDate, isProcessSelected }) 
     };
 
     return (
-        <>
-            <div className="panel">
+        <div className="panel">
 
-                <div className="panel-header">
-                    <PanelButtonNav
-                        activePanel={activePanel}
-                        handleButtonClickPanel={handleButtonClickPanel} />
-                </div>
-
-                <div className="panel-body">
-                    {
-                        activePanel === "caterv" && (
-                            <CateRvForm currentDate={currentDate} isProcessSelected={isProcessSelected} />
-                        )
-                    }
-                    {
-                        activePanel === "actualizabd" && (
-                            <ActualizaBdForm />
-                        )
-                    }
-
-                    {activePanel === "procesorv" && (
-                        <ProcesoRvForm />
-                    )
-                    }
-
-                    {activePanel === "salidas" && (
-                        <SalidasForm />
-                    )
-                    }
-
-                    {activePanel === "consultas" && (
-                        <ConsultasForm />
-                    )
-                    }
-                </div>
+            <div className="panel-header">
+                <PanelButtonNav
+                    activePanel={activePanel}
+                    handleButtonClickPanel={handleButtonClickPanel} />
             </div>
-        </>
+
+            <div className="panel-body">
+                {
+                    activePanel === "caterv" && (
+                        <CateRvForm currentDate={currentDate} isProcessSelected={isProcessSelected} />
+                    )
+                }
+                {
+                    activePanel === "actualizabd" && (
+                        <ActualizaBdForm />
+                    )
+                }
+
+                {activePanel === "procesorv" && (
+                    <ProcesoRvForm />
+                )
+                }
+
+                {activePanel === "salidas" && (
+                    <SalidasForm />
+                )
+                }
+
+                {activePanel === "consultas" && (
+                    <ConsultasForm />
+                )
+                }
+            </div>
+        </div>
     );
 };

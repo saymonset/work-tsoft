@@ -30,9 +30,13 @@ import {
     RequeridosCorp,
     ResponseConsultaDataCorp
 } from "../../../../../../model";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 export const useEraseData = () => {
+
+    useEffect(() => {
+        handleLimpiarClick()
+    }, [])
 
     const requeridosCorp: RequeridosCorp = {
         s_tv: useRef<HTMLInputSelectNull>(null),

@@ -1,5 +1,5 @@
 import { useState, ChangeEvent } from 'react';
-import { fetchDataGetEnvioMail, fetchDataGetSave, fetchDataPost, fetchDataPostAct, fetchDataUpdateGet } from '../../utils';
+import {fetchDataGetAlert,} from '../../utils';
 
 interface Errors {
     email?: string;
@@ -39,20 +39,25 @@ export const useModalRecoverPass = (): ModalRecoverPass => {
     };
 
     const handleSubmit = () => {
-        setLoading(true)
+        setLoading(true);
         const validationErrors = validateEmail();
 
         if (Object.keys(validationErrors).length === 0) {
-            console.log('Form submitted:', { email })
-            fetchDataGetEnvioMail(
+            fetchDataGetAlert(
                 "login/recuperar-contrasenia",
+                "Enviado",
+                "Se envío la contraseña a " + email,
                 " al enviar email",
-                email,
-                {email}
+                { email }
             )
-            setLoading(false)
+                .then(() => {
+                    setLoading(false);
+                })
+                .catch(() => {
+                    setLoading(false);
+                });
         } else {
-            setLoading(false)
+            setLoading(false);
             setErrors(validationErrors);
         }
     };

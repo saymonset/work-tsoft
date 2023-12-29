@@ -1,8 +1,14 @@
 import { RootState } from "@reduxjs/toolkit/dist/query/core/apiState"
 import { useDispatch, useSelector } from "react-redux"
-import { CatSector, DataHistoricoTrial, InfoUser, UriInfo } from "../../../../../model/Admin"
-import { useEffect, useState } from "react";
-import { fetchDataGet, fetchDataGetConsultaData, fetchDataGetRet, fetchDataGetSave, showAlert } from "../../../../../utils";
+import { CatSector, DataHistoricoTrial, InfoUser, UriInfo } from "../../../../../model"
+import React, { useEffect, useState } from "react";
+import {
+    fetchDataGet,
+    fetchDataGetAlert,
+    fetchDataGetConsultaData,
+    fetchDataGetRet,
+    showAlert
+} from "../../../../../utils";
 import { updateCatNom, updateCatSector, updateInfoUser, updateUriInfo } from "../../../../../redux";
 import { useGetCatalogs } from "./useGetCatalogs";
 import fileDownload from "js-file-download";
@@ -135,11 +141,11 @@ export const useHandleDataUserWeb = () => {
 
     useEffect(() => {
         if (triggerLink) {
-            uriInfo.id_proceso ?? ""
-            const link = "http://www.valmer.com.mx/public/downloadFileUserSystemProcess.do?token=" + 
-                         infoUser.token + "&idProceso=" + uriInfo.id_proceso + "&uri=" + selectedUri;
+            const idProceso = uriInfo.id_proceso ?? "";
+            const link = "http://www.valmer.com.mx/public/downloadFileUserSystemProcess.do?token=" +
+                infoUser.token + "&idProceso=" + idProceso + "&uri=" + selectedUri;
             setLiga(link);
-            setTriggerLink(false)
+            setTriggerLink(false);
         }
     }, [triggerLink]);
 
@@ -179,14 +185,16 @@ export const useHandleDataUserWeb = () => {
             const params = {n_nombre: selectedNombre, 
                             n_tipo_usuario: infoUser.n_tipo_usuario, 
                             s_email: infoUser.email};
-            await fetchDataGetSave(
+            await fetchDataGetAlert(
                 "admin-user-web/update-info-user",
+                "Guardado",
+                "Registro actualizado correctamente",
                 " al actualizar datos del usuario",
                 params
             )
             setLoadingSave(false);
         } else {
-            showAlert("info", "No hay datos para guardar", "Debe seleccionar un nombre de usuario");
+            await showAlert("info", "No hay datos para guardar", "Debe seleccionar un nombre de usuario");
         }
     }
 

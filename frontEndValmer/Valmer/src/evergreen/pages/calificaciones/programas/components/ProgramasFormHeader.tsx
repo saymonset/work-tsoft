@@ -73,7 +73,7 @@ export const ProgramasFormHeader = () => {
                             </option>
                         ))}
                     </select>
-                    <label
+                    <label htmlFor="s_tv"
                         className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
                                     -translate-y-6 origin-[0]"
                     >
@@ -97,7 +97,8 @@ export const ProgramasFormHeader = () => {
                     </select>
 
                     {loadingEmisoras && <BarLoader className="mt-2" color="#059669" width={150}/>}
-                    <label className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
+                    <label htmlFor="s_emisora"
+                        className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
                                     -translate-y-6 origin-[0]"
                     >
                         Emisora
@@ -119,7 +120,8 @@ export const ProgramasFormHeader = () => {
                             </option>
                         ))}
                     </select>
-                    <label className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
+                    <label htmlFor="n_plazo_calif"
+                        className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
                                     -translate-y-6 origin-[0]"
                     >
                         Plazo Calificación
@@ -142,7 +144,8 @@ export const ProgramasFormHeader = () => {
                             </option>
                         ))}
                     </select>
-                    <label className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
+                    <label htmlFor="n_emisor"
+                        className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
                                     -translate-y-6 origin-[0]"
                     >
                         Emisor

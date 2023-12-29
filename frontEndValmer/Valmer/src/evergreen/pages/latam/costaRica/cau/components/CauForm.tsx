@@ -16,8 +16,6 @@ export const CauForm = ({
 }: CauFormsProps) => {
     const isCerrados = status === "Cerrados";
 
-    console.log(queryFolio)
-
     return (
         <div>
             {loadingFolio ? (

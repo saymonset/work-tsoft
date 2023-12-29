@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import {ConsultaLipper, FormValuesLipper, ResponseDataTableHead} from "../../../../../model"
+import {ConsultaLipper, FormValuesLipper, IsModifyFormValuesLipper, ResponseDataTableHead} from "../../../../../model"
 import { RootState } from "@reduxjs/toolkit/dist/query/core/apiState"
 import {updateConsultaLipper, updateDataTableHead, updateFormValuesLipper} from "../../../../../redux"
 import {fetchDataGetSave, fetchDataPost, showAlert} from "../../../../../utils"
@@ -25,9 +25,10 @@ export const useDataHandle = () => {
     const [selectedReuters, setSelectedReuters] = useState(false)
     const [valuesCheckbox, setValuesCheckbox] = useState({})
     const [loadingGeneraArchivo, setLoadingGeneraArchivo] = useState(false)
+    const [isModifyFormValues, setIsModifyFormValues] = useState({} as IsModifyFormValuesLipper)
 
     const inputValueEval = (name: string, data: string): string => {
-        if (formValuesKeys.includes(name)) 
+        if (formValuesKeys.includes(name) && isModifyFormValues[name])
         {
             return formValuesLipper[name]
         } 
@@ -38,7 +39,7 @@ export const useDataHandle = () => {
     }
 
     const checkboxValueEval = (name: string, data: string) : boolean => {
-        if(formValuesKeys.includes(name))
+        if(formValuesKeys.includes(name) && isModifyFormValues[name])
         {
             return formValuesLipper[name] === '1'
         } else {
@@ -50,12 +51,18 @@ export const useDataHandle = () => {
         const {name, checked} = e.target
         const updatedValues = {...formValuesLipper, [name]: checked ? '1' : '0'}
         dispatch(updateFormValuesLipper(updatedValues))
+
+        const updateIsModifyData = {...isModifyFormValues, [name]: true}
+        setIsModifyFormValues(updateIsModifyData)
     }
 
     const handlePrecioMercadoChange = <T extends HTMLInputElement>(e: React.ChangeEvent<T>) => {
         const {name, value} = e.target
         const updatedValues = {...formValuesLipper, [name]: value}
         dispatch(updateFormValuesLipper(updatedValues))
+
+        const updateIsModifyData = {...isModifyFormValues, [name]: true}
+        setIsModifyFormValues(updateIsModifyData)
     }
 
     const handleUpdateModal = (instrumento: string, valida_bbva: string, precio_mercado: string) => {

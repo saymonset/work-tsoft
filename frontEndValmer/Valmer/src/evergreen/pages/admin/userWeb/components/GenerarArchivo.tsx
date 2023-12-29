@@ -102,7 +102,7 @@ export const GenerarArchivo = (data: GenerarArchivoProps) => {
                     </div>
                     <div className="form-cols-1 ml-3">
                         <button
-                            className="btn w-9/12"
+                            className="btn w-min"
                             onClick={handleGenerar}
                         >
                             <ButtonContent name="Generar" loading={loading}/>

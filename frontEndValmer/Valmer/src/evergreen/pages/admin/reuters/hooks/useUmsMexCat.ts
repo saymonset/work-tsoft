@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { fetchDataGetRet, fetchDataPost, fetchDataPostAct, downloadFile } from "../../../../../utils";
+import {
+  fetchDataGetRet,
+  fetchDataPost,
+  fetchDataPostAct,
+  fetchDataPostRetNoAlert
+} from "../../../../../utils";
 import { IUmsMexCat, RegistrosUMSMexCat } from '../Models'
 import { Base64 } from 'js-base64'
 import fileDownload from 'js-file-download'
@@ -91,7 +96,7 @@ export const useUmsMexCat = () => {
         "Borrar",
         " al borrar datos",
         [], {
-          idReuFormato: idReuFormato,
+        idReuFormato: idReuFormato,
         sIsin: sIsin
       }
       )
@@ -106,9 +111,8 @@ export const useUmsMexCat = () => {
 
   const downloadCsvFile = async (idReuFormato: number) => {
     try {
-      const response = await downloadFile(
+      const response = await fetchDataPostRetNoAlert(
         "/reuters/carga-info-csv",
-        "Descargar archivo",
         " al descargar archivo csv",
         [], { idReuFormato: idReuFormato }
       )
@@ -215,6 +219,7 @@ export const useUmsMexCat = () => {
     handleChangeForm,
     isOpenDelete,
     handleCloseDelete,
-    deleteByISIN
+    deleteByISIN,
+    setOpenDelete
   }
 }

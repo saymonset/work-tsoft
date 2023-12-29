@@ -23,6 +23,10 @@ export interface FormValuesLipper {
     [key: string]: string
 }
 
+export interface IsModifyFormValuesLipper {
+    [key: string]: boolean
+}
+
 export interface InstrumentoLipper extends FormValuesLipper {
     rowNum: string
     instrumento: string

@@ -28,7 +28,8 @@ export const LiqLatamCat = () => {
         handleChangeForm,
         handleSubmitForm,
         deleteByISIN,
-        textSearch
+        textSearch,
+        handleKeyDown
     } = useliqLatamCat();
 
     useEffect(() => {
@@ -44,7 +45,15 @@ export const LiqLatamCat = () => {
             <div className="animate__animated animate__fadeIn">
                 <div className="flex justify-center">
                     <div className="form-input m-1 w-1/2">
-                        <input type="text" name="buscar" id="buscar" value={textSearch} onChange={HandleChangeBuscar} placeholder="" />
+                        <input
+                            type="text"
+                            name="buscar"
+                            id="buscar"
+                            value={textSearch}
+                            onChange={HandleChangeBuscar}
+                            onKeyDown={handleKeyDown}
+                            placeholder=""
+                        />
                         <label htmlFor="buscar">BUSCAR</label>
                     </div>
                     <div className="content-center grid m-1">
@@ -134,7 +143,7 @@ export const LiqLatamCat = () => {
                         <div className="form-cols-1 -my-3">
                             <div className="form-input">
                                 <input type="text" name="s_tipo" id="tipo" value={registro.s_tipo} onChange={handleChangeForm} placeholder='' />
-                                <label htmlFor="provedor">Tipo</label>
+                                <label htmlFor="tipo">Tipo</label>
                             </div>
                         </div>
                         <div className="line" />

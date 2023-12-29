@@ -9,12 +9,6 @@ export const LipperFund = () => {
     const title : string = "Lipper Fund";
 
     const {
-        loading,
-        loadingTableHead,
-        consultaLipper,
-    } = useDataTable()
-
-    const {
         isOpen,
         txtAreaLipper,
         loadingSubmit,
@@ -29,6 +23,12 @@ export const LipperFund = () => {
         handleChangeCheckbox,
         handleGeneraArchivos
     } = useDataHandle()
+
+    const {
+        loading,
+        loadingTableHead,
+        consultaLipper,
+    } = useDataTable()
 
     const [isDivVisible, setIsDivVisible] = useState(false);
 

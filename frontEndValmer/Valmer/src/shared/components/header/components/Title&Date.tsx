@@ -5,6 +5,7 @@ export const TitleDate = ({title}: any) => {
     return (
         <>
             <div className="flex">
+                {/* <div className="flex-1  ml-8 text-cyan-700 text-2xl font-semibold"  style={{ fontSize: '1rem' }}> */}
                 <div className="flex-1  ml-8 text-cyan-700 text-2xl font-semibold">
                     {title}
                 </div>

@@ -1,8 +1,9 @@
 import {  useState } from 'react'
-import { TitleDate } from "../../../../shared"
+import { ButtonContent, TitleDate } from "../../../../shared"
 import { UsuariosForm } from './components/UsuariosForm'
 import {useUsuarios} from './hooks/useUsuarios'
 import {IUserList,InitialUser} from './Models'
+import { BarLoader } from 'react-spinners'
 
 export const Usuarios = () => {
     const [nuevo, setNuevo] = useState(false)
@@ -10,10 +11,11 @@ export const Usuarios = () => {
         userList,
         userData,
         loadingSave,
+        loadingIdUser,
         setUserData,
-        setUsserId,  
-        HandleCahngeInputsForms  ,
-        saveDataUser    ,
+        setUserId,  
+        HandleCahngeInputsForms,
+        saveDataUser,
         getUsers,
         deleteUser
     } = useUsuarios()
@@ -27,7 +29,7 @@ export const Usuarios = () => {
     const handleCancel = (e: React.SyntheticEvent) => {
         e.preventDefault()
         setNuevo(false)
-        setUserData(InitialUser) 
+        setUserData(InitialUser)
     }
 
     const  HandleSaveUser = async (e: React.SyntheticEvent) => {
@@ -54,9 +56,8 @@ export const Usuarios = () => {
     const  handleOnChangeName =(e: React.ChangeEvent<HTMLSelectElement>) => {
         const id_user : number = Number(e.target.value)    
         setUserData(InitialUser)
-        id_user ==9999 ? setUserData(InitialUser)    : setUsserId(id_user)
+        id_user == 9999 ? setUserData(InitialUser) : setUserId(id_user)
     }
-
 
     return (
         <>
@@ -75,8 +76,8 @@ export const Usuarios = () => {
                     ) : (
                         <div className="form-select w-1/4 m-1">
                             <select name="nombre_select" id="nombre_select" onChange={handleOnChangeName}>
-                            <option key={9999} value ={99999}> ............</option>
-                                {userList && userList.map((item: IUserList) => {
+                            <option key={9999} value ={9999}>...</option>
+                                {userList?.map((item: IUserList) => {
                                   return (
                                     <option key={item.user_id} value={item.user_id}>
                                       {item.name}
@@ -103,7 +104,7 @@ export const Usuarios = () => {
                             type="button"
                             onClick={HandleSaveUser}
                         >
-                            Guardar
+                            <ButtonContent name='Guardar' loading={loadingSave} />
                         </button>
                     </div>
                     <div className="content-center grid m-1">
@@ -126,7 +127,8 @@ export const Usuarios = () => {
                     </div>
                 </div>
 
-                <UsuariosForm datos={userData } handleChange = {HandleCahngeInputsForms}/>
+                {loadingIdUser && <BarLoader className="w-full mt-4 -mb-6" color="#059669" width={500} />}
+                <UsuariosForm datos={userData} handleChange={HandleCahngeInputsForms}/>
 
             </form>
         </>
