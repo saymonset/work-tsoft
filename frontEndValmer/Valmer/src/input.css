@@ -172,7 +172,7 @@
 .form-input,
 .form-date,
 .form-text-area {
-    @apply relative my-3;
+    @apply relative my-2;
 }
 
 .form-select select,
@@ -180,7 +180,7 @@
     @apply block py-2.5 px-0 w-full 
     text-sm text-gray-900 bg-transparent 
     border-0 border-b-2 appearance-none 
-    border-gray-600 focus:border-cyan-700 
+    focus:border-cyan-700 
     focus:outline-none focus:ring-0;
 }
 
@@ -201,7 +201,7 @@
     @apply block py-2.5 px-0 w-full text-sm
     bg-transparent border-0
     border-b-2 appearance-none
-    text-slate-900 border-gray-600
+    text-slate-900 
     focus:outline-none focus:ring-0
     focus:border-cyan-700;
 

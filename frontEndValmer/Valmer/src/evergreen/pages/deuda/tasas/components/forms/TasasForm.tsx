@@ -17,10 +17,10 @@ export const TasasForm = ({d_fecha}: any) => {
     const {forms, loadingSave, handleSubmit, handleChange} = useTasasForm()
 
     return (
-        <div className={`p-2 w-full border border-slate-300 mb-1 animate__animated animate__fadeIn`}>
+        <div className={`p-0     w-full border border-slate-300 mb-1 animate__animated animate__fadeIn`}>
 
             <div className="px-3">
-                <div className="form-cols-4">
+                <div className="form-cols-6">
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTasHistPriCet', d_fecha)}>
                     
