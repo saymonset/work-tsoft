@@ -1,0 +1,15 @@
+.fontError{
+    @apply text-red-600 text-sm font-bold italic;
+}
+
+.button-link {
+    @apply text-sm text-cyan-600 hover:text-cyan-900
+}
+
+.modal-login-title {
+    @apply text-center text-cyan-600 font-bold text-lg
+}
+
+.logged{
+    background: linear-gradient(#226c91,rgb(1, 23, 46));
+}

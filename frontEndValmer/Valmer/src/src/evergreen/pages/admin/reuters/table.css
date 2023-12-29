@@ -1,0 +1,19 @@
+table {
+    @apply w-full;
+}
+
+table thead {
+    @apply bg-cyan-700 text-white;
+}
+
+.action {
+    @apply text-center;
+}
+
+.action-edit {
+    @apply grid justify-center;
+}
+
+.striped > tbody > tr {
+    @apply even:bg-gray-300;
+}
