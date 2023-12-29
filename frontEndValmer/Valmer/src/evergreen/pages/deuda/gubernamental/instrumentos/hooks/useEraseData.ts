@@ -116,6 +116,12 @@ export const useEraseData = () => {
         dispatch(updateNInfoGuber(2))
     }
 
+    
+    const handleCalculator = async  (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        console.log(' Vamos muy bien saymonsss');
+    };
+
     const handleNuevaSerieClick = async () => {
         console.log(formValuesIns.s_emisora)
         if (await validateFormFields(formValuesIns, dispatch, requeridosGuber)) {
@@ -165,5 +171,11 @@ export const useEraseData = () => {
         eraseSerieEmisora();
     };
 
-    return {loadingSubmit, requeridosGuber, handleSubmit, handleLimpiarClick, handleNuevoClick, handleNuevaSerieClick}
+    return {loadingSubmit, 
+            requeridosGuber, 
+            handleSubmit, 
+            handleLimpiarClick, 
+            handleNuevoClick, 
+            handleNuevaSerieClick,
+            handleCalculator}
 }

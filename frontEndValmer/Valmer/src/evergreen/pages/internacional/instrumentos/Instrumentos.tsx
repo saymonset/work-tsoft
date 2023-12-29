@@ -27,7 +27,7 @@ export const Instrumentos = () => {
 
     return (
         <HocRestricted title={title} view={title}>
-            <TitleDate title={title}/>
+            <TitleDate title={title +"jajaj"}/>
 
             <div className="flex justify-end pr-2">
                 <Link to="/internacional/valuacion" className="btn">

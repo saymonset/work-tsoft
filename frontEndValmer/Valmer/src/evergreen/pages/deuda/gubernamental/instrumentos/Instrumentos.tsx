@@ -12,7 +12,9 @@ export const Instrumentos = () => {
         handleSubmit,
         handleLimpiarClick,
         handleNuevoClick,
-        handleNuevaSerieClick } = useEraseData()
+        handleNuevaSerieClick,
+        handleCalculator,
+     } = useEraseData()
 
     const title = "Instrumentos Gubernamentales"
 
@@ -45,6 +47,14 @@ export const Instrumentos = () => {
                 <Link to="/deuda/genera/si" className="btn">
                     <span>S.I.</span>
                 </Link>
+                <div>|</div>
+                <button
+                    className="btn"
+                      onClick={handleCalculator}
+                >
+                    <i className="fa fa-calculator"></i>
+                    <ButtonContent name=" Calculadora" loading={loadingSubmit}/>
+                </button>
                 <div>|</div>
                 <button
                     className="btn"
