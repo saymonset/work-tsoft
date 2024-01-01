@@ -3,10 +3,14 @@ import {useState} from "react";
 import {subMenuClose} from "../../../utils";
 import {v4 as uuidv4} from 'uuid';
 
-export const MenuItem = ({item}: any) => {
+export const MenuItem = ({item, closeSubMenus}: any) => {
 
     const [isOpen, setIsOpen] = useState(false)
-    const handleClick = () => setIsOpen(!isOpen)
+    const handleClick = () => {
+        setIsOpen(!isOpen);
+        console.log('segudo Sdo click =' + isOpen);
+        closeSubMenus(item);
+    } 
     const redirect = () => { /* TODO document why this arrow function is empty */
     }
 
@@ -21,7 +25,7 @@ export const MenuItem = ({item}: any) => {
                     <div className="flex items-center flex-grow">
                         <i className={item.icon}></i>
                         <span className="text-sm font-medium ml-3 lg:opacity-100">
-                                {item.label}
+                                {item.label + "YYYYYYY"}
                         </span>
                         <div className="text-xs ml-auto mr-4">
                             <i className={subMenuClose(item, isOpen)}></i>
@@ -40,7 +44,7 @@ export const MenuItem = ({item}: any) => {
                                     to={item.path}
                                     className="block text-slate-200 p-2 w-full">
                                         <span className="text-sm font-medium lg:opacity-100">
-                                            {item.label}
+                                            {item.label + "ZZZZZZZ"}
                                         </span>
                                 </NavLink>
                             </li>
