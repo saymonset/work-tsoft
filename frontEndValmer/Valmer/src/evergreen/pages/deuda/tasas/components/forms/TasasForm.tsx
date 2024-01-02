@@ -599,16 +599,18 @@ export const TasasForm = ({d_fecha}: any) => {
                             </div>
                     </form>
 
-
-                    <div className="grid grid-rows-6 grid-cols-1">
-                        <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas UDIS</span>
-                    </div>    
-                        <div className="text-center text-xs text-cyan-700">
-                            <button className='bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md'
-                                    onClick={handleOpenUdi}>
-                                <span>Carga UDIS</span>
-                            </button>
-                        </div>
+                    <form onSubmit={(e) => console.log('Carga UDIS')}>
+                        <div className="grid grid-rows-6 grid-cols-1">
+                            <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas UDIS</span>
+                        </div>    
+                            <div className="text-center text-xs text-cyan-700">
+                                <button className='bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md'
+                                        onClick={handleOpenUdi}>
+                                    <span>Carga UDIS</span>
+                                </button>
+                            </div>
+                    </form>
+                    
 
                     <form onSubmit={(e) => handleSubmit(e, 'formTaIruFeFu', d_fecha)}>
                         <div className="form-titlet">

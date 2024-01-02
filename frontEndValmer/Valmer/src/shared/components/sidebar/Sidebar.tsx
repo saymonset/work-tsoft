@@ -1,78 +1,26 @@
 import { SidebarMenu } from "./SidebarMenu";
-import { SidebarData } from './SidebarData';
-import { v4 as uuidv4 } from "uuid";
-import React, { useState } from "react";
+import {SidebarData} from './SidebarData';
+import {v4 as uuidv4} from "uuid";
+import React from "react";
 
 interface SidebarProps {
     isOpen: boolean;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
+
     const username = localStorage.getItem('user');
-    const [sidebarData, setSidebarData] = useState(SidebarData);
 
-    const closeOtherMenus = (item: any) => {
-        const updatedData = sidebarData.map((menuItem: any) => {
-
-            // if (menuItem.label !== item.label) {
-            //  //   console.log('Cerrando Menus ')
-            //     menuItem.isOpen = false;
-            // }
-            // else{
-            //     console.log(item.label)
-            // }
-
-
-            if (menuItem.label !== item.label) {
-                return {
-                    ...menuItem,
-                    isOpen: false
-                };
-            }
-            if (menuItem.label === item.label) {
-                console.log(item.label)
-                return {
-                    ...menuItem,
-                    isOpen: true
-                };
-            }
-           // return menuItem;
-           
-          //  closeSubMenus(menuItem);
-            // if (menuItem.label !== item.label) {
-            //  //   console.log('Cerrando Menus ')
-            //     menuItem.isOpen = false;
-            // }
-            // else{
-            //     console.log(item.label)
-            // }
-
-        });
-
-        setSidebarData(updatedData);
-    };
-
-    const closeSubMenus = (item: any) => {
-        item.subMenu.forEach((menuItem: any) => {
-          
-            if (menuItem.label !== item.label) {
-                console.log('Cerrando submenus ')
-                menuItem.isOpen = false;
-            }
- 
-        });
-    };
-    
-
-    return (
+    return(
         <>
             {/* Sidebar backdrop (mobile only) */}
             <div
                 className="fixed inset-0 bg-slate-900 bg-opacity-30 z-0 lg:hidden lg:z-auto transition-opacity duration-200 opacity-100 pointer-events-none"
+                //aria-hidden="true"
             ></div>
 
             {/* Sidebar */}
-            <div
+            <div//ref={sidebar}
                 className={`
                 flex flex-col top-0 pt-4 overflow-y-scroll lg:overflow-y-auto bg-gradient-to-l from-cyan-950 to-cyan-800 fixed 
                             inset-y-0 left-0 z-0 w-64 transition-all duration-1000 
@@ -82,7 +30,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
                 <div className="flex justify-between mt-16 mb-14 pr-3 sm:px-2">
                     {/* Logo */}
                     <div className="grid w-full justify-items-center">
-                        <img src="/img/einstein.png" className="rounded-full w-16 text-center" alt="" />
+                        <img src="/img/einstein.png" className="rounded-full w-16 text-center" alt=""/>
                         <h5 className="text-slate-300 font-bold mt-2">{username}</h5>
                     </div>
                 </div>
@@ -92,8 +40,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
                     {/* Pages group */}
                     <div>
                         <ul className="my-10">
-                            {sidebarData.map((item, index) => {
-                                return <SidebarMenu item={item} closeOtherMenus={closeOtherMenus} key={uuidv4()} />
+                            {/** MenuSidebarItem */
+                            SidebarData.map((item, index) => {
+                                return <SidebarMenu item={item} key={uuidv4()} />
                             })}
                         </ul>
                     </div>
