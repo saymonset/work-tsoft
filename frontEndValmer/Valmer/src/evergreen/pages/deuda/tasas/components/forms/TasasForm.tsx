@@ -599,7 +599,10 @@ export const TasasForm = ({d_fecha}: any) => {
                             </div>
                     </form>
 
-                    <form onSubmit={(e) => console.log('Carga UDIS')}>
+                    <form onSubmit={(e) => {
+                               e.preventDefault(); // Prevents the default form submission
+                               console.log('Carga UDIS')
+                    }}>
                         <div className="grid grid-rows-6 grid-cols-1">
                             <span className="bg-cyan-700 text-slate-50 px-1 h-7">Tasas UDIS</span>
                         </div>    
