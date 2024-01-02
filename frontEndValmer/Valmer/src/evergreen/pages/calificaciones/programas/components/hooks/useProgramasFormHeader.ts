@@ -91,6 +91,10 @@ export const useProgramasFormHeader = () => {
         }
     }, [catalog]);
 
+    useEffect(() => {
+        handleErase()
+    }, [])
+
     const handleTv = (e: React.ChangeEvent<HTMLSelectElement>) => {
         dispatch(updateSelectedTvCalifPro(e.target.value));
         setTriggerEmisora(true);

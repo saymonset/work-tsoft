@@ -82,7 +82,6 @@ export const fetchDataGetSave = async <V>(
         await showAlert("success", "Guardado",
             response?.data?.message ?? response?.data?.body?.message ?? response?.data?.body);
     } catch (error: any) {
-        console.log(error)
         if (error.message.includes('Network Error')) {
             await showAlert('error', 'Error', 'No hay conexión con el servidor');
         } else {
@@ -91,17 +90,17 @@ export const fetchDataGetSave = async <V>(
     }
 };
 
-export const fetchDataGetEnvioMail = async <V>(
+export const fetchDataGetAlert = async <V>(
     url: string,
+    title: string,
+    textTitle: string,
     errorTitle: string,
-    email: string,
     params?: V
 ): Promise<void> => {
     try {
         await valmerApi.get(url, {params});
-        await showAlert("success", "Enviado", "Se envío la contraseña a " + email);
+        await showAlert("success", title, textTitle);
     } catch (error: any) {
-        console.log(error)
         if (error.message.includes('Network Error')) {
             await showAlert('error', 'Error', 'No hay conexión con el servidor');
         } else {
@@ -209,15 +208,13 @@ export const fetchDataPostAct = async <U, V>(
     }
 };
 
-export const downloadFile = async   <U, V>(
+export const fetchDataPostRetNoAlert = async   <U, V>(
     url: string,
-    successTitle: string,
     errorTitle: string,
     data?: U,
     params?: V
 ): Promise<any> => {
     try {
- 
         const response: AxiosResponse<ApiResponsePost> = await valmerApi.post(url, data, {params});
         return response.data
     } catch (error: any) {
@@ -228,28 +225,6 @@ export const downloadFile = async   <U, V>(
         }
     }    
 }
-
-
-export const downloadFileGET = async   <U, V>(
-    url: string,
-    successTitle: string,
-    errorTitle: string,
-    data?: U,
-    params?: V
-): Promise<any> => {
-    try {
-        const response: AxiosResponse<ApiResponsePost> = await valmerApi.get(url, {params});
-        return response.data
-    } catch (error: any) {
-        if (error.message.includes('Network Error')) {
-            await showAlert('error', 'Error', 'No hay conexión con el servidor');
-        } else {
-            await showAlert('error', `Error ${errorTitle}`, error.message);
-        }
-    }    
-}
-
-
 
 export const fetchDataSIGet = async <T extends Action>(
     url: string,

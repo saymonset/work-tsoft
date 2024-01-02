@@ -132,18 +132,41 @@ export const useCau = () => {
         }));
     };
 
-    const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
+    const handleServicio = (servicio: string) => {
+        const selectCatalog = catalog.find((item) =>
+            item.catalogo === "INTRANET.CR_CAU_SERVICIOS");
 
-        setLoadingSave(true)
+        if (selectCatalog) {
+            const id = Object.keys(selectCatalog.registros).find(key =>
+                selectCatalog.registros[key] === servicio);
+
+            if (id) {
+                return id;
+            }
+        }
+
+        return "0"
+    }
+
+    const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setLoadingSave(true);
+
+        let modifiedQueryFolio = { ...queryFolio };
+
+        if (isNaN(Number(modifiedQueryFolio.n_servicio))) {
+            modifiedQueryFolio.n_servicio = handleServicio(modifiedQueryFolio.n_servicio).toString();
+        }
+
         await fetchDataPost(
             "/latam/cr/mantenimiento-cau/modificados/actualiza-status",
             " al intentar actualizar status modificados",
-            queryFolio,
-            {s_user: userEncoded()}
-        )
-        setLoadingSave(false)
-    }
+            modifiedQueryFolio,
+            { s_user: userEncoded() }
+        );
+
+        setLoadingSave(false);
+    };
 
     const eraseFilters = () => {
         setIsEdit(false)

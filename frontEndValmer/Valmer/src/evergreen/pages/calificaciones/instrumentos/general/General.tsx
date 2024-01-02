@@ -3,11 +3,15 @@ import { HocRestricted } from '../../../restrictedAccess'
 import { MoonLoader } from 'react-spinners'
 import { CalifInstForm, CalifInstFormHeader } from '../components'
 import { FormInstProps } from '../../../../../model'
+import { useEffect } from 'react'
 
 export const General = (props: FormInstProps) => {
 
-    props.setIsFondos(false)
-
+    useEffect(() => {
+        props.handleLimpiar()
+        props.setIsFondos(false)
+    }, [])
+    
     const title = "Calificaciones Instrumentos"
 
     return (

@@ -11,8 +11,6 @@ export const UmsLatam = () => {
         downloadCsvFile,
         textSearch,
         HandleChangeBuscar,
-        handleKeyDown,
-        searchText,
         handleOpenCarga,
         handleOpenDelete,
         handleOpenEdit,
@@ -20,13 +18,39 @@ export const UmsLatam = () => {
         handleCloseCarga,
         isOpenEdit,
         handleCloseEdit,
-        handleSubmitForm,
         registro,
         handleChangeForm,
         isOpenDelete,
         handleCloseDelete,
-        deleteByISIN
+        setOpenDelete,
+        deletebyIsin,
+        isinToDelete,
+        setOpenEdit,
+        saveDataUser
     } = useUmsMexCat();
+
+    const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        setOpenEdit(false)
+        await saveDataUser(registro, 9018)
+        await getDataTable(12, 0, '', 9018)
+    }
+
+    const searchText = async () => {
+        await getDataTable(12, 0, textSearch, 9018)
+    }
+
+    const deleteByISIN = async (isinToDelete: string | null) => {
+        setOpenDelete(false);
+        await deletebyIsin(9018, isinToDelete)
+        await getDataTable(12, 0, '', 9018)
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            searchText();
+        }
+    };
 
     return (
         <>
@@ -102,7 +126,7 @@ export const UmsLatam = () => {
                     <form onSubmit={handleSubmitForm}>
                         <div className="form-cols-1 -my-3">
                             <div className="form-input">
-                                <input type="text" name="S_ISIN" id="isin" value={registro.S_ISIN} onChange={handleChangeForm} placeholder='' readOnly/>
+                                <input type="text" name="S_ISIN" id="isin" value={registro.S_ISIN} onChange={handleChangeForm} placeholder='' readOnly />
                                 <label htmlFor="isin">Isin</label>
                             </div>
                         </div>
@@ -130,7 +154,7 @@ export const UmsLatam = () => {
                             <button
                                 className="btn"
                                 type='button'
-                                onClick={handleOpenDelete}
+                                onClick={() => handleOpenDelete(registro.S_ISIN)}
                             >
                                 Eliminar
                             </button>
@@ -146,12 +170,12 @@ export const UmsLatam = () => {
 
                 <Modal isOpen={isOpenDelete} onClose={handleCloseDelete} title="Desea Eliminar!!!">
                     <div>
-                        ¿Desea eliminar el isin {registro.S_ISIN} de la bd?
+                        ¿Desea eliminar el isin {isinToDelete} de la bd?
                     </div>
                     <div className="line" />
                     <div className="flex justify-end">
                         <button className="btn"
-                            onClick={deleteByISIN}
+                            onClick={() => deleteByISIN(isinToDelete)}
                         >Continuar</button>
                         <button
                             className="btn"

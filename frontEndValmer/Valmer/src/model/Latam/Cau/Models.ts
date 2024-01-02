@@ -65,4 +65,5 @@ export interface FolioCau {
     s_observaciones: string;
     s_archivo: string;
     s_atendio: string;
+    muestra_boton_grabar: boolean;
 }

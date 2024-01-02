@@ -29,7 +29,7 @@ export const Tasas = () => {
                         type="date"
                         name="lastRegCoupon"
                         id="lastRegCoupon"
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                        className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                           border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                           dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                         placeholder=""
@@ -51,19 +51,19 @@ export const Tasas = () => {
                 <div className="flex-1 mr-6 text-right text-cyan-700 font-bold">
                     <button
                         className="bg-cyan-700 hover:bg-green-700
-                                    text-white py-1 rounded-md px-3 mx-1"
+                                    text-white py-0 rounded-md px-3 mx-1"
                         onClick={handleQueryTasas}>
                         <ButtonContent name="Consultar" loading={isLoadingConsulta}/>
                     </button>
                     <button
                         className="bg-cyan-700 hover:bg-green-700
-                                    text-white py-1 rounded-md px-3 mx-1"
+                                    text-white py-0 rounded-md px-3 mx-1"
                         onClick={handleEraseData}>
                         <span>Limpiar</span>
                     </button>
                 </div>
             </div>
-            <div className="mt-2">
+            <div className="mt-0">
                 <TasasForm d_fecha = {currentDate} />
             </div>
         </>

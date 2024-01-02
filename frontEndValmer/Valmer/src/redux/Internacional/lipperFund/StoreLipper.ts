@@ -32,8 +32,8 @@ const formValuesLipperReducer = createReducer<FormValuesLipper>(
     {} as FormValuesLipper,
     (builder) => {
         builder.addCase(updateFormValuesLipper, (_state, action) => {
-            return action.payload
-        })
+                return action.payload
+            })
     }
 )
 

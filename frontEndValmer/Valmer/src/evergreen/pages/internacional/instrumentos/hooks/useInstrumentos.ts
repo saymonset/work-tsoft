@@ -8,10 +8,8 @@ import {
     ResponseConsultaDataInter
 } from "../../../../../model";
 import {
-    updateConsultaDataInter,
     updateEmisoraInter,
     updateFieldRequiredIntern,
-    updateFormValuesInter,
     updateIsNewInterForm,
     updateRequiredEmisoraInter,
     updateRequiredSerieInter,
@@ -25,7 +23,7 @@ import {
     eraseConsultaData,
     eraseFormInsValues,
     eraseFormValuesInstrumentos,
-    fetchDataPost, fetchDataPostRet, showAlert,
+    fetchDataPostRet, showAlert,
     userEncoded,
     validateFormFields
 } from "../../../../../utils";
@@ -165,7 +163,7 @@ export const useInstrumentos = () => {
         event.preventDefault();
         if(await validateFormFields(consultaData.body, dispatch, requeridosInter, undefined, undefined, fieldRequireInter)) {
             setLoadingSubmit(true)
-            const response = await fetchDataPostRet("/instrumentos/eurobonos/guarda-info",
+            await fetchDataPostRet("/instrumentos/eurobonos/guarda-info",
                 "al intentar guardar datos",
                 consultaData.body,
                 {s_user: userEncoded()})

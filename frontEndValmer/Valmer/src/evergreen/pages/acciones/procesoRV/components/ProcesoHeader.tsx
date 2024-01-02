@@ -2,22 +2,23 @@ import React from "react";
 import { useProcesoHeader } from "./hooks";
 
 interface ProcesoHeaderProps {
+    currentDate: string;
     onCurrentDateChange: (newDate: string) => void;
     onProcessSelectionChange: (isSelected: boolean) => void;
 }
 
 export const ProcesoHeader: React.FC<ProcesoHeaderProps> = ({
+    currentDate,
     onCurrentDateChange,
     onProcessSelectionChange,
 }) => {
 
     const {
         selectedVectorRV,
-        currentDate,
         setFechaProcesoRV,
         setSelectVector,
         handleErase
-    } = useProcesoHeader()
+    } = useProcesoHeader({onCurrentDateChange, onProcessSelectionChange})
 
     return (
         <div className="flex">

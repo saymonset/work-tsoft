@@ -27,10 +27,10 @@ export const UserBloqueo = (data: UserBloqueoProps) => {
     }
 
     return (
-        <div className="form-cols-2 animate__animated animate__fadeIn">
+        <div className="form-cols-2 animate__animated animate__fadeIn flex items-center">
             <div className="text-red-700 font-bold text-center">USUARIO BLOQUEADO</div>
             <button
-                className="btn h-2/5 w-2/4"
+                className="btn w-min m-0 p-0"
                 onClick={desbloqueaUsuario}
             >
                 <ButtonContent name="DESBLOQUEAR" loading={loading} />

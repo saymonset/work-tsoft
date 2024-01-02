@@ -22,7 +22,7 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
 
     const [state, dispatchRed] = useReducer(reducer, initialState);
 
-    const inputRef = useRef<HTMLInputElement>(null);
+    const inputRefs = useRef<(HTMLInputElement | HTMLSelectElement | null)[]>([]);
     const selectRef = useRef<HTMLSelectElement>(null);
 
     const dispatch = useDispatch()
@@ -107,31 +107,39 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
         }
     }, []);
 
+    const sortedColumns = useMemo(() => {
+        return columns
+            .filter(column => !column.DisabledFieldForm)
+            .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+    }, [columns]);
+
     const handleNew = useCallback(async () => {
 
         updateState({ loadingNewId: true, isNew: true });
-
         const response : ResponseConstCatAdmin = await fetchDataGetRet(
             "/catalogos/obtiene-nuevo-id",
             " al obtener nuevo id",
             {s_nombre_catalogo: nameCatalog}
         );
-
         updateState({ loadingNewId: false });
 
         const key = Object.keys(response.body)[0];
-
         setRegistroSeleccionado(({
             id: (response.body as any)[key].toString(),
             [key.toLowerCase()]: (response.body as any)[key].toString(),
         }));
 
-        if(inputRef.current) {
-            inputRef.current.focus();
-            inputRef.current.scrollIntoView({ behavior: 'smooth' });
-        } else if(selectRef.current) {
-            selectRef.current.focus();
-            selectRef.current.scrollIntoView({ behavior: 'smooth' });
+        const firstEditableIndex = sortedColumns.findIndex(column =>
+            !column.DisabledFieldForm &&
+            !column.isReadOnly &&
+            column.type === "input"
+        );
+
+        if (firstEditableIndex !== -1 && inputRefs.current[firstEditableIndex]) {
+            // @ts-ignore
+            inputRefs.current[firstEditableIndex].focus();
+            // @ts-ignore
+            inputRefs.current[firstEditableIndex].scrollIntoView({ behavior: 'smooth' });
         }
     }, [nameCatalog]);
 
@@ -231,6 +239,15 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
 
         const { id, ...request } = registroSeleccionado;
 
+        // Verificar si el catálogo es 'bacc_subramo_ing'
+        if (nameCatalog.toLowerCase() === 'bacc_subramo_ing') {
+            // Encontrar el valor de 's_descripcion' y agregar 'n_clasificacion_sectorial'
+            const sDescripcionValue = request['s_descripcion'];
+            if (sDescripcionValue) {
+                request['n_clasificacion_sectorial'] = sDescripcionValue;
+            }
+        }
+
         await fetchDataPost(
             "/catalogos/guardar-catalogo",
             " al guardar catalogo",
@@ -255,12 +272,33 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
         [registroSeleccionado]
     );
 
+    // const validSelectValue = useCallback(
+    //     (value: string) => {
+    //         return registroSeleccionado?.[value] ?? "";
+    //     },
+    //     [registroSeleccionado]
+    // );
+
     const validSelectValue = useCallback(
-        (name: string) => {
-            return registroSeleccionado?.[name] ?? "";
+        (value: string, catalogName: string | undefined) => {
+
+            const currentValue = registroSeleccionado?.[value];
+
+            if (!isNaN(Number(currentValue))) {
+                return currentValue;
+            }
+
+            const foundCatalog = catalogStatic.find(catalog => catalog.catalogo === catalogName);
+            if (foundCatalog) {
+                const foundKey = Object.keys(foundCatalog.registros).find(key => foundCatalog.registros[key] === currentValue);
+                return foundKey ?? currentValue;
+            }
+
+            return currentValue ?? "";
         },
         [registroSeleccionado]
     );
+
 
     const registros = useMemo(() => {
         return state.catalogs?.map((catalog, index) => ({
@@ -275,7 +313,7 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
 
     return {
         isNew: state.isNew,
-        selectRef, inputRef,
+        selectRef, inputRefs, sortedColumns,
         loadingNomCorto: state.loadingNomCorto,
         registros, loadingSave: state.loadingSave,
         loadingDelete: state.loadingDelete, loadingNewId: state.loadingNewId,

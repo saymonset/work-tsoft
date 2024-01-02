@@ -2,7 +2,6 @@ import React, {useEffect} from "react";
 import {RespConsultaDataCR} from "../../../../../../model";
 import {fetchDataGetRet, fetchDataPost, showAlert, userEncoded} from "../../../../../../utils";
 import {useInitialVarCr} from "./useInitialVarCr";
-import * as sweetalert2 from "sweetalert2";
 
 export const useCostaRica = () => {
 
@@ -199,21 +198,39 @@ export const useCostaRica = () => {
         }
         
         try {
-            const bodyInfo = consultaData.body.info_rw[Object.keys(consultaData.body.info_rw)[0]]
-            const request = {
-                ...consultaData.body.info_bd,
-                ...bodyInfo[`${selectedEmisor}_${selectedNemo}_${selectedSerie}`],
-                s_emisor: selectedEmisor,
-                s_nemo_instr: selectedNemo,
-                s_serie: selectedSerie,
-            }
 
-            await fetchDataPost(
-                "/latam/cr/actualiza-info",
-                " al intentar actualizar informacion costa rica",
-                request,
-                {s_user: userEncoded()}
-            )
+            if(activeNuevo){
+                const request = {
+                    ...consultaData.body.info_bd,
+                    s_emisor: selectedEmisor,
+                    s_nemo_instr: selectedNemo,
+                    s_serie: selectedSerie,
+                }
+
+                await fetchDataPost(
+                    "/latam/cr/actualiza-info",
+                    " al intentar actualizar informacion costa rica",
+                    request,
+                    {s_user: userEncoded()}
+                )
+            }else{
+                const bodyInfo = consultaData.body.info_rw[Object.keys(consultaData.body.info_rw)[0]]
+                const request = {
+                    ...consultaData.body.info_bd,
+                    ...bodyInfo[`${selectedEmisor}_${selectedNemo}_${selectedSerie}`],
+                    s_emisor: selectedEmisor,
+                    s_nemo_instr: selectedNemo,
+                    s_serie: selectedSerie,
+                }
+
+                await fetchDataPost(
+                    "/latam/cr/actualiza-info",
+                    " al intentar actualizar informacion costa rica",
+                    request,
+                    {s_user: userEncoded()}
+                )
+            }
+            
         }
         catch (err) {
             await showAlert("error", "Error", "Error al ejecutar la actualizacion de datos :::" + err)

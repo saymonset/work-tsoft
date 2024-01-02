@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { fetchDataGetRet, fetchDataPost, fetchDataPostAct, downloadFile } from "../../../../../utils";
+import {
+  fetchDataGetRet,
+  fetchDataPost,
+  fetchDataPostAct,
+  fetchDataPostRetNoAlert
+} from "../../../../../utils";
 import { IUmsMexCat, RegistrosUMSMexCat } from '../Models'
 import { Base64 } from 'js-base64'
 import fileDownload from 'js-file-download'
@@ -33,7 +38,8 @@ export const useUmsMexCat = () => {
   const [isOpenEdit, setOpenEdit] = useState(false);
   const [isOpenCarga, setOpenCarga] = useState(false);
   const [registro, setRegistro] = useState<RegistrosUMSMexCat>(regInicial)
-  const [textSearch, setTextSearch] = useState('')
+  const [textSearch, setTextSearch] = useState('');
+  const [isinToDelete, setIsinToDelete] = useState<string | null>(null);
 
 
   const getDataTable = async (numRegistros: number, position: number, txt_buscar: string, id_reu_formato: number) => {
@@ -91,7 +97,7 @@ export const useUmsMexCat = () => {
         "Borrar",
         " al borrar datos",
         [], {
-          idReuFormato: idReuFormato,
+        idReuFormato: idReuFormato,
         sIsin: sIsin
       }
       )
@@ -106,9 +112,8 @@ export const useUmsMexCat = () => {
 
   const downloadCsvFile = async (idReuFormato: number) => {
     try {
-      const response = await downloadFile(
+      const response = await fetchDataPostRetNoAlert(
         "/reuters/carga-info-csv",
-        "Descargar archivo",
         " al descargar archivo csv",
         [], { idReuFormato: idReuFormato }
       )
@@ -130,9 +135,10 @@ export const useUmsMexCat = () => {
     setOpenCarga(false);
   }
 
-  const handleOpenDelete = () => {
+  const handleOpenDelete = (sisinToDelete: string) => {
+    setIsinToDelete(sisinToDelete);
     setOpenDelete(true);
-  }
+  };
 
   const handleCloseDelete = () => {
     setOpenDelete(false);
@@ -158,38 +164,15 @@ export const useUmsMexCat = () => {
     setRegistro({ ...registro, [nameInput]: value })
   }
 
-  const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setOpenEdit(false)
-    await saveDataUser(registro, 9018)
-    await getDataTable(12, 0, '', 9018)
-  }
-
   const HandleChangeBuscar = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
     const text = e.currentTarget.value
     setTextSearch(text)
   }
 
-  const searchText = async () => {
-    await getDataTable(12, 0, textSearch, 9018)
-  }
-
   const handleCloseEdit = () => {
     setOpenEdit(false);
   }
-
-  const deleteByISIN = async () => {
-    setOpenDelete(false);
-    await deletebyIsin(9017, registro.S_ISIN)
-    await getDataTable(12, 0, '', 9018)
-  }
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      searchText();
-    }
-  };
 
   return {
     tableData,
@@ -201,8 +184,6 @@ export const useUmsMexCat = () => {
     HandleChangeBuscar,
     saveDataUser,
     deletebyIsin,
-    handleKeyDown,
-    searchText,
     handleOpenCarga,
     handleOpenDelete,
     handleOpenEdit,
@@ -210,11 +191,12 @@ export const useUmsMexCat = () => {
     handleCloseCarga,
     isOpenEdit,
     handleCloseEdit,
-    handleSubmitForm,
     registro,
     handleChangeForm,
     isOpenDelete,
     handleCloseDelete,
-    deleteByISIN
+    setOpenDelete,
+    isinToDelete,
+    setOpenEdit
   }
 }

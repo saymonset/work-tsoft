@@ -29,9 +29,13 @@ import {
     userEncoded,
     validateFormFields
 } from "../../../../../../utils";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 export const useEraseData = () => {
+
+    useEffect(() => {
+        handleLimpiarClick()
+    }, [])
 
     const requeridosGuber: any = {
         s_tv: useRef<HTMLInputSelectNull>(null),

@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {updateConsultaSubastas, updateIsConsultaLog, updateIsShowLog} from "../../../../../redux";
 import {fetchDataPostNoMsj, showAlert} from "../../../../../utils";
@@ -115,6 +115,9 @@ export const useSubastas = (s: SubastasProps) => {
         return areAllFieldsEmpty(instrument);
     };
 
+    useEffect(() => {
+        handleErase()
+    }, [])
 
     return {
         loadingConsulta,

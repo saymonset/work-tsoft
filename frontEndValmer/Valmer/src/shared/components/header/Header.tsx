@@ -17,9 +17,9 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
     }
 
     return (
-        <header className={`sticky top-0 bg-white border-b border-slate-200 z-10`}>
+        <header className={`sticky top-0 bg-white border-b border-slate-200 z-10 text-sm`}>
             <div className="px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-16 -mb-px">
+                <div className="flex items-center justify-between h-18 -mb-px">
                     <div className="flex items-center">
                         <button
                             className="text-cyan-700 hover:text-green-600 px-4"
@@ -30,7 +30,7 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
                         </button>
 
                         <button className="px-4">
-                            <img className="w-130px h-38px" src="/img/logoValmer__int_new_.jpg" alt=""/>
+                            <img className="w-130 h-12 py-1" src="/img/logoValmer__int_new_.jpg" alt=""/>
                         </button>
 
                         <button className="text-cyan-700 hover:text-green-600 font-bold"
@@ -42,7 +42,7 @@ export const Header: React.FC<HeaderProps> = ({ onClick }) => {
                     {/* Header: Right side */}
                     <div className="flex items-center">
                         <a href="https://www.valmer.com.mx/" target="_blank"
-                           className="text-cyan-700 hover:text-green-600 text-sm font-bold py-2">WEB VALMER
+                           className="text-cyan-700 hover:text-green-600 text-xs font-bold py-2">WEB VALMER
                         </a>
                         <hr className="w-px h-6 bg-slate-200 mx-3"/>
                         <a href="http://www.mexder.com.mx/wb3/wb/MEX" target="_blank"

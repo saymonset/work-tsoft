@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect } from "react"
 import { getCurrentDate } from "../../../../../../utils"
 import {useDispatch, useSelector} from "react-redux"
 import {
@@ -24,17 +24,20 @@ import {
 } from "../../../../../../redux"
 import {RootState} from "@reduxjs/toolkit/dist/query/core/apiState";
 
-export const useProcesoHeader = () => {
+interface ProcesoHeaderProps {
+    onCurrentDateChange: (newDate: string) => void;
+    onProcessSelectionChange: (isSelected: boolean) => void;
+}
+
+export const useProcesoHeader = (props: ProcesoHeaderProps) => {
 
     const selectedVectorRV = useSelector((state: RootState<any, any, any>) =>
         state.selectedVectorRV) as unknown as string;
 
-    const [currentDate, setCurrentDate] = useState<string>(getCurrentDate)
-
     const dispatch = useDispatch()
 
     const setFechaProcesoRV = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setCurrentDate(e.target.value)
+        props.onCurrentDateChange(e.target.value)
         dispatch(updateFechaProcesoRV(e.target.value))
     }
 
@@ -66,11 +69,15 @@ export const useProcesoHeader = () => {
         dispatch(updateCheckPrecalIntProcesoRv(false))
         dispatch(updateCheckGenerarSalidas(false))
         dispatch(updateCheckProduccionSalidas(false))
+        props.onCurrentDateChange(getCurrentDate())
     }
+
+    useEffect(() => {
+        handleErase()
+    }, [])
 
     return {
         selectedVectorRV,
-        currentDate,
         setFechaProcesoRV,
         setSelectVector,
         handleErase
