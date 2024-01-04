@@ -1,15 +1,9 @@
 import React from 'react';
+import { CalProps } from '../../model';
 
-interface ModalProps {
-	isOpen: boolean;
-	onClose: () => void;
-	title: string;
-	modalSize?: 'small' | 'medium' | 'large' | 'extra-large';
-	children?: React.ReactNode;
-	isEuroCurvas?: boolean;
-}
 
-export const Modal: React.FC<ModalProps> = ({
+
+export const Modal: React.FC<CalProps> = ({
 												isOpen,
 												onClose,
 												title,

@@ -150,6 +150,22 @@ export interface ModalCalProps {
     precios: CalPrecios
     tasasInt: CalTasasInt
 }
+
+export interface CalProps {
+    isOpen?: boolean;
+	onClose?: () => void;
+	title?: string;
+	modalSize?: 'small' | 'medium' | 'large' | 'extra-large';
+	children?: React.ReactNode;
+    instrument?:string;
+	isEuroCurvas?: boolean;
+    selectedEmisora?: string;
+    selectedSerie?: string;
+    selectedTv?:string;
+    isModalOpen?:boolean;
+    handleModalClose?: () => void;
+
+}
 export interface TvEmiSerieProps
 {
     isNewFormInst: boolean,
