@@ -6,6 +6,7 @@ import React from "react";
 export const TvEmiSeriesDefault = (propsDef : TvEmiSerieProps) => {
 
     const handleTv =(event:any) => {
+        
         propsDef.handleClickTv(event);
         propsDef.handleChange(event);
     }

@@ -86,6 +86,7 @@ export const useHandleData = ({requeridos}: any) => {
     };
 
     const handleChange = <T extends HTMLInputElement | HTMLSelectElement>(e: React.ChangeEvent<T>) => {
+        
         const { name, value} = e.target;
         const updatedData: ResponseConsultaData = { body: {...consultaData.body, [name]: value} };
         dispatch(updateConsultaData(updatedData));

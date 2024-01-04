@@ -31,7 +31,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
                     {/* Logo */}
                     <div className="grid w-full justify-items-center">
                         <img src="/img/einstein.png" className="rounded-full w-16 text-center" alt=""/>
-                        <h5 className="text-slate-300 font-bold mt-2">{username}</h5>
+                        <h5 className="text-slate-300 font-bold mt-2">{username }</h5>
                     </div>
                 </div>
 

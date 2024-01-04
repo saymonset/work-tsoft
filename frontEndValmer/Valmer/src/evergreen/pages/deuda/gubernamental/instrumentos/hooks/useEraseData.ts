@@ -37,6 +37,8 @@ export const useEraseData = () => {
         handleLimpiarClick()
     }, [])
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const requeridosGuber: any = {
         s_tv: useRef<HTMLInputSelectNull>(null),
         s_emisora: useRef<HTMLInputSelectNull>(null),
@@ -116,6 +118,30 @@ export const useEraseData = () => {
         dispatch(updateNInfoGuber(2))
     }
 
+    
+    const handleCalculator = async  (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        // if (!isValidSelection(selectedTv, selectedEmisora, selectedSerie)) return;
+
+        // setInstrument(`${selectedTv}_${selectedEmisora}_${selectedSerie}`);
+        // setLoading(true);
+        // let data = { sEmisora: selectedEmisora, sSerie: selectedSerie, sTv: selectedTv };
+
+        try {
+            // const response =
+            //     await valmerApi.get("/instrumentos/eurobonos/calculadora-precios",
+            //     { params: data });
+            // handleApiResponse(response, selectedTv, selectedEmisora, selectedSerie);
+        } catch (error: any) {
+            // if (error.message.includes('Network Error')) {
+            //     await showAlert('error', 'Error', 'No hay conexión con el servidor');
+            // }
+        } finally {
+        //    setLoading(false);
+            setIsModalOpen(true);
+        }
+    };
+
     const handleNuevaSerieClick = async () => {
         console.log(formValuesIns.s_emisora)
         if (await validateFormFields(formValuesIns, dispatch, requeridosGuber)) {
@@ -165,5 +191,18 @@ export const useEraseData = () => {
         eraseSerieEmisora();
     };
 
-    return {loadingSubmit, requeridosGuber, handleSubmit, handleLimpiarClick, handleNuevoClick, handleNuevaSerieClick}
+    const handleModalClose = () => {
+        setIsModalOpen(false);
+    }
+
+    return {loadingSubmit, 
+            requeridosGuber, 
+            handleSubmit, 
+            handleLimpiarClick, 
+            handleNuevoClick, 
+            handleNuevaSerieClick,
+            handleCalculator,
+            isModalOpen,
+            handleModalClose
+        }
 }

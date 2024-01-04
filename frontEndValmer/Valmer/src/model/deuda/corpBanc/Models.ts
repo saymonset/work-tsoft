@@ -1,7 +1,6 @@
 import React from "react";
 
 export type DataTypeKey = "FvDeudaCorpInstrumentos" | "FvDeudaGobInstrumentos" | "FvInterInstrumentos";
-
 export type HTMLInputSelectNull = HTMLInputElement | HTMLSelectElement | null
 
 export interface CarCalTasas {

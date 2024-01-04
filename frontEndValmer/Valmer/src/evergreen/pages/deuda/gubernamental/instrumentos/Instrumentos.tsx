@@ -4,6 +4,7 @@ import {Panel} from "./Panel";
 import {useEraseData} from "./hooks";
 import { HocRestricted } from "../../../restrictedAccess";
 import { Link } from "react-router-dom";
+import { CalModal } from "./components/CalModal";
 export const Instrumentos = () => {
 
     const {
@@ -12,7 +13,12 @@ export const Instrumentos = () => {
         handleSubmit,
         handleLimpiarClick,
         handleNuevoClick,
-        handleNuevaSerieClick } = useEraseData()
+        handleNuevaSerieClick,
+        handleCalculator,
+        isModalOpen,
+        handleModalClose
+
+     } = useEraseData()
 
     const title = "Instrumentos Gubernamentales"
 
@@ -47,6 +53,14 @@ export const Instrumentos = () => {
                 </Link>
                 <div>|</div>
                 <button
+                      className="btn"
+                      onClick={handleCalculator}
+                >
+                    <i className="fa fa-calculator"></i>
+                    <ButtonContent name=" Calculadora" loading={loadingSubmit}/>
+                </button>
+                <div>|</div>
+                <button
                     className="btn"
                     onClick={handleLimpiarClick}
                 >
@@ -55,6 +69,13 @@ export const Instrumentos = () => {
             </div>
 
             <Panel requeridos={requeridosGuber} />
+
+            <CalModal isModalOpen={isModalOpen}
+                          instrument={"instrument"}
+                          selectedTv={"selectedTv"}
+                          selectedEmisora={"selectedEmisora"}
+                          selectedSerie={"selectedSerie"}
+                          handleModalClose={handleModalClose} />
         </HocRestricted>
     )
 }
