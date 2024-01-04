@@ -23,7 +23,7 @@ export const Tasas = () => {
         <>
             <TitleDate title="Tasas"/>
 
-            <div className="flex">
+            <div className="flex my-1">
                 <div className="relative z-0 w-40">
                     <input
                         type="date"

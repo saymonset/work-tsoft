@@ -5,10 +5,10 @@ export const TitleDate = ({title}: any) => {
     return (
         <>
             <div className="flex">
-                <div className="flex-1  ml-8 text-cyan-700 text-2xl font-semibold">
+                <div className="flex-1 ml-8 text-cyan-700 text-lg font-semibold">
                     {title}
                 </div>
-                <div className="flex-1 mr-6  text-right text-cyan-700 text-lg font-bold">
+                <div className="flex-1 mr-6  text-right text-cyan-700 text-lg font-semibold">
                     {capitalizeDate()}
                 </div>
             </div>

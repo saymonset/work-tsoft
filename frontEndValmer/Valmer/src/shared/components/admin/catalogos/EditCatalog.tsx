@@ -147,7 +147,8 @@ export const EditCatalog = ({nameCatalog, setShowTable, columns, edit}: PropsEdi
                                                     className="mt-8 block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
                                                     border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
-                                                    value={validSelectValue(name.toLowerCase(), catalog)}
+                                                    // value={validSelectValue(name.toLowerCase(), catalog)}
+                                                    value={validSelectValue(name.toLowerCase())}
                                                     onChange={handleChange}
                                             >
                                                 <option value="default">...</option>

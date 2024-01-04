@@ -824,7 +824,7 @@ export const DataCatCau = [
                 text: 'CAU_SERVICIOS',
                 columns: [
                         { name: 'N_SERVICIO', type: 'input' },
-                        { name: 'S_AREA', columnName: 'N_AREA', field: "N_AREA", type: 'select', catalog: "CAU_AREA" },
+                        { name: 'S_AREA', columnName: 'N_AREA', field: "N_AREA", type: 'select', catalog: "CAU_AREA"},
                         { name: 'S_SERVICIO', type: 'input' }
                 ]
         },
@@ -846,6 +846,7 @@ export const DataCatCau = [
                 text: 'CAU_USUARIOS',
                 columns: [
                         { name: 'N_USUARIO', type: 'select', catalog: "SEG_USUARIOS" },
+                        { name: 'S_NOMBRE', type: 'input', DisabledFieldForm: true },
                         { name: 'S_SERVICIO', columnName: 'N_SERVICIO', type: 'select', catalog: "CAU_SERVICIOS" },
                         { name: 'S_ENCARGADO', columnName: 'N_ENCARGADO', type: 'select', catalog: "CAU_ENCARGADO" }
                 ]
@@ -1122,25 +1123,25 @@ export const DataPerfilInstrumento = [
         {
                 text: 'PERFIL_INSTRUMENTO_ADRS',
                 columns: [
-                        { name: 'S_INSTR_ADR', type: 'input', isReadOnly: false },
-                        { name: 'S_INSTR_REF', type: 'input', isReadOnly: false }
+                        { name: 'S_INSTR_ADR', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_INSTR_REF', type: 'input', isReadOnly: false, isReadOnlyEdit: false }
                 ],
                 edit: true
         },
         {
                 text: 'PERFIL_INSTRUMENTO_CAT_FONDOS',
                 columns: [
-                        { name: 'N_CLASIFICACION', type: 'input', isReadOnly: false },
-                        { name: 'S_DESCRIPCION', type: 'input', isReadOnly: false }
+                        { name: 'N_CLASIFICACION', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_DESCRIPCION', type: 'input', isReadOnly: false, isReadOnlyEdit: false }
                 ],
                 edit: true
         },
         {
                 text: 'PERFIL_INSTRUMENTO_CLAS_FONDOS',
                 columns: [
-                        { name: 'S_TV', type: 'input', isReadOnly: false },
-                        { name: 'S_EMISORA', type: 'input', isReadOnly: false },
-                        { name: 'N_CLASIFICACION', type: 'input', isReadOnly: false }
+                        { name: 'S_TV', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_EMISORA', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'N_CLASIFICACION', type: 'input', isReadOnly: false, isReadOnlyEdit: false }
                 ],
                 edit: true
         },
@@ -1156,32 +1157,32 @@ export const DataPerfilInstrumento = [
         {
                 text: 'PERFIL_INSTRUMENTO_INST_EXC',
                 columns: [
-                        { name: 'S_TV', type: 'input', isReadOnly: false  },
-                        { name: 'B_PERFIL', type: 'input' , isReadOnly: false },
-                        { name: 'B_LIQUIDEZ', type: 'input' , isReadOnly: false }
+                        { name: 'S_TV', type: 'input', isReadOnly: false, isReadOnlyEdit: false  },
+                        { name: 'B_PERFIL', type: 'input' , isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'B_LIQUIDEZ', type: 'input' , isReadOnly: false, isReadOnlyEdit: false }
                 ],
                 edit: true
         },
         {
                 text: 'PERFIL_INSTRUMENTO_REGLAS',
                 columns: [
-                        { name: 'S_TV', type: 'input' },
-                        { name: 'S_MERCADO', type: 'input' },
-                        { name: 'S_DXV', type: 'input' },
-                        { name: 'S_RIESGO_CREDITO', type: 'input' },
-                        { name: 'S_CALIFICACION', type: 'input' },
-                        { name: 'S_MERCADO_SECUNDARIO', type: 'input' },
-                        { name: 'S_PAIS_INSTRUMENTO', type: 'input' },
-                        { name: 'S_PAIS_EMISOR', type: 'input' },
-                        { name: 'S_DISTRIBUCION', type: 'input' },
-                        { name: 'S_CALIF_CUSTODIO', type: 'input' },
-                        { name: 'S_TIPO_PAPEL', type: 'input' },
-                        { name: 'S_DURACION_MAC', type: 'input' },
-                        { name: 'S_BURSATILIDAD', type: 'input' },
-                        { name: 'S_RIESGO_LIQUIDEZ', type: 'input' },
-                        { name: 'S_VOLATILIDAD', type: 'input' },
-                        { name: 'S_RIESGO_MERCADO', type: 'input' },
-                        { name: 'S_MODELO_INSTR', type: 'input' }
+                        { name: 'S_TV', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_MERCADO', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_DXV', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_RIESGO_CREDITO', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_CALIFICACION', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_MERCADO_SECUNDARIO', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_PAIS_INSTRUMENTO', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_PAIS_EMISOR', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_DISTRIBUCION', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_CALIF_CUSTODIO', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_TIPO_PAPEL', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_DURACION_MAC', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_BURSATILIDAD', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_RIESGO_LIQUIDEZ', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_VOLATILIDAD', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_RIESGO_MERCADO', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_MODELO_INSTR', type: 'input', isReadOnly: false, isReadOnlyEdit: false }
                 ],
                 edit: true
         },

@@ -63,7 +63,7 @@ export const EvergreenRoutes = () => {
 
                 <Header onClick={toggleSidebar}/>
 
-                <div className="px-4">
+                <div className="px-4 mb-10">
                     <Routes>
                         <Route path="home" element={
                             <Suspense fallback={getLoading()}>

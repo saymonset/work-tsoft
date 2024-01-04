@@ -1,16 +1,16 @@
 import { Dispatch } from "redux";
-import { AccCalifLatam, fieldToValidateAccionesInst, IsFieldRequiredAccInst, RefReqAccCalifLatam } from "../../../model";
-import { updateRequiredFieldAccInst } from "../../../redux";
+import { AccCalifLatam, IsFieldReqCalifProg, RefReqAccCalifLatam, fieldToValidateCalifProg } from "../../../model";
 import { focusElement } from "../../Utils";
+import { updateRequiredCalifProg } from "../../../redux/Calificaciones/Programas/actions";
 
-export const validAccionesInstField = async (
+export const validProgramasField = async (
     formValues: AccCalifLatam,
     dispatch: Dispatch,
-    fieldRequired: IsFieldRequiredAccInst,
+    fieldRequired: IsFieldReqCalifProg,
     requeridos: RefReqAccCalifLatam
 ) => {
 
-    for (const field of fieldToValidateAccionesInst) {
+    for (const field of fieldToValidateCalifProg) {
         if (isInvalidField(formValues[field.name], field.defaultValue)) {
             updateFieldAsInvalid(dispatch, fieldRequired, field.name);
             focusElement(field.name, requeridos[field.name]);
@@ -23,6 +23,6 @@ export const validAccionesInstField = async (
 
 const isInvalidField = (fieldValue: any, defaultValue: string) => !fieldValue || fieldValue === defaultValue || fieldValue == 0;
 
-const updateFieldAsInvalid = (dispatch: Dispatch, fieldRequired: IsFieldRequiredAccInst, fieldName: string) => {
-    dispatch(updateRequiredFieldAccInst({ ...fieldRequired, [fieldName]: true }));
+const updateFieldAsInvalid = (dispatch: Dispatch, fieldRequired: IsFieldReqCalifProg, fieldName: string) => {
+    dispatch(updateRequiredCalifProg({ ...fieldRequired, [fieldName]: true }));
 };

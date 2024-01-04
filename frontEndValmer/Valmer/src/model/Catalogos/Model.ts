@@ -40,6 +40,14 @@ export interface ResponseConstCatAdmin {
     };
 }
 
+export interface ResponseCauCLientes {
+    n_cliente: number;
+    s_nomcorto: string;
+    s_nombre: string;
+    s_usuario: string;
+    s_password: string;
+}
+
 export interface RegistroConstCatAdmin {
     [key: string]: string;
 }

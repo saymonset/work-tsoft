@@ -23,7 +23,7 @@ export const useProgramasForm = () => {
     useEffect(() => {
         if (!catalogProCarac || Object.keys(catalogProCarac).length === 0) {
             setLoading(true);
-            valmerApi.get<ApiResponseCalificaciones>('/calificaciones/instrumentos/fondos/tabla-calificadora')
+            valmerApi.get<ApiResponseCalificaciones>('/calificaciones/programas/tabla-calificadora')
                 .then(response => {
                     setLoading(false);
                     dispatch(updateCalifProCarac(response.data.body));

@@ -27,6 +27,11 @@ export const InstrumentosRoutes = () => {
         consultaData,
         loadingConsultaData,
         loadingSave,
+        isFieldReqCalifInst,
+        refReqInst,
+        requiredTv,
+        requiredEmisora,
+        requiredSerie,
         setIsFondos,
         handleChange,
         handleTv,
@@ -62,6 +67,11 @@ export const InstrumentosRoutes = () => {
                     consultaData={consultaData}
                     loadingConsultaData={loadingConsultaData}
                     loadingSave={loadingSave}
+                    isFieldReqCalifInst={isFieldReqCalifInst}
+                    refReqInst={refReqInst}
+                    requiredTv={requiredTv}
+                    requiredEmisora={requiredEmisora}
+                    requiredSerie={requiredSerie}
                     setIsFondos={setIsFondos}
                     handleChange={handleChange}
                     handleChangeFile={handleChangeFile}
@@ -96,6 +106,11 @@ export const InstrumentosRoutes = () => {
                     consultaData={consultaData}
                     loadingConsultaData={loadingConsultaData}
                     loadingSave={loadingSave}
+                    isFieldReqCalifInst={isFieldReqCalifInst}
+                    refReqInst={refReqInst}
+                    requiredTv={requiredTv}
+                    requiredEmisora={requiredEmisora}
+                    requiredSerie={requiredSerie}
                     setIsFondos={setIsFondos}
                     handleChange={handleChange}
                     handleChangeFile={handleChangeFile}

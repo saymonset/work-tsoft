@@ -5,16 +5,18 @@ import {ButtonContent} from "../../../../../../shared";
 import {CauFormsProps} from "../../../../../../model";
 
 export const CauForm = ({
-    loadingSave,
-    loadingFolio,
-    isEdit,
-    catalog,
-    queryFolio,
-    handleChange,
-    handleSave,
-    status
-}: CauFormsProps) => {
+                            loadingSave,
+                            loadingFolio,
+                            isEdit,
+                            catalog,
+                            queryFolio,
+                            handleChange,
+                            handleSave,
+                            status
+                        }: CauFormsProps) => {
+
     const isCerrados = status === "Cerrados";
+    const isAbiertos = status === "Abiertos";
 
     return (
         <div>
@@ -28,7 +30,7 @@ export const CauForm = ({
                         <form>
                             <div className="form-cols-2">
                                 <span className="form-title col-span-2">DATOS</span>
-                                <div className="-my-3">
+                                <div className="mt-1 -my-3">
                                     <div className="form-input">
                                         <input type="text"
                                                name="n_folio"
@@ -39,7 +41,7 @@ export const CauForm = ({
                                         </label>
                                     </div>
                                 </div>
-                                <div className="-my-3">
+                                <div className="mt-1 -my-3">
                                     <div className="form-input">
                                         <input type="text"
                                                name="n_area"
@@ -49,7 +51,7 @@ export const CauForm = ({
                                     </div>
                                 </div>
                                 {isEdit ? (
-                                    <div className="-my-3 animate__animated animate__fadeIn">
+                                    <div className="mt-2 -my-3 animate__animated animate__fadeIn">
                                         <div className="form-select">
                                             <select name="n_servicio"
                                                     value={queryFolio.n_servicio}
@@ -65,7 +67,7 @@ export const CauForm = ({
                                         </div>
                                     </div>
                                 ) : (
-                                    <div className="-my-3 animate__animated animate__fadeIn">
+                                    <div className="mt-2 -my-3 animate__animated animate__fadeIn">
                                         <div className="form-input">
                                             <input type="text"
                                                    name="n_servicio"
@@ -75,7 +77,7 @@ export const CauForm = ({
                                         </div>
                                     </div>
                                 )}
-                                <div className="-my-3">
+                                <div className="mt-2 -my-3">
                                     <div className="form-input">
                                         <input type="text"
                                                name="n_empresa"
@@ -84,7 +86,7 @@ export const CauForm = ({
                                         <label htmlFor="n_empresa">EMPRESA</label>
                                     </div>
                                 </div>
-                                <div className="-my-3">
+                                <div className="mt-2 -my-3">
                                     <div className="form-input">
                                         <input type="text"
                                                name="s_nombre"
@@ -93,7 +95,7 @@ export const CauForm = ({
                                         <label htmlFor="s_nombre">NOMBRE</label>
                                     </div>
                                 </div>
-                                <div className="-my-3">
+                                <div className="mt-2 -my-3">
                                     <div className="form-input">
                                         <input type="text"
                                                name="s_correo"
@@ -103,7 +105,7 @@ export const CauForm = ({
                                     </div>
                                 </div>
                                 {!isCerrados &&
-                                    <div className="-my-3">
+                                    <div className="mt-2 -my-3">
                                         <div className="form-input">
                                             <input type="text"
                                                    name="s_telefono"
@@ -113,7 +115,18 @@ export const CauForm = ({
                                         </div>
                                     </div>
                                 }
-                                <div className="-my-3">
+                                {isAbiertos &&
+                                    <div className="mt-2 -my-3">
+                                        <div className="form-input">
+                                            <input type="text"
+                                                   name="s_sector"
+                                                   value={queryFolio.s_sector ?? ""}
+                                                   readOnly/>
+                                            <label htmlFor="s_telefono">SECTOR</label>
+                                        </div>
+                                    </div>
+                                }
+                                <div className="mt-2 -my-3">
                                     <div className="form-text-area">
                                     <textarea name="s_descripcion"
                                               value={queryFolio.s_descripcion ?? ""}
@@ -125,7 +138,7 @@ export const CauForm = ({
 
                                 {!queryFolio.s_archivo || queryFolio.s_archivo != "" &&
                                     (
-                                        <div className="-my-3">
+                                        <div className="mt-2 -my-3">
                                             <div className="form-input">
                                                 <input type="text"
                                                        name="s_archivo"
@@ -137,7 +150,7 @@ export const CauForm = ({
                                     )
                                 }
                                 {isCerrados &&
-                                    <div className="-my-3">
+                                    <div className="mt-2 -my-3">
                                         <div className="form-input">
                                             <input type="text"
                                                    name="s_atendio"
@@ -147,7 +160,7 @@ export const CauForm = ({
                                         </div>
                                     </div>
                                 }
-                                <div className="-my-3">
+                                <div className="mt-2 -my-3">
                                     <div className="form-select">
                                         <select name="n_status"
                                                 value={queryFolio.n_status}
@@ -164,7 +177,7 @@ export const CauForm = ({
                                 </div>
                                 {queryFolio.n_status === "3" && (
                                     <>
-                                        <div className="-my-3">
+                                        <div className="mt-2 -my-3">
                                             <div className="form-date">
                                                 <input
                                                     type="date"
@@ -177,11 +190,11 @@ export const CauForm = ({
                                                 </label>
                                             </div>
                                         </div>
-                                        <div className="-my-3">
+                                        <div className="mt-2 -my-3">
                                             <div className="form-text-area">
                                     <textarea name="s_observaciones"
                                               value={queryFolio.s_observaciones ?? ""}
-                                              readOnly>
+                                              onChange={handleChange}>
                                     </textarea>
                                                 <label htmlFor="s_observaciones">Observaciones</label>
                                             </div>

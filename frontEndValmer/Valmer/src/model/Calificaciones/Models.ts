@@ -1,4 +1,6 @@
+import { MutableRefObject } from "react";
 import {Catalogo} from "../deuda";
+import { InputOrSelect, SelectOrNull } from "../Models";
 
 export interface RatingAgency {
     [agency: string]: Catalogo[];
@@ -10,6 +12,7 @@ export interface ApiResponseCalificaciones {
 }
 
 export interface CalifProgramas {
+    [key: string]: string;
     s_tv: string;
     s_emisora: string;
     n_plazo_calif: string;
@@ -36,7 +39,6 @@ export interface CalifProgramas {
     n_calif_best_g: string;
     d_fec_best: string;
     d_fecha: string;
-    [key: string]: string
 }
 
 export const DefaultValuesProgramas: CalifProgramas = {
@@ -132,6 +134,7 @@ export interface CalifEmisoraData {
 }
 
 export interface CalifInstData {
+    [key: string]: string;
     n_calif_verum_g: string,
     n_calif_moody_g: string,
     s_bolsa_emi: string,
@@ -274,6 +277,11 @@ export interface FormInstProps {
     consultaData: CalifInstData;
     loadingConsultaData: boolean;
     loadingSave: boolean;
+    isFieldReqCalifInst: IsFieldReqCalifInst;
+    refReqInst: RefReqInst;
+    requiredTv: boolean;
+    requiredEmisora: boolean;
+    requiredSerie: boolean;
     setIsFondos: React.Dispatch<React.SetStateAction<boolean>>;
     handleChange: (e: React.ChangeEvent<HTMLInputElement | 
                                         HTMLSelectElement | 
@@ -287,3 +295,74 @@ export interface FormInstProps {
     handleGuardar: () => void;
     handleLimpiar: () => void;
 }
+
+export interface IsFieldReqCalifEmi {
+    [key: string]: boolean;
+    n_emisor: boolean;
+    n_pais: boolean;
+}
+
+export interface RefReqEmi {
+    [key: string]: React.MutableRefObject<SelectOrNull>;
+    n_emisor: React.MutableRefObject<SelectOrNull>;
+    n_pais: React.MutableRefObject<SelectOrNull>;
+}
+
+export const fieldToValidateCalifEmi = [
+    { name: 'n_emisor', defaultValue: 'default' },
+    { name: 'n_pais', defaultValue: 'default' }
+]
+
+export interface IsFieldReqCalifProg {
+    [key: string]: boolean;
+    s_tv: boolean;
+    s_emisora: boolean;
+    n_plazo_calif: boolean;
+}
+
+export interface RefReqProg {
+    [key: string]: React.MutableRefObject<SelectOrNull>;
+    s_tv: React.MutableRefObject<SelectOrNull>;
+    s_emisora: React.MutableRefObject<SelectOrNull>;
+    n_plazo_calif: React.MutableRefObject<SelectOrNull>;
+}
+
+export const fieldToValidateCalifProg = [
+    { name: 's_emisora', defaultValue: 'default' },
+    { name: 'n_plazo_calif', defaultValue: 'default' }
+]
+
+export interface IsFieldReqCalifInst {
+    [key: string]: boolean;
+    s_tv: boolean;
+    s_emisora: boolean;
+    s_serie: boolean;
+    s_pais: boolean;
+    s_moneda: boolean;
+    s_emisor: boolean;
+    s_tipo_papel: boolean;
+    s_com_val: boolean;
+    s_bolsa_emi: boolean;
+}
+
+export interface RefReqInst {
+    [key: string]: React.MutableRefObject<InputOrSelect>;
+    s_tv: React.MutableRefObject<InputOrSelect>;
+    s_emisora: React.MutableRefObject<InputOrSelect>;
+    s_serie: React.MutableRefObject<InputOrSelect>;
+    s_pais: React.MutableRefObject<SelectOrNull>;
+    s_moneda: MutableRefObject<SelectOrNull>;
+    s_emisor: MutableRefObject<SelectOrNull>;
+    s_tipo_papel: MutableRefObject<SelectOrNull>;
+    s_com_val: MutableRefObject<SelectOrNull>;
+    s_bolsa_emi: MutableRefObject<SelectOrNull>;
+}
+
+export const fieldToValidateCalifInst = [
+    { name: 's_pais', defaultValue: 'default' },
+    { name: 's_moneda', defaultValue: 'default' },
+    { name: 's_emisor', defaultValue: 'default' },
+    { name: 's_tipo_papel', defaultValue: 'default' },
+    { name: 's_com_val', defaultValue: 'default' },
+    { name: 's_bolsa_emi', defaultValue: 'default' }
+]

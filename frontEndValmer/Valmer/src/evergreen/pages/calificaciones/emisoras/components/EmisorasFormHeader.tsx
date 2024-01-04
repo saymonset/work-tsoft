@@ -10,6 +10,7 @@ export const EmisorasFormHeader = () => {
         loadingSave,
         loading,
         catalog,
+        isFieldReqCalifEmi,
         handleSave,
         handleChange} = useEmisorasHeader()
 
@@ -26,13 +27,10 @@ export const EmisorasFormHeader = () => {
     }
 
     return (
-        <div className="ml-4 mr- mt-10 form-cols-2">
-            <div className="relative z-0">
+        <div className="ml-4 form-cols-2">
+            <div className="form-select">
                 <select defaultValue="default"
                         name="n_emisor"
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                        border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                        dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
                         onChange={handleChange}
                 >
                     <option value="default">...</option>
@@ -42,17 +40,18 @@ export const EmisorasFormHeader = () => {
                         </option>
                     ))}
                 </select>
-                <label htmlFor="n_emisor" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]">
+                <label htmlFor="n_emisor">
                     Emisora
                 </label>
+                {isFieldReqCalifEmi.n_emisor && (
+                    <span className="fontError animate__animated animate__fadeIn">
+                        Campo requerido Emisora
+                    </span>
+                )}
             </div>
-            <div className="relative z-0">
+            <div className="form-select">
                 <select defaultValue="default"
                         name="n_pais"
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                        border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                        dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
                         onChange={handleChange}
                 >
                     <option value="default">...</option>
@@ -62,28 +61,27 @@ export const EmisorasFormHeader = () => {
                         </option>
                     ))}
                 </select>
-                <label htmlFor="n_pais" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]">
+                <label htmlFor="n_pais">
                     País
                 </label>
+                {isFieldReqCalifEmi.n_pais && (
+                    <span className="fontError animate__animated animate__fadeIn">
+                        Campo requerido País
+                    </span>
+                )}
             </div>
-            <div className="mt-4 mb-4 relative z-0">
+            <div className="form-input">
                 <input
-                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
-                    border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600 dark:focus:border-cyan-700
-                    focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                     type="text"
                     name="s_entidad"
                     placeholder=""
                     onChange={handleChange}
                     required
                 />
-                <label htmlFor="s_entidad" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]">
+                <label htmlFor="s_entidad">
                     Entidad
                 </label>
             </div>
-
 
             <div className="flex justify-end items-center">
                 <button className="btn" onClick={handleSave}>

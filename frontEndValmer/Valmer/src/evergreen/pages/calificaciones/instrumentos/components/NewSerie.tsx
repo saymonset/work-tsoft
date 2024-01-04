@@ -20,6 +20,11 @@ export const NewSerie = (props: FormInstProps) => {
                     ))}
                 </select>
                 <label htmlFor="s_tv">TV</label>
+                {props.requiredTv && (
+                    <span className="fontError animate__animated animate__fadeIn">
+                        Campo requerido TV
+                    </span>
+                )}
             </div>
             <div className="form-select">
                 <select 
@@ -37,6 +42,11 @@ export const NewSerie = (props: FormInstProps) => {
                 </select>
                 {props.loadingEmisoras && <BarLoader className="mt-2" color="#059669" width={180} />}
                 <label htmlFor="s_emisora">EMISORA</label>
+                {props.requiredEmisora && (
+                    <span className="fontError animate__animated animate__fadeIn">
+                        Campo requerido EMISORA
+                    </span>
+                )}
             </div>
             <div className="form-input">
                 <input 
@@ -47,6 +57,11 @@ export const NewSerie = (props: FormInstProps) => {
                     value={props.consultaData.s_serie || ""}
                 />
                 <label htmlFor="s_serie">SERIE</label>
+                {props.requiredSerie && (
+                    <span className="fontError animate__animated animate__fadeIn">
+                        Campo requerido SERIE
+                    </span>
+                )}
             </div>
         </>
     )

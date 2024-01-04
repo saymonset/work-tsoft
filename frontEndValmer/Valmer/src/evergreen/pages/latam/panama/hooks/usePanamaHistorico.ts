@@ -33,14 +33,48 @@ export const usePanamaHistorico = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setAllFieldsKeys(checkCampos ? campos?.body?.map(item => Object.keys(item)[0]) || [] : []);
-  }, [checkCampos, campos]);
+    if (checkCampos) {
+        handleMoveAllFieldsToRight();
+    }else{
+      handleMoveAllFieldsToLeft();
+    }
+}, [checkCampos]);
 
   useEffect(() => {
     setAllNemotecnicoOptions(checkNemotecnicos ? nemoTecnicoHistorico || [] : []);
   }, [checkNemotecnicos, nemoTecnicoHistorico]);
 
   const handleAllFieldsChange = () => setCheckCampos(!checkCampos);
+
+  const handleMoveAllFieldsToRight = () => {
+    const sourceSelect = document.getElementById('campos') as HTMLSelectElement | null;
+    const targetSelect = document.getElementById('pickList') as HTMLSelectElement | null;
+
+    if (sourceSelect && targetSelect) {
+        var options = Array.from(sourceSelect.options);
+
+        options.forEach(option => {
+            targetSelect.add(new Option(option.text, option.value));
+            setSelectedCampos(prevSelected => [...prevSelected, option.value]);
+        });
+    }
+};
+
+// Función para mover todos los campos del select de escogidos al select de campos
+const handleMoveAllFieldsToLeft = () => {
+  const pickListSelect = document.getElementById('pickList') as HTMLSelectElement | null;
+  const sourceSelect = document.getElementById('campos') as HTMLSelectElement | null;
+
+  if (pickListSelect && sourceSelect) {
+    const options = Array.from(pickListSelect.options);
+
+    options.forEach(option => {
+      sourceSelect.add(new Option(option.text, option.value));
+      setSelectedCampos(prevSelected => prevSelected.filter(value => value !== option.value)); 
+      pickListSelect.remove(option.index); // remover la opción del select de la derecha
+    });
+  }
+}
 
   const handleRightArrowClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();

@@ -1,4 +1,5 @@
 import {
+    AccCalifLatam,
     Acciones,
     AccionesAdd,
     Catalogo,
@@ -19,8 +20,11 @@ import {
     IsFieldModifiedFvDdGobIns,
     IsFieldModifiedFvDerivados,
     IsFieldModifiedFvInterIns,
+    IsFieldReqCalifInst,
+    IsFieldReqCalifProg,
     IsFieldRequiredAccInst,
-    RequeridosAcc,
+    IsFieldRequiredLatPanama,
+    RefReqAccCalifLatam,
     RequeridosCorp,
     RequeridosDefDerivados,
     RequeridosDerivados,
@@ -44,16 +48,20 @@ import {
     updateFormValuesInter,
     updateRequiredEmisora,
     updateRequiredEmisoraAcc,
+    updateRequiredEmisoraCalifInst,
     updateRequiredEmisoraCorp,
     updateRequiredEmisoraDer,
     updateRequiredEmisoraInter,
     updateRequiredSerie,
     updateRequiredSerieAcc,
+    updateRequiredSerieCalifInst,
     updateRequiredSerieCorp,
     updateRequiredSerieDer,
     updateRequiredSerieInter,
     updateRequiredTv,
     updateRequiredTvAcc,
+    updateRequiredTvCalifInst,
+    updateRequiredTvCalifProg,
     updateRequiredTvCorp,
     updateRequiredTvDer,
     updateRequiredTvInter
@@ -68,11 +76,17 @@ import Sweet from "sweetalert2";
 import React, {ChangeEvent} from "react";
 import {fetchDataPost} from "./UtilsAxios";
 import {ActionCreatorWithPayload} from "@reduxjs/toolkit";
-import {validCorpField, validInternacionalField} from "./ValidFields";
-import {validGubField} from "./ValidFields/Deuda/Guber";
-import {validDerivadosField} from "./ValidFields/Derivados/Listados";
-import { validDefDerivadosField } from "./ValidFields/Derivados/DefDerivados";
-import { validAccionesInstField } from "./ValidFields/Acciones/Instrumentos";
+import {
+    validAccionesInstField, 
+    validCalifInstField, 
+    validCorpField, 
+    validDefDerivadosField, 
+    validDerivadosField, 
+    validGubField, 
+    validInternacionalField, 
+    validProgramasField} from "./ValidFields";
+import { validLatPamanaField } from "./ValidFields/Latam/Panama";
+import { useDispatch } from "react-redux";
 
 export const generateUUID = (): string => {
     return uuidv4();
@@ -237,6 +251,8 @@ export const validChangeTvEmiSerie = (name: string, dispatch: Dispatch) => {
         dispatch(updateRequiredTvInter(false))
         dispatch(updateRequiredTvDer(false))
         dispatch(updateRequiredTvAcc(false))
+        dispatch(updateRequiredTvCalifProg(false))
+        dispatch(updateRequiredTvCalifInst(false))
     }
     if (name === 's_emisora') {
         dispatch(updateRequiredEmisora(false))
@@ -244,6 +260,7 @@ export const validChangeTvEmiSerie = (name: string, dispatch: Dispatch) => {
         dispatch(updateRequiredEmisoraInter(false))
         dispatch(updateRequiredEmisoraDer(false))
         dispatch(updateRequiredEmisoraAcc(false))
+        dispatch(updateRequiredEmisoraCalifInst(false))
     }
     if (name === 's_serie') {
         dispatch(updateRequiredSerie(false))
@@ -251,6 +268,7 @@ export const validChangeTvEmiSerie = (name: string, dispatch: Dispatch) => {
         dispatch(updateRequiredSerieInter(false))
         dispatch(updateRequiredSerieDer(false))
         dispatch(updateRequiredSerieAcc(false))
+        dispatch(updateRequiredSerieCalifInst(false))
     }
 }
 
@@ -343,29 +361,53 @@ export const validateFormDerivadosFields = async (
     return true;
 }
 
-export const validateFormAccFields = async (
-    formValues: Acciones,
-    dispatch: Dispatch,
-    requeridos: RequeridosAcc,
-    fieldRequiredAccInst?: IsFieldRequiredAccInst) => {
+export const validateFieldsAccCalifLatam = async (
+    formValues: AccCalifLatam,
+    requeridos: RefReqAccCalifLatam,
+    isEmisora: boolean,
+    isSerie: boolean,
+    dispatch?: Dispatch,
+    fieldRequiredAccInst?: IsFieldRequiredAccInst,
+    fieldRequiredCalifProg?: IsFieldReqCalifProg,
+    fieldRequiredCalifInst?: IsFieldReqCalifInst,
+    fieldRequiredLatPanama?: IsFieldRequiredLatPanama,
+    setFieldRequiredLatPanama?: React.Dispatch<React.SetStateAction<IsFieldRequiredLatPanama>>) => {
 
-    if (!formValues?.s_tv || formValues.s_tv == 'default') {
-        dispatch(updateRequiredTvAcc(true))
-        focusElement("s_tv", requeridos.s_tv)
-        return false;
+    if (dispatch) {
+        if (!formValues?.s_tv || formValues.s_tv == 'default') {
+            dispatch(updateRequiredTvAcc(true))
+            dispatch(updateRequiredTvCalifProg(true))
+            dispatch(updateRequiredTvCalifInst(true))
+            focusElement("s_tv", requeridos.s_tv)
+            return false;
+        }
+        if (isEmisora && (!formValues.s_emisora || formValues.s_emisora == 'default')) {
+            dispatch(updateRequiredEmisoraAcc(true))
+            dispatch(updateRequiredEmisoraCalifInst(true))
+            focusElement("s_emisora", requeridos.s_emisora)
+            return false;
+        }
+        if (isSerie && (!formValues.s_serie || formValues.s_serie == 'default')) {
+            dispatch(updateRequiredSerieAcc(true))
+            dispatch(updateRequiredSerieCalifInst(true))
+            focusElement("s_serie", requeridos.s_serie)
+            return false;
+        }
+        if (fieldRequiredAccInst) {
+            return validAccionesInstField(formValues, dispatch, fieldRequiredAccInst, requeridos)
+        }
+    
+        if (fieldRequiredCalifProg) {
+            return validProgramasField(formValues, dispatch, fieldRequiredCalifProg, requeridos)
+        }
+    
+        if (fieldRequiredCalifInst) {
+            return validCalifInstField(formValues, dispatch, fieldRequiredCalifInst, requeridos)
+        }
     }
-    if (!formValues.s_emisora || formValues.s_emisora == 'default') {
-        dispatch(updateRequiredEmisoraAcc(true))
-        focusElement("s_emisora", requeridos.s_emisora)
-        return false;
-    }
-    if (!formValues.s_serie || formValues.s_serie == 'default') {
-        dispatch(updateRequiredSerieAcc(true))
-        focusElement("s_serie", requeridos.s_serie)
-        return false;
-    }
-    if (fieldRequiredAccInst) {
-        return validAccionesInstField(formValues, dispatch, fieldRequiredAccInst, requeridos)
+
+    if (fieldRequiredLatPanama && setFieldRequiredLatPanama) {
+        return validLatPamanaField(formValues, setFieldRequiredLatPanama, fieldRequiredLatPanama, requeridos)
     }
 
     return true;

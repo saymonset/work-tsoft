@@ -1,7 +1,8 @@
 import { useEffect } from "react"
-import { fetchDataGetRet } from "../../../../../utils"
+import { fetchDataGetRet, validChangeTvEmiSerie } from "../../../../../utils"
 import { CalifInstData } from "../../../../../model"
 import { useCalifInstVar } from "./useCalifInstVar"
+import { useDispatch } from "react-redux"
 
 export const useTvEmiSerieCalif = () => {
     
@@ -53,6 +54,8 @@ export const useTvEmiSerieCalif = () => {
         setLoadingConsultaData,
         setTriggerConsultaData
     } = useCalifInstVar()
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         if (!tv || tv.length === 0) {
@@ -163,6 +166,8 @@ export const useTvEmiSerieCalif = () => {
         setSelectedEmisora("...")
         setSelectedSerie("...")
         setSelectedTv(e.target.value)
+        validChangeTvEmiSerie("s_tv", dispatch)
+        setConsultaData({...consultaData, "s_tv": e.target.value})
     }
 
     const handleEmisora = (e: any) => {
@@ -175,12 +180,16 @@ export const useTvEmiSerieCalif = () => {
             setSelectedSerie("...")
         }
         setSelectedEmisora(e.target.value)
+        validChangeTvEmiSerie("s_emisora", dispatch)
+        setConsultaData({...consultaData, "s_emisora": e.target.value})
     }
 
     const handleSerie = (e: any) => {
         setConsultaData({} as CalifInstData)
         setTriggerConsultaData(true)
         setSelectedSerie(e.target.value)
+        validChangeTvEmiSerie("s_serie", dispatch)
+        setConsultaData({...consultaData, "s_serie": e.target.value})
     }
 
     return {

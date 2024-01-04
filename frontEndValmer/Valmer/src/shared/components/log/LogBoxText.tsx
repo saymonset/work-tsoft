@@ -11,7 +11,7 @@ export const LogBoxText = (p: LogProps) => {
         if (log.length > 0) {
             return (
                 <div
-                    className="bg-gray-900 text-green-500 p-2 mt-4 w-full resize-y overflow-auto"
+                    className="bg-gray-900 text-green-500 p-2 mt-4 w-full resize-y overflow-auto max-h-[30rem]"
                     dangerouslySetInnerHTML={{ __html: log }}
                     style={{ minHeight: '30rem' }}
                 />

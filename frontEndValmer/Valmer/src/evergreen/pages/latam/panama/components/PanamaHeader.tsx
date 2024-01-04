@@ -41,32 +41,41 @@ export const PanamaHeader = (data: PanamaHeaderProps) => {
                                 <div className="form-input animate__animated animate__fadeIn">
                                     <input
                                         type="text"
-                                        name="nemotecnico"
-                                        id="nemotecnico"
+                                        name="s_nemotecnico"
+                                        id="s_nemotecnico"
                                         placeholder=''
                                         value={data.selectedNemoTecnico}
-                                        onChange={(e) =>
-                                        {data.setSelectedNemoTecnico(e.target.value)}}
+                                        onChange={data.handleNewNemo}
                                     />
                                     <label htmlFor="nemotecnico">NEMOTECNICO</label>
+                                    {data.isFieldRequiredLatPanama.s_nemotecnico && (
+                                        <span className="fontError animate__animated animate__fadeIn">
+                                            Campo requerido NEMOTECNICO
+                                        </span>
+                                    )}
                                 </div>
                             )}
                             {!data.activeNuevo && (
                                 <div className="form-select animate__animated animate__fadeIn">
                                     <select
-                                        name="nemotecnico"
-                                        id="nemotecnico"
+                                        name="s_nemotecnico"
+                                        id="s_nemotecnico"
                                         value={data.selectedNemoTecnico}
                                         onChange={data.handleSelectNemo}
                                     >
-                                        <option value="">...</option>
+                                        <option value="default">...</option>
                                         {data.nemoTecnico?.map((item) => (
                                             <option key={generateUUID()} value={item}>
                                                 {item}
                                             </option>
                                         ))}
                                     </select>
-                                    <label htmlFor="nemotecnico">NEMOTECNICO</label>
+                                    <label htmlFor="s_nemotecnico">NEMOTECNICO</label>
+                                    {data.isFieldRequiredLatPanama.s_nemotecnico && (
+                                        <span className="fontError animate__animated animate__fadeIn">
+                                            Campo requerido NEMOTECNICO
+                                        </span>
+                                    )}
                                 </div>
                             )}
                             <div className="form-select">
@@ -74,6 +83,7 @@ export const PanamaHeader = (data: PanamaHeaderProps) => {
                                     name="n_tipo_instrumento"
                                     value={data.consultaData?.body?.info_bd?.n_tipo_instrumento || "default"}
                                     onChange={data.handleChange}
+                                    ref={data.refReqLatPanama.n_tipo_instrumento}
                                 >
                                     <option value="">...</option>
                                     {getCatalogs(data.catalog, 'TIPO_INSTRUMENTO').map((column) => (
@@ -83,6 +93,11 @@ export const PanamaHeader = (data: PanamaHeaderProps) => {
                                     ))}
                                 </select>
                                 <label htmlFor="n_tipo_instrumento">TIPO INSTRUMENTO</label>
+                                {data.isFieldRequiredLatPanama.n_tipo_instrumento && (
+                                    <span className="fontError animate__animated animate__fadeIn">
+                                        Campo requerido TIPO INSTRUMENTO
+                                    </span>
+                                )}
                             </div>
                         </div>
                         {!data.activeNuevo && (

@@ -1,9 +1,31 @@
 import { RootState } from "@reduxjs/toolkit/dist/query/core/apiState"
 import { useDispatch, useSelector } from "react-redux"
-import { CalifInstData, Catalogo, CatalogoCalificadoras, SectionType, ValuesNewInstr } from "../../../../../model"
-import React, { useEffect, useState } from "react"
-import { fetchDataGetRet, fetchDataPost, getCurrentDate, handleFileChangeCalif, userEncoded } from "../../../../../utils"
-import { updateCatalogCalifInst, updateCatalogCalificadoras } from "../../../../../redux"
+import { 
+    CalifInstData, 
+    Catalogo, 
+    CatalogoCalificadoras, 
+    InputOrSelect, 
+    IsFieldReqCalifInst, 
+    RefReqInst, 
+    SectionType, 
+    SelectOrNull, 
+    ValuesNewInstr} from "../../../../../model"
+import React, { useEffect, useRef, useState } from "react"
+import { 
+    fetchDataGetRet, 
+    fetchDataPost, 
+    getCurrentDate, 
+    handleFileChangeCalif, 
+    userEncoded, 
+    validChangeTvEmiSerie, 
+    validateFieldsAccCalifLatam } from "../../../../../utils"
+import { 
+    updateCatalogCalifInst, 
+    updateCatalogCalificadoras, 
+    updateRequiredCalifInst, 
+    updateRequiredEmisoraCalifInst, 
+    updateRequiredSerieCalifInst, 
+    updateRequiredTvCalifInst } from "../../../../../redux"
 import { useTvEmiSerieCalif } from "./useTvEmiSerieCalif"
 
 export const useCalifInstForm = () => {
@@ -49,11 +71,35 @@ export const useCalifInstForm = () => {
         handleSerie
     } = useTvEmiSerieCalif()
 
+    const refReqInst: RefReqInst = {
+        s_tv: useRef<InputOrSelect>(null),
+        s_emisora: useRef<InputOrSelect>(null),
+        s_serie: useRef<InputOrSelect>(null),
+        s_pais: useRef<SelectOrNull>(null),
+        s_moneda: useRef<SelectOrNull>(null),
+        s_emisor: useRef<SelectOrNull>(null),
+        s_tipo_papel: useRef<SelectOrNull>(null),
+        s_com_val: useRef<SelectOrNull>(null),
+        s_bolsa_emi: useRef<SelectOrNull>(null),
+    }
+
     const catalog = useSelector((state: RootState<any, any, any>) =>
         state.catalogCalif) as unknown as Catalogo[]
 
     const catalogCalif = useSelector((state: RootState<any, any, any>) => 
         state.catalogCalificadoras) as unknown as CatalogoCalificadoras
+
+    const isFieldReqCalifInst = useSelector((state: RootState<any, any, any>) => 
+        state.isFieldReqCalifInst) as unknown as IsFieldReqCalifInst
+
+    const requiredTv = useSelector((state: RootState<any, any, any>) => 
+        state.requiredTvCalifInst) as unknown as boolean;
+
+    const requiredEmisora = useSelector((state: RootState<any, any, any>) => 
+        state.requiredEmisoraCalifInst) as unknown as boolean;
+
+    const requiredSerie = useSelector((state: RootState<any, any, any>) => 
+        state.requiredSerieCalifInst) as unknown as boolean;
 
     const dispatch = useDispatch()
 
@@ -122,6 +168,10 @@ export const useCalifInstForm = () => {
         }
 
         setConsultaData(updateFormData)
+
+        dispatch(updateRequiredCalifInst({ ...isFieldReqCalifInst, [name]: false }));
+
+        validChangeTvEmiSerie(name, dispatch)
     }
 
     const handleLimpiar = () => {
@@ -136,18 +186,24 @@ export const useCalifInstForm = () => {
             setSelectedEmisora("")
             setSelectedSerie("")
             setConsultaData({} as CalifInstData)
+            dispatch(updateRequiredTvCalifInst(false))
+            dispatch(updateRequiredEmisoraCalifInst(false))
+            dispatch(updateRequiredSerieCalifInst(false))
+            dispatch(updateRequiredCalifInst({} as IsFieldReqCalifInst))
         }, 10)
     }
 
     const handleGuardar = async () => {
-        setLoadingSave(true)
-        await fetchDataPost(
-            isFondos ? "calificaciones/instrumentos/fondos/actualiza-info" : "calificaciones/instrumentos/actualiza-info",
-            " al guardar instrumento",
-            consultaData,
-            {s_user: userEncoded()}
-        )
-        setLoadingSave(false)
+        if (await validateFieldsAccCalifLatam(consultaData, refReqInst, true, true, dispatch, undefined, undefined, isFieldReqCalifInst)) {
+            setLoadingSave(true)
+            await fetchDataPost(
+                isFondos ? "calificaciones/instrumentos/fondos/actualiza-info" : "calificaciones/instrumentos/actualiza-info",
+                " al guardar instrumento",
+                consultaData,
+                {s_user: userEncoded()}
+            )
+            setLoadingSave(false)
+        }
     }
 
     const handleNuevo = () => {
@@ -200,6 +256,11 @@ export const useCalifInstForm = () => {
         consultaData,
         loadingConsultaData,
         loadingSave,
+        isFieldReqCalifInst,
+        refReqInst,
+        requiredTv,
+        requiredEmisora,
+        requiredSerie,
         setIsFondos,
         handleNuevo,
         handleNuevaSerie,

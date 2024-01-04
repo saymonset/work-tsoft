@@ -17,7 +17,10 @@ export const Panama = () => {
         loadingConsultaData,
         loadingNemo,
         catalog,
-        setSelectedNemoTecnico,
+        isFieldRequiredLatPanama,
+        refReqLatPanama,
+        //setSelectedNemoTecnico,
+        handleNewNemo,
         handleCheckboxChange,
         handleSelectNemo,
         handleNuevo,
@@ -52,7 +55,9 @@ export const Panama = () => {
                           catalog={catalog}
                           nemoTecnico={nemoTecnico}
                           checkboxValues={checkboxValues}
-                          setSelectedNemoTecnico={setSelectedNemoTecnico}
+                          isFieldRequiredLatPanama={isFieldRequiredLatPanama}
+                          refReqLatPanama={refReqLatPanama}
+                          handleNewNemo={handleNewNemo}
                           handleNuevo={handleNuevo}
                           handleCancel={handleCancel}
                           handleSelectNemo={handleSelectNemo}
@@ -63,6 +68,8 @@ export const Panama = () => {
             <PanamForm catalog={catalog}
                        consultaData={consultaData}
                        selectedNemoTecnico={selectedNemoTecnico}
+                       isFieldRequiredLatPanama={isFieldRequiredLatPanama}
+                       refReqLatPanama={refReqLatPanama}
                        handleChange={handleChange}/>
         </>
     )

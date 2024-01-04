@@ -20,6 +20,9 @@ export const ProgramasFormHeader = () => {
         loadingSave,
         loadingEmisoras,
         catalog,
+        isFieldReqCalifProg,
+        refReqCalifProg,
+        requiredTvCalifProg,
         handleSave,
         handleErase,
         handleChange,
@@ -65,6 +68,7 @@ export const ProgramasFormHeader = () => {
                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
                             value={selectedTv}
                             onChange={handleTv}
+                            ref={refReqCalifProg.s_tv}
                     >
                         <option value="default">...</option>
                         {tv?.map((item) => (
@@ -79,6 +83,10 @@ export const ProgramasFormHeader = () => {
                     >
                         TV
                     </label>
+                    {requiredTvCalifProg && (
+                        <span className="fontError animate__animated animate__fadeIn">
+                            Campo requerido TV</span>
+                    )}
                 </div>
                 <div className="relative z-0">
                     <select name="s_emisora"
@@ -87,6 +95,7 @@ export const ProgramasFormHeader = () => {
                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
                             value={formData?.s_emisora ?? 'default'}
                             onChange={handleChange}
+                            ref={refReqCalifProg.s_emisora}
                     >
                         <option value="default">...</option>
                         {emisora?.map((item) => (
@@ -103,6 +112,10 @@ export const ProgramasFormHeader = () => {
                     >
                         Emisora
                     </label>
+                    {isFieldReqCalifProg.s_emisora && (
+                        <span className="fontError animate__animated animate__fadeIn">
+                            Campo requerido Emisora</span>
+                    )}
                 </div>
                 <div className="mt-4 relative z-0">
                     <select defaultValue="default"
@@ -112,6 +125,7 @@ export const ProgramasFormHeader = () => {
                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
                             onChange={handleChange}
                             value={formData?.n_plazo_calif ?? 'default'}
+                            ref={refReqCalifProg.n_plazo_calif}
                     >
                         <option value="default">...</option>
                         {getCatalogs(catalog,'PLAZO_CALIF').map((column) => (
@@ -126,6 +140,10 @@ export const ProgramasFormHeader = () => {
                     >
                         Plazo Calificación
                     </label>
+                    {isFieldReqCalifProg.n_plazo_calif && (
+                        <span className="fontError animate__animated animate__fadeIn">
+                            Campo requerido Plazo Calificación</span>
+                    )}
                 </div>
                 <div className="mt-4 relative z-0">
                     <select defaultValue="default"

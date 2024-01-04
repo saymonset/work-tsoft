@@ -121,25 +121,8 @@ export const useEraseData = () => {
     
     const handleCalculator = async  (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        // if (!isValidSelection(selectedTv, selectedEmisora, selectedSerie)) return;
+        setIsModalOpen(true);
 
-        // setInstrument(`${selectedTv}_${selectedEmisora}_${selectedSerie}`);
-        // setLoading(true);
-        // let data = { sEmisora: selectedEmisora, sSerie: selectedSerie, sTv: selectedTv };
-
-        try {
-            // const response =
-            //     await valmerApi.get("/instrumentos/eurobonos/calculadora-precios",
-            //     { params: data });
-            // handleApiResponse(response, selectedTv, selectedEmisora, selectedSerie);
-        } catch (error: any) {
-            // if (error.message.includes('Network Error')) {
-            //     await showAlert('error', 'Error', 'No hay conexión con el servidor');
-            // }
-        } finally {
-        //    setLoading(false);
-            setIsModalOpen(true);
-        }
     };
 
     const handleNuevaSerieClick = async () => {

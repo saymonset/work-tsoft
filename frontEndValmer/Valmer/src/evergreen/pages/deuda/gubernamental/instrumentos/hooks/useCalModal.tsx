@@ -4,13 +4,7 @@ import { getCurrentDate } from '../../../../../../utils'
 
 export const useCalModal  = (c: CalProps) => {
     const [selectDate, setSelectDate] = useState(getCurrentDate)
-    // const [nPrecioRend, setNPrecioRend]
-    //     = useState(c.calPrecios?.body?.n_precio_rend || 0)
-    // const [nPrecioMercadoSt, setNPrecioMercadoSt]
-    //     = useState(c.calPrecios?.body?.n_precio_mercado_st || 0
-    // )
-    // const [nPrecioMercadoR, setNPrecioMercadoR]
-    //     = useState(c.calPrecios?.body?.n_precio_mercado_r || 0)
+     
 
     const [nPrecioRendResp, setNPrecioRendResp] = useState()
     const [nPrecioMercadoStResp, setNPrecioMercadoStResp] = useState()
@@ -22,39 +16,15 @@ export const useCalModal  = (c: CalProps) => {
 
      
     const handleCalcularPrecioRendimiento = async () => {
-        // await handleCalculo(
-        //     "/instrumentos/eurobonos/calcular-precio-rendimiento",
-        //     " al obtener calculo de precio rendimiento",
-        //     'n_precio_rend',
-        //     nPrecioRend,
-        //     setNPrecioRendResp,
-        //     setLoadingPrecioRend,
-        //     'n_precio'
-        // );
+    
     };
 
     const handleCalcularSobretasa = async () => {
-        // await handleCalculo(
-        //     "/instrumentos/eurobonos/calcular-sobretasa",
-        //     " al obtener calculo de sobretasa",
-        //     'n_precio_mercado_st',
-        //     nPrecioMercadoSt,
-        //     setNPrecioMercadoStResp,
-        //     setLoadingPrecioMercadoSt,
-        //     'n_st'
-        // );
+    
     };
 
     const handleCalcularRendimiento = async () => {
-        // await handleCalculo(
-        //     "/instrumentos/eurobonos/calcular-rendimiento",
-        //     " al obtener calculo de rendimiento",
-        //     'n_precio_mercado_r',
-        //     nPrecioMercadoR,
-        //     setNPrecioMercadoRResp,
-        //     setLoadingMercadoRResp,
-        //     'n_rendimiento'
-        // );
+     
     };
 
     const handleCalculo = async (

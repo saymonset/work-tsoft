@@ -194,6 +194,11 @@ export const InstrumentosForm: React.FC<InstrumentosFormProps> = ({ requeridosAc
                                         <label htmlFor="s_serie">
                                             SERIE
                                         </label>
+                                        {requiredSerie && (
+                                            <span className="fontError animate__animated animate__fadeIn">
+                                                Campo requerido Serie
+                                            </span>
+                                        )}
                                     </div>
                                 )}
 

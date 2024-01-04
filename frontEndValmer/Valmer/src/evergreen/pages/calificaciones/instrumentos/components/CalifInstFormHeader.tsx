@@ -25,6 +25,7 @@ export const CalifInstFormHeader = (props: FormInstProps) => {
                             id="s_pais"
                             onChange={props.handleChange}
                             value={props.consultaData.s_pais || ""}
+                            ref={props.refReqInst.s_pais}
                         >
                             <option value="default">...</option>
                             {getCatalogs(props.catalog, 'PAIS').map((column) => (
@@ -34,6 +35,10 @@ export const CalifInstFormHeader = (props: FormInstProps) => {
                             ))}
                         </select>
                         <label htmlFor="s_pais">País</label>
+                        {props.isFieldReqCalifInst.s_pais && (
+                            <span className="fontError animate__animated animate__fadeIn">
+                                Campo requerido País</span>
+                        )}
                     </div>
                     <div className="form-select">
                         <select
@@ -41,6 +46,7 @@ export const CalifInstFormHeader = (props: FormInstProps) => {
                             id="s_moneda"
                             onChange={props.handleChange}
                             value={props.consultaData.s_moneda || ""}
+                            ref={props.refReqInst.s_moneda}
                         >
                             <option value="default">...</option>
                             {getCatalogs(props.catalog, 'MONEDA').map((column) => (
@@ -50,6 +56,10 @@ export const CalifInstFormHeader = (props: FormInstProps) => {
                             ))}
                         </select>
                         <label htmlFor="s_moneda">Moneda</label>
+                        {props.isFieldReqCalifInst.s_moneda && (
+                            <span className="fontError animate__animated animate__fadeIn">
+                                Campo requerido Moneda</span>
+                        )}
                     </div>
                 </div>
                 <div className="form-cols-1">
@@ -59,6 +69,7 @@ export const CalifInstFormHeader = (props: FormInstProps) => {
                             id="s_emisor"
                             onChange={props.handleChange}
                             value={props.consultaData.s_emisor || ""}
+                            ref={props.refReqInst.s_emisor}
                         >
                             <option value="default">...</option>
                             {getCatalogs(props.catalog, 'EMISOR').map((column) => (
@@ -68,6 +79,10 @@ export const CalifInstFormHeader = (props: FormInstProps) => {
                             ))}
                         </select>
                         <label htmlFor="s_emisor">Emisor</label>
+                        {props.isFieldReqCalifInst.s_emisor && (
+                            <span className="fontError animate__animated animate__fadeIn">
+                                Campo requerido Emisor</span>
+                        )}
                     </div>
                 </div>
                 <div className="form-cols-5">
@@ -77,6 +92,7 @@ export const CalifInstFormHeader = (props: FormInstProps) => {
                             id="s_tipo_papel"
                             onChange={props.handleChange}
                             value={props.consultaData.s_tipo_papel || ""}
+                            ref={props.refReqInst.s_tipo_papel}
                         >
                             <option value="default">...</option>
                             {getCatalogs(props.catalog, 'TIPO_PAPEL').map((column) => (
@@ -86,6 +102,10 @@ export const CalifInstFormHeader = (props: FormInstProps) => {
                             ))}
                         </select>
                         <label htmlFor="s_tipo_papel">Tipo Papel</label>
+                        {props.isFieldReqCalifInst.s_tipo_papel && (
+                            <span className="fontError animate__animated animate__fadeIn">
+                                Campo requerido Tipo Papel</span>
+                        )}
                     </div>
                     <div className="form-select">
                         <select
@@ -93,6 +113,7 @@ export const CalifInstFormHeader = (props: FormInstProps) => {
                             id="s_com_val"
                             onChange={props.handleChange}
                             value={props.consultaData.s_com_val || ""}
+                            ref={props.refReqInst.s_com_val}
                         >
                             <option value="default">...</option>
                             {getCatalogs(props.catalog, 'COMISION_VALORES').map((column) => (
@@ -102,6 +123,10 @@ export const CalifInstFormHeader = (props: FormInstProps) => {
                             ))}
                         </select>
                         <label htmlFor="s_com_val">Comisión Valores</label>
+                        {props.isFieldReqCalifInst.s_com_val && (
+                            <span className="fontError animate__animated animate__fadeIn">
+                                Campo requerido Comisión Valores</span>
+                        )}
                     </div>
                     <div className="form-select">
                         <select
@@ -109,6 +134,7 @@ export const CalifInstFormHeader = (props: FormInstProps) => {
                             id="s_bolsa_emi"
                             onChange={props.handleChange}
                             value={props.consultaData.s_bolsa_emi || ""}
+                            ref={props.refReqInst.s_bolsa_emi}
                         >
                             <option value="">...</option>
                             {getCatalogs(props.catalog, 'BOLSA_EMISION').map((column) => (
@@ -118,6 +144,10 @@ export const CalifInstFormHeader = (props: FormInstProps) => {
                             ))}
                         </select>
                         <label htmlFor="s_bolsa_emi">Bolsa Emisión</label>
+                        {props.isFieldReqCalifInst.s_bolsa_emi && (
+                            <span className="fontError animate__animated animate__fadeIn">
+                                Campo requerido Bolsa Emisión</span>
+                        )}
                     </div>
                     <div className="form-date">
                         <input

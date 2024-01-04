@@ -1,5 +1,5 @@
 import { Catalogo, IsFieldModifiedFvDerivados, RequeridosDefDerivados, RespDerivadosDef } from "../../../../../model";
-import { getCatalogs } from "../../../../../utils";
+import { getCatalogs, getCatalogsNoOrder } from "../../../../../utils";
 import { FormColateralFF } from "./FormColateralFF";
 import { FormColateralSOFR } from "./FormColateralSOFR";
 
@@ -221,7 +221,7 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                             onChange={(e) => props.handleChange(e)}
                         >
                             <option value="default">...</option>
-                            {getCatalogs(props.catalog, 'CRV_REFERENCIA').map((column) => (
+                            {getCatalogs(props.catalog, 'CRV_DESCUENTO').map((column) => (
                                 <option key={column[0]} value={column[0]}>
                                     {column[1]}
                                 </option>
@@ -275,7 +275,7 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                             onChange={(e) => props.handleChange(e)}
                         >
                             <option value="default">...</option>
-                            {getCatalogs(props.catalogUnderlying, 's_underlying').map((column) => (
+                            {getCatalogsNoOrder(props.catalogUnderlying, 's_underlying').map((column) => (
                                 <option key={column[0]} value={column[0]}>
                                     {column[1]}
                                 </option>
@@ -291,7 +291,7 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                             onChange={(e) => props.handleChange(e)}
                         >
                             <option value="default">...</option>
-                            {getCatalogs(props.catalogUnderlying, 's_underlying_sp').map((column) => (
+                            {getCatalogsNoOrder(props.catalogUnderlying, 's_underlying_sp').map((column) => (
                                 <option key={column[0]} value={column[0]}>
                                     {column[1]}
                                 </option>
@@ -451,7 +451,7 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                             onChange={(e) => props.handleChange(e)}
                         >
                             <option value="default">...</option>
-                            {getCatalogs(props.catalogUnderlying, 's_underlying_cu').map((column) => (
+                            {getCatalogsNoOrder(props.catalogUnderlying, 's_underlying_cu').map((column) => (
                                 <option key={column[0]} value={column[0]}>
                                     {column[1]}
                                 </option>
@@ -467,7 +467,7 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                             onChange={(e) => props.handleChange(e)}
                         >
                             <option value="default">...</option>
-                            {getCatalogs(props.catalogUnderlying, 's_underlying_sp_cu').map((column) => (
+                            {getCatalogsNoOrder(props.catalogUnderlying, 's_underlying_sp_cu').map((column) => (
                                 <option key={column[0]} value={column[0]}>
                                     {column[1]}
                                 </option>

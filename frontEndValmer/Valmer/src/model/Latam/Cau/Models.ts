@@ -13,6 +13,7 @@ export interface ElementCau {
     compania: string;
     s_status: string;
     d_fecha: string;
+    s_sector: string;
     d_fecha_cierre: string;
 }
 
@@ -61,6 +62,7 @@ export interface FolioCau {
     s_nombre: string;
     s_correo: string;
     s_telefono: string;
+    s_sector: string;
     d_fecha_estimada: string;
     s_observaciones: string;
     s_archivo: string;

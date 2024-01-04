@@ -21,7 +21,7 @@ export const SubastasForm = (p: SubFormProps) => {
                 <div className="flex flex-col items-center w-3/4">
 					<div className="form-title text-center w-full">LOG SUBASTAS</div>
                     <div
-                        className="bg-gray-900 text-green-500 p-2 w-full overflow-scroll h-72"
+                        className="bg-gray-900 text-green-500 p-2 w-full overflow-auto max-h-[30rem]"
                         dangerouslySetInnerHTML={{ __html: log }}
                         style={{ minHeight: '15rem' }}
                     />

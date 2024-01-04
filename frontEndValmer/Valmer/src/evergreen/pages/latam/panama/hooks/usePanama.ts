@@ -1,8 +1,44 @@
-import React, {useEffect, useState} from "react";
-import {Catalogo, RespConsultaDataPanam} from "../../../../../model";
-import {fetchDataGetRet, fetchDataPost, userEncoded} from "../../../../../utils";
+import React, {useEffect, useRef, useState} from "react";
+import {Catalogo, InputOrNull, IsFieldRequiredLatPanama, RefReqLatPanama, RespConsultaDataPanam, SelectOrNull} from "../../../../../model";
+import {fetchDataGetRet, fetchDataPost, userEncoded, validateFieldsAccCalifLatam} from "../../../../../utils";
+import { useDispatch } from "react-redux";
 
 export const usePanama = () => {
+
+    const refReqLatPanama: RefReqLatPanama = {
+        n_tipo_instrumento: useRef<SelectOrNull>(null),
+        n_tipo_instrumento_edit: useRef<SelectOrNull>(null),
+        d_fecha_emision: useRef<InputOrNull>(null),
+        n_frecuencia_cupon: useRef<SelectOrNull>(null),
+        d_fecha_liquidacion: useRef<InputOrNull>(null),
+        n_tipo_mercado: useRef<SelectOrNull>(null),
+        d_fecha_vencimiento: useRef<InputOrNull>(null),
+        n_clase: useRef<SelectOrNull>(null),
+        d_fecha_inicio_cupon: useRef<InputOrNull>(null),
+        n_sector: useRef<SelectOrNull>(null),
+        d_fecha_vto_cupon: useRef<InputOrNull>(null),
+        n_curva_desc: useRef<SelectOrNull>(null),
+        n_plazo: useRef<InputOrNull>(null),
+        n_moneda: useRef<SelectOrNull>(null),
+        n_monto_colocado: useRef<InputOrNull>(null),
+        n_theo_model: useRef<SelectOrNull>(null),
+        n_valor_nominal: useRef<InputOrNull>(null),
+        n_tasa: useRef<InputOrNull>(null),
+        n_base_calculo: useRef<SelectOrNull>(null),
+        n_sobretasa: useRef<InputOrNull>(null),
+        n_status: useRef<SelectOrNull>(null),
+        s_isin: useRef<InputOrNull>(null),
+        n_precio: useRef<InputOrNull>(null),
+        n_form_cotizacion: useRef<SelectOrNull>(null),
+        n_coupon_gen_met: useRef<SelectOrNull>(null),
+        n_odd_last_coupon: useRef<SelectOrNull>(null),
+        n_fixed_coupon_date: useRef<InputOrNull>(null),
+        n_odd_first_coupon: useRef<SelectOrNull>(null),
+        n_pais: useRef<SelectOrNull>(null),
+        n_emisor: useRef<SelectOrNull>(null),
+        d_fecha_ingreso_titulo: useRef<InputOrNull>(null),
+        n_crv_index: useRef<SelectOrNull>(null)
+    }
 
     const [nemoTecnico, setNemoTecnico] = useState<string[]>([])
 
@@ -27,6 +63,8 @@ export const usePanama = () => {
         inactivas: 0,
         amortAnticipadas: 0
     });
+
+    const [isFieldRequiredLatPanama, setIsFieldRequiredLatPanama] = useState<IsFieldRequiredLatPanama>({} as IsFieldRequiredLatPanama)
 
     useEffect(() => {
         const getNemoTenico = async () => {
@@ -65,14 +103,36 @@ export const usePanama = () => {
 
     const handleNuevo = () => {
         setActiveNuevo(true)
+        setSelectedNemoTecnico("")
+        setConsultaData({} as RespConsultaDataPanam)
+        setIsFieldRequiredLatPanama({} as IsFieldRequiredLatPanama)
     }
 
     const handleCancel = () => {
         setActiveNuevo(false)
+        setSelectedNemoTecnico("")
+        setConsultaData({} as RespConsultaDataPanam)
+        setIsFieldRequiredLatPanama({} as IsFieldRequiredLatPanama)
+    }
+
+    const handleNewNemo = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSelectedNemoTecnico(e.target.value)
+        setIsFieldRequiredLatPanama({...isFieldRequiredLatPanama, "s_nemotecnico": false})
+        setConsultaData(prevConsultaData => ({
+            ...prevConsultaData,
+            body: {
+                ...(prevConsultaData.body || {}),
+                info_bd: {
+                    ...(prevConsultaData.body?.info_bd || {}),
+                    "s_nemotecnico": e.target.value
+                }
+            }
+        }))
     }
 
     const handleSelectNemo = async (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedNemoTecnico(e.target.value)
+        setIsFieldRequiredLatPanama({...isFieldRequiredLatPanama, "s_nemotecnico": false})
         setLoadingConsultaData(true)
         const response: RespConsultaDataPanam = await fetchDataGetRet(
             "/latam/panama/consulta-info",
@@ -104,12 +164,24 @@ export const usePanama = () => {
                 }
             }
         }));
+
+        setIsFieldRequiredLatPanama({...isFieldRequiredLatPanama, [name]: false})
     };
 
     const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        if(selectedNemoTecnico)
-        {
+        if(await validateFieldsAccCalifLatam(
+                consultaData?.body?.info_bd,
+                refReqLatPanama, 
+                false, 
+                false, 
+                undefined, 
+                undefined, 
+                undefined, 
+                undefined,
+                isFieldRequiredLatPanama, 
+                setIsFieldRequiredLatPanama
+        )) {
             setLoadingSave(true)
             const request = {
                 ...consultaData.body.info_bd,
@@ -141,7 +213,9 @@ export const usePanama = () => {
         loadingConsultaData,
         loadingNemo,
         catalog,
-        setSelectedNemoTecnico,
+        isFieldRequiredLatPanama,
+        refReqLatPanama,
+        handleNewNemo,
         handleCheckboxChange,
         handleSelectNemo,
         handleNuevo,

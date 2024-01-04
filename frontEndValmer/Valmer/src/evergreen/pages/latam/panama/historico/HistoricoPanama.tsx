@@ -32,6 +32,14 @@ export const HistoricoPanama = () => {
     } = usePanamaHistorico();
 
     const renderLogContent = () => {
+        const targetSelect:any = document.getElementById('pickList') as HTMLSelectElement | null;
+
+        let columnHeaders : any = [];
+        if (targetSelect) {
+            columnHeaders = Array.from(targetSelect as any)
+                               .map((option: any) => option.textContent);
+        }
+
         if (tabla) {
             return (
                 <div className="mt-8 flex flex-col items-center w-full">
@@ -43,24 +51,22 @@ export const HistoricoPanama = () => {
                         </button>
                     </div>
                     <table className="table w-full">
-                        <thead className="thead">
-                            <tr>
-                                <th>NEMOTECNICO</th>
-                                <th>FECHA</th>
-                                <th>BASE</th>
-                                <th>CIERRE LIBRO</th>
-                            </tr>
-                        </thead>
-                        <tbody className="tbody">
-                            {tabla?.body?.map((fila) => (
-                                <tr key={generateUUID()}>
-                                    <td>{fila.s_nemotecnico}</td>
-                                    <td>{fila.d_fecha}</td>
-                                    <td>{fila.s_base}</td>
-                                    <td>{fila.s_cierre_libro}</td>
-                                </tr>
+                    <thead className="thead">
+                    <tr>
+                        {columnHeaders.map((value:any) => (
+                        <th key={value}>{value}</th>
+                        ))}
+                    </tr>
+                    </thead>
+                    <tbody className="tbody">
+                        {tabla?.body?.map((fila, index) => (
+                            <tr key={index}>
+                            {columnHeaders.map((value:any) => (
+                                <td key={`${value}-${index}`}>{(fila as any)[value]}</td>
                             ))}
-                        </tbody>
+                            </tr>
+                        ))}
+                    </tbody>
                     </table>
                 </div>
             );

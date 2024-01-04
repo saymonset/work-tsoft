@@ -11,6 +11,7 @@ import {RootState} from "@reduxjs/toolkit/dist/query/core/apiState";
 import {fetchDataGetRet, fetchDataPost, showAlert, userEncoded} from "../../../../../utils";
 import {updateCatalogStatic} from "../../../../../redux";
 import {initialState, reducer} from "./components";
+import {procesarEvaluate} from "../../../../../helper";
 
 export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) => {
 
@@ -124,6 +125,7 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
         updateState({ loadingNewId: false });
 
         const key = Object.keys(response.body)[0];
+
         setRegistroSeleccionado(({
             id: (response.body as any)[key].toString(),
             [key.toLowerCase()]: (response.body as any)[key].toString(),
@@ -203,7 +205,9 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
         }
         updateState({ loadingDelete: true });
 
-        const { id, ...request } = registroSeleccionado;
+        const { ...request } = registroSeleccionado;
+
+        procesarEvaluate(nameCatalog, request, catalogStatic)
 
         await fetchDataPost(
             "/catalogos/borrar-catalogo",
@@ -221,45 +225,66 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
     }, [nameCatalog, registroSeleccionado]);
 
     const handleSave = async () => {
+        try {
+            if (!(await validarCampos())) {
+                return;
+            }
+
+            updateState({ loadingSave: true });
+
+            const {...request } = registroSeleccionado;
+
+            procesarEvaluate(nameCatalog, request, catalogStatic);
+
+            eraseRequest(request);
+
+            await fetchDataPost(
+                "/catalogos/guardar-catalogo",
+                " al guardar catalogo",
+                request,
+                {
+                    s_nombre_catalogo: nameCatalog.toLowerCase(),
+                    s_user: userEncoded()
+                }
+            );
+
+            updateState({ loadingSave: false });
+            setRegistroSeleccionado(null);
+            updateState({ catalogs: [], triggerCatalogs: true });
+        }
+        catch (error: any)
+        {
+            await showAlert('warning', 'Atención', error.message);
+            updateState({ loadingSave: false });
+        }
+    };
+
+
+    const validarCampos = async (): Promise<boolean> => {
         if (registroSeleccionado === null) {
             await showAlert('warning', 'Atencion', "No hay ningún registro seleccionado.");
-            return;
+            return false;
         }
 
         for (let column of columns) {
             const columnName = column.name.toLowerCase();
 
+            if (column.DisabledFieldForm) {
+                continue;
+            }
+
             if (!(columnName in registroSeleccionado) || registroSeleccionado[columnName] === "") {
                 await showAlert('warning', 'Atencion', `El campo ${column.name} está vacío.`);
-                return;
+                return false;
             }
         }
+        return true;
+    };
 
-        updateState({ loadingSave: true });
-
-        const { id, ...request } = registroSeleccionado;
-
-        // Verificar si el catálogo es 'bacc_subramo_ing'
-        if (nameCatalog.toLowerCase() === 'bacc_subramo_ing') {
-            // Encontrar el valor de 's_descripcion' y agregar 'n_clasificacion_sectorial'
-            const sDescripcionValue = request['s_descripcion'];
-            if (sDescripcionValue) {
-                request['n_clasificacion_sectorial'] = sDescripcionValue;
-            }
+    const eraseRequest = (request: RegistroEdit): void => {
+        if ('error' in request) {
+            delete request.error;
         }
-
-        await fetchDataPost(
-            "/catalogos/guardar-catalogo",
-            " al guardar catalogo",
-            request,
-            {
-                s_nombre_catalogo: nameCatalog.toLowerCase(),
-                s_user: userEncoded()}
-        )
-
-        updateState({ loadingSave: false });
-        setRegistroSeleccionado(null)
-        updateState({ catalogs: [], triggerCatalogs: true });
     };
 
     const validInputValue = useCallback(
@@ -272,32 +297,32 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
         [registroSeleccionado]
     );
 
-    // const validSelectValue = useCallback(
-    //     (value: string) => {
-    //         return registroSeleccionado?.[value] ?? "";
-    //     },
-    //     [registroSeleccionado]
-    // );
-
     const validSelectValue = useCallback(
-        (value: string, catalogName: string | undefined) => {
-
-            const currentValue = registroSeleccionado?.[value];
-
-            if (!isNaN(Number(currentValue))) {
-                return currentValue;
-            }
-
-            const foundCatalog = catalogStatic.find(catalog => catalog.catalogo === catalogName);
-            if (foundCatalog) {
-                const foundKey = Object.keys(foundCatalog.registros).find(key => foundCatalog.registros[key] === currentValue);
-                return foundKey ?? currentValue;
-            }
-
-            return currentValue ?? "";
+        (value: string) => {
+            return registroSeleccionado?.[value] ?? "";
         },
         [registroSeleccionado]
     );
+
+    // const validSelectValue = useCallback(
+    //     (value: string, catalogName: string | undefined) => {
+    //
+    //         const currentValue = registroSeleccionado?.[value];
+    //
+    //         if (!isNaN(Number(currentValue))) {
+    //             return currentValue;
+    //         }
+    //
+    //         const foundCatalog = catalogStatic.find(catalog => catalog.catalogo === catalogName);
+    //         if (foundCatalog) {
+    //             const foundKey = Object.keys(foundCatalog.registros).find(key => foundCatalog.registros[key] === currentValue);
+    //             return foundKey ?? currentValue;
+    //         }
+    //
+    //         return currentValue ?? "";
+    //     },
+    //     [registroSeleccionado]
+    // );
 
 
     const registros = useMemo(() => {

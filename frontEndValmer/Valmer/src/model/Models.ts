@@ -1,5 +1,14 @@
 import React from "react";
 import {AnyAction} from "redux";
+import { Acciones, RequeridosAcc } from "./Acciones";
+import { CalifInstData, CalifProgramas, RefReqInst, RefReqProg } from "./Calificaciones";
+import { RefReqLatPanama, formValuesLatPanama } from "./Latam";
+
+export type AccCalifLatam = Acciones | CalifProgramas | CalifInstData | formValuesLatPanama;
+export type RefReqAccCalifLatam = RequeridosAcc | RefReqProg | RefReqInst | RefReqLatPanama;
+export type InputOrNull = HTMLInputElement | null;
+export type SelectOrNull = HTMLSelectElement | null;
+export type InputOrSelect = HTMLSelectElement | HTMLInputElement | null;
 
 export interface CargaArchivoContent
 {

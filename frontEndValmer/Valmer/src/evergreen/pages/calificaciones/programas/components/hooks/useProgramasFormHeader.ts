@@ -1,17 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@reduxjs/toolkit/dist/query/core/apiState";
-import { CalifProgramas, Catalogo, DefaultValuesProgramas, RatingAgency, ResponseDataCorp } from "../../../../../../model";
-import React, { useEffect, useState } from "react";
-import { fetchDataGet, fetchDataPost, getEmisoras, showAlert, userEncoded } from "../../../../../../utils";
+import { CalifProgramas, Catalogo, DefaultValuesProgramas, IsFieldReqCalifProg, RatingAgency, RefReqProg, ResponseDataCorp, SelectOrNull } from "../../../../../../model";
+import React, { useEffect, useState, useRef } from "react";
+import { fetchDataGet, fetchDataPost, getEmisoras, showAlert, userEncoded, validChangeTvEmiSerie, validateFieldsAccCalifLatam } from "../../../../../../utils";
 import {
     updateCalifProCarac,
     updateCatalogCalifPro, updateDataCalifProgramas,
-    updateEmisoraCalifPro, updateSelectedTvCalifPro, updateTriggerEraseCalifPro,
+    updateEmisoraCalifPro, updateRequiredCalifProg, updateRequiredTvCalifProg, updateSelectedTvCalifPro, updateTriggerEraseCalifPro,
     updateTvCalifPro
 } from "../../../../../../redux/Calificaciones/Programas/actions";
 import { valmerApi } from "../../../../../../api";
 
 export const useProgramasFormHeader = () => {
+
+    const refReqCalifProg: RefReqProg = {
+        s_tv: useRef<SelectOrNull>(null),
+        s_emisora: useRef<SelectOrNull>(null),
+        n_plazo_calif: useRef<SelectOrNull>(null),
+    }
 
     const tv = useSelector((state: RootState<any, any, any>) =>
         state.tvCalifPro) as unknown as string[];
@@ -30,6 +36,12 @@ export const useProgramasFormHeader = () => {
 
     const triggerErase = useSelector((state: RootState<any, any, any>) =>
         state.triggerEraseCalifPro) as unknown as boolean;
+
+    const isFieldReqCalifProg = useSelector((state: RootState<any, any, any>) => 
+        state.isFieldReqCalifProg) as unknown as IsFieldReqCalifProg;
+
+    const requiredTvCalifProg = useSelector((state: RootState<any, any, any>) => 
+        state.requiredTvCalifProg) as unknown as boolean;
 
     const [loadingSave, setLoadingSave] = useState(false);
 
@@ -96,6 +108,7 @@ export const useProgramasFormHeader = () => {
     }, [])
 
     const handleTv = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        validChangeTvEmiSerie("s_tv", dispatch)
         dispatch(updateSelectedTvCalifPro(e.target.value));
         setTriggerEmisora(true);
         handleChange(e)
@@ -111,6 +124,8 @@ export const useProgramasFormHeader = () => {
         updatedFormData[name] = value !== "" ? value : defaultValue;
       
         dispatch(updateDataCalifProgramas(updatedFormData));
+
+        dispatch(updateRequiredCalifProg({ ...isFieldReqCalifProg, [name]: false }));
       };
 
     const handleErase = () => {
@@ -123,18 +138,22 @@ export const useProgramasFormHeader = () => {
             dispatch(updateEmisoraCalifPro([]))
             dispatch(updateSelectedTvCalifPro(""))
             dispatch(updateTriggerEraseCalifPro(false))
+            dispatch(updateRequiredCalifProg({} as IsFieldReqCalifProg))
+            dispatch(updateRequiredTvCalifProg(false))
         }, 10)
     }
 
     const handleSave = async () => {
-        setLoadingSave(true)
-
-        await fetchDataPost(
-            "/calificaciones/programas/actualiza-info",
-            " al intentar guardar calificaciones programas",
-            formData,
-            { s_user: userEncoded() })
-        setLoadingSave(false)
+        if (await validateFieldsAccCalifLatam(formData, refReqCalifProg, false, false, dispatch, undefined, isFieldReqCalifProg)) {
+            setLoadingSave(true)
+    
+            await fetchDataPost(
+                "/calificaciones/programas/actualiza-info",
+                " al intentar guardar calificaciones programas",
+                formData,
+                { s_user: userEncoded() })
+            setLoadingSave(false)
+        }
     }
 
     return {
@@ -148,6 +167,9 @@ export const useProgramasFormHeader = () => {
         loadingSave,
         loadingEmisoras,
         catalog,
+        isFieldReqCalifProg,
+        refReqCalifProg,
+        requiredTvCalifProg,
         handleSave,
         handleErase,
         handleChange,

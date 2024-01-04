@@ -248,7 +248,7 @@
 }
 
 .form-date input {
-    @apply block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-slate-900 border-gray-600 focus:border-cyan-700 focus:outline-none focus:ring-0;
+    @apply block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-slate-900 focus:border-cyan-700 focus:outline-none focus:ring-0;
 }
 
 .form-date label {

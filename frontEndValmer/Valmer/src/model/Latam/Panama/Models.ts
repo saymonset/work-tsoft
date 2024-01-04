@@ -1,3 +1,4 @@
+import { InputOrNull, InputOrSelect, SelectOrNull } from "../../Models";
 import {Catalogo} from "../../deuda";
 import React from "react";
 
@@ -10,7 +11,9 @@ export type PanamaHeaderProps = {
     catalog: Catalogo[];
     nemoTecnico: string[];
     checkboxValues: { inactivas: number; amortAnticipadas: number; };
-    setSelectedNemoTecnico: (value: string) => void;
+    isFieldRequiredLatPanama: IsFieldRequiredLatPanama;
+    refReqLatPanama: RefReqLatPanama;
+    handleNewNemo: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleNuevo: () => void;
     handleCancel: () => void;
     handleSelectNemo: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -23,6 +26,8 @@ export type PanamaFormProps = {
     catalog: Catalogo[];
     consultaData: RespConsultaDataPanam;
     selectedNemoTecnico: string;
+    isFieldRequiredLatPanama: IsFieldRequiredLatPanama;
+    refReqLatPanama: RefReqLatPanama;
     handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 };
 
@@ -133,4 +138,161 @@ export interface HistoricoConsultaTabla {
     d_fecha: string;
     s_base: string;
     s_cierre_libro: string;
+}
+
+export interface formValuesLatPanama {
+    [key: string]: string;
+    n_coupon_gen_met: string;
+    d_last_reg_coup_date: string;
+    n_moody: string;
+    d_fitch: string;
+    n_tasa: string;
+    n_curva_desc: string;
+    n_sector: string;
+    d_fecha_vencimiento: string;
+    n_emisor: string;
+    n_frecuencia_cupon: string;
+    n_odd_last_coupon: string;
+    n_tipo_mercado: string;
+    n_monto_colocado: string;
+    n_theo_model: string;
+    d_fecha_vto_cupon: string;
+    s_nemotecnico: string;
+    n_fixed_coupon_date: string;
+    n_tipo_instrumento_edit: string;
+    n_crv_index: string;
+    n_soy: string;
+    s_isin: string;
+    n_fitch: string;
+    d_fecha_liquidacion: string;
+    n_base_calculo: string;
+    n_clase: string;
+    n_valor_nominal: string;
+    n_plazo: string;
+    d_sp: string;
+    d_fecha_inicio_cupon: string;
+    n_tipo_instrumento: string;
+    n_business_day_rule: string;
+    n_pais: string;
+    n_odd_first_coupon: string;
+    n_precio_colocacion: string;
+    d_fecha_amort_ant: string;
+    n_sp: string;
+    d_moody: string;
+    n_status: string;
+    n_form_cotizacion: string;
+    d_fecha_ingreso_titulo: string;
+    n_moneda: string;
+    n_precio: string;
+    n_sobretasa: string;
+    d_fecha_emision: string;
+}
+
+export interface IsFieldRequiredLatPanama {
+    [key: string]: boolean;
+    s_nemotecnico: boolean;
+    n_tipo_instrumento: boolean;
+    n_tipo_instrumento_edit: boolean;
+    d_fecha_emision: boolean;
+    n_frecuencia_cupon: boolean;
+    d_fecha_liquidacion: boolean;
+    n_tipo_mercado: boolean;
+    d_fecha_vencimiento: boolean;
+    n_clase: boolean;
+    d_fecha_inicio_cupon: boolean;
+    n_sector: boolean;
+    d_fecha_vto_cupon: boolean;
+    n_curva_desc: boolean;
+    n_plazo: boolean;
+    n_moneda: boolean;
+    n_monto_colocado: boolean;
+    n_theo_model: boolean;
+    n_valor_nominal: boolean;
+    n_tasa: boolean;
+    n_base_calculo: boolean;
+    n_sobretasa: boolean;
+    n_status: boolean;
+    s_isin: boolean;
+    n_precio: boolean;
+    n_form_cotizacion: boolean;
+    n_coupon_gen_met: boolean;
+    n_odd_last_coupon: boolean;
+    n_fixed_coupon_date: boolean;
+    n_odd_first_coupon: boolean;
+    n_pais: boolean;
+    n_emisor: boolean;
+    d_fecha_ingreso_titulo: boolean;
+    n_crv_index: boolean;
+}
+
+export const fieldToValidateLatamPanama = [
+    { name: "s_nemotecnico", defaultValue: "default" },
+    { name: "n_tipo_instrumento", defaultValue: "default" },
+    { name: "n_tipo_instrumento_edit", defaultValue: "default" },
+    { name: "d_fecha_emision", defaultValue: "default" },
+    { name: "n_frecuencia_cupon", defaultValue: "default" },
+    { name: "d_fecha_liquidacion", defaultValue: "default" },
+    { name: "n_tipo_mercado", defaultValue: "default" },
+    { name: "d_fecha_vencimiento", defaultValue: "default" },
+    { name: "n_clase", defaultValue: "default" },
+    { name: "d_fecha_inicio_cupon", defaultValue: "default" },
+    { name: "n_sector", defaultValue: "default" },
+    { name: "d_fecha_vto_cupon", defaultValue: "default" },
+    { name: "n_curva_desc", defaultValue: "default" },
+    { name: "n_plazo", defaultValue: "default" },
+    { name: "n_moneda", defaultValue: "default" },
+    { name: "n_monto_colocado", defaultValue: "default" },
+    { name: "n_theo_model", defaultValue: "default" },
+    { name: "n_valor_nominal", defaultValue: "default" },
+    { name: "n_tasa", defaultValue: "default" },
+    { name: "n_base_calculo", defaultValue: "default" },
+    { name: "n_sobretasa", defaultValue: "default" },
+    { name: "n_status", defaultValue: "default" },
+    { name: "s_isin", defaultValue: "default" },
+    { name: "n_precio", defaultValue: "default" },
+    { name: "n_form_cotizacion", defaultValue: "default" },
+    { name: "n_coupon_gen_met", defaultValue: "default" },
+    { name: "n_odd_last_coupon", defaultValue: "default" },
+    { name: "n_fixed_coupon_date", defaultValue: "default" },
+    { name: "n_odd_first_coupon", defaultValue: "default" },
+    { name: "n_pais", defaultValue: "default" },
+    { name: "n_emisor", defaultValue: "default" },
+    { name: "d_fecha_ingreso_titulo", defaultValue: "default" },
+    { name: "n_crv_index", defaultValue: "default" }
+]
+
+export interface RefReqLatPanama {
+    [key: string]: React.MutableRefObject<InputOrSelect>;
+    n_tipo_instrumento: React.MutableRefObject<SelectOrNull>;
+    n_tipo_instrumento_edit: React.MutableRefObject<SelectOrNull>;
+    d_fecha_emision: React.MutableRefObject<InputOrNull>;
+    n_frecuencia_cupon: React.MutableRefObject<SelectOrNull>;
+    d_fecha_liquidacion: React.MutableRefObject<InputOrNull>;
+    n_tipo_mercado: React.MutableRefObject<SelectOrNull>;
+    d_fecha_vencimiento: React.MutableRefObject<InputOrNull>;
+    n_clase: React.MutableRefObject<SelectOrNull>;
+    d_fecha_inicio_cupon: React.MutableRefObject<InputOrNull>;
+    n_sector: React.MutableRefObject<SelectOrNull>;
+    d_fecha_vto_cupon: React.MutableRefObject<InputOrNull>;
+    n_curva_desc: React.MutableRefObject<SelectOrNull>;
+    n_plazo: React.MutableRefObject<InputOrNull>;
+    n_moneda: React.MutableRefObject<SelectOrNull>;
+    n_monto_colocado: React.MutableRefObject<InputOrNull>;
+    n_theo_model: React.MutableRefObject<SelectOrNull>;
+    n_valor_nominal: React.MutableRefObject<InputOrNull>;
+    n_tasa: React.MutableRefObject<InputOrNull>;
+    n_base_calculo: React.MutableRefObject<SelectOrNull>;
+    n_sobretasa: React.MutableRefObject<InputOrNull>;
+    n_status: React.MutableRefObject<SelectOrNull>;
+    s_isin: React.MutableRefObject<InputOrNull>;
+    n_precio: React.MutableRefObject<InputOrNull>;
+    n_form_cotizacion: React.MutableRefObject<SelectOrNull>;
+    n_coupon_gen_met: React.MutableRefObject<SelectOrNull>;
+    n_odd_last_coupon: React.MutableRefObject<SelectOrNull>;
+    n_fixed_coupon_date: React.MutableRefObject<InputOrNull>;
+    n_odd_first_coupon: React.MutableRefObject<SelectOrNull>;
+    n_pais: React.MutableRefObject<SelectOrNull>;
+    n_emisor: React.MutableRefObject<SelectOrNull>;
+    d_fecha_ingreso_titulo: React.MutableRefObject<InputOrNull>;
+    n_crv_index: React.MutableRefObject<SelectOrNull>;
 }

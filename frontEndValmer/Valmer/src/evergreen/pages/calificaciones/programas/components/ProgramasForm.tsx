@@ -45,7 +45,7 @@ export const ProgramasForm = () => {
                                     value={formData?.n_calif_fitch_n ?? 'default'}
                             >
                                 <option value="default">...</option>
-                                {getCatalogs(catalogProCarac['fitch'],'califN').map((column) => (
+                                {getCatalogs(catalogProCarac['Fitch'],'califN').map((column) => (
                                     <option key={column[0]} value={column[0]}>
                                         {column[1]}
                                     </option>
@@ -66,7 +66,7 @@ export const ProgramasForm = () => {
                                     value={formData?.n_calif_fitch_g ?? 'default'}
                             >
                                 <option value="default">...</option>
-                                {getCatalogs(catalogProCarac['fitch'],'califG').map((column) => (
+                                {getCatalogs(catalogProCarac['Fitch'],'califG').map((column) => (
                                     <option key={column[0]} value={column[0]}>
                                         {column[1]}
                                     </option>

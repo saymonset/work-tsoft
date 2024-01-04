@@ -15,9 +15,10 @@ import {
     updateSelectedTvAcc,
     updateShowCarRvAcc,
     updateShowPrecalc,
-    updateTriggerEraseAcc
+    updateTriggerEraseAcc,
+    updateTvAccInst
 } from "../../../../../redux";
-import {fetchDataPost, updateMissingFields, userEncoded, validateFormAccFields} from "../../../../../utils";
+import {fetchDataPost, updateMissingFields, userEncoded, validateFieldsAccCalifLatam} from "../../../../../utils";
 
 export const useInstrumentosAcc = () => {
 
@@ -86,6 +87,7 @@ export const useInstrumentosAcc = () => {
     const handleErase = () => {
         dispatch(updateTriggerEraseAcc(true))
         setTimeout(() => {
+            dispatch(updateTvAccInst([]))
             dispatch(updateShowPrecalc(false))
             dispatch(updateNewFormInst(false))
             dispatch(updateShowCarRvAcc(false))
@@ -140,7 +142,7 @@ export const useInstrumentosAcc = () => {
             }
         }
 
-        if (await validateFormAccFields(formValues?.body?.acciones, dispatch, requeridosAcc, fieldRequiredAccInst)) {
+        if (await validateFieldsAccCalifLatam(formValues?.body?.acciones, requeridosAcc, true, true, dispatch, fieldRequiredAccInst)) {
             setLoading(true)
             await fetchDataPost(
                 "/acciones/instrumentos/actualiza-info",

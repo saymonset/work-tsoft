@@ -23,14 +23,14 @@ export const EmisorasForm = () => {
     return (
         <form>
             <div className="px-3">
-                <div className="grid grid-cols-4 gap-4">
-                    <div className="grid grid-cols-1">
-                        <span className="bg-cyan-700 text-slate-50 px-1">Fitch</span>
-                        <div className="relative z-0 my-3">
+                <div className="form-cols-4">
+                    <div>
+                        <div className="form-title">
+                            <span>Fitch</span>
+                        </div>
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                        border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                        dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_fitch_lp_n"
                                     name="s_fitch_lp_n"
                                     onChange={handleChange}
                             >
@@ -41,19 +41,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label
-                                htmlFor="califNacFitch"
-                                className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_fitch_lp_n">
                                 Calificación Largo Plazo Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_fitch_cp_n"
                                     name="s_fitch_cp_n"
                                     onChange={handleChange}
                             >
@@ -64,19 +58,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label
-                                htmlFor="califGlobFitch"
-                                className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_fitch_cp_n">
                                 Calificación Corto Plazo Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_fitch_lp_g"
                                     name="s_fitch_lp_g"
                                     onChange={handleChange}
                             >
@@ -87,17 +75,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_fitch_lp_g" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_fitch_lp_g">
                                 Calificación Largo Plazo Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_fitch_cp_g"
                                     name="s_fitch_cp_g"
                                     onChange={handleChange}
                             >
@@ -108,45 +92,31 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label
-                                htmlFor="califGlobFitch"
-                                className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_fitch_cp_g">
                                 Calificación Corto Plazo Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-date">
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
-                                    border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
-                                    dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 placeholder=""
+                                id="d_fec_fitch"
                                 name="d_fec_fitch"
                                 onChange={handleChange}
                                 required
                             />
-                            <label
-                                htmlFor="fechaFitch"
-                                className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]">
+                            <label htmlFor="d_fec_fitch">
                                 Fecha
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
-								<textarea
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
-                                    border-b-2 border-gray-300 appearance-none dark:text-slate-900
-									dark:border-gray-600 dark:focus:border-cyan-700 focus:outline-none focus:ring-0
-									focus:border-cyan-700 peer"
-                                    name="s_evento_fitch"
-                                    onChange={handleChange}
-                                >
-                                </textarea>
-                            <label htmlFor="eventoFitch"
-                                   className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                       -translate-y-6 origin-[0]">
+                        <div className="form-text-area">
+                            <textarea
+                                id="s_evento_fitch"
+                                name="s_evento_fitch"
+                                onChange={handleChange}
+                            >
+                            </textarea>
+                            <label htmlFor="s_evento_fitch">
                                 Evento Fitch
                             </label>
                         </div>
@@ -155,13 +125,13 @@ export const EmisorasForm = () => {
                         </div>
                         <SelectFileCalifEmi name="s_pdf_fitch" fieldB64="fitch_b64"/>
                     </div>
-                    <div className="grid grid-cols-1">
-                        <span className="bg-cyan-700 text-slate-50 px-1">Standard & Poors</span>
-                        <div className="relative z-0 my-3">
+                    <div>
+                        <div className="form-title">
+                            <span>Standard & Poors</span>
+                        </div>
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                        border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                        dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_sp_lp_n"
                                     name="s_sp_lp_n"
                                     onChange={handleChange}
                             >
@@ -172,19 +142,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label
-                                htmlFor="califNacFitch"
-                                className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_sp_lp_n">
                                 Calificación Largo Plazo Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_sp_cp_n"
                                     name="s_sp_cp_n"
                                     onChange={handleChange}
                             >
@@ -195,19 +159,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label
-                                htmlFor="califGlobFitch"
-                                className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_sp_cp_n">
                                 Calificación Corto Plazo Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_sp_lp_g"
                                     name="s_sp_lp_g"
                                     onChange={handleChange}
                             >
@@ -218,19 +176,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label
-                                htmlFor="califGlobFitch"
-                                className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_sp_lp_g">
                                 Calificación Largo Plazo Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_sp_cp_g"
                                     name="s_sp_cp_g"
                                     onChange={handleChange}
                             >
@@ -241,42 +193,29 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_sp_cp_g" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_sp_cp_g">
                                 Calificación Corto Plazo Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-date">
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
-                                    border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
-                                    dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
-                                placeholder=""
+                                id="d_fec_sp"
                                 name="d_fec_sp"
                                 onChange={handleChange}
                                 required
                             />
-                            <label htmlFor="d_fec_sp" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="d_fec_sp">
                                 Fecha
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
-								<textarea
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
-                                    border-b-2 border-gray-300 appearance-none dark:text-slate-900
-									dark:border-gray-600 dark:focus:border-cyan-700 focus:outline-none focus:ring-0
-									focus:border-cyan-700 peer"
-                                    name="s_evento_sp"
-                                    onChange={handleChange}
-                                ></textarea>
-                            <label htmlFor="s_evento_sp"
-                                   className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                       -translate-y-6 origin-[0]"
-                            >
+                        <div className="form-text-area">
+                            <textarea
+                                id="s_evento_sp"
+                                name="s_evento_sp"
+                                onChange={handleChange}
+                            ></textarea>
+                            <label htmlFor="s_evento_sp">
                                 Evento SP
                             </label>
                         </div>
@@ -285,13 +224,13 @@ export const EmisorasForm = () => {
                         </div>
                         <SelectFileCalifEmi name="s_pdf_sp" fieldB64="sp_b64"/>
                     </div>
-                    <div className="grid grid-cols-1">
-                        <span className="bg-cyan-700 text-slate-50 px-1">Moodys</span>
-                        <div className="relative z-0 my-3">
+                    <div>
+                        <div className="form-title">
+                            <span>Moodys</span>
+                        </div>
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                        border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                        dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_moody_lp_n"
                                     name="s_moody_lp_n"
                                     onChange={handleChange}
                             >
@@ -302,17 +241,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_moody_lp_n" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_moody_lp_n">
                                 Calificación Largo Plazo Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_moody_cp_n"
                                     name="s_moody_cp_n"
                                     onChange={handleChange}
                             >
@@ -323,17 +258,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_moody_cp_n" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_moody_cp_n">
                                 Calificación Corto Plazo Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_moody_lp_g"
                                     name="s_moody_lp_g"
                                     onChange={handleChange}
                             >
@@ -344,17 +275,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_moody_lp_g" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_moody_lp_g">
                                 Calificación Largo Plazo Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_moody_cp_g"
                                     name="s_moody_cp_g"
                                     onChange={handleChange}
                             >
@@ -365,44 +292,29 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_moody_cp_g" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_moody_cp_g">
                                 Calificación Corto Plazo Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-date">
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
-                                    border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
-                                    dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
-                                placeholder=""
+                                id="d_fec_moody"
                                 name="d_fec_moody"
                                 onChange={handleChange}
                                 required
                             />
-                            <label
-                                htmlFor="fechaMoody"
-                                className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="d_fec_moody">
                                 Fecha
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
-								<textarea
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
-                                    border-b-2 border-gray-300 appearance-none dark:text-slate-900
-									dark:border-gray-600 dark:focus:border-cyan-700 focus:outline-none focus:ring-0
-									focus:border-cyan-700 peer"
-                                    name="s_evento_moody"
-                                    onChange={handleChange}
-                                ></textarea>
-                            <label htmlFor="eventoMoody"
-                                   className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                       -translate-y-6 origin-[0]"
-                            >
+                        <div className="form-text-area">
+                            <textarea
+                                id="s_evento_moody"
+                                name="s_evento_moody"
+                                onChange={handleChange}
+                            ></textarea>
+                            <label htmlFor="s_evento_moody">
                                 Evento Moody
                             </label>
                         </div>
@@ -411,13 +323,13 @@ export const EmisorasForm = () => {
                         </div>
                         <SelectFileCalifEmi name="s_pdf_moody" fieldB64="moody_b64"/>
                     </div>
-                    <div className="grid grid-cols-1">
-                        <span className="bg-cyan-700 text-slate-50 px-1">Hr</span>
-                        <div className="relative z-0 my-3">
+                    <div>
+                        <div className="form-title">
+                            <span className="bg-cyan-700 text-slate-50 px-1">Hr</span>
+                        </div>
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                        border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                        dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_hr_lp_n"
                                     name="s_hr_lp_n"
                                     onChange={handleChange}
                             >
@@ -428,17 +340,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_hr_lp_n" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_hr_lp_n">
                                 Calificación Largo Plazo Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_hr_cp_n"
                                     name="s_hr_cp_n"
                                     onChange={handleChange}
                             >
@@ -449,17 +357,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_hr_cp_n" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_hr_cp_n">
                                 Calificación Corto Plazo Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_hr_lp_g"
                                     name="s_hr_lp_g"
                                     onChange={handleChange}
                             >
@@ -470,17 +374,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_hr_lp_g" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_hr_lp_g">
                                 Calificación Largo Plazo Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_hr_cp_g"
                                     name="s_hr_cp_g"
                                     onChange={handleChange}
                             >
@@ -491,41 +391,29 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_hr_cp_g" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_hr_cp_g">
                                 Calificación Corto Plazo Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-date">
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
-                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
-                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
-                                placeholder=""
+                                id="d_fec_hr"
                                 name="d_fec_hr"
                                 onChange={handleChange}
                                 required
                             />
-                            <label htmlFor="d_fec_hr" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]">
+                            <label htmlFor="d_fec_hr">
                                 Fecha
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-text-area">
 								<textarea
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
-                                    border-b-2 border-gray-300 appearance-none dark:text-slate-900
-									dark:border-gray-600 dark:focus:border-cyan-700 focus:outline-none focus:ring-0
-									focus:border-cyan-700 peer"
+                                    id="s_evento_hr"
                                     name="s_evento_hr"
                                     onChange={handleChange}
                                 ></textarea>
-                            <label htmlFor="eventoHr"
-                                   className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                       -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_evento_hr">
                                 Evento hr
                             </label>
                         </div>
@@ -536,16 +424,16 @@ export const EmisorasForm = () => {
                     </div>
                 </div>
                 <div className="grid grid-cols-1 gap-4">
-                    <div className="border-gray-300 border my-5"></div>
+                    <div className="line"/>
                 </div>
-                <div className="grid grid-cols-4 gap-4">
-                    <div className="grid grid-cols-1">
-                        <span className="bg-cyan-700 text-slate-50 px-1">Verum</span>
-                        <div className="relative z-0 my-3">
+                <div className="form-cols-4">
+                    <div>
+                        <div className="form-title">
+                            <span>Verum</span>
+                        </div>
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                        border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                        dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_verum_lp_n"
                                     name="s_verum_lp_n"
                                     onChange={handleChange}
                             >
@@ -556,17 +444,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_verum_lp_n" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_verum_lp_n">
                                 Calificación Largo Plazo Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_verum_cp_n"
                                     name="s_verum_cp_n"
                                     onChange={handleChange}
                             >
@@ -577,17 +461,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_verum_cp_n" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_verum_cp_n">
                                 Calificación Corto Plazo Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_verum_lp_g"
                                     name="s_verum_lp_g"
                                     onChange={handleChange}
                             >
@@ -598,17 +478,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_verum_lp_g" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_verum_lp_g">
                                 Calificación Largo Plazo Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_verum_cp_g"
                                     name="s_verum_cp_g"
                                     onChange={handleChange}
                             >
@@ -619,44 +495,29 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_verum_cp_g" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_verum_cp_g">
                                 Calificación Corto Plazo Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-date">
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
-                                    border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
-                                    dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
-                                placeholder=""
+                                id="d_fec_verum"
                                 name="d_fec_verum"
                                 onChange={handleChange}
                                 required
                             />
-                            <label
-                                htmlFor="d_fec_verum"
-                                className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                     -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="d_fec_verum">
                                 Fecha
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-text-area">
 								<textarea
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
-                                    border-b-2 border-gray-300 appearance-none dark:text-slate-900
-									dark:border-gray-600 dark:focus:border-cyan-700 focus:outline-none focus:ring-0
-									focus:border-cyan-700 peer"
+                                    id="s_evento_verum"
                                     name="s_evento_verum"
                                     onChange={handleChange}
                                 ></textarea>
-                            <label htmlFor="s_evento_verum"
-                                   className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                       -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_evento_verum">
                                 Evento verum
                             </label>
                         </div>
@@ -665,13 +526,13 @@ export const EmisorasForm = () => {
                         </div>
                         <SelectFileCalifEmi name="s_pdf_verum" fieldB64="verum_b64"/>
                     </div>
-                    <div className="grid grid-cols-1">
-                        <span className="bg-cyan-700 text-slate-50 px-1">Dbrs</span>
-                        <div className="relative z-0 my-3">
+                    <div>
+                        <div className="form-title">
+                            <span className="bg-cyan-700 text-slate-50 px-1">Dbrs</span>
+                        </div>
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                        border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                        dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_dbrs_lp_n"
                                     name="s_dbrs_lp_n"
                                     onChange={handleChange}
                             >
@@ -682,17 +543,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_dbrs_lp_n" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_dbrs_lp_n">
                                 Calificación Largo Plazo Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_dbrs_cp_n"
                                     name="s_dbrs_cp_n"
                                     onChange={handleChange}
                             >
@@ -703,17 +560,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_dbrs_cp_n" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_dbrs_cp_n">
                                 Calificación Corto Plazo Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_dbrs_lp_g"
                                     name="s_dbrs_lp_g"
                                     onChange={handleChange}
                             >
@@ -724,17 +577,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_dbrs_lp_g" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_dbrs_lp_g">
                                 Calificación Largo Plazo Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_dbrs_cp_g"
                                     name="s_dbrs_cp_g"
                                     onChange={handleChange}
                             >
@@ -745,43 +594,28 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_dbrs_cp_g" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_dbrs_cp_g">
                                 Calificación Corto Plazo Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-date">
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
-                                    border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
-                                    dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
-                                placeholder=""
+                                id="d_fec_dbrs"
                                 name="d_fec_dbrs"
                                 onChange={handleChange}
-                                required
                             />
-                            <label
-                                htmlFor="d_fec_dbrs"
-                                className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="d_fec_dbrs">
                                 Fecha
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-text-area">
 								<textarea
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
-                                    border-b-2 border-gray-300 appearance-none dark:text-slate-900
-									dark:border-gray-600 dark:focus:border-cyan-700 focus:outline-none focus:ring-0
-									focus:border-cyan-700 peer"
+                                    id="s_evento_dbrs"
                                     name="s_evento_dbrs"
                                     onChange={handleChange}
                                 ></textarea>
-                            <label htmlFor="s_evento_dbrs" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                       -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_evento_dbrs">
                                 Evento dbrs
                             </label>
                         </div>
@@ -790,13 +624,13 @@ export const EmisorasForm = () => {
                         </div>
                         <SelectFileCalifEmi name="s_pdf_dbrs" fieldB64="dbrs_b64"/>
                     </div>
-                    <div className="grid grid-cols-1">
-                        <span className="bg-cyan-700 text-slate-50 px-1">Best</span>
-                        <div className="relative z-0 my-3">
+                    <div>
+                        <div className="form-title">
+                            <span className="bg-cyan-700 text-slate-50 px-1">Best</span>
+                        </div>
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                        border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                        dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_best_lp_n"
                                     name="s_best_lp_n"
                                     onChange={handleChange}
                             >
@@ -807,17 +641,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_best_lp_n" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_best_lp_n">
                                 Calificación Largo Plazo Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_best_cp_n"
                                     name="s_best_cp_n"
                                     onChange={handleChange}
                             >
@@ -828,17 +658,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_best_cp_n" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_best_cp_n">
                                 Calificación Corto Plazo Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_best_lp_g"
                                     name="s_best_lp_g"
                                     onChange={handleChange}
                             >
@@ -849,17 +675,13 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_best_lp_g" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_best_lp_g">
                                 Calificación Largo Plazo Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-select">
                             <select defaultValue="default"
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
-                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
-                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                    id="s_best_cp_g"
                                     name="s_best_cp_g"
                                     onChange={handleChange}
                             >
@@ -870,44 +692,28 @@ export const EmisorasForm = () => {
                                     </option>
                                 ))}
                             </select>
-                            <label htmlFor="s_best_cp_g" className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="s_best_cp_g">
                                 Calificación Corto Plazo Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-date">
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
-                                    border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
-                                    dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
-                                placeholder=""
+                                id="d_fec_best"
                                 name="d_fec_best"
                                 onChange={handleChange}
-                                required
                             />
-                            <label
-                                htmlFor="fechaBest"
-                                className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                    -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="d_fec_best">
                                 Fecha
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="form-text-area">
 								<textarea
-                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
-                                    border-b-2 border-gray-300 appearance-none dark:text-slate-900
-									dark:border-gray-600 dark:focus:border-cyan-700 focus:outline-none focus:ring-0
-									focus:border-cyan-700 peer"
+                                    id="s_evento_best"
                                     name="s_evento_best"
                                     onChange={handleChange}
                                 ></textarea>
-                            <label htmlFor="eventoBest"
-                                   className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
-                                       -translate-y-6 origin-[0]"
-                            >
+                            <label htmlFor="eventoBest">
                                 Evento best
                             </label>
                         </div>

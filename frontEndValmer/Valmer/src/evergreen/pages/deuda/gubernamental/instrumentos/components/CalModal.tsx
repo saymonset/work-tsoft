@@ -44,6 +44,7 @@ export const CalModal = (c: CalProps) => {
                         border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                     name="n_tasa_cupon_md_vig"
+                    disabled={true}
                     value={''}
                     onChange={(e) => console.log(Number(e.target.value))}
                 />
@@ -132,6 +133,7 @@ export const CalModal = (c: CalProps) => {
                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                     name="n_tasa_cupon_24_vig"
                     value={''}
+                    disabled={true}
                     onChange={(e) => console.log(Number(e.target.value))}
                 />
                 <label
@@ -160,11 +162,6 @@ export const CalModal = (c: CalProps) => {
                     Interes 24
                 </label>
             </div>
-            {/* <div className="relative z-0 w-full my-3 ml-20">
-                <button className="btn" onClick={handleCalcularSobretasa}>
-                    <ButtonContent name="Calcular" loading={loadingPrecioMercadoSt}/>
-                </button>
-            </div> */}
         </div>
         
 

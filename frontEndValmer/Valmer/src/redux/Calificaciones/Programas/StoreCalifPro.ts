@@ -3,10 +3,10 @@ import {
     updateCalifProCarac,
     updateCatalogCalifPro,
     updateDataCalifProgramas,
-    updateEmisoraCalifPro, updateSelectedTvCalifPro, updateTriggerEraseCalifPro,
+    updateEmisoraCalifPro, updateRequiredCalifProg, updateRequiredTvCalifProg, updateSelectedTvCalifPro, updateTriggerEraseCalifPro,
     updateTvCalifPro
 } from "./actions";
-import {CalifProgramas, Catalogo, RatingAgency} from "../../../model";
+import {CalifProgramas, Catalogo, IsFieldReqCalifProg, RatingAgency} from "../../../model";
 
 const tvCalifProReducer = createReducer<string[]>(
     [],
@@ -71,6 +71,24 @@ const califProgramasDataReducer = createReducer<CalifProgramas>(
     }
 );
 
+const isRequiredCalifProgReducer = createReducer<IsFieldReqCalifProg>(
+    {} as IsFieldReqCalifProg,
+    (builder) => {
+        builder.addCase(updateRequiredCalifProg, (_state, action) => {
+            return action.payload;
+        });
+    }
+);
+
+const requiredTvCalifProgReducer = createReducer<boolean>(
+    false,
+    (builder) =>{
+        builder.addCase(updateRequiredTvCalifProg, (_state, action) => {
+            return action.payload;
+        });
+    }
+);
+
 const rootReducer = combineReducers({
     tvCalifPro: tvCalifProReducer,
     emisoraCalifPro: emisoraCalifProReducer,
@@ -78,7 +96,9 @@ const rootReducer = combineReducers({
     triggerEraseCalifPro: triggerEraseCalifProReducer,
     catalogoCalifPro: catalogCalifProReducer,
     catalogProCarac: catalogProCaracReducer,
-    califProgramasData: califProgramasDataReducer
+    califProgramasData: califProgramasDataReducer,
+    isFieldReqCalifProg: isRequiredCalifProgReducer,
+    requiredTvCalifProg: requiredTvCalifProgReducer,
 });
 
 export const storeCalifPro = configureStore({
