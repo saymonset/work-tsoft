@@ -98,7 +98,7 @@ export const useTvEmiSerieCalif = () => {
             if (triggerEmisora) {
                 setLoadingEmisoras(true)
                 const response = await fetchDataGetRet(
-                    "/calificaciones/instrumentos/emisoras",
+                    isFondos ? "/calificaciones/instrumentos/fondos/emisoras" : "/calificaciones/instrumentos/emisoras",
                     " al obtener catalogo emisora",
                     {sTv: selectedTv}
                 )

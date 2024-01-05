@@ -297,32 +297,32 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
         [registroSeleccionado]
     );
 
-    const validSelectValue = useCallback(
-        (value: string) => {
-            return registroSeleccionado?.[value] ?? "";
-        },
-        [registroSeleccionado]
-    );
-
     // const validSelectValue = useCallback(
-    //     (value: string, catalogName: string | undefined) => {
-    //
-    //         const currentValue = registroSeleccionado?.[value];
-    //
-    //         if (!isNaN(Number(currentValue))) {
-    //             return currentValue;
-    //         }
-    //
-    //         const foundCatalog = catalogStatic.find(catalog => catalog.catalogo === catalogName);
-    //         if (foundCatalog) {
-    //             const foundKey = Object.keys(foundCatalog.registros).find(key => foundCatalog.registros[key] === currentValue);
-    //             return foundKey ?? currentValue;
-    //         }
-    //
-    //         return currentValue ?? "";
+    //     (value: string) => {
+    //         return registroSeleccionado?.[value] ?? "";
     //     },
     //     [registroSeleccionado]
     // );
+
+    const validSelectValue = useCallback(
+        (value: string, catalogName: string | undefined) => {
+
+            const currentValue = registroSeleccionado?.[value];
+
+            if (!isNaN(Number(currentValue))) {
+                return currentValue;
+            }
+
+            const foundCatalog = catalogStatic.find(catalog => catalog.catalogo === catalogName);
+            if (foundCatalog) {
+                const foundKey = Object.keys(foundCatalog.registros).find(key => foundCatalog.registros[key] === currentValue);
+                return foundKey ?? currentValue;
+            }
+
+            return currentValue ?? "";
+        },
+        [registroSeleccionado]
+    );
 
 
     const registros = useMemo(() => {

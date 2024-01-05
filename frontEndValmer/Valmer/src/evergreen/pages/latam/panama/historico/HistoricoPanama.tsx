@@ -35,9 +35,14 @@ export const HistoricoPanama = () => {
         const targetSelect:any = document.getElementById('pickList') as HTMLSelectElement | null;
 
         let columnHeaders : any = [];
+        const prefixArray : any = ['s_nemotecnico', 'd_fecha'];
+
         if (targetSelect) {
             columnHeaders = Array.from(targetSelect as any)
-                               .map((option: any) => option.textContent);
+            .map((option: any) => option.value)
+            .filter((option: any) => !prefixArray.includes(option));           
+            
+            columnHeaders = prefixArray.concat(columnHeaders);
         }
 
         if (tabla) {
@@ -50,14 +55,15 @@ export const HistoricoPanama = () => {
                             <ButtonContent name="Obtener Log CSV" loading={loadingLogCsv} />
                         </button>
                     </div>
-                    <table className="table w-full">
-                    <thead className="thead">
-                    <tr>
-                        {columnHeaders.map((value:any) => (
-                        <th key={value}>{value}</th>
-                        ))}
-                    </tr>
-                    </thead>
+                    <div className='max-h-80 overflow-scroll w-full'>
+                        <table className="table w-full text-xs">
+                        <thead className="thead sticky top-0">
+                            <tr>
+                                {columnHeaders.map((value:any) => (
+                                    <th className='px-3' key={value}>{value.slice(2).replace("_"," ").toUpperCase()}</th>
+                                ))}
+                            </tr>
+                        </thead>
                     <tbody className="tbody">
                         {tabla?.body?.map((fila, index) => (
                             <tr key={index}>
@@ -68,6 +74,8 @@ export const HistoricoPanama = () => {
                         ))}
                     </tbody>
                     </table>
+                    </div>
+                    
                 </div>
             );
 

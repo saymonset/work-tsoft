@@ -3,17 +3,17 @@ import {MenuItem} from "./MenuItem";
 import {subMenuClose, generateUUID} from "../../../utils";
 
 
-export const SidebarMenu = ({item}: any) => {
+export const SidebarMenu = ({item, setOpenMenu, isOpen}: any) => {
 
-    const [isOpen, setIsOpen] = useState(false)
-
-    const handleClick = () => setIsOpen(!isOpen)
-
+    const [openSubMenu, setOpenSubMenu] = useState<string|null>(null);
+    const handleClick = () => {
+        setOpenMenu((prevOpenMenu:any) => (prevOpenMenu === item.label ? null: item.label));
+    }
     return (
         <>
-            <li className={`hover:bg-gradient-to-l hover:from-cyan-900 ${isOpen ? 'bg-gradient-to-l from-cyan-900' : null}`}>
+            <li className={`hover:bg-gradient-to-l hover:from-cyan-900 ${isOpen ? 'bg-gradient-to-l from-cyan-900' : ''}`}>
                 <button className={`block text-slate-200 p-2 w-full hover:border-l-4 hover:border-l-green-600 hover:text-slate-50 
-                        ${isOpen ? 'border-l-4 border-l-green-600' : null}`}
+                        ${isOpen ? 'border-l-4 border-l-green-600' : ''}`}
                         onClick={handleClick}>
 
                     <div className="flex items-center">
@@ -33,7 +33,7 @@ export const SidebarMenu = ({item}: any) => {
                     <ul className="pl-9 mt-1 bg-gradient-to-l from-cyan-700">
                         {isOpen && item.subMenu.map((item: any) => {
                             return (
-                                <MenuItem item={item} key={generateUUID()}/>
+                                <MenuItem item={item} key={generateUUID()} setOpenSubMenu={setOpenSubMenu} isOpen={openSubMenu===item.label}/>
                             )
                         })}
                     </ul>

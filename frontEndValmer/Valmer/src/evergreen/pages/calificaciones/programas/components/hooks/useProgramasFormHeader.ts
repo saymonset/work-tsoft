@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@reduxjs/toolkit/dist/query/core/apiState";
 import { CalifProgramas, Catalogo, DefaultValuesProgramas, IsFieldReqCalifProg, RatingAgency, RefReqProg, ResponseDataCorp, SelectOrNull } from "../../../../../../model";
 import React, { useEffect, useState, useRef } from "react";
-import { fetchDataGet, fetchDataPost, getEmisoras, showAlert, userEncoded, validChangeTvEmiSerie, validateFieldsAccCalifLatam } from "../../../../../../utils";
+import { fetchDataGet, fetchDataGetRet, fetchDataPost, showAlert, userEncoded, validChangeTvEmiSerie, validateFieldsAccCalifLatam } from "../../../../../../utils";
 import {
     updateCalifProCarac,
     updateCatalogCalifPro, updateDataCalifProgramas,
@@ -73,15 +73,21 @@ export const useProgramasFormHeader = () => {
     }, [tv]);
 
     useEffect(() => {
-        getEmisoras({
-            url: "/acciones/instrumentos/emisoras",
-            triggerEmisora,
-            selectedTv,
-            setTriggerEmisora,
-            setLoadingEmisoras,
-            dispatch,
-            reduxAction: updateEmisoraCalifPro
-        }).then();
+        const getDataEmisoras = async () => {
+            if (triggerEmisora) {
+                setLoadingEmisoras(true)
+                const response = await fetchDataGetRet(
+                    "/calificaciones/programas/emisoras",
+                    " al obtener catalogo emisora",
+                    {sTv: selectedTv}
+                )
+                dispatch(updateEmisoraCalifPro(response.body || []))
+                setTriggerEmisora(false)
+                setLoadingEmisoras(false)
+            }
+        };
+
+        getDataEmisoras().catch(() => {})
     }, [triggerEmisora]);
 
     useEffect(() => {

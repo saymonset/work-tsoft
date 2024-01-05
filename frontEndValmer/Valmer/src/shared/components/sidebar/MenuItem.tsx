@@ -1,20 +1,20 @@
 import {NavLink} from "react-router-dom";
-import {useState} from "react";
 import {subMenuClose} from "../../../utils";
 import {v4 as uuidv4} from 'uuid';
 
-export const MenuItem = ({item}: any) => {
+export const MenuItem = ({item, setOpenSubMenu, isOpen}: any) => {
 
-    const [isOpen, setIsOpen] = useState(false)
-    const handleClick = () => setIsOpen(!isOpen)
+    const handleClick = () => {
+        setOpenSubMenu((prevOpenMenu:any) => (prevOpenMenu === item.label ? null: item.label))
+    }
     const redirect = () => { /* TODO document why this arrow function is empty */
     }
 
     return (
         <NavLink to={item.path} className={`hover:bg-gradient-to-l hover:from-cyan-800 
-            ${isOpen ? 'bg-gradient-to-l from-cyan-800' : null}`}>
+            ${isOpen ? 'bg-gradient-to-l from-cyan-800' : ''}`}>
             <button className={`block text-slate-200 p-2 w-full hover:bg-gradient-to-l hover:from-green-600 
-                ${isOpen ? 'bg-gradient-to-l from-cyan-800' : null}`}
+                ${isOpen ? 'bg-gradient-to-l from-cyan-800' : ''}`}
                     onClick={item.subMenu ? handleClick : redirect}
             >
                 <div className="flex items-center">

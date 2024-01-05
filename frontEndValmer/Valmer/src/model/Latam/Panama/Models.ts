@@ -138,6 +138,44 @@ export interface HistoricoConsultaTabla {
     d_fecha: string;
     s_base: string;
     s_cierre_libro: string;
+    s_clase: string;
+    n_convexidad: number;
+    s_curva: string;
+    n_dias_x_venc: number;
+    n_duracion: number;
+    n_dur_mack: number;
+    s_emisor_corto: string;
+    d_fec_emision: string;
+    d_fecha_ini_cupon: string;
+    d_fecha_fin_cupon: string;
+    s_fitch: string;
+    d_fitch: string;
+    s_frecuencia: string;
+    n_interes: number;
+    s_isin: string;
+    s_moneda: string;
+    n_monto: number;
+    s_moody: string;
+    d_moody: string;
+    s_origen: string;
+    s_pais: string;
+    n_plazo: string;
+    n_porc_precio: number;
+    n_precio_limpio: number;
+    n_precio_sucio: number;
+    s_emisor: string;
+    n_rendimiento: number;
+    s_sp: string;
+    s_sector: string;
+    n_sobretasa: number;
+    d_sp: string;
+    n_spread: string;
+    n_tasa_c: number;
+    n_tasa_desc: string;
+    s_tipo_instrumento: string;
+    s_tipo_mercado: string;
+    n_valor_nominal: number;
+    d_fecha_vencimiento: string;
 }
 
 export interface formValuesLatPanama {

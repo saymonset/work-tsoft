@@ -60,7 +60,7 @@ export const usePanamaHistorico = () => {
     }
 };
 
-// Función para mover todos los campos del select de escogidos al select de campos
+
 const handleMoveAllFieldsToLeft = () => {
   const pickListSelect = document.getElementById('pickList') as HTMLSelectElement | null;
   const sourceSelect = document.getElementById('campos') as HTMLSelectElement | null;
@@ -71,7 +71,7 @@ const handleMoveAllFieldsToLeft = () => {
     options.forEach(option => {
       sourceSelect.add(new Option(option.text, option.value));
       setSelectedCampos(prevSelected => prevSelected.filter(value => value !== option.value)); 
-      pickListSelect.remove(option.index); // remover la opción del select de la derecha
+      pickListSelect.remove(option.index);
     });
   }
 }

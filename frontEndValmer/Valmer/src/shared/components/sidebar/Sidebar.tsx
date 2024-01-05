@@ -1,7 +1,7 @@
 import { SidebarMenu } from "./SidebarMenu";
 import {SidebarData} from './SidebarData';
 import {v4 as uuidv4} from "uuid";
-import React from "react";
+import React,{useState} from "react";
 
 interface SidebarProps {
     isOpen: boolean;
@@ -9,6 +9,7 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
 
+    const [openMenu, setOpenMenu] = useState<string|null>(null);
     const username = localStorage.getItem('user');
 
     return(
@@ -42,7 +43,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
                         <ul className="my-10">
                             {/** MenuSidebarItem */
                             SidebarData.map((item, index) => {
-                                return <SidebarMenu item={item} key={uuidv4()} />
+                                return <SidebarMenu item={item} key={uuidv4()} setOpenMenu={setOpenMenu} isOpen={openMenu===item.label}/>
                             })}
                         </ul>
                     </div>
