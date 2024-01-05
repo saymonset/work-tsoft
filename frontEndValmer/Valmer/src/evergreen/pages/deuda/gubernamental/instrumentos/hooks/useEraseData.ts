@@ -27,7 +27,8 @@ import {
     eraseFormValuesInstrumentos,
     fetchDataPost,
     userEncoded,
-    validateFormFields
+    validateFormFields,
+    validateSelectTaked
 } from "../../../../../../utils";
 import React, {useEffect, useRef, useState} from "react";
 
@@ -121,7 +122,11 @@ export const useEraseData = () => {
     
     const handleCalculator = async  (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        setIsModalOpen(true);
+        
+        if (await validateSelectTaked(consultaData.body, dispatch, requeridosGuber )) {
+            setIsModalOpen(true);
+        }
+      
 
     };
 

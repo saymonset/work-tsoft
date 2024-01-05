@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 // import {ButtonContent, Modal} from "../../../../../shared";
 import { CalProps } from '../../../../../../model'
-import { ButtonContent, Modal } from '../../../../../../shared';
+import { ButtonContent, Modal, Title, TitleDate } from '../../../../../../shared';
 import { useCalModal } from '../hooks/useCalModal';
 
 export const CalModal = (c: CalProps) => {
@@ -32,6 +32,10 @@ export const CalModal = (c: CalProps) => {
     <Modal isOpen={c.isModalOpen} onClose={c.handleModalClose} title="">
 
     <div className="grid grid-cols-1 mt-1">
+    <div className="mt-4 mb-4 p-1 text-black text-left">
+        
+       <Title title={'Calculadora'}/>
+        </div>
 
         <div className="mt-4 mb-4 p-1 bg-cyan-700 text-white text-center">
             <span>Calculo Tasa</span>
@@ -156,8 +160,11 @@ export const CalModal = (c: CalProps) => {
                     disabled={true}
                 />
                 <label
-                    htmlFor="fechaVencimientoEstimada"
-                    className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75 -translate-y-6 origin-[0]"
+                    htmlFor="interes24"
+                    className="peer-focus:font-medium absolute text-sm text-gray-900 dark:text-gray-900 duration-300
+                    transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-cyan-700
+                    peer-focus:dark:text-cyan-700 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+                    peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
                     Interes 24
                 </label>

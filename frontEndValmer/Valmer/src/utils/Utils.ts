@@ -328,6 +328,40 @@ export const validateFormFields = async (
     return true;
 }
 
+export const validateSelectTaked = async (
+    formValues: InstrumentosType,
+    dispatch: Dispatch,
+    requeridos: RequeridosCorp
+   ) => {
+
+
+    if (!formValues?.s_tv || formValues.s_tv == 'default') {
+        dispatch(updateRequiredTv(true));
+        // dispatch(updateRequiredTvCorp(true));
+        // dispatch(updateRequiredTvInter(true))
+        focusElement("s_tv", requeridos.s_tv)
+        return false;
+    }
+
+    if (!formValues.s_emisora || formValues.s_emisora == 'default') {
+        dispatch(updateRequiredEmisora(true));
+        // dispatch(updateRequiredEmisoraCorp(true));
+        // dispatch(updateRequiredEmisoraInter(true));
+        focusElement("s_emisora", requeridos.s_emisora)
+        return false;
+    }
+
+    if (!formValues.s_serie || formValues.s_serie == 'default') {
+        dispatch(updateRequiredSerie(true));
+        // dispatch(updateRequiredSerieCorp(true));
+        // dispatch(updateRequiredSerieInter(true));
+        focusElement("s_serie", requeridos.s_serie)
+        return false;
+    }
+ 
+    return true;
+}
+
 export const validateFormDerivadosFields = async (
     formValues: InstrumentosDerivadosType,
     dispatch: Dispatch,

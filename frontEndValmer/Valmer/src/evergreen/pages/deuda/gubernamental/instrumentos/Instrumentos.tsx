@@ -5,7 +5,6 @@ import {useEraseData} from "./hooks";
 import { HocRestricted } from "../../../restrictedAccess";
 import { Link } from "react-router-dom";
 import { CalModal } from "./components/CalModal";
-// import { CalModal } from "./components/CalModal";
 export const Instrumentos = () => {
 
     const {
