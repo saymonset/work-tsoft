@@ -4,7 +4,7 @@ import {
     AccionesAdd,
     Catalogo,
     CatalogoSubastas,
-    ClienteInfo,
+    ClienteInfo, ConsultaDataEditCauClient,
     DataTypeKey,
     FormValuesCorp,
     FormValuesDerivados,
@@ -27,7 +27,7 @@ import {
     RefReqAccCalifLatam,
     RequeridosCorp,
     RequeridosDefDerivados,
-    RequeridosDerivados,
+    RequeridosDerivados, ResponseApiEditCauClient,
     ResponseConsultaData,
     ResponseConsultaDataCorp,
     ResponseConsultaDataInter,
@@ -86,7 +86,6 @@ import {
     validInternacionalField, 
     validProgramasField} from "./ValidFields";
 import { validLatPamanaField } from "./ValidFields/Latam/Panama";
-import { useDispatch } from "react-redux";
 
 export const generateUUID = (): string => {
     return uuidv4();

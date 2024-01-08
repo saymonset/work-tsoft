@@ -34,6 +34,7 @@ export const InstrumentosForm: React.FC<InstrumentosFormProps> = ({ requeridosAc
         requiredTv,
         requiredEmisora,
         requiredSerie,
+        loadingPrecalc,
         handleChange,
         handleCheckbox,
         handleClickTv,
@@ -65,8 +66,8 @@ export const InstrumentosForm: React.FC<InstrumentosFormProps> = ({ requeridosAc
             <div>
                 {loadingConsultaData && <BarLoader className="ml-2 w-full mt-2 mb-2" color="#059669" width={500}/>}
 
-                <div className={`${showPrecalc ? 'grid grid-cols-5 animate__animated animate__fadeIn' : ''}`}>
-                    <div className="form col-span-3">
+                <div className={`${showPrecalc ? 'animate__animated animate__fadeIn' : ''}`}>
+                    <div className="form">
                         <div className="form-title">
                             <span>Instrumento</span>
                         </div>
@@ -697,23 +698,30 @@ export const InstrumentosForm: React.FC<InstrumentosFormProps> = ({ requeridosAc
                                     </label>
                                 </div>
                             </div>
+                    </div>
 
-                        <div className="mb-14 col-span-4">
+                    <div className="form-cols-2">
+
+                        <div className="mb-14">
                             {loadingDividendos &&
                                 <BarLoader
                                     className="w-full mt-2 mb-2"
                                     color="#059669"
-                                    width={500}/>}
+                                    width={500}
+                                />
+                            }
                             <InstrumentosTable data={dividendosTable}/>
                         </div>
+
+                        {showPrecalc &&
+                            <div className="animate__animated animate__fadeIn">
+                                <div className="form-cols-1">
+                                    <InstrumentosPreCalc loadingPrecalc={loadingPrecalc} />
+                                </div>
+                            </div>
+                        }
                     </div>
 
-                    {showPrecalc &&
-                        <div className="form col-span-2 animate__animated animate__fadeIn">
-                            <div className="form-cols-1">
-                                <InstrumentosPreCalc/>
-                            </div>
-                        </div>}
                 </div>
             </div>
         </form>

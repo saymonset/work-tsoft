@@ -19,7 +19,6 @@ export const Panama = () => {
         catalog,
         isFieldRequiredLatPanama,
         refReqLatPanama,
-        //setSelectedNemoTecnico,
         handleNewNemo,
         handleCheckboxChange,
         handleSelectNemo,

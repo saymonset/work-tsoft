@@ -1,96 +1,128 @@
 import React from "react";
 import {PrecalcAdr, PrecalcDerCorp, PrecalcFijo, PrecalcSuspend, PrecalcVinc} from "./components";
 import {useInstrumentosPreCalc} from "../hooks";
+import { BarLoader } from "react-spinners";
 
-export const InstrumentosPreCalc = () => {
+interface Props {
+    loadingPrecalc: boolean
+}
+
+export const InstrumentosPreCalc: React.FC<Props> = ({ loadingPrecalc }) => {
 
     const {
-        showVinculado,
-        showAdr,
-        showSuspend,
-        showFijo,
-        showDerCorp,
+        showState,
         handleShowVinculado,
-        handleShowAdr,
-        handleShowSuspend,
-        handleShowFijo,
-        handleShowDerCorp,
+        checkboxValue,
+        deletedPrecalc,
+        setShowState
     } = useInstrumentosPreCalc()
 
 
     return (
         <div className="mb-12">
+            {loadingPrecalc && <BarLoader className="w-full mt-2 mb-2" color="#059669" width={500} />}
             <div className="form-title">
                 <span>Precalculados</span>
             </div>
-            <div className="mt-4 flex justify-between">
+            <div className="mt-4 justify-between grid grid-cols-5 gap-4">
 
-                <div className="form-check">
+                <div className="form-check justify-center">
+                    <button 
+                        className="fa fa-edit text-xs text-cyan-700" 
+                        onClick={(e) => handleShowVinculado(e, "vinculado")}
+                        disabled={checkboxValue("precalc-acciones-vinculadas", "check_adr")}
+                    />
                     <input
+                        name="vinculado"
+                        id="vinculado"
                         type="checkbox"
-                        checked={showVinculado}
-                        onChange={handleShowVinculado}
+                        checked={checkboxValue("precalc-acciones-vinculadas", "check_vinculado")}
+                        disabled={checkboxValue("precalc-acciones-vinculadas", "check_adr")}
+                        onChange={deletedPrecalc}
                     />
                     <label htmlFor="vinculado">
                         Vinculado
                     </label>
                 </div>
-                <div className="form-check">
+                <div className="form-check justify-center">
+                    <button 
+                        className="fa fa-edit text-xs text-cyan-700" 
+                        onClick={(e) => handleShowVinculado(e, "adr")}
+                        disabled={checkboxValue("precalc-acciones-vinculadas", "check_vinculado")}
+                    />
                     <input
+                        name="adr"
+                        id="adr"
                         type="checkbox"
-                        checked={showAdr}
-                        onChange={handleShowAdr}
+                        checked={checkboxValue("precalc-acciones-vinculadas", "check_adr")}
+                        disabled={checkboxValue("precalc-acciones-vinculadas", "check_vinculado")}
+                        onChange={deletedPrecalc}
                     />
                     <label htmlFor="adr">ADR</label>
                 </div>
-                <div className="form-check">
+                <div className="form-check justify-center">
+                    <button 
+                        className="fa fa-edit text-xs text-cyan-700" 
+                        onClick={(e) => handleShowVinculado(e, "suspendido")}
+                    />
                     <input
                         type="checkbox"
-                        name="b_tipo_crisis_shock"
-                        checked={showSuspend}
-                        onChange={handleShowSuspend}
+                        name="suspendido"
+                        id="suspendido"
+                        checked={checkboxValue("precalc-suspendidas", "check_suspendido")}
+                        onChange={deletedPrecalc}
                     />
-                    <label htmlFor="b_tipo_crisis_shock">Suspendido</label>
+                    <label htmlFor="suspendido">Suspendido</label>
                 </div>
-                <div className="form-check">
+                <div className="form-check justify-center">
+                    <button 
+                        className="fa fa-edit text-xs text-cyan-700" 
+                        onClick={(e) => handleShowVinculado(e, "fijo")}
+                    />
                     <input
                         type="checkbox"
-                        name="b_valida_bbva"
-                        checked={showFijo}
-                        onChange={handleShowFijo}
+                        name="fijo"
+                        id="fijo"
+                        checked={checkboxValue("precalc-fijos", "check_fijo")}
+                        onChange={deletedPrecalc}
                     />
-                    <label htmlFor="b_valida_bbva">Fijo</label>
+                    <label htmlFor="fijo">Fijo</label>
                 </div>
-                <div className="form-check">
+                <div className="form-check justify-center">
+                    <button 
+                        className="fa fa-edit text-xs text-cyan-700" 
+                        onClick={(e) => handleShowVinculado(e, "derCorp")}
+                    />
                     <input
                         type="checkbox"
-                        name="b_precio_cierre"
-                        checked={showDerCorp}
-                        onChange={handleShowDerCorp}
+                        id="derCorp"
+                        name="derCorp"
+                        checked={checkboxValue("precalc-derecho-corp", "check_dercorp")}
+                        onChange={deletedPrecalc}
                     />
-                    <label htmlFor="b_precio_cierre">Der.Corp</label>
+                    <label htmlFor="derCorp">Der.Corp</label>
                 </div>
             </div>
 
 
-            {showVinculado &&
-                <PrecalcVinc/>
+            {showState["vinculado"] &&
+                <PrecalcVinc setShowState={setShowState} />
             }
 
-            {showAdr &&
-                <PrecalcAdr/>
+            {showState["adr"] &&
+                <PrecalcAdr setShowState={setShowState} />
             }
 
-            {showSuspend &&
-                <PrecalcSuspend/>
+            {showState["suspendido"] &&
+                <PrecalcSuspend setShowState={setShowState} />
             }
 
-            {showFijo &&
-                <PrecalcFijo/>
+            {showState["fijo"] &&
+                <PrecalcFijo setShowState={setShowState} />
             }
 
-            {showDerCorp &&
-                <PrecalcDerCorp/>
+            {showState["derCorp"] &&
+                <PrecalcDerCorp setShowState={setShowState} />
             }
         </div>
     );

@@ -1,3 +1,6 @@
+import {ConsultaDataEditCauClient} from "../Admin";
+import {Catalogo} from "../deuda";
+
 export interface RegistroEdit {
     id: string;
     [key: string]: string;
@@ -40,7 +43,7 @@ export interface ResponseConstCatAdmin {
     };
 }
 
-export interface ResponseCauCLientes {
+export interface ResponseCauClientes {
     n_cliente: number;
     s_nomcorto: string;
     s_nombre: string;
@@ -67,3 +70,41 @@ export interface RegistroEnviosMailGrupos {
     n_grupo: number;
     s_descripcion: string;
 }
+
+export type ActionHookEditCauClient = | { type: 'UPDATE', payload: Partial<StateHookEditCauClient> };
+
+export interface StateHookEditCauClient {
+    loadingClient: boolean;
+    clients: Record<string, string>;
+    enterprise: string;
+    selectClient: string;
+    catalogs: ResponseCauClientes[];
+    filteredCatalogs: ResponseCauClientes[];
+    enterpriseFilteredCatalogs: ResponseCauClientes[];
+    consultaDataClient: ConsultaDataEditCauClient;
+    catalogsCau: Catalogo[];
+    loadingCatalog: boolean;
+    loadingCatalogCau: boolean;
+    triggerCatalogs: boolean;
+    loadingClientById: boolean;
+    loadingCsv: boolean;
+    loadingNewId: boolean;
+    loadingErase: boolean;
+    loadingSave: boolean;
+    loadingClientId: number | null;
+}
+
+export type ActionHookEdit = | { type: 'UPDATE', payload: Partial<StateHookEdit> };
+
+export type StateHookEdit = {
+    registroSeleccionado: RegistroEdit | null;
+    loadingSave: boolean;
+    loadingDelete: boolean;
+    loadingNewId: boolean;
+    loadingCatalogStatic: boolean;
+    loadingNomCorto: boolean;
+    loadingCatalog: boolean;
+    triggerCatalogs: boolean;
+    isNew: boolean,
+    catalogs: RegistroConstCatAdmin[];
+};

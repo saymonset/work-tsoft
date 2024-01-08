@@ -85,7 +85,7 @@ export const PanamaHeader = (data: PanamaHeaderProps) => {
                                     onChange={data.handleChange}
                                     ref={data.refReqLatPanama.n_tipo_instrumento}
                                 >
-                                    <option value="">...</option>
+                                    <option value="default">...</option>
                                     {getCatalogs(data.catalog, 'TIPO_INSTRUMENTO').map((column) => (
                                         <option key={column[0]} value={column[0]}>
                                             {column[1]}

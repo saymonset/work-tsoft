@@ -225,38 +225,31 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
     }, [nameCatalog, registroSeleccionado]);
 
     const handleSave = async () => {
-        try {
-            if (!(await validarCampos())) {
-                return;
+        if (!(await validarCampos())) {
+            return;
+        }
+
+        updateState({ loadingSave: true });
+
+        const {...request } = registroSeleccionado;
+
+        procesarEvaluate(nameCatalog, request, catalogStatic);
+
+        eraseRequest(request);
+
+        await fetchDataPost(
+            "/catalogos/guardar-catalogo",
+            " al guardar catalogo",
+            request,
+            {
+                s_nombre_catalogo: nameCatalog.toLowerCase(),
+                s_user: userEncoded()
             }
+        );
 
-            updateState({ loadingSave: true });
-
-            const {...request } = registroSeleccionado;
-
-            procesarEvaluate(nameCatalog, request, catalogStatic);
-
-            eraseRequest(request);
-
-            await fetchDataPost(
-                "/catalogos/guardar-catalogo",
-                " al guardar catalogo",
-                request,
-                {
-                    s_nombre_catalogo: nameCatalog.toLowerCase(),
-                    s_user: userEncoded()
-                }
-            );
-
-            updateState({ loadingSave: false });
-            setRegistroSeleccionado(null);
-            updateState({ catalogs: [], triggerCatalogs: true });
-        }
-        catch (error: any)
-        {
-            await showAlert('warning', 'Atención', error.message);
-            updateState({ loadingSave: false });
-        }
+        updateState({ loadingSave: false });
+        setRegistroSeleccionado(null);
+        updateState({ catalogs: [], triggerCatalogs: true });
     };
 
 

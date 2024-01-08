@@ -1,4 +1,110 @@
-import {ColumnEditCat, RegistroConstCatAdmin, RegistroEdit} from "../Catalogos";
+import {ColumnEditCat} from "../Catalogos";
+
+export interface ResponseApiEditCauClient {
+    status: number;
+    body: BodyEditCauClient;
+}
+
+export interface BodyEditCauClient {
+    catalogo: string;
+    campos: string;
+    registros: ClienteEditCau[];
+    niveles_servicio: NivelesServicioEditCau;
+}
+
+
+export interface ClienteEditCau {
+    n_cliente: string;
+    n_empresa: string;
+    s_nombre: string;
+    s_puesto: string;
+    s_telefono: string;
+    s_email: string;
+    s_usuario: string;
+    s_password: string;
+    s_area: string;
+    n_sector: string;
+    s_fax: string;
+    n_hits: string;
+    d_fecha: string;
+    n_status: string;
+}
+
+export interface NivelesServicioEditCau {
+    n_betas: string;
+    n_curvas: string;
+    n_nivmer: string;
+    n_bench: string;
+    n_vecafor: string;
+    n_basecorp: string;
+    n_escenarios: string;
+    n_nivel1: string;
+    n_nivel2: string;
+    n_vecintafor: string;
+    n_portafolio: string;
+    n_asp: string;
+    n_motorbench: string;
+    n_indrot: string;
+    n_benchlim: string;
+    n_volati: string;
+    n_baseeur: string;
+    n_nivel4: string;
+    n_cau: string;
+    n_basecalif: string;
+    n_vecfecval: string;
+    n_vecpromafor: string;
+    n_nivel3: string;
+    n_indices: string;
+    n_nivel5: string;
+    n_notasind: string;
+    n_notasest: string;
+}
+
+export interface ConsultaDataEditCauClient {
+    n_emp: string,
+    n_cli: string,
+    N_CLIENTE: string;
+    N_EMPRESA: string;
+    S_NOMBRE: string;
+    S_PUESTO: string;
+    S_TELEFONO: string;
+    S_EMAIL: string;
+    S_USUARIO: string;
+    S_PASSWORD: string;
+    S_AREA: string;
+    N_SECTOR: string;
+    S_FAX: string;
+    N_HITS: string;
+    D_FECHA: string;
+    N_STATUS: string;
+    n_betas: string;
+    n_curvas: string;
+    n_nivmer: string;
+    n_bench: string;
+    n_vecafor: string;
+    n_basecorp: string;
+    n_escenarios: string;
+    n_nivel1: string;
+    n_nivel2: string;
+    n_vecintafor: string;
+    n_portafolio: string;
+    n_asp: string;
+    n_motorbench: string;
+    n_indrot: string;
+    n_benchlim: string;
+    n_volati: string;
+    n_baseeur: string;
+    n_nivel4: string;
+    n_cau: string;
+    n_basecalif: string;
+    n_vecfecval: string;
+    n_vecpromafor: string;
+    n_nivel3: string;
+    n_indices: string;
+    n_nivel5: string;
+    n_notasind: string;
+    n_notasest: string;
+}
 
 export interface ResponseTableMail {
     status: number;
@@ -46,39 +152,15 @@ export type MemoizedTableProps = {
     edit: boolean | undefined
 };
 
-export type StateHookEdit = {
-    registroSeleccionado: RegistroEdit | null;
-    loadingSave: boolean;
-    loadingDelete: boolean;
-    loadingNewId: boolean;
-    loadingCatalogStatic: boolean;
-    loadingNomCorto: boolean;
-    loadingCatalog: boolean;
-    triggerCatalogs: boolean;
-    isNew: boolean,
-    catalogs: RegistroConstCatAdmin[];
-};
-
-export type ActionHookEdit = | { type: 'UPDATE', payload: Partial<StateHookEdit> };
 
 export interface ResponseCat {
     status: number;
     body: Record<string, string>;
 }
 
-export interface ResponseDataSector {
-    status: number;
-    body: CatSector[];
-}
-
 export interface CatSector {
     id_sector: number;
     nombre: string;
-}
-
-export interface ResponseDataUser {
-    status: number;
-    body: InfoUser;
 }
 
 export interface InfoUser {
@@ -96,11 +178,6 @@ export interface InfoUser {
     fecha_alta: string;
     n_sector: string;
     "n institucion": string;
-}
-
-export interface ResponseDataUri {
-    status: number;
-    body: UriInfo;
 }
 
 export interface UriInfo {
@@ -121,6 +198,12 @@ export interface DataHistoricoTrial {
     id_proceso_padre: string;
     uri: string;
 }
+
+export type ParamsEditCauClient = {
+    s_nombre_catalogo: string;
+    n_cli?: string;
+    n_emp?: string;
+};
 
 export interface FvCheckbox {
     [key: string]: boolean;

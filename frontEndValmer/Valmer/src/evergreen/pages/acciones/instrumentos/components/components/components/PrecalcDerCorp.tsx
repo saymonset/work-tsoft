@@ -1,9 +1,16 @@
 import React from "react";
-import {usePrecalcPersist} from "./hooks";
+import { ButtonContent } from "../../../../../../../shared";
+import {usePrecalcTvEmiSerie} from "./hooks";
+import { PropsPrecalc } from "../../../../../../../model";
 
-export const PrecalcDerCorp = () => {
+export const PrecalcDerCorp: React.FC<PropsPrecalc> = ({ setShowState }) => {
 
-    const {handleChange} = usePrecalcPersist()
+    const {
+        loadingAct,
+        inputValue,
+        handleChange,
+        actPrecalc
+    } = usePrecalcTvEmiSerie({ setShowState })
 
     return (
         <div className="animate__animated animate__fadeIn">
@@ -19,24 +26,32 @@ export const PrecalcDerCorp = () => {
                 <div className="form-date">
                     <input
                         type="date"
-                        name="d_der_corp_fecha"
-                        onChange={handleChange}
+                        name="fecha_dercorp"
+                        id="fecha_dercorp"
+                        value={inputValue("precalc-derecho-corp", "fecha_dercorp")}
+                        onChange={(e) => handleChange(e, "precalc-derecho-corp")}
                     />
-                    <label>
-                        Fecha
-                    </label>
+                    <label htmlFor="fecha_dercorp">Fecha</label>
                 </div>
 
                 <div className="form-input">
                     <input
                         type="text"
-                        name="n_der_corp_monto"
-                        onChange={handleChange}
+                        name="n_monto_decorp"
+                        id="n_monto_decorp"
+                        value={inputValue("precalc-derecho-corp", "n_monto_decorp")}
+                        onChange={(e) => handleChange(e, "precalc-derecho-corp")}
                     />
-                    <label>
-                        Monto
-                    </label>
+                    <label htmlFor="n_monto_decorp">Monto</label>
                 </div>
+            </div>
+            <div className="flex justify-center">
+                <button className="btn"
+                    type="button"
+                    onClick={() => actPrecalc("derecho-corp")}
+                >
+                    <ButtonContent name="Actualizar" loading={loadingAct} />
+                </button>
             </div>
         </div>
     );

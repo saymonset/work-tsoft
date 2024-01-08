@@ -3,11 +3,23 @@ import {
     updateCatalogAcc,
     updateConsultaDataAccInst,
     updateDividendosTable,
-    updateEmisoraAccInst, updateNewFormInst, updateRequiredEmisoraAcc, updateRequiredFieldAccInst, updateRequiredSerieAcc, updateRequiredTvAcc, updateSelectedEmisoraAcc, updateSelectedSerieAcc, updateSelectedTvAcc,
-    updateSerieAccInst, updateShowCarRvAcc, updateShowPrecalc, updateTriggerEraseAcc,
-    updateTvAccInst
-} from "./actions";
-import {Catalogo, DividendosData, IsFieldRequiredAccInst, RespAccInstData} from "../../../model";
+    updateEmisoraAccInst, 
+    updateNewFormInst, 
+    updatePrecalculados, 
+    updateRequiredEmisoraAcc, 
+    updateRequiredFieldAccInst, 
+    updateRequiredSerieAcc, 
+    updateRequiredTvAcc, 
+    updateSelectedEmisoraAcc, 
+    updateSelectedSerieAcc, 
+    updateSelectedTvAcc,
+    updateSerieAccInst, 
+    updateShowCarRvAcc, 
+    updateShowPrecalc, 
+    updateTriggerEraseAcc,
+    updateTriggerPrecalc,
+    updateTvAccInst} from "./actions";
+import {Catalogo, DividendosData, IsFieldRequiredAccInst, Precalculados, RespAccInstData} from "../../../model";
 
 const selectedTvAccReducer = createReducer<string>(
     "default",
@@ -162,6 +174,24 @@ const requiredSerieAccReducer = createReducer<boolean>(
     }
 );
 
+const precalculadosReducer = createReducer<Precalculados>(
+    {} as Precalculados,
+    (builder) => {
+        builder.addCase(updatePrecalculados, (_state, action) => {
+            return action.payload;
+        });
+    }
+);
+
+const triggerPrecalcdoReducer = createReducer<boolean>(
+    false,
+    (builder) => {
+        builder.addCase(updateTriggerPrecalc, (_state, action) => {
+            return action.payload;
+        });
+    }
+);
+
 const rootReducer = combineReducers({
     selectedTvAcc: selectedTvAccReducer,
     selectedEmisoraAcc: selectedEmisoraAccReducer,
@@ -179,7 +209,9 @@ const rootReducer = combineReducers({
     fieldRequiredAccInst: fieldRequiredAccInstReducer,
     requiredTvAcc: requiredTvAccReducer,
     requiredEmisoraAcc: requiredEmisoraAccReducer,
-    requiredSerieAcc: requiredSerieAccReducer
+    requiredSerieAcc: requiredSerieAccReducer,
+    precalculados: precalculadosReducer,
+    triggerPrecalc: triggerPrecalcdoReducer
 });
 
 export const storeAccInst = configureStore({

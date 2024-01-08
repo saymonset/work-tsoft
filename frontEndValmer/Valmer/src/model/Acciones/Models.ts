@@ -341,3 +341,53 @@ export interface RequeridosAcc {
     n_theo_model: React.MutableRefObject<SelectOrNull>;
     n_mkt_model: React.MutableRefObject<SelectOrNull>;
 }
+
+export interface Precalculados {
+    [key: string]: PrecalcAccVin[] | PrecalcSuspendidas[] | PrecalcFijos[] | PrecalcDerCorp[] | undefined;
+    "precalc-acciones-vinculadas"?: PrecalcAccVin[];
+    "precalc-suspendidas"?: PrecalcSuspendidas[];
+    "precalc-fijos"?: PrecalcFijos[];
+    "precalc-derecho-corp"?: PrecalcDerCorp[];
+}
+
+export interface PrecalcAccVin {
+    [key: string]: string | undefined;
+    check_vinculado?: string;
+    vinculo_vin?: string;
+    check_adr?: string;
+    vinculo_adr?: string;
+    prpoporcion?: string;
+}
+
+export interface PrecalcSuspendidas {
+    [key: string]: string;
+    check_suspendido: string;
+    fecha_suspension: string;
+}
+
+export interface PrecalcFijos {
+    [key: string]: string;
+    check_fijo: string;
+    n_precio: string;
+    n_moneda: string;
+}
+
+export interface PrecalcDerCorp {
+    [key: string]: string;
+    check_dercorp: string;
+    fecha_dercorp: string;
+    n_monto_decorp: string;
+}
+
+export interface ShowPrecalc {
+    [key: string]: boolean;
+    vinculado: boolean;
+    adr: boolean;
+    suspendido: boolean;
+    fijo: boolean;
+    derCorp: boolean;
+}
+
+export interface PropsPrecalc {
+    setShowState: React.Dispatch<React.SetStateAction<ShowPrecalc>>
+}

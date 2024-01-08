@@ -7,7 +7,7 @@ export const InstrumentosTable = ({ data }: {data: DividendosData[]}) => {
         <>
             <div className="form-title">DIVIDENDOS</div>
             <div className="flex flex-col mt-3">
-                <table className="table">
+                <table className="table text-xs">
                     <thead className="thead">
                     <tr>
                         <th>FECHA</th>

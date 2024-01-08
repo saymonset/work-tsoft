@@ -14,26 +14,8 @@ export const procesarEvaluate = (nameCatalog: string, request: RegistroEdit, cat
         case 'cau_usuarios':
             procesarCatalogoCauUsuarios(request, catalogStatic);
             break;
-        case 'broker_cat_plazos':
-            procesarCatalogoBrokerCatPlazos(request);
-            break;
     }
 }
-
-const procesarCatalogoBrokerCatPlazos = (request: RegistroEdit): void => {
-    const nRango = request['n_rango'];
-
-    const partes = nRango.split('-');
-    if (partes.length !== 2 || !esNumero(partes[0]) || !esNumero(partes[1])) {
-        throw new Error("Formato inválido: n_rango debe ser del formato 'numero-numero'");
-    }
-
-    const numero1 = parseInt(partes[0], 10);
-    const numero2 = parseInt(partes[1], 10);
-    const resultado = numero1 - numero2;
-
-    request['n_rango'] = resultado.toString();
-};
 
 
 const procesarCatalogoBaccSubramoIng = (request: RegistroEdit): void => {

@@ -1,7 +1,26 @@
 import React from "react";
 import {DataCauLevels, generateUUID} from "../../../../../../../../utils";
+import {
+    BodyEditCauClient,
+    Catalogo,
+    ConsultaDataEditCauClient,
+    NivelesServicioEditCau
+} from "../../../../../../../../model";
 
-export const ServiceLevelsCau = () => {
+interface ServiceLevelsCauProps {
+    Data: ConsultaDataEditCauClient;
+    handleChange: <T extends HTMLInputElement | HTMLSelectElement>(e: React.ChangeEvent<T>) => void;
+}
+
+export const ServiceLevelsCau = ({Data, handleChange}: ServiceLevelsCauProps) => {
+
+    const getValue = (levelValue: string) => {
+        if (Data && levelValue in Data) {
+            return (Data as any)[levelValue];
+        }
+        return "2";
+    };
+
 
     return (
         <>
@@ -14,13 +33,14 @@ export const ServiceLevelsCau = () => {
             <div className="mt-8 mb-14 grid grid-cols-4 gap-4">
                 {DataCauLevels.map((level) => (
                     <div key={generateUUID()} className="relative z-0 my-3">
-                        <select defaultValue="default"
+                        <select value={getValue(level.value)}
                                 name={level.name}
                                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                                onChange={handleChange}
                         >
-                            <option value="default">...</option>
+                            <option value="0">...</option>
                             <option value="2">O</option>
                             <option value="3">T</option>
                             <option value="1">X</option>

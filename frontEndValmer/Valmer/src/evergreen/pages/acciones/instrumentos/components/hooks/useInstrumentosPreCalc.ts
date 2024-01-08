@@ -1,35 +1,50 @@
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@reduxjs/toolkit/dist/query/core/apiState";
-import {RespAccInstData} from "../../../../../../model";
+import {Precalculados, ShowPrecalc} from "../../../../../../model";
 import React, {useState} from "react";
 import Sweet from "sweetalert2";
-import {updateConsultaDataAccInst} from "../../../../../../redux";
+import { fetchDataPostAct } from "../../../../../../utils";
+import { updatePrecalculados, updateTriggerPrecalc } from "../../../../../../redux";
 
 export const useInstrumentosPreCalc = () => {
 
-    const consultaDataAccInst = useSelector((state: RootState<any, any, any>) =>
-        state.consultaDataAccInst) as unknown as RespAccInstData;
+    const tv = useSelector(
+        (state: RootState<any, any, any>) => state.selectedTvAcc
+    ) as unknown as string;
+
+    const emisora = useSelector(
+        (state: RootState<any, any, any>) => state.selectedEmisoraAcc
+    ) as unknown as string;
+
+    const serie = useSelector(
+        (state: RootState<any, any, any>) => state.selectedSerieAcc
+    ) as unknown as string;
+
+    const precalculados = useSelector(
+        (state: RootState<any, any, any>) => state.precalculados
+    ) as unknown as Precalculados;
+
+    const [showState, setShowState] = useState<ShowPrecalc>({
+        vinculado: false,
+        adr: false,
+        suspendido: false,
+        fijo: false,
+        derCorp: false
+    })
 
     const dispatch = useDispatch()
 
-    const [showVinculado, setShowVinculado] = useState(false)
-    const [showAdr, setShowAdr] = useState(false)
-    const [showSuspend, setShowSuspend] = useState(false)
-    const [showFijo, setShowFijo] = useState(false)
-    const [showDerCorp, setShowDerCorp] = useState(false)
-
     const handleSweetAlert = (
         currentShowState: boolean,
-        newCheckedValue: boolean,
-        setStateFunction: React.Dispatch<React.SetStateAction<boolean>>,
-        fieldsToReset: string[],
-        word: string
+        newCheckedValue: ShowPrecalc,
+        setStateFunction: React.Dispatch<React.SetStateAction<ShowPrecalc>>,
+        name: string
     ) => {
-        if (currentShowState && !newCheckedValue) {
+        if (!currentShowState) {
             Sweet.fire({
                 icon: "warning",
                 title: "¿Está seguro?",
-                html: `Desea eliminar esta caracteristica? <br/><br/> <b style="color: #0e7490;">${word}</b>`,
+                html: `¿Desea eliminar esta característica? <br/><br/> <b style="color: #0e7490;">${name.toUpperCase()}</b>`,
                 showCancelButton: true,
                 confirmButtonColor: '#166534',
                 confirmButtonText: '<span style="color: white;">Aceptar</span>',
@@ -37,7 +52,23 @@ export const useInstrumentosPreCalc = () => {
             }).then((r) => {
                 if (r.isConfirmed) {
                     setStateFunction(newCheckedValue);
-                    resetFields(fieldsToReset);
+                    fetchDataPostAct(
+                        "/acciones/instrumentos/elimina-precalc",
+                        "Actualizado",
+                        " al eliminar precalculado",
+                        [],
+                        {
+                            s_tv: tv,
+                            s_emisora: emisora,
+                            s_serie: serie,
+                            "value_check-precal": name
+                        }
+                    )
+
+                    setTimeout(() => {
+                        dispatch(updatePrecalculados({} as Precalculados))
+                        dispatch(updateTriggerPrecalc(true))
+                    }, 1000)
                 }
             }).catch(() => {})
         } else {
@@ -45,84 +76,52 @@ export const useInstrumentosPreCalc = () => {
         }
     }
 
-    const resetFields = (fields: string[]) => {
-        const updatedValues = {
-            ...consultaDataAccInst,
-            body: {
-                ...consultaDataAccInst?.body,
-                acciones: {
-                    ...consultaDataAccInst?.body?.acciones,
-                }
-            }
-        };
+    const handleShowVinculado = (e: React.MouseEvent<HTMLButtonElement>, name: keyof ShowPrecalc) => {
+        e.preventDefault();
+        
+        setShowState(prevState => {
+            const updatedState: ShowPrecalc = Object.keys(prevState).reduce(
+                (acc, key) => {
+                    acc[key as keyof ShowPrecalc] = key === name;
+                    return acc; 
+                },
+                {} as ShowPrecalc
+            );
 
-        fields.forEach(field => {
-            (updatedValues.body.acciones as any)[field] = "";
-        });
-
-        dispatch(updateConsultaDataAccInst(updatedValues));
-    };
-
-    const handleShowVinculado = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newCheckedValue = e.target.checked;
-
-        handleSweetAlert(
-            showVinculado,
-            newCheckedValue,
-            setShowVinculado,
-            ["s_tv_vin", "s_emisora_vin", "s_serie_vin"], "Vinculado");
+            return updatedState;
+        })
     }
 
-    const handleShowAdr = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newCheckedValue = e.target.checked;
+    const checkboxValue = (namePrecalc: any, name: string): boolean => {
+        const existPrecalc = precalculados?.[namePrecalc]?.[0]
 
-        handleSweetAlert(
-            showAdr,
-            newCheckedValue,
-            setShowAdr,
-            ["s_tv_der", "s_emisora_der", "s_serie_der", "n_proporcion_adr"], "Adr");
+        if (existPrecalc) {
+            return existPrecalc[name] == "checked"
+        }
+
+        return false
     }
 
-    const handleShowSuspend = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newCheckedValue = e.target.checked;
+    const deletedPrecalc = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const checked = e.target.checked
+        const name = e.target.name
+
+        const updatedState = {...showState, [name]: false}
 
         handleSweetAlert(
-            showSuspend,
-            newCheckedValue,
-            setShowSuspend,
-            ["d_susp_fecha"], "Suspendido");
-    }
-
-    const handleShowFijo = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newCheckedValue = e.target.checked;
-
-        handleSweetAlert(
-            showFijo,
-            newCheckedValue,
-            setShowFijo,
-            ["n_fijo_precio"], "Fijo");
-    }
-
-    const handleShowDerCorp = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newCheckedValue = e.target.checked;
-
-        handleSweetAlert(
-            showDerCorp,
-            newCheckedValue,
-            setShowDerCorp,
-            ["d_der_corp_fecha", "n_der_corp_monto"], "DerCorp");
+            checked,
+            updatedState,
+            setShowState,
+            name
+        )
     }
 
     return {
-        showVinculado,
-        showAdr,
-        showSuspend,
-        showFijo,
-        showDerCorp,
+        showState,
+        precalculados,
         handleShowVinculado,
-        handleShowAdr,
-        handleShowSuspend,
-        handleShowFijo,
-        handleShowDerCorp,
+        checkboxValue,
+        deletedPrecalc,
+        setShowState
     };
 }

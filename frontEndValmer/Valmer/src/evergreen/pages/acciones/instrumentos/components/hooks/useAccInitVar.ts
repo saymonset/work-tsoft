@@ -30,9 +30,14 @@ export const useAccInitVar = () => {
         (state: RootState<any, any, any>) => state.requiredSerieAcc
     ) as unknown as boolean
 
+    const triggerPrecalc = useSelector(
+        (state: RootState<any, any, any>) => state.triggerPrecalc
+    ) as unknown as boolean
+
     const [loadingEmisoras, setLoadingEmisoras] = useState(false);
     const [loadingSerie, setLoadingSerie] = useState(false);
     const [loadingConsultaData, setLoadingConsultaData] = useState(false);
+    const [loadingPrecalc, setLoadingPrecalc] = useState(false);
 
     const [triggerEmisora, setTriggerEmisora] = useState(false);
     const [triggerSerie, setTriggerSerie] = useState(false);
@@ -52,11 +57,14 @@ export const useAccInitVar = () => {
         requiredTv,
         requiredEmisora,
         requiredSerie,
+        triggerPrecalc,
+        loadingPrecalc,
         setTriggerConsultaData,
         setLoadingEmisoras,
         setLoadingSerie,
         setLoadingConsultaData,
         setTriggerEmisora,
-        setTriggerSerie
+        setTriggerSerie,
+        setLoadingPrecalc
     }
 }

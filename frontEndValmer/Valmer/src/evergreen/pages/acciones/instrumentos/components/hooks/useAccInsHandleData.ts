@@ -2,19 +2,20 @@ import {useTvAccIns} from "./useTvAccIns";
 import {useGetCatalogsDeuda} from "./useGetCatalogsDeuda";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@reduxjs/toolkit/dist/query/core/apiState";
-import {DividendosData, IsFieldRequiredAccInst, RespAccInstData} from "../../../../../../model";
+import {DividendosData, Precalculados, RespAccInstData} from "../../../../../../model";
 import React, {useEffect, useState} from "react";
 import {fetchDataGet, fetchDataGetRet, getEmisoras, getSerie, validChangeTvEmiSerie} from "../../../../../../utils";
 import {
     updateConsultaDataAccInst,
     updateDividendosTable,
     updateEmisoraAccInst,
+    updatePrecalculados,
     updateRequiredFieldAccInst,
     updateSelectedEmisoraAcc,
     updateSelectedSerieAcc,
     updateSelectedTvAcc,
     updateSerieAccInst,
-    updateShowCarRvAcc, updateShowPrecalc
+    updateShowCarRvAcc, updateShowPrecalc, updateTriggerPrecalc
 } from "../../../../../../redux";
 import {useAccInitVar} from "./useAccInitVar";
 
@@ -63,12 +64,15 @@ export const useAccInsHandleData = () => {
         requiredTv,
         requiredEmisora,
         requiredSerie,
+        triggerPrecalc,
+        loadingPrecalc,
         setTriggerConsultaData,
         setLoadingEmisoras,
         setLoadingSerie,
         setLoadingConsultaData,
         setTriggerEmisora,
-        setTriggerSerie
+        setTriggerSerie,
+        setLoadingPrecalc
     } = useAccInitVar()
 
     useEffect(() => {
@@ -114,7 +118,6 @@ export const useAccInsHandleData = () => {
 
                     dispatch(updateConsultaDataAccInst(response));
                     dispatch(updateShowCarRvAcc(true))
-                    dispatch(updateShowPrecalc(true))
                     setTriggerConsultaData(false);
                     setLoadingConsultaData(false);
                     setLoadingDividendos(true)
@@ -142,6 +145,35 @@ export const useAccInsHandleData = () => {
         fetchData().then();
     }, [triggerConsultaData]);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                if (triggerPrecalc) {
+                    setLoadingPrecalc(true)
+                    await fetchDataGet(
+                        "/acciones/instrumentos/tabla-precalculados",
+                        " al obtener precalculados",
+                        {
+                            sTv: selectedTv,
+                            sEmisora: selectedEmisora,
+                            sSerie: selectedSerie
+                        },
+                        updatePrecalculados,
+                        dispatch
+                    )
+
+                    dispatch(updateShowPrecalc(true))
+                    setLoadingPrecalc(false)
+                    dispatch(updateTriggerPrecalc(false))
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }
+
+        fetchData().then()
+    },[triggerPrecalc])
+
     const handleClickTv = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const {type} = e.target
         if (type !== "text") {
@@ -153,6 +185,8 @@ export const useAccInsHandleData = () => {
         dispatch(updateSelectedTvAcc(e.target.value))
         dispatch(updateConsultaDataAccInst({} as RespAccInstData))
         dispatch(updateDividendosTable([]))
+        dispatch(updatePrecalculados({} as Precalculados))
+        dispatch(updateShowPrecalc(false))
     };
 
 
@@ -166,6 +200,8 @@ export const useAccInsHandleData = () => {
         dispatch(updateSelectedEmisoraAcc(e.target.value))
         dispatch(updateConsultaDataAccInst({} as RespAccInstData))
         dispatch(updateDividendosTable([]))
+        dispatch(updatePrecalculados({} as Precalculados))
+        dispatch(updateShowPrecalc(false))
     };
 
 
@@ -173,11 +209,14 @@ export const useAccInsHandleData = () => {
         const {type} = e.target
         if (type !== "text") {
             setTriggerConsultaData(true);
+            dispatch(updateTriggerPrecalc(true))
         }
         validChangeTvEmiSerie("s_serie", dispatch)
         dispatch(updateSelectedSerieAcc(e.target.value))
         dispatch(updateConsultaDataAccInst({} as RespAccInstData))
         dispatch(updateDividendosTable([]))
+        dispatch(updatePrecalculados({} as Precalculados))
+        dispatch(updateShowPrecalc(false))
     };
 
 
@@ -250,6 +289,7 @@ export const useAccInsHandleData = () => {
         handleCheckbox,
         handleClickTv,
         handleEmisora,
-        handleSerie
+        handleSerie,
+        loadingPrecalc
     }
 }

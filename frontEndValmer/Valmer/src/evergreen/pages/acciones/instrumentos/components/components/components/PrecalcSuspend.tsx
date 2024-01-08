@@ -1,9 +1,16 @@
 import React from "react";
-import {usePrecalcPersist} from "./hooks";
+import { PropsPrecalc } from "../../../../../../../model";
+import { ButtonContent } from "../../../../../../../shared";
+import {usePrecalcTvEmiSerie} from "./hooks";
 
-export const PrecalcSuspend = () => {
+export const PrecalcSuspend: React.FC<PropsPrecalc> = ({ setShowState }) => {
 
-    const {handleChange} = usePrecalcPersist()
+    const {
+        loadingAct,
+        inputValue,
+        handleChange,
+        actPrecalc
+    } = usePrecalcTvEmiSerie({ setShowState })
 
     return (
         <div className="animate__animated animate__fadeIn">
@@ -19,13 +26,21 @@ export const PrecalcSuspend = () => {
                 <div className="form-date">
                     <input
                         type="date"
-                        name="d_susp_fecha"
-                        onChange={handleChange}
+                        name="fecha_suspension"
+                        id="fecha_suspension"
+                        value={inputValue("precalc-suspendidas", "fecha_suspension")}
+                        onChange={(e) => handleChange(e, "precalc-suspendidas")}
                     />
-                    <label>
-                        Fecha Suspensión
-                    </label>
+                    <label htmlFor="fecha_suspension">Fecha Suspensión</label>
                 </div>
+            </div>
+            <div className="flex justify-center">
+                <button className="btn"
+                    type="button"
+                    onClick={() => actPrecalc("suspendidos")}
+                >
+                    <ButtonContent name="Actualizar" loading={loadingAct} />
+                </button>
             </div>
         </div>
     );

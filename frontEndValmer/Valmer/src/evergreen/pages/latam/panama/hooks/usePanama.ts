@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {Catalogo, InputOrNull, IsFieldRequiredLatPanama, RefReqLatPanama, RespConsultaDataPanam, SelectOrNull} from "../../../../../model";
 import {fetchDataGetRet, fetchDataPost, userEncoded, validateFieldsAccCalifLatam} from "../../../../../utils";
-import { useDispatch } from "react-redux";
 
 export const usePanama = () => {
 

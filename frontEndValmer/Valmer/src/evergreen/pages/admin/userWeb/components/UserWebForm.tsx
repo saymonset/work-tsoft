@@ -380,7 +380,8 @@ export const UserWebForm = () => {
                     </div>
                     <div className="form-cols-1 -my-3">
                         <div className="form-text-area">
-                            <textarea 
+                            <textarea
+                                className="max-h-80"
                                 name="liga_descarga" 
                                 id="liga_descarga" 
                                 rows={5} 

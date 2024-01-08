@@ -7,10 +7,10 @@ export const validLatPamanaField = async (
     fieldRequired: IsFieldRequiredLatPanama,
     requeridos: RefReqAccCalifLatam
 ) => {
-    console.log(formValues)
+    console.log(formValues?.n_crv_index)
     if (formValues) {
         for (const field of fieldToValidateLatamPanama) {
-            if (isInvalidField(formValues[field.name], field.defaultValue)) {
+            if (isInvalidField(field.name, formValues[field.name], field.defaultValue)) {
                 updateFieldAsInvalid(dispatch, fieldRequired, field.name);
                 focusElement(field.name, requeridos[field.name]);
                 return false;
@@ -24,7 +24,14 @@ export const validLatPamanaField = async (
     return true;
 };
 
-const isInvalidField = (fieldValue: any, defaultValue: string) => !fieldValue || fieldValue === defaultValue || fieldValue == 0;
+const isInvalidField = (field: string, fieldValue: any, defaultValue: string) => {
+    const fieldName = field === "n_crv_index" || field === "n_odd_first_coupon" || field === "n_odd_last_coupon"
+    if (fieldName) {
+        return !fieldValue || fieldValue === defaultValue || fieldValue == "0";
+    } else {
+        return !fieldValue || fieldValue === defaultValue;
+    }
+}
 
 const updateFieldAsInvalid = (
     dispatch: React.Dispatch<React.SetStateAction<IsFieldRequiredLatPanama>>, 

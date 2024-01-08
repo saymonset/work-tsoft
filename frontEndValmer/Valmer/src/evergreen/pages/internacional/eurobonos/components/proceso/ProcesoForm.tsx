@@ -50,7 +50,7 @@ export const ProcesoForm = () => {
                         </button>
                     </div>
                     <div
-                        className="bg-gray-900 text-green-500 p-2 w-3/4 resize-y overflow-auto max-h-[30rem]"
+                        className="bg-gray-900 text-green-500 p-2 ml-12 sm:w-full w-3/4 resize-y overflow-auto max-h-[30rem]"
                         dangerouslySetInnerHTML={{ __html: log }}
                         style={{ minHeight: '30rem' }}
                     />
@@ -75,7 +75,7 @@ export const ProcesoForm = () => {
             return (
                 <div className="mt-8 flex flex-col items-center w-full">
                     <div
-                        className="bg-gray-900 text-green-500 p-2 w-full resize-y overflow-auto"
+                        className="bg-gray-900 text-green-500 p-2 w-full resize-y overflow-auto max-h-[30rem]"
                         dangerouslySetInnerHTML={{ __html: logModal }}
                         style={{ minHeight: '20rem', maxHeight: '30rem', height: '30rem' }}
                     />

@@ -1,9 +1,11 @@
-import React from "react";
+import React from 'react';
 import {generateUUID} from "../../../../../../../utils";
 import {BarLoader} from "react-spinners";
 import {usePrecalcTvEmiSerie} from "./hooks";
+import { ButtonContent } from "../../../../../../../shared";
+import { PropsPrecalc } from "../../../../../../../model";
 
-export const PrecalcVinc = () => {
+export const PrecalcVinc: React.FC<PropsPrecalc> = ({ setShowState }) => {
 
     const {
         tv,
@@ -15,10 +17,13 @@ export const PrecalcVinc = () => {
         loadingTv,
         loadingEmisoras,
         loadingSerie,
+        loadingAct,
         handleClickTv,
         handleEmisora,
-        handleSerie
-    } = usePrecalcTvEmiSerie()
+        handleSerie,
+        selectValue,
+        actPrecalc
+    } = usePrecalcTvEmiSerie({ setShowState })
 
     return (
         <div className="animate__animated animate__fadeIn">
@@ -34,8 +39,16 @@ export const PrecalcVinc = () => {
 
                 <div className="form-select">
                     <select
+                        id="s_tv_vin"
                         name="s_tv_vin"
-                        value={selectedTv}
+                        value={
+                            selectedTv || 
+                            selectValue(
+                                "precalc-acciones-vinculadas",
+                                "vinculo_vin",
+                                "tv"
+                            )
+                        }
                         onChange={handleClickTv}
                     >
                         <option value="default">...</option>
@@ -47,14 +60,20 @@ export const PrecalcVinc = () => {
                     </select>
 
                     {loadingTv && <BarLoader className="mt-2" color="#059669" width={80}/>}
-                    <label>
-                        TV
-                    </label>
+                    <label htmlFor="s_tv_vin">TV</label>
                 </div>
                 <div className="form-select">
                     <select
+                        id="s_emisora_vin"
                         name="s_emisora_vin"
-                        value={selectedEmisora}
+                        value={
+                            selectedEmisora || 
+                            selectValue(
+                                "precalc-acciones-vinculadas",
+                                "vinculo_vin",
+                                "emisora"
+                            )
+                        }
                         onChange={handleEmisora}
                     >
                         <option value="default">...</option>
@@ -66,14 +85,20 @@ export const PrecalcVinc = () => {
                     </select>
 
                     {loadingEmisoras && <BarLoader className="mt-2" color="#059669" width={80}/>}
-                    <label>
-                        Emisora
-                    </label>
+                    <label htmlFor="s_emisora_vin">Emisora</label>
                 </div>
                 <div className="form-select">
                     <select
+                        id="s_serie_vin"
                         name="s_serie_vin"
-                        value={selectedSerie}
+                        value={
+                            selectedSerie || 
+                            selectValue(
+                                "precalc-acciones-vinculadas",
+                                "vinculo_vin",
+                                "serie"
+                            )
+                        }
                         onChange={handleSerie}
                     >
                         <option value="default">...</option>
@@ -85,10 +110,16 @@ export const PrecalcVinc = () => {
                     </select>
 
                     {loadingSerie && <BarLoader className="mt-2" color="#059669" width={80}/>}
-                    <label>
-                        SERIE
-                    </label>
+                    <label htmlFor="s_serie_vin">SERIE</label>
                 </div>
+            </div>
+            <div className="flex justify-center">
+                <button className="btn"
+                    type="button"
+                    onClick={() => actPrecalc("vinculados")}
+                >
+                    <ButtonContent name="Actualizar" loading={loadingAct} />
+                </button>
             </div>
         </div>
     );

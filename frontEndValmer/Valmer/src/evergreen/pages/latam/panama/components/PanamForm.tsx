@@ -17,7 +17,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                         onChange={data.handleChange}
                                         ref={data.refReqLatPanama.n_tipo_instrumento_edit}
                                 >
-                                    <option value="">...</option>
+                                    <option value="default">...</option>
                                     {getCatalogs(data.catalog, 'TIPO_INSTRUMENTO').map((column) => (
                                         <option key={column[0]} value={column[0]}>
                                             {column[1]}
@@ -59,7 +59,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                         onChange={data.handleChange}
                                         ref={data.refReqLatPanama.n_frecuencia_cupon}
                                 >
-                                    <option value="">...</option>
+                                    <option value="default">...</option>
                                     {getCatalogs(data.catalog, 'FRECUENCIA_CUPON').map((column) => (
                                         <option key={column[0]} value={column[0]}>
                                             {column[1]}
@@ -101,7 +101,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                         onChange={data.handleChange}
                                         ref={data.refReqLatPanama.n_tipo_mercado}
                                 >
-                                    <option value="">...</option>
+                                    <option value="default">...</option>
                                     {getCatalogs(data.catalog, 'TIPO_MERCADO').map((column) => (
                                         <option key={column[0]} value={column[0]}>
                                             {column[1]}
@@ -141,7 +141,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                         onChange={data.handleChange}
                                         ref={data.refReqLatPanama.n_clase}
                                 >
-                                    <option value="">...</option>
+                                    <option value="default">...</option>
                                     {getCatalogs(data.catalog, 'CLASE').map((column) => (
                                         <option key={column[0]} value={column[0]}>
                                             {column[1]}
@@ -264,7 +264,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                         onChange={data.handleChange}
                                         ref={data.refReqLatPanama.n_moneda}
                                 >
-                                    <option value="">...</option>
+                                    <option value="default">...</option>
                                     {getCatalogs(data.catalog, 'MONEDA').map((column) => (
                                         <option key={column[0]} value={column[0]}>
                                             {column[1]}
@@ -307,7 +307,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                         onChange={data.handleChange}
                                         ref={data.refReqLatPanama.n_theo_model}
                                 >
-                                    <option value="">...</option>
+                                    <option value="default">...</option>
                                     {getCatalogs(data.catalog, 'THEO_MODEL').map((column) => (
                                         <option key={column[0]} value={column[0]}>
                                             {column[1]}
@@ -382,7 +382,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                         onChange={data.handleChange}
                                         ref={data.refReqLatPanama.n_base_calculo}
                                 >
-                                    <option value="">...</option>
+                                    <option value="default">...</option>
                                     {getCatalogs(data.catalog, 'BASE_CALCULO').map((column) => (
                                         <option key={column[0]} value={column[0]}>
                                             {column[1]}
@@ -423,7 +423,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                         onChange={data.handleChange}
                                         ref={data.refReqLatPanama.n_status}
                                 >
-                                    <option value="">...</option>
+                                    <option value="default">...</option>
                                     {getCatalogs(data.catalog, 'STATUS').map((column) => (
                                         <option key={column[0]} value={column[0]}>
                                             {column[1]}
@@ -497,7 +497,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                         onChange={data.handleChange}
                                         ref={data.refReqLatPanama.n_form_cotizacion}
                                 >
-                                    <option value="">...</option>
+                                    <option value="default">...</option>
                                     {getCatalogs(data.catalog, 'forma_cotizacion').map((column) => (
                                         <option key={column[0]} value={column[0]}>
                                             {column[1]}
@@ -522,7 +522,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                         onChange={data.handleChange}
                                         ref={data.refReqLatPanama.n_coupon_gen_met}
                                 >
-                                    <option value="">...</option>
+                                    <option value="default">...</option>
                                     {getCatalogs(data.catalog, 'COUPON_GEN_MET').map((column) => (
                                         <option key={column[0]} value={column[0]}>
                                             {column[1]}
@@ -545,7 +545,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                         onChange={data.handleChange}
                                         ref={data.refReqLatPanama.n_odd_last_coupon}
                                 >
-                                    <option value="">...</option>
+                                    <option value="default">...</option>
                                     {getCatalogs(data.catalog, 'ODD_COUPON').map((column) => (
                                         <option key={column[0]} value={column[0]}>
                                             {column[1]}
@@ -588,7 +588,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                         onChange={data.handleChange}
                                         ref={data.refReqLatPanama.n_odd_first_coupon}
                                 >
-                                    <option value="">...</option>
+                                    <option value="default">...</option>
                                     {getCatalogs(data.catalog, 'ODD_COUPON').map((column) => (
                                         <option key={column[0]} value={column[0]}>
                                             {column[1]}
@@ -612,7 +612,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                         onChange={data.handleChange}
                                         ref={data.refReqLatPanama.n_pais}
                                 >
-                                    <option value="">...</option>
+                                    <option value="default">...</option>
                                     {getCatalogs(data.catalog, 'PAIS').map((column) => (
                                         <option key={column[0]} value={column[0]}>
                                             {column[1]}
@@ -632,7 +632,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                         value={data.consultaData?.body?.info_bd?.n_business_day_rule || "default"}
                                         onChange={data.handleChange}
                                 >
-                                    <option value="">...</option>
+                                    <option value="default">...</option>
                                     {getCatalogs(data.catalog, 'BUSINESS_DAY_RULE').map((column) => (
                                         <option key={column[0]} value={column[0]}>
                                             {column[1]}
@@ -652,7 +652,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                         onChange={data.handleChange}
                                         ref={data.refReqLatPanama.n_emisor}
                                 >
-                                    <option value="">...</option>
+                                    <option value="default">...</option>
                                     {getCatalogs(data.catalog, 'EMISOR').map((column) => (
                                         <option key={column[0]} value={column[0]}>
                                             {column[1]}
@@ -676,7 +676,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                         value={data.consultaData?.body?.info_bd?.n_fitch || "default"}
                                         onChange={data.handleChange}
                                 >
-                                    <option value="">...</option>
+                                    <option value="default">...</option>
                                     {getCatalogs(data.catalog, 'FITCH').map((column) => (
                                         <option key={column[0]} value={column[0]}>
                                             {column[1]}
@@ -704,7 +704,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                         value={data.consultaData?.body?.info_bd?.n_moody || "default"}
                                         onChange={data.handleChange}
                                 >
-                                    <option value="">...</option>
+                                    <option value="default">...</option>
                                     {getCatalogs(data.catalog, 'MOODY').map((column) => (
                                         <option key={column[0]} value={column[0]}>
                                             {column[1]}
@@ -730,7 +730,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                         value={data.consultaData?.body?.info_bd?.n_sp || "default"}
                                         onChange={data.handleChange}
                                 >
-                                    <option value="">...</option>
+                                    <option value="default">...</option>
                                     {getCatalogs(data.catalog, 'FITCH').map((column) => (
                                         <option key={column[0]} value={column[0]}>
                                             {column[1]}

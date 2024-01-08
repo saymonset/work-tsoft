@@ -49,7 +49,6 @@ export const ShowEditCau = ({ titleName, DataCatalog }: {
                     {selectedOption === "CAU_CLIENTE" ? (
                         <EditCauClient
                             nameCatalog={nameCatalog}
-                            columns={columns}
                             setShowTable={setShowTable}
                             setSelectedOption={setSelectedOption}
                         />

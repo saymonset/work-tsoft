@@ -37,7 +37,7 @@ export const SalidasForm = () => {
                         </button>
                     </div>
                     <div
-                        className="bg-gray-900 text-green-500 p-2 w-3/4 resize-y overflow-auto max-h-[30rem]"
+                        className="bg-gray-900 text-green-500 p-2 sm:w-full w-3/4 resize-y overflow-auto max-h-[30rem]"
                         dangerouslySetInnerHTML={{ __html: log }}
                         style={{ minHeight: '30rem' }}
                     />
@@ -107,7 +107,9 @@ export const SalidasForm = () => {
                 </td>
                 <td>
                     {IsShowLogBoxOuts && (
-                        renderLogContent()
+                        <div className="flex mb-44 mr-44 justify-center items-center ">
+                            {renderLogContent()}
+                        </div>
                     )}
                 </td>
                 <td align="center">

@@ -1,1 +1,1 @@
-export * from './editCatalogReducer'
+export * from './EditCatalogReducer'

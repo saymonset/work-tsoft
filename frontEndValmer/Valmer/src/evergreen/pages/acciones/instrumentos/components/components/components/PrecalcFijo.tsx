@@ -1,9 +1,16 @@
-import React from "react";
-import {usePrecalcPersist} from "./hooks";
+import React from 'react';
+import { PropsPrecalc } from "../../../../../../../model";
+import { ButtonContent } from "../../../../../../../shared";
+import {usePrecalcTvEmiSerie} from "./hooks";
 
-export const PrecalcFijo = () => {
+export const PrecalcFijo: React.FC<PropsPrecalc> = ({ setShowState }) => {
 
-    const {handleChange} = usePrecalcPersist()
+    const {
+        loadingAct,
+        inputValue,
+        handleChange,
+        actPrecalc
+    } = usePrecalcTvEmiSerie({ setShowState })
 
     return (
         <div className="animate__animated animate__fadeIn">
@@ -19,13 +26,21 @@ export const PrecalcFijo = () => {
                 <div className="form-input">
                     <input
                         type="text"
-                        name="n_fijo_precio"
-                        onChange={handleChange}
+                        name="n_precio"
+                        id="n_precio"
+                        value={inputValue("precalc-fijos", "n_precio")}
+                        onChange={(e) => handleChange(e, "precalc-fijos")}
                     />
-                    <label>
-                        Precio
-                    </label>
+                    <label htmlFor="n_precio">Precio</label>
                 </div>
+            </div>
+            <div className="flex justify-center">
+                <button className="btn"
+                    type="button"
+                    onClick={() => actPrecalc("fijos")}
+                >
+                    <ButtonContent name="Actualizar" loading={loadingAct} />
+                </button>
             </div>
         </div>
     );

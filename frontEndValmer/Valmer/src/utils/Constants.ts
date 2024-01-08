@@ -1,3 +1,5 @@
+import {ConsultaDataEditCauClient, ResponseApiEditCauClient} from "../model";
+
 export const DataCatMexico = [
         {
                 text: 'AGENTE_COLOCADOR',
@@ -854,34 +856,72 @@ export const DataCatCau = [
 ];
 
 export const DataCauLevels = [
-        { name: "Nivel I" },
-        { name: "ASP Riesgos" },
-        { name: "Benchmarks" },
-        { name: "Base Corporativa" },
-        { name: "Nivel II" },
-        { name: "Escenarios" },
-        { name: "Betas" },
-        { name: "Vector Fecha Valor" },
-        { name: "Nivel III" },
-        { name: "Niveles de Mercado" },
-        { name: "Vector INT'L Afores" },
-        { name: "Base Calificaciones" },
-        { name: "Nivel IV" },
-        { name: "Indices (cerrado)" },
-        { name: "Notas sobre Indices" },
-        { name: "Motor Personalizado Benchmarks (cerrado)" },
-        { name: "Nivel V" },
-        { name: "Notas Estructuradas" },
-        { name: "Volatilidades" },
-        { name: "Indices de Rotacion" },
-        { name: "Curvas" },
-        { name: "Portafolio&Historicos" },
-        { name: "Base Eurobonos" },
-        { name: "CAU" },
-        { name: "Benchmarks limitado (cerrado)" },
-        { name: "Vector Aforado" },
-        { name: "Vector Promedio Aforado (abierto)" }
+        { name: "Nivel I", value: "n_nivel1" },
+        { name: "ASP Riesgos", value: "n_asp" },
+        { name: "Benchmarks", value: "n_bench"  },
+        { name: "Base Corporativa", value: "n_basecorp"  },
+        { name: "Nivel II", value: "n_nivel2"  },
+        { name: "Escenarios", value: "n_escenarios"  },
+        { name: "Betas", value: "n_betas"  },
+        { name: "Vector Fecha Valor", value: "n_vecfecval"  },
+        { name: "Nivel III", value: "n_nivel3"  },
+        { name: "Niveles de Mercado", value: "n_nivmer"  },
+        { name: "Vector INT'L Afores", value: "n_vecintafor"  },
+        { name: "Base Calificaciones", value: "n_basecalif"  },
+        { name: "Nivel IV", value: "n_nivel4"  },
+        { name: "Indices (cerrado)", value: "n_indices"  },
+        { name: "Notas sobre Indices", value: "n_notasind"  },
+        { name: "Motor Personalizado Benchmarks (cerrado)", value: "n_motorbench"  },
+        { name: "Nivel V", value: "n_nivel5"  },
+        { name: "Notas Estructuradas", value: "n_notasest"  },
+        { name: "Volatilidades", value: "n_volati"  },
+        { name: "Indices de Rotacion", value: "n_indrot"  },
+        { name: "Curvas", value: "n_curvas"  },
+        { name: "Portafolio&Historicos", value: "n_portafolio"  },
+        { name: "Base Eurobonos", value: "n_baseeur"  },
+        { name: "CAU", value: "n_cau"  },
+        { name: "Benchmarks limitado (cerrado)", value: "n_benchlim"  },
+        { name: "Vector Aforado", value: "n_vecafor"  },
+        { name: "Vector Promedio Aforado (abierto)", value: "n_vecpromafor"  }
 ];
+
+export const requiredFieldsEditCauClient = [
+        { key: 'N_CLIENTE'},
+        { key: 'S_NOMBRE'},
+        { key: 'S_PUESTO'},
+        { key: 'S_TELEFONO'},
+        { key: 'S_EMAIL'},
+        { key: 'S_USUARIO'},
+        { key: 'S_PASSWORD'},
+        { key: 'S_AREA'},
+        { key: 'S_FAX'},
+        { key: 'N_HITS'},
+        { key: 'D_FECHA'},
+];
+
+export const transformToResponseEditCauClient = (data: ResponseApiEditCauClient): ConsultaDataEditCauClient => {
+        const cliente = data.body.registros[0];
+
+        return {
+                n_emp: "0",
+                n_cli: "0",
+                N_CLIENTE: cliente.n_cliente.toString(),
+                N_EMPRESA: cliente.n_empresa.toString(),
+                S_NOMBRE: cliente.s_nombre,
+                S_PUESTO: cliente.s_puesto,
+                S_TELEFONO: cliente.s_telefono,
+                S_EMAIL: cliente.s_email,
+                S_USUARIO: cliente.s_usuario,
+                S_PASSWORD: cliente.s_password,
+                S_AREA: cliente.s_area,
+                N_SECTOR: cliente.n_sector.toString(),
+                S_FAX: cliente.s_fax,
+                N_HITS: cliente.n_hits.toString(),
+                D_FECHA: cliente.d_fecha,
+                N_STATUS: cliente.n_status.toString(),
+                ...data.body.niveles_servicio
+        };
+};
 
 
 export const DataCatArchivos = [

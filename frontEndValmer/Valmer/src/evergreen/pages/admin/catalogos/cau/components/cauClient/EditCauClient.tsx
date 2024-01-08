@@ -1,100 +1,51 @@
-import {HeadCauClient} from "./header/HeadCauClient";
-import {fetchDataGetRet, generateUUID} from "../../../../../../../utils";
-import React, {useEffect, useState} from "react";
+import {getCatalogs} from "../../../../../../../utils";
+import React from "react";
 import {DataForm} from "./form/DataForm";
 import {ServiceLevelsCau} from "./form/ServiceLevelsCau";
-import {Catalogo, RegistroConstCatAdmin, ResponseCauCLientes, ResponseConstCatAdmin} from "../../../../../../../model";
-import {MoonLoader} from "react-spinners";
-
-interface Column {
-    name: string;
-    type: string;
-}
+import {BarLoader, MoonLoader} from "react-spinners";
+import {useEditCauClient} from "./hooks";
+import {ButtonContent} from "../../../../../../../shared";
 
 interface Props {
     nameCatalog: string;
     setShowTable: (show: boolean) => void;
     setSelectedOption: (show: string) => void;
-    columns: Column[];
 }
 
-export const EditCauClient : React.FC<Props> = ({nameCatalog, setShowTable,
-                                                    setSelectedOption, columns}) => {
+export const EditCauClient : React.FC<Props> = ({
+                                                    nameCatalog, setShowTable,
+                                                    setSelectedOption}) => {
 
-    const [catalogs, setCatalogs] = useState<ResponseCauCLientes[]>([])
-    const [catalogsCau, setCatalogsCau] = useState<Catalogo[]>([])
-    const [loadingCatalog, setLoadingCatalog] = useState<boolean>(false)
-    const [loadingCatalogCau, setLoadingCatalogCau] = useState<boolean>(false)
-    const [triggerCatalogs, setTriggerCatalogs] = useState<boolean>(false)
+    const {
+        consultaDataClient,
+        loadingClientId,
+        loadingClient,
+        loadingCatalog,
+        loadingCatalogCau,
+        loadingClientById,
+        loadingSave,
+        loadingErase,
+        loadingNewId,
+        loadingCsv,
+        clients,
+        catalogs,
+        catalogsCau,
+        filteredCatalogs,
+        handleClickClient,
+        handleEnterprise,
+        handleSave,
+        handleErase,
+        handleChange,
+        handleClient,
+        handleNewId,
+        handleGetCsv
+    } = useEditCauClient({nameCatalog})
+
 
     const goBack = () => {
         setShowTable(true)
         setSelectedOption('')
     }
-
-    useEffect(() => {
-        const getCatalogs = async () => {
-            setLoadingCatalog(true)
-
-            try {
-                const response = await fetchDataGetRet(
-                    "/catalogos/cau-cliente/consulta-catalogo",
-                    " al obtener catalogos latam",
-                    {
-                        num_registros: 0,
-                        posicion: 0,
-                        s_nombre_catalogo: nameCatalog
-                    }
-                );
-
-                const responseCau = await fetchDataGetRet(
-                    "/latam/cr/mantenimiento-cau/catalogos",
-                    " al obtener catalogos cr cau",
-                    {}
-                );
-
-                setCatalogsCau(responseCau.body.catalogos)
-                setCatalogs(response.body.registros)
-                setTriggerCatalogs(false)
-
-            } catch (error) {
-                console.error('Error al obtener los catálogos:', error);
-            }
-
-            setLoadingCatalog(false)
-        };
-
-        if (!catalogs || catalogs.length === 0) {
-            getCatalogs().then();
-        }
-    }, [catalogs, triggerCatalogs]);
-
-    useEffect(() => {
-        const getCatalogsCau = async () => {
-
-            setLoadingCatalogCau(true)
-
-            try {
-                const responseCau = await fetchDataGetRet(
-                    "/latam/cr/mantenimiento-cau/catalogos",
-                    " al obtener catalogos cr cau",
-                    {}
-                );
-
-                setCatalogsCau(responseCau.body.catalogos)
-                setLoadingCatalogCau(false)
-
-            } catch (error) {
-                console.error('Error al obtener los catálogos:', error);
-            }
-
-            setLoadingCatalogCau(false)
-        };
-
-        if (!catalogsCau || catalogsCau.length === 0) {
-            getCatalogsCau().then();
-        }
-    }, [catalogsCau]);
 
     if (loadingCatalog || loadingCatalogCau || !catalogs.length) {
         return (
@@ -116,35 +67,80 @@ export const EditCauClient : React.FC<Props> = ({nameCatalog, setShowTable,
                         <i className="mr-2 fa-solid fa-arrow-left"></i>
                         <span>Regresar</span>
                     </button>
-                    <button className="btn">
-                        <span>Obtener CSV</span>
+                    <button onClick={handleGetCsv} className="btn">
+                        <ButtonContent name="Obtener CSV" loading={loadingCsv}/>
                     </button>
                 </div>
 
                 <div className="flex justify-end pr-2">
-                    <button className="btn">
-                        <span>Grabar</span>
+                    <button className="btn" onClick={handleSave}>
+                        <ButtonContent name="Grabar" loading={loadingSave}/>
                     </button>
-                    <button className="btn">
-                        <span>Nuevo</span>
+                    <button className="btn" onClick={handleNewId}>
+                        <ButtonContent name="Nuevo" loading={loadingNewId}/>
                     </button>
-                    <button className="btn">
-                        <span>Borrar</span>
+                    <button className="btn" onClick={handleErase}>
+                        <ButtonContent name="Borrar" loading={loadingErase}></ButtonContent>
                     </button>
                 </div>
             </div>
 
-            <HeadCauClient catalogCau={catalogsCau}/>
+            <div className="ml-4 mr- mt-10 form-cols-2">
+                <div className="relative z-0">
+                    <select defaultValue="default"
+                            name="n_emp"
+                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
+                                        border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
+                                        dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                            onChange={handleEnterprise}
+                    >
+                        <option value="default">...</option>
+                        {getCatalogs(catalogsCau, "CAU_EMPRESA").map((column) => (
+                            <option key={column[0]} value={column[0]}>
+                                {column[1]}
+                            </option>
+                        ))}
+                    </select>
+                    <label
+                        htmlFor="n_emp"
+                        className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
+                                    -translate-y-6 origin-[0]"
+                    >
+                        Empresa
+                    </label>
+                </div>
+                <div className="relative z-0">
+                    <select defaultValue="default"
+                            name="n_cli"
+                            className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
+                                        border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
+                                        dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
+                            onChange={handleClient}
+                    >
+                        <option value="default">...</option>
+                        {clients && Object.entries(clients).map(([key, value]) => (
+                            <option key={key} value={key}>{value}</option>
+                        ))}
+                    </select>
+                    <label
+                        htmlFor="n_cli"
+                        className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
+                                    -translate-y-6 origin-[0]">
+                        Cliente
+                    </label>
+                    {loadingClient && <BarLoader className="w-full mt-2 mb-2" color="#059669" width={500}/>}
+                </div>
+            </div>
 
             <div className="flex mb-8">
-            <div className="flex-1 mt-8 ml-8 text-center text-cyan-700 text-2xl font-semibold">
+                <div className="flex-1 mt-8 ml-8 text-center text-cyan-700 text-2xl font-semibold">
                     Catalogo {nameCatalog}
                 </div>
             </div>
 
             <div className="flex flex-col">
                 <div className="overflow-x-auto">
-                    <div style={{ maxHeight: "500px", overflowY: "scroll" }}>
+                    <div style={{maxHeight: "500px", overflowY: "scroll"}}>
                         <table className="min-w-full">
                             <thead>
                             <tr>
@@ -166,11 +162,19 @@ export const EditCauClient : React.FC<Props> = ({nameCatalog, setShowTable,
                             </tr>
                             </thead>
                             <tbody className="tbody">
-                            {catalogs.map((data) => {
+                            {filteredCatalogs.map((data, index) => {
+
+                                const isClientLoading = loadingClientById && loadingClientId === data.n_cliente;
+
                                 return (
-                                    <tr key={generateUUID()} >
-                                        <td className="border px-4 py-2 flex items-center justify-center cursor-pointer">
-                                            {data.n_cliente}
+                                    <tr key={data.n_cliente + index}>
+                                        <td className="border px-4 py-2 flex text-cyan-600 items-center justify-center cursor-pointer"
+                                            onClick={() => handleClickClient(data.n_cliente)}>
+                                            {isClientLoading ? (
+                                                <i className="fa fa-spinner fa-spin"></i>
+                                            ) : (
+                                                data.n_cliente
+                                            )}
                                         </td>
                                         <td className="border px-4 py-2 items-center justify-center text-center">
                                             {data.s_nomcorto}
@@ -192,9 +196,9 @@ export const EditCauClient : React.FC<Props> = ({nameCatalog, setShowTable,
                     </div>
                 </div>
 
-                <DataForm/>
+                <DataForm Data={consultaDataClient} Catalog={catalogsCau} handleChange={handleChange}/>
 
-                <ServiceLevelsCau/>
+                <ServiceLevelsCau Data={consultaDataClient} handleChange={handleChange}/>
             </div>
         </>
     )

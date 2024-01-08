@@ -117,7 +117,6 @@ const handleMoveAllFieldsToLeft = () => {
 
     const checkNemotecnicosBoolean = checkNemotecnicos ? 1 : 0;
     const checkCamposBoolean = checkCampos ? 1 : 0;
-    const selectedNemotecnico = checkNemotecnicos ? allNemotecnicoOptions.join(',') : nemotecnicoSeleccionado;
     const selectedCamposRequest = checkCampos ? allFieldsKeys.join(',') : selectedCampos.join(',');
 
     try {
@@ -127,7 +126,7 @@ const handleMoveAllFieldsToLeft = () => {
           check_nemotecnicos: checkNemotecnicosBoolean,
           fecha_fin: fechaFin,
           fecha_inicio: fechaInicio,
-          s_nemotecnico: selectedNemotecnico,
+          s_nemotecnico: nemotecnicoSeleccionado,
           selected_campos: selectedCamposRequest
         }),
         fetchDataGetRet('/latam/panama/historico/consulta-tabla', 'Fetching Table Data', {
@@ -135,7 +134,7 @@ const handleMoveAllFieldsToLeft = () => {
           check_nemotecnicos: checkNemotecnicosBoolean,
           fecha_fin: fechaFin,
           fecha_inicio: fechaInicio,
-          s_nemotecnico: selectedNemotecnico,
+          s_nemotecnico: nemotecnicoSeleccionado,
           selected_campos: selectedCamposRequest
         })
       ]);
