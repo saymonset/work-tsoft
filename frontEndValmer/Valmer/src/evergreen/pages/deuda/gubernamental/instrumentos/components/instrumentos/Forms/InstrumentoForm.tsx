@@ -68,7 +68,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
     return (
         <>
             <form ref={formRef}>
-                <div className="px-3">
+                <div className="px-1">
                     <TvEmiSerieOptions isNewFormInst={isNewGubForm}
                                        isNewSerie={isNewSerieGub}
                                        loadingConsultaData={loadingConsultaData}
@@ -92,7 +92,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                        handleClickTv={handleClickTv}
                                        handleEmisora={handleEmisora}
                                        handleSerie={handleSerie}/>
-                    <div className="form-cols-3">
+                    <div className="form-cols-6">
                         <div className="form-select">
                             <select
                                 name="n_tipo_instrumento"
@@ -135,8 +135,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate__animated animate__fadeIn">Campo requerido n_familia_instrumento</span>
                             )}
                         </div>
-                    </div>
-                    <div className="form-cols-3">
+                 
                         <div className="form-select">
                             <select
                                 name="n_tipo_mercado"
@@ -179,8 +178,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate__animated animate__fadeIn">Campo requerido n_pais</span>
                             )}
                         </div>
-                    </div>
-                    <div className="form-cols-4">
+                    
                         <div className="form-select">
                             <select
                                 name="n_moneda"
@@ -256,7 +254,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                     <div className="bg-cyan-700 p-1 text-slate-50">
                         <span>Características</span>
                     </div>
-                    <div className="form-cols-3">
+                    <div className="form-cols-6">
                         <div className="form-select">
                             <select
                                 name="n_emisor"
@@ -297,8 +295,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate__animated animate__fadeIn">Campo requerido n_crv_descuento</span>
                             )}
                         </div>
-                    </div>
-                    <div className="form-cols-2">
+                  
                         <div className="form-select">
                             <select
                                 name="n_representante_comun"
@@ -341,8 +338,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate__animated animate__fadeIn">Campo requerido n_agente_colocador</span>
                             )}
                         </div>
-                    </div>
-                    <div className="form-cols-2">
+                  
                         <div className="form-select">
                             <select
                                 name="n_tasa_referencia"
@@ -399,8 +395,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate__animated animate__fadeIn">Campo requerido n_convencion_dias</span>
                             )}
                         </div>
-                    </div>
-                    <div className="form-cols-4">
+                   
                         <div className="form-date">
                             <input
                                 type="date"
@@ -445,8 +440,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate__animated animate__fadeIn">Campo requerido d_fecha_vto</span>
                             )}
                         </div>
-                    </div>
-                    <div className="form-cols-3">
+                   
                         <div className="form-input">
                             <input
                                 type="text"
@@ -495,8 +489,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate__animated animate__fadeIn">Campo requerido n_monto_circ</span>
                             )}
                         </div>
-                    </div>
-                    <div className="form-cols-4">
+                  
                         <div className="form-select">
                             <select
                                 name="n_tipo_tasa"
@@ -530,8 +523,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 Nomb. Tasa
                             </label>
                         </div>
-                    </div>
-                    <div className="form-cols-3">
+                  
                         <div className="form-input">
                             <input
                                 type="text"
@@ -625,8 +617,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 SEDOL
                             </label>
                         </div>
-                    </div>
-                    <div className="form-cols-3">
+                   
                         <div className="form-select">
                             <select
                                 name="n_status"
@@ -647,9 +638,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate__animated animate__fadeIn">Campo requerido n_status</span>
                             )}
                         </div>
-                    </div>
-
-                    <div className="form-cols-4">
+                  
                         <div className="form-input">
                             <input
                                 type="text"
@@ -702,9 +691,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 Tasa de Rendimiento
                             </label>
                         </div>
-                    </div>
-
-                    <div className="form-cols-3">
+                 
                         <div className="form-input">
                             <input
                                 type="text"
@@ -731,9 +718,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 Precio Mercado 24
                             </label>
                         </div>
-                    </div>
-
-                    <div className="form-cols-3">
+                     
                         <div className="form-input">
                             <input
                                 type="text"
@@ -758,9 +743,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 Intereses 24
                             </label>
                         </div>
-                    </div>
-
-                    <div className="form-cols-3">
+                   
                         <div className="form-check">
                             <input
                                 type="checkbox"
@@ -796,7 +779,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                     </div>
 
                     {consultaData?.body && consultaData?.body?.s_serie !== '' && !isNewGubForm && (
-                            <div className="mt-8 px-3">
+                            <div className="mt-0 px-3">
                                 <div className="bg-cyan-700 p-1 text-slate-50">
                                     <span>Instrumento Deuda</span>
                                 </div>
@@ -838,9 +821,6 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         )
                     }
 
-                    <div className="form-cols-1">
-                        <div className="line"></div>
-                    </div>
                 </div>
             </form>
 
@@ -849,7 +829,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                     <div className="bg-cyan-700 p-1 text-slate-50">
                         <span>RW</span>
                     </div>
-                    <div className="form-cols-3">
+                    <div className="form-cols-6">
                         <div className="form-select">
                             <select
                                 name="n_theo_model"
@@ -901,8 +881,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 Curve Index
                             </label>
                         </div>
-                    </div>
-                    <div className="form-cols-3">
+                    
                         <div className="form-select">
                             <select
                                 name="n_reset_rule"
@@ -949,8 +928,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 Fixed Coupon Date
                             </label>
                         </div>
-                    </div>
-                    <div className="form-cols-3">
+                   
                         <div className="form-input">
                             <input
                                 type="text"
@@ -987,8 +965,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 Odd Last Coupon
                             </label>
                         </div>
-                    </div>
-                    <div className="form-cols-3">
+                  
                         <div className="form-date">
                             <input
                                 type="date"
@@ -1044,7 +1021,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                 </div>
-                <div className='mt-10 flex justify-end px-3'>
+                <div className='mt-0 flex justify-end px-3'>
                     <button className='bg-cyan-700 hover:bg-cyan-800 text-white py-1 px-3 rounded-md'>
                         <ButtonContent name={"Guardar RW"} loading={loadingSubmitInstRW}></ButtonContent>
                     </button>
