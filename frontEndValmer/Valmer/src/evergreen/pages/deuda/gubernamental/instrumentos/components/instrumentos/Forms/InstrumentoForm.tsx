@@ -3,9 +3,14 @@ import React from "react";
 import {useHandleData, useTvEmiSerie} from "./hooks";
 import {ButtonContent, TvEmiSerieOptions} from "../../../../../../../../shared";
 import {getCatalogs} from "../../../../../../../../utils";
+import { useBigInput } from '../../../../../tasas/components/forms/hooks/useBigInput';
 
 export const InstrumentoForm = ({requeridos}: any) => {
 
+    //  Achica o agranda el input del form cuando obtiene o deja el focus
+    const {  handleFocus,
+        handleBlur,
+        sendStyle} = useBigInput();
     const {
         triggerErase,
         isNewGubForm,
@@ -209,6 +214,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 placeholder=""
                                 maxLength={12}
                                 required
+                                onFocus={() => handleFocus('s_isin')}
+                                onBlur={handleBlur}
+                                style={sendStyle('s_isin')}
                             />
                             <label htmlFor='s_isin'>
                                 ISIN
@@ -367,6 +375,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 placeholder=''
                                 value={consultaData.body?.n_valor_nominal || ''}
                                 onChange={(e) => handleNumericChange(e, handleChange)}
+                                onFocus={() => handleFocus('n_valor_nominal')}
+                                onBlur={handleBlur}
+                                style={sendStyle('n_valor_nominal')}
                             />
                             <label htmlFor='n_valor_nominal'>
                                 Valor Nominal
@@ -418,6 +429,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 value={consultaData.body?.n_plazo || ''}
                                 onChange={(e) => handleNumericChange(e, handleChange)}
                                 required
+                                onFocus={() => handleFocus('n_plazo')}
+                                onBlur={handleBlur}
+                                style={sendStyle('n_plazo')}
                             />
                             <label htmlFor='n_plazo'>
                                 Plazo
@@ -449,6 +463,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 onChange={(e) => handleNumericChange(e, handleChange)}
                                 placeholder=""
                                 required
+                                onFocus={() => handleFocus('n_titulos_circulacion')}
+                                onBlur={handleBlur}
+                                style={sendStyle('n_titulos_circulacion')}
                             />
                             <label htmlFor='n_titulos_circulacion'>
                                 Títulos
@@ -465,6 +482,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 onChange={(e) => handleNumericChange(e, handleChange)}
                                 placeholder=""
                                 required
+                                onFocus={() => handleFocus('n_monto_emi')}
+                                onBlur={handleBlur}
+                                style={sendStyle('n_monto_emi')}
                             />
                             <label htmlFor='n_monto_emi'>
                                 Monto Emi.
@@ -481,6 +501,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 onChange={(e) => handleNumericChange(e, handleChange)}
                                 placeholder=""
                                 required
+                                onFocus={() => handleFocus('n_monto_circ')}
+                                onBlur={handleBlur}
+                                style={sendStyle('n_monto_circ')}
                             />
                             <label htmlFor="n_monto_circ">
                                 Monto Cir.
@@ -518,6 +541,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 onChange={handleChange}
                                 placeholder=""
                                 required
+                                onFocus={() => handleFocus('n_nomb_tasa')}
+                                onBlur={handleBlur}
+                                style={sendStyle('n_nomb_tasa')}
                             />
                             <label htmlFor='n_nomb_tasa'>
                                 Nomb. Tasa
@@ -532,6 +558,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 onChange={handleChange}
                                 placeholder=""
                                 required
+                                onFocus={() => handleFocus('n_prima')}
+                                onBlur={handleBlur}
+                                style={sendStyle('n_prima')}
                             />
                             <label htmlFor='n_prima'>
                                 Prima
@@ -598,6 +627,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 placeholder=""
                                 maxLength={9}
                                 required
+                                onFocus={() => handleFocus('s_cusip')}
+                                onBlur={handleBlur}
+                                style={sendStyle('s_cusip')}
                             />
                             <label htmlFor='s_cusip'>
                                 CUSIP
@@ -612,6 +644,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 placeholder=""
                                 maxLength={7}
                                 required
+                                onFocus={() => handleFocus('s_sedol')}
+                                onBlur={handleBlur}
+                                style={sendStyle('s_sedol')}
                             />
                             <label htmlFor='s_sedol'>
                                 SEDOL
@@ -647,6 +682,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 value={consultaData.body?.n_last_reset_rate || ''}
                                 onChange={(e) => handleNumericChange(e, handleChange)}
                                 required
+                                onFocus={() => handleFocus('n_last_reset_rate')}
+                                onBlur={handleBlur}
+                                style={sendStyle('n_last_reset_rate')}
                             />
                             <label htmlFor='n_last_reset_rate'>
                                 Last Reset Rate
@@ -660,6 +698,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 onChange={(e) => handleNumericChange(e, handleChange)}
                                 placeholder=""
                                 required
+                                onFocus={() => handleFocus('n_last_reset_rate_24h')}
+                                onBlur={handleBlur}
+                                style={sendStyle('n_last_reset_rate_24h')}
                             />
                             <label htmlFor='n_last_reset_rate_24h'>
                                 Last Reset Rate 24
@@ -673,6 +714,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 onChange={handleChange}
                                 placeholder=""
                                 required
+                                onFocus={() => handleFocus('n_tasa_mercado')}
+                                onBlur={handleBlur}
+                                style={sendStyle('n_tasa_mercado')}
                             />
                             <label htmlFor='n_tasa_mercado'>
                                 Tasa de Mercado
@@ -686,6 +730,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 onChange={handleChange}
                                 placeholder=""
                                 required
+                                onFocus={() => handleFocus('n_rendimiento')}
+                                onBlur={handleBlur}
+                                style={sendStyle('n_rendimiento')}
                             />
                             <label htmlFor="n_rendimiento">
                                 Tasa de Rendimiento
@@ -700,6 +747,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 onChange={(e) => handleNumericChange(e, handleChange)}
                                 placeholder=""
                                 required
+                                onFocus={() => handleFocus('n_precio_mercado')}
+                                onBlur={handleBlur}
+                                style={sendStyle('n_precio_mercado')}
                             />
                             <label htmlFor='n_precio_mercado'>
                                 Precio Mercado
@@ -713,6 +763,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 onChange={(e) => handleNumericChange(e, handleChange)}
                                 placeholder=""
                                 required
+                                onFocus={() => handleFocus('n_precio_mercado_24h')}
+                                onBlur={handleBlur}
+                                style={sendStyle('n_precio_mercado_24h')}
                             />
                             <label htmlFor='n_precio_mercado_24h'>
                                 Precio Mercado 24
@@ -726,6 +779,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 value={consultaData.body?.n_intereses_md || ''}
                                 onChange={(e) => handleNumericChange(e, handleChange)}
                                 placeholder=""
+                                onFocus={() => handleFocus('n_intereses_md')}
+                                onBlur={handleBlur}
+                                style={sendStyle('n_intereses_md')}
                             />
                             <label htmlFor='n_intereses_md'>
                                 Intereses MD
@@ -738,6 +794,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 placeholder=''
                                 value={consultaData.body?.n_intereses_24h || ''}
                                 onChange={(e) => handleNumericChange(e, handleChange)}
+                                onFocus={() => handleFocus('n_intereses_24h')}
+                                onBlur={handleBlur}
+                                style={sendStyle('n_intereses_24h')}
                             />
                             <label htmlFor='n_intereses_24h'>
                                 Intereses 24
@@ -792,6 +851,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                             value={consultaData.body?.n_sobretasa || ''}
                                             onChange={(e) => handleNumericChange(e, handleChange)}
                                             placeholder=""
+                                            onFocus={() => handleFocus('n_sobretasa')}
+                                            onBlur={handleBlur}
+                                            style={sendStyle('n_sobretasa')}
                                         />
                                         <label htmlFor='n_sobretasa'>
                                             Sobretasa de Mercado
@@ -923,6 +985,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 value={consultaData.body?.n_fixed_coupon_date || ''}
                                 onChange={handleChange}
                                 placeholder=""
+                                onFocus={() => handleFocus('n_fixed_coupon_date')}
+                                onBlur={handleBlur}
+                                style={sendStyle('n_fixed_coupon_date')}
                             />
                             <label htmlFor='n_fixed_coupon_date'>
                                 Fixed Coupon Date
@@ -936,6 +1001,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 value={consultaData.body?.s_credit_spread_curve || ''}
                                 onChange={handleChange}
                                 placeholder=""
+                                onFocus={() => handleFocus('s_credit_spread_curve')}
+                                onBlur={handleBlur}
+                                style={sendStyle('s_credit_spread_curve')}
                             />
                             <label htmlFor='s_credit_spread_curve'>
                                 Credit Spread Curve
@@ -948,6 +1016,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 value={consultaData.body?.s_oddfirstcoupon || ''}
                                 onChange={handleChange}
                                 placeholder=""
+                                onFocus={() => handleFocus('s_oddfirstcoupon')}
+                                onBlur={handleBlur}
+                                style={sendStyle('s_oddfirstcoupon')}
                             />
                             <label htmlFor='s_oddfirstcoupon'>
                                 Odd First Coupon
@@ -960,6 +1031,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 value={consultaData.body?.s_oddlastcoupon || ''}
                                 onChange={handleChange}
                                 placeholder=""
+                                onFocus={() => handleFocus('s_oddlastcoupon')}
+                                onBlur={handleBlur}
+                                style={sendStyle('s_oddlastcoupon')}
                             />
                             <label htmlFor='s_oddlastcoupon'>
                                 Odd Last Coupon
@@ -1014,6 +1088,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 value={consultaData.body?.s_coupgenmthd || ''}
                                 onChange={handleChange}
                                 placeholder=""
+                                onFocus={() => handleFocus('s_coupgenmthd')}
+                                onBlur={handleBlur}
+                                style={sendStyle('s_coupgenmthd')}
                             />
                             <label htmlFor='s_coupgenmthd'>
                                 Coupon Generation Method
