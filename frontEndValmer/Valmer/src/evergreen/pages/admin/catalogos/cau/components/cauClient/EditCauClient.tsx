@@ -67,7 +67,7 @@ export const EditCauClient : React.FC<Props> = ({
                         <i className="mr-2 fa-solid fa-arrow-left"></i>
                         <span>Regresar</span>
                     </button>
-                    <button onClick={handleGetCsv} className="btn">
+                    <button onClick={handleGetCsv} className="text-cyan-700 hover:text-green-600 font-bold">
                         <ButtonContent name="Obtener CSV" loading={loadingCsv}/>
                     </button>
                 </div>
