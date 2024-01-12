@@ -38,7 +38,7 @@ export const CuponesForm = ({requeridos}: any) => {
                             <span className="fontError animate__animated animate__fadeIn">Campo requerido n_frecuencia_cupon</span>
                         )}
                     </div>
-                    <div className="form-date">
+                    <div className=" form-date form-date-my">
                         <input
                             type="date"
                             name="d_fecha_ini_cupon"
@@ -47,7 +47,7 @@ export const CuponesForm = ({requeridos}: any) => {
                         />
                         <label htmlFor="d_fecha_ini_cupon">Fecha Inicio Cupón</label>
                     </div>
-                    <div className="form-date">
+                    <div className=" form-date form-date-my">
                         <input
                             type="date"
                             name="d_fecha_fin_cupon"

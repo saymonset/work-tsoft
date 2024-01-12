@@ -125,9 +125,13 @@
 }
 
 .form-title {
-    @apply bg-cyan-700 px-1 mt-0 text-slate-50;
+    @apply bg-cyan-700 px-1 mt-0  text-slate-50;
 }
 
+.form-mb {
+    @apply  mb-2
+}
+ 
 .form-titlet {
     @apply bg-cyan-700 px-1 mt-0 text-slate-50;
 }
@@ -180,6 +184,10 @@
 
 .form-date{
     @apply relative my-0;
+}
+
+.form-date-my{
+    @apply relative my-2;
 }
 
 .form-select{
