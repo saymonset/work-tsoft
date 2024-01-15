@@ -72,7 +72,7 @@ export const DerivadosForm = ({isChicago, sMercado, queryDataUrl, urlSaveData}: 
                                 ))}
                             </select>
                             <label htmlFor="n_tipo_instrumento">
-                                Tipo Instrumento
+                                Tipo Instrumento 
                             </label>
                             {fieldRequiredDerivados.n_tipo_instrumento && (
                                 <span className="fontError animate__animated animate__fadeIn">Campo requerido Tipo Instrumento</span>

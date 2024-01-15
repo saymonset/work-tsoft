@@ -102,7 +102,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                             handleEmisora={handleEmisora}
                             handleSerie={handleSerie}
                         />
-                        <div className="form-check">
+                        <div className="form-check ">
                             <input
                                 type="checkbox"
                                 id="n_inact"
@@ -118,7 +118,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-3">
-                        <div className="form-select">
+                        <div className="form-select form-my">
                             <select
                                 id="s_tipo_instr"
                                 name="s_tipo_instr"
@@ -139,7 +139,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate_animated animate_fadeIn">Campo requerido Tipo Instrumento</span>
                             )}
                         </div>
-                        <div className="form-select">
+                        <div className="form-select form-my">
                             <select
                                 id="s_tipo_merc"
                                 name="s_tipo_merc"
@@ -162,7 +162,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     {/* </div>
                     <div className="form-cols-2"> */}
-                        <div className="form-select">
+                        <div className="form-select form-my">
                             <select
                                 id="s_pais"
                                 name="s_pais"
@@ -183,7 +183,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate_animated animate_fadeIn">Campo requerido País</span>
                             )}
                         </div>
-                        <div className="form-select">
+                        <div className="form-select form-my">
                             <select
                                 id="n_pais_riesgo"
                                 name="n_pais_riesgo"
@@ -203,7 +203,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     {/* </div>
                     <div className="form-cols-2"> */}
-                        <div className="form-select">
+                        <div className="form-select form-my">
                             <select
                                 id="s_subfamilia"
                                 name="s_subfamilia"
@@ -240,11 +240,11 @@ export const InstrumentoForm = ({requeridos}: any) => {
                             </label>
                         </div>
                     </div>
-                    <div className="form-title form-mb">
+                    <div className="form-title form-mbx">
                         <span>Caracteristicas</span>
                     </div>
                     <div className="form-cols-3">
-                        <div className="form-date">
+                        <div className="form-date form-date-my">
                             <input
                                 type="date"
                                 name="d_fec_emi"
@@ -261,7 +261,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate_animated animate_fadeIn">Campo requerido Fecha Emisión</span>
                             )}
                         </div>
-                        <div className="form-date">
+                        <div className="form-date  form-date-my">
                             <input
                                 type="date"
                                 name="d_fec_venc"
@@ -302,7 +302,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate_animated animate_fadeIn">Campo requerido Moneda</span>
                             )}
                         </div>
-                        <div className="form-input">
+                        <div className="form-input form-my">
                             <input
                                 type="text"
                                 name="n_val_nom"
@@ -326,7 +326,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     {/* </div>
                     <div className="form-cols-2"> */}
-                        <div className="form-select">
+                        <div className="form-select form-my">
                             <select
                                 id="s_tasa_ref"
                                 name="s_tasa_ref"
@@ -344,7 +344,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 Tasa Referencia
                             </label>
                         </div>
-                        <div className="form-select">
+                        <div className="form-select form-my">
                             <select
                                 id="s_crv_desc"
                                 name="s_crv_desc"
@@ -367,7 +367,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     {/* </div>
                     <div className="form-cols-2"> */}
-                        <div className="form-input">
+                        <div className="form-input form-my">
                             <input
                                 type="text"
                                 name="s_isin"
@@ -389,7 +389,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate_animated animate_fadeIn">Campo requerido ISIN</span>
                             )}
                         </div>
-                        <div className="form-input">
+                        <div className="form-input form-my">
                             <input
                                 type="text"
                                 name="s_isin_v"
@@ -410,7 +410,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-select">
+                        <div className="form-select form-my">
                             <select
                                 className="mt-1"
                                 name="s_emisor"
@@ -432,7 +432,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate_animated animate_fadeIn">Campo requerido Emisor</span>
                             )}
                         </div>
-                        <div className="form-select">
+                        <div className="form-select form-my">
                             <select
                                 id="n_status"
                                 name="n_status"
@@ -456,7 +456,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                     </div>
                     <div className="form-cols-2">
                    
-                        <div className="form-select">
+                        <div className="form-select form-my0">
                             <select
                                 id="s_met_calc"
                                 name="s_met_calc"
@@ -479,7 +479,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     {/* </div>
                     <div className="form-cols-1"> */}
-                        <div className="form-select">
+                        <div className="form-select form-my0">
                             <select
                                 id="n_calendario"
                                 name="n_calendario"
@@ -505,7 +505,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         <span>Instrumento Deuda</span>
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-date">
+                        <div className="form-date form-date-my">
                             <input
                                 type="date"
                                 name="d_fecha_amort_ant"
@@ -521,7 +521,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 Fecha Amort. Ant.
                             </label>
                         </div>
-                        <div className="form-input">
+                        <div className="form-input form-my1">
                             <input
                                 type="text"
                                 name="n_prima"
@@ -542,7 +542,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-input">
+                        <div className="form-input form-my0">
                             <input
                                 type="text"
                                 name="n_rendimiento"
@@ -561,7 +561,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 Rendimiento
                             </label>
                         </div>
-                        <div className="form-input">
+                        <div className="form-input form-my0">
                             <input
                                 type="text"
                                 name="n_sobretasa"
@@ -621,7 +621,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-input">
+                        <div className="form-input form-my0">
                             <input
                                 type="text"
                                 name="n_val_nom_a"
@@ -640,7 +640,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 Valor Nominal Act
                             </label>
                         </div>
-                        <div className="form-input">
+                        <div className="form-input form-my0">
                             <input
                                 type="text"
                                 name="n_mont_circ"
@@ -661,7 +661,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-select">
+                        <div className="form-select ">
                             <select
                                 id="s_tipo"
                                 name="s_tipo"
@@ -699,7 +699,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-select">
+                        <div className="form-select form-my0">
                             <select
                                 id="s_sector"
                                 name="s_sector"
@@ -788,7 +788,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         Calificaciones
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-select">
+                        <div className="form-select ">
                             <select
                                 id="n_fitch"
                                 name="n_fitch"
@@ -806,7 +806,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 Fitch
                             </label>
                         </div>
-                        <div className="form-date">
+                        <div className="form-date  form-date-my">
                             <input
                                 type="date"
                                 name="d_fecha_fitch"
@@ -822,7 +822,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-select">
+                        <div className="form-select form-my0">
                             <select
                                 id="n_sp"
                                 name="n_sp"
@@ -840,7 +840,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 S&P
                             </label>
                         </div>
-                        <div className="form-date">
+                        <div className="form-date form-date-my">
                             <input
                                 type="date"
                                 name="d_fecha_sp"
@@ -856,7 +856,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-select">
+                        <div className="form-select form-my0">
                             <select
                                 id="n_moody"
                                 name="n_moody"
@@ -874,7 +874,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 Moody
                             </label>
                         </div>
-                        <div className="form-date">
+                        <div className="form-date form-date-my">
                             <input
                                 type="date"
                                 name="d_fecha_moody"
@@ -890,7 +890,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-select">
+                        <div className="form-select form-my0">
                             <select
                                 id="n_hr"
                                 name="n_hr"
@@ -929,7 +929,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         Contribuidores
                     </div>
                     <div className="form-cols-1">
-                        <div className="form-input">
+                        <div className="form-input form-my1">
                             <input
                                 type="text"
                                 name="n_precio_bloomberg"
@@ -950,7 +950,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-1">
-                        <div className="form-input">
+                        <div className="form-input form-my0">
                             <input
                                 type="text"
                                 name="n_precio_markit"
@@ -971,7 +971,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-1">
-                        <div className="form-input">
+                        <div className="form-input form-my0">
                             <input
                                 type="text"
                                 name="n_precio_reuters"
@@ -991,8 +991,8 @@ export const InstrumentoForm = ({requeridos}: any) => {
                             </label>
                         </div>
                     </div>
-                    <div className="form-cols-1">
-                        <div className="form-check">
+                    <div className="form-cols-1 ">
+                        <div className="form-check ">
                             <input
                                 type="checkbox"
                                 name="b_precio_sucio"

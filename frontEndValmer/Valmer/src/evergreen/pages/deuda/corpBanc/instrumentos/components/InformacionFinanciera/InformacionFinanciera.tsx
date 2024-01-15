@@ -544,7 +544,7 @@ export const InformacionFinanciera = () => {
 					<button
 						type='submit'
 						className='btn'
-						onClick={handleSubmitFinanciera}
+							onClick={handleSubmitFinanciera}
 					>
 						{loadingSubmit ? (
 							<i className="fa fa-spinner fa-spin"></i>
@@ -556,4 +556,6 @@ export const InformacionFinanciera = () => {
 			</div>
 		</form>
 	);
-}
+	}
+
+		
