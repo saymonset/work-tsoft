@@ -165,6 +165,10 @@
     @apply grid grid-cols-1 gap-4;
 }
 
+.form-cols-1-gap-1 {
+    @apply grid grid-cols-1 gap-1;
+}
+
 .form-col-1 {
     @apply grid grid-cols-1;
 }
@@ -258,7 +262,6 @@
     text-slate-900 
     focus:outline-none focus:ring-0
     focus:border-cyan-700;
-
 }
 
 
