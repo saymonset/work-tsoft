@@ -134,6 +134,9 @@
     @apply px-1 mb-5;
 }
 
+.form-mb-x {
+    @apply mb-1;
+}
 .form-title {
     @apply bg-cyan-700 px-1 mt-0  text-slate-50;
 }
