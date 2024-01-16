@@ -373,6 +373,9 @@ table {
 .line-y {
     @apply border-gray-300 border my-0
 }
+.line-y-1 {
+    @apply border-gray-300 border my-1
+}
 /** Fin estilos Linea */
 
 /** Inicio estilos Card */
