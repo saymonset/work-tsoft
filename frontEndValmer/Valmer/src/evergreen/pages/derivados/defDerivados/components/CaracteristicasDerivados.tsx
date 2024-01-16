@@ -560,7 +560,7 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                         <input
                             type="text"
                             name="n_swp_rate"
-                            id="n_swp_rate"l
+                            id="n_swp_rate"
                             placeholder=""
                             value={props.consultaDataDerDef?.body?.n_swp_rate || ''}
                             onChange={(e) => props.handleChange(e)}
