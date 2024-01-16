@@ -7,10 +7,10 @@ import { Link } from "react-router-dom";
 
 export const PanamaHeader = (data: PanamaHeaderProps) => {
     return (
-        <div className="form form-mb-x  mt-0 animate__animated animate__fadeIn">
+        <div className="form form-mb-x  mt-1 animate__animated animate__fadeIn">
             <form>
                 <div className="form-cols-3">
-                    <div className="form-cols-1 col-span-2">
+                    <div className="form-cols-1 col-span-2 form-cols-1-gap-1">
                         <div className="form-cols-1">
                             <div className="flex justify-end pr-2">
                                 <button
@@ -34,7 +34,7 @@ export const PanamaHeader = (data: PanamaHeaderProps) => {
                                 )}
                             </div>
                         </div>
-                        <span className="form-title ">Instrumento</span>
+                        <span className="form-title mb-2 ">Instrumento</span>
                         {data.loadingConsultaData && <BarLoader className="w-full" color="#059669" width={500} />}
                         <div className="form-cols-2 -my-3 ">
                             {data.activeNuevo && (
