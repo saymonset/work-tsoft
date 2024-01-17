@@ -91,7 +91,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                        handleClickTv={handleClickTv}
                                        handleEmisora={handleEmisora}
                                        handleSerie={handleSerie}/>
-                    <div className="form-cols-6">
+                    <div className="form-cols-6 ">
                         <div className="form-select">
                             <select name="n_tipo_instrumento"
                                     value={consultaData?.body?.n_tipo_instrumento ?? ''}

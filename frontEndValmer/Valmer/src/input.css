@@ -198,9 +198,12 @@
 }
 
 .form-cols-6 {
-    @apply grid grid-cols-6 gap-1;
+    @apply grid grid-cols-6 gap-0;
 }
 
+.form-cols-6-gap-0 {
+    @apply grid grid-cols-6 gap-0;
+}
 .form-input,
 .form-text-area {
     @apply relative my-2;
@@ -329,8 +332,11 @@ table {
 }
 
 .table .tbody .tr {
+   
     @apply even:bg-gray-300 hover:bg-cyan-600 hover:text-white;
 }
+
+
 
 .table .tbody .tr-editable:hover span{
     @apply text-green-400
