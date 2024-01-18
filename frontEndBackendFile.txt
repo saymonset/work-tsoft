@@ -1,6 +1,7 @@
  npm install
  npm run dev
-
+  npm run build
+  
  npm install para las dependencias
 Y npm run dev para levantar el proyecto
 
@@ -26,7 +27,9 @@ ejecutar
 1-) cd /home/usrlocal/Valmer/evergreen-valmer/ValmerServices
 2-) git pull
 3-) mvn clean install
-4-) cp -R -f ValmerServices /home/usrlocal/
+ entrar en target
+4-) cp -R -f ValmerServices /home/usrlocal/shared
+
 5-) cd /home/usrlocal/ValmerServices/0.0.1-SNAPSHOT/bin
 6-)./startup.sh  |  ./shutdown.sh
 7-) cd /home/usrlocal/ValmerServices/0.0.1-SNAPSHOT/
