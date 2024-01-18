@@ -4,7 +4,7 @@ import {
     AccionesAdd,
     Catalogo,
     CatalogoSubastas,
-    ClienteInfo, ConsultaDataEditCauClient,
+    ClienteInfo,
     DataTypeKey,
     FormValuesCorp,
     FormValuesDerivados,
@@ -23,11 +23,12 @@ import {
     IsFieldReqCalifInst,
     IsFieldReqCalifProg,
     IsFieldRequiredAccInst,
+    IsFieldRequiredLatCr,
     IsFieldRequiredLatPanama,
     RefReqAccCalifLatam,
     RequeridosCorp,
     RequeridosDefDerivados,
-    RequeridosDerivados, ResponseApiEditCauClient,
+    RequeridosDerivados,
     ResponseConsultaData,
     ResponseConsultaDataCorp,
     ResponseConsultaDataInter,
@@ -86,6 +87,7 @@ import {
     validInternacionalField, 
     validProgramasField} from "./ValidFields";
 import { validLatPamanaField } from "./ValidFields/Latam/Panama";
+import { validLatCrField } from "./ValidFields/Latam/CostaRica";
 
 export const generateUUID = (): string => {
     return uuidv4();
@@ -336,24 +338,18 @@ export const validateSelectTaked = async (
 
     if (!formValues?.s_tv || formValues.s_tv == 'default') {
         dispatch(updateRequiredTv(true));
-        // dispatch(updateRequiredTvCorp(true));
-        // dispatch(updateRequiredTvInter(true))
         focusElement("s_tv", requeridos.s_tv)
         return false;
     }
 
     if (!formValues.s_emisora || formValues.s_emisora == 'default') {
         dispatch(updateRequiredEmisora(true));
-        // dispatch(updateRequiredEmisoraCorp(true));
-        // dispatch(updateRequiredEmisoraInter(true));
         focusElement("s_emisora", requeridos.s_emisora)
         return false;
     }
 
     if (!formValues.s_serie || formValues.s_serie == 'default') {
         dispatch(updateRequiredSerie(true));
-        // dispatch(updateRequiredSerieCorp(true));
-        // dispatch(updateRequiredSerieInter(true));
         focusElement("s_serie", requeridos.s_serie)
         return false;
     }
@@ -404,7 +400,9 @@ export const validateFieldsAccCalifLatam = async (
     fieldRequiredCalifProg?: IsFieldReqCalifProg,
     fieldRequiredCalifInst?: IsFieldReqCalifInst,
     fieldRequiredLatPanama?: IsFieldRequiredLatPanama,
-    setFieldRequiredLatPanama?: React.Dispatch<React.SetStateAction<IsFieldRequiredLatPanama>>) => {
+    setFieldRequiredLatPanama?: React.Dispatch<React.SetStateAction<IsFieldRequiredLatPanama>>,
+    fieldRequiredLatCr?: IsFieldRequiredLatCr,
+    setFieldRequiredLatCr?: React.Dispatch<React.SetStateAction<IsFieldRequiredLatCr>>) => {
 
     if (dispatch) {
         if (!formValues?.s_tv || formValues.s_tv == 'default') {
@@ -441,6 +439,10 @@ export const validateFieldsAccCalifLatam = async (
 
     if (fieldRequiredLatPanama && setFieldRequiredLatPanama) {
         return validLatPamanaField(formValues, setFieldRequiredLatPanama, fieldRequiredLatPanama, requeridos)
+    }
+
+    if (fieldRequiredLatCr && setFieldRequiredLatCr) {
+        return validLatCrField(formValues, setFieldRequiredLatCr, fieldRequiredLatCr, requeridos)
     }
 
     return true;

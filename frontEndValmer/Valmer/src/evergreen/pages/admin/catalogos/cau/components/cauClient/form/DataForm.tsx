@@ -1,5 +1,5 @@
 import React from "react";
-import {BodyEditCauClient, Catalogo, ConsultaDataEditCauClient} from "../../../../../../../../model";
+import {Catalogo, ConsultaDataEditCauClient} from "../../../../../../../../model";
 import {getCatalogs} from "../../../../../../../../utils";
 
 interface DataFormProps {

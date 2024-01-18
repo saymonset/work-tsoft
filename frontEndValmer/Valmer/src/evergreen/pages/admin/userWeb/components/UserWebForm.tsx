@@ -36,6 +36,7 @@ export const UserWebForm = () => {
         triggerInfoTrial,
         triggerProducts,
         dataTable,
+        dataUri,
         handleClickInstitucion,
         handleClickSector,
         handleClickNombre,
@@ -46,12 +47,13 @@ export const UserWebForm = () => {
         downloadProcesosPermisos,
         setTriggerInfoTrial,
         setTriggerProducts,
-        setDataTable
+        setDataTable,
+        searchDataUri
     } = useHandleDataUserWeb()
 
     if (loadingInst || !catalogoInst.length ||
         loadingTipoUser || !catTipoUser.body ||
-        loadingCatUri || !catUri.body) {
+        loadingCatUri || !catUri.body || !dataUri) {
         return (
             <div className="flex justify-center items-center h-full">
               {loadingInst || loadingTipoUser || loadingCatUri ? (
@@ -320,8 +322,12 @@ export const UserWebForm = () => {
                     {loadingUri && <BarLoader className="mt-2" color="#059669" width={400} />}
                     <div className="form-cols-1 -my-3">
                         <div className="form-input">
-                            <input type="text" name="buscaUri" id="buscaUri" placeholder=""/>
-                            <label htmlFor="buscaUri">Busca URI</label>
+                            <input type="text" 
+                                   name="searchUri" 
+                                   id="searchUri"
+                                   onChange={searchDataUri}
+                            />
+                            <label htmlFor="searchUri">Busca URI</label>
                         </div>
                     </div>
                     <div className="form-cols-1 -my-3">
@@ -333,7 +339,7 @@ export const UserWebForm = () => {
                                 onChange={handleUri}
                             >
                                 <option value="default">...</option>
-                                {Object.entries(catUri.body).map((item) => (
+                                {Object.entries(dataUri).map((item) => (
                                 <option key={item[0]} value={item[0]}>
                                     {item[1]}
                                 </option>

@@ -1,3 +1,4 @@
+import { InputOrNull, InputOrSelect, SelectOrNull } from "../../Models";
 import {Catalogo} from "../../deuda";
 import React from "react";
 
@@ -12,16 +13,15 @@ export type CostaRicaHeaderProps = {
     loadingSave: boolean
     loadingNemoInst: boolean
     loadingSerie: boolean
-    setSelectedEmisor: (value: string) => void;
-    setSelectedNemo: (value: string) => void;
-    setSelectedSerie: (value: string) => void;
     activeNuevo: boolean;
+    isFieldRequired: IsFieldRequiredLatCr;
+    requeridos: any;
     handleNuevo: () => void;
     handleCancel: () => void;
     handleErase: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    handleEmisor: (e: React.ChangeEvent<HTMLSelectElement>) => Promise<void>;
-    handleNemo: (e: React.ChangeEvent<HTMLSelectElement>) => Promise<void>;
-    handleSerie: (e: React.ChangeEvent<HTMLSelectElement>) => Promise<void>;
+    handleEmisor: (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => Promise<void>;
+    handleNemo: (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => Promise<void>;
+    handleSerie: (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => Promise<void>;
     handleCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleSave: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
@@ -32,6 +32,8 @@ export type CostaRicaFormProps = {
     consultaData: RespConsultaDataCR;
     mergeInstrumentos: string;
     loadingConsultaInfo: boolean;
+    isFieldRequired: IsFieldRequiredLatCr;
+    requeridos: RefReqLatCr;
     handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 };
 
@@ -47,6 +49,7 @@ export interface BodyCr {
 }
 
 export interface InfoBd {
+    [key: string]: string;
     n_last_reset_rate: string;
     n_tipo_diversificacion: string;
     n_liquidos: string;
@@ -146,4 +149,51 @@ export interface Action {
     "*Theoretical Model": string;
     "ENC": string;
     "Name": string;
+}
+
+export interface IsFieldRequiredLatCr {
+    [key: string]: boolean;
+    s_emisor: boolean;
+    s_nemo_instr: boolean;
+    s_serie: boolean;
+    s_isin: boolean;
+    n_tipo_tasa: boolean;
+    n_tipo_merc: boolean;
+    n_moneda: boolean;
+    n_edo_instrumento: boolean;
+    n_monto_colocado: boolean;
+    n_pais: boolean;
+    n_monto_aprobado: boolean;
+    n_tipo_valor: boolean;
+}
+
+export const fieldToValidateLatamCr = [
+    {name: "s_emisor", defaultValue: "default"},
+    {name: "s_nemo_instr", defaultValue: "default"},
+    {name: "s_serie", defaultValue: "default"},
+    {name: "s_isin", defaultValue: "default"},
+    {name: "n_tipo_tasa", defaultValue: "default"},
+    {name: "n_tipo_merc", defaultValue: "default"},
+    {name: "n_moneda", defaultValue: "default"},
+    {name: "n_edo_instrumento", defaultValue: "default"},
+    {name: "n_monto_colocado", defaultValue: "default"},
+    {name: "n_pais", defaultValue: "default"},
+    {name: "n_monto_aprobado", defaultValue: "default"},
+    {name: "n_tipo_valor", defaultValue: "default"}
+]
+
+export interface RefReqLatCr {
+    [key: string]: React.MutableRefObject<InputOrSelect>;
+    s_emisor: React.MutableRefObject<InputOrSelect>;
+    s_nemo_instr: React.MutableRefObject<InputOrSelect>;
+    s_serie: React.MutableRefObject<InputOrSelect>;
+    s_isin: React.MutableRefObject<InputOrNull>;
+    n_tipo_tasa: React.MutableRefObject<SelectOrNull>;
+    n_tipo_merc: React.MutableRefObject<SelectOrNull>;
+    n_moneda: React.MutableRefObject<SelectOrNull>;
+    n_edo_instrumento: React.MutableRefObject<SelectOrNull>;
+    n_monto_colocado: React.MutableRefObject<InputOrNull>;
+    n_pais: React.MutableRefObject<SelectOrNull>;
+    n_monto_aprobado: React.MutableRefObject<InputOrNull>;
+    n_tipo_valor: React.MutableRefObject<SelectOrNull>;
 }

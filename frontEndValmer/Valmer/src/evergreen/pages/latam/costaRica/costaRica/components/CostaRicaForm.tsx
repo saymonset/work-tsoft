@@ -8,6 +8,8 @@ export const CostaRicaForm = ({
                                   consultaData,
                                   mergeInstrumentos,
                                   handleChange,
+                                  isFieldRequired,
+                                  requeridos,
                                   catalog}: CostaRicaFormProps) => {
 
     const infoRwObject = consultaData?.body?.info_rw?.Acciones?.[mergeInstrumentos];
@@ -38,8 +40,14 @@ export const CostaRicaForm = ({
                                         name="s_isin"
                                         value={consultaData?.body?.info_bd?.s_isin ?? ""}
                                         onChange={handleChange}
+                                        ref={requeridos.s_isin}
                                     />
                                     <label htmlFor="s_isin">Isin</label>
+                                    {isFieldRequired.s_isin && (
+                                        <span className="fontError animate__animated animate__fadeIn">
+                                            Campo requerido Isin
+                                        </span>
+                                    )}
                                 </div>
                             </div>
                             <div className="form-cols-2 -my-3">
@@ -56,6 +64,7 @@ export const CostaRicaForm = ({
                                     <select name="n_tipo_tasa"
                                             value={consultaData?.body?.info_bd?.n_tipo_tasa ?? "default"}
                                             onChange={handleChange}
+                                            ref={requeridos.n_tipo_tasa}
                                     >
                                         <option value="default">...</option>
                                         {getCatalogs(catalog,'TIPO_TASA').map((column) => (
@@ -67,6 +76,11 @@ export const CostaRicaForm = ({
                                     <label htmlFor="n_tipo_tasa">
                                         Tipo Tasa
                                     </label>
+                                    {isFieldRequired.n_tipo_tasa && (
+                                        <span className="fontError animate__animated animate__fadeIn">
+                                            Campo requerido Tipo Tasa
+                                        </span>
+                                    )}
                                 </div>
                             </div>
                             <div className="form-cols-2 -my-3">
@@ -143,6 +157,7 @@ export const CostaRicaForm = ({
                                     <select name="n_tipo_merc"
                                             value={consultaData?.body?.info_bd?.n_tipo_merc ?? "default"}
                                             onChange={handleChange}
+                                            ref={requeridos.n_tipo_merc}
                                     >
                                         <option value="default">...</option>
                                         {getCatalogs(catalog,'TIPO_MERCADO').map((column) => (
@@ -154,6 +169,11 @@ export const CostaRicaForm = ({
                                     <label htmlFor="n_tipo_merc">
                                         Tipo Mercado
                                     </label>
+                                    {isFieldRequired.n_tipo_merc && (
+                                        <span className="fontError animate__animated animate__fadeIn">
+                                            Campo requerido Tipo Mercado
+                                        </span>
+                                    )}
                                 </div>
                             </div>
                             <div className="form-cols-2 -my-3">
@@ -338,6 +358,7 @@ export const CostaRicaForm = ({
                                     <select name="n_moneda"
                                             value={consultaData?.body?.info_bd?.n_moneda ?? "default"}
                                             onChange={handleChange}
+                                            ref={requeridos.n_moneda}
                                     >
                                         <option value="default">...</option>
                                         {getCatalogs(catalog,'MONEDA').map((column) => (
@@ -349,6 +370,11 @@ export const CostaRicaForm = ({
                                     <label htmlFor="n_moneda">
                                         Moneda
                                     </label>
+                                    {isFieldRequired.n_moneda && (
+                                        <span className="fontError animate__animated animate__fadeIn">
+                                            Campo requerido Moneda
+                                        </span>
+                                    )}
                                 </div>
                                 <div className="form-select">
                                     <select name="n_curve_index"
@@ -383,6 +409,7 @@ export const CostaRicaForm = ({
                                     <select name="n_edo_instrumento"
                                             value={consultaData?.body?.info_bd?.n_edo_instrumento ?? "default"}
                                             onChange={handleChange}
+                                            ref={requeridos.n_edo_instrumento}
                                     >
                                         <option value="default">...</option>
                                         {getCatalogs(catalog,'EDO_INSTRUMENTO').map((column) => (
@@ -394,6 +421,11 @@ export const CostaRicaForm = ({
                                     <label htmlFor="n_edo_instrumento">
                                         Estado Instrumento
                                     </label>
+                                    {isFieldRequired.n_edo_instrumento && (
+                                        <span className="fontError animate__animated animate__fadeIn">
+                                            Campo requerido Estado Instrumento
+                                        </span>
+                                    )}
                                 </div>
                             </div>
                             <div className="form-cols-2 -my-3">
@@ -403,15 +435,22 @@ export const CostaRicaForm = ({
                                         name="n_monto_colocado"
                                         value={consultaData?.body?.info_bd?.n_monto_colocado ?? ""}
                                         onChange={handleChange}
+                                        ref={requeridos.n_monto_colocado}
                                     />
                                     <label htmlFor="n_monto_colocado">
                                         Monto Colocado
                                     </label>
+                                    {isFieldRequired.n_monto_colocado && (
+                                        <span className="fontError animate__animated animate__fadeIn">
+                                            Campo requerido Monto Colocado
+                                        </span>
+                                    )}
                                 </div>
                                 <div className="form-select">
                                     <select name="n_pais"
                                             value={consultaData?.body?.info_bd?.n_pais ?? "default"}
                                             onChange={handleChange}
+                                            ref={requeridos.n_pais}
                                     >
                                         <option value="default">...</option>
                                         {getCatalogs(catalog,'PAIS').map((column) => (
@@ -423,6 +462,11 @@ export const CostaRicaForm = ({
                                     <label htmlFor="pais">
                                         País
                                     </label>
+                                    {isFieldRequired.n_pais && (
+                                        <span className="fontError animate__animated animate__fadeIn">
+                                            Campo requerido País
+                                        </span>
+                                    )}
                                 </div>
                             </div>
                             <div className="form-cols-2 -my-3">
@@ -432,10 +476,16 @@ export const CostaRicaForm = ({
                                         name="n_monto_aprobado"
                                         value={consultaData?.body?.info_bd?.n_monto_aprobado ?? ""}
                                         onChange={handleChange}
+                                        ref={requeridos.n_monto_aprobado}
                                     />
                                     <label htmlFor="n_monto_aprobado">
                                         Monto Aprobado
                                     </label>
+                                    {isFieldRequired.n_monto_aprobado && (
+                                        <span className="fontError animate__animated animate__fadeIn">
+                                            Campo requerido Monto Aprobado
+                                        </span>
+                                    )}
                                 </div>
                                 <div className="form-select">
                                     <select name="n_emisor"
@@ -573,6 +623,7 @@ export const CostaRicaForm = ({
                                     <select name="n_tipo_valor"
                                             value={consultaData?.body?.info_bd?.n_tipo_valor ?? "default"}
                                             onChange={handleChange}
+                                            ref={requeridos.n_tipo_valor}
                                     >
                                         <option value="default">...</option>
                                         {getCatalogs(catalog,'TIPO_VALOR').map((column) => (
@@ -582,6 +633,11 @@ export const CostaRicaForm = ({
                                         ))}
                                     </select>
                                     <label htmlFor="n_tipo_valor">Tipo Valor</label>
+                                    {isFieldRequired.n_tipo_valor && (
+                                        <span className="fontError animate__animated animate__fadeIn">
+                                            Campo requerido Tipo Valor
+                                        </span>
+                                    )}
                                 </div>
                                 <div className="form-select">
                                     <select name="n_market_model"

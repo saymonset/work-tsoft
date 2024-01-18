@@ -3,11 +3,13 @@ import {
   fetchDataGetRet,
   fetchDataPost,
   fetchDataPostAct,
-  fetchDataPostRetNoAlert
+  fetchDataPostRetNoAlert,
+  showAlert
 } from "../../../../../utils";
 import { IUmsMexCat, RegistrosUMSMexCat } from '../Models'
 import { Base64 } from 'js-base64'
 import fileDownload from 'js-file-download'
+import Swal from "sweetalert2";
 
 export const useUmsMexCat = () => {
   const InitialData: IUmsMexCat = {
@@ -174,6 +176,23 @@ export const useUmsMexCat = () => {
     setOpenEdit(false);
   }
 
+  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    Swal.fire({
+      title: 'Desea cargar a la BD',
+      showCancelButton: true,
+      confirmButtonText: 'Continuar',
+      cancelButtonText: 'Cancelar',
+      icon: 'question',
+    }).then((result) => {
+      if (result.isConfirmed) {
+      
+
+        Swal.fire('Cargando a la BD', '', 'success');
+      }
+    });
+  }  
+
   return {
     tableData,
     loadingData,
@@ -182,6 +201,7 @@ export const useUmsMexCat = () => {
     downloadCsvFile,
     textSearch,
     HandleChangeBuscar,
+    handleButtonClick,
     saveDataUser,
     deletebyIsin,
     handleOpenCarga,

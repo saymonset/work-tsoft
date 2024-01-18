@@ -1,7 +1,7 @@
 import React from "react";
 import { RevisarForm } from "./components";
 import {useInsumos} from "./hooks";
-import {ButtonContent} from "../../../../../../shared";
+import {ButtonContent, TextAreaLog} from "../../../../../../shared";
 import {MoonLoader} from "react-spinners";
 
 export const InsumosForm = () => {
@@ -24,7 +24,7 @@ export const InsumosForm = () => {
     const renderLogContent = () => {
         if (log.length > 0) {
             return (
-                <div className="flex flex-col items-center w-full">
+                <div className="flex flex-col items-center">
                     <div className="w-1/8 mb-4">
                         <button
                             className="w-44 bg-cyan-700 hover:bg-green-700 text-white py-1 rounded-md px-3"
@@ -32,14 +32,9 @@ export const InsumosForm = () => {
                             <ButtonContent name="Obtener Log CSV" loading={loadingLogCsv}/>
                         </button>
                     </div>
-                    <div
-                        className="bg-gray-900 text-green-500 p-2 w-3/4 resize-y overflow-auto max-h-[30rem]"
-                        dangerouslySetInnerHTML={{ __html: log }}
-                        style={{ minHeight: '30rem' }}
-                    />
+                    <TextAreaLog log={log}/>
                 </div>
             );
-
         }
         else
         {
@@ -64,7 +59,7 @@ export const InsumosForm = () => {
                                         type="checkbox"
                                         name="cbx_carga_insumos"
                                         checked={isCheckboxChecked.cbx_carga_insumos}
-                                        onClick={()=>handleChange("cbx_carga_insumos", isCheckboxChecked.cbx_carga_insumos)}
+                                        onClick={() => handleChange("cbx_carga_insumos", isCheckboxChecked.cbx_carga_insumos)}
                                     />
                                     <button
                                         className="w-44 bg-cyan-700 hover:bg-green-700
@@ -79,14 +74,14 @@ export const InsumosForm = () => {
                         <tr>
                             <td height="35" align="left">
                                 <div className="form-check">
-                                    <label htmlFor="cbx_Revisar1">
+                                    <label className="!ml-0" htmlFor="cbx_Revisar1">
                                         2
                                     </label>
                                     <input
                                         type="checkbox"
                                         name="cbx_Revisar1"
                                         checked={isCheckboxChecked.cbx_Revisar1}
-                                        onClick={()=>handleChange("cbx_Revisar1", isCheckboxChecked.cbx_Revisar1)}
+                                        onClick={() => handleChange("cbx_Revisar1", isCheckboxChecked.cbx_Revisar1)}
                                     />
                                     <button
                                         className="w-44 bg-cyan-700 hover:bg-green-700
@@ -101,21 +96,19 @@ export const InsumosForm = () => {
                         </tbody>
                     </table>
                 </td>
-                <td align="center"></td>
-            </tr>
-            <tr>
                 <td>
                     {isShowLogBox && (
-                        <div className="flex mb-44 justify-center items-center h-full">
+                        <div className="flex justify-center items-center ">
                             {loadingLogBox ? (
-                                <MoonLoader color="#0e7490" loading={true} speedMultiplier={0.5} size={80} />
+                                <MoonLoader color="#0e7490" loading={true} speedMultiplier={0.5} size={80}/>
                             ) : renderLogContent()}
                         </div>
                     )}
                 </td>
+                <td align="center"></td>
             </tr>
             <tr>
-                <td>{showRevisarForm && <RevisarForm />}</td>
+                <td>{showRevisarForm && <RevisarForm/>}</td>
             </tr>
             </tbody>
         </table>

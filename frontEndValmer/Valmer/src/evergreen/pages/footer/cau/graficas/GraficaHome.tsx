@@ -24,11 +24,11 @@ export const GraficaHome = () => {
                 ) : (
                     <>
                         <div className="body">
-                            <SimpleBarChart dataBody={data}/>
+                            <SimpleBarChart data={data}/>
                         </div>
                         <div className="footer">
                             <Link to="/cau/graficas/area">
-                                <button className="btn-link">Grafica por área</button>
+                                <button className="btn-link font-semibold opacity-70">Graficas por áreas</button>
                             </Link>
                         </div>
                     </>

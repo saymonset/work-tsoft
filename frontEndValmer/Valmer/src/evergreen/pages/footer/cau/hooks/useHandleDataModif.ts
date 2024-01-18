@@ -69,7 +69,6 @@ export const useHandleDataModif = () => {
                     setInfoCau(response.body[0])
                     setLoadingInfoCau(false)
                     setTriggerInfoCau(false)
-                    console.log(infoCau.n_folio)
                 }
             } catch (error) {
                 setLoadingInfoCau(false)
@@ -95,6 +94,7 @@ export const useHandleDataModif = () => {
         setPosicion,
         setSearch,
         setFolio,
-        setTriggerInfoCau
+        setTriggerInfoCau,
+        setInfoCau
     }
 }

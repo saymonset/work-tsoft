@@ -27,7 +27,6 @@ export const ShowEditCatalog = ({titleName, DataCatalog}: EditCatalogProps) => {
         column2 = DataCatalog.slice(midPoint);
     }
 
-
     const handleClick = (text: string, columns: ColumnEditCat[], edit?: boolean) => {
         setState(prevState => ({
             ...prevState,

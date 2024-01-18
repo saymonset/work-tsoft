@@ -21,7 +21,7 @@ export const MailClientes = () => {
 
     if (loading || !catalogo.length) {
         return (
-            <div className="flex justify-center items-center h-full">
+            <div className="mt-2 flex justify-center items-center h-full">
               {loading ? (
                   <MoonLoader color="#0e7490" loading={true} speedMultiplier={0.5} size={60} />
               ) : (

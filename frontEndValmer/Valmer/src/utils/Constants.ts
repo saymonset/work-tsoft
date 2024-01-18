@@ -1080,8 +1080,8 @@ export const DataCatBrokers = [
         {
                 text: 'BROKER_CAT_ID_INSTR',
                 columns: [
-                        { name: 'N_ID_BROKER', type: 'input' },
                         { name: 'S_ID_BROKER', type: 'input' },
+                        { name: 'N_ID_BROKER', type: 'input' },
                         { name: 'S_EMI_BROKER', type: 'input' },
                         { name: 'S_EMI_VALMER', type: 'input' },
                         { name: 'S_TV', type: 'input' }
@@ -1118,7 +1118,7 @@ export const DataCatBrokers = [
                 text: 'BROKER_CONFIG_ARCHIVOS',
                 columns: [
                         { name: 'N_ID_ARCHIVO', type: 'input' },
-                        { name: 'N_ID_BROKER', type: 'select', catalog: "" },
+                        { name: 'N_ID_BROKER', type: 'select', catalog: "BROKER_ELECTRONICO" },
                         { name: 'S_IP_FTP', type: 'input' },
                         { name: 'S_TIPO_FTP', type: 'select', catalog: "tipo-ftp"},
                         { name: 'S_USER_FTP', type: 'input' },
@@ -1188,9 +1188,9 @@ export const DataPerfilInstrumento = [
         {
                 text: 'PERFIL_INSTRUMENTO_FONDO_SERIE',
                 columns: [
-                        { name: 'S_TV', type: 'input', isReadOnly: false },
-                        { name: 'S_EMISORA', type: 'input', isReadOnly: false },
-                        { name: 'S_SERIE', type: 'input', isReadOnly: false }
+                        { name: 'S_TV', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_EMISORA', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_SERIE', type: 'input', isReadOnly: false, isReadOnlyEdit: false }
                 ],
                 edit: true
         },
@@ -1308,8 +1308,9 @@ export const DataCatBaseAccionaria = [
                 text: 'BACC_SUBRAMO_ING',
                 columns: [
                         { name: 'N_SUBRAMO_ING', type: 'input' },
-                        { name: 'S_DESCRIPCION', columnName: "N_CLASIFICACION_SECTORIAL", field: "N_CLASIFICACION_SECTORIAL", type: 'select', catalog: "CLASIFICACION_SECTORIAL", columnIndex: 1},
-                        { name: 'S_DESCR', field: "S_DESCRIPCION", type: 'input' }
+                        { name: 'S_CLASIFICACION_SECTORIAL',type: 'input', columnName: "N_CLASIFICACION_SECTORIAL", DisabledFieldForm: true},
+                        { name: 'N_CLASIFICACION_SECTORIAL', type: 'select', catalog: "clase-sectorial", DisabledFieldTable: true},
+                        { name: 'S_DESCRIPCION', type: 'input'}
                 ]
         },
         {
@@ -1378,7 +1379,7 @@ export const DataCatClassSec = [
                         { name: 'N_INEGI_RAMO', type: 'input', isReadOnly: true },
                         { name: 'S_NOMCORTO', type: 'input' , isReadOnly: false},
                         { name: 'S_DESCRIPCION', type: 'input', isReadOnly: false },
-                        { name: 'N_INEGI_DIVISION', type: 'select', catalog: "INEGI_SECTOR"}
+                        { name: 'N_INEGI_DIVISION', type: 'select', catalog: "INEGI_DIVISION"}
                 ]
         },
         {
@@ -1399,3 +1400,4 @@ export const DataCatClassSec = [
         },
 ];
 
+export const ColorsGraph = ["#80cbc4", "#4dd0e1", "#b39ddb", "#90caf9", "#2980b9", "#76d7c4", "#a9cce3", "#abebc6", "#73c6b6", "#5499c7", "#80cbc4", "#4dd0e1"]

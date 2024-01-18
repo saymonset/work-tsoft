@@ -11,7 +11,7 @@ import {RootState} from "@reduxjs/toolkit/dist/query/core/apiState";
 import {fetchDataGetRet, fetchDataPost, showAlert, userEncoded} from "../../../../../utils";
 import {updateCatalogStatic} from "../../../../../redux";
 import {initialState, reducer} from "./components";
-import {procesarEvaluate} from "../../../../../helper";
+import {buildIdPerfiles, procesarEvaluate, validRowClick} from "../../../../../helper";
 
 export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) => {
 
@@ -31,6 +31,17 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
     const updateState = (newState: Partial<StateHookEdit>) => {
         dispatchRed({ type: 'UPDATE', payload: newState });
     };
+
+    const sortedColumns = useMemo(() => {
+        return columns
+            .filter(column => !column.DisabledFieldForm)
+            .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+    }, [columns]);
+
+    const sortedTable = useMemo(() => {
+        return columns
+            .filter(column => !column.DisabledFieldTable)
+    }, [columns]);
 
     useEffect(() => {
         const getCatalogs = async () => {
@@ -108,12 +119,6 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
         }
     }, []);
 
-    const sortedColumns = useMemo(() => {
-        return columns
-            .filter(column => !column.DisabledFieldForm)
-            .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-    }, [columns]);
-
     const handleNew = useCallback(async () => {
 
         updateState({ loadingNewId: true, isNew: true });
@@ -148,6 +153,7 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
 
     const handleRowClick = useCallback(
         (registro: { id: string; [key: string]: string }) => {
+            validRowClick(nameCatalog, catalogStatic, registro)
             updateState({ isNew: false});
             setRegistroSeleccionado({
                 ...registro,
@@ -207,16 +213,31 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
 
         const { ...request } = registroSeleccionado;
 
-        procesarEvaluate(nameCatalog, request, catalogStatic)
+        if(nameCatalog.includes("PERFIL"))
+        {
+            await fetchDataPost(
+                "/catalogos/perfil/borrar-catalogo",
+                " al guardar catalogo",
+                {},
+                {
+                    id: buildIdPerfiles(request, nameCatalog),
+                    s_nombre_catalogo: nameCatalog.toLowerCase(),
+                    s_user: userEncoded()}
+            )
+        }
+        else
+        {
+            procesarEvaluate(nameCatalog, request, catalogStatic)
 
-        await fetchDataPost(
-            "/catalogos/borrar-catalogo",
-            " al guardar catalogo",
-            request,
-            {
-                s_nombre_catalogo: nameCatalog.toLowerCase(),
-                s_user: userEncoded()}
-        )
+            await fetchDataPost(
+                "/catalogos/borrar-catalogo",
+                " al guardar catalogo",
+                request,
+                {
+                    s_nombre_catalogo: nameCatalog.toLowerCase(),
+                    s_user: userEncoded()}
+            )
+        }
 
         updateState({ loadingDelete: false });
         setRegistroSeleccionado(null)
@@ -237,8 +258,11 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
 
         eraseRequest(request);
 
+        const url = nameCatalog.includes("PERFIL") ?
+            "/catalogos/perfil/guardar-catalogo" : "/catalogos/guardar-catalogo"
+
         await fetchDataPost(
-            "/catalogos/guardar-catalogo",
+            url,
             " al guardar catalogo",
             request,
             {
@@ -321,17 +345,21 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
     const registros = useMemo(() => {
         return state.catalogs?.map((catalog, index) => ({
             id: String(index + 1),
-            ...columns.reduce<Partial<RegistroEdit>>((acc, column) => {
-                const key = column.name.toLowerCase();
-                acc[key] = String(catalog[key]);
-                return acc;
-            }, {})
+            ...columns
+                .filter(column => !column.DisabledFieldTable)
+                .reduce<Partial<RegistroEdit>>((acc, column) => {
+                    const key = column.name.toLowerCase();
+                    acc[key] = String(catalog[key]);
+                    return acc;
+                }, {})
         }));
     }, [state.catalogs, columns]);
 
+
+
     return {
         isNew: state.isNew,
-        selectRef, inputRefs, sortedColumns,
+        selectRef, inputRefs, sortedColumns, sortedTable,
         loadingNomCorto: state.loadingNomCorto,
         registros, loadingSave: state.loadingSave,
         loadingDelete: state.loadingDelete, loadingNewId: state.loadingNewId,

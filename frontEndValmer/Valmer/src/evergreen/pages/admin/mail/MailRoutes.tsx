@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import { MailClientes } from './mailClientes';
 import { MailGrupos } from './mailGrupos';
 import { Provider } from 'react-redux';
-import { storeClient } from '../../../../redux/Admin';
+import { storeClient } from '../../../../redux';
 
 export const MailRoutes = () => (
     <Routes>

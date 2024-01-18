@@ -1,7 +1,8 @@
 import React, {useEffect} from "react";
 import {FolioCau, ResponseFolioCau, ResponseMantCau} from "../../../../../../model";
-import {fetchDataGetRet, fetchDataPost, userEncoded} from "../../../../../../utils";
+import {fetchDataGetRet, fetchDataPost, showAlert, userEncoded} from "../../../../../../utils";
 import {useCauInitVar} from "./useCauInitVar";
+import Sweet from "sweetalert2";
 
 export const useCau = () => {
 
@@ -84,8 +85,23 @@ export const useCau = () => {
 
     const handleClickFolio = async (folio: number) => {
         setLoadingFolio(true)
+        let url = "";
+
+        if(status == "Abiertos")
+        {
+            url = "/latam/cr/mantenimiento-cau/abiertos/consulta-folio"
+        }
+        else if (status == "Modificación")
+        {
+            url = "/latam/cr/mantenimiento-cau/modificados/consulta-folio"
+        }
+        else if (status == "Cerrados")
+        {
+            url = "/latam/cr/mantenimiento-cau/cerrados/consulta-folio"
+        }
+
         const response: ResponseFolioCau = await fetchDataGetRet(
-            "/latam/cr/mantenimiento-cau/abiertos/consulta-folio",
+            url,
             " al obtener informacion folio",
             {n_folio: folio, s_user: userEncoded()})
 
@@ -150,28 +166,34 @@ export const useCau = () => {
 
     const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setLoadingSave(true);
-
-        let modifiedQueryFolio = { ...queryFolio };
-
-        if (isNaN(Number(modifiedQueryFolio.n_servicio))) {
-            modifiedQueryFolio.n_servicio = handleServicio(modifiedQueryFolio.n_servicio).toString();
+        if (queryFolio.n_status !== "default") {
+            setLoadingSave(true);
+    
+            let modifiedQueryFolio = { ...queryFolio };
+    
+            if (isNaN(Number(modifiedQueryFolio.n_servicio))) {
+                modifiedQueryFolio.n_servicio = handleServicio(modifiedQueryFolio.n_servicio).toString();
+            }
+    
+            await fetchDataPost(
+                "/latam/cr/mantenimiento-cau/modificados/modifica-solicitud",
+                " al intentar actualizar status modificados",
+                modifiedQueryFolio,
+                { s_user: userEncoded() }
+            );
+    
+            setLoadingSave(false);
+            return
         }
 
-        await fetchDataPost(
-            "/latam/cr/mantenimiento-cau/modificados/actualiza-status",
-            " al intentar actualizar status modificados",
-            modifiedQueryFolio,
-            { s_user: userEncoded() }
-        );
-
-        setLoadingSave(false);
+        await showAlert('warning', 'Faltan Campos', 'Debe seleccionar un status');
     };
 
     const eraseFilters = () => {
         setIsEdit(false)
         setSelectedEnterprise("")
-        setStatus("")
+        setQueryFolio({} as FolioCau);
+        setStatus("Abiertos")
     }
 
     const validStatus = async (emp: string) => {

@@ -16,4 +16,8 @@ table thead {
 
 .striped > tbody > tr {
     @apply even:bg-gray-300;
+
+}
+.instrument-cell {
+    @apply bg-white;
 }

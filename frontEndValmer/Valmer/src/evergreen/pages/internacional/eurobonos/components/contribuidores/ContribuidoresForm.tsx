@@ -3,6 +3,7 @@ import {ButtonContent} from "../../../../../../shared";
 import {ChargeClientWallet, Revisar2Form} from "./components";
 import {useContribuidores} from "./hooks";
 import {MoonLoader} from "react-spinners";
+import {TextAreaLog} from "../../../../../../shared";
 
 export const ContribuidoresForm = () => {
 
@@ -27,7 +28,7 @@ export const ContribuidoresForm = () => {
     const renderLogContent = () => {
         if (log.length > 0) {
             return (
-                <div className="mt-8 flex flex-col items-center w-full">
+                <div className="flex flex-col items-center">
                     <div className="w-1/8 mb-4">
                         <button
                             className="w-44 bg-cyan-700 hover:bg-green-700 text-white py-1 rounded-md px-3"
@@ -35,14 +36,9 @@ export const ContribuidoresForm = () => {
                             <ButtonContent name="Obtener Log CSV" loading={loadingLogCsv}/>
                         </button>
                     </div>
-                    <div
-                        className="bg-gray-900 text-green-500 p-2 w-3/4 resize-y overflow-auto max-h-[30rem]"
-                        dangerouslySetInnerHTML={{ __html: log }}
-                        style={{ minHeight: '30rem' }}
-                    />
+                    <TextAreaLog log={log}/>
                 </div>
             );
-
         }
         else
         {
@@ -129,7 +125,7 @@ export const ContribuidoresForm = () => {
                     {isShowLogBoxCont && (
                         <div className="flex mb-44 justify-center items-center h-full">
                             {loadingLogBox ? (
-                                <MoonLoader color="#0e7490" loading={true} speedMultiplier={0.5} size={80} />
+                                <MoonLoader color="#0e7490" loading={true} speedMultiplier={0.5} size={80}/>
                             ) : renderLogContent()}
                         </div>
                     )}

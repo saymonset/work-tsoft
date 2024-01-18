@@ -42,7 +42,8 @@ export const DatosCau: React.FC<DatosCauProps> = ({
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>) => {
         const {name, value} = e.target
         const values = {...data, [name]: value}
-        if (setData) { setData(values) }
+        console.log(values)
+        if (setData) { setData(values)}
     }
 
     const saveData = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -212,7 +213,6 @@ export const DatosCau: React.FC<DatosCauProps> = ({
                             <input type="date" 
                                 name="d_fecha_estimada" 
                                 id="d_fecha_estimada"
-                                disabled={!!data.d_fecha_estimada}
                                 value={data.d_fecha_estimada ?? ''}
                                 onChange={handleChange}
                             />

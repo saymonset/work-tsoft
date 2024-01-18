@@ -104,6 +104,7 @@ export const useHandleDataCerrados = () => {
         setEmpresa,
         setServicio,
         setArea,
-        setTriggerDataTable
+        setTriggerDataTable,
+        setInfoCau
     }
 }

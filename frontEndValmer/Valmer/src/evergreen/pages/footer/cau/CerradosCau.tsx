@@ -28,7 +28,8 @@ export const CerradosCau = () => {
         setEmpresa,
         setServicio,
         setArea,
-        setTriggerDataTable
+        setTriggerDataTable,
+        setInfoCau
     } = useHandleDataCerrados()
 
     if (loadingCatalog || !catalog.length || loadingDataTable || !dataTable) {
@@ -47,7 +48,7 @@ export const CerradosCau = () => {
 
     return (
         <HocRestricted title={title} view={title}>
-            <ButtonsCau title={title + "Cerrados"} />
+            <ButtonsCau title={title + " Cerrados"} />
 
             <div className="form-cols-1">
                 <FiltrosCauCerrados
@@ -59,6 +60,7 @@ export const CerradosCau = () => {
                     setServicio={setServicio}
                     setArea={setArea}
                     setTriggerData={setTriggerDataTable}
+                    setData={setInfoCau}
                 />
 
                 <TableCau

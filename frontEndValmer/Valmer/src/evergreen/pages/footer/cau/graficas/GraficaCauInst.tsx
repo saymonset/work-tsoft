@@ -21,7 +21,7 @@ export const GraficaCauInst = () => {
                         <MoonLoader color="#0e7490" loading={true} speedMultiplier={0.5} size={80} />
                     </div>
                 ) : (
-                    <div className="body h-screen">
+                    <div className="body min-h-min">
                         <SimplePieChart dataBody={instGraphics}/>
                     </div>
                 )}

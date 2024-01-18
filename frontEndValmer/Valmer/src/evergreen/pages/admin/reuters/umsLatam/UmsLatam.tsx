@@ -17,6 +17,7 @@ export const UmsLatam = () => {
         isOpenCarga,
         handleCloseCarga,
         isOpenEdit,
+        handleButtonClick,
         handleCloseEdit,
         registro,
         handleChangeForm,
@@ -117,7 +118,7 @@ export const UmsLatam = () => {
                         </div>
                         <div className="line" />
                         <div className="flex justify-end">
-                            <button className="btn">Carga</button>
+                            <button className="btn" onClick={handleButtonClick}>Carga</button>
                         </div>
                     </form>
                 </Modal>

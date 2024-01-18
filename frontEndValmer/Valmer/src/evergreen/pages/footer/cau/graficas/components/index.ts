@@ -1,3 +1,4 @@
-export * from './SimpleBarChart'
-export * from './SimplePieChart'
+export * from './BarChartHome'
+export * from './PieChartInst'
 export * from './BarChartArea'
+export * from './PieChartClientServ'

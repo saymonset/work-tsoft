@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import {HorarioBarra} from "../../../../model";
-import React from "react";
+import { ColorsGraph } from '../../../../utils';
 
 interface SimpleBarChartProps {
   dataBody: HorarioBarra[];
@@ -36,11 +36,11 @@ export const SimpleBarChart: React.FC<SimpleBarChartProps> = ({ dataBody }) => {
           <Tooltip />
           <Legend />
           <ReferenceLine y={0} stroke="#000" />
-          <Bar dataKey="Gubernamental" barSize={28} fill="#22d3ee" />
-          <Bar dataKey="Preliminar" barSize={30} fill="#a78bfa" />
-          <Bar dataKey="Definitivo" barSize={30} fill="#3b82f6" />
-          <Bar dataKey="Definitivo_Notas_PV" barSize={30} fill="#fdba74" />
-          <Bar dataKey="Def_Notas_Estruct" barSize={30} fill="#f87171" />
+          <Bar dataKey="Gubernamental" barSize={28} fill={ColorsGraph[0]} />
+          <Bar dataKey="Preliminar" barSize={30} fill={ColorsGraph[1]} />
+          <Bar dataKey="Definitivo" barSize={30} fill={ColorsGraph[2]} />
+          <Bar dataKey="Definitivo_Notas_PV" barSize={30} fill={ColorsGraph[3]} />
+          <Bar dataKey="Def_Notas_Estruct" barSize={30} fill={ColorsGraph[4]} />
         </BarChart>
       </ResponsiveContainer>
     </>

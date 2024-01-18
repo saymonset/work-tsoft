@@ -1,54 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { BarLoader } from 'react-spinners';
-import { TitleDate } from "../../../../../shared";
+import {ButtonContent, TitleDate} from "../../../../../shared";
 import { MailGruposTable } from './components/MailGruposTable';
 import { MailGruposForm } from './components/MailGruposForm';
-import { usePostGroup } from './hooks/usePostGroup';
-import { useGetNewGroupId } from './hooks/useGetNewGroupId';
-import { usePostDeleteGroup } from './hooks/usePostDeleteGroup';
-
+import {useMailGrupos} from "./hooks";
 export const MailGrupos = () => {
-    const [selectedGroup, setSelectedGroup] = useState({
-        n_grupo: "",
-        s_descripcion: ""
-      });
 
-    const { loadingCarga, fetchDataPostGroup, changeCatalogPost } = usePostGroup();
-    const { loadingCargaDelete, fetchDataPostDeleteGroup, changeCatalogDelete } = usePostDeleteGroup();
-    const [modifiedDescription, setModifiedDescription] = useState(false);
-    const { getNewGroupId } = useGetNewGroupId();
-    
-    const handleSelectedGroup = (group: any) => {
-        setSelectedGroup(group);
-    }
-    
-    const handleGuardarClick = (e:  React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        if (selectedGroup.n_grupo && modifiedDescription) {
-            fetchDataPostGroup(selectedGroup).then();
-        } 
-    }
-
-    const handleDeleteClick = (e:  React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        if (selectedGroup.n_grupo && modifiedDescription) {
-            fetchDataPostDeleteGroup(selectedGroup).then();
-        } 
-    }
-
-    const handleClickNew = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        try {
-          const newId = await getNewGroupId();
-          setSelectedGroup({
-            n_grupo: newId,
-            s_descripcion: "",
-          });
-        } catch (error) {
-          console.error("Error al obtener el nuevo ID:", error);
-        }
-      }
+    const {
+        selectedGroup,
+        changeCatalogDelete,
+        changeCatalogPost,
+        loadingNew,
+        loadingCarga,
+        loadingCargaDelete,
+        setSelectedGroup,
+        handleSelectedGroup,
+        handleClickNew,
+        handleGuardarClick,
+        handleDeleteClick
+    } = useMailGrupos()
 
     return (
         <>
@@ -65,18 +35,17 @@ export const MailGrupos = () => {
                         </NavLink>
                     </div>
                     <div className='mb-3'>
-                        <button className="btn" onClick={handleClickNew}>Nuevo</button>
-                        <button className="btn" onClick={handleGuardarClick}>Guardar</button>
-                        <button className="btn" onClick={handleDeleteClick}>Borrar</button>
+                        <button className="btn" onClick={handleClickNew}>
+                            <ButtonContent name="Nuevo" loading={loadingNew}/>
+                        </button>
+                        <button className="btn" onClick={handleGuardarClick}>
+                            <ButtonContent name="Grabar" loading={loadingCarga}/>
+                        </button>
+                        <button className="btn" onClick={handleDeleteClick}>
+                            <ButtonContent name="Borrar" loading={loadingCargaDelete}/>
+                        </button>
                     </div>
                 </div>
-                {(loadingCarga || loadingCargaDelete) && (
-                  <BarLoader
-                    className="ml-2 w-full mt-2 mb-2"
-                    color="#059669"
-                    width={500}
-                  />
-                )}
                 <div className="form-cols-2">
                     <MailGruposTable
                         onSelectedGroup={handleSelectedGroup}
@@ -86,7 +55,6 @@ export const MailGrupos = () => {
                     <MailGruposForm
                         selectedGroup={selectedGroup}
                         setSelectedGroup={setSelectedGroup}
-                        setModifiedDescription={setModifiedDescription}
                     />
                 </div>
             </form>

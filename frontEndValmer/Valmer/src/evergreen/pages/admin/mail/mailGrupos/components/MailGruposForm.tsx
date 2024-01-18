@@ -6,24 +6,21 @@ interface MailGruposFormProps {
         s_descripcion: string;
     };
     setSelectedGroup: (group: any) => void;
-    setModifiedDescription: (value: boolean) => void;
 }
 
 export const MailGruposForm: React.FC<MailGruposFormProps> = ({
                                                                   selectedGroup,
-                                                                  setSelectedGroup,
-                                                                  setModifiedDescription
+                                                                  setSelectedGroup
                                                               }) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const updatedGroup = {...selectedGroup, s_descripcion: e.target.value};
         setSelectedGroup(updatedGroup);
-        setModifiedDescription(true);
     };
 
     return (
         <div className="form-cols-1 -my-3">
             <span className="form-title">DATOS</span>
-            <div className="form-cols-1 -my-3">
+            <div className="form-cols-1">
                 <div className="form-input">
                     <input type="text" name="n_grupo" id="n_grupo" placeholder="" value={selectedGroup.n_grupo}
                            disabled/>

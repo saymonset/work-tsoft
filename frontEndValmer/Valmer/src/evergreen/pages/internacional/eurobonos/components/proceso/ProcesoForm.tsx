@@ -4,6 +4,7 @@ import {useProceso} from "./hooks";
 import {MoonLoader} from "react-spinners";
 import { ModalProceso } from "./ModalProceso";
 import {generateUUID} from "../../../../../../utils";
+import {TextAreaLog} from "../../../../../../shared";
 
 export const ProcesoForm = () => {
 
@@ -41,7 +42,7 @@ export const ProcesoForm = () => {
     const renderLogContent = () => {
         if (log.length > 0) {
             return (
-                <div className="mt-8 flex flex-col items-center w-full">
+                <div className="flex flex-col items-center">
                     <div className="w-1/8 mb-4">
                         <button
                             className="w-44 bg-cyan-700 hover:bg-green-700 text-white py-1 rounded-md px-3"
@@ -49,12 +50,7 @@ export const ProcesoForm = () => {
                             <ButtonContent name="Obtener Log CSV" loading={loadingLogCsv}/>
                         </button>
                     </div>
-                    <div
-                        className="bg-gray-900 text-green-500 p-2 ml-12 sm:w-full w-3/4 resize-y overflow-auto max-h-[30rem]"
-                        dangerouslySetInnerHTML={{ __html: log }}
-                        style={{ minHeight: '30rem' }}
-                    />
-
+                    <TextAreaLog log={log}/>
                     {isOutputs && (<div className="mt-12 w-1/8">
                         <button
                             className="w-44 bg-cyan-700 hover:bg-green-700 text-white py-1 rounded-md px-3"
@@ -91,57 +87,57 @@ export const ProcesoForm = () => {
 
     return (
         <>
-        <table className="tableEuro mt-12">
-            <tbody>
-            <tr>
-                <td valign="top">
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td height="35" align="left">
-                                <div className="form-check">
-                                    <span>
-                                        9
-                                    </span>
-                                    <input
-                                        type="checkbox"
-                                        name="cbx_Act_Precios"
-                                        checked={isCheckboxChecked.cbx_Act_Precios}
-                                        onClick={() => handleChange("cbx_Act_Precios",
-                                            isCheckboxChecked.cbx_Act_Precios)}
-                                    />
-                                    <button
-                                        className="w-44 bg-cyan-700 hover:bg-green-700
+            <table className="tableEuro mt-12">
+                <tbody>
+                <tr>
+                    <td valign="top">
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td height="35" align="left">
+                                    <div className="form-check">
+                                        <label htmlFor="cbx_Act_Precios">
+                                            9
+                                        </label>
+                                        <input
+                                            type="checkbox"
+                                            name="cbx_Act_Precios"
+                                            checked={isCheckboxChecked.cbx_Act_Precios}
+                                            onClick={() => handleChange("cbx_Act_Precios",
+                                                isCheckboxChecked.cbx_Act_Precios)}
+                                        />
+                                        <button
+                                            className="w-44 bg-cyan-700 hover:bg-green-700
                                             text-white py-1 rounded-md px-3 mx-1"
-                                        onClick={handleUpdatePrices}>
-                                        <ButtonContent name="Act Precios" loading={loadingPrices}/>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td height="35" align="left">
-                                <div className="form-check">
-                                    <span className="!ml-0">
-                                        9.1
-                                    </span>
-                                    <input
-                                        type="checkbox"
-                                        name="cbx_Calcular_Tasas"
-                                        checked={isCheckboxChecked.cbx_Calcular_Tasas}
-                                        onClick={() => handleChange("cbx_Calcular_Tasas",
-                                            isCheckboxChecked.cbx_Calcular_Tasas)}
-                                    />
-                                    <button
-                                        className="w-44 bg-cyan-700 hover:bg-green-700
+                                            onClick={handleUpdatePrices}>
+                                            <ButtonContent name="Act Precios" loading={loadingPrices}/>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="35" align="left">
+                                    <div className="form-check">
+                                        <label className="!ml-0" htmlFor="cbx_Calcular_Tasas">
+                                            9.1
+                                        </label>
+                                        <input
+                                            type="checkbox"
+                                            name="cbx_Calcular_Tasas"
+                                            checked={isCheckboxChecked.cbx_Calcular_Tasas}
+                                            onClick={() => handleChange("cbx_Calcular_Tasas",
+                                                isCheckboxChecked.cbx_Calcular_Tasas)}
+                                        />
+                                        <button
+                                            className="w-44 bg-cyan-700 hover:bg-green-700
                                             text-white py-1 rounded-md px-3 mx-1"
                                             onClick={handleCalculateRates}>
                                             <ButtonContent name="Calcular Tasas" loading={loadingCalculateRates}/>
                                         </button>
-                                        <button 
+                                        <button
                                             className={`ml-2 bg-cyan-700 hover:bg-green-700 text-white py-1 rounded-md px-3`}
                                             onClick={handleOpenModal}
-                                            >
+                                        >
                                             <i className="fa fa-calculator"></i>
                                         </button>
                                     </div>
@@ -163,52 +159,53 @@ export const ProcesoForm = () => {
                                         <button
                                             className="w-44 bg-cyan-700 hover:bg-green-700
                                             text-white py-1 rounded-md px-3 mx-1"
-                                        onClick={handleCalculatePrices}>
-                                        <ButtonContent name="Calcula Precios" loading={loadingCalculatePrices}/>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td height="35" align="left">
-                                <div className="form-check">
+                                            onClick={handleCalculatePrices}>
+                                            <ButtonContent name="Calcula Precios" loading={loadingCalculatePrices}/>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="35" align="left">
+                                    <div className="form-check">
                                     <span>
                                         11
                                     </span>
-                                    <input
-                                        type="checkbox"
-                                        name="cbx_Salidas"
-                                        checked={isCheckboxChecked.cbx_Salidas}
-                                        onClick={()=> handleChange("cbx_Salidas", isCheckboxChecked.cbx_Salidas)}
-                                    />
-                                    <button
-                                        className="w-44 bg-cyan-700 hover:bg-green-700
+                                        <input
+                                            type="checkbox"
+                                            name="cbx_Salidas"
+                                            checked={isCheckboxChecked.cbx_Salidas}
+                                            onClick={() => handleChange("cbx_Salidas", isCheckboxChecked.cbx_Salidas)}
+                                        />
+                                        <button
+                                            className="w-44 bg-cyan-700 hover:bg-green-700
                                             text-white py-1 rounded-md px-3 mx-1"
-                                        onClick={handleOutputs}>
-                                        <ButtonContent name="Salidas" loading={loadingOutputs}/>
-                                    </button>
+                                            onClick={handleOutputs}>
+                                            <ButtonContent name="Salidas" loading={loadingOutputs}/>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <td>
+                            {isShowLogBoxProc && (
+                                <div className="flex justify-center items-center">
+                                    {loadingLogBox ? (
+                                        <MoonLoader color="#0e7490" loading={true} speedMultiplier={0.5} size={80}/>
+                                    ) : renderLogContent()}
                                 </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </td>
-                <td>
-                    {isShowLogBoxProc && (
-                        <div className="flex mb-44 mr-44 justify-center items-center ">
-                            {loadingLogBox ? (
-                                <MoonLoader color="#0e7490" loading={true} speedMultiplier={0.5} size={80} />
-                            ) : renderLogContent()}
-                        </div>
-                    )}
-                </td>
-                <td align="center">
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                            )}
+                        </td>
+                    </td>
+                    <td align="center"></td>
+                </tr>
+                </tbody>
+            </table>
 
-        <ModalProceso isModalOpenProcesos= {isModalOpenProcesos} close={handleCloseModal}/>
+            <ModalProceso isModalOpenProcesos={isModalOpenProcesos} close={handleCloseModal}/>
             <Modal isOpen={isOpenEdit} onClose={handleCloseEdit} title="Valida SALIDAS_EURO">
 
                 {isShowLogBoxProcModal ? (

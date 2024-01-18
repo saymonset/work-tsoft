@@ -13,15 +13,14 @@ export const CostaRica = () => {
         selectedEmisor, selectedNemo,
         selectedSerie, emisor,
         nemoInstrumento, serie,
-        checkboxValue,loadingSave, loadingNemoInst,
-        loadingSerie, setSelectedEmisor,
-        setSelectedNemo, setSelectedSerie,
+        checkboxValue,loadingSave, 
+        loadingNemoInst, loadingSerie,
         handleChange, handleNuevo,
         handleCancel, handleEmisor,
         handleNemo, handleSerie,
         handleCheckboxChange, handleErase,
-        handleSave
-    } = useCostaRica()
+        handleSave, isFieldRequired, requeridos
+    } = useCostaRica();
 
     if (loadingEmisor || loadingCatalogo || !catalog.length) {
         return (
@@ -45,8 +44,8 @@ export const CostaRica = () => {
                 nemoInstrumento={nemoInstrumento} serie={serie}
                 checkboxValue={checkboxValue} loadingNemoInst={loadingNemoInst}
                 loadingSave={loadingSave} loadingSerie={loadingSerie}
-                setSelectedEmisor={setSelectedEmisor} setSelectedNemo={setSelectedNemo}
-                setSelectedSerie={setSelectedSerie} activeNuevo={activeNuevo}
+                activeNuevo={activeNuevo}
+                isFieldRequired={isFieldRequired} requeridos={requeridos}
                 handleNuevo={handleNuevo} handleCancel={handleCancel}
                 handleEmisor={handleEmisor} handleNemo={handleNemo}
                 handleSerie={handleSerie} handleCheckboxChange={handleCheckboxChange}
@@ -57,6 +56,7 @@ export const CostaRica = () => {
                 catalog={catalog} consultaData={consultaData}
                 mergeInstrumentos={`${selectedEmisor}_${selectedNemo}_${selectedSerie}`}
                 loadingConsultaInfo={loadingConsultaInfo}
+                isFieldRequired={isFieldRequired} requeridos={requeridos}
                 handleChange={handleChange}
             />
         </>

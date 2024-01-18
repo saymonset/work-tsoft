@@ -36,7 +36,7 @@ export const MailGruposTable: React.FC<MailGruposTableProps> = ({ onSelectedGrou
 
     if (loading || !catalogoEnviosMailGrupos) {
         return (
-            <div className="flex justify-center items-center h-[256px]">
+            <div className="flex justify-center items-center h-[256px] row-span-2">
                 {loading ? (
                     <MoonLoader color="#0e7490" loading={true} speedMultiplier={0.5} size={60} />
                 ) : (
@@ -47,7 +47,7 @@ export const MailGruposTable: React.FC<MailGruposTableProps> = ({ onSelectedGrou
     }
     
     return (
-        <div className="flex justify-center">
+        <div className="flex justify-center row-span-2">
             <div className="max-h-64 overflow-y-scroll w-full">
                 <table className="table w-full">
                     <thead className="thead">

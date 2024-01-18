@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { fetchDataGetRet } from "../../../../../utils";
+import { fetchDataGetRet, fetchDataPost, showAlert } from "../../../../../utils";
 import { ILiqLatam, RegistrosLiqLatam } from '../Models'
 import { Base64 } from 'js-base64'
 import fileDownload from 'js-file-download'
+import { CargaArchivoContent } from "../../../../../model";
 
 export const useliqLatamCat = () => {
   const InitialData: ILiqLatam = {
@@ -41,6 +42,8 @@ export const useliqLatamCat = () => {
   const [isOpenEdit, setOpenEdit] = useState(false);
   const [registro, setRegistro] = useState<RegistrosLiqLatam>(regInicial);
   const [textSearch, setTextSearch] = useState('')
+  const [parametros, setParametros] = useState<string>('');
+  const [loadingSubmit, setLoadingSubmit] = useState(false)
 
   const getDataTable = async (pais: number, numRegistros: number, position: number, txt_buscar: string) => {
     try {
@@ -133,8 +136,40 @@ export const useliqLatamCat = () => {
     setOpenCarga(false);
   }
 
+  const handleTextareaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setParametros(event.target.value);
+  };
+
+  const handleclick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    const params = {n_cbo_pais: n_cbo_pais, txt_info_carga: parametros}
+    try {
+      setLoadingSubmit(true)
+      const response = await fetchDataGetRet('/reuters/liquidez/carga-masiva', 'Guardar', params);
+      showAlert ("success", "Guardado", response.message)
+      setLoadingSubmit(false)
+      setOpenCarga(false)
+      getDataTable(n_cbo_pais, 12, 0, textSearch)
+      setParametros("")
+    } catch (error) {
+      console.error('Error al realizar la llamada a la API:', error);
+    }
+  };
+
   const handleOpenDelete = (e: React.MouseEvent<HTMLElement>) => {
+    const sIsin: string | null = e.currentTarget.getAttribute("data-sisin")
+    const instrumento: string | null = e.currentTarget.getAttribute("data-instrumento")
+    const ric: string | null = e.currentTarget.getAttribute("data-sric")
+    const stipo: string | null = e.currentTarget.getAttribute("data-stipo")
     setOpenDelete(true);
+    setRegistro({
+      id_reu_formato: n_cbo_pais,
+      s_formato: n_cbo_pais == 1055 ? 'LIQUIDEZ_CR' : n_cbo_pais == 1056 ? 'LIQUIDEZ_PAN' : '',
+      s_ric: ric ?? '',
+      isin: sIsin ?? '',
+      s_tipo: stipo ?? '',
+      s_instrumento: instrumento ? instrumento : ''
+    })
   }
 
   const handleCloseDelete = () => {
@@ -226,6 +261,11 @@ export const useliqLatamCat = () => {
     handleChangeForm,
     handleSubmitForm,
     deleteByISIN,
+    handleclick,
+    parametros,
+    setParametros,
+    handleTextareaChange,
+    loadingSubmit,
     textSearch,
     handleKeyDown
   }

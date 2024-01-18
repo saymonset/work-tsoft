@@ -1,10 +1,10 @@
 import {generateUUID} from "../../../../../../utils";
 import {BarLoader} from "react-spinners";
-import React from "react";
 import {CostaRicaHeaderProps} from "../../../../../../model";
 import {ButtonContent} from "../../../../../../shared";
 
 export const CostaRicaFormHeader = (data: CostaRicaHeaderProps) => {
+
     return (
         <div className="form mt-4 animate__animated animate__fadeIn">
             <form>
@@ -47,35 +47,50 @@ export const CostaRicaFormHeader = (data: CostaRicaHeaderProps) => {
                             <div className="form-input">
                                 <input
                                     type="text"
-                                    name="emisor"
+                                    name="s_emisor"
+                                    id="s_emisor"
                                     value={data.selectedEmisor}
-                                    onChange={(e) => {
-                                        data.setSelectedEmisor(e.target.value)
-                                    }}
+                                    onChange={data.handleEmisor}
+                                    ref={data.requeridos.s_emisor}
                                 />
-                                <label htmlFor="emisor">EMISOR</label>
+                                <label htmlFor="s_emisor">EMISOR</label>
+                                {data.isFieldRequired.s_emisor && (
+                                    <span className="fontError animate__animated animate__fadeIn">
+                                        Campo requerido EMISOR
+                                    </span>
+                                )}
                             </div>
                             <div className="form-input">
                                 <input
                                     type="text"
-                                    name="nemoInstrumento"
+                                    name="s_nemo_instr"
+                                    id="s_nemo_instr"
                                     value={data.selectedNemo}
-                                    onChange={(e) => {
-                                        data.setSelectedNemo(e.target.value)
-                                    }}
+                                    onChange={data.handleNemo}
+                                    ref={data.requeridos.s_nemo_instr}
                                 />
-                                <label htmlFor="nemoInstrumento">NEMO INSTRUMENTO</label>
+                                <label htmlFor="s_nemo_instr">NEMO INSTRUMENTO</label>
+                                {data.isFieldRequired.s_nemo_instr && (
+                                    <span className="fontError animate__animated animate__fadeIn">
+                                        Campo requerido NEMO INSTRUMENTO
+                                    </span>
+                                )}
                             </div>
                             <div className="form-input">
                                 <input
                                     type="text"
-                                    name="serie"
+                                    name="s_serie"
+                                    id="s_serie"
                                     value={data.selectedSerie}
-                                    onChange={(e) => {
-                                        data.setSelectedSerie(e.target.value)
-                                    }}
+                                    onChange={data.handleSerie}
+                                    ref={data.requeridos.s_serie}
                                 />
-                                <label htmlFor="serie">SERIE</label>
+                                <label htmlFor="s_serie">SERIE</label>
+                                {data.isFieldRequired.s_serie && (
+                                    <span className="fontError animate__animated animate__fadeIn">
+                                        Campo requerido SERIE
+                                    </span>
+                                )}
                             </div>
                             <div className="form-check">
                                 <input
@@ -94,8 +109,10 @@ export const CostaRicaFormHeader = (data: CostaRicaHeaderProps) => {
                             <div className="form-select">
                                 <select
                                     name="s_emisor"
+                                    id="s_emisor"
                                     value={data.selectedEmisor}
                                     onChange={data.handleEmisor}
+                                    ref={data.requeridos.s_emisor}
                                 >
                                     <option value="">...</option>
                                     {data.emisor?.map((item: any) => (
@@ -104,14 +121,21 @@ export const CostaRicaFormHeader = (data: CostaRicaHeaderProps) => {
                                         </option>
                                     ))}
                                 </select>
-                                <label htmlFor="emisor">EMISOR</label>
+                                <label htmlFor="s_emisor">EMISOR</label>
+                                {data.isFieldRequired.s_emisor && (
+                                    <span className="fontError animate__animated animate__fadeIn">
+                                        Campo requerido EMISOR
+                                    </span>
+                                )}
                             </div>
 
                             <div className="form-select">
                                 <select
                                     name="s_nemo_instr"
+                                    id="s_nemo_instr"
                                     value={data.selectedNemo}
                                     onChange={data.handleNemo}
+                                    ref={data.requeridos.s_nemo_instr}
                                 >
                                     <option value="">...</option>
                                     {data.nemoInstrumento?.map((item) => (
@@ -121,14 +145,21 @@ export const CostaRicaFormHeader = (data: CostaRicaHeaderProps) => {
                                     ))}
                                 </select>
                                 {data.loadingNemoInst && <BarLoader className="mt-2" color="#059669" width={200}/>}
-                                <label htmlFor="nemoInstrumento">NEMO INSTRUMENTO</label>
+                                <label htmlFor="s_nemo_inst">NEMO INSTRUMENTO</label>
+                                {data.isFieldRequired.s_nemo_instr && (
+                                    <span className="fontError animate__animated animate__fadeIn">
+                                        Campo requerido NEMO INSTRUMENTO
+                                    </span>
+                                )}
                             </div>
 
                             <div className="form-select">
                                 <select
                                     name="s_serie"
+                                    id="s_serie"
                                     value={data.selectedSerie}
                                     onChange={data.handleSerie}
+                                    ref={data.requeridos.s_serie}
                                 >
                                     <option value="">...</option>
                                     {data.serie?.map((item) => (
@@ -138,7 +169,12 @@ export const CostaRicaFormHeader = (data: CostaRicaHeaderProps) => {
                                     ))}
                                 </select>
                                 {data.loadingSerie && <BarLoader className="mt-2" color="#059669" width={200}/>}
-                                <label htmlFor="serie">SERIE</label>
+                                <label htmlFor="s_serie">SERIE</label>
+                                {data.isFieldRequired.s_serie && (
+                                    <span className="fontError animate__animated animate__fadeIn">
+                                        Campo requerido SERIE
+                                    </span>
+                                )}
                             </div>
                             <div className="form-check">
                                 <input

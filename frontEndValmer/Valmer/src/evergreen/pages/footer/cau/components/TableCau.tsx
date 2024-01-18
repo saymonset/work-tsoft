@@ -33,12 +33,13 @@ export const TableCau: React.FC<TableCauProps> = (
     }, [])
     
     const handleBuscar = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearch(e.target.value)
+        const valueSearch = e.target.value
+        setSearch(valueSearch)
         if (search) {
 
             const result = data?.registros?.filter(item => 
                 Object.values(item).some(value => 
-                    typeof value === 'string' && value.toLowerCase().includes(search.toLowerCase())
+                        value.toString().toLowerCase().includes(valueSearch.toLowerCase())
                 )
             )
 

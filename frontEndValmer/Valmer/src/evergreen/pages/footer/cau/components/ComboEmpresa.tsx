@@ -1,6 +1,6 @@
 import React from 'react'
 import { getCatalogs } from "../../../../../utils"
-import { Catalogo } from '../../../../../model'
+import { Catalogo, InfoCauId } from '../../../../../model'
 
 interface ComboEmpresaProps {
     catalog: Catalogo[]
@@ -10,9 +10,10 @@ interface ComboEmpresaProps {
     setNumRegistros: React.Dispatch<React.SetStateAction<number>>
     setPosicion: React.Dispatch<React.SetStateAction<number>>
     setSearch: React.Dispatch<React.SetStateAction<string>>
+    setData: React.Dispatch<React.SetStateAction<InfoCauId>>
 }
 
-export const ComboEmpresa: React.FC<ComboEmpresaProps> = ({ catalog, empresa, setEmpresa, setTriggerData, setNumRegistros, setPosicion, setSearch }) => {
+export const ComboEmpresa: React.FC<ComboEmpresaProps> = ({ catalog, empresa, setEmpresa, setTriggerData, setNumRegistros, setPosicion, setSearch, setData }) => {
 
     const handleLimp = () => {
         setEmpresa("")
@@ -20,6 +21,7 @@ export const ComboEmpresa: React.FC<ComboEmpresaProps> = ({ catalog, empresa, se
         setPosicion(0)
         setSearch("")
         setTriggerData(true)
+        setData({} as InfoCauId)
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

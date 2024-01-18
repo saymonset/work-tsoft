@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
-import {RespConsultaDataCR} from "../../../../../../model";
-import {fetchDataGetRet, fetchDataPost, showAlert, userEncoded} from "../../../../../../utils";
+import {IsFieldRequiredLatCr, RespConsultaDataCR} from "../../../../../../model";
+import {fetchDataGetRet, fetchDataPost, showAlert, userEncoded, validateFieldsAccCalifLatam} from "../../../../../../utils";
 import {useInitialVarCr} from "./useInitialVarCr";
 
 export const useCostaRica = () => {
@@ -24,7 +24,9 @@ export const useCostaRica = () => {
         triggerNemo,setTriggerNemo,
         triggerSerie, setTriggerSerie,
         triggerConsultaInfo, setTriggerConsultaInfo,
-        activeNuevo,setActiveNuevo} = useInitialVarCr()
+        isFieldRequired, setIsFieldRequired,
+        activeNuevo,setActiveNuevo,
+        requeridos} = useInitialVarCr();
 
     useEffect(() => {
         const getCatalogs = async () => {
@@ -57,7 +59,7 @@ export const useCostaRica = () => {
         if (!emisor || emisor.length === 0) {
             getEmisor().then();
         }
-    }, []);
+    }, [emisor]);
 
 
     useEffect(() => {
@@ -132,27 +134,72 @@ export const useCostaRica = () => {
         setSelectedNemo("")
         setSelectedSerie("")
         setCheckboxValue(1)
+        setIsFieldRequired({} as IsFieldRequiredLatCr)
     }
 
     const handleCancel = () => {
         setActiveNuevo(false)
     }
 
-    const handleEmisor = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedEmisor(e.target.value)
-        setSelectedNemo("...")
-        setSelectedSerie("...")
-        setTriggerNemo(true)
+    const handleEmisor = async (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+        const {name, value} = e.target
+        setSelectedEmisor(value)
+        const updatedConsulta = {
+            ...consultaData,
+            body: {
+                ...(consultaData?.body || {}),
+                info_bd: {
+                    ...(consultaData?.body?.info_bd || {}),
+                    [name]: value
+                }
+            }
+
+        }
+        setConsultaData(updatedConsulta)
+        setIsFieldRequired({...isFieldRequired, [name]: false})
+        if (e.target.type !== "text") {
+            setSelectedNemo("...")
+            setSelectedSerie("...")
+            setTriggerNemo(true)
+        }
     }
-    const handleNemo = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedNemo(e.target.value)
-        setSelectedSerie("...")
-        setTriggerSerie(true)
+    const handleNemo = async (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+        const {name, value} = e.target
+        setSelectedNemo(value)
+        const updatedConsulta = {
+            ...consultaData,
+            body: {
+                ...consultaData.body,
+                info_bd: {
+                    ...consultaData.body.info_bd,
+                    [name]: value
+                }
+            }
+        }
+        setConsultaData(updatedConsulta)
+        setIsFieldRequired({...isFieldRequired, [name]: false})
+        if (e.target.type !== "text") {
+            setSelectedSerie("...")
+            setTriggerSerie(true)
+        }
     }
 
-    const handleSerie = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedSerie(e.target.value)
-        setTriggerConsultaInfo(true)
+    const handleSerie = async (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+        const {name, value} = e.target
+        setSelectedSerie(value)
+        setIsFieldRequired({...isFieldRequired, [name]: false})
+        const updatedConsulta = {
+            ...consultaData,
+            body: {
+                ...consultaData.body,
+                info_bd: {
+                    ...consultaData.body.info_bd,
+                    [name]: value
+                }
+            }
+        }
+        setConsultaData(updatedConsulta)
+        if (e.target.type !== "text") setTriggerConsultaInfo(true)
     }
 
     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -171,6 +218,8 @@ export const useCostaRica = () => {
         setSelectedNemo("")
         setSelectedSerie("")
         setCheckboxValue(1)
+        setIsFieldRequired({} as IsFieldRequiredLatCr)
+        setEmisor([])
     }
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -186,57 +235,63 @@ export const useCostaRica = () => {
                 }
             }
         }));
+
+        setIsFieldRequired({...isFieldRequired, [name]: false})
     };
 
     const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
-        setLoadingSave(true);
 
-        if (Object.keys(consultaData).length === 0) {
-            setLoadingSave(false);
-            return;
-        }
-        
-        try {
-
-            if(activeNuevo){
-                const request = {
-                    ...consultaData.body.info_bd,
-                    s_emisor: selectedEmisor,
-                    s_nemo_instr: selectedNemo,
-                    s_serie: selectedSerie,
-                }
-
-                await fetchDataPost(
-                    "/latam/cr/actualiza-info",
-                    " al intentar actualizar informacion costa rica",
-                    request,
-                    {s_user: userEncoded()}
-                )
-            }else{
-                const bodyInfo = consultaData.body.info_rw[Object.keys(consultaData.body.info_rw)[0]]
-                const request = {
-                    ...consultaData.body.info_bd,
-                    ...bodyInfo[`${selectedEmisor}_${selectedNemo}_${selectedSerie}`],
-                    s_emisor: selectedEmisor,
-                    s_nemo_instr: selectedNemo,
-                    s_serie: selectedSerie,
-                }
-
-                await fetchDataPost(
-                    "/latam/cr/actualiza-info",
-                    " al intentar actualizar informacion costa rica",
-                    request,
-                    {s_user: userEncoded()}
-                )
-            }
+        const validate = await validateFieldsAccCalifLatam(
+                                    consultaData?.body?.info_bd, requeridos, 
+                                    false, false, undefined, undefined, 
+                                    undefined, undefined, undefined,undefined, 
+                                    isFieldRequired, setIsFieldRequired)
+        if (validate) {
+            setLoadingSave(true);
             
-        }
-        catch (err) {
-            await showAlert("error", "Error", "Error al ejecutar la actualizacion de datos :::" + err)
-        }
+            try {
+    
+                if(activeNuevo){
+                    const request = {
+                        ...consultaData.body.info_bd,
+                        s_emisor: selectedEmisor,
+                        s_nemo_instr: selectedNemo,
+                        s_serie: selectedSerie,
+                    }
+    
+                    await fetchDataPost(
+                        "/latam/cr/actualiza-info",
+                        " al intentar actualizar informacion costa rica",
+                        request,
+                        {s_user: userEncoded()}
+                    )
+                }else{
+                    const bodyInfo = consultaData.body.info_rw[Object.keys(consultaData.body.info_rw)[0]]
+                    const request = {
+                        ...consultaData.body.info_bd,
+                        ...bodyInfo[`${selectedEmisor}_${selectedNemo}_${selectedSerie}`],
+                        s_emisor: selectedEmisor,
+                        s_nemo_instr: selectedNemo,
+                        s_serie: selectedSerie,
+                    }
+    
+                    await fetchDataPost(
+                        "/latam/cr/actualiza-info",
+                        " al intentar actualizar informacion costa rica",
+                        request,
+                        {s_user: userEncoded()}
+                    )
+                }
+                
+            }
+            catch (err) {
+                await showAlert("error", "Error", "Error al ejecutar la actualizacion de datos :::" + err)
+            }
+    
+            setLoadingSave(false);
 
-        setLoadingSave(false);
+        }
     }
 
     return {
@@ -256,6 +311,8 @@ export const useCostaRica = () => {
         loadingSave,
         loadingNemoInst,
         loadingSerie,
+        isFieldRequired,
+        requeridos,
         setSelectedEmisor,
         setSelectedNemo,
         setSelectedSerie,

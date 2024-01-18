@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import { PieChart, Pie, Sector, ResponsiveContainer, Cell } from 'recharts';
-import {generateUUID} from "../../../../utils";
+import {ColorsGraph, generateUUID} from "../../../../utils";
 import {GraphCau} from "../../../../model";
-
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
 const renderActiveShape = (props: any) => {
   const RADIAN = Math.PI / 180;
@@ -57,10 +55,10 @@ interface SimplePieChartProps{
 
 export const SimplePieChart: React.FC<SimplePieChartProps> = ({ dataBody }) => {
 
-    const [activeIndex, setState] = useState(0)
+    const [activeIndex, setActiveIndex] = useState(0)
 
     const onPieEnter = (_:any, index:any) => {
-        setState(index);
+        setActiveIndex(index);
     };
 
     const [height, setHeight] = useState(window.innerHeight/2);
@@ -88,7 +86,7 @@ export const SimplePieChart: React.FC<SimplePieChartProps> = ({ dataBody }) => {
             onMouseEnter={onPieEnter}
           >
             {dataBody.map((entry, index) => (
-              <Cell key={generateUUID()} fill={COLORS[index % COLORS.length]} />
+              <Cell key={generateUUID()} fill={ColorsGraph[index % ColorsGraph.length]} />
             ))}
           </Pie>
         </PieChart>

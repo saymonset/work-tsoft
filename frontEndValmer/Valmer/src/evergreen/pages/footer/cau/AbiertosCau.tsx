@@ -52,7 +52,7 @@ export const AbiertosCau = () => {
     
     return (
         <HocRestricted title={title} view={title}>
-            <ButtonsCau title={title + "Abiertos"} />
+            <ButtonsCau title={title + " Abiertos"} />
 
             <div className="form-cols-1">
                 
@@ -64,6 +64,7 @@ export const AbiertosCau = () => {
                     setNumRegistros={setNumRegistros}
                     setPosicion={setPosicion}
                     setSearch={setSearch}
+                    setData={setInfoCau}
                 />
 
                 <TableCau

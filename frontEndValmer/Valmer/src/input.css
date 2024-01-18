@@ -330,15 +330,15 @@ table {
 }
 
 .card .head {
-    @apply p-4 border-b-2 flex justify-between
+    @apply p-1 border-b-2 flex justify-between
 }
 
 .card .head span {
-    @apply font-semibold text-gray-400
+    @apply font-bold text-cyan-900 opacity-50
 }
 
 .card .body {
-    @apply px-3 py-4
+    @apply px-1 py-1
 }
 
 .card .body h2 {
@@ -346,7 +346,7 @@ table {
 }
 
 .card .body p {
-    @apply text-gray-700
+    @apply text-gray-700 text-xs
 }
 
 .card .body .center {

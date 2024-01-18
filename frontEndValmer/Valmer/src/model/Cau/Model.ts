@@ -86,8 +86,8 @@ export interface InstGraphics {
 export interface AreaGraphics {
     peticiones: number
     area?: string
-    cliente?: string
     servicio?: string
+    cliente?: string
 }
 
 export interface CatUser {

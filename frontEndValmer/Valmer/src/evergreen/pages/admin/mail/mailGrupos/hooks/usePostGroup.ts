@@ -8,7 +8,9 @@ export const usePostGroup = () => {
     const fetchDataPostGroup = async (selectedGroup: any) => {
       setChangeCatalogPost(false);
 
-      const request = {"n_grupo": String(selectedGroup.n_grupo), "s_descripcion": String(selectedGroup.s_descripcion)};
+      const request = {
+          "n_grupo": String(selectedGroup.n_grupo),
+          "s_descripcion": String(selectedGroup.s_descripcion)};
 
       setLoadingCarga(true);
       

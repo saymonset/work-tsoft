@@ -1,6 +1,7 @@
-import { ButtonContent } from "../../../../../../shared";
+import {ButtonContent, TextAreaLog} from "../../../../../../shared";
 import { useProcesoRV } from "./hooks";
 import React from "react";
+import {MoonLoader} from "react-spinners";
 
 export const ProcesoRvForm = () => {
     
@@ -30,7 +31,7 @@ export const ProcesoRvForm = () => {
     const renderLogContent = () => {
         if (log.length > 0) {
             return (
-                <div className="mt-8 flex flex-col items-center w-full">
+                <div className="flex flex-col items-center">
                     <div className="w-1/8 mb-4">
                         <button
                             className="w-44 bg-cyan-700 hover:bg-green-700 text-white py-1 rounded-md px-3"
@@ -38,11 +39,7 @@ export const ProcesoRvForm = () => {
                             <ButtonContent name="Obtener Log CSV" loading={loadingLogCsv}/>
                         </button>
                     </div>
-                    <div
-                        className="bg-gray-900 text-green-500 p-2 w-3/4 resize-y overflow-auto max-h-[30rem]"
-                        dangerouslySetInnerHTML={{ __html: log }}
-                        style={{ minHeight: '30rem' }}
-                    />
+                    <TextAreaLog log={log}/>
                 </div>
             );
 
@@ -121,13 +118,15 @@ export const ProcesoRvForm = () => {
                         </tbody>
                     </table>
                 </td>
+                <td>
+                    {ShowProcesoRvLog && (
+                        <div className="flex justify-center items-center ">
+                            {renderLogContent()}
+                        </div>
+                    )}
+                </td>
                 <td align="center">
                 </td>
-            </tr>
-            <tr>
-                {ShowProcesoRvLog && (
-                    renderLogContent()
-                )}
             </tr>
             </tbody>
         </table>

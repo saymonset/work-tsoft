@@ -1,6 +1,6 @@
 import React from "react";
 import { useActualizaBd } from "./hooks";
-import { ButtonContent } from "../../../../../../shared";
+import {ButtonContent, TextAreaLog} from "../../../../../../shared";
 
 export const ActualizaBdForm = () => {
     
@@ -42,14 +42,9 @@ export const ActualizaBdForm = () => {
                             <ButtonContent name="Obtener Log CSV" loading={loadingLogCsv}/>
                         </button>
                     </div>
-                    <div
-                        className="bg-gray-900 text-green-500 p-2 w-3/4 resize-y overflow-auto max-h-[30rem]"
-                        dangerouslySetInnerHTML={{ __html: log }}
-                        style={{ minHeight: '30rem' }}
-                    />
+                    <TextAreaLog log={log}/>
                 </div>
             );
-
         }
         else
         {

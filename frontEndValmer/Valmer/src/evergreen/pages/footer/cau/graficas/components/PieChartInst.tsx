@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { Cell, Pie, PieChart, ResponsiveContainer, Sector } from "recharts";
-import { generateUUID } from "../../../../../../utils";
+import { Cell, Pie, PieChart, Sector } from "recharts";
+import { generateUUID, ColorsGraph } from "../../../../../../utils";
 import { InstGraphics } from "../../../../../../model";
-
-const COLORS = ['#405DE6', '#833AB4', '#C13584', '#F77737', '#FCAF45', '#000D29', '#118C8B', '#BCA18D', '#F2746B', '#F14D49'];
 
 const renderActiveShape = (props: any) => {
   const RADIAN = Math.PI / 180;
@@ -45,7 +43,7 @@ const renderActiveShape = (props: any) => {
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
       <text x={ex + (cos >= 0 ? 1 : -1) * 10} y={ey} textAnchor={textAnchor} fill="#333">{`Solicitudes ${value}`}</text>
       <text x={ex + (cos >= 0 ? 1 : -1) * 10} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
-        {`(${(percent * 100).toFixed(2)} %)`}
+        {`(${(percent * 100).toFixed(0)} %)`}
       </text>
     </g>
   );
@@ -69,29 +67,51 @@ export const SimplePieChart: React.FC<SimplePieChartProps> = ({ dataBody }) => {
       setHeight(window.innerHeight / 2)
     });
 
-    const radiusInterno = (height / 1.5);
+    const radiusInterno = (height / 2.5);
     const radiusExterno = radiusInterno + 35;
 
     return (
-        <ResponsiveContainer width="100%">
-        <PieChart width={300} height={500}>
-          <Pie
-            activeIndex={activeIndex}
-            activeShape={renderActiveShape}
-            data={dataBody}
-            cx="50%"
-            cy="50%"
-            innerRadius={radiusInterno}
-            outerRadius={radiusExterno}
-            fill="#8884d8"
-            dataKey="peticiones"
-            onMouseEnter={onPieEnter}
-          >
-            {dataBody.map((entry, index) => (
-              <Cell key={generateUUID()} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-        </PieChart>
-      </ResponsiveContainer>
+      <div className="flex justify-between">
+        <div className="flex justify-center items-center">
+          <table className="table text-xs">
+            <thead className="thead">
+                <tr>
+                    <th className="px-3"></th>
+                    <th>Institución</th>
+                    <th className="px-1">Solicitudes -  %</th>
+                </tr>
+            </thead>
+            <tbody className="tbody">
+              {dataBody.map((item, key) => (
+                <tr key={key}>
+                  <td style={{background: ColorsGraph[key]}}></td>
+                  <td>{ item.empresa }</td>
+                  <td>{ item.peticiones }</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <PieChart width={1000} height={height * 1.5}>
+            <Pie
+              activeIndex={activeIndex}
+              activeShape={renderActiveShape}
+              data={dataBody}
+              cx="40%"
+              cy="50%"
+              innerRadius={radiusInterno}
+              outerRadius={radiusExterno}
+              fill="#8884d8"
+              dataKey="peticiones"
+              onMouseEnter={onPieEnter}
+            >
+              {dataBody.map((_entry, index) => (
+                <Cell key={generateUUID()} fill={ColorsGraph[index % ColorsGraph.length]} />
+              ))}
+            </Pie>
+          </PieChart>
+        </div>
+      </div>
     )
 }

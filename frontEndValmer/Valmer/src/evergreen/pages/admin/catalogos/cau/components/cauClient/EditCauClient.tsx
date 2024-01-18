@@ -67,7 +67,7 @@ export const EditCauClient : React.FC<Props> = ({
                         <i className="mr-2 fa-solid fa-arrow-left"></i>
                         <span>Regresar</span>
                     </button>
-                    <button onClick={handleGetCsv} className="text-cyan-700 hover:text-green-600 font-bold">
+                    <button onClick={handleGetCsv} className="btn-link px-2 font-semibold">
                         <ButtonContent name="Obtener CSV" loading={loadingCsv}/>
                     </button>
                 </div>
@@ -134,7 +134,7 @@ export const EditCauClient : React.FC<Props> = ({
 
             <div className="flex mb-8">
                 <div className="flex-1 mt-8 ml-8 text-center text-cyan-700 text-2xl font-semibold">
-                    Catalogo {nameCatalog}
+                    Catálogo {nameCatalog}
                 </div>
             </div>
 

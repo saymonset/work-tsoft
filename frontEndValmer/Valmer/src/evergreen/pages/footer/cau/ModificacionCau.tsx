@@ -25,7 +25,8 @@ export const ModificacionCau = () => {
         setPosicion,
         setSearch,
         setFolio,
-        setTriggerInfoCau
+        setTriggerInfoCau,
+        setInfoCau
     } = useHandleDataModif()
 
     if (loadingCatalog || !catalog.length || loadingDataTable || !dataTable) {
@@ -55,6 +56,7 @@ export const ModificacionCau = () => {
                     setNumRegistros={setNumRegistros}
                     setPosicion={setPosicion}
                     setSearch={setSearch}
+                    setData={setInfoCau}
                 />
 
                 <TableCau
@@ -77,6 +79,7 @@ export const ModificacionCau = () => {
                         catalog={catalog}
                         data={infoCau}
                         loading={loadingInfoCau}
+                        setData={setInfoCau}
                     />
                 </div>
             </div>

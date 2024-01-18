@@ -10,10 +10,10 @@ export const Table:React.FC<TableBD> = ( {dataBody} ) => {
     return (
         <>
             <div className="flex flex-col h-full">
-                <table className="table">
+                <table className="table text-xs">
                     <thead className="thead">
                         <tr>
-                            <th key={generateUUID()} scope="col"></th>
+                            <th key={generateUUID()} scope="col">INSUMO</th>
                             <th key={generateUUID()} scope="col">HORARIOS</th>
                         </tr>
                     </thead>

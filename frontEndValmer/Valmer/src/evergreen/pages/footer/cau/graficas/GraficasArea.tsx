@@ -1,6 +1,7 @@
 import { MoonLoader } from "react-spinners"
 import { useDataGraphics } from "./hooks"
-import { BarChartArea } from "./components"
+import { BarChartArea, PieChartClientServ } from "./components"
+import { AreaGraphics } from "../../../../../model"
 
 export const GraficasArea = () => {
 
@@ -33,6 +34,23 @@ export const GraficasArea = () => {
         e.preventDefault()
         setTriggerCliente(true)
         setTriggerServicio(true)
+    }
+
+    const getGraph = (data: AreaGraphics[]) => {
+        if (!data) {
+            return (
+                <div className="flex justify-center h-full items-center">
+                        No hay Información
+                </div>
+            )
+        } else {
+            return (
+                <div className="body">
+                    <PieChartClientServ dataBody={dataCliente ?? dataServicio} />
+                </div>
+            )
+        }
+         
     }
 
     return (
@@ -74,9 +92,7 @@ export const GraficasArea = () => {
                             <MoonLoader color="#0e7490" loading={true} speedMultiplier={0.5} size={80} />
                         </div>
                     ) : (
-                        <div className="body">
-                            <BarChartArea data={dataCliente} pantalla="cliente"/>
-                        </div>
+                        getGraph(dataCliente)
                     )}
                 </div>
                 <div className="card">
@@ -88,9 +104,7 @@ export const GraficasArea = () => {
                             <MoonLoader color="#0e7490" loading={true} speedMultiplier={0.5} size={80} />
                         </div>
                     ) : (
-                        <div className="body">
-                            <BarChartArea data={dataServicio} pantalla="servicio"/>
-                        </div>
+                        getGraph(dataServicio)
                     )}
                 </div>
             </div>

@@ -10,7 +10,7 @@ export const EditCatalog = ({nameCatalog, setShowTable, columns, edit}: PropsEdi
 
     const {
         isNew, selectRef,
-        inputRefs, sortedColumns,
+        inputRefs, sortedColumns, sortedTable,
         loadingNomCorto,
         registros,
         loadingSave, loadingDelete,
@@ -79,16 +79,17 @@ export const EditCatalog = ({nameCatalog, setShowTable, columns, edit}: PropsEdi
                                         Editar
                                     </th>
                                 )}
-                                {columns.map(column => (
-                                    <MemoizedColumn key={column.name} column={column} />
-                                ))}
+                                {sortedTable
+                                    .map(column => (
+                                        <MemoizedColumn key={column.name} column={column} />
+                                    ))}
                             </tr>
                             </thead>
                             <tbody>
-                            {registros.map((registro) => (
-                                <MemoizedTableRow key={registro.id}
-                                                  registro={registro}
-                                                  columns={columns}
+                            {registros.map((register) => (
+                                <MemoizedTableRow key={register.id}
+                                                  registro={register}
+                                                  columns={sortedTable}
                                                   handleRowClick={handleRowClick}
                                                   edit={edit} />
                             ))}

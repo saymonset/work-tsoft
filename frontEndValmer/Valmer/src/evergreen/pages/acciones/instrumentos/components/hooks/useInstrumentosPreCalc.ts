@@ -76,8 +76,10 @@ export const useInstrumentosPreCalc = () => {
         }
     }
 
-    const handleShowVinculado = (e: React.MouseEvent<HTMLButtonElement>, name: keyof ShowPrecalc) => {
-        e.preventDefault();
+    const handleShowVinculado = (e: React.MouseEvent<HTMLButtonElement> | undefined, name: keyof ShowPrecalc) => {
+        if (e) {
+            e.preventDefault();
+        }
         
         setShowState(prevState => {
             const updatedState: ShowPrecalc = Object.keys(prevState).reduce(
@@ -102,18 +104,51 @@ export const useInstrumentosPreCalc = () => {
         return false
     }
 
-    const deletedPrecalc = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const checked = e.target.checked
-        const name = e.target.name
+    const deletedPrecalc = (e: React.ChangeEvent<HTMLInputElement>, precalc: string, check: string) => {
+        const {name, checked} = e.target
 
-        const updatedState = {...showState, [name]: false}
+        if (!checked) {
+            const updatedState = {...showState, [name]: false}
+    
+            handleSweetAlert(
+                checked,
+                updatedState,
+                setShowState,
+                name
+            )
+        } else {
 
-        handleSweetAlert(
-            checked,
-            updatedState,
-            setShowState,
-            name
-        )
+            const dataup: Precalculados = { ...precalculados };
+    
+            const elements = dataup[precalc];
+
+            if (!elements) {
+                const newDataElement = {
+                    [check]: "checked",
+                };
+        
+                const updatedDataup: Precalculados = {
+                    ...dataup,
+                    [precalc]: [newDataElement]
+                };
+        
+                dispatch(updatePrecalculados(updatedDataup));
+
+            }
+
+            setShowState(prevState => {
+                const updatedState: ShowPrecalc = Object.keys(prevState).reduce(
+                    (acc, key) => {
+                        acc[key as keyof ShowPrecalc] = key === name;
+                        return acc; 
+                    },
+                    {} as ShowPrecalc
+                );
+    
+                return updatedState;
+            })
+        }
+
     }
 
     return {

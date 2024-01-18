@@ -60,6 +60,11 @@ export const useHandleDataUserWeb = () => {
     const [archivo, setArchivo] = useState<string>("")
     const [nombreArch, setNombreArch] = useState<string>("")
     const [dataTable, setDataTable] = useState<DataHistoricoTrial[]>([])
+    const [dataUri, setDataUri] = useState<Record<string, string>>({})
+
+    useEffect(() => {
+        setDataUri(catUri.body)
+    }, [])
 
     const [loadingSave, setLoadingSave] = useState<boolean>(false)
 
@@ -236,6 +241,17 @@ export const useHandleDataUserWeb = () => {
         fileDownload(archivo, nombreArch);
     }
 
+    const searchDataUri = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const search = e.target.value.toUpperCase()
+
+        const result: Record<string, string> = Object.fromEntries(
+            Object.entries(catUri.body).filter(([key, value]) => value.toUpperCase().includes(search))
+        )
+
+        setDataUri(result)
+
+    }
+
     return {
         catalogoInst, 
         loadingInst, 
@@ -262,6 +278,7 @@ export const useHandleDataUserWeb = () => {
         triggerInfoTrial,
         triggerProducts,
         dataTable,
+        dataUri,
         handleClickInstitucion,
         handleClickSector,
         handleClickNombre,
@@ -272,6 +289,7 @@ export const useHandleDataUserWeb = () => {
         downloadProcesosPermisos,
         setTriggerInfoTrial,
         setTriggerProducts,
-        setDataTable
+        setDataTable,
+        searchDataUri
     }
 }

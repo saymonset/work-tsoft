@@ -169,6 +169,7 @@ export const usePanama = () => {
 
     const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
+
         if(await validateFieldsAccCalifLatam(
                 consultaData?.body?.info_bd,
                 refReqLatPanama, 

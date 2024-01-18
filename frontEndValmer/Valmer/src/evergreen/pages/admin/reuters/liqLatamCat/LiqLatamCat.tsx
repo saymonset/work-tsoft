@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { TitleDate, Modal } from '../../../../../shared';
+import { TitleDate, Modal, ButtonContent } from '../../../../../shared';
 import { UmsLiquidezLatamTable } from './components/UmsLiquidezLatamTable';
 import { useliqLatamCat } from '../hooks/useliqLatamCat'
 
@@ -29,6 +29,10 @@ export const LiqLatamCat = () => {
         handleSubmitForm,
         deleteByISIN,
         textSearch,
+        parametros,
+        handleTextareaChange,
+        loadingSubmit,
+        handleclick,
         handleKeyDown
     } = useliqLatamCat();
 
@@ -110,12 +114,19 @@ export const LiqLatamCat = () => {
                     </div>
                     <form>
                         <div className="form-text-area">
-                            <textarea name="carga" id="carga" placeholder=''></textarea>
+                            <textarea
+                                name="carga"
+                                id="carga"
+                                placeholder=''
+                                value={parametros}
+                                onChange={handleTextareaChange}/>
                             <label htmlFor="carga">ISIN, INSTRUMENTO, RIC, TIPO</label>
                         </div>
                         <div className="line" />
                         <div className="flex justify-end">
-                            <button className="btn">Carga</button>
+                            <button className="btn" onClick={handleclick}>
+                                <ButtonContent name="Cargar" loading={loadingSubmit}/>
+                            </button>
                         </div>
                     </form>
                 </Modal>

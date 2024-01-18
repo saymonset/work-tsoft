@@ -1,5 +1,5 @@
 import React from 'react'
-import { Catalogo } from '../../../../../model'
+import { Catalogo, InfoCauId } from '../../../../../model'
 import { getCatalogs } from '../../../../../utils'
 
 interface FiltrosCerradosProps {
@@ -11,10 +11,11 @@ interface FiltrosCerradosProps {
     setServicio: React.Dispatch<React.SetStateAction<string>>
     setArea: React.Dispatch<React.SetStateAction<string>>
     setTriggerData: React.Dispatch<React.SetStateAction<boolean>>
+    setData: React.Dispatch<React.SetStateAction<InfoCauId>>
 }
 
 export const FiltrosCauCerrados: React.FC<FiltrosCerradosProps> = ({ 
-    catalog, empresa, servicio, area, setEmpresa, setServicio, setArea, setTriggerData
+    catalog, empresa, servicio, area, setEmpresa, setServicio, setArea, setTriggerData, setData
 }) => {
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -34,6 +35,7 @@ export const FiltrosCauCerrados: React.FC<FiltrosCerradosProps> = ({
         setServicio("")
         setEmpresa("")
         setTriggerData(true)
+        setData({} as InfoCauId)
     }
 
     return (

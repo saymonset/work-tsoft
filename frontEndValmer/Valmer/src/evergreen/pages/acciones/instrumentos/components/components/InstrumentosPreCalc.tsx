@@ -38,7 +38,7 @@ export const InstrumentosPreCalc: React.FC<Props> = ({ loadingPrecalc }) => {
                         type="checkbox"
                         checked={checkboxValue("precalc-acciones-vinculadas", "check_vinculado")}
                         disabled={checkboxValue("precalc-acciones-vinculadas", "check_adr")}
-                        onChange={deletedPrecalc}
+                        onChange={(e) => deletedPrecalc(e, "precalc-acciones-vinculadas", "check_vinculado")}
                     />
                     <label htmlFor="vinculado">
                         Vinculado
@@ -56,7 +56,7 @@ export const InstrumentosPreCalc: React.FC<Props> = ({ loadingPrecalc }) => {
                         type="checkbox"
                         checked={checkboxValue("precalc-acciones-vinculadas", "check_adr")}
                         disabled={checkboxValue("precalc-acciones-vinculadas", "check_vinculado")}
-                        onChange={deletedPrecalc}
+                        onChange={(e) => deletedPrecalc(e, "precalc-acciones-vinculadas", "check_adr")}
                     />
                     <label htmlFor="adr">ADR</label>
                 </div>
@@ -70,7 +70,7 @@ export const InstrumentosPreCalc: React.FC<Props> = ({ loadingPrecalc }) => {
                         name="suspendido"
                         id="suspendido"
                         checked={checkboxValue("precalc-suspendidas", "check_suspendido")}
-                        onChange={deletedPrecalc}
+                        onChange={(e) => deletedPrecalc(e, "precalc-suspendidas", "check_suspendido")}
                     />
                     <label htmlFor="suspendido">Suspendido</label>
                 </div>
@@ -84,7 +84,7 @@ export const InstrumentosPreCalc: React.FC<Props> = ({ loadingPrecalc }) => {
                         name="fijo"
                         id="fijo"
                         checked={checkboxValue("precalc-fijos", "check_fijo")}
-                        onChange={deletedPrecalc}
+                        onChange={(e) => deletedPrecalc(e, "precalc-fijos", "check_fijo")}
                     />
                     <label htmlFor="fijo">Fijo</label>
                 </div>
@@ -98,7 +98,7 @@ export const InstrumentosPreCalc: React.FC<Props> = ({ loadingPrecalc }) => {
                         id="derCorp"
                         name="derCorp"
                         checked={checkboxValue("precalc-derecho-corp", "check_dercorp")}
-                        onChange={deletedPrecalc}
+                        onChange={(e) => deletedPrecalc(e, "precalc-derecho-corp", "check_dercorp")}
                     />
                     <label htmlFor="derCorp">Der.Corp</label>
                 </div>

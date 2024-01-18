@@ -18,6 +18,9 @@ export const Home = () => {
         cau,
         loadingCau,
         userName,
+        handleDownloadObjetivosCalidad,
+        handleDownloadCodigoConducta,
+        handleDownloadGuiaAtencionCau,
         previousDate} = useHome()
 
     return (
@@ -85,24 +88,21 @@ export const Home = () => {
                                 text-white py-2 rounded-md px-2">
                             Mantenimiento Cau
                         </Link>
-                        <a href="/PAGINA_NUEVA/GUIA_PARA_ATENCION_DEL_CAU.pptx"
-                           className="bg-green-700 hover:bg-green-900
-                                text-white py-2 rounded-md px-2"
-                           target="_blank"
+                        <a className="bg-green-700 hover:bg-green-900
+                                text-white py-2 rounded-md px-2 hover:cursor-pointer"
+                            onClick={handleDownloadGuiaAtencionCau}    
                         >
                             Guía para atención del CAU
                         </a>
-                        <a href="/DOCTOS/Codigo_de_Conducta_Valmer_version_Consejo_Administracion_15_feb_2007.pdf"
-                           className="bg-green-700 hover:bg-green-900
-                                text-white py-2 rounded-md px-2"
-                           target="_blank"
+                        <a className="bg-green-700 hover:bg-green-900
+                                text-white py-2 rounded-md px-2 hover:cursor-pointer"
+                            onClick={handleDownloadCodigoConducta}
                         >
                             Código de conducta Valmer
                         </a>
-                        <a href="/DOCTOS/OBJETIVOS_DE_CALIDAD.pdf"
-                           className="bg-green-700 hover:bg-green-900
-                                text-white py-2 rounded-md px-2"
-                           target="_blank"
+                        <a className="bg-green-700 hover:bg-green-900
+                                text-white py-2 rounded-md px-2 hover:cursor-pointer"
+                           onClick={handleDownloadObjetivosCalidad}
                         >
                             Objetivos de Calidad
                         </a>

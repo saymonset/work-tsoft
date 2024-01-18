@@ -1,11 +1,6 @@
 import React from "react";
 import {DataCauLevels, generateUUID} from "../../../../../../../../utils";
-import {
-    BodyEditCauClient,
-    Catalogo,
-    ConsultaDataEditCauClient,
-    NivelesServicioEditCau
-} from "../../../../../../../../model";
+import {ConsultaDataEditCauClient} from "../../../../../../../../model";
 
 interface ServiceLevelsCauProps {
     Data: ConsultaDataEditCauClient;
@@ -13,14 +8,12 @@ interface ServiceLevelsCauProps {
 }
 
 export const ServiceLevelsCau = ({Data, handleChange}: ServiceLevelsCauProps) => {
-
     const getValue = (levelValue: string) => {
         if (Data && levelValue in Data) {
             return (Data as any)[levelValue];
         }
         return "2";
     };
-
 
     return (
         <>
@@ -34,7 +27,7 @@ export const ServiceLevelsCau = ({Data, handleChange}: ServiceLevelsCauProps) =>
                 {DataCauLevels.map((level) => (
                     <div key={generateUUID()} className="relative z-0 my-3">
                         <select value={getValue(level.value)}
-                                name={level.name}
+                                name={level.value}
                                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"

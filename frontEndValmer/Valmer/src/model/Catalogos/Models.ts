@@ -13,6 +13,7 @@ export interface ColumnEditCat {
     order?: number;
     type: string;
     catalog?: string;
+    DisabledFieldTable?: boolean;
     DisabledFieldForm?: boolean;
     isReadOnly ?: boolean;
     isReadOnlyEdit ?: boolean;

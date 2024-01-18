@@ -165,7 +165,7 @@ export const CauForm = ({
                                         <select name="n_status"
                                                 value={queryFolio.n_status}
                                                 onChange={handleChange}>
-                                            <option value="">...</option>
+                                            <option value="default">...</option>
                                             {getCatalogs(catalog, 'CAU_STATUS').map((column) => (
                                                 <option key={column[0]} value={column[0]}>
                                                     {column[1]}
@@ -203,7 +203,7 @@ export const CauForm = ({
                                 )}
 
                             </div>
-                            {isEdit && queryFolio.muestra_boton_grabar && (
+                            {(status == "Modificación" || (isEdit && queryFolio.muestra_boton_grabar)) && (
                                 <div className="mt-5 animate__animated animate__fadeIn">
                                     <button type="button"
                                             className="btn"

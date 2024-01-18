@@ -1,14 +1,14 @@
-import { AccCalifLatam, IsFieldRequiredLatPanama, RefReqAccCalifLatam, fieldToValidateLatamPanama } from "../../../model";
+import { AccCalifLatam, IsFieldRequiredLatCr, RefReqAccCalifLatam, fieldToValidateLatamCr } from "../../../model";
 import { focusElement } from "../../Utils";
 
-export const validLatPamanaField = async (
+export const validLatCrField = async (
     formValues: AccCalifLatam,
-    dispatch: React.Dispatch<React.SetStateAction<IsFieldRequiredLatPanama>>,
-    fieldRequired: IsFieldRequiredLatPanama,
+    dispatch: React.Dispatch<React.SetStateAction<IsFieldRequiredLatCr>>,
+    fieldRequired: IsFieldRequiredLatCr,
     requeridos: RefReqAccCalifLatam
 ) => {
     if (formValues) {
-        for (const field of fieldToValidateLatamPanama) {
+        for (const field of fieldToValidateLatamCr) {
             if (isInvalidField(field.name, formValues[field.name], field.defaultValue)) {
                 updateFieldAsInvalid(dispatch, fieldRequired, field.name);
                 focusElement(field.name, requeridos[field.name]);
@@ -16,8 +16,8 @@ export const validLatPamanaField = async (
             }
         }
     } else {
-        dispatch({...fieldRequired, "s_nemotecnico": true});
-        focusElement("s_nemotecnico", requeridos["s_nemotecnico"]);
+        dispatch({...fieldRequired, "s_emisor": true});
+        focusElement("s_emisor", requeridos["s_emisor"]);
         return false;
     }
 
@@ -34,8 +34,8 @@ const isInvalidField = (field: string, fieldValue: any, defaultValue: string) =>
 }
 
 const updateFieldAsInvalid = (
-    dispatch: React.Dispatch<React.SetStateAction<IsFieldRequiredLatPanama>>, 
-    fieldRequired: IsFieldRequiredLatPanama, 
+    dispatch: React.Dispatch<React.SetStateAction<IsFieldRequiredLatCr>>, 
+    fieldRequired: IsFieldRequiredLatCr, 
     fieldName: string
 ) => {
     dispatch({ ...fieldRequired, [fieldName]: true });

@@ -517,15 +517,19 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate__animated animate__fadeIn">Campo requerido n_tipo_tasa</span>
                             )}
                         </div>
-                        <div className="form-input">
-                            <input
-                                type="text"
+                        <div className="form-select">
+                            <select
                                 name="n_nomb_tasa"
-                                value={consultaData.body?.n_nomb_tasa || consultaData.body?.s_tasa || ''}
+                                value = {consultaData.body?.n_nomb_tasa || consultaData.body?.s_tasa || ''}
                                 onChange={handleChange}
-                                placeholder=""
-                                required
-                            />
+                            >
+                                <option value="default">...</option>
+                                {getCatalogs(catalog,'TIPO_INSTRUMENTO-NOMBRE_TASA').map((column) => (
+                                    <option key={column[0]} value={column[0]}>
+                                        {column[1]}
+                                    </option>
+                                ))}
+                            </select>
                             <label htmlFor='n_nomb_tasa'>
                                 Nomb. Tasa
                             </label>

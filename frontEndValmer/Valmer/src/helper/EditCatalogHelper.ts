@@ -2,9 +2,6 @@ import {Catalogo, RegistroEdit} from "../model";
 
 export const procesarEvaluate = (nameCatalog: string, request: RegistroEdit, catalogStatic: Catalogo[]) => {
     switch (nameCatalog.toLowerCase()) {
-        case 'bacc_subramo_ing':
-            procesarCatalogoBaccSubramoIng(request);
-            break;
         case 'cau_escalamiento':
             procesarCatalogoCauEscalamiento(request, catalogStatic);
             break;
@@ -16,14 +13,6 @@ export const procesarEvaluate = (nameCatalog: string, request: RegistroEdit, cat
             break;
     }
 }
-
-
-const procesarCatalogoBaccSubramoIng = (request: RegistroEdit): void => {
-    const sDescripcionValue = request['s_descripcion'];
-    if (sDescripcionValue) {
-        request['n_clasificacion_sectorial'] = sDescripcionValue;
-    }
-};
 
 const procesarCatalogoCauEscalamiento = (request: RegistroEdit, catalogStatic: Catalogo[]): void => {
     const catalogoObj = catalogStatic.find(catalogo => catalogo.catalogo === "CAU_SERVICIOS");
@@ -110,3 +99,49 @@ const buscarClavePorValor = (registros: { [key: string]: string }, valor: string
 const esNumero = (valor: any): boolean => {
     return !isNaN(parseInt(valor)) && isFinite(valor);
 };
+
+export const validRowClick = (nameCatalog: string,
+                              catalogStatic: Catalogo[],
+                              registro: { id: string; [key: string]: string }) => {
+    if (nameCatalog === "BACC_SUBRAMO_ING") {
+
+        const catalogoObj = catalogStatic.find(catalogo => catalogo.catalogo === "clase-sectorial");
+
+        console.log(catalogoObj)
+
+        if (catalogoObj && registro['s_clasificacion_sectorial']) {
+            const sectorialID = Object.keys(catalogoObj.registros).find(key =>
+                catalogoObj.registros[key] === registro['s_clasificacion_sectorial']
+            );
+
+            console.log(registro['s_clasificacion_sectorial'])
+            console.log(sectorialID)
+
+            if (sectorialID) {
+                registro['n_clasificacion_sectorial'] = sectorialID;
+                delete registro['s_clasificacion_sectorial'];
+            }
+            else
+            {
+                registro['n_clasificacion_sectorial'] = "default";
+            }
+        }
+    }
+}
+
+const buildIdFunctions: Record<string, (req: {[key: string]: string }) => string> = {
+    PERFIL_INSTRUMENTO_REGLAS: (req) => `${req['s_tv']}_${req['s_mercado']}`,
+    PERFIL_INSTRUMENTO_INST_EXC: (req) => req['s_tv'],
+    PERFIL_INSTRUMENTO_ADRS: (req) => req['s_instr_adr'],
+    PERFIL_INSTRUMENTO_CAT_FONDOS: (req) => req['n_clasificacion'],
+    PERFIL_INSTRUMENTO_CLAS_FONDOS: (req) => `${req['s_tv']}_${req['s_emisora']}`,
+    PERFIL_INSTRUMENTO_FONDO_SERIE: (req) => `${req['s_tv']}_${req['s_emisora']}_${req['s_serie']}`,
+    PERFIL_INSTRUMENTO_SCOTIA: (req) => `${req['n_tipo_catalogo']}_${req['s_tv']}`
+};
+
+export const buildIdPerfiles = (request: {[key: string]: string }, nameCatalog: string): string => {
+    const buildFunction = buildIdFunctions[nameCatalog];
+    return buildFunction ? buildFunction(request) : "";
+};
+
+

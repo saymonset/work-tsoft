@@ -1,7 +1,7 @@
 import {useInitValPrecalc} from "./useInitValPrecalc";
 import {useSelector} from "react-redux";
 import {RootState} from "@reduxjs/toolkit/dist/query/core/apiState";
-import {PrecalcAccVin, PrecalcDerCorp, PrecalcFijos, PrecalcSuspendidas, Precalculados, PropsPrecalc, RespAccInstData, ShowPrecalc} from "../../../../../../../../model";
+import {PrecalcAccVin, PrecalcDerCorp, PrecalcFijos, PrecalcSuspendidas, Precalculados, PropsPrecalc, ShowPrecalc} from "../../../../../../../../model";
 import React, {useEffect, useState} from "react";
 import {fetchDataGetRet, fetchDataPostAct, getEmisoras, getSerie} from "../../../../../../../../utils";
 import {updatePrecalculados, updateTriggerPrecalc} from "../../../../../../../../redux";
@@ -34,10 +34,6 @@ export const usePrecalcTvEmiSerie = ({setShowState}: PropsPrecalc) => {
         setLoadingSerie,
         dispatch
     } = useInitValPrecalc()
-
-    const consultaDataAccInst = useSelector(
-        (state: RootState<any, any, any>) => state.consultaDataAccInst
-    ) as unknown as RespAccInstData;
 
     const precalculados = useSelector(
         (state: RootState<any, any, any>) => state.precalculados
@@ -161,7 +157,7 @@ export const usePrecalcTvEmiSerie = ({setShowState}: PropsPrecalc) => {
             return field != "" && field != "default" && field != "..."
         })
 
-        if (isValid.some(valor => valor == false)) {
+        if (isValid.some(valor => !valor)) {
             Sweet.fire({
                 title: "Falta ingresar campo",
                 icon: "warning"
@@ -205,6 +201,13 @@ export const usePrecalcTvEmiSerie = ({setShowState}: PropsPrecalc) => {
         const title = "Actualizado"
         const message = " al actualizar "
         const inst = [selectedTv, selectedEmisora, selectedSerie]
+        const adrFields = [precalculados["precalc-acciones-vinculadas"]?.[0].prpoporcion]
+        const suspFields = [precalculados["precalc-suspendidas"]?.[0].fecha_suspension]
+        const fijoFields = [precalculados["precalc-fijos"]?.[0].n_precio]
+        const dercorpFields = [
+            precalculados["precalc-derecho-corp"]?.[0].n_monto_decorp,
+            precalculados["precalc-derecho-corp"]?.[0].fecha_dercorp
+        ]
         switch (name) {
             case "vinculados":
                 if (validateFieldInst(inst)) {
@@ -228,9 +231,6 @@ export const usePrecalcTvEmiSerie = ({setShowState}: PropsPrecalc) => {
                     break
                 }
             case "adr":
-                const adrFields = [
-                    precalculados["precalc-acciones-vinculadas"]?.[0].prpoporcion
-                ]
                 if (validateFieldInst(inst) && validateCampos(adrFields)) {
                     await fetchDataPostAct(
                         url + name,
@@ -253,9 +253,6 @@ export const usePrecalcTvEmiSerie = ({setShowState}: PropsPrecalc) => {
                     break
                 }
             case "suspendidos":
-                const suspFields = [
-                    precalculados["precalc-suspendidas"]?.[0].fecha_suspension
-                ]
                 if (validateCampos(suspFields)) {
                     await fetchDataPostAct(
                         url + name,
@@ -275,9 +272,6 @@ export const usePrecalcTvEmiSerie = ({setShowState}: PropsPrecalc) => {
                     break
                 }
             case "fijos":
-                const fijoFields = [
-                    precalculados["precalc-fijos"]?.[0].n_precio
-                ]
                 if (validateCampos(fijoFields)) {
                     await fetchDataPostAct(
                         url + name,
@@ -297,10 +291,6 @@ export const usePrecalcTvEmiSerie = ({setShowState}: PropsPrecalc) => {
                     break
                 }
             case "derecho-corp":
-                const dercorpFields = [
-                    precalculados["precalc-derecho-corp"]?.[0].n_monto_decorp,
-                    precalculados["precalc-derecho-corp"]?.[0].fecha_dercorp
-                ]
                 if (validateCampos(dercorpFields)) {
                     await fetchDataPostAct(
                         url + name,
@@ -366,7 +356,16 @@ export const usePrecalcTvEmiSerie = ({setShowState}: PropsPrecalc) => {
             }
         }
 
-        dispatch(updatePrecalculados(dataup));
+        const newDataElement = {
+            [name]: value,
+        };
+
+        const updatedDataup: Precalculados = {
+            ...dataup,
+            [precalc]: [newDataElement]
+        };
+
+        dispatch(updatePrecalculados(updatedDataup));
     };
 
     return {
