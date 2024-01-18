@@ -1,5 +1,6 @@
 import { Catalogo, IsFieldModifiedFvDerivados, RequeridosDefDerivados, RespDerivadosDef } from "../../../../../model";
 import { getCatalogs, getCatalogsNoOrder } from "../../../../../utils";
+import { useBigInput } from "../../../deuda/tasas/components/forms/hooks/useBigInput";
 import { FormColateralFF } from "./FormColateralFF";
 import { FormColateralSOFR } from "./FormColateralSOFR";
 
@@ -21,12 +22,18 @@ interface CaracteristicasDerivadosProps {
 }
 
 export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) => {
+
+     //  Achica o agranda el input del form cuando obtiene o deja el focus
+     const {  handleFocus,
+        handleBlur,
+        sendStyle} = useBigInput();
+        
     return (
         <div className="form-cols-3">
             <div className="col-span-2">
-                <div className="form-title">Características Derivados</div>
-                <div className="form-cols-2">
-                    <div className="form-input">
+                <div className="form-title ">Características Derivados</div>
+                <div className="form-cols-5 form-gap-1">
+                    <div className="form-input ">
                         <input
                             type="text"
                             name="n_tam_contrato"
@@ -34,11 +41,14 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                             placeholder=""
                             value={props.consultaDataDerDef?.body?.n_tam_contrato || ''}
                             onChange={(e) => props.handleChange(e)}
+                            onFocus={() => handleFocus('n_tam_contrato')}
+                            onBlur={handleBlur}
+                            style={sendStyle('n_tam_contrato')}
                         />
                         <label htmlFor="contrato">Contrato</label>
                     </div>
-                </div>
-                <div className="form-cols-2">
+                {/* </div>
+                <div className="form-cols-2"> */}
                     <div className="form-select">
                         <select
                             id="n_moneda"
@@ -75,8 +85,8 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                         </select>
                         <label htmlFor="n_moneda_e">Moneda Entrega</label>
                     </div>
-                </div>
-                <div className="form-cols-2">
+                {/* </div>
+                <div className="form-cols-2"> */}
                     <div className="form-select">
                         <select
                             name="n_tipo_instrumento"
@@ -109,9 +119,9 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                         </select>
                         <label htmlFor="n_tipo_instrumento_e">Tipo Instrumento Entrega</label>
                     </div>
-                </div>
-                <div className="form-cols-2">
-                    <div className="form-select">
+                {/* </div>
+                <div className="form-cols-2"> */}
+                    <div className="form-select ">
                         <select
                             name="n_crv_descuento"
                             id="n_crv_descuento"
@@ -143,8 +153,8 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                         </select>
                         <label htmlFor="n_crv_descuento">Crv Descuento Entrega</label>
                     </div>
-                </div>
-                <div className="form-cols-2">
+                {/* </div>
+                <div className="form-cols-2"> */}
                     <div className="form-select">
                         <select
                             name="n_crv_foranea"
@@ -177,8 +187,8 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                         </select>
                         <label htmlFor="n_crv_foranea_e">Crv Descuento Foranea Entrega</label>
                     </div>
-                </div>
-                <div className="form-cols-2">
+                {/* </div>
+                <div className="form-cols-2"> */}
                     <div className="form-select">
                         <select
                             name="n_crv_index"
@@ -211,8 +221,8 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                         </select>
                         <label htmlFor="n_crv_index_e">Crv Index Entrega</label>
                     </div>
-                </div>
-                <div className="form-cols-2">
+                {/* </div>
+                <div className="form-cols-2"> */}
                     <div className="form-select">
                         <select
                             name="n_crv_referencia"
@@ -229,8 +239,8 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                         </select>
                         <label htmlFor="n_crv_referencia">Curva Referencia</label>
                     </div>
-                </div>
-                <div className="form-cols-2">
+                {/* </div>
+                <div className="form-cols-2"> */}
                     <div className="form-select">
                         <select
                             name="n_theo_model"
@@ -247,8 +257,8 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                         </select>
                         <label htmlFor="n_theo_model">Theorical Model</label>
                     </div>
-                </div>
-                <div className="form-cols-2">
+                {/* </div>
+                <div className="form-cols-2"> */}
                     <div className="form-select">
                         <select
                             name="n_mkt_model"
@@ -265,8 +275,8 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                         </select>
                         <label htmlFor="n_mkt_model">Market Model</label>
                     </div>
-                </div>
-                <div className="form-cols-2">
+                {/* </div>
+                <div className="form-cols-2"> */}
                     <div className="form-select">
                         <select
                             name="s_underlying"
@@ -299,8 +309,8 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                         </select>
                         <label htmlFor="s_underlying_sp">Underlying SP</label>
                     </div>
-                </div>
-                <div className="form-cols-2">
+                {/* </div>
+                <div className="form-cols-2"> */}
                     <div className="form-select">
                         <select
                             name="n_tipo_tasa"
@@ -317,8 +327,8 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                         </select>
                         <label htmlFor="n_tipo_tasa">Tipo Tasa</label>
                     </div>
-                </div>
-                <div className="form-cols-2">
+                {/* </div>
+                <div className="form-cols-2"> */}
                     <div className="form-select">
                         <select
                             name="n_tipo_subyacente"
@@ -335,8 +345,8 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                         </select>
                         <label htmlFor="n_tipo_subyacente">Tipo Subyacente</label>
                     </div>
-                </div>
-                <div className="form-cols-2">
+                {/* </div>
+                <div className="form-cols-2"> */}
                     <div className="form-select">
                         <select
                             name="n_comp_yield"
@@ -353,8 +363,8 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                         </select>
                         <label htmlFor="n_comp_yield">Composición Yield</label>
                     </div>
-                </div>
-                <div className="form-cols-2">
+                {/* </div>
+                <div className="form-cols-2"> */}
                     <div className="form-select">
                         <select
                             name="s_dcs_curve_und"
@@ -371,8 +381,8 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                         </select>
                         <label htmlFor="d_dcs_curve_und">Dos_Curve_Und</label>
                     </div>
-                </div>
-                <div className="form-cols-2">
+                {/* </div>
+                <div className="form-cols-2"> */}
                     <div className="form-select">
                         <select
                             name="n_setdayrule"
@@ -389,8 +399,8 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                         </select>
                         <label htmlFor="n_setdayrule">Set_Day_Rule</label>
                     </div>
-                </div>
-                <div className="form-cols-2">
+                {/* </div>
+                <div className="form-cols-2"> */}
                     <div className="form-select">
                         <select
                             name="n_supervol"
@@ -407,8 +417,8 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                         </select>
                         <label htmlFor="n_supervol">Superifie Volatilidad</label>
                     </div>
-                </div>
-                <div className="form-cols-2">
+                {/* </div>
+                <div className="form-cols-2"> */}
                     <div className="form-select">
                         <select
                             name="n_tipo_calculo_r"
@@ -441,8 +451,8 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                         </select>
                         <label htmlFor="n_tipo_calculo_e">Tipo Cálculo Entrega</label>
                     </div>
-                </div>
-                <div className="form-cols-2">
+                {/* </div>
+                <div className="form-cols-2"> */}
                     <div className="form-select">
                         <select
                             name="s_underlying_cu"
@@ -477,7 +487,7 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                     </div>
                 </div>
                 <div className="container-line">
-                    <div className="line"></div>
+                    <div className="line-y"></div>
                 </div>
                 <div className="form-cols-1">
                     <div className="form-input">
@@ -488,6 +498,9 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                             placeholder=""
                             value={props.consultaDataDerDef?.body?.s_fb_underlyings || ''}
                             onChange={(e) => props.handleChange(e)}
+                            onFocus={() => handleFocus('s_fb_underlyings')}
+                            onBlur={handleBlur}
+                            style={sendStyle('s_fb_underlyings')}
                         />
                         <label htmlFor="s_fb_underlyings">FBUnderlyings</label>
                     </div>
@@ -501,12 +514,15 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                             placeholder=""
                             value={props.consultaDataDerDef?.body?.n_component_weights || ''}
                             onChange={(e) => props.handleChange(e)}
+                            onFocus={() => handleFocus('n_component_weights')}
+                            onBlur={handleBlur}
+                            style={sendStyle('n_component_weights')}
                         />
                         <label htmlFor="n_component_weights">Component Weights</label>
                     </div>
                 </div>
                 <div className="container-line">
-                    <div className="line"></div>
+                    <div className="line-y"></div>
                 </div>
                 <div className="form-cols-1">
                     <div className="form-check">
@@ -529,12 +545,15 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                             placeholder=""
                             value={props.consultaDataDerDef?.body?.n_factor_filtro_strike || ''}
                             onChange={(e) => props.handleChange(e)}
+                            onFocus={() => handleFocus('n_factor_filtro_strike')}
+                            onBlur={handleBlur}
+                            style={sendStyle('n_factor_filtro_strike')}
                         />
                         <label htmlFor="n_factor_filtro_strike">Factor Filtro Strike</label>
                     </div>
                 </div>
                 <div className="container-line">
-                    <div className="line"></div>
+                    <div className="line-y"></div>
                 </div>
                 <div className="form-cols-1">
                     <div className="form-input">
@@ -545,12 +564,15 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                             placeholder=""
                             value={props.consultaDataDerDef?.body?.n_swp_rate || ''}
                             onChange={(e) => props.handleChange(e)}
+                            onFocus={() => handleFocus('n_swp_rate')}
+                            onBlur={handleBlur}
+                            style={sendStyle('n_swp_rate')}
                         />
                         <label htmlFor="n_swp_rate">SWP RATE</label>
                     </div>
                 </div>
                 <div className="container-line">
-                    <div className="line"></div>
+                    <div className="line-y"></div>
                 </div>
                 <div className="form-cols-1">
                     <div className="form-check">
@@ -627,6 +649,9 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                             placeholder=""
                             value={props.consultaDataDerDef?.body?.s_fuente || ''}
                             onChange={(e) => props.handleChange(e)}
+                            onFocus={() => handleFocus('s_fuente')}
+                            onBlur={handleBlur}
+                            style={sendStyle('s_fuente')}
                         />
                         <label htmlFor="s_fuente">Fuente</label>
                     </div>
@@ -658,6 +683,9 @@ export const CaracteristicasDerivados = (props: CaracteristicasDerivadosProps) =
                             placeholder=""
                             value={props.consultaDataDerDef?.body?.s_future_quote_units || ''}
                             onChange={(e) => props.handleChange(e)}
+                            onFocus={() => handleFocus('s_future_quote_units')}
+                            onBlur={handleBlur}
+                            style={sendStyle('s_future_quote_units')}
                         />
                         <label htmlFor="s_future_quote_units">Future Quote Units</label>
                     </div>

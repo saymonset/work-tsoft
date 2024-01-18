@@ -33,7 +33,7 @@ export const MainSubastas = (sub: SubastasProps) => {
                 {buttonConfig.map(({name, loading, handler}) =>
                     <button
                         key={generateUUID()}
-                        className="bg-cyan-700 hover:bg-green-700 text-white py-1 rounded-md px-3 mx-1"
+                        className="bg-cyan-700 hover:bg-green-700 text-white py-0 rounded-md px-3 mx-1"
                         onClick={handler}>
                         <ButtonContent name={name} loading={loading}></ButtonContent>
                     </button>

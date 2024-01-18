@@ -2,15 +2,19 @@ import {BarLoader} from "react-spinners";
 import {getCatalogs} from "../../../../../../utils";
 import React from "react";
 import {CostaRicaFormProps} from "../../../../../../model";
+import { useBigInput } from "../../../../deuda/tasas/components/forms/hooks/useBigInput";
 
 export const CostaRicaForm = ({
                                   loadingConsultaInfo,
                                   consultaData,
                                   mergeInstrumentos,
                                   handleChange,
-                                  isFieldRequired,
-                                  requeridos,
                                   catalog}: CostaRicaFormProps) => {
+
+        //  Achica o agranda el input del form cuando obtiene o deja el focus
+        const {  handleFocus,
+            handleBlur,
+            sendStyle} = useBigInput();                                
 
     const infoRwObject = consultaData?.body?.info_rw?.Acciones?.[mergeInstrumentos];
     const hasInfoRwData = infoRwObject && Object.keys(infoRwObject).length > 0;
@@ -19,13 +23,13 @@ export const CostaRicaForm = ({
         <>
             {loadingConsultaInfo && <BarLoader className="w-full ml-2 mt-2" color="#059669" width={500} />}
 
-            <div className="form mt-4 animate__animated animate__fadeIn">
+            <div className="form mt-2 animate__animated animate__fadeIn">
                 <form>
                     <div className="form-cols-3 flex items-start">
                         <div className="form-cols-1 col-span-2">
                             <span className="form-title">Características</span>
                             <div className="form-cols-2 -my-3">
-                                <div className="form-date">
+                                <div className="form-date  form-date-my">
                                     <input
                                         type="date"
                                         name="d_fecha_emision"
@@ -40,18 +44,15 @@ export const CostaRicaForm = ({
                                         name="s_isin"
                                         value={consultaData?.body?.info_bd?.s_isin ?? ""}
                                         onChange={handleChange}
-                                        ref={requeridos.s_isin}
+                                        onFocus={() => handleFocus('s_isin')}
+                                        onBlur={handleBlur}
+                                        style={sendStyle('s_isin')}
                                     />
                                     <label htmlFor="s_isin">Isin</label>
-                                    {isFieldRequired.s_isin && (
-                                        <span className="fontError animate__animated animate__fadeIn">
-                                            Campo requerido Isin
-                                        </span>
-                                    )}
                                 </div>
                             </div>
                             <div className="form-cols-2 -my-3">
-                                <div className="form-date">
+                                <div className="form-date form-date-my">
                                     <input
                                         type="date"
                                         name="d_fecha_vencimiento"
@@ -84,7 +85,7 @@ export const CostaRicaForm = ({
                                 </div>
                             </div>
                             <div className="form-cols-2 -my-3">
-                                <div className="form-date">
+                                <div className="form-date form-date-my">
                                     <input
                                         type="date"
                                         name="d_fec_ini_cupon"
@@ -112,7 +113,7 @@ export const CostaRicaForm = ({
                                 </div>
                             </div>
                             <div className="form-cols-2 -my-3">
-                                <div className="form-date">
+                                <div className="form-date form-date-my">
                                     <input
                                         type="date"
                                         name="d_fecha_pago_interes"
@@ -217,6 +218,9 @@ export const CostaRicaForm = ({
                                         name="n_fixed_coupon_date"
                                         value={consultaData?.body?.info_bd?.n_fixed_coupon_date ?? ""}
                                         onChange={handleChange}
+                                        onFocus={() => handleFocus('n_fixed_coupon_date')}
+                                        onBlur={handleBlur}
+                                        style={sendStyle('n_fixed_coupon_date')}
                                     />
                                     <label htmlFor="n_fixed_coupon_date">
                                         Fixed Coupon Date
@@ -240,7 +244,7 @@ export const CostaRicaForm = ({
                                 </div>
                             </div>
                             <div className="form-cols-2 -my-3">
-                                <div className="form-date">
+                                <div className="form-date form-date-my">
                                     <input
                                         type="date"
                                         name="d_last_reg_coup_date"
@@ -257,6 +261,9 @@ export const CostaRicaForm = ({
                                         name="n_last_reset_rate"
                                         value={consultaData?.body?.info_bd?.n_last_reset_rate ?? ""}
                                         onChange={handleChange}
+                                        onFocus={() => handleFocus('n_last_reset_rate')}
+                                        onBlur={handleBlur}
+                                        style={sendStyle('n_last_reset_rate')}
                                     />
                                     <label htmlFor="n_last_reset_rate">
                                         Last Reset Rate
@@ -286,6 +293,9 @@ export const CostaRicaForm = ({
                                         name="n_premio"
                                         value={consultaData?.body?.info_bd?.n_premio ?? ""}
                                         onChange={handleChange}
+                                        onFocus={() => handleFocus('n_premio')}
+                                        onBlur={handleBlur}
+                                        style={sendStyle('n_premio')}
                                     />
                                     <label htmlFor="n_premio">
                                         Premio
@@ -315,6 +325,9 @@ export const CostaRicaForm = ({
                                         name="n_sobretasa"
                                         value={consultaData?.body?.info_bd?.n_sobretasa ?? ""}
                                         onChange={handleChange}
+                                        onFocus={() => handleFocus('n_sobretasa')}
+                                        onBlur={handleBlur}
+                                        style={sendStyle('n_sobretasa')}
                                     />
                                     <label htmlFor="n_sobretasa">
                                         Sobretasa
@@ -400,6 +413,9 @@ export const CostaRicaForm = ({
                                         name="n_plazo"
                                         value={consultaData?.body?.info_bd?.n_plazo ?? ""}
                                         onChange={handleChange}
+                                        onFocus={() => handleFocus('n_plazo')}
+                                        onBlur={handleBlur}
+                                        style={sendStyle('n_plazo')}
                                     />
                                     <label htmlFor="n_plazo">
                                         Plazo
@@ -435,6 +451,9 @@ export const CostaRicaForm = ({
                                         name="n_monto_colocado"
                                         value={consultaData?.body?.info_bd?.n_monto_colocado ?? ""}
                                         onChange={handleChange}
+                                        onFocus={() => handleFocus('n_monto_colocado')}
+                                        onBlur={handleBlur}
+                                        style={sendStyle('n_monto_colocado')}
                                         ref={requeridos.n_monto_colocado}
                                     />
                                     <label htmlFor="n_monto_colocado">
@@ -476,6 +495,9 @@ export const CostaRicaForm = ({
                                         name="n_monto_aprobado"
                                         value={consultaData?.body?.info_bd?.n_monto_aprobado ?? ""}
                                         onChange={handleChange}
+                                        onFocus={() => handleFocus('n_monto_aprobado')}
+                                        onBlur={handleBlur}
+                                        style={sendStyle('n_monto_aprobado')}
                                         ref={requeridos.n_monto_aprobado}
                                     />
                                     <label htmlFor="n_monto_aprobado">
@@ -509,6 +531,9 @@ export const CostaRicaForm = ({
                                         name="n_tasa_minima"
                                         value={consultaData?.body?.info_bd?.n_tasa_minima ?? ""}
                                         onChange={handleChange}
+                                        onFocus={() => handleFocus('n_tasa_minima')}
+                                        onBlur={handleBlur}
+                                        style={sendStyle('n_tasa_minima')}
                                     />
                                     <label htmlFor="n_tasa_minima">
                                         Tasa Mínima
@@ -520,6 +545,9 @@ export const CostaRicaForm = ({
                                         name="n_valor_nominal"
                                         value={consultaData?.body?.info_bd?.n_valor_nominal ?? ""}
                                         onChange={handleChange}
+                                        onFocus={() => handleFocus('n_valor_nominal')}
+                                        onBlur={handleBlur}
+                                        style={sendStyle('n_valor_nominal')}
                                     />
                                     <label htmlFor="n_valor_nominal">
                                         Valor Nominal
@@ -533,6 +561,9 @@ export const CostaRicaForm = ({
                                         name="n_tasa_maxima"
                                         value={consultaData?.body?.info_bd?.n_tasa_maxima ?? ""}
                                         onChange={handleChange}
+                                        onFocus={() => handleFocus('n_tasa_maxima')}
+                                        onBlur={handleBlur}
+                                        style={sendStyle('n_tasa_maxima')}
                                     />
                                     <label htmlFor="n_tasa_maxima">
                                         Tasa Máxima
@@ -544,6 +575,9 @@ export const CostaRicaForm = ({
                                         name="n_spot_price"
                                         value={consultaData?.body?.info_bd?.n_spot_price ?? ""}
                                         onChange={handleChange}
+                                        onFocus={() => handleFocus('n_spot_price')}
+                                        onBlur={handleBlur}
+                                        style={sendStyle('n_spot_price')}
                                     />
                                     <label htmlFor="n_spot_price">
                                         Spot Price
@@ -671,6 +705,9 @@ export const CostaRicaForm = ({
                                         name="n_factor_impuesto"
                                         value={consultaData?.body?.info_bd?.n_factor_impuesto ?? ""}
                                         onChange={handleChange}
+                                        onFocus={() => handleFocus('n_factor_impuesto')}
+                                        onBlur={handleBlur}
+                                        style={sendStyle('n_factor_impuesto')}
                                     />
                                     <label htmlFor="factorImpuesto">
                                         Factor Impuesto
@@ -684,6 +721,9 @@ export const CostaRicaForm = ({
                                         name="n_tasa_cupon_piso"
                                         value={consultaData?.body?.info_bd?.n_tasa_cupon_piso ?? ""}
                                         onChange={handleChange}
+                                        onFocus={() => handleFocus('n_tasa_cupon_piso')}
+                                        onBlur={handleBlur}
+                                        style={sendStyle('n_tasa_cupon_piso')}
                                     />
                                     <label htmlFor="n_tasa_cupon_piso">
                                         Tasa de Cupón Piso
@@ -695,12 +735,15 @@ export const CostaRicaForm = ({
                                         name="n_tasa_cupon_techo"
                                         value={consultaData?.body?.info_bd?.n_tasa_cupon_techo ?? ""}
                                         onChange={handleChange}
+                                        onFocus={() => handleFocus('n_tasa_cupon_techo')}
+                                        onBlur={handleBlur}
+                                        style={sendStyle('n_tasa_cupon_techo')}
                                     />
                                     <label htmlFor="n_tasa_cupon_techo">Tasa de Cupón Techo</label>
                                 </div>
                             </div>
                             <div className="form-cols-2 -my-3">
-                                <div className="form-date">
+                                <div className="form-date form-date-my">
                                     <input
                                         type="date"
                                         name="d_fec_pri_dia_val"
@@ -726,6 +769,9 @@ export const CostaRicaForm = ({
                                                        [mergeInstrumentos]?.
                                                        ["Common Stock"] ?? ""}
                                                    readOnly
+                                                   onFocus={() => handleFocus('CommonStock')}
+                                                   onBlur={handleBlur}
+                                                   style={sendStyle('CommonStock')}
                                             />
                                             <label htmlFor="Common Stock">
                                                 Common Stock
@@ -739,7 +785,11 @@ export const CostaRicaForm = ({
                                                    value={consultaData?.body?.info_rw?.Acciones?.
                                                        [mergeInstrumentos]?.
                                                        ["Name"] ?? ""}
-                                                   readOnly/>
+                                                   readOnly
+                                                   onFocus={() => handleFocus('Name')}
+                                                   onBlur={handleBlur}
+                                                   style={sendStyle('Name')}
+                                                   />
                                             <label htmlFor="name">
                                                 Name
                                             </label>
@@ -752,7 +802,11 @@ export const CostaRicaForm = ({
                                                    value={consultaData?.body?.info_rw?.Acciones?.
                                                        [mergeInstrumentos]?.
                                                        ["Spot Price"] ?? ""}
-                                                   readOnly/>
+                                                   readOnly
+                                                   onFocus={() => handleFocus('Spot Price')}
+                                                   onBlur={handleBlur}
+                                                   style={sendStyle('Spot Price')}
+                                                   />
                                             <label htmlFor="Spot Price">
                                                 Spot Price
                                             </label>
@@ -765,7 +819,11 @@ export const CostaRicaForm = ({
                                                    value={consultaData?.body?.info_rw?.Acciones?.
                                                        [mergeInstrumentos]?.
                                                        ["*Theoretical Model"] ?? ""}
-                                                   readOnly/>
+                                                   readOnly
+                                                   onFocus={() => handleFocus('Theoretical Model')}
+                                                   onBlur={handleBlur}
+                                                   style={sendStyle('Theoretical Model')}
+                                                   />
                                             <label htmlFor="*Theoretical Model">
                                                 Theorical Model
                                             </label>
@@ -778,7 +836,11 @@ export const CostaRicaForm = ({
                                                    value={consultaData?.body?.info_rw?.Acciones?.
                                                        [mergeInstrumentos]?.
                                                        ["Currency"] ?? ""}
-                                                   readOnly/>
+                                                   readOnly
+                                                   onFocus={() => handleFocus('Currency')}
+                                                   onBlur={handleBlur}
+                                                   style={sendStyle('Currency')}
+                                                   />
                                             <label htmlFor="Currency">
                                                 Currency
                                             </label>
@@ -910,7 +972,7 @@ export const CostaRicaForm = ({
                                     </select>
                                     <label htmlFor="n_sp_i">S P & I</label>
                                 </div>
-                                <div className="form-date">
+                                <div className="form-date form-date-my">
                                     <input type="date"
                                            name="d_fecha_sp_i"
                                            value={consultaData?.body?.info_bd?.d_fecha_sp_i ?? ""}
@@ -936,7 +998,7 @@ export const CostaRicaForm = ({
                                     </select>
                                     <label htmlFor="n_moodys_i">Moodys I</label>
                                 </div>
-                                <div className="form-date">
+                                <div className="form-date form-date-my">
                                     <input type="date"
                                            name="d_fecha_moodys_i"
                                            value={consultaData?.body?.info_bd?.d_fecha_moodys_i ?? ""}
@@ -964,7 +1026,7 @@ export const CostaRicaForm = ({
                                         Fitch I
                                     </label>
                                 </div>
-                                <div className="form-date">
+                                <div className="form-date form-date-my">
                                     <input type="date"
                                            name="d_fecha_fitch_i"
                                            value={consultaData?.body?.info_bd?.d_fecha_fitch_i ?? "default"}
@@ -981,7 +1043,11 @@ export const CostaRicaForm = ({
                                     <input type="text"
                                            name="n_fac_liqui"
                                            value={consultaData?.body?.info_bd?.n_fac_liqui ?? "default"}
-                                           readOnly/>
+                                           readOnly
+                                           onFocus={() => handleFocus('n_fac_liqui')}
+                                           onBlur={handleBlur}
+                                           style={sendStyle('n_fac_liqui')}
+                                                   />
                                     <label htmlFor="n_fac_liqui">
                                         Factor Liquidez
                                     </label>

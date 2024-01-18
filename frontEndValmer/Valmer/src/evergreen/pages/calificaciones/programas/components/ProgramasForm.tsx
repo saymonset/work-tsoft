@@ -36,7 +36,7 @@ export const ProgramasForm = () => {
                 <div className="grid grid-cols-4 gap-4">
                     <div className="grid grid-cols-1">
                         <span className="bg-cyan-700 text-slate-50 px-1">Fitch</span>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <select name="n_calif_fitch_n"
                                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
@@ -57,7 +57,7 @@ export const ProgramasForm = () => {
                                 Calificación Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <select name="n_calif_fitch_g"
                                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
                                          border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
@@ -78,7 +78,7 @@ export const ProgramasForm = () => {
                                 Calificación Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <input
                                 type="date"
                                 name="d_fec_fitch"
@@ -98,7 +98,7 @@ export const ProgramasForm = () => {
                     </div>
                     <div className="grid grid-cols-1">
                         <span className="bg-cyan-700 text-slate-50 px-1">Standard & Poors</span>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <select name="n_calif_sp_n"
                                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
@@ -119,7 +119,7 @@ export const ProgramasForm = () => {
                                 Calificación Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <select name="n_calif_sp_g"
                                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
                                          border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
@@ -140,7 +140,7 @@ export const ProgramasForm = () => {
                                 Calificación Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <input
                                 type="date"
                                 name="d_fec_sp"
@@ -160,7 +160,7 @@ export const ProgramasForm = () => {
                     </div>
                     <div className="grid grid-cols-1">
                         <span className="bg-cyan-700 text-slate-50 px-1">Moodys</span>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <select name="n_calif_moody_n"
                                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
@@ -181,7 +181,7 @@ export const ProgramasForm = () => {
                                 Calificación Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <select name="n_calif_moody_g"
                                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
                                          border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
@@ -202,7 +202,7 @@ export const ProgramasForm = () => {
                                 Calificación Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <input
                                 type="date"
                                 name="d_fec_moody"
@@ -222,7 +222,7 @@ export const ProgramasForm = () => {
                     </div>
                     <div className="grid grid-cols-1">
                         <span className="bg-cyan-700 text-slate-50 px-1">Hr</span>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <select name="n_calif_hr_n"
                                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
@@ -243,7 +243,7 @@ export const ProgramasForm = () => {
                                 Calificación Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <select name="n_calif_hr_g"
                                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
                                          border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
@@ -264,7 +264,7 @@ export const ProgramasForm = () => {
                                 Calificación Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <input
                                 type="date"
                                 name="d_fec_hr"
@@ -289,7 +289,7 @@ export const ProgramasForm = () => {
                 <div className="grid grid-cols-4 gap-4">
                     <div className="grid grid-cols-1">
                         <span className="bg-cyan-700 text-slate-50 px-1">Verum</span>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <select name="n_calif_verum_n"
                                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
@@ -310,7 +310,7 @@ export const ProgramasForm = () => {
                                 Calificación Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <select name="n_calif_verum_g"
                                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
                                          border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
@@ -331,7 +331,7 @@ export const ProgramasForm = () => {
                                 Calificación Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <input
                                 type="date"
                                 name="d_fec_verum"
@@ -351,7 +351,7 @@ export const ProgramasForm = () => {
                     </div>
                     <div className="grid grid-cols-1">
                         <span className="bg-cyan-700 text-slate-50 px-1">Dbrs</span>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <select name="n_calif_dbrs_n"
                                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
@@ -372,7 +372,7 @@ export const ProgramasForm = () => {
                                 Calificación Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <select name="n_calif_dbrs_g"
                                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
                                          border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
@@ -393,7 +393,7 @@ export const ProgramasForm = () => {
                                 Calificación Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <input
                                 type="date"
                                 name="d_fec_dbrs"
@@ -413,7 +413,7 @@ export const ProgramasForm = () => {
                     </div>
                     <div className="grid grid-cols-1">
                         <span className="bg-cyan-700 text-slate-50 px-1">Best</span>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <select name="n_calif_best_n"
                                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
                                         border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
@@ -434,7 +434,7 @@ export const ProgramasForm = () => {
                                 Calificación Nacional
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <select name="n_calif_best_g"
                                     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
                                          border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
@@ -455,7 +455,7 @@ export const ProgramasForm = () => {
                                 Calificación Global
                             </label>
                         </div>
-                        <div className="relative z-0 my-3">
+                        <div className="relative z-0 my-2">
                             <input
                                 type="date"
                                 name="d_fec_best"

@@ -7,9 +7,14 @@ import { UserChangePwd } from "./UserChangePwd";
 import { ProductosTrial } from "./ProductosTrial";
 import { HistoricoTrial } from "./HistoricoTrial";
 import { GenerarArchivo } from "./GenerarArchivo";
+import { useBigInput } from "../../../deuda/tasas/components/forms/hooks/useBigInput";
 
 export const UserWebForm = () => {
 
+    //  Achica o agranda el input del form cuando obtiene o deja el focus
+    const {  handleFocus,
+        handleBlur,
+        sendStyle} = useBigInput();
     const {
         catalogoInst, 
         loadingInst, 
@@ -67,10 +72,10 @@ export const UserWebForm = () => {
 
     return (
         <>
-            <div className="form-cols-3 -my-3">
+            <div className="form-cols-3 my-0">
                 <div className="form-cols-2 col-span-2">
                     <span className="form-title col-span-2">Compañía</span>
-                    <div className="form-select">
+                    <div className="form-select form-my0">
                         <select 
                             name="n_institucion"
                             id="n_institucion"
@@ -86,7 +91,7 @@ export const UserWebForm = () => {
                         </select>
                         <label htmlFor="institucion">INSTITUCION</label>
                     </div>
-                    <div className="form-select">
+                    <div className="form-select form-my0">
                         <select 
                             name="n_sector" 
                             id="n_sector"
@@ -106,7 +111,7 @@ export const UserWebForm = () => {
                 </div>
                 <div className="form-cols-1 col-span-1">
                     <span className="form-title">Usuario</span>
-                    <div className="form-select">
+                    <div className="form-select form-my0">
                         <select 
                             name="n_nombre" 
                             id="n_nombre"
@@ -125,7 +130,7 @@ export const UserWebForm = () => {
                     </div>
                 </div>
             </div>
-            <div className="flex mt-3">
+            <div className="flex mt-0">
                 <button className="btn">RECARGAR</button>
                 <button 
                     className="btn"
@@ -135,13 +140,13 @@ export const UserWebForm = () => {
                 </button>
             </div>
             
-            <div className="line"/>
+            <div className="line-y-1"/>
             
-            <div className="flex justify-center -mt-3">
-                <div className="grid grid-rows-2 gap-4 w-2/5">
+            <div className="flex justify-center mt-1">
+                <div className="grid grid-rows-2 gap-1 w-2/5">
                     <span className="form-title w-full">Consulta Usuarios Proceso Permisos</span>
                     <div className="form-cols-3">
-                        <span className="text-center mt-2">CONSULTA</span>
+                        <span className="text-center mt-1">CONSULTA</span>
                         <button 
                             className="btn"
                             onClick={handleProcesosPermisos}
@@ -160,50 +165,59 @@ export const UserWebForm = () => {
                 </div>
             </div>
             
-            <div className="line"/>
+            <div className="line line-y-1"/>
 
-            <div className="form-cols-2 -mt-3">
+            <div className="form-cols-2 mt-1">
                 <div className="form-cols-1">
-                    {loadingInfo && <BarLoader className="mt-2" color="#059669" width={400} />}
+                    {loadingInfo && <BarLoader className="mt-1" color="#059669" width={400} />}
                     <span className="form-title">Información</span>
-                    <div className="form-cols-1 -my-3">
-                        <div className="form-input -my-3">
+                    <div className="form-cols-2 my-0">
+                        <div className="form-input form-my0 my-0">
                             <input 
                                 type="text" 
                                 name="id_usuario" 
                                 id="id_usuario"
                                 value={selectedNombre}
                                 disabled
+                                onFocus={() => handleFocus('id_usuario')}
+                                onBlur={handleBlur}
+                                style={sendStyle('id_usuario')}
                             />
                             <label htmlFor="id_usuario">ID_DATOS</label>
                         </div>
-                    </div>
-                    <div className="form-cols-1 -my-3">
-                        <div className="form-input">
+                    {/* </div>
+                    <div className="form-cols-1 my-0"> */}
+                        <div className="form-input form-my0 ">
                             <input 
                                 type="text" 
                                 name="id_institucion" 
                                 id="id_institucion"
                                 value={infoUser?.["n institucion"] ?? selectedInstitucion ?? ''}
                                 disabled
+                                onFocus={() => handleFocus('id_institucion')}
+                                onBlur={handleBlur}
+                                style={sendStyle('id_institucion')}
                             />
                             <label htmlFor="id_institucion">ID_INSTITUCION</label>
                         </div>
-                    </div>
-                    <div className="form-cols-1 -my-3">
-                        <div className="form-input">
+                    {/* </div>
+                    <div className="form-cols-1 my-0"> */}
+                        <div className="form-input form-my0 ">
                             <input 
                                 type="text" 
                                 name="id_sector" 
                                 id="id_sector"
                                 value={infoUser?.n_sector ?? selectedSector ?? ''}
                                 disabled
+                                onFocus={() => handleFocus('id_sector')}
+                                onBlur={handleBlur}
+                                style={sendStyle('id_sector')}
                             />
                             <label htmlFor="id_sector">ID_SECTOR</label>
                         </div>
-                    </div>
-                    <div className="form-cols-1 -my-3">
-                        <div className="form-select">
+                    {/* </div>
+                    <div className="form-cols-1 my-0"> */}
+                        <div className="form-select form-my0">
                             <select 
                                 name="n_tipo_usuario" 
                                 id="n_tipo_usuario"
@@ -219,99 +233,123 @@ export const UserWebForm = () => {
                             </select>
                             <label htmlFor="n_tipo_usuario">TIPO USUARIO</label>
                         </div>
-                    </div>
-                    <div className="form-cols-1 -my-3">
-                        <div className="form-input">
+                    {/* </div>
+                    <div className="form-cols-1 my-0"> */}
+                        <div className="form-input form-my0 ">
                             <input 
                                 type="email" 
                                 name="email" 
                                 id="email"
                                 value={infoUser?.email ?? ''}
                                 onChange={handleChage}
+                                onFocus={() => handleFocus('email')}
+                                onBlur={handleBlur}
+                                style={sendStyle('email')}
                             />
                             <label htmlFor="email">EMAIL</label>
                         </div>
-                    </div>
-                    <div className="form-cols-1 -my-3">
-                        <div className="form-input">
+                    {/* </div>
+                    <div className="form-cols-1 my-0"> */}
+                        <div className="form-input form-my0 ">
                             <input 
                                 type="text" 
                                 name="contrasenia_vigente" 
                                 id="contrasenia_vigente"
                                 value={infoUser?.contrasenia_vigente ?? ''}
                                 disabled
+                                onFocus={() => handleFocus('contrasenia_vigente')}
+                                onBlur={handleBlur}
+                                style={sendStyle('contrasenia_vigente')}
                             />
                             <label htmlFor="contrasenia_vigente">CONTRASEÑA VIGENTE</label>
                         </div>
-                    </div>
-                    <div className="form-cols-1 -my-3">
-                        <div className="form-input">
+                    {/* </div>
+                    <div className="form-cols-1 my-0"> */}
+                        <div className="form-input form-my0 ">
                             <input 
                                 type="text" 
                                 name="contrasenia_fecha_cambio" 
                                 id="contrasenia_fecha_cambio"
                                 value={infoUser?.contrasenia_fecha_cambio ?? ''}
                                 disabled
+                                onFocus={() => handleFocus('contrasenia_fecha_cambio')}
+                                onBlur={handleBlur}
+                                style={sendStyle('contrasenia_fecha_cambio')}
                             />
                             <label htmlFor="contrasenia_fecha_cambio">CONTRASEÑA FECHA CAMBIO</label>
                         </div>
-                    </div>
-                    <div className="form-cols-1 -my-3">
-                        <div className="form-input">
+                    {/* </div>
+                    <div className="form-cols-1 my-0"> */}
+                        <div className="form-input form-my0 ">
                             <input 
                                 type="text" 
                                 name="token" 
                                 id="token"
                                 value={infoUser?.token ?? ''}
                                 disabled
+                                onFocus={() => handleFocus('token')}
+                                onBlur={handleBlur}
+                                style={sendStyle('token')}
                             />
                             <label htmlFor="token">TOKEN</label>
                         </div>
-                    </div>
-                    <div className="form-cols-1 -my-3">
-                        <div className="form-input">
+                    {/* </div>
+                    <div className="form-cols-1 my-0"> */}
+                        <div className="form-input form-my0 ">
                             <input 
                                 type="text" 
                                 name="cuenta_activada" 
                                 id="cuenta_activada"
                                 value={infoUser?.cuenta_activada ?? ''}
                                 disabled
+                                onFocus={() => handleFocus('cuenta_activada')}
+                                onBlur={handleBlur}
+                                style={sendStyle('cuenta_activada')}
                             />
                             <label htmlFor="cuenta_activada">CUENTA ACTIVADA</label>
                         </div>
-                    </div>
-                    <div className="form-cols-1 -my-3">
-                        <div className="form-input">
+                    {/* </div>
+                    <div className="form-cols-1 my-0"> */}
+                        <div className="form-input form-my0 ">
                             <input 
                                 type="text" 
                                 name="estatus" 
                                 id="estatus"
                                 value={infoUser?.estatus ?? ''}
                                 disabled
+                                onFocus={() => handleFocus('estatus')}
+                                onBlur={handleBlur}
+                                style={sendStyle('estatus')}
                             />
                             <label htmlFor="estatus">ESTATUS</label>
                         </div>
-                    </div>
-                    <div className="form-cols-1 -my-3">
-                        <div className="form-input">
+                    {/* </div>
+                    <div className="form-cols-1 my-0"> */}
+                        <div className="form-input form-my0 ">
                             <input 
                                 type="text" 
                                 name="activo" 
                                 id="activo"
                                 value={infoUser?.activo ?? ''}
                                 disabled
+                                onFocus={() => handleFocus('activo')}
+                                onBlur={handleBlur}
+                                style={sendStyle('activo')}
                             />
                             <label htmlFor="activo">ACTIVO</label>
                         </div>
-                    </div>
-                    <div className="form-cols-1 -my-3">
-                        <div className="form-input">
+                    {/* </div>
+                    <div className="form-cols-1 my-0"> */}
+                        <div className="form-input form-my0 ">
                             <input 
                                 type="text" 
                                 name="fecha_alta" 
                                 id="fecha_alta"
                                 value={infoUser?.fecha_alta ?? ''}
                                 disabled
+                                onFocus={() => handleFocus('fecha_alta')}
+                                onBlur={handleBlur}
+                                style={sendStyle('fecha_alta')}
                             />
                             <label htmlFor="fecha_alta">FECHA ALTA</label>
                         </div>
@@ -320,8 +358,8 @@ export const UserWebForm = () => {
                 <div className="form-cols-1 content-start">
                     <span className="form-title">Archivos Proceso Descarga</span>
                     {loadingUri && <BarLoader className="mt-2" color="#059669" width={400} />}
-                    <div className="form-cols-1 -my-3">
-                        <div className="form-input">
+                    <div className="form-cols-1 my-0">
+                        <div className="form-input form-my0 ">
                             <input type="text" 
                                    name="searchUri" 
                                    id="searchUri"
@@ -330,8 +368,8 @@ export const UserWebForm = () => {
                             <label htmlFor="searchUri">Busca URI</label>
                         </div>
                     </div>
-                    <div className="form-cols-1 -my-3">
-                        <div className="form-select">
+                    <div className="form-cols-1 my-0">
+                        <div className="form-select form-my0">
                             <select 
                                 name="s_uri" 
                                 id="s_uri"
@@ -348,43 +386,52 @@ export const UserWebForm = () => {
                             <label htmlFor="s_uri">URI</label>
                         </div>
                     </div>
-                    <div className="form-cols-1 -my-3">
-                        <div className="form-input">
+                    <div className="form-cols-1 my-0">
+                        <div className="form-input form-my0 ">
                             <input 
                                 type="text" 
                                 name="archivo" 
                                 id="archivo"
                                 value={uriInfo.archivo ?? ''}
                                 disabled
+                                onFocus={() => handleFocus('archivo')}
+                                onBlur={handleBlur}
+                                style={sendStyle('archivo')}
                             />
                             <label htmlFor="archivo">ARCHIVO</label>
                         </div>
                     </div>
-                    <div className="form-cols-1 -my-3">
-                        <div className="form-input">
+                    <div className="form-cols-1 my-0">
+                        <div className="form-input form-my0 ">
                             <input 
                                 type="text" 
                                 name="id_proceso" 
                                 id="id_proceso"
                                 value={uriInfo.id_proceso ?? ''}
                                 disabled
+                                onFocus={() => handleFocus('id_proceso')}
+                                onBlur={handleBlur}
+                                style={sendStyle('id_proceso')}
                             />
                             <label htmlFor="id_proceso">ID_PROCESO</label>
                         </div>
                     </div>
-                    <div className="form-cols-1 -my-3">
-                        <div className="form-input">
+                    <div className="form-cols-1 my-0">
+                        <div className="form-input form-my0 ">
                             <input 
                                 type="text" 
                                 name="id_proceso_padre" 
                                 id="id_proceso_padre"
                                 value={uriInfo.id_proceso_padre ?? ''}
                                 disabled
+                                onFocus={() => handleFocus('id_proceso_padre')}
+                                onBlur={handleBlur}
+                                style={sendStyle('id_proceso_padre')}
                             />
                             <label htmlFor="id_proceso_padre">ID_PROCESO_PADRE</label>
                         </div>
                     </div>
-                    <div className="form-cols-1 -my-3">
+                    <div className="form-cols-1 my-0">
                         <div className="form-text-area">
                             <textarea
                                 className="max-h-80"
@@ -419,7 +466,7 @@ export const UserWebForm = () => {
                 is_hist={false}
             />
 
-            <div className="line"/>
+            <div className="line line-y-1"/>
             
             <div className="form-cols-3">
                 <ProductosTrial 

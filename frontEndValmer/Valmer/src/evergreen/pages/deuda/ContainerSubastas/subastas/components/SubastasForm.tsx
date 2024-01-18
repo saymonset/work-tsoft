@@ -3,7 +3,13 @@ import { MoonLoader } from "react-spinners";
 import {generateUUID, getCatalogsSub} from "../../../../../../utils";
 import {useSubastasForm} from "../../hooks";
 import {SubFormProps} from "../../../../../../model";
+import { useBigInput } from "../../../tasas/components/forms/hooks/useBigInput";
 export const SubastasForm = (p: SubFormProps) => {
+
+      //  Achica o agranda el input del form cuando obtiene o deja el focus
+    const {  handleFocus,
+        handleBlur,
+        sendStyle} = useBigInput();
 
     const {
         catalog,
@@ -74,7 +80,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -89,7 +95,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -103,7 +109,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -119,7 +125,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -134,7 +140,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -148,7 +154,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -159,7 +165,7 @@ export const SubastasForm = (p: SubFormProps) => {
                             />
                         </td>
                         <td>
-                            <select className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
+                            <select className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent
                                     border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
                                 name="s_instr"
@@ -179,7 +185,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_monto"
@@ -197,7 +203,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -212,7 +218,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -226,7 +232,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -239,7 +245,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <select 
 
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent
                                     border-0 border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
                                 name="s_instr"
@@ -259,7 +265,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_monto"
@@ -276,7 +282,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -291,7 +297,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -305,7 +311,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -318,7 +324,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <select 
 
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900
+                                className="block py-0 px-0 w-full text-sm text-gray-900
                                     bg-transparent border-0 border-b-2 border-gray-200 appearance-none
                                     dark:border-gray-600 dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
                                 name="s_instr"
@@ -338,7 +344,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_monto"
@@ -355,7 +361,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -370,7 +376,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -384,7 +390,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -397,7 +403,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <select 
 
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
                                 name="s_instr"
@@ -417,7 +423,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_monto"
@@ -434,7 +440,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -449,7 +455,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -463,7 +469,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -476,7 +482,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <select 
 
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
                                 name="s_instr"
@@ -496,7 +502,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_monto"
@@ -513,7 +519,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -528,7 +534,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -542,7 +548,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -555,7 +561,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <select 
 
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
                                 name="s_instr"
@@ -575,7 +581,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_monto"
@@ -592,7 +598,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -607,7 +613,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -621,7 +627,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -634,7 +640,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <select 
 
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
                                 name="s_instr"
@@ -654,7 +660,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_monto"
@@ -671,7 +677,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -686,7 +692,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -700,7 +706,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -713,7 +719,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <select 
 
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
                                 name="s_instr"
@@ -733,7 +739,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_monto"
@@ -750,7 +756,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -765,7 +771,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -779,7 +785,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -792,7 +798,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <select 
 
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
                                 name="s_instr"
@@ -812,7 +818,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_monto"
@@ -829,7 +835,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -844,7 +850,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -858,7 +864,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -871,7 +877,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <select 
 
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
                                 name="s_instr"
@@ -891,7 +897,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_monto"
@@ -908,7 +914,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -923,7 +929,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -937,7 +943,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -950,7 +956,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <select 
 
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
                                 name="udibonos5"
@@ -970,7 +976,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_monto"
@@ -987,7 +993,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -1002,7 +1008,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -1016,7 +1022,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -1029,7 +1035,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <select 
 
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
                                 name="s_instr"
@@ -1049,7 +1055,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_monto"
@@ -1066,7 +1072,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -1081,7 +1087,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -1095,7 +1101,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -1108,7 +1114,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <select 
 
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
                                 name="s_instr"
@@ -1128,7 +1134,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_monto"
@@ -1145,7 +1151,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -1160,7 +1166,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -1174,7 +1180,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -1187,7 +1193,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <select 
 
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer"
                                 name="s_instr"
@@ -1207,7 +1213,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_monto"
@@ -1224,7 +1230,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -1236,7 +1242,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         </td>
                         <td>INPC Q</td>
                         <td>
-                            <select className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                            <select className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                         border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer text-center"
                                     name="s_plazo"
@@ -1256,7 +1262,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -1270,7 +1276,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -1286,7 +1292,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -1298,7 +1304,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         </td>
                         <td>INPC M</td>
                         <td>
-                            <select className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                            <select className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                         border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer text-center"
                                     name="s_plazo"
@@ -1318,7 +1324,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -1332,7 +1338,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -1348,7 +1354,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -1360,7 +1366,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         </td>
                         <td>CPP</td>
                         <td>
-                            <select className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                            <select className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                         border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer text-center"
                                     name="s_plazo"
@@ -1380,7 +1386,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -1394,7 +1400,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -1410,7 +1416,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -1422,7 +1428,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         </td>
                         <td>Salario Minimo</td>
                         <td>
-                            <select className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                            <select className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                         border-b-2 border-gray-200 appearance-none dark:border-gray-600
                                         dark:focus:border-cyan-700 focus:outline-none focus:ring-0 peer text-center"
                                     name="s_plazo"
@@ -1442,7 +1448,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -1456,7 +1462,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -1472,7 +1478,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -1489,7 +1495,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -1503,7 +1509,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -1519,7 +1525,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -1536,7 +1542,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -1550,7 +1556,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"
@@ -1566,7 +1572,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_subasta"
@@ -1583,7 +1589,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="text"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0
                                     border-b-2 border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="n_tasa"
@@ -1597,7 +1603,7 @@ export const SubastasForm = (p: SubFormProps) => {
                         <td>
                             <input
                                 type="date"
-                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                                className="block py-0 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                                     border-gray-300 appearance-none dark:text-slate-900 dark:border-gray-600
                                     dark:focus:border-cyan-700 focus:outline-none focus:ring-0 focus:border-cyan-700 peer"
                                 name="d_fecha_colocacion"

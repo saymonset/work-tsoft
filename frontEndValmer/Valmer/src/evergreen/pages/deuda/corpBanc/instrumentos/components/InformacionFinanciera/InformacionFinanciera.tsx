@@ -2,9 +2,13 @@ import React from 'react'
 import { useCalifAntNew, useInfoFinanciera } from './hooks';
 import { MoonLoader } from 'react-spinners';
 import {getCatalogs} from "../../../../../../../utils";
+import { useBigInput } from '../../../../tasas/components/forms/hooks/useBigInput';
 
 export const InformacionFinanciera = () => {
-
+    //  Achica o agranda el input del form cuando obtiene o deja el focus
+    const {  handleFocus,
+        handleBlur,
+        sendStyle} = useBigInput();
 	const {
         consultaData,
 		loadingSubmit,
@@ -46,6 +50,9 @@ export const InformacionFinanciera = () => {
 							required
 							value={consultaData?.body?.s_instrumento ?? ''}
 							onChange={handleChange}
+							onFocus={() => handleFocus('s_instrumento')}
+							onBlur={handleBlur}
+							style={sendStyle('s_instrumento')}
 						/>
 						<label
 							htmlFor="s_instrumento"
@@ -148,6 +155,9 @@ export const InformacionFinanciera = () => {
 							required
 							value={consultaData?.body?.n_notches ?? ''}
 							onChange={handleChange}
+							onFocus={() => handleFocus('n_notches')}
+							onBlur={handleBlur}
+							style={sendStyle('n_notches')}
 						/>
 						<label
 							htmlFor="n_notches"
@@ -156,8 +166,7 @@ export const InformacionFinanciera = () => {
 						</label>
 					</div>
 				</div>
-			</div>
-			<div className="px-3">
+			
 				<div className="form-title">
 					<span>Información Financiera</span>
 				</div>
@@ -171,6 +180,9 @@ export const InformacionFinanciera = () => {
 							required
 							value={consultaData?.body?.n_titulos_iniciales ?? ''}
 							onChange={handleChange}
+							onFocus={() => handleFocus('n_titulos_if')}
+							onBlur={handleBlur}
+							style={sendStyle('n_titulos_if')}
 						/>
 						<label
 							htmlFor="n_titulos_if"
@@ -178,9 +190,7 @@ export const InformacionFinanciera = () => {
 							Títulos
 						</label>
 					</div>
-				</div>
-				<div className='form-cols-4'>
-					<div className="form-input col-start-2">
+					<div className="form-input">
 						<input
 							type="text"
 							name="n_valor_nominal_act"
@@ -189,6 +199,9 @@ export const InformacionFinanciera = () => {
 							required
 							value={consultaData?.body?.n_valor_nominal_act ?? ''}
 							onChange={handleChange}
+							onFocus={() => handleFocus('n_valor_nominal_act')}
+							onBlur={handleBlur}
+							style={sendStyle('n_valor_nominal_act')}
 						/>
 						<label
 							htmlFor="n_valor_nominal_act"
@@ -207,6 +220,9 @@ export const InformacionFinanciera = () => {
 							required
 							value={consultaData?.body?.n_monto_circulacion ?? ''}
 							onChange={handleChange}
+							onFocus={() => handleFocus('n_monto_circulacion')}
+							onBlur={handleBlur}
+							style={sendStyle('n_monto_circulacion')}
 						/>
 						<label
 							htmlFor="n_monto_circulacion"
@@ -214,9 +230,8 @@ export const InformacionFinanciera = () => {
 							Monto en Circulación
 						</label>
 					</div>
-				</div>
-				<div className="form-cols-4">
-					<div className="form-input col-start-2">
+				 
+					<div className="form-input">
 						<input
 							type="text"
 							name="n_factor"
@@ -225,6 +240,9 @@ export const InformacionFinanciera = () => {
 							required
 							value={consultaData?.body?.n_factor ?? ''}
 							onChange={handleChange}
+							onFocus={() => handleFocus('n_factor')}
+							onBlur={handleBlur}
+							style={sendStyle('n_factor')}
 						/>
 						<label
 							htmlFor="n_factor"
@@ -243,6 +261,9 @@ export const InformacionFinanciera = () => {
 							required
 							value={consultaData?.body?.n_efectivo ?? ''}
 							onChange={handleChange}
+							onFocus={() => handleFocus('n_efectivo')}
+							onBlur={handleBlur}
+							style={sendStyle('n_efectivo')}
 						/>
 						<label
 							htmlFor="n_efectivo"
@@ -250,9 +271,8 @@ export const InformacionFinanciera = () => {
 							Efectivo
 						</label>
 					</div>
-				</div>
-				<div className="form-cols-4">
-					<div className="form-input col-start-2">
+				 
+					<div className="form-input">
 						<input
 							type="text"
 							name="n_der_cobro"
@@ -261,6 +281,9 @@ export const InformacionFinanciera = () => {
 							required
 							value={consultaData?.body?.n_der_cobro ?? ''}
 							onChange={handleChange}
+							onFocus={() => handleFocus('n_der_cobro')}
+							onBlur={handleBlur}
+							style={sendStyle('n_der_cobro')}
 						/>
 						<label
 							htmlFor="n_der_cobro"
@@ -279,6 +302,9 @@ export const InformacionFinanciera = () => {
 							required
 							value={consultaData?.body?.n_der_35_porcent ?? ''}
 							onChange={handleChange}
+							onFocus={() => handleFocus('n_der_35_porcent')}
+							onBlur={handleBlur}
+							style={sendStyle('n_der_35_porcent')}
 						/>
 						<label
 							htmlFor="n_der_35_porcent"
@@ -286,9 +312,8 @@ export const InformacionFinanciera = () => {
 							Der 35%
 						</label>
 					</div>
-				</div>
-				<div className="form-cols-4">
-					<div className="form-input col-start-2">
+			 
+					<div className="form-input">
 						<input
 							type="text"
 							name="n_ac"
@@ -297,6 +322,9 @@ export const InformacionFinanciera = () => {
 							required
 							value={consultaData?.body?.n_ac ?? ''}
 							onChange={handleChange}
+							onFocus={() => handleFocus('n_ac')}
+							onBlur={handleBlur}
+							style={sendStyle('n_ac')}
 						/>
 						<label
 							htmlFor="n_ac"
@@ -315,6 +343,9 @@ export const InformacionFinanciera = () => {
 							required
 							value={consultaData?.body?.n_activo_no_circ ?? ''}
 							onChange={handleChange}
+							onFocus={() => handleFocus('n_activo_no_circ')}
+							onBlur={handleBlur}
+							style={sendStyle('n_activo_no_circ')}
 						/>
 						<label
 							htmlFor="n_activo_no_circ"
@@ -322,9 +353,8 @@ export const InformacionFinanciera = () => {
 							Activo NO Circulante
 						</label>
 					</div>
-				</div>
-				<div className="form-cols-4">
-					<div className="form-input col-start-2">
+				 
+					<div className="form-input">
 						<input
 							type="text"
 							name="n_garantias"
@@ -333,6 +363,9 @@ export const InformacionFinanciera = () => {
 							required
 							value={consultaData?.body?.n_garantias ?? ''}
 							onChange={handleChange}
+							onFocus={() => handleFocus('n_garantias')}
+							onBlur={handleBlur}
+							style={sendStyle('n_garantias')}
 						/>
 						<label
 							htmlFor="n_garantias"
@@ -351,6 +384,9 @@ export const InformacionFinanciera = () => {
 							required
 							value={consultaData?.body?.n_re_anc ?? ''}
 							onChange={handleChange}
+							onFocus={() => handleFocus('n_re_anc')}
+							onBlur={handleBlur}
+							style={sendStyle('n_re_anc')}
 						/>
 						<label
 							htmlFor="n_re_anc"
@@ -358,9 +394,8 @@ export const InformacionFinanciera = () => {
 							Rec 35% ACTIVO NO CIRCULANTE
 						</label>
 					</div>
-				</div>
-				<div className="form-cols-4">
-					<div className="form-input col-start-2">
+				 
+					<div className="form-input">
 						<input
 							type="text"
 							name="n_re_garantias"
@@ -369,6 +404,9 @@ export const InformacionFinanciera = () => {
 							required
 							value={consultaData?.body?.n_re_garantias ?? ''}
 							onChange={handleChange}
+							onFocus={() => handleFocus('n_re_garantias')}
+							onBlur={handleBlur}
+							style={sendStyle('n_re_garantias')}
 						/>
 						<label
 							htmlFor="n_re_garantias"
@@ -387,6 +425,9 @@ export const InformacionFinanciera = () => {
 							required
 							value={consultaData?.body?.n_ac_rec ?? ''}
 							onChange={handleChange}
+							onFocus={() => handleFocus('n_ac_rec')}
+							onBlur={handleBlur}
+							style={sendStyle('n_ac_rec')}
 						/>
 						<label
 							htmlFor="n_ac_rec"
@@ -394,9 +435,8 @@ export const InformacionFinanciera = () => {
 							AC + Rec
 						</label>
 					</div>
-				</div>
-				<div className="form-cols-4">
-					<div className="form-input col-start-2">
+				 
+					<div className="form-input">
 						<input
 							type="text"
 							name="n_precio_vector_dha"
@@ -405,6 +445,9 @@ export const InformacionFinanciera = () => {
 							required
 							value={consultaData.body?.n_precio_vector_dha ?? ''}
 							onChange={handleChange}
+							onFocus={() => handleFocus('n_precio_vector_dha')}
+							onBlur={handleBlur}
+							style={sendStyle('n_precio_vector_dha')}
 						/>
 						<label
 							htmlFor="n_precio_vector_dha"
@@ -423,6 +466,9 @@ export const InformacionFinanciera = () => {
 							required
 							value={consultaData?.body?.n_porc_vna_ant ?? ''}
 							onChange={handleChange}
+							onFocus={() => handleFocus('n_porc_vna_ant')}
+							onBlur={handleBlur}
+							style={sendStyle('n_porc_vna_ant')}
 						/>
 						<label
 							htmlFor="n_porc_vna_ant"
@@ -430,9 +476,8 @@ export const InformacionFinanciera = () => {
 							%VNA Ant
 						</label>
 					</div>
-				</div>
-				<div className="form-cols-4">
-					<div className="form-input col-start-2">
+			 
+					<div className="form-input">
 						<input
 							type="text"
 							name="n_porc_vna"
@@ -441,6 +486,9 @@ export const InformacionFinanciera = () => {
 							required
 							value={consultaData?.body?.n_porc_vna ?? ''}
 							onChange={handleChange}
+							onFocus={() => handleFocus('n_porc_vna')}
+							onBlur={handleBlur}
+							style={sendStyle('n_porc_vna')}
 						/>
 						<label
 							htmlFor="n_porc_vna"
@@ -459,6 +507,9 @@ export const InformacionFinanciera = () => {
 							required
 							value={consultaData?.body?.n_precio_nuevo ?? ''}
 							onChange={handleChange}
+							onFocus={() => handleFocus('n_precio_nuevo')}
+							onBlur={handleBlur}
+							style={sendStyle('n_precio_nuevo')}
 						/>
 						<label
 							htmlFor="n_precio_nuevo"
@@ -478,12 +529,22 @@ export const InformacionFinanciera = () => {
 						</label>
 					</div>
 				</div>
-				<div className='line' />
+
+				<div className="form-cols-4">
+					<div className="col-start-2">
+					<div className='line' />
+					</div>
+					<div className='line' />
+				</div>
+				<div className="form-cols-4">
+					
+				</div>
+				
 				<div className='flex justify-center px-3'>
 					<button
 						type='submit'
 						className='btn'
-						onClick={handleSubmitFinanciera}
+							onClick={handleSubmitFinanciera}
 					>
 						{loadingSubmit ? (
 							<i className="fa fa-spinner fa-spin"></i>
@@ -495,4 +556,6 @@ export const InformacionFinanciera = () => {
 			</div>
 		</form>
 	);
-}
+	}
+
+		
