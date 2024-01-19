@@ -2,11 +2,11 @@ import { BarLoader, MoonLoader } from "react-spinners";
 import { useHandleDataUserWeb } from "../hooks"
 import { getCatalogs } from "../../../../../utils";
 import { ButtonContent } from "../../../../../shared";
-import { UserBloqueo } from "./UserBloqueo";
 import { UserChangePwd } from "./UserChangePwd";
 import { ProductosTrial } from "./ProductosTrial";
 import { HistoricoTrial } from "./HistoricoTrial";
 import { GenerarArchivo } from "./GenerarArchivo";
+import React from "react";
 import { useBigInput } from "../../../deuda/tasas/components/forms/hooks/useBigInput";
 
 export const UserWebForm = () => {
@@ -19,7 +19,7 @@ export const UserWebForm = () => {
         catalogoInst, loadingInst,
         catNom, loadingCatNom,
         catTipoUser, loadingTipoUser,
-        catUri, loadingCatUri,
+        catUri, dataUri,loadingCatUri,
         loadingSector, selectedInstitucion,
         catSector, selectedSector,
         loadingInfo, selectedNombre,
@@ -28,18 +28,18 @@ export const UserWebForm = () => {
         uriInfo, liga,
         loadingGeneraArch, linkArchPermisos,
         triggerInfoTrial, triggerProducts,
-        dataTable, dataUri,
-        handleClickInstitucion, handleClickSector,
+        dataTable,
+        unlockUser, handleClickInstitucion, handleClickSector,
         handleClickNombre, handleChage,
         handleSaveUser, handleUri,
-        handleProcesosPermisos, downloadProcesosPermisos,
+        handleProcesosPermisos, downloadProcesosPermisos, setTriggerInfo,
         setTriggerInfoTrial, setTriggerProducts,
         setDataTable, searchDataUri
     } = useHandleDataUserWeb()
 
-    const isLoading = loadingInst || loadingTipoUser || loadingCatUri || loadingCatNom || loadingUri;
+    const isLoading = loadingInst || loadingTipoUser || loadingCatUri || loadingUri;
 
-    const isDataAvailable = catalogoInst.length && catTipoUser.body && catUri.body && dataUri && catNom.body;
+    const isDataAvailable = catalogoInst.length && catTipoUser.body && catUri.body;
 
     if (isLoading) {
         return (
@@ -362,7 +362,7 @@ export const UserWebForm = () => {
                                 onChange={handleUri}
                             >
                                 <option value="default">...</option>
-                                {Object.entries(dataUri).map((item) => (
+                                {dataUri && Object.entries(dataUri).map((item) => (
                                 <option key={item[0]} value={item[0]}>
                                     {item[1]}
                                 </option>
@@ -434,10 +434,23 @@ export const UserWebForm = () => {
             </div>
             <div className="form-cols-2">
                 {(infoUser.cuenta_activada === "N" || infoUser.estatus === "B" || infoUser.activo === "N") && (
-                    <UserBloqueo n_nombre = {selectedNombre} />
+                    <div className="form-cols-2 animate__animated animate__fadeIn flex items-center">
+                        <div className="text-red-700 font-bold text-center">USUARIO BLOQUEADO</div>
+                        <button
+                            className="btn w-min m-0 p-0"
+                            onClick={unlockUser}
+                        >
+                            DESBLOQUEAR
+                        </button>
+                    </div>
                 )}
                 {selectedNombre !== 0 && (
-                    <UserChangePwd email={infoUser.email} />
+                    <UserChangePwd
+                        email={infoUser.email}
+                        setTriggerProducts={setTriggerProducts}
+                        setTriggerInfoTrial={setTriggerInfoTrial}
+                        setTriggerInfo={setTriggerInfo}
+                    />
                 )}
             </div>
 
