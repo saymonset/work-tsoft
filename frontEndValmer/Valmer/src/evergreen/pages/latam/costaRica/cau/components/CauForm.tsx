@@ -3,7 +3,7 @@ import {MoonLoader} from "react-spinners";
 import {getCatalogs} from "../../../../../../utils";
 import {ButtonContent} from "../../../../../../shared";
 import {CauFormsProps} from "../../../../../../model";
-import { useBigInput } from "../../../../deuda/tasas/components/forms/hooks/useBigInput";
+import {Link} from "react-router-dom";
 
 export const CauForm = ({
                             loadingSave,
@@ -15,7 +15,7 @@ export const CauForm = ({
                             handleSave,
                             status
                         }: CauFormsProps) => {
-
+import { useBigInput } from "../../../../deuda/tasas/components/forms/hooks/useBigInput";
     //  Achica o agranda el input del form cuando obtiene o deja el focus
     const {  handleFocus,
         handleBlur,
