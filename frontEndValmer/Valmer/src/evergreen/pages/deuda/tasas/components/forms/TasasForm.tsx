@@ -17,6 +17,7 @@ export const TasasForm = ({d_fecha}: any) => {
 
     const {forms, loadingSave, handleSubmit, handleChange} = useTasasForm()
 
+    //  Achica o agranda el input del form cuando obtiene o deja el focus
     const {  handleFocus,
              handleBlur,
              sendStyle} = useBigInput();

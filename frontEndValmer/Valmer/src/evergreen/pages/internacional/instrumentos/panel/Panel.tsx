@@ -20,7 +20,7 @@ export const Panel = ({requeridos}: any) => {
 
     return (
         <div className="panel">
-            <div className="panel-header">
+            <div className="panel-header panel-header-mt">
                 <PanelButtonNav
                     activePanel={activePanel}
                     handleButtonClickPanel={handleButtonClickPanel} />

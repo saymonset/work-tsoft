@@ -36,7 +36,7 @@ export const ActiveInstrumentos = ({requeridos, activePanel, activeForm, handleB
                 </div>
                 {activeForm === "instrumento" && (
                     <div
-                        className={`p-2 w-full border border-slate-300 mb-1 ${activeForm === "instrumento" ? 
+                        className={`p-0 w-full border border-slate-300 mb-1 ${activeForm === "instrumento" ? 
                             "animate__animated animate__fadeIn animate__slow" : ""
                         }`}
                     >
@@ -76,7 +76,7 @@ export const ActiveInstrumentos = ({requeridos, activePanel, activeForm, handleB
                 )}
             </div>
 
-            <div className="mt-8">
+            <div className="mt-0">
                 <LogBoxText logName={"log_guber"}/>
             </div>
         </>
