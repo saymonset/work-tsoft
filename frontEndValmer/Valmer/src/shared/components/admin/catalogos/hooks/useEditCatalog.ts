@@ -151,7 +151,7 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
     }, [nameCatalog]);
 
 
-    const handleRowClick = useCallback(
+    const handleRowClick = React.useCallback(
         (registro: { id: string; [key: string]: string }) => {
             validRowClick(nameCatalog, catalogStatic, registro)
             updateState({ isNew: false});
@@ -160,7 +160,7 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
                 id: String(registro.id),
             });
         },
-        []
+        [catalogStatic]
     );
 
 
@@ -279,24 +279,26 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
 
     const validarCampos = async (): Promise<boolean> => {
         if (registroSeleccionado === null) {
-            await showAlert('warning', 'Atencion', "No hay ningún registro seleccionado.");
+            await showAlert('warning', 'Atención', "No hay ningún registro seleccionado.");
             return false;
         }
 
         for (let column of columns) {
             const columnName = column.name.toLowerCase();
 
-            if (column.DisabledFieldForm) {
+            if (column.isReadOnly) {
                 continue;
             }
 
-            if (!(columnName in registroSeleccionado) || registroSeleccionado[columnName] === "") {
-                await showAlert('warning', 'Atencion', `El campo ${column.name} está vacío.`);
+            if (('isMandatory' in column ? column.isMandatory : true) &&
+                (!(columnName in registroSeleccionado) || registroSeleccionado[columnName] === "")) {
+                await showAlert('warning', 'Atención', `El campo ${column.name} está vacío.`);
                 return false;
             }
         }
         return true;
     };
+
 
     const eraseRequest = (request: RegistroEdit): void => {
         if ('error' in request) {

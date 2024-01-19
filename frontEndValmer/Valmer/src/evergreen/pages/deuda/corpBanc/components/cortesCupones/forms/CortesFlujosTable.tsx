@@ -4,9 +4,7 @@ import {generateUUID} from "../../../../../../../utils";
 
 export const CortesFlujosTable = ({data}: {data: ResponseCorteCupon}) => {
 
-    if (!data?.body) {
-        return <p className='text-center'>No hay datos para mostrar.</p>
-    }
+    const { body = [] } = data;
 
     return (
         <table className='table w-full'>
@@ -22,7 +20,7 @@ export const CortesFlujosTable = ({data}: {data: ResponseCorteCupon}) => {
             </tr>
             </thead>
             <tbody className='tbody'>
-            {data.body.map((item) => {
+            {body.map((item) => {
                 return (
                     <tr
                         key={generateUUID()}

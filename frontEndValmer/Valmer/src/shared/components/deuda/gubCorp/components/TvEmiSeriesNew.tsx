@@ -4,7 +4,6 @@ import {TvEmiSerieProps} from "../../../../../model";
 // @ts-ignore
 import Select, {ActionMeta, InputActionMeta, ValueType} from 'react-select';
 import {customStyles} from "../../../../../utils";
-import { useBigInput } from "../../../../../evergreen/pages/deuda/tasas/components/forms/hooks/useBigInput";
 
 interface IOption {
     value: string;
@@ -12,12 +11,6 @@ interface IOption {
 }
 
 export const TvEmiSeriesNew = (propsDef: TvEmiSerieProps) => {
-
-    
-    //  Achica o agranda el input del form cuando obtiene o deja el focus
-    const {  handleFocus,
-        handleBlur,
-        sendStyle} = useBigInput();
 
     const tvOptions = propsDef.tv?.map((item) => ({value: item, label: item}));
 
@@ -56,7 +49,7 @@ export const TvEmiSeriesNew = (propsDef: TvEmiSerieProps) => {
             <div className="form-cols-3">
                 <div className="form-input">
                     <Select
-                        className="mt-0"
+                        className="mt-1"
                         name="s_tv"
                         value={tvOptions.find(option =>
                             option.value === propsDef.selectedTv) ??
@@ -67,7 +60,6 @@ export const TvEmiSeriesNew = (propsDef: TvEmiSerieProps) => {
                         isSearchable
                         required
                         styles={customStyles}
-                        
 
                     />
                     <label htmlFor="s_tv">TV</label>
@@ -75,18 +67,12 @@ export const TvEmiSeriesNew = (propsDef: TvEmiSerieProps) => {
                         <span className="fontError animate__animated animate__fadeIn">Campo requerido sTv</span>
                     )}
                 </div>
-
-                
-
                 <div className="form-input">
                     <input
                         type="text"
                         name="s_emisora"
                         value={propsDef.consultaData?.body?.s_emisora ?? ''}
                         onChange={handleEmi}
-                        onFocus={() => handleFocus('s_emisora')}
-                        onBlur={handleBlur}
-                        style={sendStyle('s_emisora')}
                     />
                     <label htmlFor="s_emisora">
                         EMISORA
@@ -101,9 +87,6 @@ export const TvEmiSeriesNew = (propsDef: TvEmiSerieProps) => {
                         name="s_serie"
                         value={propsDef.consultaData?.body?.s_serie ?? ''}
                         onChange={handleSerie}
-                        onFocus={() => handleFocus('s_serie')}
-                        onBlur={handleBlur}
-                        style={sendStyle('s_emisora')}
                     />
                     <label htmlFor="s_serie">
                         SERIE

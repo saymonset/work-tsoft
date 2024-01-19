@@ -12,6 +12,14 @@ export interface BodyEditCauClient {
     niveles_servicio: NivelesServicioEditCau;
 }
 
+export interface GenerarArchivoUserWebProps {
+    title: string
+    n_institucion?: number
+    n_nombre?: number
+    url: string
+    is_hist: boolean
+}
+
 
 export interface ClienteEditCau {
     n_cliente: string;

@@ -245,11 +245,10 @@ export const useHandleDataUserWeb = () => {
         const search = e.target.value.toUpperCase()
 
         const result: Record<string, string> = Object.fromEntries(
-            Object.entries(catUri.body).filter(([key, value]) => value.toUpperCase().includes(search))
+            Object.entries(catUri.body).filter(([value]) => value.toUpperCase().includes(search))
         )
 
         setDataUri(result)
-
     }
 
     return {

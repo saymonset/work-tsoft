@@ -45,7 +45,7 @@ export const UmsLiquidezLatamTable: React.FC<Table> = ({
   }
 
   let color = "bg-white"
-  let prevNumRows = 0
+  let prevNumRows = 1
   const setColor = (numRows: number) => {
     if (numRows == prevNumRows) {
       prevNumRows = numRows
@@ -83,6 +83,7 @@ export const UmsLiquidezLatamTable: React.FC<Table> = ({
                 <tr key={index}>
                   {rowspan > 0 && (
                     <td rowSpan={rowspan} className={color}>
+                      {tableData.body.registros.some(reg => reg.isin === registro.isin) && (
                       <button
                         data-sisin={registro.isin}
                         data-ricformato={registro.s_formato}
@@ -91,8 +92,11 @@ export const UmsLiquidezLatamTable: React.FC<Table> = ({
                         data-stipo={registro.s_tipo}
                         onClick={onOpenDelete}
                       >
+                        {tableData.body.registros.length > 1 && (
                         <i className="fa-regular fa-trash-can text-xl text-cyan-700"></i>
+                        )}
                       </button>
+                      )}
                     </td>
                   )}
                   {rowspan > 0 && <td rowSpan={rowspan} className={color}>{registro.isin}</td>}
@@ -108,7 +112,9 @@ export const UmsLiquidezLatamTable: React.FC<Table> = ({
                       data-stipo={registro.s_tipo}
                       onClick={onOpenEdit}
                     >
+                      {tableData.body.registros.length > 1 && (
                       <i className="fa fa-file-pen text-xl text-cyan-700"></i>
+                      )}
                     </button>
                   </td>
                 </tr>

@@ -20,16 +20,6 @@ export const DatosCau: React.FC<DatosCauProps> = ({
 }) => {
 
     const [loadingSave, setLoadingSave] = useState<boolean>(false)
-    const [url, setUrl] = useState<string>("")
-
-    useEffect(() => {
-        if (cau === "abierto") {
-            setUrl("/cau/abiertos/actualiza-status")
-        } else {
-            setUrl("/cau/modificados/actualiza-status")
-        }
-    }, [])
-
 
     const getLabel = (cau: string): string => {
         if(cau === 'modificacion') {
@@ -42,17 +32,46 @@ export const DatosCau: React.FC<DatosCauProps> = ({
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>) => {
         const {name, value} = e.target
         const values = {...data, [name]: value}
-        console.log(values)
         if (setData) { setData(values)}
     }
+
+    const convertNumberToString = (obj: any): any => {
+        const newObj: { [key: string]: any } = {};
+        for (const key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                newObj[key] = typeof obj[key] === 'number' ? obj[key].toString() : obj[key];
+            }
+        }
+        return newObj;
+    }
+
 
     const saveData = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         setLoadingSave(true)
+
+        let url;
+
+        if (cau === "abiertos")
+        {
+            url = "/cau/abiertos/actualiza-status"
+        }
+        else if (cau === "cierre")
+        {
+            url = "/cau/cerrados/actualiza-status"
+        }
+        else
+        {
+            url = "/cau/modificados/actualiza-status"
+        }
+
+        // Convierte los números a strings
+        const dataAsString = convertNumberToString(data);
+
         await fetchDataPost(
             url,
             " al actualizar status",
-            data,
+            dataAsString,
             {s_user: userEncoded()}
         )
         setLoadingSave(false)
@@ -67,16 +86,17 @@ export const DatosCau: React.FC<DatosCauProps> = ({
                     <div className="form-input">
                         <input 
                             type="text"
-                            id="n_folio"
                             name="n_folio"
                             disabled
                             value={data.n_folio ?? ''}
                         />
                         <label htmlFor="n_folio">FOLIO</label>
                     </div>
-                    <button className="btn my-3" onClick={saveData} type='button'>
-                        <ButtonContent name='Grabar' loading={loadingSave} />
-                    </button>
+                    {(cau === "modificacion" || data.muestra_boton_grabar) && (
+                        <button className="btn my-3" onClick={saveData} type='button'>
+                            <ButtonContent name='Grabar' loading={loadingSave} />
+                        </button>
+                    )}
                 </div>
                 {cau === "abiertos" && catUsr &&(
                     <AsignarCau 
@@ -86,8 +106,7 @@ export const DatosCau: React.FC<DatosCauProps> = ({
                     />
                 )}
                 <div className="form-input w-1/2">
-                    <input type="text" 
-                        id="n_area"
+                    <input type="text"
                         name="n_area"
                         disabled
                         value={data.n_area ?? ''}
@@ -97,8 +116,7 @@ export const DatosCau: React.FC<DatosCauProps> = ({
                 {cau === "modificacion" ? (
                     <div className="form-select w-2/3">
                         <select 
-                            name="n_servicio" 
-                            id="n_servicio"
+                            name="n_servicio"
                             value={data.n_servicio ?? ''}
                             onChange={handleChange}
                         >
@@ -113,8 +131,7 @@ export const DatosCau: React.FC<DatosCauProps> = ({
                     </div>
                 ) : (
                     <div className="form-input w-2/3">
-                        <input type="text" 
-                            id="n_servicio"
+                        <input type="text"
                             name="n_servicio"
                             disabled
                             value={data.n_servicio ?? ''}
@@ -123,8 +140,7 @@ export const DatosCau: React.FC<DatosCauProps> = ({
                     </div>
                 )}
                 <div className="form-input">
-                    <input type="text" 
-                        id="n_empresa"
+                    <input type="text"
                         name="n_empresa"
                         disabled
                         value={data.n_empresa ?? ''}
@@ -132,8 +148,7 @@ export const DatosCau: React.FC<DatosCauProps> = ({
                     <label htmlFor="n_empresa">EMPRESA</label>
                 </div>
                 <div className="form-input">
-                    <input type="text" 
-                        id="s_nombre"
+                    <input type="text"
                         name="s_nombre"
                         disabled
                         value={data.s_nombre ?? ''}
@@ -141,8 +156,7 @@ export const DatosCau: React.FC<DatosCauProps> = ({
                     <label htmlFor="s_nombre">NOMBRE</label>
                 </div>
                 <div className="form-input">
-                    <input type="email" 
-                        id="s_correo"
+                    <input type="email"
                         name="s_correo"
                         disabled
                         value={data.s_correo ?? ''}
@@ -151,8 +165,7 @@ export const DatosCau: React.FC<DatosCauProps> = ({
                 </div>
                 {cau !== "cierre" && (
                     <div className="form-input">
-                        <input type="text" 
-                            id="s_telefono"
+                        <input type="text"
                             name="s_telefono"
                             disabled
                             value={data.s_telefono ?? ''}
@@ -162,8 +175,7 @@ export const DatosCau: React.FC<DatosCauProps> = ({
                 )}
                 <div className="form-text-area">
                     <textarea 
-                        name="s_descripcion" 
-                        id="s_descripcion" 
+                        name="s_descripcion"
                         disabled
                         cols={30} 
                         rows={3}
@@ -175,7 +187,6 @@ export const DatosCau: React.FC<DatosCauProps> = ({
                 {cau === "cierre" ? (
                     <div className="form-input">
                         <input type="email"
-                            id='s_atendido'
                             name='s_atendido'
                             value={data.s_atendio ?? ''}
                         />
@@ -193,8 +204,7 @@ export const DatosCau: React.FC<DatosCauProps> = ({
                 )}
                 <div className="form-select w-1/3">
                     <select 
-                        name="n_status" 
-                        id="n_status"
+                        name="n_status"
                         value={data.n_status ?? ''}
                         onChange={handleChange}
                     >
@@ -211,8 +221,7 @@ export const DatosCau: React.FC<DatosCauProps> = ({
                     <>
                         <div className="form-date w-1/4">
                             <input type="date" 
-                                name="d_fecha_estimada" 
-                                id="d_fecha_estimada"
+                                name="d_fecha_estimada"
                                 value={data.d_fecha_estimada ?? ''}
                                 onChange={handleChange}
                             />
@@ -220,8 +229,7 @@ export const DatosCau: React.FC<DatosCauProps> = ({
                         </div>
                         <div className="form-text-area">
                             <textarea 
-                                name="s_observaciones" 
-                                id="s_observaciones" 
+                                name="s_observaciones"
                                 cols={30} 
                                 rows={3}
                                 value={data.s_observaciones ?? ''}

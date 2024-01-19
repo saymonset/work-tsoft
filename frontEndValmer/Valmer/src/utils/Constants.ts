@@ -1080,11 +1080,11 @@ export const DataCatBrokers = [
         {
                 text: 'BROKER_CAT_ID_INSTR',
                 columns: [
-                        { name: 'S_ID_BROKER', type: 'input' },
-                        { name: 'N_ID_BROKER', type: 'input' },
-                        { name: 'S_EMI_BROKER', type: 'input' },
-                        { name: 'S_EMI_VALMER', type: 'input' },
-                        { name: 'S_TV', type: 'input' }
+                        { name: 'S_ID_BROKER', type: 'input', isReadOnly: false, isReadOnlyEdit: true },
+                        { name: 'N_ID_BROKER', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_EMI_BROKER', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_EMI_VALMER', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
+                        { name: 'S_TV', type: 'input', isReadOnly: false, isReadOnlyEdit: false }
                 ]
         },
         {
@@ -1206,34 +1206,34 @@ export const DataPerfilInstrumento = [
         {
                 text: 'PERFIL_INSTRUMENTO_REGLAS',
                 columns: [
-                        { name: 'S_TV', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
-                        { name: 'S_MERCADO', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
-                        { name: 'S_DXV', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
-                        { name: 'S_RIESGO_CREDITO', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
-                        { name: 'S_CALIFICACION', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
-                        { name: 'S_MERCADO_SECUNDARIO', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
-                        { name: 'S_PAIS_INSTRUMENTO', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
-                        { name: 'S_PAIS_EMISOR', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
-                        { name: 'S_DISTRIBUCION', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
-                        { name: 'S_CALIF_CUSTODIO', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
-                        { name: 'S_TIPO_PAPEL', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
-                        { name: 'S_DURACION_MAC', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
-                        { name: 'S_BURSATILIDAD', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
-                        { name: 'S_RIESGO_LIQUIDEZ', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
-                        { name: 'S_VOLATILIDAD', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
-                        { name: 'S_RIESGO_MERCADO', type: 'input', isReadOnly: false, isReadOnlyEdit: false },
-                        { name: 'S_MODELO_INSTR', type: 'input', isReadOnly: false, isReadOnlyEdit: false }
+                        { name: 'S_TV', type: 'input', isReadOnly: false, isReadOnlyEdit: false, isMandatory: true },
+                        { name: 'S_MERCADO', type: 'input', isReadOnly: false, isReadOnlyEdit: false, isMandatory: true },
+                        { name: 'S_DXV', type: 'input', isReadOnly: false, isReadOnlyEdit: false, isMandatory: true },
+                        { name: 'S_RIESGO_CREDITO', type: 'input', isReadOnly: false, isReadOnlyEdit: false, isMandatory: true },
+                        { name: 'S_CALIFICACION', type: 'input', isReadOnly: false, isReadOnlyEdit: false, isMandatory: true },
+                        { name: 'S_MERCADO_SECUNDARIO', type: 'input', isReadOnly: false, isReadOnlyEdit: false, isMandatory: true },
+                        { name: 'S_PAIS_INSTRUMENTO', type: 'input', isReadOnly: false, isReadOnlyEdit: false, isMandatory: true },
+                        { name: 'S_PAIS_EMISOR', type: 'input', isReadOnly: false, isReadOnlyEdit: false, isMandatory: true },
+                        { name: 'S_DISTRIBUCION', type: 'input', isReadOnly: false, isReadOnlyEdit: false, isMandatory: true },
+                        { name: 'S_CALIF_CUSTODIO', type: 'input', isReadOnly: false, isReadOnlyEdit: false , isMandatory: true},
+                        { name: 'S_TIPO_PAPEL', type: 'input', isReadOnly: false, isReadOnlyEdit: false, isMandatory: true },
+                        { name: 'S_DURACION_MAC', type: 'input', isReadOnly: false, isReadOnlyEdit: false, isMandatory: true },
+                        { name: 'S_BURSATILIDAD', type: 'input', isReadOnly: false, isReadOnlyEdit: false, isMandatory: true },
+                        { name: 'S_RIESGO_LIQUIDEZ', type: 'input', isReadOnly: false, isReadOnlyEdit: false , isMandatory: true},
+                        { name: 'S_VOLATILIDAD', type: 'input', isReadOnly: false, isReadOnlyEdit: false, isMandatory: true },
+                        { name: 'S_RIESGO_MERCADO', type: 'input', isReadOnly: false, isReadOnlyEdit: false, isMandatory: true },
+                        { name: 'S_MODELO_INSTR', type: 'input', isReadOnly: false, isReadOnlyEdit: false, isMandatory: true }
                 ],
                 edit: true
         },
         {
                 text: 'PERFIL_INSTRUMENTO_SCOTIA',
                 columns: [
-                        { name: 'N_TIPO_CATALOGO', type: 'input', isReadOnly: false },
-                        { name: 'S_TV', type: 'input', isReadOnly: false },
-                        { name: 'S_EMISORA', type: 'input', isReadOnly: false },
-                        { name: 'S_SERIE', type: 'input', isReadOnly: false },
-                        { name: 'S_CODIGO_TECH', type: 'input' , isReadOnly: false}
+                        { name: 'N_TIPO_CATALOGO', type: 'input', isReadOnly: false, isMandatory: true },
+                        { name: 'S_TV', type: 'input', isReadOnly: false, isMandatory: true },
+                        { name: 'S_EMISORA', type: 'input', isReadOnly: false, isMandatory: true },
+                        { name: 'S_SERIE', type: 'input', isReadOnly: false, isMandatory: true },
+                        { name: 'S_CODIGO_TECH', type: 'input' , isReadOnly: false, isMandatory: true}
                 ],
                 edit: true
         }
@@ -1307,10 +1307,10 @@ export const DataCatBaseAccionaria = [
         {
                 text: 'BACC_SUBRAMO_ING',
                 columns: [
-                        { name: 'N_SUBRAMO_ING', type: 'input' },
-                        { name: 'S_CLASIFICACION_SECTORIAL',type: 'input', columnName: "N_CLASIFICACION_SECTORIAL", DisabledFieldForm: true},
-                        { name: 'N_CLASIFICACION_SECTORIAL', type: 'select', catalog: "clase-sectorial", DisabledFieldTable: true},
-                        { name: 'S_DESCRIPCION', type: 'input'}
+                        { name: 'N_SUBRAMO_ING', type: 'input', isMandatory: true },
+                        { name: 'S_CLASIFICACION_SECTORIAL',type: 'input', columnName: "N_CLASIFICACION_SECTORIAL", DisabledFieldForm: true, isMandatory: false},
+                        { name: 'N_CLASIFICACION_SECTORIAL', type: 'select', catalog: "clase-sectorial", DisabledFieldTable: true,  isMandatory: true },
+                        { name: 'S_DESCRIPCION', type: 'input', isMandatory: true }
                 ]
         },
         {

@@ -4,7 +4,6 @@ import {generateUUID, getCatalogs} from "../../../../../utils";
 import {useAccInsHandleData} from "./hooks";
 import {InstrumentosPreCalc, InstrumentosTable} from "./components";
 import { RequeridosAcc } from "../../../../../model";
-import { useBigInput } from "../../../deuda/tasas/components/forms/hooks/useBigInput";
 
 interface InstrumentosFormProps {
     requeridosAcc: RequeridosAcc
@@ -12,10 +11,6 @@ interface InstrumentosFormProps {
 
 export const InstrumentosForm: React.FC<InstrumentosFormProps> = ({ requeridosAcc }) => {
 
-    //  Achica o agranda el input del form cuando obtiene o deja el focus
-    const {  handleFocus,
-        handleBlur,
-        sendStyle} = useBigInput();
     const {
         isNewFormInst,
         showPrecalc,
@@ -76,7 +71,7 @@ export const InstrumentosForm: React.FC<InstrumentosFormProps> = ({ requeridosAc
                         <div className="form-title">
                             <span>Instrumento</span>
                         </div>
-                        <div className="mt-0 form-cols-4">
+                        <div className="mt-4 form-cols-4">
                             {isNewFormInst ? (
                                 <div className="form-input">
                                     <input
@@ -85,9 +80,6 @@ export const InstrumentosForm: React.FC<InstrumentosFormProps> = ({ requeridosAc
                                         value={selectedTv}
                                         onChange={handleClickTv}
                                         required
-                                        onFocus={() => handleFocus('s_tv')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('s_tv')}
                                     />
                                     <label htmlFor="s_tv">
                                         TV
@@ -130,9 +122,6 @@ export const InstrumentosForm: React.FC<InstrumentosFormProps> = ({ requeridosAc
                                         value={selectedEmisora}
                                         onChange={handleEmisora}
                                         required
-                                        onFocus={() => handleFocus('s_emisora')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('s_emisora')}
                                     />
                                     <label htmlFor="s_emisora">
                                         Emisora
@@ -177,9 +166,6 @@ export const InstrumentosForm: React.FC<InstrumentosFormProps> = ({ requeridosAc
                                         value={selectedSerie}
                                         onChange={handleSerie}
                                         required
-                                        onFocus={() => handleFocus('s_serie')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('s_serie')}
                                     />
                                     <label htmlFor="s_serie">
                                         SERIE
@@ -276,7 +262,7 @@ export const InstrumentosForm: React.FC<InstrumentosFormProps> = ({ requeridosAc
                                 <label htmlFor="b_rnv">RNV</label>
                             </div>
                         </div>
-                        <div className="mt-1 form-cols-4">
+                        <div className="mt-4 form-cols-2">
                             <div className="form-select">
                                 <select
                                     name="n_tipo_instrumento"
@@ -323,8 +309,8 @@ export const InstrumentosForm: React.FC<InstrumentosFormProps> = ({ requeridosAc
                                         </span>
                                     )}
                                 </div>
-                            {/* </div>
-                            <div className="mt-0 form-cols-2"> */}
+                            </div>
+                            <div className="mt-4 form-cols-2">
                                 <div className="form-select">
                                     <select name="n_pais"
                                             value={consultaDataAccInst?.body?.acciones.n_pais ?? 'default'}
@@ -373,7 +359,7 @@ export const InstrumentosForm: React.FC<InstrumentosFormProps> = ({ requeridosAc
                             <div className="form-title">
                                 <span>Caracteristicas</span>
                             </div>
-                            <div className="mt-1 form-cols-2">
+                            <div className="mt-6 form-cols-2">
                                 <div className="form-input">
                                     <input
                                         type="text"
@@ -382,9 +368,6 @@ export const InstrumentosForm: React.FC<InstrumentosFormProps> = ({ requeridosAc
                                         onChange={handleChange}
                                         placeholder=""
                                         required
-                                        onFocus={() => handleFocus('s_ticker')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('s_ticker')}
                                     />
                                     <label htmlFor="s_ticker">
                                         Ticker Bloomberg
@@ -398,9 +381,6 @@ export const InstrumentosForm: React.FC<InstrumentosFormProps> = ({ requeridosAc
                                         onChange={handleChange}
                                         placeholder=""
                                         required
-                                        onFocus={() => handleFocus('s_ric')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('s_ric')}
                                     />
                                     <label htmlFor="s_ric">
                                         Ric Reuters
@@ -416,9 +396,6 @@ export const InstrumentosForm: React.FC<InstrumentosFormProps> = ({ requeridosAc
                                         onChange={handleChange}
                                         required
                                         ref={requeridosAcc.n_precio}
-                                        onFocus={() => handleFocus('n_precio')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('n_precio')}
                                     />
                                     <label htmlFor="n_precio">
                                         Precio
@@ -462,9 +439,6 @@ export const InstrumentosForm: React.FC<InstrumentosFormProps> = ({ requeridosAc
                                         placeholder=""
                                         required
                                         ref={requeridosAcc.s_isin}
-                                        onFocus={() => handleFocus('s_isin')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('s_isin')}
                                     />
                                     <label htmlFor="s_isin">
                                         ISIN
@@ -483,9 +457,6 @@ export const InstrumentosForm: React.FC<InstrumentosFormProps> = ({ requeridosAc
                                         onChange={handleChange}
                                         placeholder=""
                                         required
-                                        onFocus={() => handleFocus('s_sedol')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('s_sedol')}
                                     />
                                     <label htmlFor="s_sedol">
                                         SEDOL
@@ -499,9 +470,6 @@ export const InstrumentosForm: React.FC<InstrumentosFormProps> = ({ requeridosAc
                                         onChange={handleChange}
                                         placeholder=""
                                         required
-                                        onFocus={() => handleFocus('s_cusip')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('s_cusip')}
                                     />
                                     <label htmlFor="s_cusip">
                                         CUSIP
@@ -588,9 +556,6 @@ export const InstrumentosForm: React.FC<InstrumentosFormProps> = ({ requeridosAc
                                         placeholder=""
                                         required
                                         ref={requeridosAcc.s_dividendo}
-                                        onFocus={() => handleFocus('s_dividendo')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('s_dividendo')}
                                     />
                                     <label htmlFor="s_dividendo">
                                         Dividendo

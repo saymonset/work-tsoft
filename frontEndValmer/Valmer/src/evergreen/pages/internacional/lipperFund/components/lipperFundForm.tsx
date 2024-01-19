@@ -24,7 +24,7 @@ export const LipperFundForm = () => {
     } = useDataHandle()
 
     return (
-        <div className="flex flex-col text-sm mt-1 mb-1 ml-5 mr-5 animate__animated animate__fadeIn">
+        <div className="flex flex-col text-sm mt-5 mb-5 ml-5 mr-5 animate__animated animate__fadeIn">
             <table className='table'>
                 <thead className='thead'>
                     <tr>

@@ -3,7 +3,7 @@ import { useGetCatalogs } from "../hooks";
 import { fetchDataGetRet, getCatalogs } from "../../../../../utils";
 import { TitleDate } from "../../../../../shared";
 import { ObtenerCsv, TableCauHist } from "./components";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DataTableHist, FvDataHist } from "../../../../../model";
 import { HocRestricted } from "../../../restrictedAccess";
 
@@ -15,6 +15,7 @@ export const HistoricoCau = () => {
 
     const [triggerDataHist, setTriggerDataHist] = useState<boolean>(false)
     const [loadingDataHist, setLoadingDataHist] = useState<boolean>(false)
+    const [showMessageNoData, setShowMessageNoData] = useState<boolean>(false)
     const [fvDataHist, setFvDataHist] = useState<FvDataHist>({n_status: "0"} as FvDataHist)
     const [dataCauHist, setDataCauHist] = useState<DataTableHist>({} as DataTableHist)
 
@@ -32,7 +33,14 @@ export const HistoricoCau = () => {
                             d_fecha_fin: fvDataHist.d_fecha_fin
                         }
                     )
-                    setDataCauHist(response.body)
+
+                    if(response.message === "No existen registros") {
+                        setDataCauHist({} as DataTableHist)
+                        setShowMessageNoData(true)
+                    }
+                    else {
+                        setDataCauHist(response.body)
+                    }
                     setLoadingDataHist(false)
                     setTriggerDataHist(false)
                 }
@@ -47,6 +55,7 @@ export const HistoricoCau = () => {
 
     const handleGenerar = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
+        setShowMessageNoData(false)
         setTriggerDataHist(true)
     }
 
@@ -126,15 +135,21 @@ export const HistoricoCau = () => {
                 <hr className="line" />
 
                 {loadingDataHist && <BarLoader className="mt-2" color="#059669" width={500} />}
-                
-                {Object.keys(dataCauHist).length !== 0 && (
+
+                {Object.keys(dataCauHist).length === 0 && showMessageNoData ? (
+                    <div className="text-center">No existe información disponible.</div>
+                ) : (
                     <>
-                        <ObtenerCsv 
-                            n_status={fvDataHist.n_status} 
-                            d_fecha_inicio={fvDataHist.d_fecha_inicio} 
-                            d_fecha_fin={fvDataHist.d_fecha_fin}
-                        />
-                        <TableCauHist data={dataCauHist} />
+                        {Object.keys(dataCauHist).length !== 0 && (
+                            <>
+                                <ObtenerCsv
+                                    n_status={fvDataHist.n_status}
+                                    d_fecha_inicio={fvDataHist.d_fecha_inicio}
+                                    d_fecha_fin={fvDataHist.d_fecha_fin}
+                                />
+                                <TableCauHist data={dataCauHist} />
+                            </>
+                        )}
                     </>
                 )}
             </div>

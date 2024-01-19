@@ -2,7 +2,6 @@ import React, {useEffect} from "react";
 import {FolioCau, ResponseFolioCau, ResponseMantCau} from "../../../../../../model";
 import {fetchDataGetRet, fetchDataPost, showAlert, userEncoded} from "../../../../../../utils";
 import {useCauInitVar} from "./useCauInitVar";
-import Sweet from "sweetalert2";
 
 export const useCau = () => {
 
@@ -181,6 +180,19 @@ export const useCau = () => {
                 modifiedQueryFolio,
                 { s_user: userEncoded() }
             );
+
+            if(status === "Modificación")
+            {
+                await getModifies("0").then()
+            }
+            else if (status === "Abiertos")
+            {
+                await getOpened("0", setLoadingOpened).then()
+            }
+            else if (status === "Cerrados")
+            {
+                await getClosed("0").then()
+            }
     
             setLoadingSave(false);
             return

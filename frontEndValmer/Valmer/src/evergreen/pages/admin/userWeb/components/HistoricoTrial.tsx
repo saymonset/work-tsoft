@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { DataHistoricoTrial, FvCheckbox, FvContratos } from "../../../../../model";
 import { fetchDataGetRet, fetchDataPostRet, generateUUID } from "../../../../../utils";
 import { BarLoader } from "react-spinners";
@@ -59,7 +59,7 @@ export const HistoricoTrial = (data: HistoricoTrialProps) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value, checked} = e.target
         console.log(name, value, checked)
-        const checkedValue = {...checkbox, [name]: !!checked}
+        const checkedValue = {...checkbox, [name]: checked}
         const contratosValue = {...contratos, [name]: checked ? value : ''}
         console.log(checkedValue)
         setCheckbox(checkedValue)
@@ -77,7 +77,8 @@ export const HistoricoTrial = (data: HistoricoTrialProps) => {
             {loading && <BarLoader className="mt-2" color="#059669" width={500} />}
 
             <div className="table">
-                <thead className="thead text-xs">
+                <table>
+                    <thead className="thead text-xs">
                     <tr>
                         <th>PRODUCTO</th>
                         <th>JERARQUIA</th>
@@ -88,8 +89,8 @@ export const HistoricoTrial = (data: HistoricoTrialProps) => {
                         <th>STATUS</th>
                         <th>CONTRATAR</th>
                     </tr>
-                </thead>
-                <tbody className="tbody">
+                    </thead>
+                    <tbody className="tbody">
                     {dataTable && dataTable.length > 0 && dataTable.map((item) => (
                         <tr className="tr" key={generateUUID()}>
                             <td> {item.nombre} </td>
@@ -101,8 +102,8 @@ export const HistoricoTrial = (data: HistoricoTrialProps) => {
                             <td> {item.b_trial} </td>
                             <td>
                                 {item.b_trial === "A" && (
-                                    <input 
-                                        type="checkbox" 
+                                    <input
+                                        type="checkbox"
                                         name={"contr_chkb_" + item.id_proceso}
                                         id={"contr_chkb_" + item.id_proceso}
                                         value={item.id_proceso}
@@ -113,14 +114,15 @@ export const HistoricoTrial = (data: HistoricoTrialProps) => {
                             </td>
                         </tr>
                     ))}
-                </tbody>
+                    </tbody>
+                </table>
             </div>
             <div className="text-center">
-                <button 
+                <button
                     className="btn"
                     onClick={handleActContrato}
                 >
-                    <ButtonContent name="Activar Contrato" loading={loadingContrato} />
+                    <ButtonContent name="Activar Contrato" loading={loadingContrato}/>
                 </button>
             </div>
         </div>

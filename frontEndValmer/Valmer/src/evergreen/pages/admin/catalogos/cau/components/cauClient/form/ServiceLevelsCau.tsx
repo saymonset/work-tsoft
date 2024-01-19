@@ -12,7 +12,7 @@ export const ServiceLevelsCau = ({Data, handleChange}: ServiceLevelsCauProps) =>
         if (Data && levelValue in Data) {
             return (Data as any)[levelValue];
         }
-        return "2";
+        return "0";
     };
 
     return (

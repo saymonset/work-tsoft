@@ -1,5 +1,5 @@
 import {TitleDate} from "../../../../../../shared";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {fetchDataGetRet, getCurrentDate} from "../../../../../../utils";
 import {ResponseBonosRef} from "../../../../../../model";
 import {CambBonRefTable} from "./forms";
@@ -10,6 +10,10 @@ export const CambBonRef = () => {
     const [loading, setLoading] = useState(false)
     const [date, setDate] = useState(getCurrentDate)
     const [bonos, setBonos] = useState({} as ResponseBonosRef);
+
+    useEffect(() => {
+        handleConsulta();
+    }, []);
 
     const handleConsulta = async () => {
         setLoading(true)

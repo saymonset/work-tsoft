@@ -3,15 +3,9 @@ import { getCatalogs } from "../../../../../../../utils";
 import { TvEmiSerieOptions, ClientesActuales } from "./components";
 import { useTvEmiSerie, useHandleData} from "./hooks";
 import { getCatalogsSorted } from "./hooks/useGetCatalogSorted";
-import { useBigInput } from "../../../../../deuda/tasas/components/forms/hooks/useBigInput";
 
 export const InstrumentoForm = ({requeridos}: any) => {
 
-     //  Achica o agranda el input del form cuando obtiene o deja el focus
-     const {  handleFocus,
-        handleBlur,
-        sendStyle} = useBigInput();
-        
     const {
         fieldRequiredInternacional,
         triggerErase,
@@ -102,7 +96,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                             handleEmisora={handleEmisora}
                             handleSerie={handleSerie}
                         />
-                        <div className="form-check ">
+                        <div className="form-check">
                             <input
                                 type="checkbox"
                                 id="n_inact"
@@ -117,8 +111,8 @@ export const InstrumentoForm = ({requeridos}: any) => {
                             </label>
                         </div>
                     </div>
-                    <div className="form-cols-3">
-                        <div className="form-select form-my">
+                    <div className="form-cols-2">
+                        <div className="form-select">
                             <select
                                 id="s_tipo_instr"
                                 name="s_tipo_instr"
@@ -139,7 +133,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate_animated animate_fadeIn">Campo requerido Tipo Instrumento</span>
                             )}
                         </div>
-                        <div className="form-select form-my">
+                        <div className="form-select">
                             <select
                                 id="s_tipo_merc"
                                 name="s_tipo_merc"
@@ -160,9 +154,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate_animated animate_fadeIn">Campo requerido Tipo Mercado</span>
                             )}
                         </div>
-                    {/* </div>
-                    <div className="form-cols-2"> */}
-                        <div className="form-select form-my">
+                    </div>
+                    <div className="form-cols-2">
+                        <div className="form-select">
                             <select
                                 id="s_pais"
                                 name="s_pais"
@@ -183,7 +177,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate_animated animate_fadeIn">Campo requerido País</span>
                             )}
                         </div>
-                        <div className="form-select form-my">
+                        <div className="form-select">
                             <select
                                 id="n_pais_riesgo"
                                 name="n_pais_riesgo"
@@ -201,9 +195,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 País de Riesgo
                             </label>
                         </div>
-                    {/* </div>
-                    <div className="form-cols-2"> */}
-                        <div className="form-select form-my">
+                    </div>
+                    <div className="form-cols-2">
+                        <div className="form-select">
                             <select
                                 id="s_subfamilia"
                                 name="s_subfamilia"
@@ -240,11 +234,11 @@ export const InstrumentoForm = ({requeridos}: any) => {
                             </label>
                         </div>
                     </div>
-                    <div className="form-title form-mbx">
+                    <div className="form-title">
                         <span>Caracteristicas</span>
                     </div>
-                    <div className="form-cols-3">
-                        <div className="form-date form-date-my">
+                    <div className="form-cols-2">
+                        <div className="form-date">
                             <input
                                 type="date"
                                 name="d_fec_emi"
@@ -261,7 +255,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate_animated animate_fadeIn">Campo requerido Fecha Emisión</span>
                             )}
                         </div>
-                        <div className="form-date  form-date-my">
+                        <div className="form-date">
                             <input
                                 type="date"
                                 name="d_fec_venc"
@@ -279,8 +273,8 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate_animated animate_fadeIn">Campo requerido Fecha Vencimiento</span>
                             )}
                         </div>
-                    {/* </div>
-                    <div className="form-cols-2"> */}
+                    </div>
+                    <div className="form-cols-2">
                         <div className="form-select">
                             <select
                                 id="s_moneda"
@@ -302,7 +296,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate_animated animate_fadeIn">Campo requerido Moneda</span>
                             )}
                         </div>
-                        <div className="form-input form-my">
+                        <div className="form-input">
                             <input
                                 type="text"
                                 name="n_val_nom"
@@ -311,9 +305,6 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 required
                                 value = {consultaData?.body?.n_val_nom ?? ''}
                                 onChange={handleChange}
-                                onFocus={() => handleFocus('n_val_nom')}
-                                onBlur={handleBlur}
-                                style={sendStyle('n_val_nom')}
                             />
                             <label
                                 htmlFor="n_val_nom"
@@ -324,9 +315,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate_animated animate_fadeIn">Campo requerido Valor Nominal</span>
                             )}
                         </div>
-                    {/* </div>
-                    <div className="form-cols-2"> */}
-                        <div className="form-select form-my">
+                    </div>
+                    <div className="form-cols-2">
+                        <div className="form-select">
                             <select
                                 id="s_tasa_ref"
                                 name="s_tasa_ref"
@@ -344,7 +335,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 Tasa Referencia
                             </label>
                         </div>
-                        <div className="form-select form-my">
+                        <div className="form-select">
                             <select
                                 id="s_crv_desc"
                                 name="s_crv_desc"
@@ -365,9 +356,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate_animated animate_fadeIn">Campo requerido Curva Descuento</span>
                             )}
                         </div>
-                    {/* </div>
-                    <div className="form-cols-2"> */}
-                        <div className="form-input form-my">
+                    </div>
+                    <div className="form-cols-2">
+                        <div className="form-input">
                             <input
                                 type="text"
                                 name="s_isin"
@@ -376,9 +367,6 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 required
                                 value = {consultaData?.body?.s_isin ?? ''}
                                 onChange={handleChange}
-                                onFocus={() => handleFocus('s_isin')}
-                                onBlur={handleBlur}
-                                style={sendStyle('s_isin')}
                             />
                             <label
                                 htmlFor="s_isin"
@@ -389,7 +377,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate_animated animate_fadeIn">Campo requerido ISIN</span>
                             )}
                         </div>
-                        <div className="form-input form-my">
+                        <div className="form-input">
                             <input
                                 type="text"
                                 name="s_isin_v"
@@ -398,9 +386,6 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 required
                                 value={consultaData?.body?.s_isin_v ?? ''}
                                 onChange={(e) => handleChange(e)}
-                                onFocus={() => handleFocus('isinVinculado')}
-                                onBlur={handleBlur}
-                                style={sendStyle('isinVinculado')}
                             />
                             <label
                                 htmlFor="isinVinculado"
@@ -409,8 +394,8 @@ export const InstrumentoForm = ({requeridos}: any) => {
                             </label>
                         </div>
                     </div>
-                    <div className="form-cols-2">
-                        <div className="form-select form-my">
+                    <div className="form-cols-1">
+                        <div className="form-select">
                             <select
                                 className="mt-1"
                                 name="s_emisor"
@@ -432,7 +417,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate_animated animate_fadeIn">Campo requerido Emisor</span>
                             )}
                         </div>
-                        <div className="form-select form-my">
+                    </div>
+                    <div className="form-cols-2">
+                        <div className="form-select">
                             <select
                                 id="n_status"
                                 name="n_status"
@@ -453,10 +440,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate_animated animate_fadeIn">Campo requerido Status</span>
                             )}
                         </div>
-                    </div>
-                    <div className="form-cols-2">
-                   
-                        <div className="form-select form-my0">
+                        <div className="form-select">
                             <select
                                 id="s_met_calc"
                                 name="s_met_calc"
@@ -477,9 +461,9 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 <span className="fontError animate_animated animate_fadeIn">Campo requerido Método Cálculo</span>
                             )}
                         </div>
-                    {/* </div>
-                    <div className="form-cols-1"> */}
-                        <div className="form-select form-my0">
+                    </div>
+                    <div className="form-cols-1">
+                        <div className="form-select">
                             <select
                                 id="n_calendario"
                                 name="n_calendario"
@@ -505,7 +489,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         <span>Instrumento Deuda</span>
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-date form-date-my">
+                        <div className="form-date">
                             <input
                                 type="date"
                                 name="d_fecha_amort_ant"
@@ -521,7 +505,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 Fecha Amort. Ant.
                             </label>
                         </div>
-                        <div className="form-input form-my1">
+                        <div className="form-input">
                             <input
                                 type="text"
                                 name="n_prima"
@@ -530,9 +514,6 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 required
                                 value={consultaData?.body?.n_prima ?? ''}
                                 onChange={(e) => handleChange(e)}
-                                onFocus={() => handleFocus('n_prima')}
-                                onBlur={handleBlur}
-                                style={sendStyle('n_prima')}
                             />
                             <label
                                 htmlFor="n_prima"
@@ -542,7 +523,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-input form-my0">
+                        <div className="form-input">
                             <input
                                 type="text"
                                 name="n_rendimiento"
@@ -551,9 +532,6 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 required
                                 value={consultaData?.body?.n_rendimiento ?? ''}
                                 onChange={(e) => handleChange(e)}
-                                onFocus={() => handleFocus('n_rendimiento')}
-                                onBlur={handleBlur}
-                                style={sendStyle('n_rendimiento')}
                             />
                             <label
                                 htmlFor="n_rendimiento"
@@ -561,7 +539,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 Rendimiento
                             </label>
                         </div>
-                        <div className="form-input form-my0">
+                        <div className="form-input">
                             <input
                                 type="text"
                                 name="n_sobretasa"
@@ -570,9 +548,6 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 required
                                 value={consultaData?.body?.n_sobretasa ?? ''}
                                 onChange={(e) => handleChange(e)}
-                                onFocus={() => handleFocus('n_sobretasa')}
-                                onBlur={handleBlur}
-                                style={sendStyle('n_sobretasa')}
                             />
                             <label
                                 htmlFor="n_sobretasa"
@@ -591,9 +566,6 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 required
                                 value={consultaData?.body?.n_prec_merc ?? ''}
                                 onChange={(e) => handleChange(e)}
-                                onFocus={() => handleFocus('n_prec_merc')}
-                                onBlur={handleBlur}
-                                style={sendStyle('n_prec_merc')}
                             />
                             <label
                                 htmlFor="n_prec_merc"
@@ -621,7 +593,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-input form-my0">
+                        <div className="form-input">
                             <input
                                 type="text"
                                 name="n_val_nom_a"
@@ -630,9 +602,6 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 required
                                 value={consultaData?.body?.n_val_nom_a ?? ''}
                                 onChange={(e) => handleChange(e)}
-                                onFocus={() => handleFocus('n_val_nom_a')}
-                                onBlur={handleBlur}
-                                style={sendStyle('n_val_nom_a')}
                             />
                             <label
                                 htmlFor="n_val_nom_a"
@@ -640,7 +609,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 Valor Nominal Act
                             </label>
                         </div>
-                        <div className="form-input form-my0">
+                        <div className="form-input">
                             <input
                                 type="text"
                                 name="n_mont_circ"
@@ -649,9 +618,6 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 required
                                 value={consultaData?.body?.n_mont_circ ?? ''}
                                 onChange={(e) => handleChange(e)}
-                                onFocus={() => handleFocus('n_mont_circ')}
-                                onBlur={handleBlur}
-                                style={sendStyle('n_mont_circ')}
                             />
                             <label
                                 htmlFor="n_mont_circ"
@@ -661,7 +627,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-select ">
+                        <div className="form-select">
                             <select
                                 id="s_tipo"
                                 name="s_tipo"
@@ -699,7 +665,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-select form-my0">
+                        <div className="form-select">
                             <select
                                 id="s_sector"
                                 name="s_sector"
@@ -788,7 +754,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         Calificaciones
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-select ">
+                        <div className="form-select">
                             <select
                                 id="n_fitch"
                                 name="n_fitch"
@@ -806,7 +772,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 Fitch
                             </label>
                         </div>
-                        <div className="form-date  form-date-my">
+                        <div className="form-date">
                             <input
                                 type="date"
                                 name="d_fecha_fitch"
@@ -822,7 +788,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-select form-my0">
+                        <div className="form-select">
                             <select
                                 id="n_sp"
                                 name="n_sp"
@@ -840,7 +806,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 S&P
                             </label>
                         </div>
-                        <div className="form-date form-date-my">
+                        <div className="form-date">
                             <input
                                 type="date"
                                 name="d_fecha_sp"
@@ -856,7 +822,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-select form-my0">
+                        <div className="form-select">
                             <select
                                 id="n_moody"
                                 name="n_moody"
@@ -874,7 +840,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 Moody
                             </label>
                         </div>
-                        <div className="form-date form-date-my">
+                        <div className="form-date">
                             <input
                                 type="date"
                                 name="d_fecha_moody"
@@ -890,7 +856,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-select form-my0">
+                        <div className="form-select">
                             <select
                                 id="n_hr"
                                 name="n_hr"
@@ -929,7 +895,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         Contribuidores
                     </div>
                     <div className="form-cols-1">
-                        <div className="form-input form-my1">
+                        <div className="form-input">
                             <input
                                 type="text"
                                 name="n_precio_bloomberg"
@@ -938,9 +904,6 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 value={consultaData?.body?.n_precio_bloomberg ?? ''}
                                 onChange={(e) => handleChange(e)}
                                 disabled={true}
-                                onFocus={() => handleFocus('n_precio_blomberg')}
-                                onBlur={handleBlur}
-                                style={sendStyle('n_precio_blomberg')}
                             />
                             <label
                                 htmlFor="n_precio_blomberg"
@@ -950,7 +913,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-1">
-                        <div className="form-input form-my0">
+                        <div className="form-input">
                             <input
                                 type="text"
                                 name="n_precio_markit"
@@ -959,9 +922,6 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 value={consultaData?.body?.n_precio_markit ?? ''}
                                 onChange={(e) => handleChange(e)}
                                 disabled={true}
-                                onFocus={() => handleFocus('n_precio_markit')}
-                                onBlur={handleBlur}
-                                style={sendStyle('n_precio_markit')}
                             />
                             <label
                                 htmlFor="n_precio_markit"
@@ -971,7 +931,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                         </div>
                     </div>
                     <div className="form-cols-1">
-                        <div className="form-input form-my0">
+                        <div className="form-input">
                             <input
                                 type="text"
                                 name="n_precio_reuters"
@@ -980,9 +940,6 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 value={consultaData?.body?.n_precio_reuters ?? ''}
                                 onChange={(e) => handleChange(e)}
                                 disabled={true}
-                                onFocus={() => handleFocus('n_precio_reuters')}
-                                onBlur={handleBlur}
-                                style={sendStyle('n_precio_reuters')}
                             />
                             <label
                                 htmlFor="n_precio_reuters"
@@ -991,8 +948,8 @@ export const InstrumentoForm = ({requeridos}: any) => {
                             </label>
                         </div>
                     </div>
-                    <div className="form-cols-1 ">
-                        <div className="form-check ">
+                    <div className="form-cols-1">
+                        <div className="form-check">
                             <input
                                 type="checkbox"
                                 name="b_precio_sucio"
@@ -1088,9 +1045,6 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 placeholder=""
                                 value={consultaData?.body?.n_fixed_coupon_date ?? ''}
                                 onChange={(e) => handleChange(e)}
-                                onFocus={() => handleFocus('n_fixed_coupon_date')}
-                                onBlur={handleBlur}
-                                style={sendStyle('n_fixed_coupon_date')}
                             />
                             <label
                                 htmlFor="n_fixed_coupon_date"
@@ -1108,9 +1062,6 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 placeholder=""
                                 value={consultaData?.body?.s_credit_spread_curve ?? ''}
                                 onChange={(e) => handleChange(e)}
-                                onFocus={() => handleFocus('s_credit_spread_curve')}
-                                onBlur={handleBlur}
-                                style={sendStyle('s_credit_spread_curve')}
                             />
                             <label
                                 htmlFor="s_credit_spread_curve"
@@ -1128,9 +1079,6 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 placeholder=""
                                 value={consultaData?.body?.s_oddfirstcoupon ?? ''}
                                 onChange={(e) => handleChange(e)}
-                                onFocus={() => handleFocus('s_oddfirstcoupon')}
-                                onBlur={handleBlur}
-                                style={sendStyle('s_oddfirstcoupon')}
                             />
                             <label
                                 htmlFor="s_oddfirstcoupon"
@@ -1148,9 +1096,6 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 placeholder=""
                                 value={consultaData?.body?.s_oddlastcoupon ?? ''}
                                 onChange={(e) => handleChange(e)}
-                                onFocus={() => handleFocus('s_oddlastcoupon')}
-                                onBlur={handleBlur}
-                                style={sendStyle('s_oddlastcoupon')}
                             />
                             <label
                                 htmlFor="s_oddlastcoupon"
@@ -1294,9 +1239,6 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 placeholder=""
                                 value={consultaData?.body?.n_last_reset_rate ?? ''}
                                 onChange={(e) => handleChange(e)}
-                                onFocus={() => handleFocus('n_last_reset_rate')}
-                                onBlur={handleBlur}
-                                style={sendStyle('n_last_reset_rate')}
                             />
                             <label
                                 htmlFor="n_last_reset_rate"
@@ -1314,9 +1256,6 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 placeholder=""
                                 value={consultaData?.body?.n_last_reset_rate_24h ?? ''}
                                 onChange={(e) => handleChange(e)}
-                                onFocus={() => handleFocus('n_last_reset_rate_24h')}
-                                onBlur={handleBlur}
-                                style={sendStyle('n_last_reset_rate_24h')}
                             />
                             <label
                                 htmlFor="n_last_reset_rate_24h"

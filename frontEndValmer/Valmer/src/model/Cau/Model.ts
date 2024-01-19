@@ -60,6 +60,7 @@ export interface InfoCauId {
     d_fecha_estimada: string
     s_observaciones: string
     archivo: string
+    muestra_boton_grabar: boolean
     n_usuario_asig: number
     s_usuario_asig: string
     s_atendio?: string
