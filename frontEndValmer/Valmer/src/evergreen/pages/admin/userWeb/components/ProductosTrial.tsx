@@ -77,14 +77,14 @@ export const ProductosTrial: React.FC<ProductosTrialProps> = ({n_nombre,
     }
 
     return (
-        <div className="form-cols-1 row-span-3">
-            <span className="form-title -mb-3">Productos Trial</span>
+        <div className="form-cols-1 row-span-1">
+            <span className="form-title mb-3">Productos Trial</span>
             {loading ? (
-                <BarLoader className="mt-2" color="#059669" width={300} />
+                <BarLoader className="mt-4" color="#059669" width={300} />
             ):(
                 <>
                     <div className="form-cols-2">
-                        <div className="form-date">
+                        <div className="form-date form-date-my">
                             <input 
                                 type="date"
                                 id="d_fecha_trial"

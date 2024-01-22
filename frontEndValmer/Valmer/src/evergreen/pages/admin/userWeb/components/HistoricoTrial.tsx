@@ -71,7 +71,7 @@ export const HistoricoTrial = (data: HistoricoTrialProps) => {
 
     return (
         <div className="form-cols-1 col-span-2 row-span-2">
-            <div className="form-title">Historico Trial</div>
+            <div className="form-title ">Historico Trial</div>
             {loading && <BarLoader className="mt-2" color="#059669" width={500} />}
 
             <div className="table">
