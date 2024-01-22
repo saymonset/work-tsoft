@@ -1,7 +1,7 @@
 import {getCatalogs} from "../../../../../../../../utils";
 import React from "react";
 import {useDataCupones} from "./hooks";
-import { useBigInput } from "../../../../../tasas/components/forms/hooks/useBigInput";
+import { useBigInput } from "../../../../../../../../utils/useBigInput";
 
 export const CuponesForm = ({requeridos}: any) => {
 

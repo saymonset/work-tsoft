@@ -1,5 +1,5 @@
 import {generateUUID, getCatalogs} from "../../../../../../../../utils";
-import { useBigInput } from "../../../../../../deuda/tasas/components/forms/hooks/useBigInput";
+import { useBigInput } from "../../../../../../../../utils/useBigInput";
 import {useDataCupones} from "../hooks"
 
 export const CuponesForm = ({requeridos}: any) => {

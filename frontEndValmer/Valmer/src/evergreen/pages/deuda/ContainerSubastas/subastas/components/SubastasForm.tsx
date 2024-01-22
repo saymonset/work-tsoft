@@ -3,7 +3,7 @@ import { MoonLoader } from "react-spinners";
 import {generateUUID, getCatalogsSub} from "../../../../../../utils";
 import {useSubastasForm} from "../../hooks";
 import {SubFormProps} from "../../../../../../model";
-import { useBigInput } from "../../../tasas/components/forms/hooks/useBigInput";
+import { useBigInput } from "../../../../../../utils/useBigInput";
 export const SubastasForm = (p: SubFormProps) => {
 
       //  Achica o agranda el input del form cuando obtiene o deja el focus

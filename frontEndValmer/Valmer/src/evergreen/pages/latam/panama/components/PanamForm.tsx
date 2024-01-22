@@ -1,7 +1,7 @@
 import {getCatalogs} from "../../../../../utils";
 import React from "react";
 import {PanamaFormProps} from "../../../../../model";
-import { useBigInput } from "../../../deuda/tasas/components/forms/hooks/useBigInput";
+import { useBigInput } from "../../../../../utils/useBigInput";
 
 export const PanamForm = (data: PanamaFormProps) => {
         //  Achica o agranda el input del form cuando obtiene o deja el focus

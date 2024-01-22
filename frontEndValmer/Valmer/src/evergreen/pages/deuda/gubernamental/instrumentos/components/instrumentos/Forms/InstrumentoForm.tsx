@@ -3,7 +3,7 @@ import React from "react";
 import {useHandleData, useTvEmiSerie} from "./hooks";
 import {ButtonContent, TvEmiSerieOptions} from "../../../../../../../../shared";
 import {getCatalogs} from "../../../../../../../../utils";
-import { useBigInput } from '../../../../../tasas/components/forms/hooks/useBigInput';
+import { useBigInput } from '../../../../../../../../utils/useBigInput';
 
 export const InstrumentoForm = ({requeridos}: any) => {
 

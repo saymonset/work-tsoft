@@ -1,4 +1,4 @@
-import { useBigInput } from '../../../deuda/tasas/components/forms/hooks/useBigInput';
+import { useBigInput } from '../../../../../utils/useBigInput';
 import {IUserData} from '../Models'
 
  interface Props {

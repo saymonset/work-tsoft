@@ -1,6 +1,6 @@
 import { Catalogo, IsFieldModifiedFvDerivados, RequeridosDefDerivados, RespDerivadosDef } from "../../../../../model";
 import { getCatalogs, getCatalogsNoOrder } from "../../../../../utils";
-import { useBigInput } from "../../../deuda/tasas/components/forms/hooks/useBigInput";
+import { useBigInput } from "../../../../../utils/useBigInput";
 import { FormColateralFF } from "./FormColateralFF";
 import { FormColateralSOFR } from "./FormColateralSOFR";
 

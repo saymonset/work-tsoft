@@ -2,7 +2,7 @@ import {BarLoader} from "react-spinners";
 import {getCatalogs} from "../../../../../../utils";
 import React from "react";
 import {CostaRicaFormProps} from "../../../../../../model";
-import { useBigInput } from "../../../../deuda/tasas/components/forms/hooks/useBigInput";
+import { useBigInput } from "../../../../../../utils/useBigInput";
 
 export const CostaRicaForm = ({
                                   loadingConsultaInfo,

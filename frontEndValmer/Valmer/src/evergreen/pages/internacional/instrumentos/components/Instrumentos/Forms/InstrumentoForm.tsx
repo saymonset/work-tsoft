@@ -3,7 +3,7 @@ import { getCatalogs } from "../../../../../../../utils";
 import { TvEmiSerieOptions, ClientesActuales } from "./components";
 import { useTvEmiSerie, useHandleData} from "./hooks";
 import { getCatalogsSorted } from "./hooks/useGetCatalogSorted";
-import { useBigInput } from "../../../../../deuda/tasas/components/forms/hooks/useBigInput";
+import { useBigInput } from "../../../../../../../utils/useBigInput";
 
 export const InstrumentoForm = ({requeridos}: any) => {
 

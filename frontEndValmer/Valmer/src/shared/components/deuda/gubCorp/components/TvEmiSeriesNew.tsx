@@ -4,7 +4,7 @@ import {TvEmiSerieProps} from "../../../../../model";
 // @ts-ignore
 import Select, {ActionMeta, InputActionMeta, ValueType} from 'react-select';
 import {customStyles} from "../../../../../utils";
-import { useBigInput } from "../../../../../evergreen/pages/deuda/tasas/components/forms/hooks/useBigInput";
+import { useBigInput } from "../../../../../utils/useBigInput";
 
 interface IOption {
     value: string;

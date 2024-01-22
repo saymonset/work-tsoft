@@ -4,7 +4,8 @@ import {generateUUID, getCatalogs} from "../../../../../utils";
 import {useAccInsHandleData} from "./hooks";
 import {InstrumentosPreCalc, InstrumentosTable} from "./components";
 import { RequeridosAcc } from "../../../../../model";
-import { useBigInput } from "../../../deuda/tasas/components/forms/hooks/useBigInput";
+import { useBigInput } from "../../../../../utils/useBigInput";
+
 
 interface InstrumentosFormProps {
     requeridosAcc: RequeridosAcc

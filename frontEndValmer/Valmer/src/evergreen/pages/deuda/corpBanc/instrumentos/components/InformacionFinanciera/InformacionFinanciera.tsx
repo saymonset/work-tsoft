@@ -2,7 +2,7 @@ import React from 'react'
 import { useCalifAntNew, useInfoFinanciera } from './hooks';
 import { MoonLoader } from 'react-spinners';
 import {getCatalogs} from "../../../../../../../utils";
-import { useBigInput } from '../../../../tasas/components/forms/hooks/useBigInput';
+import { useBigInput } from '../../../../../../../utils/useBigInput';
 
 export const InformacionFinanciera = () => {
     //  Achica o agranda el input del form cuando obtiene o deja el focus

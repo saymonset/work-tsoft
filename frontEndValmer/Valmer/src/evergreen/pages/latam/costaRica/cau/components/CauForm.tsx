@@ -4,7 +4,7 @@ import {getCatalogs} from "../../../../../../utils";
 import {ButtonContent} from "../../../../../../shared";
 import {CauFormsProps} from "../../../../../../model";
 import {Link} from "react-router-dom";
-
+import { useBigInput } from "../../../../../../utils/index";
 export const CauForm = ({
                             loadingSave,
                             loadingFolio,
@@ -15,7 +15,7 @@ export const CauForm = ({
                             handleSave,
                             status
                         }: CauFormsProps) => {
-import { useBigInput } from "../../../../deuda/tasas/components/forms/hooks/useBigInput";
+
     //  Achica o agranda el input del form cuando obtiene o deja el focus
     const {  handleFocus,
         handleBlur,

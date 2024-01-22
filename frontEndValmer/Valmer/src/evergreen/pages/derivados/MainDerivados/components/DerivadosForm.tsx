@@ -4,7 +4,7 @@ import {TvEmiSerieDer} from "./components";
 import {generateUUID, getCatalogs} from "../../../../../utils";
 import {ButtonContent} from "../../../../../shared";
 import React from "react";
-import { useBigInput } from "../../../deuda/tasas/components/forms/hooks/useBigInput";
+import { useBigInput } from "../../../../../utils/useBigInput";
 
 interface TeoricosChicagoProps {
     isChicago: boolean,

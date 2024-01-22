@@ -1,7 +1,7 @@
 import React from "react";
 import {useTasasForm, useTasasFormData} from "./hooks";
 import {ButtonContent, Modal} from "../../../../../../shared";
-import { useBigInput } from "./hooks/useBigInput";
+import { useBigInput } from "../../../../../../utils/useBigInput";
 
 export const TasasForm = ({d_fecha}: any) => {
 

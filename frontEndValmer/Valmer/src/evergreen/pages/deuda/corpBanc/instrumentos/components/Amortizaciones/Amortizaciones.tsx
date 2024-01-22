@@ -1,6 +1,6 @@
 import React from 'react'
 import {useHandleDataCorp} from '../Instrumentos';
-import { useBigInput } from '../../../../tasas/components/forms/hooks/useBigInput';
+import { useBigInput } from '../../../../../../../utils/useBigInput';
 
 export const Amortizaciones: React.FC = () => {
 

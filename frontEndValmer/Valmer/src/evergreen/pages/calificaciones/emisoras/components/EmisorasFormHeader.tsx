@@ -3,7 +3,7 @@ import {getCatalogs} from "../../../../../utils";
 import {MoonLoader} from "react-spinners";
 import {useEmisorasHeader} from "./hooks";
 import {ButtonContent} from "../../../../../shared";
-import { useBigInput } from "../../../deuda/tasas/components/forms/hooks/useBigInput";
+import { useBigInput } from "../../../../../utils/useBigInput";
 
 export const EmisorasFormHeader = () => {
 

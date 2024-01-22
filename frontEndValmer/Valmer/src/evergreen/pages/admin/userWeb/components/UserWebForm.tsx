@@ -7,7 +7,7 @@ import { ProductosTrial } from "./ProductosTrial";
 import { HistoricoTrial } from "./HistoricoTrial";
 import { GenerarArchivo } from "./GenerarArchivo";
 import React from "react";
-import { useBigInput } from "../../../deuda/tasas/components/forms/hooks/useBigInput";
+import { useBigInput } from "../../../../../utils/useBigInput";
 
 export const UserWebForm = () => {
 
