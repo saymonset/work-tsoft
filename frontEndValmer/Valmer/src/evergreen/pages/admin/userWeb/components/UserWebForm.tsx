@@ -152,10 +152,10 @@ export const UserWebForm = () => {
             
             <div className="line line-y-1"/>
 
-            <div className="form-cols-2 mt-1">
-                <div className="form-cols-1">
+            <div className="form-cols-2 mt-1 ">
+                <div className="form-cols-1 content-start ">
                     {loadingInfo && <BarLoader className="mt-1" color="#059669" width={400} />}
-                    <span className="form-title">Información</span>
+                    <span className="form-title ">Información</span>
                     <div className="form-cols-2 my-0">
                         <div className="form-input form-my0 my-0">
                             <input 
