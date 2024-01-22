@@ -391,7 +391,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     Ponderado
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-0">
+                            <div className="text-center text-xs text-cyan-700 my-2">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -591,7 +591,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     Ponderado
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-0">
+                            <div className="text-center text-xs text-cyan-700 my-2">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>

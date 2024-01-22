@@ -21,7 +21,7 @@ export const GenerarArchivo = (data: GenerarArchivoUserWebProps) => {
                 <span className="form-title w-full">{data.title}</span>
                 <div className="form-cols-3">
                     <div className="form-cols-1 -my-3">
-                        <div className="form-date">
+                        <div className="form-date form-date-my">
                             <input
                                 type="date"
                                 name="d_fecha_ini"
@@ -33,7 +33,7 @@ export const GenerarArchivo = (data: GenerarArchivoUserWebProps) => {
                         </div>
                     </div>
                     <div className="form-cols-1 -my-3">
-                        <div className="form-date">
+                        <div className="form-date form-date-my">
                             <input
                                 type="date"
                                 name="d_fecha_fin"

@@ -134,7 +134,7 @@ export const UmsMexCat = () => {
 
                 <Modal isOpen={isOpenEdit} onClose={handleCloseEdit} title="Editar">
                     <form onSubmit={handleSubmitForm}>
-                        <div className="form-cols-1 -my-3">
+                        <div className="form-cols-1 my-3">
                             <div className="form-input">
                                 <input
                                     type="text"
@@ -148,13 +148,13 @@ export const UmsMexCat = () => {
                                 <label htmlFor="isin">Isin</label>
                             </div>
                         </div>
-                        <div className="form-cols-1 -my-3">
+                        <div className="form-cols-1 my-3">
                             <div className="form-input">
                                 <input type="text" name="S_RIC_FORMATO" id="ric" value={registro.S_RIC_FORMATO} onChange={handleChangeForm} placeholder='' />
                                 <label htmlFor="ric">Ric</label>
                             </div>
                         </div>
-                        <div className="form-cols-1 -my-3">
+                        <div className="form-cols-1 my-3">
                             <div className="form-input">
                                 <input type="text" name="S_PROVEDOR" id="provedor" value={registro.S_PROVEDOR} onChange={handleChangeForm} placeholder='' />
                                 <label htmlFor="provedor">Provedor</label>
