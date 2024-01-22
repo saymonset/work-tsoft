@@ -1,12 +1,17 @@
 import {getCatalogs} from "../../../../../utils";
 import React from "react";
 import {PanamaFormProps} from "../../../../../model";
+import { useBigInput } from "../../../../../utils/useBigInput";
 
 export const PanamForm = (data: PanamaFormProps) => {
+        //  Achica o agranda el input del form cuando obtiene o deja el focus
+        const {  handleFocus,
+            handleBlur,
+            sendStyle} = useBigInput();
     return (
-        <div className="form mt-4 animate__animated animate__fadeIn">
+        <div className="form form-mb-x mt-1 animate__animated animate__fadeIn ">
             <form>
-                <div className="form-cols-3 flex items-start">
+                <div className="form-cols-3 flex items-start ">
                     <div className="form-cols-1 col-span-2">
                         <span className="form-title">Características</span>
                         <div className="form-cols-2 -my-3">
@@ -35,7 +40,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                             </div>
                         </div>
                         <div className="form-cols-2 -my-3">
-                            <div className="form-date">
+                            <div className="form-date form-date-my">
                                 <input type="date"
                                        name="d_fecha_emision"
                                        id="d_fecha_emision"
@@ -77,7 +82,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                             </div>
                         </div>
                         <div className="form-cols-2 -my-3">
-                            <div className="form-date">
+                            <div className="form-date form-date-my">
                                 <input type="date"
                                        name="d_fecha_liquidacion"
                                        id="d_fecha_liquidacion"
@@ -117,7 +122,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                             </div>
                         </div>
                         <div className="form-cols-2 -my-3">
-                            <div className="form-date">
+                            <div className="form-date form-date-my">
                                 <input type="date"
                                        name="d_fecha_vencimiento"
                                        id="d_fecha_vencimiento"
@@ -157,7 +162,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                             </div>
                         </div>
                         <div className="form-cols-2 -my-3">
-                            <div className="form-date">
+                            <div className="form-date form-date-my">
                                 <input type="date"
                                        name="d_fecha_inicio_cupon"
                                        id="d_fecha_inicio_cupon"
@@ -197,7 +202,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                             </div>
                         </div>
                         <div className="form-cols-2 -my-3">
-                            <div className="form-date">
+                            <div className="form-date form-date-my">
                                 <input type="date"
                                        name="d_fecha_vto_cupon"
                                        id="d_fecha_vto_cupon"
@@ -247,6 +252,9 @@ export const PanamForm = (data: PanamaFormProps) => {
                                        value={data.consultaData?.body?.info_bd?.n_plazo || ""}
                                        onChange={data.handleChange}
                                        ref={data.refReqLatPanama.n_plazo}
+                                       onFocus={() => handleFocus('n_plazo')}
+                                       onBlur={handleBlur}
+                                       style={sendStyle('n_plazo')}
                                 />
                                 <label htmlFor="n_plazo">
                                     Plazo
@@ -290,6 +298,9 @@ export const PanamForm = (data: PanamaFormProps) => {
                                        value={data.consultaData?.body?.info_bd?.n_monto_colocado || ""}
                                        onChange={data.handleChange}
                                        ref={data.refReqLatPanama.n_monto_colocado}
+                                       onFocus={() => handleFocus('n_monto_colocado')}
+                                       onBlur={handleBlur}
+                                       style={sendStyle('n_monto_colocado')}
                                 />
                                 <label htmlFor="n_monto_colocado">
                                     Monto Colocado
@@ -333,6 +344,9 @@ export const PanamForm = (data: PanamaFormProps) => {
                                        value={data.consultaData?.body?.info_bd?.n_valor_nominal || ""}
                                        onChange={data.handleChange}
                                        ref={data.refReqLatPanama.n_valor_nominal}
+                                       onFocus={() => handleFocus('n_valor_nominal')}
+                                       onBlur={handleBlur}
+                                       style={sendStyle('n_valor_nominal')}
                                 />
                                 <label htmlFor="n_valor_nominal">
                                     Valor Nominal
@@ -350,6 +364,9 @@ export const PanamForm = (data: PanamaFormProps) => {
                                        placeholder=""
                                        value={data.consultaData?.body?.info_bd?.n_precio_colocacion || ""}
                                        onChange={data.handleChange}
+                                       onFocus={() => handleFocus('n_precio_colocacion')}
+                                       onBlur={handleBlur}
+                                       style={sendStyle('n_precio_colocacion')}
                                 />
                                 <label htmlFor="n_precio_colocacion">
                                     Precio Colocación
@@ -365,6 +382,9 @@ export const PanamForm = (data: PanamaFormProps) => {
                                        value={data.consultaData?.body?.info_bd?.n_tasa || ""}
                                        onChange={data.handleChange}
                                        ref={data.refReqLatPanama.n_tasa}
+                                       onFocus={() => handleFocus('n_tasa')}
+                                       onBlur={handleBlur}
+                                       style={sendStyle('n_tasa')}
                                 />
                                 <label htmlFor="tasa">
                                     Tasa
@@ -408,6 +428,9 @@ export const PanamForm = (data: PanamaFormProps) => {
                                        value={data.consultaData?.body?.info_bd?.n_sobretasa || ""}
                                        onChange={data.handleChange}
                                        ref={data.refReqLatPanama.n_sobretasa}
+                                       onFocus={() => handleFocus('n_sobretasa')}
+                                       onBlur={handleBlur}
+                                       style={sendStyle('n_sobretasa')}
                                 />
                                 <label htmlFor="prima">Prima</label>
                                 {data.isFieldRequiredLatPanama.n_sobretasa && (
@@ -449,6 +472,9 @@ export const PanamForm = (data: PanamaFormProps) => {
                                        value={data.consultaData?.body?.info_bd?.s_isin || ""}
                                        onChange={data.handleChange}
                                        ref={data.refReqLatPanama.s_isin}
+                                       onFocus={() => handleFocus('s_isin')}
+                                       onBlur={handleBlur}
+                                       style={sendStyle('s_isin')}
                                 />
                                 <label htmlFor="s_isin">
                                     Isin
@@ -459,7 +485,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                     </span>
                                 )}
                             </div>
-                            <div className="form-date">
+                            <div className="form-date form-date-my">
                                 <input type="date"
                                        name="d_fecha_amort_ant"
                                        id="d_fecha_amort_ant"
@@ -480,6 +506,9 @@ export const PanamForm = (data: PanamaFormProps) => {
                                        value={data.consultaData?.body?.info_bd?.n_precio || ""}
                                        onChange={data.handleChange}
                                        ref={data.refReqLatPanama.n_precio}
+                                       onFocus={() => handleFocus('n_precio')}
+                                       onBlur={handleBlur}
+                                       style={sendStyle('n_precio')}
                                 />
                                 <label htmlFor="n_precio">
                                     Precio
@@ -571,6 +600,9 @@ export const PanamForm = (data: PanamaFormProps) => {
                                        value={data.consultaData?.body?.info_bd?.n_fixed_coupon_date || ""}
                                        onChange={data.handleChange}
                                        ref={data.refReqLatPanama.n_fixed_coupon_date}
+                                       onFocus={() => handleFocus('n_fixed_coupon_date')}
+                                       onBlur={handleBlur}
+                                       style={sendStyle('n_fixed_coupon_date')}
                                 />
                                 <label htmlFor="n_fixed_coupon_date">
                                     Fixed Coupon Date
@@ -685,7 +717,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                 </select>
                                 <label htmlFor="fitch">Fitch</label>
                             </div>
-                            <div className="form-date">
+                            <div className="form-date form-date-my">
                                 <input type="date"
                                        name="d_fitch"
                                        id="d_fitch"
@@ -713,7 +745,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                 </select>
                                 <label htmlFor="n_moody">Moody</label>
                             </div>
-                            <div className="form-date">
+                            <div className="form-date form-date-my">
                                 <input type="date"
                                        name="d_moody"
                                        id="d_moody"
@@ -741,7 +773,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                     S&P
                                 </label>
                             </div>
-                            <div className="form-date">
+                            <div className="form-date form-date-my">
                                 <input type="date"
                                        name="d_sp"
                                        id="d_sp"
@@ -752,7 +784,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                             </div>
                         </div>
                         <div className="form-cols-2 -my-3">
-                            <div className="form-date">
+                            <div className="form-date form-date-my">
                                 <input type="date"
                                        name="d_fecha_ingreso_titulo"
                                        id="d_fecha_ingreso_titulo"
@@ -769,7 +801,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                     </span>
                                 )}
                             </div>
-                            <div className="form-date">
+                            <div className="form-date form-date-my">
                                 <input type="date"
                                        name="d_last_reg_coup_date"
                                        id="d_last_reg_coup_date"
@@ -810,6 +842,9 @@ export const PanamForm = (data: PanamaFormProps) => {
                                        placeholder=""
                                        value={data.consultaData?.body?.info_bd?.n_soy || ""}
                                        onChange={data.handleChange}
+                                       onFocus={() => handleFocus('n_soy')}
+                                       onBlur={handleBlur}
+                                       style={sendStyle('n_soy')}
                                 />
                                 <label htmlFor="n_soy">SOY</label>
                             </div>
@@ -829,6 +864,9 @@ export const PanamForm = (data: PanamaFormProps) => {
                                                ["Fixed Rate Bond"]?.
                                                [data.selectedNemoTecnico]?.Currency ?? ''}
                                            disabled
+                                           onFocus={() => handleFocus('currency')}
+                                           onBlur={handleBlur}
+                                           style={sendStyle('currency')}
                                     />
                                     <label htmlFor="currency">Currency</label>
                                 </div>
@@ -842,12 +880,16 @@ export const PanamForm = (data: PanamaFormProps) => {
                                                ["Fixed Rate Bond"]?.
                                                [data.selectedNemoTecnico]?.Notional ?? ''}
                                            placeholder=""
-                                           disabled/>
+                                           disabled
+                                           onFocus={() => handleFocus('notional')}
+                                           onBlur={handleBlur}
+                                           style={sendStyle('notional')}
+                                           />
                                     <label htmlFor="notional">Notional</label>
                                 </div>
                             </div>
                             <div className="form-cols-1 -my-3">
-                                <div className="form-date">
+                                <div className="form-date form-date-my">
                                     <input type="date"
                                            name="issueDate"
                                            id="issueDate"
@@ -859,7 +901,7 @@ export const PanamForm = (data: PanamaFormProps) => {
                                 </div>
                             </div>
                             <div className="form-cols-1 -my-3">
-                                <div className="form-date">
+                                <div className="form-date form-date-my">
                                     <input type="date"
                                            name="maturityDate"
                                            id="maturityDate"
@@ -878,7 +920,11 @@ export const PanamForm = (data: PanamaFormProps) => {
                                                ["Fixed Rate Bond"]?.
                                                [data.selectedNemoTecnico]?.["Discount Courve"] ?? ''}
                                            placeholder=""
-                                           disabled/>
+                                           disabled
+                                           onFocus={() => handleFocus('Discount Courve')}
+                                           onBlur={handleBlur}
+                                           style={sendStyle('Discount Courve')}
+                                           />
                                     <label htmlFor="Discount Courve">Discount Curve</label>
                                 </div>
                             </div>
@@ -891,7 +937,11 @@ export const PanamForm = (data: PanamaFormProps) => {
                                            value={data.consultaData?.body?.info_rw?.
                                                ["Fixed Rate Bond"]?.
                                                [data.selectedNemoTecnico]?.Term ?? ''}
-                                           disabled/>
+                                           disabled
+                                           onFocus={() => handleFocus('term')}
+                                           onBlur={handleBlur}
+                                           style={sendStyle('term')}
+                                           />
                                     <label htmlFor="term">Term</label>
                                 </div>
                             </div>
@@ -904,7 +954,11 @@ export const PanamForm = (data: PanamaFormProps) => {
                                                ["Fixed Rate Bond"]?.
                                                [data.selectedNemoTecnico]?.["Coupon Generation Method"] ?? ''}
                                            placeholder=""
-                                           disabled/>
+                                           disabled
+                                           onFocus={() => handleFocus('couponGenerationMethod')}
+                                           onBlur={handleBlur}
+                                           style={sendStyle('couponGenerationMethod')}
+                                           />
                                     <label htmlFor="couponGenerationMethod">Coupon Generation Method</label>
                                 </div>
                             </div>
@@ -917,7 +971,11 @@ export const PanamForm = (data: PanamaFormProps) => {
                                                ["Fixed Rate Bond"]?.
                                                [data.selectedNemoTecnico]?.["State Procedure"] ?? ''}
                                            placeholder=""
-                                           disabled/>
+                                           disabled
+                                           onFocus={() => handleFocus('stateProcedure')}
+                                           onBlur={handleBlur}
+                                           style={sendStyle('stateProcedure')}
+                                           />
                                     <label htmlFor="stateProcedure">State Procedure</label>
                                 </div>
                             </div>
@@ -930,7 +988,11 @@ export const PanamForm = (data: PanamaFormProps) => {
                                                ["Fixed Rate Bond"]?.
                                                [data.selectedNemoTecnico]?.["Coupon Rate"] ?? ''}
                                            placeholder=""
-                                           disabled/>
+                                           disabled
+                                           onFocus={() => handleFocus('couponRate')}
+                                           onBlur={handleBlur}
+                                           style={sendStyle('couponRate')}
+                                           />
                                     <label htmlFor="couponRate">Coupon Rate</label>
                                 </div>
                             </div>
@@ -943,7 +1005,11 @@ export const PanamForm = (data: PanamaFormProps) => {
                                                ["Fixed Rate Bond"]?.
                                                [data.selectedNemoTecnico]?.["Spot Price"] ?? ''}
                                            placeholder=""
-                                           disabled/>
+                                           disabled
+                                           onFocus={() => handleFocus('spotPrice')}
+                                           onBlur={handleBlur}
+                                           style={sendStyle('spotPrice')}
+                                           />
                                     <label htmlFor="spotPrice">Spot Price</label>
                                 </div>
                             </div>
@@ -956,7 +1022,11 @@ export const PanamForm = (data: PanamaFormProps) => {
                                                ["Fixed Rate Bond"]?.
                                                [data.selectedNemoTecnico]?.["Coupon Prorated"] ?? ''}
                                            placeholder=""
-                                           disabled/>
+                                           disabled
+                                           onFocus={() => handleFocus('couponProrated')}
+                                           onBlur={handleBlur}
+                                           style={sendStyle('couponProrated')}
+                                           />
                                     <label htmlFor="couponProrated">Coupon Prorated</label>
                                 </div>
                             </div>
@@ -969,7 +1039,11 @@ export const PanamForm = (data: PanamaFormProps) => {
                                                ["Fixed Rate Bond"]?.
                                                [data.selectedNemoTecnico]?.["Business Day Rule"] ?? ''}
                                            placeholder=""
-                                           disabled/>
+                                           disabled
+                                           onFocus={() => handleFocus('businessDayRule')}
+                                           onBlur={handleBlur}
+                                           style={sendStyle('businessDayRule')}
+                                           />
                                     <label htmlFor="businessDayRule">Business Day Rule</label>
                                 </div>
                             </div>
@@ -981,7 +1055,11 @@ export const PanamForm = (data: PanamaFormProps) => {
                                                ["Fixed Rate Bond"]?.
                                                [data.selectedNemoTecnico]?.["Spread Over Yield"] ?? ''}
                                            placeholder=""
-                                           disabled/>
+                                           disabled
+                                           onFocus={() => handleFocus('spreadOverYield')}
+                                           onBlur={handleBlur}
+                                           style={sendStyle('spreadOverYield')}
+                                           />
                                     <label htmlFor="spreadOverYield">Spread Over Yield</label>
                                 </div>
                             </div>
@@ -993,7 +1071,11 @@ export const PanamForm = (data: PanamaFormProps) => {
                                                ["Fixed Rate Bond"]?.
                                                [data.selectedNemoTecnico]?.["Theorical Model"] ?? ''}
                                            placeholder=""
-                                           disabled/>
+                                           disabled
+                                           onFocus={() => handleFocus('theoricalModel')}
+                                           onBlur={handleBlur}
+                                           style={sendStyle('theoricalModel')}
+                                           />
                                     <label htmlFor="theoricalModel">Theorical Model</label>
                                 </div>
                             </div>
@@ -1006,7 +1088,11 @@ export const PanamForm = (data: PanamaFormProps) => {
                                                ["Fixed Rate Bond"]?.
                                                [data.selectedNemoTecnico]?.["Market Model"] ?? ''}
                                            placeholder=""
-                                           disabled/>
+                                           disabled
+                                           onFocus={() => handleFocus('marketModel')}
+                                           onBlur={handleBlur}
+                                           style={sendStyle('marketModel')}
+                                           />
                                     <label htmlFor="marketModel">Market Model</label>
                                 </div>
                             </div>
