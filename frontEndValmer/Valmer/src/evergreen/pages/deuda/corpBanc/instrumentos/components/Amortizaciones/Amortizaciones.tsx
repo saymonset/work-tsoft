@@ -1,13 +1,8 @@
 import React from 'react'
 import {useHandleDataCorp} from '../Instrumentos';
-import { useBigInput } from '../../../../../../../utils/useBigInput';
 
 export const Amortizaciones: React.FC = () => {
 
-	    //  Achica o agranda el input del form cuando obtiene o deja el focus
-	const {  handleFocus,
-			handleBlur,
-			sendStyle} = useBigInput();
 	const {
 		consultaData,
 		handleChange,
@@ -30,9 +25,6 @@ export const Amortizaciones: React.FC = () => {
 							required
 							value={consultaData?.body?.n_titulos_amortizar ?? ''}
 							onChange={(e) => handleNumericChange(e, handleChange)}
-							onFocus={() => handleFocus('n_titulos_amortizar')}
-							onBlur={handleBlur}
-							style={sendStyle('n_titulos_amortizar')}
 						/>
 						<label
 							htmlFor="n_titulos_amortizar"
@@ -49,9 +41,6 @@ export const Amortizaciones: React.FC = () => {
 							required
 							value={consultaData?.body?.n_importe_amortizar ?? ''}
 							onChange={(e) => handleNumericChange(e, handleChange)}
-							onFocus={() => handleFocus('n_importe_amortizar')}
-							onBlur={handleBlur}
-							style={sendStyle('n_importe_amortizar')}
 						/>
 						<label
 							htmlFor="n_importe_amortizar"
@@ -86,9 +75,6 @@ export const Amortizaciones: React.FC = () => {
 							required
 							value={consultaData?.body?.n_prima_amortizacion ?? ''}
 							onChange={(e) => handleNumericChange(e, handleChange)}
-							onFocus={() => handleFocus('n_prima_amortizacion')}
-							onBlur={handleBlur}
-							style={sendStyle('n_prima_amortizacion')}
 						/>
 						<label
 							htmlFor="n_prima_amortizacion"

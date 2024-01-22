@@ -13,7 +13,7 @@ export const Emisoras = () => {
 
             <EmisorasFormHeader/>
 
-            <div className={`mt-1 mb-14 container-flex animate__animated animate__fadeIn`}>
+            <div className={`mt-4 mb-14 container-flex animate__animated animate__fadeIn`}>
                 <div className="container-form">
                     <EmisorasForm/>
                 </div>

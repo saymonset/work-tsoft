@@ -424,7 +424,7 @@ export const EmisorasForm = () => {
                     </div>
                 </div>
                 <div className="grid grid-cols-1 gap-4">
-                    <div className="line-y-1"/>
+                    <div className="line"/>
                 </div>
                 <div className="form-cols-4">
                     <div>

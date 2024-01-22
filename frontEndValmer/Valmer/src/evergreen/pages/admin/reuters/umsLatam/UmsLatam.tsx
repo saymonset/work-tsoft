@@ -1,4 +1,4 @@
-import { TitleDate, Modal } from '../../../../../shared';
+import { TitleDate, Modal, ButtonContent } from '../../../../../shared';
 import { UmsLatamTable } from './components/UmsLatamTable';
 import { useUmsMexCat } from '../hooks/useUmsMexCat'
 
@@ -17,7 +17,7 @@ export const UmsLatam = () => {
         isOpenCarga,
         handleCloseCarga,
         isOpenEdit,
-        handleButtonClick,
+        handleClickReutersLatam,
         handleCloseEdit,
         registro,
         handleChangeForm,
@@ -27,6 +27,9 @@ export const UmsLatam = () => {
         deletebyIsin,
         isinToDelete,
         setOpenEdit,
+        handleTextareaChange,
+        parametrosLatam,
+        loadingSubmit,
         saveDataUser
     } = useUmsMexCat();
 
@@ -113,12 +116,18 @@ export const UmsLatam = () => {
                     </div>
                     <form>
                         <div className="form-text-area">
-                            <textarea name="carga" id="carga" placeholder=''></textarea>
+                            <textarea
+                                name="carga" id="carga"
+                                placeholder=''
+                                value={parametrosLatam}
+                                onChange={handleTextareaChange}/>
                             <label htmlFor="carga">ISIN, RIC, PROVEDOR</label>
                         </div>
                         <div className="line" />
                         <div className="flex justify-end">
-                            <button className="btn" onClick={handleButtonClick}>Carga</button>
+                            <button className="btn" onClick={handleClickReutersLatam}>
+                                <ButtonContent name="Cargar" loading={loadingSubmit}/>
+                            </button>
                         </div>
                     </form>
                 </Modal>

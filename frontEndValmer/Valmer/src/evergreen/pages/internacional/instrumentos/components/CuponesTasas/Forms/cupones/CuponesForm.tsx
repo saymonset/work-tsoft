@@ -1,13 +1,8 @@
 import {generateUUID, getCatalogs} from "../../../../../../../../utils";
-import { useBigInput } from "../../../../../../../../utils/useBigInput";
 import {useDataCupones} from "../hooks"
 
 export const CuponesForm = ({requeridos}: any) => {
 
-      //  Achica o agranda el input del form cuando obtiene o deja el focus
-      const {  handleFocus,
-        handleBlur,
-        sendStyle} = useBigInput();
     const {
         triggerErase,
         catalog,
@@ -56,7 +51,7 @@ export const CuponesForm = ({requeridos}: any) => {
             <div className="form">
                 <div className="form-title">Cupones</div>
                 <div className="form-cols-3">
-                    <div className="form-date form-date-my">
+                    <div className="form-date">
                         <input
                             type="date"
                             name="d_fec_ini_c"
@@ -80,7 +75,7 @@ export const CuponesForm = ({requeridos}: any) => {
                         </select>
                         <label htmlFor="n_frec_cupon">Forma de Pago</label>
                     </div>
-                    <div className="form-date form-date-my">
+                    <div className="form-date">
                         <input
                             type="date"
                             name="d_fec_fin_c"
@@ -97,9 +92,6 @@ export const CuponesForm = ({requeridos}: any) => {
                             name="n_p_cupon"
                             value={consultaData?.body?.n_p_cupon ?? ''}
                             onChange={handleChange}
-                            onFocus={() => handleFocus('n_p_cupon')}
-                            onBlur={handleBlur}
-                            style={sendStyle('n_p_cupon')}
                         />
                         <label htmlFor="n_p_cupon">Periodo Cupón</label>
                     </div>
@@ -109,9 +101,6 @@ export const CuponesForm = ({requeridos}: any) => {
                             name="n_p_cupon_vig"
                             value={consultaData?.body?.n_p_cupon_vig ?? ''}
                             onChange={handleChange}
-                            onFocus={() => handleFocus('n_p_cupon_vig')}
-                            onBlur={handleBlur}
-                            style={sendStyle('n_p_cupon_vig')}
                         />
                         <label htmlFor="n_p_cupon_vig">Periodo Cupón Vigente</label>
                     </div>
@@ -121,9 +110,6 @@ export const CuponesForm = ({requeridos}: any) => {
                             name="n_num_cupones"
                             value={consultaData?.body?.n_num_cupones ?? ''}
                             onChange={handleChange}
-                            onFocus={() => handleFocus('n_num_cupones')}
-                            onBlur={handleBlur}
-                            style={sendStyle('n_num_cupones')}
                         />
                         <label htmlFor="n_num_cupones">Cupones</label>
                     </div>
@@ -135,9 +121,6 @@ export const CuponesForm = ({requeridos}: any) => {
                             name="n_tasa_cupon_md"
                             value={consultaData?.body?.n_tasa_cupon_md ?? ''}
                             onChange={handleChange}
-                            onFocus={() => handleFocus('n_tasa_cupon_md')}
-                            onBlur={handleBlur}
-                            style={sendStyle('n_tasa_cupon_md')}
                         />
                         <label htmlFor="n_tasa_cupon_md">Tasa</label>
                     </div>
@@ -147,9 +130,6 @@ export const CuponesForm = ({requeridos}: any) => {
                             name="n_tasa_cupon_24"
                             value={consultaData?.body?.n_tasa_cupon_24 ?? ''}
                             onChange={handleChange}
-                            onFocus={() => handleFocus('n_tasa_cupon_24')}
-                            onBlur={handleBlur}
-                            style={sendStyle('n_tasa_cupon_24')}
                         />
                         <label htmlFor="n_tasa_cupon_24h">Tasa Cupón 24</label>
                     </div>
@@ -159,9 +139,6 @@ export const CuponesForm = ({requeridos}: any) => {
                             name="n_num_cupon"
                             value={consultaData?.body?.n_num_cupon ?? ''}
                             onChange={handleChange}
-                            onFocus={() => handleFocus('n_num_cupon')}
-                            onBlur={handleBlur}
-                            style={sendStyle('n_num_cupon')}
                         />
                         <label htmlFor="n_num_cupon">Cupón Vigente</label>
                     </div>
@@ -203,9 +180,6 @@ export const CuponesForm = ({requeridos}: any) => {
                             name="n_dias_deter_tasa"
                             value={consultaData?.body?.n_dias_deter_tasa ?? ''}
                             onChange={handleChange}
-                            onFocus={() => handleFocus('n_dias_deter_tasa')}
-                            onBlur={handleBlur}
-                            style={sendStyle('n_dias_deter_tasa')}
                         />
                         <label htmlFor="n_dias_deter_tasa">Días Determinación Tasa</label>
                     </div>
@@ -217,9 +191,6 @@ export const CuponesForm = ({requeridos}: any) => {
                             name="n_redondeo_tasa_cupon"
                             value={consultaData?.body?.n_redondeo_tasa_cupon ?? ''}
                             onChange={handleChange}
-                            onFocus={() => handleFocus('n_redondeo_tasa_cupon')}
-                            onBlur={handleBlur}
-                            style={sendStyle('n_redondeo_tasa_cupon')}
                         />
                         <label htmlFor="n_redondeo_tasa_cupon">Redondeo</label>
                     </div>

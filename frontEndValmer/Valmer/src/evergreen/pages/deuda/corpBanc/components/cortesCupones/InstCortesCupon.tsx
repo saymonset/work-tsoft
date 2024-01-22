@@ -23,7 +23,7 @@ export const InstCortesCupon = () => {
                     <span>Filtros</span>
                 </div>
                 <div className="grid grid-cols-4 gap-4">
-                    <div className="form-date form-date-my">
+                    <div className="form-date">
                         <input
                             type="date"
                             name="d_fecha_vto"

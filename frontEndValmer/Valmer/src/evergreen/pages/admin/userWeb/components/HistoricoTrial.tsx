@@ -58,10 +58,8 @@ export const HistoricoTrial = (data: HistoricoTrialProps) => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value, checked} = e.target
-        console.log(name, value, checked)
         const checkedValue = {...checkbox, [name]: checked}
         const contratosValue = {...contratos, [name]: checked ? value : ''}
-        console.log(checkedValue)
         setCheckbox(checkedValue)
         setContratos(contratosValue)
     }

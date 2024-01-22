@@ -27,6 +27,7 @@ export const useGetCatalogs = () => {
     const [loadingInst, setLoadingInst] = useState(false)
     const [loadingTipoUser, setLoadingTipoUser] = useState(false)
     const [loadingCatUri, setLoadingCatUri] = useState(false)
+    const [dataUri, setDataUri] = useState<Record<string, string>>({})
 
     const dispatch = useDispatch();
 
@@ -77,26 +78,29 @@ export const useGetCatalogs = () => {
                 .get<ResponseCat>('/admin-user-web/uri')
                 .then((response) => {
                     dispatch(updateCatUri(response.data))
-                    setLoadingCatUri(false)
+                    setDataUri(response.data.body)
                 })
                 .catch(async (error) => {
-                    setLoadingCatUri(false)
                     if (error.message.includes('Network Error')) {
                         await showAlert('error', 'Error', 'No hay conexión con el servidor');
                     } else {
                         await showAlert('error', 'Error', error.message);
                     }
-                });
+                }).finally(() => {
+                setLoadingCatUri(false)
+            });
         }
     }, [catUri]);
 
     return {
-        catalogoInst, 
-        loadingInst, 
-        catNom, 
+        catalogoInst,
+        loadingInst,
+        catNom,
         loadingTipoUser,
         catTipoUser,
         loadingCatUri,
-        catUri
+        dataUri,
+        catUri,
+        setDataUri
     }
 }

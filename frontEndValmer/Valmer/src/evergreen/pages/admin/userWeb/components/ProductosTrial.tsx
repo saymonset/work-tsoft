@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { MenuProducts } from "./MenuProducts"
 import { DataHistoricoTrial, FvContratos, ItemProduct } from "../../../../../model"
 import { fetchDataGetRet, fetchDataPostRet, showAlert } from "../../../../../utils"
@@ -13,7 +13,11 @@ interface ProductosTrialProps {
     setTriggerDataTable: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const ProductosTrial: React.FC<ProductosTrialProps> = ({n_nombre, triggerProduct, setTriggerProduct, setDataTable, setTriggerDataTable}) => {
+export const ProductosTrial: React.FC<ProductosTrialProps> = ({n_nombre,
+                                                                  triggerProduct,
+                                                                  setTriggerProduct,
+                                                                  setDataTable,
+                                                                  setTriggerDataTable}) => {
 
     const [loading, setLoading] = useState<boolean>(false)
     const [products, setProducts] = useState<ItemProduct>({} as ItemProduct)

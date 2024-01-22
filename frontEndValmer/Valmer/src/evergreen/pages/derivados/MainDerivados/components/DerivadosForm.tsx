@@ -4,7 +4,6 @@ import {TvEmiSerieDer} from "./components";
 import {generateUUID, getCatalogs} from "../../../../../utils";
 import {ButtonContent} from "../../../../../shared";
 import React from "react";
-import { useBigInput } from "../../../../../utils/useBigInput";
 
 interface TeoricosChicagoProps {
     isChicago: boolean,
@@ -14,10 +13,6 @@ interface TeoricosChicagoProps {
 }
 export const DerivadosForm = ({isChicago, sMercado, queryDataUrl, urlSaveData}: TeoricosChicagoProps) => {
 
-      //  Achica o agranda el input del form cuando obtiene o deja el focus
-      const {  handleFocus,
-        handleBlur,
-        sendStyle} = useBigInput();
     const {
         tv,
         loadingPersist,
@@ -157,7 +152,7 @@ export const DerivadosForm = ({isChicago, sMercado, queryDataUrl, urlSaveData}: 
                         <span>Caracteristicas</span>
                     </div>
                     <div className="form-cols-2">
-                        <div className="form-date form-date-my">
+                        <div className="form-date">
                             <input
                                 type="date"
                                 name="d_fecha_vto"
@@ -220,9 +215,6 @@ export const DerivadosForm = ({isChicago, sMercado, queryDataUrl, urlSaveData}: 
                                 onChange={handleChange}
                                 ref={requeridosDer.n_valor_nominal}
                                 placeholder=""
-                                onFocus={() => handleFocus('n_valor_nominal')}
-                                onBlur={handleBlur}
-                                style={sendStyle('n_valor_nominal')}
                             />
                             <label htmlFor="n_valor_nominal">
                                 Valor Nominal
@@ -328,9 +320,6 @@ export const DerivadosForm = ({isChicago, sMercado, queryDataUrl, urlSaveData}: 
                                     onChange={handleChange}
                                     placeholder=""
                                     ref={requeridosDer.n_tasa_cupon}
-                                    onFocus={() => handleFocus('n_tasa_cupon')}
-                                    onBlur={handleBlur}
-                                    style={sendStyle('n_tasa_cupon')}
                                 />
                                 <label htmlFor="n_tasa_cupon">
                                     Tasa Cupón
@@ -400,9 +389,6 @@ export const DerivadosForm = ({isChicago, sMercado, queryDataUrl, urlSaveData}: 
                                         value={consultaDataDer?.body?.s_consec ?? ""}
                                         onChange={handleChange}
                                         placeholder=""
-                                        onFocus={() => handleFocus('s_consec')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('s_consec')}
                                     />
                                     <label htmlFor="s_consec">
                                         Consecutivo
@@ -429,9 +415,6 @@ export const DerivadosForm = ({isChicago, sMercado, queryDataUrl, urlSaveData}: 
                                         value={consultaDataDer?.body?.consec_precio_hoy ?? ""}
                                         onChange={handleChange}
                                         placeholder=""
-                                        onFocus={() => handleFocus('consec_precio_hoy')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('consec_precio_hoy')}
                                     />
                                     <label htmlFor="consec_precio_hoy">
                                         Precio Hoy
@@ -444,9 +427,6 @@ export const DerivadosForm = ({isChicago, sMercado, queryDataUrl, urlSaveData}: 
                                         value={consultaDataDer?.body?.consec_precio_ayer ?? ""}
                                         onChange={handleChange}
                                         placeholder=""
-                                        onFocus={() => handleFocus('consec_precio_ayer')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('consec_precio_ayer')}
                                     />
                                     <label htmlFor="consec_precio_ayer">
                                         Precio Ayer
@@ -461,9 +441,6 @@ export const DerivadosForm = ({isChicago, sMercado, queryDataUrl, urlSaveData}: 
                                         value={consultaDataDer?.body?.consec_monto_ex_h ?? ""}
                                         onChange={handleChange}
                                         placeholder=""
-                                        onFocus={() => handleFocus('consec_monto_ex_h')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('consec_monto_ex_h')}
                                     />
                                     <label htmlFor="consec_monto_ex_h">
                                         Monto Exposición Hoy
@@ -476,9 +453,6 @@ export const DerivadosForm = ({isChicago, sMercado, queryDataUrl, urlSaveData}: 
                                         value={consultaDataDer?.body?.consec_monto_ex_a ?? ""}
                                         onChange={handleChange}
                                         placeholder=""
-                                        onFocus={() => handleFocus('consec_monto_ex_a')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('consec_monto_ex_a')}
                                     />
                                     <label htmlFor="consec_monto_ex_a">
                                         Monto Exposición Ayer
@@ -493,9 +467,6 @@ export const DerivadosForm = ({isChicago, sMercado, queryDataUrl, urlSaveData}: 
                                         value={consultaDataDer?.body?.consec_under_fin_ent ?? ""}
                                         onChange={handleChange}
                                         placeholder=""
-                                        onFocus={() => handleFocus('consec_under_fin_ent')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('consec_under_fin_ent')}
                                     />
                                     <label htmlFor="consec_under_fin_ent">
                                         Underlying Fin Ent
@@ -510,9 +481,6 @@ export const DerivadosForm = ({isChicago, sMercado, queryDataUrl, urlSaveData}: 
                                         value={consultaDataDer?.body?.consec_compon_weights ?? ""}
                                         onChange={handleChange}
                                         placeholder=""
-                                        onFocus={() => handleFocus('consec_compon_weights')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('consec_compon_weights')}
                                     />
                                     <label htmlFor="consec_compon_weights">
                                         Component Weights
@@ -566,9 +534,6 @@ export const DerivadosForm = ({isChicago, sMercado, queryDataUrl, urlSaveData}: 
                                         value={consultaDataDer?.body?.s_coupgenmthd ?? ""}
                                         onChange={handleChange}
                                         placeholder=""
-                                        onFocus={() => handleFocus('s_coupgenmthd')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('s_coupgenmthd')}
                                     />
                                     <label htmlFor="s_coupgenmthd">
                                         Coup Generation Method
@@ -587,9 +552,6 @@ export const DerivadosForm = ({isChicago, sMercado, queryDataUrl, urlSaveData}: 
                                         value={consultaDataDer?.body?.s_dsc_curve_und ?? ""}
                                         onChange={handleChange}
                                         placeholder=""
-                                        onFocus={() => handleFocus('s_dsc_curve_und')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('s_dsc_curve_und')}
                                     />
                                     <label htmlFor="s_dsc_curve_und">
                                         Discount Curve Und
@@ -604,9 +566,6 @@ export const DerivadosForm = ({isChicago, sMercado, queryDataUrl, urlSaveData}: 
                                         value={consultaDataDer?.body?.s_foreign_curve ?? ""}
                                         onChange={handleChange}
                                         placeholder=""
-                                        onFocus={() => handleFocus('s_foreign_curve')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('s_foreign_curve')}
                                     />
                                     <label htmlFor="s_foreign_curve">
                                         Foreign Curve
@@ -621,9 +580,6 @@ export const DerivadosForm = ({isChicago, sMercado, queryDataUrl, urlSaveData}: 
                                         value={consultaDataDer?.body?.s_volatilidad ?? ""}
                                         onChange={handleChange}
                                         placeholder=""
-                                        onFocus={() => handleFocus('s_volatilidad')}
-                                        onBlur={handleBlur}
-                                        style={sendStyle('s_volatilidad')}
                                     />
                                     <label htmlFor="s_volatilidad">
                                         Volatilidad

@@ -60,7 +60,7 @@ export const General = (props: FormInstProps) => {
                     <>
                         <CalifInstFormHeader {...props} />
             
-                        <div className="line-y-1"></div>
+                        <div className="line"></div>
             
                         <CalifInstForm {...props} />
                     </>
