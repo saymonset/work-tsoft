@@ -21,9 +21,9 @@ export const AsignarCau: React.FC<AsignarCauProps> = ({ data, catUsr, loading })
             if (triggerAsig) {
                 setLoadingAsig(true)
                 const newData= {
-                    n_folio: data.n_folio,
-                    n_usuario_asig: userAsig,
-                    n_servicio: data.n_serv_aux
+                    n_folio: data.n_folio.toString(),
+                    n_usuario_asig: userAsig.toString(),
+                    n_servicio: data.n_serv_aux.toString()
                 }
                 fetchDataPostAct(
                     "/cau/abiertos/asignar-cau",
