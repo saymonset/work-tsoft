@@ -79,7 +79,7 @@ export const DatosCau: React.FC<DatosCauProps> = ({
 
     return (
         <div className='form-col-1'>
-            <div className="form-col-1 mb-4">
+            <div className="form-col-1 mb-4 mt-1">
                 {loading && <BarLoader className="mt-2" color="#059669" width={200} />}
                 <div className="form-title">Datos</div>
                 <div className="form-cols-2">
