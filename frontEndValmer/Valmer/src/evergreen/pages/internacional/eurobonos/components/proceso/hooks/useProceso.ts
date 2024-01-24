@@ -9,12 +9,10 @@ import {
     showAlert,
     userEncoded
 } from "../../../../../../../utils";
-import {updateIsShowLogBoxProc} from "../../../../../../../redux";
+import {updateIsShowLogBoxProc, updateStateCheckbox} from "../../../../../../../redux";
 import {AxiosResponse} from "axios";
 import {valmerApi} from "../../../../../../../api";
-import {SalidaEuro} from "../../../../../../../model";
-import { stateCheckbox } from "../../../../../../../model";
-import {updateStateCheckbox} from "../../../../../../../redux";
+import {SalidaEuro, stateCheckbox} from "../../../../../../../model";
 
 export const useProceso = () => {
 

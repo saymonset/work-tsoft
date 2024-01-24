@@ -1,8 +1,8 @@
-import { components } from "react-select";
 import { TvEmiSerieF } from "./TvEmiSerieF";
 import { TvEmiSerieO } from "./TvEmiSerieO";
 import { NewSerieO } from "./NewSerieO";
 import { FormValuesVenc } from "../../../../../../model";
+import React from "react";
 
 interface TvEmiSerieProps {
     tipoTv: string

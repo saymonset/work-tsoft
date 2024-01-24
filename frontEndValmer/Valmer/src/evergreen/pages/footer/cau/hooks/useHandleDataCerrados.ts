@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useVarCau } from "./useVarCau"
-import { fetchDataGetRet } from "../../../../../utils"
+import { fetchDataGetRet, userEncoded } from "../../../../../utils"
 
 export const useHandleDataCerrados = () => {
     const {
@@ -69,7 +69,8 @@ export const useHandleDataCerrados = () => {
                         '/cau/cerrados/consulta-info-id',
                         " al consultar info cau abierto",
                         {
-                            n_folio: folio
+                            n_folio: folio,
+                            s_user: userEncoded()
                         }
                     )
                     setInfoCau(response.body[0])

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { CargaArchivoContent } from "../../../../../../../model"
-import { fetchDataGetRet, fetchDataPost, fetchDataPostAct } from "../../../../../../../utils"
+import { fetchDataPost } from "../../../../../../../utils"
 
 export const useChargeFileGeneric = () => {
 

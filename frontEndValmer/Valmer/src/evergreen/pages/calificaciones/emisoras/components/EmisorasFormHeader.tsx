@@ -3,9 +3,14 @@ import {getCatalogs} from "../../../../../utils";
 import {MoonLoader} from "react-spinners";
 import {useEmisorasHeader} from "./hooks";
 import {ButtonContent} from "../../../../../shared";
+import { useBigInput } from "../../../../../utils";
 
 export const EmisorasFormHeader = () => {
 
+    //  Achica o agranda el input del form cuando obtiene o deja el focus
+    const {  handleFocus,
+        handleBlur,
+        sendStyle} = useBigInput();
     const {
         loadingSave,
         loading,
@@ -70,13 +75,16 @@ export const EmisorasFormHeader = () => {
                     </span>
                 )}
             </div>
-            <div className="form-input">
+            <div className="form-input form-my0">
                 <input
                     type="text"
                     name="s_entidad"
                     placeholder=""
                     onChange={handleChange}
                     required
+                    onFocus={() => handleFocus('s_entidad')}
+                                onBlur={handleBlur}
+                                style={sendStyle('s_entidad')}
                 />
                 <label htmlFor="s_entidad">
                     Entidad

@@ -1,9 +1,15 @@
 import React from 'react'
 import { useDataCupones } from './hooks';
 import { getCatalogs } from '../../../../../../../../utils';
+import { useBigInput } from '../../../../../../../../utils';
 
 export const CuponesForm = ({requeridos}: any) => {
 
+	
+    //  Achica o agranda el input del form cuando obtiene o deja el focus
+    const {  handleFocus,
+        handleBlur,
+        sendStyle} = useBigInput();
 	const {
 		isFrecuenciaBimestral,
 		fieldRequiredCorp,
@@ -61,6 +67,9 @@ export const CuponesForm = ({requeridos}: any) => {
 								required
 								value={consultaData?.body?.n_dia_corte_cupon ?? ''}
 								onChange={handleChange}
+								onFocus={() => handleFocus('n_dia_corte_cupon')}
+								onBlur={handleBlur}
+								style={sendStyle('n_dia_corte_cupon')}
 							/>
 							<label
 								htmlFor="n_dia_corte_cupon"
@@ -133,6 +142,9 @@ export const CuponesForm = ({requeridos}: any) => {
 							value={consultaData?.body?.n_dias_deter_tasa ?? ''}
 							onChange={handleChange}
 							ref={requeridos.n_dias_deter_tasa}
+							onFocus={() => handleFocus('n_dias_deter_tasa')}
+							onBlur={handleBlur}
+							style={sendStyle('n_dias_deter_tasa')}
 						/>
 						<label
 							htmlFor="n_dias_deter_tasa"
@@ -168,6 +180,9 @@ export const CuponesForm = ({requeridos}: any) => {
 								required
 								value={consultaData?.body?.n_redondeo_tasa_cupon ?? ''}
 								onChange={(e) => handleChange(e)}
+								onFocus={() => handleFocus('n_redondeo_tasa_cupon')}
+								onBlur={handleBlur}
+								style={sendStyle('n_redondeo_tasa_cupon')}
 							/>
 							<label
 								htmlFor="n_redondeo_tasa_cupon"
@@ -188,6 +203,9 @@ export const CuponesForm = ({requeridos}: any) => {
 							value={consultaData?.body?.n_tasa_cupon ?? ''}
 							onChange={(e) => handleNumericChange(e, handleChange)}
 							ref={requeridos.n_tasa_cupon}
+							onFocus={() => handleFocus('n_tasa_cupon')}
+							onBlur={handleBlur}
+							style={sendStyle('n_tasa_cupon')}
 						/>
 						<label
 							htmlFor="n_tasa_cupon"
@@ -209,6 +227,9 @@ export const CuponesForm = ({requeridos}: any) => {
 							value={consultaData?.body?.n_tasa_cupon_24h ?? ''}
 							onChange={(e) => handleChange(e)}
 							ref={requeridos.n_tasa_cupon_24h}
+							onFocus={() => handleFocus('n_tasa_cupon_24h')}
+							onBlur={handleBlur}
+							style={sendStyle('n_tasa_cupon_24h')}
 						/>
 						<label
 							htmlFor="n_tasa_cupon_24h"
@@ -230,6 +251,9 @@ export const CuponesForm = ({requeridos}: any) => {
 							value={consultaData?.body?.n_valor_nominal_act ?? ''}
 							onChange={(e) => handleChange(e)}
 							ref={requeridos.n_valor_nominal_act}
+							onFocus={() => handleFocus('n_valor_nominal_act')}
+							onBlur={handleBlur}
+							style={sendStyle('n_valor_nominal_act')}
 						/>
 						<label
 							htmlFor="n_valor_nominal_act"
@@ -248,7 +272,7 @@ export const CuponesForm = ({requeridos}: any) => {
 					<span>Cupones</span>
 				</div>
 				<div className="form-cols-4">
-					<div className="form-date">
+					<div className="form-date form-date-my">
 						<input
 							type="date"
 							name="d_fecha_ini_cupon"
@@ -269,7 +293,7 @@ export const CuponesForm = ({requeridos}: any) => {
                                     Campo requerido Fecha Inicio Cupón</span>
 						)}
 					</div>
-					<div className="form-date">
+					<div className="form-date form-date-my">
 						<input
 							type="date"
 							name="d_fecha_fin_cupon"
@@ -406,6 +430,9 @@ export const CuponesForm = ({requeridos}: any) => {
 							value={consultaData?.body?.n_num_cupones ?? ''}
 							onChange={(e) => handleNumericChange(e, handleChange)}
 							ref={requeridos.n_num_cupones}
+							onFocus={() => handleFocus('n_num_cupones')}
+							onBlur={handleBlur}
+							style={sendStyle('n_num_cupones')}
 						/>
 						<label
 							htmlFor="n_num_cupones"
@@ -427,6 +454,9 @@ export const CuponesForm = ({requeridos}: any) => {
 							value={consultaData?.body?.n_periodo_cupon ?? ''}
 							onChange={(e) => handleNumericChange(e, handleChange)}
 							ref={requeridos.n_periodo_cupon}
+							onFocus={() => handleFocus('n_periodo_cupon')}
+							onBlur={handleBlur}
+							style={sendStyle('n_periodo_cupon')}
 						/>
 						<label
 							htmlFor="n_periodo_cupon"
@@ -448,6 +478,9 @@ export const CuponesForm = ({requeridos}: any) => {
 							value={consultaData?.body?.n_periodo_cupon_v ?? ''}
 							onChange={(e) => handleNumericChange(e, handleChange)}
 							ref={requeridos.n_periodo_cupon_v}
+							onFocus={() => handleFocus('n_periodo_cupon_v')}
+							onBlur={handleBlur}
+							style={sendStyle('n_periodo_cupon_v')}
 						/>
 						<label
 							htmlFor="n_periodo_cupon_v"

@@ -1,10 +1,9 @@
 import React from "react";
-import {ButtonContent, Modal} from "../../../../../../shared";
+import {ButtonContent, Modal, TextAreaLog} from "../../../../../../shared";
 import {useProceso} from "./hooks";
 import {MoonLoader} from "react-spinners";
-import { ModalProceso } from "./ModalProceso";
+import {ModalProceso} from "./ModalProceso";
 import {generateUUID} from "../../../../../../utils";
-import {TextAreaLog} from "../../../../../../shared";
 
 export const ProcesoForm = () => {
 

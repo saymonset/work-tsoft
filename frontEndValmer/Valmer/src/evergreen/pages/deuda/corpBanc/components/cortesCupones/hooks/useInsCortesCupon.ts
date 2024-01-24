@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {BodyCorteCupon, ResponseCorteCupon} from "../../../../../../../model";
 import {fetchDataGetRet, getCurrentDate} from "../../../../../../../utils";
 
@@ -7,6 +7,10 @@ export const useInsCortesCupon = () => {
     const [fijos, setFijos] = useState({} as ResponseCorteCupon);
     const [flotantes, setFlotantes] = useState({} as ResponseCorteCupon);
     const [fecha, setFecha] = useState(getCurrentDate);
+
+    useEffect(() => {
+        handleConsulta();
+    }, []);
 
     const handleConsulta = async () => {
 

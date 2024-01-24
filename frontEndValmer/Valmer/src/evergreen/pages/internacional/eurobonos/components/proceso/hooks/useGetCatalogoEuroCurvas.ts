@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchDataGetConsultaData, showAlert } from '../../../../../../../utils';
+import { fetchDataGetConsultaData } from '../../../../../../../utils';
 import { ResponseCatalogoEuroCurvas } from '../../../../../../../model';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@reduxjs/toolkit/dist/query/core/apiState';

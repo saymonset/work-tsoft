@@ -1,15 +1,25 @@
-import { useState } from "react"
-import { fetchDataPostAct } from "../../../../../utils"
+import React, { useState } from "react"
+import {fetchDataPostAct, showAlert} from "../../../../../utils"
 import { ButtonContent } from "../../../../../shared"
+import {AxiosResponse} from "axios";
+import {valmerApi} from "../../../../../api";
+import {useDispatch} from "react-redux";
+import {updateInfoUser} from "../../../../../redux";
+import {InfoUser} from "../../../../../model";
 
 interface UserChangePwdProps {
-    email: string
+    email: string,
+    setTriggerProducts: React.Dispatch<React.SetStateAction<boolean>>,
+    setTriggerInfoTrial: React.Dispatch<React.SetStateAction<boolean>>,
+    setTriggerInfo: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const UserChangePwd = (data: UserChangePwdProps) => {
 
     const [password, setPassword] = useState<string>("")
     const [loading, setLoading] = useState<boolean>(false)
+
+    const dispatch = useDispatch()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const password = e.target.value
@@ -19,13 +29,31 @@ export const UserChangePwd = (data: UserChangePwdProps) => {
     const handleActPassword = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         setLoading(true)
-        await fetchDataPostAct(
-            "/admin-user-web/cambiar-contrasenia",
-            "Actualizada",
-            " al actualizar contraseña",
-            [],
-            {email: data.email, nueva_contrasenia: password}
-        )
+
+        let params = {email: data.email, nueva_contrasenia: password}
+
+        try {
+            const response: AxiosResponse<any> = await valmerApi.post(
+                "/admin-user-web/cambiar-contrasenia",
+                data,
+                {params});
+            await showAlert("success", `Actualizada`,
+                response?.data?.message ?? response?.data?.body?.message ?? response?.data?.body);
+
+            dispatch(updateInfoUser({} as InfoUser))
+            data.setTriggerProducts(true)
+            data.setTriggerInfoTrial(true)
+            data.setTriggerInfo(true)
+        } catch (error: any)
+        {
+            if (error.message.includes('Network Error'))
+            {
+                await showAlert('error', 'Error', 'No hay conexión con el servidor');
+            } else {
+                await showAlert('error', `Error al actualizar contraseña`, error.message);
+            }
+        }
+
         setLoading(false)
         setPassword("")
     }

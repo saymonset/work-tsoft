@@ -1,4 +1,4 @@
-import {DerDefHandleDataProps, IsFieldModifiedFvDerivados} from "../../../../../../model"
+import {DerDefHandleDataProps} from "../../../../../../model"
 import {useTvDerDef} from "./useTvDerDef"
 import {useGetCatalogsDefDer, useGetCatalogsUnderlying} from "./index";
 import {useGetCatalogsDer} from "../../../MainDerivados/components/hooks";

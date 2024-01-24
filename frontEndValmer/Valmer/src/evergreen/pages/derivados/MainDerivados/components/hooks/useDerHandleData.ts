@@ -3,7 +3,6 @@ import {useGetCatalogsDer, useTvDer} from "./index";
 import React, {useRef, useState} from "react";
 import {fetchDataPost, showAlert, userEncoded, validateFormDerivadosFields} from "../../../../../../utils";
 import { useDispatch, useSelector } from "react-redux";
-import { useSelect } from "@mui/base";
 import { RootState } from "@reduxjs/toolkit/dist/query/core/apiState";
 import { updateFieldRequiredDerivados } from "../../../../../../redux";
 
@@ -85,7 +84,7 @@ export const useDerHandleData = ({sMercado, urlSaveData}: {sMercado: string, url
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         if(sMercado === "TEORICOS")
         {
-            handleSubmitTeoricos(event);
+            await handleSubmitTeoricos(event);
         }
         else {
             event.preventDefault();

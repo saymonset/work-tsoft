@@ -19,7 +19,7 @@ import {
     updateShowTableWallet,
     updateTriggerEraseInt
 } from "../../../../../../redux";
-import {CargaArchivoContent, RespClientWallet, Revisar1Response, Revisar2Response, stateCheckbox} from "../../../../../../model";
+import {CargaArchivoContent, RespClientWallet, Revisar1Response, Revisar2Response} from "../../../../../../model";
 import { RootState } from "@reduxjs/toolkit/dist/query/core/apiState";
 
 export const useProcesoHeader = () => {

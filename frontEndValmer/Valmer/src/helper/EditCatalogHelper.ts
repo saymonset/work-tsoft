@@ -107,15 +107,10 @@ export const validRowClick = (nameCatalog: string,
 
         const catalogoObj = catalogStatic.find(catalogo => catalogo.catalogo === "clase-sectorial");
 
-        console.log(catalogoObj)
-
         if (catalogoObj && registro['s_clasificacion_sectorial']) {
             const sectorialID = Object.keys(catalogoObj.registros).find(key =>
                 catalogoObj.registros[key] === registro['s_clasificacion_sectorial']
             );
-
-            console.log(registro['s_clasificacion_sectorial'])
-            console.log(sectorialID)
 
             if (sectorialID) {
                 registro['n_clasificacion_sectorial'] = sectorialID;

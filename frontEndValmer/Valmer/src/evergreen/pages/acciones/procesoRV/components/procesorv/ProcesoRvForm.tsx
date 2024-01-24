@@ -1,7 +1,6 @@
 import {ButtonContent, TextAreaLog} from "../../../../../../shared";
 import { useProcesoRV } from "./hooks";
 import React from "react";
-import {MoonLoader} from "react-spinners";
 
 export const ProcesoRvForm = () => {
     

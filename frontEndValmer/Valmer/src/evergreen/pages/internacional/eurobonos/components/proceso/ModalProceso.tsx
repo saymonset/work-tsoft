@@ -14,19 +14,21 @@ export const ModalProceso = ({ close, isModalOpenProcesos }: ModalProcesoProps) 
     const title = "Catalogo EURO_CURVAS";
 
     const { catalogoEuroCurva, loading, fetchCatalogoEuroCurvas, updateCatalogo } = useGetCatalogoEuroCurvas();
-    const { handleClick,
+    const {
+        loadingButtonBorrar,
+        loadingButtonNuevo,
+        loadingButtonGuardar,
+        selectedNID,
+        selectedInstrumento,
+        selectedCurva,
+        handleClick,
         handleLimpiar,
         handleInstrumentoChange,
         handleCurvaChange,
         handleGuardar,
-        selectedNID,
-        selectedInstrumento,
-        selectedCurva,
         handleNuevo,
-        loadingButtonNuevo,
-        loadingButtonGuardar,
-        handleBorrar,
-        loadingButtonBorrar } = useModalProceso(updateCatalogo);
+        handleBorrar
+    } = useModalProceso(updateCatalogo);
 
     useEffect(() => {
         if (!catalogoEuroCurva) {

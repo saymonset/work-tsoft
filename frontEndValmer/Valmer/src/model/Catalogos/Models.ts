@@ -18,6 +18,7 @@ export interface ColumnEditCat {
     isReadOnly ?: boolean;
     isReadOnlyEdit ?: boolean;
     columnIndex?: number;
+    isMandatory?: boolean;
 }
 
 export interface PropsEdit {

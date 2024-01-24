@@ -32,7 +32,7 @@ export const CalificacionesContent = (c: CalifProps) => {
     return (
         <form onSubmit={c.handleSubmit}>
             <div className="px-3">
-                <div className="grid grid-cols-4 gap-4">
+                <div className="grid grid-cols-4 ">
                     <div className="grid grid-cols-1">
                         <span className="bg-cyan-700 text-slate-50 px-1">Fitch</span>
                         <div className="form-select">
@@ -82,9 +82,9 @@ export const CalificacionesContent = (c: CalifProps) => {
                                 Fecha
                             </label>
                         </div>
-                        <div className="form-text-area h-32">
+                        <div className="form-text-area h-8">
 								<textarea
-                                    className="max-h-32"
+                                    className="max-h-8"
                                     id="s_evento_fitch"
                                     name="s_evento_fitch"
                                     value={c.consultaData?.body?.s_evento_fitch}
@@ -151,9 +151,9 @@ export const CalificacionesContent = (c: CalifProps) => {
                                 Fecha
                             </label>
                         </div>
-                        <div className="form-text-area h-32">
+                        <div className="form-text-area h-8">
 								<textarea
-                                    className="max-h-32"
+                                    className="max-h-8"
                                     id="s_evento_sp"
                                     name="s_evento_sp"
                                     value={c.consultaData?.body?.s_evento_sp}
@@ -219,9 +219,9 @@ export const CalificacionesContent = (c: CalifProps) => {
                                 Fecha
                             </label>
                         </div>
-                        <div className="form-text-area h-32">
+                        <div className="form-text-area h-8">
 								<textarea
-                                    className="max-h-32"
+                                    className="max-h-8"
                                     id="s_evento_moody"
                                     name="s_evento_moody"
                                     value={c.consultaData?.body?.s_evento_moody}
@@ -287,9 +287,9 @@ export const CalificacionesContent = (c: CalifProps) => {
                                 Fecha
                             </label>
                         </div>
-                        <div className="form-text-area h-32">
+                        <div className="form-text-area h-8">
 								<textarea
-                                    className="max-h-32"
+                                    className="max-h-8"
                                     id="s_evento_hr"
                                     name="s_evento_hr"
                                     value={c.consultaData?.body?.s_evento_hr}
@@ -310,7 +310,7 @@ export const CalificacionesContent = (c: CalifProps) => {
                 <div className="form-cols-1">
                     <div className="line"></div>
                 </div>
-                <div className="grid grid-cols-4 gap-4">
+                <div className="grid grid-cols-4 ">
                     <div className="grid grid-cols-1">
                         <span className="bg-cyan-700 text-slate-50 px-1">Verum</span>
                         <div className="form-select">
@@ -360,9 +360,9 @@ export const CalificacionesContent = (c: CalifProps) => {
                                 Fecha
                             </label>
                         </div>
-                        <div className="form-text-area h-32">
+                        <div className="form-text-area h-8">
 								<textarea
-                                    className="max-h-32"
+                                    className="max-h-8"
                                     id="s_evento_verum"
                                     name="s_evento_verum"
                                     value={c.consultaData?.body?.s_evento_verum}
@@ -428,9 +428,9 @@ export const CalificacionesContent = (c: CalifProps) => {
                                 Fecha
                             </label>
                         </div>
-                        <div className="form-text-area h-32">
+                        <div className="form-text-area h-8">
 								<textarea
-                                    className="max-h-32"
+                                    className="max-h-8"
                                     id="s_evento_dbrs"
                                     name="s_evento_dbrs"
                                     value={c.consultaData?.body?.s_evento_dbrs}
@@ -496,9 +496,9 @@ export const CalificacionesContent = (c: CalifProps) => {
                                 Fecha
                             </label>
                         </div>
-                        <div className="form-text-area h-32">
+                        <div className="form-text-area h-8">
 								<textarea
-                                    className="max-h-32"
+                                    className="max-h-8"
                                     id="s_evento_best"
                                     name="s_evento_best"
                                     value={c.consultaData?.body?.s_evento_best}

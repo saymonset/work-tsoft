@@ -25,9 +25,7 @@ export const LipperFundFormHead = () => {
                         <tr key={generateUUID()} className="tr">
                             <td>{filename}</td>
                             {typeof detailsOrStatus === 'string' ? (
-                                <>
-                                    <td className="text-red-600" colSpan={4}>{detailsOrStatus}</td>
-                                </>
+                                <td className="text-red-600" colSpan={4}>{detailsOrStatus}</td>
                             ) : (
                                 <>
                                     <td>{detailsOrStatus.fecha_mod}</td>

@@ -1,12 +1,12 @@
 import React from "react";
 import './css/Home.css'
-import { SimplePieChart } from "./components/SimplePieChart";
-import { Table } from './components/Table';
+import {SimplePieChart} from "./components/SimplePieChart";
+import {Table} from './components/Table';
 import {TitleDate} from "../../../shared";
 import {MoonLoader} from "react-spinners";
 import {useHome} from "./hooks";
 import {SimpleBarChart} from "./components/SimpleBarChart";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 export const Home = () => {
 
@@ -21,7 +21,8 @@ export const Home = () => {
         handleDownloadObjetivosCalidad,
         handleDownloadCodigoConducta,
         handleDownloadGuiaAtencionCau,
-        previousDate} = useHome()
+        previousDate
+    } = useHome()
 
     return (
         <div>
@@ -84,28 +85,21 @@ export const Home = () => {
                 <div className="grid grid-cols-1 text-center mb-20">
                     <div className="space-x-4 mt-8">
                         <Link to="/cau/mantenimiento"
-                              className="bg-green-700 hover:bg-green-900
-                                text-white py-2 rounded-md px-2">
+                              className="bg-green-700 hover:bg-green-900 text-white py-2 rounded-md px-2">
                             Mantenimiento Cau
                         </Link>
-                        <a className="bg-green-700 hover:bg-green-900
-                                text-white py-2 rounded-md px-2 hover:cursor-pointer"
-                            onClick={handleDownloadGuiaAtencionCau}    
-                        >
+                        <button className="bg-green-700 hover:bg-green-900 text-white py-2 rounded-md px-2"
+                                onClick={handleDownloadGuiaAtencionCau}>
                             Guía para atención del CAU
-                        </a>
-                        <a className="bg-green-700 hover:bg-green-900
-                                text-white py-2 rounded-md px-2 hover:cursor-pointer"
-                            onClick={handleDownloadCodigoConducta}
-                        >
+                        </button>
+                        <button className="bg-green-700 hover:bg-green-900 text-white py-2 rounded-md px-2"
+                                onClick={handleDownloadCodigoConducta}>
                             Código de conducta Valmer
-                        </a>
-                        <a className="bg-green-700 hover:bg-green-900
-                                text-white py-2 rounded-md px-2 hover:cursor-pointer"
-                           onClick={handleDownloadObjetivosCalidad}
-                        >
+                        </button>
+                        <button className="bg-green-700 hover:bg-green-900 text-white py-2 rounded-md px-2"
+                                onClick={handleDownloadObjetivosCalidad}>
                             Objetivos de Calidad
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>

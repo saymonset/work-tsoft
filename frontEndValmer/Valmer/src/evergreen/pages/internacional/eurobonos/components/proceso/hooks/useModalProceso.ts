@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import { fetchDataGetRet, fetchDataPostRet, userEncoded } from "../../../../../../../utils";
 
 export const useModalProceso = (updateCatalogo: () => void) => {
+
   const [selectedNID, setSelectedNID] = useState<number | null>(null);
   const [selectedInstrumento, setSelectedInstrumento] = useState<string>("");
   const [selectedCurva, setSelectedCurva] = useState<string>("");
-  const [loading1, setLoading1] = useState(false);
   const [loadingButtonNuevo, setLoadingButtonNuevo] = useState<boolean>(false);
-  const [loadingButtonGuardar, setLoadingButtonguardar] = useState<boolean>(false);
+  const [loadingButtonGuardar, setLoadingButtonGuardar] = useState<boolean>(false);
   const [loadingButtonBorrar, setLoadingButtonBorrar] = useState<boolean>(false);
-  const [changeCatalogPost, setChangeCatalogPost] = useState(false);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement>, nID: number, instrumento: string, curva: string) => {
     e.preventDefault();
@@ -33,14 +32,13 @@ export const useModalProceso = (updateCatalogo: () => void) => {
   };
 
   const handleGuardar = async () => {
-    setLoadingButtonguardar(true);
+    setLoadingButtonGuardar(true);
 
     const request = {
       n_id: selectedNID?.toString(),
       s_instrumento: selectedInstrumento,
       s_curva: selectedCurva,
     };
-    setLoading1(true);
 
     await fetchDataPostRet(
       "/catalogos/guardar-catalogo",
@@ -52,9 +50,7 @@ export const useModalProceso = (updateCatalogo: () => void) => {
       }
     );
 
-    setLoading1(false);
-    setChangeCatalogPost(true);
-    setLoadingButtonguardar(false);
+    setLoadingButtonGuardar(false);
     handleLimpiar();
 
     updateCatalogo();
@@ -62,8 +58,9 @@ export const useModalProceso = (updateCatalogo: () => void) => {
 
   const handleNuevo = async () => {
     setLoadingButtonNuevo(true);
-    try {
-      const newId = await fetchDataGetRet(
+    try
+    {
+      const newId : { body: { N_ID: number; }; } = await fetchDataGetRet(
         "/catalogos/obtiene-nuevo-id",
         " al obtener nuevo id",
         { s_nombre_catalogo: "EURO_CURVAS" }
@@ -83,7 +80,6 @@ export const useModalProceso = (updateCatalogo: () => void) => {
       s_instrumento: selectedInstrumento,
       s_curva: selectedCurva,
     };
-    setLoading1(true);
 
     await fetchDataPostRet(
       "/catalogos/borrar-catalogo",
@@ -95,8 +91,6 @@ export const useModalProceso = (updateCatalogo: () => void) => {
       }
     );
 
-    setLoading1(false);
-    setChangeCatalogPost(true);
     setLoadingButtonBorrar(false);
     handleLimpiar();
 
@@ -104,18 +98,18 @@ export const useModalProceso = (updateCatalogo: () => void) => {
   };
 
   return {
+    loadingButtonBorrar,
+    loadingButtonNuevo,
+    loadingButtonGuardar,
+    selectedNID,
+    selectedInstrumento,
+    selectedCurva,
     handleClick,
     handleLimpiar,
     handleInstrumentoChange,
     handleCurvaChange,
     handleGuardar,
-    selectedNID,
-    selectedInstrumento,
-    selectedCurva,
     handleNuevo,
-    loadingButtonNuevo,
-    loadingButtonGuardar,
-    handleBorrar,
-    loadingButtonBorrar
+    handleBorrar
   }
 }

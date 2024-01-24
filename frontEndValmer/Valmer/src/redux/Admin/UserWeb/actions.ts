@@ -1,6 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { Catalogo } from "../../../model";
-import { ResponseCat, CatSector, InfoUser, UriInfo } from "../../../model/Admin";
+import {Catalogo, ResponseCat, CatSector, InfoUser, UriInfo} from "../../../model";
 
 export const updateCatalogoInst = createAction<Catalogo[]>("UPDATE_CATALOGO_INST")
 export const updateCatNom = createAction<ResponseCat>("UPDATE_CAT_NOM")

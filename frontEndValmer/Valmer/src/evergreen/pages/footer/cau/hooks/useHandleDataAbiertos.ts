@@ -5,46 +5,22 @@ import { useVarCau } from "./useVarCau"
 export const useHandleDataAbiertos = () => {
 
     const {
-        loadingDataTable,
-        triggerDataTable,
-        dataTable,
-        empresa,
-        numRegistros,
-        posicion,
-        search,
-        loadingInfoCau,
-        triggerInfoCau,
-        folio,
-        infoCau,
-        validaUser,
-        triggerValidaUser,
-        loadingValidaUser,
-        dataPassExp,
-        triggerPassExp,
-        loadingPassExp,
-        catUsr,
-        loadingCatUsr,
-        triggerCatUsr,
-        setLoadingDataTable,
-        setTriggerDataTable,
-        setDataTable,
-        setEmpresa,
-        setNumRegistros,
-        setPosicion,
-        setSearch,
-        setLoadingInfoCau,
-        setTriggerInfoCau,
-        setFolio,
-        setInfoCau,
-        setValidaUser,
-        setTriggerValidaUser,
-        setLoadingValidaUser,
-        setDataPassExp,
-        setTriggerPassExp,
-        setLoadingPassExp,
-        setTriggerCatUsr,
-        setLoadingCatUsr,
-        setCatUsr
+        loadingDataTable, triggerDataTable, dataTable,
+        empresa, numRegistros, posicion,
+        search, loadingInfoCau, triggerInfoCau,
+        folio, infoCau, validaUser,
+        triggerValidaUser, loadingValidaUser, dataPassExp,
+        triggerPassExp, loadingPassExp, catUsr,
+        loadingCatUsr, triggerCatUsr,
+        setLoadingDataTable, setTriggerDataTable,
+        setDataTable, setEmpresa, setNumRegistros,
+        setPosicion, setSearch, setLoadingInfoCau,
+        setTriggerInfoCau, setFolio,
+        setInfoCau, setValidaUser,
+        setTriggerValidaUser, setLoadingValidaUser,
+        setDataPassExp, setTriggerPassExp,
+        setLoadingPassExp, setTriggerCatUsr,
+        setLoadingCatUsr, setCatUsr
     } = useVarCau()
 
     useEffect(() => {
@@ -81,6 +57,7 @@ export const useHandleDataAbiertos = () => {
                         '/cau/abiertos/consulta-info-id',
                         " al consultar info cau abierto",
                         {
+                            s_user: userEncoded(),
                             n_folio: folio
                         }
                     )
@@ -123,7 +100,10 @@ export const useHandleDataAbiertos = () => {
                 console.log("Se produjo el siguiente error: " + error)
             }
         }
-        getValidaUser().then()
+
+        if(!dataPassExp || dataPassExp.length === 0) {
+            getValidaUser().then()
+        }
     })
 
     useEffect(() => {

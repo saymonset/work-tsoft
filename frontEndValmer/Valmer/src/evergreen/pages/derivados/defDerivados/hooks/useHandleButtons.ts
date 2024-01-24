@@ -35,7 +35,7 @@ export const useHandleButtons = () => {
     const [loadingGuardaDer, setLoadingGuardaDer] = useState(false)
     const [loadingActCaract, setLoadingActCaract] = useState(false)
 
-    const [isTablaCatalog, setIsTableCatalog] = useState(false)
+    const [isTableCatalog, setIsTableCatalog] = useState(false)
 
     const [isButtonVenc, setIsButtonVenc] = useState(false)
     const [isModalVenc, setIsModalVenc] = useState(false)
@@ -89,7 +89,7 @@ export const useHandleButtons = () => {
     }
 
     const handleTablaCatalog = () => {
-        setIsTableCatalog(!isTablaCatalog)
+        setIsTableCatalog(!isTableCatalog)
     }
 
     const handleVenc = () => {
@@ -108,7 +108,7 @@ export const useHandleButtons = () => {
         selectedEmisora,
         loadingGuardaDer,
         loadingActCaract,
-        isTablaCatalog,
+        isTableCatalog,
         isButtonVenc,
         isModalVenc,
         triggerTablaVenc,

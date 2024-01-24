@@ -1,9 +1,8 @@
 import React from "react";
-import {ButtonContent} from "../../../../../../shared";
+import {ButtonContent, TextAreaLog} from "../../../../../../shared";
 import {ChargeClientWallet, Revisar2Form} from "./components";
 import {useContribuidores} from "./hooks";
 import {MoonLoader} from "react-spinners";
-import {TextAreaLog} from "../../../../../../shared";
 
 export const ContribuidoresForm = () => {
 

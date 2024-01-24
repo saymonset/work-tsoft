@@ -6,9 +6,9 @@ import {ButtonContent} from "../../../../../../shared";
 export const CostaRicaFormHeader = (data: CostaRicaHeaderProps) => {
 
     return (
-        <div className="form mt-4 animate__animated animate__fadeIn">
+        <div className="form form-my mt-1 animate__animated animate__fadeIn">
             <form>
-                <div className="form-cols-1">
+                <div className="form-cols-1-gap-1">
                     <div className="form-cols-1">
                         <div className="flex justify-end pr-2">
                             <button
@@ -41,7 +41,7 @@ export const CostaRicaFormHeader = (data: CostaRicaHeaderProps) => {
                             )}
                         </div>
                     </div>
-                    <span className="form-title">Instrumento</span>
+                    <span className="form-title mb-2">Instrumento</span>
                     {data.activeNuevo && (
                         <div className="form-cols-4 -my-3 animate__animated animate__fadeIn">
                             <div className="form-input">
@@ -189,7 +189,7 @@ export const CostaRicaFormHeader = (data: CostaRicaHeaderProps) => {
                     )}
                 </div>
             </form>
-            <div className="line"></div>
+            {/* <div className="line"></div> */}
         </div>
     )
 }

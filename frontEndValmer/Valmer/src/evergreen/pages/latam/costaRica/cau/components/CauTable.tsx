@@ -18,6 +18,7 @@ export const CauTable = ({
 
     return (
         <div>
+            {/*{loadingOpened || loadingClosed || loadingModifies ? (*/}
             {loadingOpened || loadingClosed || loadingModifies ? (
                 <div className="mt-8 flex justify-center items-center h-full">
                     <MoonLoader color="#0e7490" loading={true} speedMultiplier={0.5} size={60}/>

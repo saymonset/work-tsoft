@@ -8,27 +8,27 @@ export const HistoricoPanama = () => {
         nemoTecnicoHistorico,
         loadingNemo,
         campos,
-        handleRightArrowClick,
-        handleLeftArrowClick,
         checkCampos,
         checkNemotecnicos,
-        setCheckNemotecnicos,
-        handleGeneraClick,
-        setFechaInicio,
-        setFechaFin,
         fechaInicio,
         fechaFin,
         nemotecnicoSeleccionado,
-        setNemotecnicoSeleccionado,
-        handleAllFieldsChange,
-        downloadFilesFromUrl,
         loadingLogCsv,
         tabla,
         genera,
         loadingGenera,
-        resetState,
         loadingCancelar,
-        handleRegresar
+        resetState,
+        handleRegresar,
+        handleRightArrowClick,
+        handleLeftArrowClick,
+        setCheckNemotecnicos,
+        handleGeneraClick,
+        setFechaInicio,
+        setFechaFin,
+        setNemotecnicoSeleccionado,
+        handleAllFieldsChange,
+        downloadFilesFromUrl
     } = usePanamaHistorico();
 
     const renderLogContent = () => {
@@ -38,7 +38,7 @@ export const HistoricoPanama = () => {
         const prefixArray : any = ['s_nemotecnico', 'd_fecha'];
 
         if (targetSelect) {
-            columnHeaders = Array.from(targetSelect as any)
+            columnHeaders = Array.from(targetSelect)
             .map((option: any) => option.value)
             .filter((option: any) => !prefixArray.includes(option));           
             

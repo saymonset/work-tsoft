@@ -37,7 +37,6 @@ export const useContribuidores = () => {
     const [loadingRevisar2, setLoadingRevisar2] = useState(false)
     const [loadingLogCsv, setLoadingLogCsv] = useState(false)
     const [checkObtenerCarteras, setCheckObtenerCarteras] = useState(false)
-    const [checkRevisar2, setCheckRevisar2] = useState(false)
     const [flechaArriba, setFlechaArriba] = useState(true);
     const [isFetchDataGetSaveSuccessful, setIsFetchDataGetSaveSuccessful] = useState(false);
     const [log, setLog] = useState<string[]>([]);
@@ -163,7 +162,6 @@ export const useContribuidores = () => {
         loadingRevisar2,
         showContribuidoresForm,
         checkObtenerCarteras,
-        checkRevisar2,
         flechaArriba,
         isCheckboxChecked,
         handleChange,

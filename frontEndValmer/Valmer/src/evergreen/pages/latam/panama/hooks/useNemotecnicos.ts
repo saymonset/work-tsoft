@@ -24,5 +24,10 @@ export const useNemotecnicos = () => {
     getNemoTenicoHistorico();
   }, []);
 
-  return { nemoTecnicoHistorico, loadingNemo, setNemoTecnicoHistorico, setLoadingNemo, setNemoTecnicoLoaded };
+  return {
+    nemoTecnicoHistorico,
+    loadingNemo,
+    setLoadingNemo,
+    setNemoTecnicoLoaded
+  };
 };

@@ -28,7 +28,7 @@ export const Instrumentos = () => {
 
             <TitleDate title={title}/>
 
-            <div className="flex justify-end pr-2">
+            <div className="flex justify-end pr-0">
                 <button
                     className="btn"
                     onClick={handleNuevoClick}

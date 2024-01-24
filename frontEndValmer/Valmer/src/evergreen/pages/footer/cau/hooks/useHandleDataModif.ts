@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { fetchDataGetRet } from "../../../../../utils"
+import {fetchDataGetRet, userEncoded} from "../../../../../utils"
 import { useVarCau } from "./useVarCau"
 
 export const useHandleDataModif = () => {
@@ -63,6 +63,7 @@ export const useHandleDataModif = () => {
                         '/cau/modificados/consulta-info-id',
                         " al consultar info cau abierto",
                         {
+                            s_user: userEncoded(),
                             n_folio: folio
                         }
                     )

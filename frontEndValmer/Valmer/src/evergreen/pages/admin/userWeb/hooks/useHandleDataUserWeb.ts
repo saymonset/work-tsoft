@@ -1,6 +1,6 @@
 import { RootState } from "@reduxjs/toolkit/dist/query/core/apiState"
 import { useDispatch, useSelector } from "react-redux"
-import { CatSector, DataHistoricoTrial, InfoUser, UriInfo } from "../../../../../model"
+import {CatSector, DataHistoricoTrial, InfoUser, UriInfo} from "../../../../../model"
 import React, { useEffect, useState } from "react";
 import {
     fetchDataGet,
@@ -9,7 +9,11 @@ import {
     fetchDataGetRet,
     showAlert
 } from "../../../../../utils";
-import { updateCatNom, updateCatSector, updateInfoUser, updateUriInfo } from "../../../../../redux";
+import {updateCatNom,
+    updateCatSector,
+    updateCatUri,
+    updateInfoUser,
+    updateUriInfo} from "../../../../../redux";
 import { useGetCatalogs } from "./useGetCatalogs";
 import fileDownload from "js-file-download";
 import { Base64 } from "js-base64";
@@ -17,13 +21,15 @@ import { Base64 } from "js-base64";
 export const useHandleDataUserWeb = () => {
 
     const {
-        catalogoInst, 
-        loadingInst, 
+        catalogoInst,
+        loadingInst,
         catNom,
-        catTipoUser,
         loadingTipoUser,
-        catUri,
+        catTipoUser,
         loadingCatUri,
+        dataUri,
+        catUri,
+        setDataUri
     } = useGetCatalogs()
 
     const catSector = useSelector(
@@ -60,11 +66,6 @@ export const useHandleDataUserWeb = () => {
     const [archivo, setArchivo] = useState<string>("")
     const [nombreArch, setNombreArch] = useState<string>("")
     const [dataTable, setDataTable] = useState<DataHistoricoTrial[]>([])
-    const [dataUri, setDataUri] = useState<Record<string, string>>({})
-
-    useEffect(() => {
-        setDataUri(catUri.body)
-    }, [])
 
     const [loadingSave, setLoadingSave] = useState<boolean>(false)
 
@@ -125,6 +126,20 @@ export const useHandleDataUserWeb = () => {
         getDataInfo().catch(() => {});
     }, [triggerInfo]);
 
+    const unlockUser = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
+        dispatch(updateInfoUser({} as InfoUser))
+        setLoadingInfo(true)
+        await fetchDataGet(
+            "/admin-user-web/desbloquear-usuario",
+            " al intentar desbloquear usuario",
+            {n_nombre: selectedNombre},
+            updateInfoUser,
+            dispatch
+        )
+        setLoadingInfo(false)
+    }
+
     useEffect(() => {
         const getDataUri = async () => {
             if(triggerUri) {
@@ -167,9 +182,9 @@ export const useHandleDataUserWeb = () => {
     }
 
     const handleClickSector = (e: any) => {
-        setTriggerCatNom(true)
         setSelectedNombre(0)
         setSelectedSector(e.target.value)
+        setTriggerCatNom(true)
     }
 
     const handleClickNombre = (e: any) => {
@@ -242,15 +257,19 @@ export const useHandleDataUserWeb = () => {
     }
 
     const searchDataUri = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const search = e.target.value.toUpperCase()
+        const search = e.target.value.toUpperCase();
 
-        const result: Record<string, string> = Object.fromEntries(
-            Object.entries(catUri.body).filter(([key, value]) => value.toUpperCase().includes(search))
-        )
+        if (search === "") {
+            dispatch(updateCatUri(catUri));
+        } else {
+            const filteredBody: Record<string, string> = Object.fromEntries(
+                Object.entries(catUri.body).filter(([key]) =>
+                    key.toUpperCase().includes(search))
+            );
 
-        setDataUri(result)
-
-    }
+            setDataUri(filteredBody)
+        }
+    };
 
     return {
         catalogoInst, 
@@ -260,6 +279,7 @@ export const useHandleDataUserWeb = () => {
         catTipoUser,
         loadingTipoUser,
         catUri,
+        dataUri,
         loadingCatUri,
         loadingSector,
         selectedInstitucion,
@@ -278,7 +298,7 @@ export const useHandleDataUserWeb = () => {
         triggerInfoTrial,
         triggerProducts,
         dataTable,
-        dataUri,
+        unlockUser,
         handleClickInstitucion,
         handleClickSector,
         handleClickNombre,
@@ -287,6 +307,7 @@ export const useHandleDataUserWeb = () => {
         handleUri,
         handleProcesosPermisos,
         downloadProcesosPermisos,
+        setTriggerInfo,
         setTriggerInfoTrial,
         setTriggerProducts,
         setDataTable,

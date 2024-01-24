@@ -3,10 +3,11 @@ import {useSelector} from "react-redux";
 import {RootState} from "@reduxjs/toolkit/dist/query/core/apiState";
 import {PrecalcAccVin, PrecalcDerCorp, PrecalcFijos, PrecalcSuspendidas, Precalculados, PropsPrecalc, ShowPrecalc} from "../../../../../../../../model";
 import React, {useEffect, useState} from "react";
-import {fetchDataGetRet, fetchDataPostAct, getEmisoras, getSerie} from "../../../../../../../../utils";
+import {fetchDataGetRet, fetchDataPostAct, getEmisoras, getSerie, showAlert} from "../../../../../../../../utils";
 import {updatePrecalculados, updateTriggerPrecalc} from "../../../../../../../../redux";
-import Sweet from "sweetalert2";
-
+interface FetchDataParams {
+    [key: string]: any;
+}
 export const usePrecalcTvEmiSerie = ({setShowState}: PropsPrecalc) => {
 
     const {
@@ -158,10 +159,7 @@ export const usePrecalcTvEmiSerie = ({setShowState}: PropsPrecalc) => {
         })
 
         if (isValid.some(valor => !valor)) {
-            Sweet.fire({
-                title: "Falta ingresar campo",
-                icon: "warning"
-            })
+            showAlert("warning", "Falta ingresar campo", "").then()
             return false
         } else {
             return true
@@ -174,10 +172,7 @@ export const usePrecalcTvEmiSerie = ({setShowState}: PropsPrecalc) => {
 
     const validateCampos = (campos: any[]): boolean => {
         if (!campos.every(validateField)) {
-            Sweet.fire({ 
-                title: "Falta ingresar campo",
-                icon: "warning"
-            })
+            showAlert("warning", "Falta ingresar campo", "").then()
             return false
         } else {
             return true
@@ -196,7 +191,9 @@ export const usePrecalcTvEmiSerie = ({setShowState}: PropsPrecalc) => {
     }
 
     const actPrecalc = async (name: string) => {
-        setLoadingAct(true)
+
+        setLoadingAct(true);
+
         const url = "/acciones/instrumentos/actualiza-"
         const title = "Actualizado"
         const message = " al actualizar "
@@ -208,120 +205,65 @@ export const usePrecalcTvEmiSerie = ({setShowState}: PropsPrecalc) => {
             precalculados["precalc-derecho-corp"]?.[0].n_monto_decorp,
             precalculados["precalc-derecho-corp"]?.[0].fecha_dercorp
         ]
-        switch (name) {
-            case "vinculados":
-                if (validateFieldInst(inst)) {
-                    await fetchDataPostAct(
-                        url + name,
-                        title,
-                        message + "Vinculados",
-                        [],
-                        {
-                            s_tv: tvAcc,
-                            s_tv_vin: selectedTv,
-                            s_emisora: emiAcc,
-                            s_emisora_vin: selectedEmisora,
-                            s_serie: serieAcc,
-                            s_serie_vin: selectedSerie
-                        }
-                    )
-                    cleanUpdate()
-                    break
-                } else {
-                    break
-                }
-            case "adr":
-                if (validateFieldInst(inst) && validateCampos(adrFields)) {
-                    await fetchDataPostAct(
-                        url + name,
-                        title,
-                        message + "ADR",
-                        [],
-                        {
-                            s_tv: tvAcc,
-                            s_tv_adr: selectedTv,
-                            s_emisora: emiAcc,
-                            s_emisora_adr: selectedEmisora,
-                            s_serie: serieAcc,
-                            s_serie_adr: selectedSerie,
-                            n_proporcion_adr: precalculados["precalc-acciones-vinculadas"]?.[0].prpoporcion
-                        }
-                    )
-                    cleanUpdate()
-                    break
-                } else {
-                    break
-                }
-            case "suspendidos":
-                if (validateCampos(suspFields)) {
-                    await fetchDataPostAct(
-                        url + name,
-                        title,
-                        message + "Suspendido",
-                        [],
-                        {
-                            s_tv: tvAcc,
-                            s_emisora: emiAcc,
-                            s_serie: serieAcc,
-                            d_susp_fecha: precalculados["precalc-suspendidas"]?.[0].fecha_suspension
-                        }
-                    )
-                    cleanUpdate()
-                    break
-                } else {
-                    break
-                }
-            case "fijos":
-                if (validateCampos(fijoFields)) {
-                    await fetchDataPostAct(
-                        url + name,
-                        title,
-                        message + "Fijo",
-                        [],
-                        {
-                            s_tv: tvAcc,
-                            s_emisora: emiAcc,
-                            s_serie: serieAcc,
-                            n_fijo_precio: precalculados["precalc-fijos"]?.[0].n_precio
-                        }
-                    )
-                    cleanUpdate()
-                    break
-                } else {
-                    break
-                }
-            case "derecho-corp":
-                if (validateCampos(dercorpFields)) {
-                    await fetchDataPostAct(
-                        url + name,
-                        title,
-                        message + "Der.Corp",
-                        [],
-                        {
-                            s_tv: tvAcc,
-                            s_emisora: emiAcc,
-                            s_serie: serieAcc,
-                            n_der_corp_monto: precalculados["precalc-derecho-corp"]?.[0].n_monto_decorp,
-                            d_der_corp_fecha: precalculados["precalc-derecho-corp"]?.[0].fecha_dercorp
-                        }
-                    )
-                    cleanUpdate()
-                    break;
-                } else {
-                    break
-                }
-            default:
-                return 0
-        }
-        setLoadingAct(false)
-    }
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, precalc: string) => {
+        const commonFetchData = async (extraParams: FetchDataParams, messageAppend: string, fieldValues: any[] = []) => {
+            if (fieldValues.every((field) => validateCampos(field)) && validateFieldInst(inst)) {
+                await fetchDataPostAct(
+                    `${url}${name}`,
+                    title,
+                    `${message}${messageAppend}`,
+                    [],
+                    {
+                        s_tv: tvAcc,
+                        s_emisora: emiAcc,
+                        s_serie: serieAcc,
+                        ...extraParams
+                    }
+                );
+                cleanUpdate();
+            }
+        };
+
+        const cases: { [key: string]: () => Promise<void> } = {
+            "vinculados": () => commonFetchData({
+                s_tv_vin: selectedTv,
+                s_emisora_vin: selectedEmisora,
+                s_serie_vin: selectedSerie
+            }, "Vinculados"),
+            "adr": () => commonFetchData({
+                s_tv_adr: selectedTv,
+                s_emisora_adr: selectedEmisora,
+                s_serie_adr: selectedSerie,
+                n_proporcion_adr: precalculados["precalc-acciones-vinculadas"]?.[0].prpoporcion
+            }, "ADR", [adrFields]),
+            "suspendidos": () => commonFetchData({
+                d_susp_fecha: precalculados["precalc-suspendidas"]?.[0].fecha_suspension
+            }, "Suspendido", [suspFields]),
+            "fijos": () => commonFetchData({
+                n_fijo_precio: precalculados["precalc-fijos"]?.[0].n_precio
+            }, "Fijo", [fijoFields]),
+            "derecho-corp": () => commonFetchData({
+                n_der_corp_monto: precalculados["precalc-derecho-corp"]?.[0].n_monto_decorp,
+                d_der_corp_fecha: precalculados["precalc-derecho-corp"]?.[0].fecha_dercorp
+            }, "Der.Corp", [dercorpFields])
+        };
+
+        if (cases[name]) {
+            await cases[name]();
+        } else {
+            console.warn("Unhandled case in actPrecalc: ", name);
+            return 0;
+        }
+
+        setLoadingAct(false);
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, preCalc: string) => {
         const { name, value } = e.target;
     
         const dataup: Precalculados = { ...precalculados };
     
-        const elements = dataup[precalc];
+        const elements = dataup[preCalc];
     
         if (Array.isArray(elements) && elements.length > 0) {
             const firstElement = elements[0];
@@ -329,7 +271,7 @@ export const usePrecalcTvEmiSerie = ({setShowState}: PropsPrecalc) => {
             if (firstElement !== undefined && firstElement !== null) {
                 const updatedFirstElement = { ...firstElement };
 
-                switch (precalc) {
+                switch (preCalc) {
                     case "precalc-acciones-vinculadas":
                         updatedFirstElement[name as keyof PrecalcAccVin] = value;
                         break;
@@ -348,7 +290,7 @@ export const usePrecalcTvEmiSerie = ({setShowState}: PropsPrecalc) => {
 
                 const updatedDataup: Precalculados = {
                     ...dataup,
-                    [precalc]: [updatedFirstElement, ...elements.slice(1)],
+                    [preCalc]: [updatedFirstElement, ...elements.slice(1)],
                 };
     
                 dispatch(updatePrecalculados(updatedDataup));
@@ -362,7 +304,7 @@ export const usePrecalcTvEmiSerie = ({setShowState}: PropsPrecalc) => {
 
         const updatedDataup: Precalculados = {
             ...dataup,
-            [precalc]: [newDataElement]
+            [preCalc]: [newDataElement]
         };
 
         dispatch(updatePrecalculados(updatedDataup));

@@ -1,4 +1,3 @@
-import { ChangeEvent } from "react"
 import { FormValuesVenc } from "../../../../../../model"
 import { ButtonContent } from "../../../../../../shared"
 

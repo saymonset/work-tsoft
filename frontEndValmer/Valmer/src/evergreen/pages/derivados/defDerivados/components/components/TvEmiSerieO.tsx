@@ -1,7 +1,6 @@
-import { ChangeEvent } from "react"
 import { FormValuesVenc } from "../../../../../../model"
 import { ButtonContent } from "../../../../../../shared"
-import { generateUUID } from "../../../../../../utils"
+import React from "react";
 
 interface TvEmiSerieO {
     tv: string
@@ -55,7 +54,7 @@ export const TvEmiSerieO = (props: TvEmiSerieO) => {
                     >
                         <option value="default">...</option>
                         {props.serieOp.map((item) => (
-                            <option id={generateUUID()} value={item}>
+                            <option key={item} value={item}>
                                 {item}
                             </option>
                         ))}

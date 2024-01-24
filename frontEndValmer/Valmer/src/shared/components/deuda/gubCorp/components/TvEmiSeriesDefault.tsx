@@ -24,7 +24,7 @@ export const TvEmiSeriesDefault = (propsDef : TvEmiSerieProps) => {
 
     return (
         <>
-            {propsDef.loadingConsultaData && <BarLoader className="w-full mt-2 mb-2" color="#059669" width={500} />}
+            {propsDef.loadingConsultaData && <BarLoader className="w-full mt-1 mb-2" color="#059669" width={500} />}
             <div className="bg-cyan-700 p-1 text-slate-50">
                 <span>Instrumento</span>
             </div>

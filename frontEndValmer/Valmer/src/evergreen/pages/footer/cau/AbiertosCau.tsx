@@ -1,7 +1,6 @@
 import { MoonLoader } from "react-spinners";
 import { useGetCatalogs, useHandleDataAbiertos } from "./hooks";
-import { TableCau } from "./components/TableCau";
-import { ButtonsCau, ComboEmpresa, DatosCau, PasswordExpires } from "./components";
+import {TableCau, ButtonsCau, ComboEmpresa, DatosCau, PasswordExpires} from "./components";
 import { HocRestricted } from "../../restrictedAccess";
 
 export const AbiertosCau = () => {

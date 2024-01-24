@@ -1,4 +1,4 @@
-import { TitleDate, Modal } from "../../../../../shared"
+import { TitleDate, Modal, ButtonContent } from "../../../../../shared"
 import { UmsMexCatTable } from './components/UmsMexCatTable'
 import { useUmsMexCat } from '../hooks/useUmsMexCat'
 
@@ -26,6 +26,11 @@ export const UmsMexCat = () => {
         handleOpenDelete,
         setOpenEdit,
         saveDataUser,
+        handleClickReutersMexCat,
+        handleTextareaChange,
+        handleTextareaChangeMexCat,
+        parametrosMexCat,
+        loadingSubmit,
         isinToDelete
     } = useUmsMexCat();
 
@@ -111,19 +116,25 @@ export const UmsMexCat = () => {
                     </div>
                     <form>
                         <div className="form-text-area">
-                            <textarea name="carga" id="carga" placeholder=''></textarea>
+                            <textarea
+                                name="carga" id="carga"
+                                placeholder=''
+                                value={parametrosMexCat}
+                                onChange={handleTextareaChangeMexCat}/>
                             <label htmlFor="carga">ISIN, RIC, PROVEDOR</label>
                         </div>
                         <div className="line" />
                         <div className="flex justify-end">
-                            <button className="btn">Carga</button>
+                            <button className="btn" onClick={handleClickReutersMexCat}>
+                                <ButtonContent name="Cargar" loading={loadingSubmit}/>
+                            </button>
                         </div>
                     </form>
                 </Modal>
 
                 <Modal isOpen={isOpenEdit} onClose={handleCloseEdit} title="Editar">
                     <form onSubmit={handleSubmitForm}>
-                        <div className="form-cols-1 -my-3">
+                        <div className="form-cols-1 my-3">
                             <div className="form-input">
                                 <input
                                     type="text"
@@ -137,13 +148,13 @@ export const UmsMexCat = () => {
                                 <label htmlFor="isin">Isin</label>
                             </div>
                         </div>
-                        <div className="form-cols-1 -my-3">
+                        <div className="form-cols-1 my-3">
                             <div className="form-input">
                                 <input type="text" name="S_RIC_FORMATO" id="ric" value={registro.S_RIC_FORMATO} onChange={handleChangeForm} placeholder='' />
                                 <label htmlFor="ric">Ric</label>
                             </div>
                         </div>
-                        <div className="form-cols-1 -my-3">
+                        <div className="form-cols-1 my-3">
                             <div className="form-input">
                                 <input type="text" name="S_PROVEDOR" id="provedor" value={registro.S_PROVEDOR} onChange={handleChangeForm} placeholder='' />
                                 <label htmlFor="provedor">Provedor</label>

@@ -60,9 +60,11 @@ export interface InfoCauId {
     d_fecha_estimada: string
     s_observaciones: string
     archivo: string
+    muestra_boton_grabar: boolean
     n_usuario_asig: number
     s_usuario_asig: string
     s_atendio?: string
+    descarga_archivo?: DownloadFile
 }
 
 export interface PassExpInfo {
@@ -94,4 +96,12 @@ export interface CatUser {
     n_usuario: number
     s_nombre: string
     s_email: string
+}
+
+export interface DownloadFile {
+    nombre: string
+    extension?: string
+    contenido: string | undefined
+    contentType?: string
+    nombreCompleto?: string
 }

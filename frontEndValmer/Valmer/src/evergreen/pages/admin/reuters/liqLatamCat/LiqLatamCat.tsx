@@ -1,44 +1,29 @@
 import React, { useEffect } from 'react';
 import { TitleDate, Modal, ButtonContent } from '../../../../../shared';
 import { UmsLiquidezLatamTable } from './components/UmsLiquidezLatamTable';
-import { useliqLatamCat } from '../hooks/useliqLatamCat'
+import { useLiqLatamCat } from '../hooks'
 
 export const LiqLatamCat = () => {
 
     const {
-        tableData,
-        loadingData,
-        totaPages,
-        getDataTable,
-        downloadCsvFile,
-        isOpenCarga,
-        handleOpenCarga,
-        handleCloseCarga,
-        handleOpenDelete,
-        isOpenDelete,
-        handleCloseDelete,
-        n_cbo_pais,
-        isOpenEdit,
-        handleCloseEdit,
-        registro,
-        HandleChangeBuscar,
-        handleOpenEdit,
-        searchText,
-        HandleChangePais,
-        handleChangeForm,
-        handleSubmitForm,
-        deleteByISIN,
-        textSearch,
-        parametros,
-        handleTextareaChange,
-        loadingSubmit,
-        handleclick,
-        handleKeyDown
-    } = useliqLatamCat();
+        loadingData, loadingSubmit,
+        tableData, totalPages,
+        n_cbo_pais, registro, parametros,
+        textSearch, isOpenEdit, isOpenCarga, isOpenDelete,
+        isOpenModalConfirmCarga,
+        getDataTable, downloadCsvFile,
+        handleOpenCarga, handleCloseCarga,
+        handleOpenDelete, handleCloseDelete, handleCloseEdit, handleChangeBuscar,
+        handleOpenEdit, handleChangePais,
+        handleChangeForm, handleSubmitForm, handleClick,
+        handleTextareaChange, handleKeyDown, handleCloseConfirm,
+        searchText, deleteByISIN,
+        openModalConfirmCarga
+    } = useLiqLatamCat();
 
     useEffect(() => {
         if (n_cbo_pais > 0) {
-            getDataTable(n_cbo_pais, 12, 0, textSearch)
+            getDataTable(n_cbo_pais, 12, 0, textSearch).then()
         }
     }, [n_cbo_pais])
 
@@ -54,7 +39,7 @@ export const LiqLatamCat = () => {
                             name="buscar"
                             id="buscar"
                             value={textSearch}
-                            onChange={HandleChangeBuscar}
+                            onChange={handleChangeBuscar}
                             onKeyDown={handleKeyDown}
                             placeholder=""
                         />
@@ -93,7 +78,7 @@ export const LiqLatamCat = () => {
 
                 <div className='flex justify-center'>
                     <div className="form-select m-1 w-3/4">
-                        <select name="n_cbo_pais" id="n_cbo_pais" onChange={HandleChangePais}>
+                        <select name="n_cbo_pais" id="n_cbo_pais" onChange={handleChangePais}>
                             <option value={0}>...</option>
                             <option value={1055}>Costa Rica</option>
                             <option value={1056}>Panamá</option>
@@ -104,7 +89,7 @@ export const LiqLatamCat = () => {
                 <UmsLiquidezLatamTable
                     onOpenDelete={handleOpenDelete} onOpenEdit={handleOpenEdit}
                     tableData={tableData} loadingData={loadingData}
-                    totaPages={totaPages} n_cbo_pais={n_cbo_pais} textSearch={textSearch} getDataTable={getDataTable}
+                    totaPages={totalPages} n_cbo_pais={n_cbo_pais} textSearch={textSearch} getDataTable={getDataTable}
 
                 />
 
@@ -124,11 +109,22 @@ export const LiqLatamCat = () => {
                         </div>
                         <div className="line" />
                         <div className="flex justify-end">
-                            <button className="btn" onClick={handleclick}>
+                            <button className="btn" onClick={openModalConfirmCarga}>
                                 <ButtonContent name="Cargar" loading={loadingSubmit}/>
                             </button>
                         </div>
                     </form>
+                </Modal>
+
+                <Modal isOpen={isOpenModalConfirmCarga} onClose={handleCloseConfirm} title="Cargar">
+                    <div>
+                        <p>Desea Cargar a la bd?</p>
+                        <div className="line" />
+                            <div className="flex justify-end">
+                            <button className="btn" onClick={handleClick}>Continuar</button>
+                            <button className="btn" onClick={handleCloseConfirm}>Cancelar</button>
+                        </div>
+                    </div>
                 </Modal>
 
                 <Modal isOpen={isOpenEdit} onClose={handleCloseEdit} title="Editar">

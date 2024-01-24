@@ -14,29 +14,31 @@ export const useSortData = () => {
     const [sortDirection, setSortDirection] =
         useState<'asc' | 'desc' | null>(null);
 
-    let sortedData = [...(respClientWallet?.body || [])];
+    const compareFunction = (a: DataClient, b: DataClient) => {
+        if (!sortField || !sortDirection) return 0;
 
-    if (sortField && sortDirection) {
-        sortedData.sort((a, b) => {
-            const aValue = a[sortField];
-            const bValue = b[sortField];
-            const directionModifier = sortDirection === 'asc' ? 1 : -1;
-    
-            const numA = parseFloat(aValue);
-            const numB = parseFloat(bValue);
-    
-            const bothNumbers = !isNaN(numA) && !isNaN(numB);
-    
-            if (bothNumbers) {
-                return (numA - numB) * directionModifier;
-            } else {
-                if (aValue < bValue) return -1 * directionModifier;
-                if (aValue > bValue) return 1 * directionModifier;
-                return 0;
+        const aValue = a[sortField];
+        const bValue = b[sortField];
+        const directionModifier = sortDirection === 'asc' ? 1 : -1;
+
+        const numA = parseFloat(aValue);
+        const numB = parseFloat(bValue);
+
+        if (!isNaN(numA) && !isNaN(numB)) {
+            return (numA - numB) * directionModifier;
+        } else {
+            let result = 0;
+            if (aValue < bValue) {
+                result = -1;
+            } else if (aValue > bValue) {
+                result = 1;
             }
-        });
-    }
-    
+            return result * directionModifier;
+        }
+    };
+
+    let sortedData = [...(respClientWallet?.body || [])].sort(compareFunction);
+
     return {
         sortField,
         sortDirection,
@@ -44,5 +46,4 @@ export const useSortData = () => {
         setSortDirection,
         setSortField
     }
-
 }

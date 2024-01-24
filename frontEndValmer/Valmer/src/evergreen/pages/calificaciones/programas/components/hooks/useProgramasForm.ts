@@ -39,10 +39,6 @@ export const useProgramasForm = () => {
         }
     }, [catalogProCarac]);
 
-    useEffect(() => {
-        console.log(catalogProCarac['fitch'])
-    }, [catalogProCarac]);
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
 

@@ -1,10 +1,9 @@
 import React from "react";
 import {useTasasForm, useTasasFormData} from "./hooks";
 import {ButtonContent, Modal} from "../../../../../../shared";
-import { useBigInput } from "./hooks/useBigInput";
+import { useBigInput } from "../../../../../../utils";
 
 export const TasasForm = ({d_fecha}: any) => {
-
     const {
         textUdi,
         isOpenUdi,
@@ -17,6 +16,7 @@ export const TasasForm = ({d_fecha}: any) => {
 
     const {forms, loadingSave, handleSubmit, handleChange} = useTasasForm()
 
+    //  Achica o agranda el input del form cuando obtiene o deja el focus
     const {  handleFocus,
              handleBlur,
              sendStyle} = useBigInput();
@@ -390,7 +390,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     Ponderado
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-0">
+                            <div className="text-center text-xs text-cyan-700 my-2">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -590,7 +590,7 @@ export const TasasForm = ({d_fecha}: any) => {
                                     Ponderado
                                 </label>
                             </div>
-                            <div className="text-center text-xs text-cyan-700 my-0">
+                            <div className="text-center text-xs text-cyan-700 my-2">
                                 <button type="submit"
                                         className={`bg-cyan-700 hover:bg-green-700 text-white py-0 px-3 rounded-md 
                                         ${loadingSave ? 'opacity-50 pointer-events-none' : ''}`}>

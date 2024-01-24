@@ -158,6 +158,12 @@ export const useCalCorp = () => {
         setIsModalOpenCalPrecio(false);
     }
 
+    const selectedValues = {
+        selectedEmisora,
+        selectedTv,
+        selectedSerie,
+    };
+
     return {
         instrument,
         isDivVisible,
@@ -177,6 +183,7 @@ export const useCalCorp = () => {
         handleCalTasasInt,
         handleCalPrecio,
         handleUpdateCalculator,
-        toggleDivVisibility
+        toggleDivVisibility,
+        selectedValues
     }
 }

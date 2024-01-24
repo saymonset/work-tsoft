@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { FormValuesVenc, TableDefVenc } from "../../../../../../../model"
 import { fetchDataPostAct, getCurrentDate } from "../../../../../../../utils"
 import { useChargeFileGeneric } from "./useChargeFileGeneric"

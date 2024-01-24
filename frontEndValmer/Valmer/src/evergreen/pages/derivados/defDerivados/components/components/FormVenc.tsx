@@ -56,19 +56,14 @@ export const FormVenc = (props: FormVencProps) => {
             <div className="form-cols-4">
                 <div className="form-title col-span-3">Carga Operaciones</div>
                 <div className="flex justify-end text-3xl mt-1 text-cyan-700">
-                    <span
-                        className="fa fa-sort-down mx-1 cursor-pointer"
-                        onClick={handleOpenCargaOp}
-                    />
-                    <span
-                        className="fa fa-sort-up mx-1 mt-4 -mb-4 cursor-pointer"
-                        onClick={handleCloseCargaOp}
-                    />
+                    <button className="mx-1" onClick={handleOpenCargaOp} aria-label="Abrir">
+                        <span className="fa fa-sort-down"/>
+                    </button>
+                    <button className="mx-1 mt-4 -mb-4" onClick={handleCloseCargaOp} aria-label="Cerrar">
+                        <span className="fa fa-sort-up"/>
+                    </button>
                 </div>
             </div>
-
-
-
 
 
             <div className={`grid gap-1 animate__animated ${isCargaOp ? "animate__fadeIn": "animate__fadeOut"}`}>

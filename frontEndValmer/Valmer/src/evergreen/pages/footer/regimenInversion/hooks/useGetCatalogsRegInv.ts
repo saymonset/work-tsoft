@@ -8,20 +8,20 @@ import { CatalogoRegInv, ResponseDataRegInv } from '../../../../../model/Regimen
 
 export const useGetCatalogsRegInv= () => {
   const catalog = useSelector((state: RootState<any, any, any>) => state.catalog) as unknown as CatalogoRegInv[];
-  const [loadingCatalog, setLoading] = useState(false);
+  const [loadingCatalog, setLoadingCatalog] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (!catalog || catalog.length === 0) {
-      setLoading(true);
+      setLoadingCatalog(true);
       valmerApi
         .get<ResponseDataRegInv>('/regimen-inv/catalogos')
         .then((response) => {
-          setLoading(false);
+          setLoadingCatalog(false);
           dispatch(updateCatalogRegInv(response.data.body.catalogos));
         })
         .catch(async (error) => {
-          setLoading(false);
+          setLoadingCatalog(false);
           if (error.message.includes('Network Error')) {
             await showAlert('error', 'Error', 'No hay conexión con el servidor');
           } else {

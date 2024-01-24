@@ -9,6 +9,7 @@ import {ModalCalCorp} from "./components";
 export const Instrumentos = () => {
 
     const title : string = "Instrumentos Corp-Banc"
+    let concatenatedValues = "";
 
     const {
         requeridosCorp,
@@ -38,13 +39,24 @@ export const Instrumentos = () => {
         handleCalTasasInt,
         handleCalPrecio,
         handleUpdateCalculator,
-        toggleDivVisibility
+        toggleDivVisibility,
+        selectedValues
     } = useCalCorp()
+
+    if (selectedValues.selectedEmisora ==="...") selectedValues.selectedEmisora = "0";
+    if (selectedValues.selectedSerie ==="...") selectedValues.selectedSerie = "0";
+    if (selectedValues.selectedTv !== "" || selectedValues.selectedEmisora !== "" || selectedValues.selectedSerie !== "") {
+        concatenatedValues = `${selectedValues.selectedTv}_${selectedValues.selectedEmisora}_${selectedValues.selectedSerie}`;
+    }
 
     return (
         <HocRestricted title={title} view={title}>
             <TitleDate title={title}/>
-
+            <div>
+                <li>
+                    <strong style={{ color: '#2980b9' }}>{concatenatedValues}</strong>
+                </li>
+            </div>
             <div className="flex justify-end pr-2">
                 <button
                     className="btn"

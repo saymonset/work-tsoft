@@ -16,18 +16,17 @@ interface Table {
 export const UmsLatamTable: React.FC<Table> = ({ onOpenDelete, onOpenEdit, tableData, loadingData, totaPages, getDataTable }) => {
     const [position, setPosition] = useState(0);
     const checkReload = useRef(true);
-    const [numRegistros, setNumRegistros] = useState(12);
 
     useEffect(() => {
         if (checkReload.current) {
             checkReload.current = false
-            getDataTable(numRegistros, position, '', 9018).then()
+            getDataTable(12, position, '', 9018).then()
         }
     }, [])
 
     const goToPage = (newPosition: number) => {
         setPosition(newPosition);
-        getDataTable(numRegistros, newPosition, '', 9018);
+        getDataTable(12, newPosition, '', 9018);
     };
 
 
@@ -43,6 +42,9 @@ export const UmsLatamTable: React.FC<Table> = ({ onOpenDelete, onOpenEdit, table
         );
     }
 
+    let color = "bg-white";
+    let prevIsin = "";
+
     return (
         <>
             <div className="max-h-screen overflow-y-scroll mb-5">
@@ -57,48 +59,61 @@ export const UmsLatamTable: React.FC<Table> = ({ onOpenDelete, onOpenEdit, table
                         </tr>
                     </thead>
                     <tbody>
-                        {tableData.body.registros.map((registro: RegistrosUMSMexCat, index: number) => (
-                            <tr key={index}>
-                                <td className='action'>
-                                    <button
-                                        onClick={() => onOpenDelete(registro.S_ISIN)}
-                                    >
-                                        <i className="fa-regular fa-trash-can text-xl text-cyan-700"></i>
-                                    </button>
-                                </td>
-                                <td>{registro.S_ISIN}</td>
-                                <td>{registro.S_RIC_FORMATO}</td>
-                                <td>{registro.S_PROVEDOR}</td>
-                                <td className='action-edit'>
-                                    <tr>
-                                        <td>
+                        {tableData.body.registros.map((registro: RegistrosUMSMexCat, index: number) => {
+                            const instrumentosCount = tableData.body.registros.filter(reg => reg.S_ISIN === registro.S_ISIN).length;
+                            const rowspan = index === 0 || registro.S_ISIN !== prevIsin ? instrumentosCount : 0;
+                            color = prevIsin !== registro.S_ISIN ? (color === "bg-white" ? "bg-gray-300" : "bg-white") : color;
+                            prevIsin = registro.S_ISIN;
+
+                            return (
+                                <tr key={index}>
+                                    {rowspan > 0 && (
+                                        <td rowSpan={rowspan} className={`${color} action`}>
                                             <button
-                                                data-sisin={registro.S_ISIN}
-                                                data-ricformato={registro.S_RIC_FORMATO}
-                                                data-proveedor={registro.S_PROVEDOR}
-                                                onClick={onOpenEdit}
+                                                onClick={() => onOpenDelete(registro.S_ISIN)}
                                             >
-                                                <i className="fa fa-file-pen text-xl text-cyan-700"></i>
+                                                {tableData.body.registros.length > 1 && (
+                                                    <i className="fa-regular fa-trash-can text-xl text-cyan-700"></i>
+                                                )}
                                             </button>
                                         </td>
-                                    </tr>
+                                    )}
+                                    {rowspan > 0 && <td rowSpan={rowspan} className={color}>{registro.S_ISIN}</td>}
+                                    <td className={color}>{registro.S_RIC_FORMATO}</td>
+                                    <td className={color}>{registro.S_PROVEDOR}</td>
+                                    <td className={`${color} action-edit`}>
+                                        <tr>
+                                            <td>
+                                                <button
+                                                    data-sisin={registro.S_ISIN}
+                                                    data-ricformato={registro.S_RIC_FORMATO}
+                                                    data-proveedor={registro.S_PROVEDOR}
+                                                    onClick={onOpenEdit}
+                                                >
+                                                    {tableData.body.registros.length > 1 && (
+                                                        <i className="fa fa-file-pen text-xl text-cyan-700"></i>
+                                                    )}
+                                                </button>
+                                            </td>
+                                        </tr>
 
-                                </td>
-                            </tr>
-                        ))}
+                                    </td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
                 <div className="text-white bg-cyan-700 flex justify-center mt-10">
                     <button className={`hover:text-black ${position === 0 ? 'disabled:text-inherit opacity-50 disabled:pointer-events-none' : ''}`}
-                        onClick={() => goToPage(position - numRegistros)}
+                        onClick={() => goToPage(position - 12)}
                         disabled={position === 0}>
                         Anterior
                     </button>
                     <span className="mx-2">
-                        Página {position / numRegistros + 1} de {totaPages}
+                        Página {position / 12 + 1} de {totaPages}
                     </span>
                     <button className={`hover:text-black ${totaPages === 1 ? 'disabled:text-inherit opacity-50 disabled:pointer-events-none' : ''}`}
-                        onClick={() => goToPage(position + numRegistros)} disabled={position + numRegistros >= tableData.body.total_registros}>
+                        onClick={() => goToPage(position + 12)} disabled={position + 12 >= tableData.body.total_registros}>
                         Siguiente
                     </button>
                 </div>

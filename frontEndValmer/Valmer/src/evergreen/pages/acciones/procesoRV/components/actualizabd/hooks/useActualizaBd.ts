@@ -16,7 +16,7 @@ export const useActualizaBd = () => {
 
     const [loadingInter, setLoadingInter] = useState(false)
     const [loadingNac, setLoadingNac] = useState(false)
-    const [loadingAct1B, setloadingAct1B] = useState(false)
+    const [loadingAct1B, setLoadingAct1B] = useState(false)
     const [downloadResponse, setDownloadResponse] = useState<RespDownloadCsv | null>(null);
     const [log, setLog] = useState<string[]>([]);
     const [loadingLogCsv, setLoadingLogCsv] = useState(false);
@@ -137,7 +137,7 @@ export const useActualizaBd = () => {
         } else {
 
             dispatch(updateCheckActualiza1bActualizaBd(true));
-            setloadingAct1B(true);
+            setLoadingAct1B(true);
             try {
                 const response = await fetchDataGetRet(
                     "/acciones/proceso-rv/actualiza-1B",
@@ -155,7 +155,7 @@ export const useActualizaBd = () => {
                 await showAlert("error", "Error", 'Error durante la solicitud: '+error)
             }
             finally {
-                setloadingAct1B(false);
+                setLoadingAct1B(false);
             }
         }
     };

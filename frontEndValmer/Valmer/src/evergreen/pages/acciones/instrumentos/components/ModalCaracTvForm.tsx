@@ -27,7 +27,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                     <div className="form-dialog">
                         <div className="form-cols-2">
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_actividad">
                                     Actividad
                                 </label>
                                 <select
@@ -45,7 +45,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                 </select>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_categoria">
                                     Categoría
                                 </label>
                                 <select
@@ -66,7 +66,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
 
                         <div className="mt-2 form-cols-2">
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_subramo">
                                     Subramo
                                 </label>
                                 <select
@@ -87,7 +87,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
 
                         <div className="mt-2 form-cols-2">
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_ramo">
                                     Ramo
                                 </label>
                                 <select
@@ -108,7 +108,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
 
                         <div className="mt-2 form-cols-2">
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_sector">
                                     Sector
                                 </label>
                                 <select
@@ -130,7 +130,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
 
                         <div className="mt-2 form-cols-2">
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_subsector">
                                     Subsector
                                 </label>
                                 <select
@@ -152,7 +152,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
 
                         <div className="mt-2 form-cols-2">
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_emisor_bacc">
                                     Emisor
                                 </label>
                                 <select
@@ -170,7 +170,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                 </select>
                             </div>
                             <div className="mt-2 form-cols-22">
-                                <label>
+                                <label htmlFor="s_bursatilidad">
                                     Bursatilidad
                                 </label>
                                 <select
@@ -188,7 +188,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                 </select>
                             </div>
                             <div className="mt-2 form-cols-22">
-                                <label>
+                                <label htmlFor="n_foco_geo">
                                     Foco Geográfico
                                 </label>
                                 <select
@@ -206,7 +206,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                 </select>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_frec_dvd">
                                     Frecuencia Dvd
                                 </label>
                                 <select
@@ -224,7 +224,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                 </select>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_mdo_cto">
                                     Mercado Corto
                                 </label>
                                 <select
@@ -242,7 +242,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                 </select>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_mdo_lgo">
                                     Mercado Largo
                                 </label>
                                 <select
@@ -263,7 +263,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
 
                         <div className="mt-2 form-cols-2">
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_subramo_ing">
                                     Subramo Ing
                                 </label>
                                 <select
@@ -284,7 +284,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
 
                         <div className="form-cols-2">
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_tipo_derecho">
                                     Tipo Derecho
                                 </label>
                                 <select
@@ -303,7 +303,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                             </div>
 
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_tipo_dvd">
                                     Tipo Dividendo
                                 </label>
                                 <select
@@ -321,7 +321,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                 </select>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_tipo_fondo">
                                     Tipo Fondo
                                 </label>
                                 <select
@@ -339,7 +339,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                 </select>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_tipo_instr_bacc">
                                     Tipo Instr
                                 </label>
                                 <select
@@ -357,7 +357,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                 </select>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_tipo_pago">
                                     Tipo Pago
                                 </label>
                                 <select
@@ -375,7 +375,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                 </select>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_acc_inscritas">
                                     Acciones Instruidas
                                 </label>
                                 <input
@@ -387,7 +387,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
 
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_volumen">
                                     Volumen
                                 </label>
                                 <input
@@ -398,7 +398,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="text"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_movimientos">
                                     Movimientos
                                 </label>
                                 <input
@@ -409,7 +409,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="text"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_vol_bid">
                                     Volumen Bid
                                 </label>
                                 <input
@@ -420,7 +420,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="text"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_vol_ask">
                                     Volumen Ask
                                 </label>
                                 <input
@@ -431,7 +431,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     onChange={handleChange}/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_hu">
                                     UH
                                 </label>
                                 <input
@@ -442,7 +442,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     onChange={handleChange}/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_precio_bid">
                                     Precio Bid
                                 </label>
                                 <input
@@ -453,7 +453,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     onChange={handleChange}/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_precio_ask">
                                     Precio Ask
                                 </label>
                                 <input
@@ -464,7 +464,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     onChange={handleChange}/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="d_fecha_uh">
                                     Fecha UH
                                 </label>
                                 <input
@@ -475,7 +475,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     onChange={handleChange}/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_cambio_procentual_1d">
                                     Cambio Porcentual 1D
                                 </label>
                                 <input
@@ -486,7 +486,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     onChange={handleChange}/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_cambios_puntos_1d">
                                     Cambio Puntos 1D
                                 </label>
                                 <input
@@ -497,7 +497,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="text"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_cambio_procentual_1a">
                                     Cambio Porcentual 1A
                                 </label>
                                 <input
@@ -508,7 +508,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="text"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_cambios_puntos_1a">
                                     Cambio Puntos 1A
                                 </label>
                                 <input
@@ -519,7 +519,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="text"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_precio_mercado">
                                     Precio Mercado
                                 </label>
                                 <input
@@ -530,7 +530,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="text"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="d_fecha_cierre">
                                     Fecha Cierre
                                 </label>
                                 <input 
@@ -541,7 +541,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="date"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_valor_libros">
                                     Valor en Libros
                                 </label>
                                 <input
@@ -552,7 +552,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="text"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_dividendo">
                                     Dividendo
                                 </label>
                                 <input
@@ -563,7 +563,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="text"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="d_fecha_anuncio">
                                     Fecha Anuncio
                                 </label>
                                 <input
@@ -574,7 +574,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="date"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="d_fecha_de_aplicaion">
                                     Fecha Aplicacion
                                 </label>
                                 <input
@@ -585,7 +585,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="date"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="d_fecha_de_pago">
                                     Fecha de Pago
                                 </label>
                                 <input
@@ -596,7 +596,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="date"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="d_fecha_de_anuncio">
                                     Fecha de Anuncio
                                 </label>
                                 <input
@@ -607,7 +607,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="date"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="d_fecha_de_aplicaion">
                                     Fecha de Aplicacion
                                 </label>
                                 <input
@@ -618,7 +618,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     onChange={handleChange}/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="d_fecha_de_liquidacion">
                                     Fecha de Liquidacion
                                 </label>
                                 <input
@@ -629,7 +629,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="date"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_factor_de_ajuste">
                                     Factor de Ajuste
                                 </label>
                                 <input
@@ -640,7 +640,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="text"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_acciones_anteriores">
                                     Acciones Anteriores
                                 </label>
                                 <input
@@ -651,7 +651,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="text"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_acciones_nuevas">
                                     Acciones Nuevas
                                 </label>
                                 <input
@@ -662,7 +662,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="text"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_proporcion">
                                     Proporcion
                                 </label>
                                 <input
@@ -673,7 +673,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="text"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_indice_principal">
                                     Indice Principal
                                 </label>
                                 <input
@@ -684,7 +684,7 @@ export const ModalCaracTvForm = ({isOpenModal, handleCloseCaracCv}: ModalProps) 
                                     type="text"/>
                             </div>
                             <div className="form-cols-22">
-                                <label>
+                                <label htmlFor="n_acciones_circulacion">
                                     Acciones en Circulacion
                                 </label>
                                 <input

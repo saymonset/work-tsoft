@@ -3,18 +3,18 @@ import {fetchDataGetSave} from "../../../../../../../utils";
 
 export const useAdmonModal = () => {
 
-    const [isOpen, setOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
     const [loading, setLoading] = useState(false)
     const [cliente, setCliente] = useState<string>('');
     const [envioSFTP, setEnvioSFTP] = useState<number>(0);
     const [envioEmail, setEnvioEmail] = useState<number>(0);
 
     const handleOpenModal = () => {
-        setOpen(!isOpen)
+        setIsOpen(!isOpen)
     }
 
     const handleCloseModal = () => {
-        setOpen(!isOpen)
+        setIsOpen(!isOpen)
     }
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

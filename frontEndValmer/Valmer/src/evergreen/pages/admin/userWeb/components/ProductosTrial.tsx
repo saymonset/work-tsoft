@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { MenuProducts } from "./MenuProducts"
 import { DataHistoricoTrial, FvContratos, ItemProduct } from "../../../../../model"
 import { fetchDataGetRet, fetchDataPostRet, showAlert } from "../../../../../utils"
@@ -13,7 +13,11 @@ interface ProductosTrialProps {
     setTriggerDataTable: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const ProductosTrial: React.FC<ProductosTrialProps> = ({n_nombre, triggerProduct, setTriggerProduct, setDataTable, setTriggerDataTable}) => {
+export const ProductosTrial: React.FC<ProductosTrialProps> = ({n_nombre,
+                                                                  triggerProduct,
+                                                                  setTriggerProduct,
+                                                                  setDataTable,
+                                                                  setTriggerDataTable}) => {
 
     const [loading, setLoading] = useState<boolean>(false)
     const [products, setProducts] = useState<ItemProduct>({} as ItemProduct)
@@ -73,14 +77,14 @@ export const ProductosTrial: React.FC<ProductosTrialProps> = ({n_nombre, trigger
     }
 
     return (
-        <div className="form-cols-1 row-span-3">
-            <span className="form-title -mb-3">Productos Trial</span>
+        <div className="form-cols-1 row-span-1">
+            <span className="form-title mb-3">Productos Trial</span>
             {loading ? (
-                <BarLoader className="mt-2" color="#059669" width={300} />
+                <BarLoader className="mt-4" color="#059669" width={300} />
             ):(
                 <>
                     <div className="form-cols-2">
-                        <div className="form-date">
+                        <div className="form-date form-date-my">
                             <input 
                                 type="date"
                                 id="d_fecha_trial"

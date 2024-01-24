@@ -13,39 +13,25 @@ const AccordionHeader = ({ isActive, handleButtonClick, label } : any) => (
 
 export const ActiveInsCortesCupon = ({fijos, flotantes}: {fijos: ResponseCorteCupon, flotantes: ResponseCorteCupon}) => {
 
-    const [activeForm, setActiveForm] = useState("fijos");
-
     const accordionItems = [
         { name: 'fijos', label: 'Fijos', data: fijos},
         { name: 'flotantes', label: 'Flotantes', data: flotantes},
     ];
 
-    const handleButtonClickForm = (buttonId: string) => {
-        setActiveForm(buttonId === activeForm ? "" : buttonId);
-    };
-
     return (
         <>
             {accordionItems.map(({ name, label, data }) =>
             {
-                const isActive = activeForm === name;
+                const isActive = true;
 
                 return (
                     <div key={generateUUID()}>
                         <AccordionHeader
                             isActive={isActive}
-                            handleButtonClick={() => handleButtonClickForm(name)}
                             iconName={isActive ? "fa fa-caret-down" : "fa fa-caret-right"}
                             label={label}
                         />
-
-                        {isActive && (
-                            <div
-                                className={`acordeon-body ${isActive ? "animate__animated animate__fadeIn" : ""}`}
-                            >
-                                <CortesFlujosTable data={data}/>
-                            </div>
-                        )}
+                            <CortesFlujosTable data={data}/>
                     </div>
                 );
             })}

@@ -11,7 +11,7 @@ export const DefDerivados = () => {
         selectedEmisora,
         loadingGuardaDer,
         loadingActCaract,
-        isTablaCatalog,
+        isTableCatalog,
         isButtonVenc,
         isModalVenc,
         triggerTablaVenc,
@@ -79,7 +79,7 @@ export const DefDerivados = () => {
 
             <FormDefDerivados
                 isNew={isNew}
-                isTabla={isTablaCatalog}
+                isTabla={isTableCatalog}
                 isModalVenc={isModalVenc}
                 triggerTablaVenc={triggerTablaVenc}
                 consultaDataDerDef={consultaDataDerDef}

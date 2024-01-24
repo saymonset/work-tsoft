@@ -1,9 +1,9 @@
 import React from "react";
 import {MoonLoader} from "react-spinners";
-import {getCatalogs} from "../../../../../../utils";
 import {ButtonContent} from "../../../../../../shared";
 import {CauFormsProps} from "../../../../../../model";
-
+import {Link} from "react-router-dom";
+import {getCatalogs, useBigInput} from "../../../../../../utils";
 export const CauForm = ({
                             loadingSave,
                             loadingFolio,
@@ -14,6 +14,11 @@ export const CauForm = ({
                             handleSave,
                             status
                         }: CauFormsProps) => {
+
+    //  Achica o agranda el input del form cuando obtiene o deja el focus
+    const {  handleFocus,
+        handleBlur,
+        sendStyle} = useBigInput();                            
 
     const isCerrados = status === "Cerrados";
     const isAbiertos = status === "Abiertos";
@@ -35,7 +40,11 @@ export const CauForm = ({
                                         <input type="text"
                                                name="n_folio"
                                                value={queryFolio.n_folio ?? ""}
-                                               readOnly/>
+                                               readOnly
+                                               onFocus={() => handleFocus('n_folio')}
+                                               onBlur={handleBlur}
+                                               style={sendStyle('n_folio')}
+                                               />
                                         <label htmlFor="n_folio">
                                             FOLIO
                                         </label>
@@ -72,7 +81,10 @@ export const CauForm = ({
                                             <input type="text"
                                                    name="n_servicio"
                                                    value={queryFolio.n_servicio || ""}
-                                                   readOnly/>
+                                                   readOnly
+                                                   onFocus={() => handleFocus('n_servicio')}
+                                                   onBlur={handleBlur}
+                                                   style={sendStyle('n_servicio')}/>
                                             <label htmlFor="servicio">SERVICIO</label>
                                         </div>
                                     </div>
@@ -82,7 +94,10 @@ export const CauForm = ({
                                         <input type="text"
                                                name="n_empresa"
                                                value={queryFolio.n_empresa ?? ""}
-                                               readOnly/>
+                                               readOnly
+                                               onFocus={() => handleFocus('n_empresa')}
+                                               onBlur={handleBlur}
+                                               style={sendStyle('n_empresa')}/>
                                         <label htmlFor="n_empresa">EMPRESA</label>
                                     </div>
                                 </div>
@@ -91,7 +106,11 @@ export const CauForm = ({
                                         <input type="text"
                                                name="s_nombre"
                                                value={queryFolio.s_nombre ?? ""}
-                                               readOnly/>
+                                               readOnly
+                                               onFocus={() => handleFocus('s_nombre')}
+                                               onBlur={handleBlur}
+                                               style={sendStyle('s_nombre')}
+                                               />
                                         <label htmlFor="s_nombre">NOMBRE</label>
                                     </div>
                                 </div>
@@ -100,7 +119,11 @@ export const CauForm = ({
                                         <input type="text"
                                                name="s_correo"
                                                value={queryFolio.s_correo ?? ""}
-                                               readOnly/>
+                                               readOnly
+                                               onFocus={() => handleFocus('s_correo')}
+                                               onBlur={handleBlur}
+                                               style={sendStyle('s_correo')}
+                                               />
                                         <label htmlFor="s_correo">CORREO</label>
                                     </div>
                                 </div>
@@ -110,7 +133,11 @@ export const CauForm = ({
                                             <input type="text"
                                                    name="s_telefono"
                                                    value={queryFolio.s_telefono ?? ""}
-                                                   readOnly/>
+                                                   readOnly
+                                                   onFocus={() => handleFocus('s_telefono')}
+                                                    onBlur={handleBlur}
+                                                    style={sendStyle('s_telefono')}
+                                                   />
                                             <label htmlFor="s_telefono">TELEFONO</label>
                                         </div>
                                     </div>
@@ -121,7 +148,10 @@ export const CauForm = ({
                                             <input type="text"
                                                    name="s_sector"
                                                    value={queryFolio.s_sector ?? ""}
-                                                   readOnly/>
+                                                   readOnly
+                                                   onFocus={() => handleFocus('s_sector')}
+                                                   onBlur={handleBlur}
+                                                   style={sendStyle('s_sector')}/>
                                             <label htmlFor="s_telefono">SECTOR</label>
                                         </div>
                                     </div>
@@ -139,11 +169,11 @@ export const CauForm = ({
                                 {!queryFolio.s_archivo || queryFolio.s_archivo != "" &&
                                     (
                                         <div className="mt-2 -my-3">
-                                            <div className="form-input">
-                                                <input type="text"
-                                                       name="s_archivo"
-                                                       value={queryFolio.s_archivo ?? ""}
-                                                       readOnly/>
+                                            <div className="form-input flex">
+                                                <Link to={"http://www.valmercostarica.com/CR/CAU/" + queryFolio.s_archivo }
+                                                      className="text-blue-500 hover:text-blue-700">
+                                                    <span>{queryFolio.s_archivo}</span>
+                                                </Link>
                                                 <label htmlFor="s_archivo">ARCHIVO ADJUNTO</label>
                                             </div>
                                         </div>
@@ -155,7 +185,10 @@ export const CauForm = ({
                                             <input type="text"
                                                    name="s_atendio"
                                                    value={queryFolio.s_atendio ?? ""}
-                                                   readOnly/>
+                                                   readOnly
+                                                   onFocus={() => handleFocus('s_atendio')}
+                                                   onBlur={handleBlur}
+                                                   style={sendStyle('s_atendio')}/>
                                             <label htmlFor="s_atendio">ATENDIO</label>
                                         </div>
                                     </div>

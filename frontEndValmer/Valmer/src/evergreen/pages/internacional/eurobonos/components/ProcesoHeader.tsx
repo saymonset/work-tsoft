@@ -3,7 +3,8 @@ import {useProcesoHeader} from "./hooks";
 
 export const ProcesoHeader = () => {
 
-    const { currentDate,
+    const {
+        currentDate,
         selectedVector,
         setFechaEurobonos,
         setSelectVector,
@@ -35,19 +36,20 @@ export const ProcesoHeader = () => {
                 </label>
             </div>
             <div className="ml-24 relative z-0 w-40">
-                <select 
-                        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
+                <select
+                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2
                             border-gray-200 appearance-none dark:border-gray-600 dark:focus:border-cyan-700
                             focus:outline-none
                             focus:ring-0 peer"
-                        onChange={setSelectVector}
-                        value={selectedVector}
+                    name="selectVector"
+                    onChange={setSelectVector}
+                    value={selectedVector}
                 >
                     <option value="default">...</option>
                     <option value="DEFINITIVO">DEFINITIVO</option>
                 </select>
-                <label
-                    className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
+                <label htmlFor="selectVector"
+                       className="font-medium absolute text-sm transform top-3 text-cyan-700 scale-75
                         -translate-y-6 origin-[0]"
                 >
                     PROCESO

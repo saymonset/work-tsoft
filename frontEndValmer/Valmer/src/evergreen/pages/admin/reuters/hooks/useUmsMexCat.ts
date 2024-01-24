@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   fetchDataGetRet,
+  fetchDataGetSave,
   fetchDataPost,
   fetchDataPostAct,
   fetchDataPostRetNoAlert,
@@ -42,6 +43,9 @@ export const useUmsMexCat = () => {
   const [registro, setRegistro] = useState<RegistrosUMSMexCat>(regInicial)
   const [textSearch, setTextSearch] = useState('');
   const [isinToDelete, setIsinToDelete] = useState<string | null>(null);
+  const [parametrosLatam, setParametrosLatam] = useState<string>('');
+  const [parametrosMexCat, setParametrosMexCat] = useState<string>('');
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
 
 
   const getDataTable = async (numRegistros: number, position: number, txt_buscar: string, id_reu_formato: number) => {
@@ -176,24 +180,71 @@ export const useUmsMexCat = () => {
     setOpenEdit(false);
   }
 
-  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    Swal.fire({
+  const handleClickReutersLatam = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    const confirmationResult = await Swal.fire({
       title: 'Desea cargar a la BD',
       showCancelButton: true,
       confirmButtonText: 'Continuar',
       cancelButtonText: 'Cancelar',
       icon: 'question',
-    }).then((result) => {
-      if (result.isConfirmed) {
-      
-
-        Swal.fire('Cargando a la BD', '', 'success');
-      }
     });
-  }  
+    if (confirmationResult.isConfirmed){
+      setLoadingSubmit(true);
+      await fetchDataPost('/reuters/carga-masiva', 'Error al cargar datos','',
+        {
+          idReuFormato: 9018,
+          sInfoCarga: parametrosLatam
+        }
+      );
+
+      setLoadingSubmit(false);
+      setOpenCarga(false);
+      await getDataTable(12, 0, textSearch, 9018);
+      setParametrosLatam('');
+    }
+  };
+  const handleTextareaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setParametrosLatam(event.target.value);
+  };
+
+  const handleClickReutersMexCat = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    const confirmationResult = await Swal.fire({
+      title: 'Desea cargar a la BD',
+      showCancelButton: true,
+      confirmButtonText: 'Continuar',
+      cancelButtonText: 'Cancelar',
+      icon: 'question',
+    });
+    if (confirmationResult.isConfirmed){
+      setLoadingSubmit(true);
+      await fetchDataPost('/reuters/carga-masiva', 'Error al cargar datos','',
+        {
+          idReuFormato: 9017,
+          sInfoCarga: parametrosMexCat
+        }
+      );
+
+      setLoadingSubmit(false);
+      setOpenCarga(false);
+      await getDataTable(12, 0, textSearch, 9017);
+      setParametrosMexCat('');
+    }
+  };
+  const handleTextareaChangeMexCat = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setParametrosMexCat(event.target.value);
+  };
 
   return {
+    handleTextareaChange,
+    handleClickReutersMexCat,
+    parametrosMexCat,
+    parametrosLatam,
+    loadingSubmit,
+    handleTextareaChangeMexCat,
     tableData,
     loadingData,
     totaPages,
@@ -201,7 +252,7 @@ export const useUmsMexCat = () => {
     downloadCsvFile,
     textSearch,
     HandleChangeBuscar,
-    handleButtonClick,
+    handleClickReutersLatam,
     saveDataUser,
     deletebyIsin,
     handleOpenCarga,

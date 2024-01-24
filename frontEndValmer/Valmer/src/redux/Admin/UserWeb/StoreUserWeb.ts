@@ -1,7 +1,7 @@
 import { combineReducers, configureStore, createReducer } from "@reduxjs/toolkit";
 import { Catalogo } from "../../../model";
 import { updateCatNom, updateCatSector, updateCatTipoUser, updateCatUri, updateCatalogoInst, updateInfoUser, updateUriInfo } from "./actions";
-import { ResponseCat, CatSector, InfoUser, UriInfo } from "../../../model/Admin";
+import { ResponseCat, CatSector, InfoUser, UriInfo } from "../../../model";
 
 const catalogoInstReducer = createReducer<Catalogo[]>(
     [],

@@ -7,14 +7,14 @@ import { Link } from "react-router-dom";
 
 export const PanamaHeader = (data: PanamaHeaderProps) => {
     return (
-        <div className="form mt-4 animate__animated animate__fadeIn">
+        <div className="form form-mb-x  mt-1 animate__animated animate__fadeIn">
             <form>
                 <div className="form-cols-3">
-                    <div className="form-cols-1 col-span-2">
+                    <div className="form-cols-1 col-span-2 form-cols-1-gap-1">
                         <div className="form-cols-1">
                             <div className="flex justify-end pr-2">
                                 <button
-                                    className="btn"
+                                    className="btn "
                                     type='button'
                                     onClick={data.handleNuevo}
                                 >
@@ -34,9 +34,9 @@ export const PanamaHeader = (data: PanamaHeaderProps) => {
                                 )}
                             </div>
                         </div>
-                        <span className="form-title">Instrumento</span>
+                        <span className="form-title mb-2 ">Instrumento</span>
                         {data.loadingConsultaData && <BarLoader className="w-full" color="#059669" width={500} />}
-                        <div className="form-cols-2 -my-3">
+                        <div className="form-cols-2 -my-3 ">
                             {data.activeNuevo && (
                                 <div className="form-input animate__animated animate__fadeIn">
                                     <input
@@ -102,7 +102,7 @@ export const PanamaHeader = (data: PanamaHeaderProps) => {
                         </div>
                         {!data.activeNuevo && (
                             <div className="form-cols-2 animate__animated animate__fadeIn">
-                                <div className="form-check">
+                                <div className="form-check ">
                                     <input
                                         type="checkbox"
                                         name="inactivas"
@@ -124,19 +124,19 @@ export const PanamaHeader = (data: PanamaHeaderProps) => {
                         )}
                     </div>
                     <Link to="/latam/panama/historico">
-                    <div className="form-cols-1">
-                        <a className="card-img">
-                            <img
-                                src="/img/hist_animado.gif"
-                                alt="históricos"
-                                className="card-img"
-                            />
-                        </a>
-                    </div>
+                        <div className="form-cols-1">
+                            <button className="card-img" style={{border: 'none', background: 'none'}}>
+                                <img
+                                    src="/img/hist_animado.gif"
+                                    alt="históricos"
+                                    className="card-img"
+                                />
+                            </button>
+                        </div>
                     </Link>
                 </div>
             </form>
-            <div className="line"></div>
+            <div className="line-y-1"></div>
         </div>
     );
 };

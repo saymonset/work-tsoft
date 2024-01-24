@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import { fetchDataGetRet, fetchDataPost, getEmisoras, getSerie, userEncoded } from "../../../../../utils";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@reduxjs/toolkit/dist/query/core/apiState";
@@ -189,9 +189,14 @@ export const useRegInvHandleData = () => {
     };
 
     const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, checked} = e.target;
-        
-        const value = name === 'B_CAMBIO' ? (checked ? '1' : '') : (checked ? '1' : '0');
+        const { name, checked } = e.target;
+
+        let value;
+        if (name === 'B_CAMBIO') {
+            value = checked ? '1' : '';
+        } else {
+            value = checked ? '1' : '0';
+        }
 
         const updatedValues = {
             ...consultaDataRegInv,
@@ -202,8 +207,8 @@ export const useRegInvHandleData = () => {
         };
 
         dispatch(updateConsultaDataRegInv(updatedValues));
-        
     };
+
 
     return {
         loading,

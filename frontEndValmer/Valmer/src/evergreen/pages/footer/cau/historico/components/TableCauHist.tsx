@@ -1,13 +1,16 @@
 import { DataTableHist } from "../../../../../../model"
+import React from "react";
 
 interface TableCauHistProps {
     data: DataTableHist
 }
 
 export const TableCauHist: React.FC<TableCauHistProps> = ({ data }) => {
+
     return (
         <table className="table w-full mb-4 text-xs">
             <thead className="thead">
+            <tr>
                 <th>Folio</th>
                 <th>Area</th>
                 <th>Servicio</th>
@@ -19,14 +22,16 @@ export const TableCauHist: React.FC<TableCauHistProps> = ({ data }) => {
                 <th>Correo</th>
                 <th>Descripción</th>
                 <th>Archivo</th>
+            </tr>
             </thead>
             <tbody className="tbody">
-                {Object.keys(data).map((folio) => {
-                    const key = data[folio]
-                    return (
-                        <tr key={folio} className="tr">
-                            <td className="min-w-content max-w-md">{ key.Folio }</td>
-                            <td className="min-w-content max-w-md">{ key.Area }</td>
+            {Object.keys(data).map((folio) => {
+
+                const key = data[folio]
+                return (
+                    <tr key={folio} className="tr">
+                        <td className="min-w-content max-w-md">{key.Folio}</td>
+                        <td className="min-w-content max-w-md">{ key.Area }</td>
                             <td className="min-w-content max-w-md">{ key.Servicio }</td>
                             <td className="min-w-content max-w-md">{ key.Empresa }</td>
                             <td className="min-w-content max-w-md">{ key.Status }</td>
@@ -36,7 +41,7 @@ export const TableCauHist: React.FC<TableCauHistProps> = ({ data }) => {
                             <td className="min-w-content max-w-md">{ key.Correo }</td>
                             <td className="min-w-content max-w-md">{ key.Descripcion }</td>
                             <td className="min-w-content max-w-md">
-                                <a 
+                                <a
                                     href={'http://www.valmer.com.mx/VAL/CAU/' + key.Archivo}
                                     className="text-cyan-700 hover:text-white"
                                 >
