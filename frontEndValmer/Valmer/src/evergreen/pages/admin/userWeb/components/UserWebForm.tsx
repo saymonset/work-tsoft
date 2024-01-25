@@ -349,6 +349,9 @@ export const UserWebForm = () => {
                                    name="searchUri" 
                                    id="searchUri"
                                    onChange={searchDataUri}
+                                   onFocus={() => handleFocus('searchUri')}
+                                    onBlur={handleBlur}
+                                    style={sendStyle('searchUri')}
                             />
                             <label htmlFor="searchUri">Busca URI</label>
                         </div>
@@ -419,7 +422,7 @@ export const UserWebForm = () => {
                     <div className="form-cols-1 my-0">
                         <div className="form-text-area">
                             <textarea
-                                className="max-h-80"
+                                className="max-h-14"
                                 name="liga_descarga" 
                                 id="liga_descarga" 
                                 rows={5} 
