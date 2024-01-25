@@ -11,6 +11,23 @@ export const InstrumentoForm = ({requeridos}: any) => {
       const {  handleFocus,
         handleBlur,
         sendStyle} = useBigInput();
+
+        const handleDateInput = (e, inputName) => {
+            const fecha = e.target.value;
+            const partes = fecha.split("-");
+            const resultado = partes[0];
+          
+            console.log(resultado);
+            if (resultado.length > 4) {
+              e.preventDefault();
+              handleChange({
+                target: {
+                  name: inputName,
+                  value: e.target.value.substring(1)
+                }
+              });
+            }
+          };
         
     const {
         fieldRequiredCorp, triggerErase, catalog,
@@ -407,6 +424,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                                 placeholder=""
                                 required
                                 ref={requeridos.d_fecha_emision}
+                                onKeyUp={(e) => handleDateInput(e, "d_fecha_emision")}
                             />
                             <label htmlFor="d_fecha_emision">
                                 Fecha Emisión
