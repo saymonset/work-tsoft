@@ -553,9 +553,9 @@ const DataPantalla = [
     },
     {
         pantalla: "Regimen de Inversion",
-        id: 17,
+        id: 22,
         observacion: "",
-        idRestriccion: 17,
+        idRestriccion: 22,
     }
 ]
 
