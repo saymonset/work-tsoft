@@ -12,6 +12,7 @@ import {
   } from 'recharts'
 
 import { AreaGraphics } from "../../../../../../model"
+import { ColorsGraph } from '../../../../../../utils';
 
 interface BarChartAreaProps {
     data: AreaGraphics[]
@@ -22,11 +23,11 @@ export const BarChartArea: React.FC<BarChartAreaProps> = ({ data, pantalla }) =>
 
     const setPantalla = (): string[] => {
         if (pantalla === "area") {
-            return [pantalla, "#ED335F"]
+            return [pantalla, ColorsGraph[0]]
         } else if (pantalla === "cliente") {
-            return [pantalla, "#4B0082"]
+            return [pantalla,ColorsGraph[1]]
         } else {
-            return [pantalla, "#9932CC"]
+            return [pantalla, ColorsGraph[2]]
         }
     }
 

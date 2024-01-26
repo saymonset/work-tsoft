@@ -24,7 +24,7 @@ export const PasswordExpires: React.FC<PasswordExpiresProps> = ({ data, loading,
     }
 
     return (
-        <div className="row-span-1">
+        <div className="row-span-1 mt-0">
             {loading && <BarLoader className="mt-2" color="#059669" width={200} />}
             <table className="table w-full">
                 <thead className="thead">

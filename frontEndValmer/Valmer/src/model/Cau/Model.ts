@@ -65,6 +65,7 @@ export interface InfoCauId {
     s_usuario_asig: string
     s_atendio?: string
     descarga_archivo?: DownloadFile
+    b_asignar: string;
 }
 
 export interface PassExpInfo {

@@ -1,0 +1,62 @@
+[10:17] Luis Carrasco
+cp /home/usrlocal/shared/ValmerServices/0.0.1-SNAPSHOT/lib/ValmerServices-0.0.1-SNAPSHOT.jar /home/usrlocal/ValmerServices/0.0.1-SNAPSHOT/lib
+[10:18] Luis Carrasco
+cd /home/usrlocal/ValmerServices/0.0.1-SNAPSHOT/bin
+[10:18] Luis Carrasco
+./startup.sh
+[10:39] Luis Carrasco
+http://127.0.0.1:8091/swagger-ui/#/login-controller/getusuarioUsingGET
+
+
+tablero qa sprimg1 spring2
+tablero  issues de negocio -> jenny, 
+Rodriguez vargas -> qa
+lulu -> 
+noe, matias -> titular -> todo el front
+miguel -> backend
+
+dos reositorio
+repositorio tsoft y lugo a repositorio de bolsa
+
+RODRIGO GUTIERRES DUENO DEL PRODUCTO
+jenny gutierres lider de qa
+grupo interno
+ TSOFT EVERGREEN VALMER
+
+
+grupo interno + cliente
+ mtsoft eevergree valmer
+
+ git bucket
+
+usuario:
+noe.vazquez@tsoftlatam.com
+password:
+ATBBrjeZu2pLpAR2aMjJJsqh8gUKB09AAADA
+
+git clone https://noervh@bitbucket.org/tsoftglobal/evergreen-valmer.git
+
+rama: valmer_services_01f
+
+ [12:56] Noe Roberto Vazquez Herrera
+ATBBrjeZu2pLpAR2aMjJJsqh8gUKB09AAADA
+[12:57] Noe Roberto Vazquez Herrera
+esta es la contraseña
+[12:57] Noe Roberto Vazquez Herrera
+noe.vazquez@tsoftlatam.com
+[12:57] Noe Roberto Vazquez Herrera
+y mi usuario
+[12:57] Luis Alberto Nieto Carrillo
+ok
+[12:57] Luis Alberto Nieto Carrillo
+la url ?
+[12:57] Noe Roberto Vazquez Herrera
+git clone https://noervh@bitbucket.org/tsoftglobal/evergreen-valmer.git
+[12:58] Noe Roberto Vazquez Herrera
+me avisas si te deja, igual puedes meter un cambio leve para probar
+[12:59] Noe Roberto Vazquez Herrera
+valmer_services_01f
+[12:59] Noe Roberto Vazquez Herrera
+esa es la rama
+
+

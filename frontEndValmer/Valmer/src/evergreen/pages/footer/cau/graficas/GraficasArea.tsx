@@ -56,7 +56,7 @@ export const GraficasArea = () => {
     return (
         <>
             <div className="form-cols-5">
-                <div className="form-date">
+                <div className="form-date form-date-my">
                     <input type="date"
                         id="d_fecha_inicio"
                         name="d_fecha_inicio"
@@ -65,7 +65,7 @@ export const GraficasArea = () => {
                     />
                     <label htmlFor="d_fecha_inicio">Fecha Inicio</label>
                 </div>
-                <div className="form-date">
+                <div className="form-date form-date-my">
                     <input type="date" 
                         id="d_fecha_fin"
                         name="d_fecha_fin"

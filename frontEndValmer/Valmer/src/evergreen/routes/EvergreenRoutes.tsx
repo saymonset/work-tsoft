@@ -58,7 +58,7 @@ export const EvergreenRoutes = () => {
 
             <Sidebar isOpen={isOpen}/>
 
-            <div className={`relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden 
+            <div className={`relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden  bg-white
                 ${isOpen ? 'ml-64' : 'ml-0'} transition-all duration-1000`}>
 
                 <Header onClick={toggleSidebar}/>

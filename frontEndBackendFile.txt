@@ -1,4 +1,20 @@
+# Colocar los compilados en el backend
+
+cp /home/usrlocal/shared/ValmerServices-0.0.1-SNAPSHOT.jar /home/usrlocal/ValmerServices/0.0.1-SNAPSHOT/lib
+
+cd /home/usrlocal/ValmerServices/0.0.1-SNAPSHOT/bin
+
+./startup.sh
+
+http://127.0.0.1:8091/swagger-ui/#/login-controller/getusuarioUsingGET
+
+
+
+
+
+# Instalar y porbar en el frontEnd
  npm install
+ npm run build
  npm run dev
 
  npm install para las dependencias
