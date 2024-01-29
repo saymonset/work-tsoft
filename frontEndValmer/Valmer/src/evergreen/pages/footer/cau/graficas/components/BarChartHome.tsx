@@ -60,7 +60,7 @@ export const SimpleBarChart: React.FC<SimpleBarChartProps> = ({ data }) => {
   const [ref, setRef] = useState<Ref>({} as Ref)
 
   data.forEach((item, index) => {
-    const value = item.area
+    const value = item.area 
     const isValue = Object.values(ref).some((value) => value === item.area)
 
     if (!isValue) {
@@ -68,6 +68,8 @@ export const SimpleBarChart: React.FC<SimpleBarChartProps> = ({ data }) => {
       setRef(updated)
     }
   })
+
+
 
   const [height, setHeight] = useState(window.innerHeight / 1.6);
 
@@ -97,6 +99,9 @@ export const SimpleBarChart: React.FC<SimpleBarChartProps> = ({ data }) => {
         <Tooltip />
         <Legend />
         {Object.values(ref).map((item, index) => {
+            console.log('----------------------item-------------inicio');
+            console.log({item});
+            console.log('----------------------ref-------------fin');
             return <Bar key={item} dataKey={item} fill={ColorsGraph[index]} />;
         })}
       </BarChart>
