@@ -12,7 +12,7 @@ export const MantenimientoCau = () => {
 
             <TitleDate title={title} />
 
-            <div className="flex justify-start pr-2 mb-1">
+            <div className="flex justify-start pr-2">
                 <Link to="/cau/historico">
                     <button className="btn">
                         <span>Histórico</span>

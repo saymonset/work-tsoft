@@ -27,7 +27,6 @@ export const UmsMexCat = () => {
         setOpenEdit,
         saveDataUser,
         handleClickReutersMexCat,
-        handleTextareaChange,
         handleTextareaChangeMexCat,
         parametrosMexCat,
         loadingSubmit,

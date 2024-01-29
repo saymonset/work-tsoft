@@ -316,13 +316,6 @@ export const useEditCatalog = ({nameCatalog, columns} : EditCatalogHookProps) =>
         [registroSeleccionado]
     );
 
-    // const validSelectValue = useCallback(
-    //     (value: string) => {
-    //         return registroSeleccionado?.[value] ?? "";
-    //     },
-    //     [registroSeleccionado]
-    // );
-
     const validSelectValue = useCallback(
         (value: string, catalogName: string | undefined) => {
 

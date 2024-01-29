@@ -2,8 +2,7 @@ import {MoonLoader} from 'react-spinners';
 import React from "react";
 import {useHandleData, useTvEmiSerie} from "./hooks";
 import {ButtonContent, TvEmiSerieOptions} from "../../../../../../../../shared";
-import {getCatalogs} from "../../../../../../../../utils";
-import { useBigInput } from '../../../../../../../../utils';
+import {getCatalogs, useBigInput} from "../../../../../../../../utils";
 
 export const InstrumentoForm = ({requeridos}: any) => {
 
@@ -1103,7 +1102,7 @@ export const InstrumentoForm = ({requeridos}: any) => {
                     </div>
                 </div>
                 <div className='mt-0 flex justify-end px-3'>
-                    <button className='bg-cyan-700 hover:bg-cyan-800 text-white py-1 mb-1 px-3 rounded-md'>
+                    <button className='bg-cyan-700 hover:bg-cyan-800 text-white py-1 px-3 rounded-md'>
                         <ButtonContent name={"Guardar RW"} loading={loadingSubmitInstRW}></ButtonContent>
                     </button>
                 </div>

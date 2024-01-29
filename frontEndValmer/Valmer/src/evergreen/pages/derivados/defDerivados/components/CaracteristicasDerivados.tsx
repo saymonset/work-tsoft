@@ -1,6 +1,5 @@
 import { Catalogo, IsFieldModifiedFvDerivados, RequeridosDefDerivados, RespDerivadosDef } from "../../../../../model";
-import { getCatalogs, getCatalogsNoOrder } from "../../../../../utils";
-import { useBigInput } from "../../../../../utils";
+import {getCatalogs, getCatalogsNoOrder, useBigInput} from "../../../../../utils";
 import { FormColateralFF } from "./FormColateralFF";
 import { FormColateralSOFR } from "./FormColateralSOFR";
 

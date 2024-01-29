@@ -2,8 +2,7 @@ import React from "react";
 import {useHandleDataCorp, useTvEmiSerieDataCorp} from "./hooks";
 import {BarLoader, MoonLoader} from "react-spinners"
 import {ButtonContent, TvEmiSerieOptions} from "../../../../../../../../shared";
-import {generateUUID, getCatalogs} from "../../../../../../../../utils";
-import { useBigInput } from "../../../../../../../../utils";
+import {generateUUID, getCatalogs, useBigInput} from "../../../../../../../../utils";
 
 export const InstrumentoForm = ({requeridos}: any) => {
 

@@ -2,9 +2,9 @@ import React from "react";
 import {AnyAction} from "redux";
 import { Acciones, RequeridosAcc } from "./Acciones";
 import { CalifInstData, CalifProgramas, RefReqInst, RefReqProg } from "./Calificaciones";
-import { InfoBd, RefReqLatCr, RefReqLatPanama, formValuesLatPanama } from "./Latam";
+import { InfoBd, RefReqLatCr, RefReqLatPanama, FormValuesLatPanama } from "./Latam";
 
-export type AccCalifLatam = Acciones | CalifProgramas | CalifInstData | formValuesLatPanama | InfoBd;
+export type AccCalifLatam = Acciones | CalifProgramas | CalifInstData | FormValuesLatPanama | InfoBd;
 export type RefReqAccCalifLatam = RequeridosAcc | RefReqProg | RefReqInst | RefReqLatPanama | RefReqLatCr;
 export type InputOrNull = HTMLInputElement | null;
 export type SelectOrNull = HTMLSelectElement | null;

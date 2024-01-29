@@ -1,10 +1,9 @@
 import {useDerHandleData} from "./hooks";
 import {MoonLoader} from "react-spinners";
 import {TvEmiSerieDer} from "./components";
-import {generateUUID, getCatalogs} from "../../../../../utils";
 import {ButtonContent} from "../../../../../shared";
 import React from "react";
-import { useBigInput } from "../../../../../utils";
+import {generateUUID, getCatalogs, useBigInput} from "../../../../../utils";
 
 interface TeoricosChicagoProps {
     isChicago: boolean,

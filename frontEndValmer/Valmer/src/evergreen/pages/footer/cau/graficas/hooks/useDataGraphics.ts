@@ -31,7 +31,6 @@ export const useDataGraphics = () => {
                         " al consultar datos para Grafica Home",
                         {}
                     )
-                    
                     setData(response.body)
                     setLoading(false)
                 } catch (error) {

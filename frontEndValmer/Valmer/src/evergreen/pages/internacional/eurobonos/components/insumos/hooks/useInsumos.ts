@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@reduxjs/toolkit/dist/query/core/apiState";
 import {downloadFiles, fetchDataGetRet, fetchDataGetSave, userEncoded} from "../../../../../../../utils";
 import {updateIsRevFormInsumos, updateIsShowLogBox, updateRevisar1, updateStateCheckbox} from "../../../../../../../redux";
-import { stateCheckbox } from "../../../../../../../model";
+import { StateCheckbox } from "../../../../../../../model";
 
 export const useInsumos = () => {
 
@@ -29,7 +29,7 @@ export const useInsumos = () => {
         state.selectedVector) as unknown as string;
 
     const isCheckboxChecked = useSelector((state: RootState<any, any, any>)=>
-        state.isCheckboxChecked) as unknown as stateCheckbox;
+        state.isCheckboxChecked) as unknown as StateCheckbox;
 
     const dispatch = useDispatch()
 

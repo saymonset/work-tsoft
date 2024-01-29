@@ -64,7 +64,15 @@ export const UmsLiquidezLatamTable: React.FC<Table> = ({
           {tableData.body.registros.map((registro, index) => {
             const instrumentosCount = tableData.body.registros.filter(reg => reg.isin === registro.isin).length;
             const rowspan = index === 0 || registro.isin !== prevIsin ? instrumentosCount : 0;
-            color = prevIsin !== registro.isin ? (color === "bg-white" ? "bg-gray-300" : "bg-white") : color;
+
+            if (prevIsin !== registro.isin) {
+              if (color === "bg-white") {
+                color = "bg-gray-300";
+              } else {
+                color = "bg-white";
+              }
+            }
+
             prevIsin = registro.isin;
 
             return (

@@ -76,7 +76,7 @@ export const ActiveInstrumentos = ({requeridos, activePanel, activeForm, handleB
                 )}
             </div>
 
-            <div className="mt-0 mb-1">
+            <div className="mt-0">
                 <LogBoxText logName={"log_guber"}/>
             </div>
         </>

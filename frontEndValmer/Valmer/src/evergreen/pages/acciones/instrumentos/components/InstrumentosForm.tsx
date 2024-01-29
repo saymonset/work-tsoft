@@ -1,10 +1,9 @@
 import React from "react";
 import {BarLoader, MoonLoader} from "react-spinners";
-import {generateUUID, getCatalogs} from "../../../../../utils";
+import {generateUUID, getCatalogs, useBigInput} from "../../../../../utils";
 import {useAccInsHandleData} from "./hooks";
 import {InstrumentosPreCalc, InstrumentosTable} from "./components";
-import { RequeridosAcc } from "../../../../../model";
-import { useBigInput } from "../../../../../utils";
+import {RequeridosAcc} from "../../../../../model";
 
 
 interface InstrumentosFormProps {

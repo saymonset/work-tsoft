@@ -7,7 +7,7 @@ import {
     ResponseCatalogoEuroCurvas,
     Revisar1Response,
     Revisar2Response,
-    stateCheckbox
+    StateCheckbox
 } from "../../../model";
 
 export const updateFechaEurobonos = createAction<string>('UPDATE_FECHA_EUROBONOS')
@@ -33,4 +33,4 @@ export const updateFileWallet = createAction<CargaArchivoContent>('UPDATE_FILE_W
 export const updateShowFileContributor= createAction<boolean>('UPDATE_SHOW_FILE_CONTRIBUTOR')
 export const updateFileContributor = createAction<CargaArchivoContent>('UPDATE_FILE_CONTRIBUTOR')
 export const updateCatalogoEuroCurvas = createAction<ResponseCatalogoEuroCurvas>('UPDATE_CATALOGO_EURO_CURVAS');
-export const updateStateCheckbox = createAction<stateCheckbox>('UPDATE_STATE_CHECKBOX')
+export const updateStateCheckbox = createAction<StateCheckbox>('UPDATE_STATE_CHECKBOX')

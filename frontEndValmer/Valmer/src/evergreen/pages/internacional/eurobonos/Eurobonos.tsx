@@ -4,7 +4,7 @@ import {HocRestricted} from "../../restrictedAccess";
 import React, { useEffect } from "react";
 import {ProcesoHeader} from "./components";
 import { updateStateCheckbox } from "../../../../redux";
-import { stateCheckbox } from "../../../../model";
+import { StateCheckbox } from "../../../../model";
 import { useDispatch } from "react-redux";
 
 export const Eurobonos = () => {
@@ -12,7 +12,7 @@ export const Eurobonos = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(updateStateCheckbox({} as stateCheckbox))
+        dispatch(updateStateCheckbox({} as StateCheckbox))
     })
 
     const title : string = "Proceso Eurobonos";

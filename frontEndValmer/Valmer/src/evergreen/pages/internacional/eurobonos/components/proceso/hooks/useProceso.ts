@@ -12,7 +12,7 @@ import {
 import {updateIsShowLogBoxProc, updateStateCheckbox} from "../../../../../../../redux";
 import {AxiosResponse} from "axios";
 import {valmerApi} from "../../../../../../../api";
-import {SalidaEuro, stateCheckbox} from "../../../../../../../model";
+import {SalidaEuro, StateCheckbox} from "../../../../../../../model";
 
 export const useProceso = () => {
 
@@ -40,7 +40,7 @@ export const useProceso = () => {
         state.isShowLogBoxProc) as unknown as boolean;
 
     const isCheckboxChecked = useSelector((state: RootState<any, any, any>)=>
-        state.isCheckboxChecked) as unknown as stateCheckbox;
+        state.isCheckboxChecked) as unknown as StateCheckbox;
 
     const [isShowLogBoxProcModal, setIsShowLogBoxProcModal] = useState(false);
     const [isFetchDataGetLogModal, setIsFetchDataGetLogModal] = useState(false);

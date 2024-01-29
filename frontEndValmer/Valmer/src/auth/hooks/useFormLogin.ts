@@ -84,7 +84,6 @@ export const useFormLogin = () => {
     }
 
     const onGoPage = () => {
-        const lastPath = localStorage.getItem('lastPath') ?? '/';
         login('Evergreen')
         navigate('/', {
             replace: true

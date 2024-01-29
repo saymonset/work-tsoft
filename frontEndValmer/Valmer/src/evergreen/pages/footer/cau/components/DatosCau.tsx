@@ -40,9 +40,9 @@ const GetFile : React.FC<DownloadFile> = ({ contenido, nombre }) => {
     };
     return (
         <>
-            <span onClick={downloadFile} className='text-cyan-700 hover:text-green-700 cursor-pointer'>
+            <button onClick={downloadFile} className='text-cyan-700 hover:text-green-700 cursor-pointer'>
               {nombre}
-            </span>
+            </button>
             <a ref={enlaceRef} style={{ display: 'none' }} />
         </>
     );

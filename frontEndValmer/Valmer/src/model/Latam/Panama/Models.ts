@@ -178,7 +178,7 @@ export interface HistoricoConsultaTabla {
     d_fecha_vencimiento: string;
 }
 
-export interface formValuesLatPanama {
+export interface FormValuesLatPanama {
     [key: string]: string;
     n_coupon_gen_met: string;
     d_last_reg_coup_date: string;

@@ -3,8 +3,7 @@ import React from "react";
 import {TvEmiSerieProps} from "../../../../../model";
 // @ts-ignore
 import Select, {ActionMeta, InputActionMeta, ValueType} from 'react-select';
-import {customStyles} from "../../../../../utils";
-import { useBigInput } from "../../../../../utils";
+import {customStyles, useBigInput} from "../../../../../utils";
 
 interface IOption {
     value: string;

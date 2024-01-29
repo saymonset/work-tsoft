@@ -1,5 +1,5 @@
 import {createAction} from "@reduxjs/toolkit";
-import {Catalogo, DividendosData, IsFieldRequiredAccInst, Precalculados, RespAccInstData, ShowPrecalc} from "../../../model";
+import {Catalogo, DividendosData, IsFieldRequiredAccInst, Precalculados, RespAccInstData} from "../../../model";
 
 export const updateSelectedTvAcc = createAction<string>('UPDATE_SELECTED_TV_ACC')
 export const updateSelectedEmisoraAcc = createAction<string>('UPDATE_SELECTED_EMISORA_ACC')

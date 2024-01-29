@@ -18,7 +18,6 @@ import {
     updateRequiredEmisoraInter,
     updateRequiredSerieInter,
     updateRequiredTvInter,
-    updateSelectedEmisorInter,
     updateSelectedEmisoraInter,
     updateSelectedSerieInter,
     updateSelectedTvInter,

@@ -30,7 +30,7 @@ export interface Revisar1Data {
     comentario: string;
 }
 
-export interface stateCheckbox {
+export interface StateCheckbox {
     cbx_obtener_carteras: boolean;
     cbx_carga_insumos: boolean;
     cbx_Revisar1: boolean;

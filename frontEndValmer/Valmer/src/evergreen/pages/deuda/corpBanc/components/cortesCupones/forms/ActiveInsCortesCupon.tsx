@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {ResponseCorteCupon} from "../../../../../../../model";
 import {generateUUID} from "../../../../../../../utils";
 import {CortesFlujosTable} from "./CortesFlujosTable";

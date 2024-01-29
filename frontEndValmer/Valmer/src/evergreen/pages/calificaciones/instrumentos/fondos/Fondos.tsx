@@ -18,7 +18,7 @@ export const Fondos = (props: FormInstProps) => {
         <HocRestricted title={title} view={title} >
             <TitleDate title={title} />
 
-            <div className="form-cols-1 mb-1">
+            <div className="form-cols-1">
                 <div className="flex justify-end pr-2">
                     <button
                         className="btn"

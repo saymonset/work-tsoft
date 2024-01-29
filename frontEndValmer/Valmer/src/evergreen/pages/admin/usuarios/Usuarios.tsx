@@ -34,7 +34,7 @@ export const Usuarios = () => {
 
     const  HandleSaveUser = async (e: React.SyntheticEvent) => {
         e.preventDefault()
-        const id: string = nuevo ? "0" : userData?.n_id_usuario ? userData?.n_id_usuario : ""
+        const id: string = nuevo ? "0" : userData?.n_id_usuario ?? ""
         const isok = await saveDataUser(id)        
         if (isok) {
             setNuevo(false)

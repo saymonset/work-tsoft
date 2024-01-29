@@ -11,7 +11,7 @@ import {
     updateStateCheckbox
 } from "../../../../../../../redux";
 import {valmerApi} from "../../../../../../../api";
-import { stateCheckbox } from "../../../../../../../model";
+import { StateCheckbox } from "../../../../../../../model";
 
 export const useContribuidores = () => {
 
@@ -31,7 +31,7 @@ export const useContribuidores = () => {
         state.isShowLogBoxCont) as unknown as boolean;
 
     const isCheckboxChecked = useSelector((state: RootState<any, any, any>)=>
-        state.isCheckboxChecked) as unknown as stateCheckbox;
+        state.isCheckboxChecked) as unknown as StateCheckbox;
 
     const [loading, setLoading] = useState(false)
     const [loadingRevisar2, setLoadingRevisar2] = useState(false)

@@ -1,11 +1,9 @@
 import { useState } from "react";
 import {
   fetchDataGetRet,
-  fetchDataGetSave,
   fetchDataPost,
   fetchDataPostAct,
   fetchDataPostRetNoAlert,
-  showAlert
 } from "../../../../../utils";
 import { IUmsMexCat, RegistrosUMSMexCat } from '../Models'
 import { Base64 } from 'js-base64'
@@ -77,7 +75,7 @@ export const useUmsMexCat = () => {
     try {
       setLoadingData(true)
       const dataPost = {}
-      const resp = await fetchDataPost(
+      await fetchDataPost(
         "/reuters/inserta-actualiza-registro",
         " al intentar actualizar informacion",
         dataPost,
@@ -156,9 +154,9 @@ export const useUmsMexCat = () => {
     const sProveedor: string | null = e.currentTarget.getAttribute("data-proveedor")
     setOpenEdit(true);
     setRegistro({
-      S_ISIN: sIsin ? sIsin : '',
-      S_RIC_FORMATO: sFormato ? sFormato : '',
-      S_PROVEDOR: sProveedor ? sProveedor : ''
+      S_ISIN: sIsin ?? '',
+      S_RIC_FORMATO: sFormato ?? '',
+      S_PROVEDOR: sProveedor ?? ''
     })
 
   }

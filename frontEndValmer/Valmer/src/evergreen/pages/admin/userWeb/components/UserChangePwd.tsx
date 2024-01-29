@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import {fetchDataPostAct, showAlert} from "../../../../../utils"
+import {showAlert} from "../../../../../utils"
 import { ButtonContent } from "../../../../../shared"
 import {AxiosResponse} from "axios";
 import {valmerApi} from "../../../../../api";

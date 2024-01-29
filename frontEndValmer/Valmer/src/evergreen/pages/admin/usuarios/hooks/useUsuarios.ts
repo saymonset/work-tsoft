@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { fetchDataGetRet, fetchDataPost, fetchDataPostAct, userEncoded } from "../../../../../utils";
 import { IUserList, IUserData, InitialUser, checks_list, DataPost } from '../Models'
 import { showAlert } from "../../../../../utils/Utils";
@@ -82,10 +82,18 @@ export const useUsuarios = () => {
   }
 
   const HandleCahngeInputsForms = (e: React.FormEvent<HTMLInputElement>) => {
-    const valor: string = e.currentTarget.hasOwnProperty('checked') ? (e.currentTarget.checked ? "1" : "0") : e.currentTarget.value
-    const nameInput: string = e.currentTarget.name == 's_nombre_0' ? 's_nombre' : e.currentTarget.name
-    setUserData({ ...userData, [nameInput]: valor })
+    let valor: string;
+
+    if (e.currentTarget.hasOwnProperty('checked')) {
+      valor = e.currentTarget.checked ? "1" : "0";
+    } else {
+      valor = e.currentTarget.value;
+    }
+
+    const nameInput: string = e.currentTarget.name === 's_nombre_0' ? 's_nombre' : e.currentTarget.name;
+    setUserData({ ...userData, [nameInput]: valor });
   }
+
 
   const getObjectKey = (obj: any, value: string) => {
     let cad = ''

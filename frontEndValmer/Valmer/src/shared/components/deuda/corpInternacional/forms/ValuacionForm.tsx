@@ -260,7 +260,7 @@ export const ValuacionForm: React.FC<ValuacionFormProps> = ({ mercado }) => {
                                     {dataActPrecio.title_log}
                                 </div>
                                 <div className="px-1.5 py-3">
-                                    {dataActPrecio.s_instrumento + " [" + (dataActPrecio.msg_log || dataActPrecio.n_precio) + "]"}
+                                    {dataActPrecio.s_instrumento + " [" + (dataActPrecio.msg_log ?? dataActPrecio.n_precio) + "]"}
                                 </div>
                             </div>
                         )}

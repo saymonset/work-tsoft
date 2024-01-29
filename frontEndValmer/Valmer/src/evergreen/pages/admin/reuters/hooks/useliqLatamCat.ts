@@ -3,7 +3,6 @@ import {fetchDataGetRet, fetchDataGetSave} from "../../../../../utils";
 import { ILiqLatam, RegistrosLiqLatam } from '../Models'
 import { Base64 } from 'js-base64'
 import fileDownload from 'js-file-download'
-import Swal from "sweetalert2";
 
 const InitialData: ILiqLatam = {
   status: 0,

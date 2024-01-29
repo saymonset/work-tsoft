@@ -1,13 +1,12 @@
 import { BarLoader, MoonLoader } from "react-spinners";
 import { useHandleDataUserWeb } from "../hooks"
-import { getCatalogs } from "../../../../../utils";
-import { ButtonContent } from "../../../../../shared";
-import { UserChangePwd } from "./UserChangePwd";
-import { ProductosTrial } from "./ProductosTrial";
-import { HistoricoTrial } from "./HistoricoTrial";
-import { GenerarArchivo } from "./GenerarArchivo";
+import {getCatalogs, useBigInput} from "../../../../../utils";
+import {ButtonContent} from "../../../../../shared";
+import {UserChangePwd} from "./UserChangePwd";
+import {ProductosTrial} from "./ProductosTrial";
+import {HistoricoTrial} from "./HistoricoTrial";
+import {GenerarArchivo} from "./GenerarArchivo";
 import React from "react";
-import { useBigInput } from "../../../../../utils";
 
 export const UserWebForm = () => {
 

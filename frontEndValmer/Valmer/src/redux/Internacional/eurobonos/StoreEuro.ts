@@ -34,7 +34,7 @@ import {
     ResponseCatalogoEuroCurvas,
     Revisar1Response,
     Revisar2Response,
-    stateCheckbox
+    StateCheckbox
 } from "../../../model";
 
 const fechaEurobonosReducer = createReducer<string>(
@@ -244,8 +244,8 @@ const catalogoEuroCurvasReducer = createReducer<ResponseCatalogoEuroCurvas>(
    }
  );
 
- const isCheckboxCheckedReducer = createReducer<stateCheckbox>(
-    {} as stateCheckbox,
+ const isCheckboxCheckedReducer = createReducer<StateCheckbox>(
+    {} as StateCheckbox,
     (builder) => {
         builder.addCase(updateStateCheckbox, (_state, action) => {
             return action.payload;
