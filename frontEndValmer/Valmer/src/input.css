@@ -496,3 +496,11 @@ li:hover ul {
 .menu {
     @apply border border-cyan-600 bg-white hover:bg-green-600 text-cyan-700 hover:text-white hover:font-bold px-1 block
 }
+
+
+/* .chart-container {
+    position: relative;
+    z-index: 10;
+  } */
+  
+ 

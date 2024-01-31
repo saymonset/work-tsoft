@@ -3,6 +3,30 @@ import { PieChart, Pie, Sector, ResponsiveContainer, Cell } from 'recharts';
 import { ColorsGraph, generateUUID } from '../../../../../../utils';
 import { AreaGraphics } from '../../../../../../model';
 
+
+import  { PureComponent } from 'react';
+
+const data = [
+  { name: 'Group A', value: 400 },
+  { name: 'Group B', value: 300 },
+  { name: 'Group C', value: 300 },
+  { name: 'Group D', value: 200 },
+];
+
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+
+const RADIAN = Math.PI / 180;
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  return (
+    <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+      {`${(percent * 100).toFixed(0)}%`}
+    </text>
+  );
+};
 const renderActiveShape = (props: any) => {
   const RADIAN = Math.PI / 180;
   const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
@@ -10,8 +34,8 @@ const renderActiveShape = (props: any) => {
   const cos = Math.cos(-RADIAN * midAngle);
   const sx = cx + (outerRadius + 10) * cos;
   const sy = cy + (outerRadius + 10) * sin;
-  const mx = cx + (outerRadius + 30) * cos;
-  const my = cy + (outerRadius + 30) * sin;
+  const mx = cx + (outerRadius + 2) * cos;
+  const my = cy + (outerRadius + 19) * sin;
   const ex = mx + (cos >= 0 ? 1 : -1) * 10;
   const ey = my;
   const textAnchor = cos >= 0 ? 'start' : 'end';
@@ -98,11 +122,12 @@ export const PieChartClientServ: React.FC<PieChartClientServProps> = ({ dataBody
       setHeight(window.innerHeight / 2)
     });
 
-    const radiusInterno = (height / 3.5);
+    const radiusInterno = (height / 5.5);
     const radiusExterno = radiusInterno + 14;
 
     return (
-        <ResponsiveContainer width="100%" height={height}>
+      
+        <ResponsiveContainer width="100%" height={height} >
             <PieChart width={300} height={500}>
                 <Pie
                     activeIndex={activeIndex}
@@ -115,12 +140,15 @@ export const PieChartClientServ: React.FC<PieChartClientServProps> = ({ dataBody
                     fill="#8884d8"
                     dataKey="peticiones"
                     onMouseEnter={onPieEnter}
+                  
                 >
                     {dataBody.map((_entry, index) => (
                         <Cell key={generateUUID()} fill={ColorsGraph[index % ColorsGraph.length]} />
                     ))}
+                    
                 </Pie>
             </PieChart>
         </ResponsiveContainer>
+    
     );
 }
