@@ -108,7 +108,7 @@ export const GraficasArea = () => {
             <p></p>
         )}
     </div>  
-    <div className="card1">
+    <div className="card">
         <div className="head">
             <span>Solicitudes CAU por Cliente</span>
         </div>
@@ -144,7 +144,7 @@ export const GraficasArea = () => {
             <p></p>
         )} 
     </div>
-    <div className="card1" >
+    <div className="card" >
         <div className="head">
             <span>Solicitudes CAU por Servicio</span>
         </div>
