@@ -83,80 +83,88 @@ export const GraficasArea = () => {
                     Consultar
                 </button>
             </div>
-            <div className="form-cols-4">
-    <div style={{ width: '85%', height:'50%', overflow: 'auto', marginTop: '100px'}}>
-        {dataCliente && dataCliente.length > 0 ? (
-            <table className="table">
-                <thead className="thead">
-                    <tr>
-                        <th className="px-3"></th>
-                        <th>Solicitudes CAU por Cliente</th>
-                        <th className="px-1">Solicitudes -  %</th>
-                    </tr>
-                </thead>
-                <tbody className="tbody">
-                    {dataCliente.map((item, key) => (
-                        <tr key={key}>
-                            <td style={{background: ColorsGraph[key  % ColorsGraph.length]}} ></td>
-                            <td>{ item.cliente }</td>
-                            <td>{ item.peticiones }</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        ) : (
-            <p></p>
-        )}
-    </div>  
-    <div className="card">
-        <div className="head">
-            <span>Solicitudes CAU por Cliente</span>
-        </div>
-        {loadingCliente ? (
-            <div className="body flex items-center justify-center">
-                <MoonLoader color="#0e7490" loading={true} speedMultiplier={0.5} size={80} />
+            <div className="form-cols-2">
+                    <div className="card">
+                        <div className="head">
+                            <span>Solicitudes CAU por Cliente</span>
+                        </div>
+                        <div className="form-cols-2">
+                            <div style={{ width: '85%', height:'50%', overflow: 'auto', marginTop: '100px'}}>
+                                    {dataCliente && dataCliente.length > 0 ? (
+                                        <table className="table">
+                                            <thead className="thead">
+                                                <tr>
+                                                    <th className="px-3"></th>
+                                                    <th>Solicitudes CAU por Cliente</th>
+                                                    <th className="px-1">Solicitudes -  %</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody className="tbody">
+                                                {dataCliente.map((item, key) => (
+                                                    <tr key={key}>
+                                                        <td style={{background: ColorsGraph[key  % ColorsGraph.length]}} ></td>
+                                                        <td>{ item.cliente }</td>
+                                                        <td>{ item.peticiones }</td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    ) : (
+                                        <p></p>
+                                    )}
+                            </div>  
+
+                            {loadingCliente ? (
+                                <div className="body flex items-center justify-center">
+                                    <MoonLoader color="#0e7490" loading={true} speedMultiplier={0.5} size={80} />
+                                </div>
+                            ) : (
+                                getGraph(dataCliente, true)
+                            )}
+                        </div>
+      
+                    </div>
+                   
+                    <div className="card" >
+                        <div className="head">
+                            <span>Solicitudes CAU por Servicio</span>
+                        </div>
+                        <div className="form-cols-2">
+                            <div style={{ width: '85%', height:'50%', overflow: 'auto', marginTop: '100px'}}>
+                            {dataServicio && dataServicio.length > 0 ? ( 
+                                <table className="table">
+                                    <thead className="thead">
+                                        <tr>
+                                            <th className="px-3"></th>
+                                            <th>Solicitudes CAU por Servicio</th>
+                                            <th className="px-1">Solicitudes -  %</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="tbody">
+                                        {dataServicio?.map((item, key) => (
+                                            <tr key={key}>
+                                                <td style={{background: ColorsGraph[key  % ColorsGraph.length]}} ></td>
+                                                <td>{ item.servicio }</td>
+                                                <td>{ item.peticiones }</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            ) : (
+                                <p></p>
+                            )} 
+                            </div>
+                            {loadingServicio ? (
+                                <div className="body flex items-center justify-center">
+                                    <MoonLoader color="#0e7490" loading={true} speedMultiplier={0.5} size={80} />
+                                </div>
+                            ) : (
+                                getGraph(dataServicio, false)
+                            )}
+                        </div>
+                       
+                    </div>
             </div>
-        ) : (
-            getGraph(dataCliente, true)
-        )}
-    </div>
-    <div style={{ width: '85%', height:'50%', overflow: 'auto', marginTop: '100px'}}>
-        {dataServicio && dataServicio.length > 0 ? ( 
-            <table className="table">
-                <thead className="thead">
-                    <tr>
-                        <th className="px-3"></th>
-                        <th>Solicitudes CAU por Servicio</th>
-                        <th className="px-1">Solicitudes -  %</th>
-                    </tr>
-                </thead>
-                <tbody className="tbody">
-                    {dataServicio?.map((item, key) => (
-                        <tr key={key}>
-                            <td style={{background: ColorsGraph[key  % ColorsGraph.length]}} ></td>
-                            <td>{ item.servicio }</td>
-                            <td>{ item.peticiones }</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        ) : (
-            <p></p>
-        )} 
-    </div>
-    <div className="card" >
-        <div className="head">
-            <span>Solicitudes CAU por Servicio</span>
-        </div>
-        {loadingServicio ? (
-            <div className="body flex items-center justify-center">
-                <MoonLoader color="#0e7490" loading={true} speedMultiplier={0.5} size={80} />
-            </div>
-        ) : (
-            getGraph(dataServicio, false)
-        )}
-    </div>
-</div>
 
             <div className="form-cols-1">
                 <div className="card">
