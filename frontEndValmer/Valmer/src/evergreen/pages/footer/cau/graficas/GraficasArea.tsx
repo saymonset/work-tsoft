@@ -36,7 +36,7 @@ export const GraficasArea = () => {
         setTriggerServicio(true)
     }
 
-    const getGraph = (data: AreaGraphics[]) => {
+    const getGraph = (data: AreaGraphics[], isCliente = true) => {
         if (!data) {
             return (
                 <div className="flex justify-center h-full items-center">
@@ -46,7 +46,7 @@ export const GraficasArea = () => {
         } else {
             return (
                 <div className="body">
-                    <PieChartClientServ dataBody={dataCliente ?? dataServicio} />
+                    <PieChartClientServ dataBody={(isCliente)?dataCliente:dataServicio} />
                 </div>
             )
         }
@@ -92,7 +92,7 @@ export const GraficasArea = () => {
                             <MoonLoader color="#0e7490" loading={true} speedMultiplier={0.5} size={80} />
                         </div>
                     ) : (
-                        getGraph(dataCliente)
+                                                getGraph(dataCliente, true)
                     )}
                 </div>
                 <div className="card">
@@ -104,7 +104,7 @@ export const GraficasArea = () => {
                             <MoonLoader color="#0e7490" loading={true} speedMultiplier={0.5} size={80} />
                         </div>
                     ) : (
-                        getGraph(dataServicio)
+                                            getGraph(dataServicio, false)
                     )}
                 </div>
             </div>

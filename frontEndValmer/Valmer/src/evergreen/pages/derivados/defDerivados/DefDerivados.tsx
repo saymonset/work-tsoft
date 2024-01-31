@@ -38,7 +38,7 @@ export const DefDerivados = () => {
         <>
             <TitleDate title={title} />
 
-            <div className="form-cols-2">
+            <div className="form-cols-2 mb-1">
                 <div className="flex justify-start pr-2">
                     <button 
                         className="btn"
