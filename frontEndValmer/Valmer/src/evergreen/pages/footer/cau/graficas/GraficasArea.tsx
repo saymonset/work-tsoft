@@ -2,6 +2,7 @@ import { MoonLoader } from "react-spinners"
 import { useDataGraphics } from "./hooks"
 import { BarChartArea, PieChartClientServ } from "./components"
 import { AreaGraphics } from "../../../../../model"
+import { ColorsGraph } from "../../../../../utils"
 
 export const GraficasArea = () => {
 
@@ -45,7 +46,7 @@ export const GraficasArea = () => {
             )
         } else {
             return (
-                <div className="body">
+                <div className="body" >
                     <PieChartClientServ dataBody={(isCliente)?dataCliente:dataServicio} />
                 </div>
             )
@@ -82,8 +83,28 @@ export const GraficasArea = () => {
                     Consultar
                 </button>
             </div>
-            <div className="form-cols-2">
-                <div className="card">
+            <div className="form-cols-4">
+               <div style={{ width: '85%', height:'50%', overflow: 'auto', marginTop: '70px'}}>
+                <table className="table">
+                    <thead className="thead">
+                        <tr>
+                            <th className="px-3"></th>
+                            <th>Solicitudes CAU por Cliente</th>
+                            <th className="px-1">Solicitudes -  %</th>
+                        </tr>
+                    </thead>
+                    <tbody className="tbody">
+                    {dataCliente?.map((item, key) => (
+                        <tr key={key}>
+                        <td style={{background: ColorsGraph[key  % ColorsGraph.length]}} ></td>
+                        <td>{ item.cliente }</td>
+                        <td>{ item.peticiones }</td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+               </div>  
+                <div className="card" >
                     <div className="head">
                         <span>Solicitudes CAU por Cliente</span>
                     </div>
@@ -94,6 +115,26 @@ export const GraficasArea = () => {
                     ) : (
                                                 getGraph(dataCliente, true)
                     )}
+                </div>
+                <div style={{ width: '85%', height:'50%', overflow: 'auto', marginTop: '70px'}}>
+                    <table className="table">
+                        <thead className="thead">
+                            <tr>
+                                <th className="px-3"></th>
+                                <th>Solicitudes CAU por Servicio</th>
+                                <th className="px-1">Solicitudes -  %</th>
+                            </tr>
+                        </thead>
+                        <tbody className="tbody">
+                        {dataServicio?.map((item, key) => (
+                            <tr key={key}>
+                            <td style={{background: ColorsGraph[key  % ColorsGraph.length]}} ></td>
+                            <td>{ item.servicio }</td>
+                            <td>{ item.peticiones }</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
                 </div>
                 <div className="card">
                     <div className="head">
