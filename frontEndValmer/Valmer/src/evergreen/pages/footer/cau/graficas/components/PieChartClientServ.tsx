@@ -3,30 +3,6 @@ import { PieChart, Pie, Sector, ResponsiveContainer, Cell } from 'recharts';
 import { ColorsGraph, generateUUID } from '../../../../../../utils';
 import { AreaGraphics } from '../../../../../../model';
 
-
-import  { PureComponent } from 'react';
-
-const data = [
-  { name: 'Group A', value: 400 },
-  { name: 'Group B', value: 300 },
-  { name: 'Group C', value: 300 },
-  { name: 'Group D', value: 200 },
-];
-
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-
-const RADIAN = Math.PI / 180;
-const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-  return (
-    <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-      {`${(percent * 100).toFixed(0)}%`}
-    </text>
-  );
-};
 const renderActiveShape = (props: any) => {
   const RADIAN = Math.PI / 180;
   const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
@@ -122,7 +98,7 @@ export const PieChartClientServ: React.FC<PieChartClientServProps> = ({ dataBody
       setHeight(window.innerHeight / 2)
     });
 
-    const radiusInterno = (height / 5.5);
+    const radiusInterno = (height / 4.5);
     const radiusExterno = radiusInterno + 14;
 
     return (
