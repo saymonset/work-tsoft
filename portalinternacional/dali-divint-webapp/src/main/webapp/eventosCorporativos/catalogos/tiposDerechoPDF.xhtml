@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="TiposDerecho" documentTitle="Tipos de Derecho"
+        institucion="#{tiposDerechoEventoCorporativoBean.agenteFirmado.id} #{tiposDerechoEventoCorporativoBean.agenteFirmado.folio} #{tiposDerechoEventoCorporativoBean.agenteFirmado.razon}" 
+        landscape="true" fecha="#{tiposDerechoEventoCorporativoBean.fechaActual}" imageResource="/images/indeval.jpg">
+        <pdf:table value="tiposDerechoEventoCorporativoBean" currentBean="tipoDer" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{tiposDerechoEventoCorporativoBean}" currentBean="evco" widthPercentage="100" maxColums="11">
+            <pdf:row>
+                <pdf:col header="Mercado" value="#{tiposDerechoEventoCorporativoBean.idTipoDerecho eq '-1' ? 'Ambos' : tiposDerechoEventoCorporativoBean.idTipoDerecho }" align="center" />
+                <pdf:col header="Tipo Derecho" value="#{!empty tiposDerechoEventoCorporativoBean.nombre ? tiposDerechoEventoCorporativoBean.nombre : 'Todos'}" align="center" />
+                <pdf:col header="Estado" value="#{tiposDerechoEventoCorporativoBean.activo eq '-1' ? 'Ambos' : (tiposDerechoEventoCorporativoBean.activo eq  '1' ? 'Inactivo' : 'Activo')}" align="center" />		               
+			</pdf:row>
+			
+        </pdf:table>
+        
+        <pdf:br/>
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{tiposDerechoEventoCorporativoBean.totalRegistros}" />
+        <pdf:br/>
+
+         <pdf:table value="#{tiposDerechoEventoCorporativoBean.paginaReportes.registros}" currentBean="tipoDer" widthPercentage="100" maxColums="7">
+            <pdf:row >
+            	
+				<pdf:col header="Id" value="#{tipoDer.idTipoDerecho}" align="center" />
+				<pdf:col header="Tipo Derecho" value="#{tipoDer.tipoDerecho}" align="center" />										
+				<pdf:col header="Mercado" value="#{tipoDer.tipo}" align="center" />	
+				<pdf:col header="Estado" value="#{tipoDer.inactivo eq '1' ? 'Inactivo' : 'Activo'}" align="center" />				
+				
+			</pdf:row>
+        </pdf:table>
+        
+
+    </pdf:document>
+</html>

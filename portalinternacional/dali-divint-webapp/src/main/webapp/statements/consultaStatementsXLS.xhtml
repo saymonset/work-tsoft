@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <xls:document documentName="consultaStatements" documentTitle="Consulta de Statements"
+                  institucion="#{consultaStatementsController.agenteFirmado.id} #{consultaStatementsController.agenteFirmado.folio} #{consultaStatementsController.agenteFirmado.razon}"
+                  fecha="#{consultaStatementsController.fechaActual}" >
+        <xls:table value="consultaStatementsController" var="dummy">
+            <xls:row>
+                <xls:col header="CRITERIOS DE CONSULTA" value="" />
+            </xls:row>
+        </xls:table>
+        <xls:table value="#{consultaStatementsController}" var="resultado">
+            <xls:row>
+                <xls:col header="#{etq.institucionMinus}" value="#{consultaStatementsController.idFolioInstitucion} - #{consultaStatementsController.nombreInstitucion}" />
+                <xls:col header="#{etq.formato}" value="#{(consultaStatementsController.param.formato eq '-1') ? 'NINGUNO' : consultaStatementsController.param.formato }" />
+                <xls:col header="#{etq.nombreBeneficiario} o #{etq.razonSocial}" value="#{consultaStatementsController.param.nombre}" />
+                <xls:col header="#{etq.custodio}" value="#{(consultaStatementsController.param.custodio eq '-1') ? ' ' : consultaStatementsController.param.custodio }" />
+                <xls:col header="#{etq.tipoBeneficiario}" value="#{consultaStatementsController.mapaTipoBeneficiario[consultaStatementsController.param.idTipoBeneficiario]}" />
+                <xls:col header="#{etq.tv}" value="#{consultaStatementsController.param.tv}" />
+                <xls:col header="#{etq.emisoraMinus}" value="#{consultaStatementsController.param.emisora}" />
+                <xls:col header="#{etq.serieMinus}" value="#{consultaStatementsController.param.serie}" />
+                <xls:col header="#{etq.isin}" value="#{consultaStatementsController.param.isin}" />
+                <xls:col header="#{etq.fechaRegistro} Inicio" value="#{consultaStatementsController.param.fechaRegistroInicio}" pattern="dd/MM/yyyy" />
+                <xls:col header="#{etq.fechaRegistro} Fin" value="#{consultaStatementsController.param.fechaRegistroFin}" pattern="dd/MM/yyyy" />
+                <xls:col header="#{etq.fechaPago} Inicio" value="#{consultaStatementsController.param.fechaPagoInicio}" pattern="dd/MM/yyyy" />
+                <xls:col header="#{etq.fechaPago} Fin" value="#{consultaStatementsController.param.fechaPagoFin}" pattern="dd/MM/yyyy" />
+                <xls:col header="#{etq.archivo}" value="#{consultaStatementsController.param.archivo}" />
+                <xls:col header="#{etq.w8benAdp}" value="#{consultaStatementsController.param.adp}" />
+                <xls:col header="#{etq.porcentajeRetencionMinus}" value="#{consultaStatementsController.param.porcentaje}" />
+            </xls:row>
+        </xls:table>
+        <xls:br />
+        <xls:subtitle value="#{etq.registrosEncontrados}: #{consultaStatementsController.paginaReportes.totalRegistros}" />
+        <xls:br />
+        <xls:subtitle value="Datos"/>
+        <xls:table value="#{consultaStatementsController.paginaReportes.registros}" var="statement">
+            <xls:row>
+                <xls:col header="#{etq.emisionMinus}"  value="#{statement.tv} | #{statement.emisora} | #{statement.serie}" />
+                <xls:col header="#{etq.isin}" value="#{statement.isin}" />
+                <xls:col header="#{etq.institucionMinus}" value="#{statement.idFolio}-#{statement.nombreInstitucion}" />
+                <xls:col header="#{etq.fechaRegistro}" value="#{statement.fechaRegistro}" pattern="dd/MM/yyyy" />
+                <xls:col header="#{etq.fechaPago}" value="#{statement.fechaPago}" pattern="dd/MM/yyyy" />
+
+                <xls:col header="#{etq.nombre}" value="#{statement.nombre}" />
+                <xls:col header="#{etq.custodio}"  value="#{statement.custodio}"  />
+                <xls:col header="#{etq.direccionMinus}" value="#{not statement.cargoInstitucion ? statement.direccion : consultaStatementsController.domiciliosFiscales[statement.idInstitucion].domicilioCompleto}" >
+                    <f:converter converterId="upperCaseConverter" />
+                </xls:col>
+                <xls:col header="#{etq.pais}" value="#{not statement.cargoInstitucion ?  statement.pais : consultaStatementsController.domiciliosFiscales[statement.idInstitucion].pais.descripcionPais}" >
+                    <f:converter converterId="upperCaseConverter" />
+                </xls:col>
+                <xls:col header="#{etq.w8benAdp}" value="#{not empty statement.adp ? statement.adp : '.'}" />
+                <xls:col header="#{etq.tipoBeneficiario}" value="#{statement.tipoBeneficiario}" />
+                <xls:col header="#{etq.rfc}" value="#{statement.rfc}" />
+                <xls:col header="#{etq.formato}" value="#{statement.formato}" />
+                <xls:col header="#{etq.estatus}" value="#{statement.statusOwner}" footer="TOTALES" />
+
+                <xls:col header="#{etq.porcentajeRetencionMinus}" value="#{statement.porcentajeRetencion}" pattern="#,##0" />
+                <xls:col header="#{etq.cantidadTit}" pattern="#,##0"
+                         value="#{statement.numeroTitulos}" footer="#{consultaStatementsController.paginaReportes.valores['totalPosicion']}" />
+                <xls:col header="#{etq.proporcionMinus}" value="#{statement.proporcion}" pattern="#,##0.000000"/>
+                <xls:col header="#{etq.dividendoMinus}" pattern="$##,##0.00"
+                         value="#{statement.dividendo}" footer="#{consultaStatementsController.paginaReportes.valores['totalDividendo']}" />
+
+                <xls:col header="#{etq.impuestoMinus}" pattern="$##,##0.00"
+                         value="#{statement.impuesto}" footer="#{consultaStatementsController.paginaReportes.valores['totalImpuestos']}" />
+                <xls:col header="#{etq.dividendoNetoMinus}" pattern="$##,##0.00"
+                         value="#{statement.dividendoNeto}" footer="#{consultaStatementsController.paginaReportes.valores['totalDividendoNeto']}" />
+            </xls:row>
+        </xls:table>
+    </xls:document>
+</html>

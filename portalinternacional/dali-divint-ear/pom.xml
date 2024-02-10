@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.indeval.dali</groupId>
+		<artifactId>dali-divint</artifactId>
+		<version>5.10.7-SNAPSHOT</version>
+	</parent>
+	<artifactId>dali-divint-ear</artifactId>
+	<packaging>ear</packaging>
+	<name>dali-divint-ear</name>
+	<description>EAR - Portal Dali Internacional</description>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+
+				<configuration>
+					<version>1.4</version>
+					<bundleFileName>dali-divint.ear</bundleFileName>
+					<finalName>dali_divint_services</finalName>
+					<defaultLibBundleDir>lib</defaultLibBundleDir>
+					<modules>
+						<ejbModule>
+							<groupId>com.indeval.dali</groupId>
+							<artifactId>dali-divint-seguridad-captcha_EJB</artifactId>
+							<bundleFileName>dali_divint_seguridad_services_ejb.jar</bundleFileName>
+						</ejbModule>
+						<ejbModule>
+							<groupId>com.indeval.dali</groupId>
+							<artifactId>dali-divint-serviciosEjb</artifactId>
+							<bundleFileName>dali_divint_services_ejb.jar</bundleFileName>
+						</ejbModule>
+					</modules>
+
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>com.indeval.dali</groupId>
+			<artifactId>dali-divint-serviciosEjb</artifactId>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>com.indeval.dali</groupId>
+			<artifactId>dali-divint-seguridad-captcha_EJB</artifactId>
+			<type>ejb</type>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.indeval.dali</groupId>
+			<artifactId>dali-divint-serviciosimpl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-digester</groupId>
+			<artifactId>commons-digester</artifactId>
+			<version>1.8</version>
+			<exclusions>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- 		<dependency> -->
+		<!-- 		    <groupId>org.apache.myfaces.core</groupId> -->
+		<!-- 		    <artifactId>myfaces-api</artifactId> -->
+		<!-- 		    <version>1.2.0</version> -->
+		<!-- 		</dependency> -->
+		<!-- 		<dependency> -->
+		<!-- 		    <groupId>org.apache.myfaces.core</groupId> -->
+		<!-- 		    <artifactId>myfaces-impl</artifactId> -->
+		<!-- 		    <version>1.2.0</version> -->
+		<!-- 		</dependency> -->
+	</dependencies>
+</project>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Cambio Multidivisas-->
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+	version="1.2">
+
+
+	<managed-bean>
+		<managed-bean-name>movimientosEfectivoBean</managed-bean-name>
+		<managed-bean-class>com.indeval.portalinternacional.presentation.controller.MovimientosEfectivoController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>divisionInternacionalService</property-name>
+			<value>#{divisionInternacionalServiceEJB}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>utilService</property-name>
+			<value>#{utilService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>dateUtilService</property-name>
+			<value>#{dateUtilService}</value>
+		</managed-property>
+<!-- 		<managed-property> se usa para firma digital, se debe hacer un extends hacia un controller padre y ahí implementarlo -->
+<!-- 			<property-name>isoHelper</property-name> -->
+<!-- 			<value>#{isoHelper}</value> -->
+<!-- 		</managed-property> -->
+		<managed-property>
+			<property-name>consultaCatalogoService</property-name>
+			<value>#{consultaCatalogoService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>catalogosUtil</property-name>
+			<value>#{catalogosUtil}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>catalogosFacade</property-name>
+			<value>#{catalogosFacade}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>sicService</property-name>
+			<value>#{sicService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>bitacoraService</property-name>
+			<value>#{bitacoraService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>horariosCustodiosService</property-name>
+			<value>#{horariosCustodiosService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>custodioService</property-name>
+			<value>#{custodioService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>diasInhabilesDivisasService</property-name>
+			<value>#{diasInhabilesDivisasService}</value>
+		</managed-property>
+	</managed-bean>
+
+</faces-config>

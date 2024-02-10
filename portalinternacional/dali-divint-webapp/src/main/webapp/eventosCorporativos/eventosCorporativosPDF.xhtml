@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="ConsultaEventosCorporativos" documentTitle="Eventos Corporativos"
+        institucion="#{eventosCorporativosBean.agenteFirmado.id} #{eventosCorporativosBean.agenteFirmado.folio} #{eventosCorporativosBean.agenteFirmado.razon}" 
+        landscape="true" fecha="#{eventosCorporativosBean.fechaActual}" imageResource="/images/indeval.jpg">
+        <pdf:table value="eventosCorporativosBean" currentBean="evco" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{eventosCorporativosBean}" currentBean="evco" widthPercentage="100" maxColums="11">
+            <pdf:row>
+                <pdf:col header="#{etq.tv}" value="#{not empty eventosCorporativosBean.tipoValor ? eventosCorporativosBean.tipoValor : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.emisoraMinus}" value="#{not empty  eventosCorporativosBean.emisora ? eventosCorporativosBean.emisora : 'TODAS'}" align="center" />
+                <pdf:col header="#{etq.serieMinus}" value="#{not empty  eventosCorporativosBean.serie ?  eventosCorporativosBean.serie : 'TODAS'}" align="center" />
+				<pdf:col header="#{etq.isin}" value="#{not empty eventosCorporativosBean.isin ? eventosCorporativosBean.isin : 'TODOS'}"  align="center"/>
+				<pdf:col header="#{etq.folioMinus}" value="#{not empty eventosCorporativosBean.idEventoCorporativo ? eventosCorporativosBean.idEventoCorporativo : 'TODOS'}"  align="center"/>				
+				<pdf:col header="#{etq.custodio}" value="#{not empty eventosCorporativosBean.selectedCustodio ? eventosCorporativosBean.selectedCustodio : 'TODOS'}"  align="center"/>
+				<pdf:col header="#{etq.tipoEvento}" value="#{not empty eventosCorporativosBean.selectedTipoEvento ? eventosCorporativosBean.selectedTipoEvento : 'TODOS'}"  align="center"/>
+				<pdf:col header="#{etq.estado}" value="#{eventosCorporativosBean.selectedEstado}"  align="center"/>				
+			
+				<pdf:col header="#{etq.tipoMercadoMinus}" value="#{eventosCorporativosBean.selectedMercado}"  align="center"/>
+				<pdf:col header="#{etq.tipoDerechoMO}" value="#{eventosCorporativosBean.selectedTipoDerechoMO}"  align="center"/>
+				<pdf:col header="#{etq.tipoDerechoML}" value="#{eventosCorporativosBean.selectedTipoDerechoML}"  align="center"/>
+				
+				
+				<pdf:col header="#{etq.fechaCreacion} Inicio" value="#{eventosCorporativosBean.fechaCreacionInicio}" align="center" rendered="#{!empty eventosCorporativosBean.fechaCreacionInicio}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaCreacion} Inicio" value="TODAS" rendered="#{empty eventosCorporativosBean.fechaCreacionInicio}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+			    </pdf:col>
+                 <pdf:col header="#{etq.fechaCreacion} Fin" value="#{eventosCorporativosBean.fechaCreacionFin}" align="center" rendered="#{!empty eventosCorporativosBean.fechaCreacionFin }">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>				
+				<pdf:col header="#{etq.fechaCreacion} Fin" value="TODAS" rendered="#{empty eventosCorporativosBean.fechaCreacionFin}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				
+				
+				<pdf:col header="#{etq.fechaRegistro} Inicio" value="#{eventosCorporativosBean.fechaRegistroInicio}" align="center" rendered="#{!empty eventosCorporativosBean.fechaRegistroInicio}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaRegistro} Inicio" value="TODAS" rendered="#{empty eventosCorporativosBean.fechaRegistroInicio}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+                <pdf:col header="#{etq.fechaRegistro} Fin" value="#{eventosCorporativosBean.fechaRegistroFin}" align="center" rendered="#{!empty eventosCorporativosBean.fechaRegistroFin }">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaRegistro} Fin" value="TODAS" rendered="#{empty eventosCorporativosBean.fechaRegistroFin}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				
+				<pdf:col header="#{etq.fechaPago} Inicio" collspan="2" value="#{eventosCorporativosBean.fechaPagoInicio}" align="center" rendered="#{!empty eventosCorporativosBean.fechaPagoInicio}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaPago} Inicio" collspan="2" value="TODAS" rendered="#{empty eventosCorporativosBean.fechaPagoInicio}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+                <pdf:col header="#{etq.fechaPago} Fin" collspan="2" value="#{eventosCorporativosBean.fechaPagoFin}" align="center" rendered="#{!empty eventosCorporativosBean.fechaPagoFin }">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaPago} Fin" collspan="2" value="TODAS" rendered="#{empty eventosCorporativosBean.fechaPagoFin}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				
+				
+				<pdf:col header="#{etq.fechaLimiteCliente} Inicio" value="#{eventosCorporativosBean.fechaClienteInicio}" align="center" rendered="#{!empty eventosCorporativosBean.fechaClienteInicio}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaLimiteCliente} Inicio" value="TODAS" rendered="#{empty eventosCorporativosBean.fechaClienteInicio}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+                <pdf:col header="#{etq.fechaLimiteCliente} Fin" value="#{eventosCorporativosBean.fechaClienteFin}" align="center" rendered="#{!empty eventosCorporativosBean.fechaClienteFin }" collspan="2">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaLimiteCliente} Fin" value="TODAS" rendered="#{empty eventosCorporativosBean.fechaClienteFin}" align="center" collspan="2">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				
+                
+			</pdf:row>
+			
+        </pdf:table>
+        
+        <pdf:br/>
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{eventosCorporativosBean.totalRegistros}" />
+        <pdf:br/>
+
+         <pdf:table value="#{eventosCorporativosBean.paginaReportes.registros}" currentBean="evco" widthPercentage="100" maxColums="7">
+            <pdf:row >
+            	
+				<pdf:col header="#{etq.folioMinus}" value="#{evco.idEventoCorporativo}" align="center" />
+				<pdf:col header="#{etq.tipoMercadoMinus}" value="#{!empty evco.tipoMercado ? evco.tipoMercado.codigo:''}" align="center" />
+				<pdf:col header="#{etq.tipoDerechoML}" value="#{!empty evco.tipoDerechoML ? evco.tipoDerechoML.tipoDerecho :''}" align="center" />
+				<pdf:col header="#{etq.tipoDerechoMO}" value="#{!empty evco.tipoDerechoMO ? evco.tipoDerechoMO.tipoDerecho:''}" align="center" />
+				<pdf:col header="#{etq.tipoEvento}" value="#{!empty evco.tipoEvento ? evco.tipoEvento.descripcion : ''}" align="center" />
+				
+				
+						
+				<pdf:col header="#{etq.fechaCreacion}" value="#{evco.fechaCreacion}" align="center" rendered="#{!empty evco.fechaCreacion}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaCreacion}" value="N/A" align="center" rendered="#{empty evco.fechaCreacion}" />
+				
+				<pdf:col header="#{etq.fechaRegistro}" value="#{evco.fechaRegistro}" align="center" rendered="#{!empty evco.fechaRegistro}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaRegistro}" value="N/A" align="center" rendered="#{empty evco.fechaRegistro}" />
+				
+				
+				<pdf:col header="#{etq.fechaPago}" value="#{evco.fechaPago}" align="center" rendered="#{!empty evco.fechaPago}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaPago}" value="N/A" align="center" rendered="#{empty evco.fechaPago}" />
+				
+				
+				
+				
+				
+				<pdf:col header="#{etq.fechaLimiteCliente}" collspan="2" value="#{evco.fechaCliente}" align="center" rendered="#{!empty evco.fechaCliente}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaLimiteCliente}" value="N/A" collspan="2" align="center" rendered="#{empty evco.fechaCliente}" />			
+					
+					
+				
+				
+				<pdf:col header="#{etq.tipoValorEmisoraSerie}" value="#{evco.tipoValor}/#{evco.emisora}/#{evco.serie}" align="center" />
+			
+				<pdf:col header="#{etq.isin}" value="#{evco.isin}" align="center" />
+				
+				<pdf:col header="#{etq.custodio}" value="#{empty evco.custodio ? '' : evco.custodio.codigoBanco}" align="center" />
+				
+				<pdf:col header="#{etq.estado}" value="#{evco.estado.estado}" align="center" />
+				
+				
+			</pdf:row>
+        </pdf:table>
+        <pdf:text align="left" value="La fecha de pago será efectiva siempre y cuando el custodio haya confirmado y acreditado lo correspondiente al evento corporativo." />
+        <pdf:br/>
+        <pdf:text align="left" value="La fecha límite cliente no indica las fechas límite de las opciones, favor de consultar el detalle del evento." />
+        <pdf:br/>
+        <pdf:text align="left" value="El horario corresponde a tiempo de México." /> 
+    </pdf:document>
+</html>

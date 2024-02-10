@@ -1,0 +1,1275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+    xmlns:t="http://myfaces.apache.org/tomahawk">
+    
+    <ui:composition template="/layoutConsultasHistoricasDerechosCap.xhtml">
+		<ui:define name="head">
+			<link rel="stylesheet" type="text/css" media="all" href="#{facesContext.externalContext.requestContextPath}/css/derechosText.css" />
+		</ui:define>
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.derechos}" />
+		</ui:define>
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.consultaDerechosPagadosBeneficiarios}" />
+		</ui:define>
+
+		<ui:define name="initPantalla">		
+			<a4j:keepAlive beanName="consultaDetalleEjerDerCap" />
+			<h:panelGroup id="init"> 
+				<h:outputText value="#{consultaDetalleEjerDerCap.init}" />
+			</h:panelGroup> 
+		</ui:define>
+    
+    	<ui:define name="mensajes">
+			<h:panelGroup id="panelMensajes">
+				<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+					<tr>
+						<td>
+							<div style="min-height: 21px;">
+								<rich:messages warnClass="warning" infoClass="info"
+									errorClass="error" ajaxRendered="true" showDetail="false"
+									showSummary="true" layout="list">
+									<f:facet name="infoMarker">
+										<h:panelGroup>
+											<h:graphicImage url="/images/accept.png" />&#160;
+		                                </h:panelGroup>
+									</f:facet>
+									<f:facet name="errorMarker">
+										<h:panelGroup>
+											<h:graphicImage url="/images/warning.gif" />&#160;
+		                                </h:panelGroup>
+									</f:facet>
+								</rich:messages>
+								<div id="divWarnings" class="warning" style="display: none;">
+									<p id="textoWarning"></p>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</h:panelGroup>
+    	</ui:define>
+    
+    	<ui:define name="criterios">
+    		<h:panelGroup id="panelCriterios">
+    			<div id="divCriterios" style="display: inline;">
+					<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+		    			<tr>
+							<td class="recuadroTabla" width="50%">
+								<table class="tablaCriterios">
+									<tr>
+										<td colspan="2">
+		    								<h:outputText value="#{etq.institucionMinus}" styleClass="texto"/>
+										</td>
+										<td>
+											<h:outputText value="#{etq.cuentaMinus}" styleClass="texto" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+			    							<h:inputText id="institucion"
+			    								value="#{consultaDetalleEjerDerCap.parametros.institucion}"
+			    								styleClass="textoControles campoNumerico textoMayusculas"
+			    								size="7" maxlength="5"
+			    								readonly="#{consultaDetalleEjerDerCap.usuarioExterno}"
+			    								autocomplete="off">
+												<a4j:support actionListener="#{consultaDetalleEjerDerCap.obtenerInstitucion}"
+													event="onchange"
+													reRender="nombreInstitucion"
+													ajaxSingle="true"/>
+			    							</h:inputText>
+			    						</td>
+			    						<td>
+			    							<h:inputText id="nombreInstitucion"
+			    								value="#{consultaDetalleEjerDerCap.parametros.nombreInstitucion}"
+			    								styleClass="textoControles campoAlphaNumerico textoMayusculas"
+			    								size="50"
+			    								readonly="true"
+			    								autocomplete="off" />
+			    						</td>
+			    						<td>
+			    							<h:inputText id="cuenta"
+			    								value="#{consultaDetalleEjerDerCap.parametros.cuenta}"
+			    								styleClass="textoControles campoNumerico textoMayusculas"
+			    								size="7" maxlength="4"
+			    								autocomplete="off" />		    								
+			    						</td>
+									</tr>								
+								</table>
+		    				</td>
+		    				<td class="recuadroTabla" width="50%">
+								<table class="tablaCriterios" align="center">
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.tv}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.emisoraMinus}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.serieMinus}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.isin}"/>
+										</td>
+									</tr>
+									<tr align="center">
+		    							<td>
+		    								<h:inputText id="tv"
+		    									value="#{consultaDetalleEjerDerCap.parametros.tv}"
+												styleClass="textoControles campoAlphaNumerico textoMayusculas"
+												size="7" maxlength="4"
+												autocomplete="off" />
+		    							</td>
+		    							<td>
+		    								<h:inputText id="emisora"
+		    									value="#{consultaDetalleEjerDerCap.parametros.emisora}"
+		    									styleClass="textoControles textoMayusculas"
+		    									size="7" maxlength="7"
+		    									autocomplete="off" />
+		    							</td>
+		    							<td>
+		    								<h:inputText id="serie"
+		    									value="#{consultaDetalleEjerDerCap.parametros.serie}"
+		    									styleClass="textoControles textoMayusculas"
+		    									size="7" maxlength="6"
+	    										autocomplete="off" />
+		    							</td>
+		    							<td>
+		    								<h:inputText id="isin"
+		    									value="#{consultaDetalleEjerDerCap.parametros.isin}"
+		    									styleClass="textoControles campoAlphaNumerico textoMayusculas"
+		    									size="12" maxlength="12"
+		    									autocomplete="off" />
+		    							</td>
+									</tr>
+								</table>
+							</td>
+		    			</tr>
+		    			<tr>
+							<td class="recuadroTabla" width="50%">
+		    					<table class="tablaCriterios" align="center">
+									<tr>
+	   									<td align="center">
+	   										<h:outputText value="#{etq.fechaCorteInicial}" styleClass="texto"/>
+	   									</td>
+	   									<td align="center">
+	   										<h:outputText value="#{etq.fechaCorteFinal}" styleClass="texto"/>
+	   									</td>
+	   									<td align="center">
+	   										<h:outputText value="#{etq.fechaPagoInicial}" styleClass="texto"/>
+	   									</td>
+	   									<td align="center">
+	   										<h:outputText value="#{etq.fechaPagoFinal}" styleClass="texto"/>
+	   									</td>
+									</tr>
+									<tr>
+	   									<td align="center">
+	    									<rich:calendar id="fechaCorteInicial" 
+												value="#{consultaDetalleEjerDerCap.parametros.fechaCorteInicial}"
+												datePattern="dd/MM/yyyy"
+												inputSize="11"
+												inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;"
+												isDayEnabled="isDayEnabled" />
+	   									</td>
+	   									<td align="center">
+	    									<rich:calendar id="fechaCorteFinal" 
+												value="#{consultaDetalleEjerDerCap.parametros.fechaCorteFinal}"
+												datePattern="dd/MM/yyyy"
+												inputSize="11"
+												inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;"
+												isDayEnabled="isDayEnabled" />
+	  									</td>
+	   									<td align="center">
+	    									<rich:calendar id="fechaPagoInicial" 
+												value="#{consultaDetalleEjerDerCap.parametros.fechaPagoInicial}"
+												datePattern="dd/MM/yyyy"
+												inputSize="11"
+												inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;"
+												isDayEnabled="isDayEnabled" />
+	   									</td>
+	   									<td align="center">
+	    									<rich:calendar id="fechaPagoFinal" 
+												value="#{consultaDetalleEjerDerCap.parametros.fechaPagoFinal}"
+												datePattern="dd/MM/yyyy"
+												inputSize="11"
+												inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;"
+												isDayEnabled="isDayEnabled" />
+	   									</td>
+									</tr>
+			    				</table>
+			    			</td>
+			    			<td class="recuadroTabla" width="50%">
+		    					<table class="tablaCriterios" align="center">
+		    						<tr>
+		    							<td>
+			    							<h:outputText value="#{etq.custodio}" styleClass="texto"/>
+			    						</td>
+		    							<td>
+			    							<h:outputText value="#{etq.divisaMinus}" styleClass="texto"/>
+			    						</td>
+			    						<td>
+                                            <h:outputText value="#{etq.estadoDerecho}" styleClass="texto"/>
+                                        </td>
+		    						</tr>
+		    						<tr>
+		    							<td>
+			    							<h:selectOneMenu id="custodio"
+												value="#{consultaDetalleEjerDerCap.parametros.idCustodio}"
+												styleClass="textoControles">
+												<f:selectItem itemValue="-1" itemLabel="#{etq.seleccionaCustodio}" />
+												<f:selectItems value="#{consultaDetalleEjerDerCap.catalogoCustodios}"/>
+											</h:selectOneMenu>
+			    						</td>
+		    							<td>
+											<h:selectOneMenu id="divisa"
+												value="#{consultaDetalleEjerDerCap.parametros.idDivisa}"
+												styleClass="textoControles">
+												<f:selectItem itemValue="-1" itemLabel="#{etq.seleccionaDivisa}" />
+												<f:selectItems value="#{consultaDetalleEjerDerCap.catalogoDivisas}"/>
+											</h:selectOneMenu>
+		    							</td>
+		    							<td>
+                                            <h:selectOneMenu id="estadoDerechoCmb"
+                                                value="#{consultaDetalleEjerDerCap.parametros.idEstadoDerecho}"
+                                                styleClass="textoControles">
+                                                <f:selectItem itemValue="-1" itemLabel="#{etq.seleccionarTodos}" />
+                                                <f:selectItems value="#{consultaDetalleEjerDerCap.catalogoEstadoDerecho}"/>
+                                            </h:selectOneMenu>
+                                        </td>
+		    						</tr>
+		    					</table>
+		    				</td>
+		    			</tr>
+		    			<tr>
+			    			<td class="recuadroTabla" width="50%">
+		    					<table class="tablaCriterios" align="center">
+		    						<tr>
+		    							<td>
+	                                		<h:outputText value="#{etq.nombreBeneficiarioRazonSocial}" styleClass="texto"/>
+										</td>
+										<td>
+											<h:outputText value="#{etq.reportesFormatosWGIIN}" styleClass="texto" />
+										</td>
+	                                    <td>
+	                                    	<h:outputText value="#{etq.rfc}" styleClass="texto"/>
+										</td>
+	                                    <td>
+	                                        <h:outputText value="#{etq.uoiDetalle}" styleClass="texto"/>
+	                                    </td>
+	                                    <td>
+	                                        <h:outputText value="#{etq.pais}" styleClass="texto"/>
+	                                    </td>
+		    						</tr>
+		    						<tr>
+										<td>
+											<h:inputText id="nombreBeneficiario"
+												value="#{consultaDetalleEjerDerCap.parametros.nombreBeneficiario}"
+												styleClass="textoControles textoMayusculas"
+												size="40" maxlength="50"
+												autocomplete="off" />
+										</td>
+										<td>
+											<h:inputText id="giin"
+												value="#{consultaDetalleEjerDerCap.parametros.giin}"
+												styleClass="textoControles textoMayusculas"
+												size="15" maxlength="20"
+												autocomplete="off" />											
+										</td>
+										<td>
+											<h:inputText id="rfc"
+												value="#{consultaDetalleEjerDerCap.parametros.rfc}"
+												styleClass="textoControles textoMayusculas"
+												size="15" maxlength="25"
+												autocomplete="off" />
+										</td>
+										<td>
+											<h:inputText id="uoi"
+												value="#{consultaDetalleEjerDerCap.parametros.uoi}"
+												styleClass="textoControles textoMayusculas"
+												size="15" maxlength="19"
+												autocomplete="off" />
+										</td>
+										<td>
+											<h:inputText id="pais"
+												value="#{consultaDetalleEjerDerCap.parametros.pais}"
+												styleClass="textoControles textoMayusculas"
+												size="15" maxlength="19"
+												autocomplete="off" />
+										</td>
+		    						</tr>
+		    					</table>
+		    				</td>
+			    			<td class="recuadroTabla" width="50%">
+		    					<table class="tablaCriterios" align="center">
+		    						<tr>
+										<td>
+											<h:outputText value="#{etq.tipoBeneficiario}" styleClass="texto"/>
+										</td>
+										<td>
+											<h:outputText value="#{etq.tipoFormato}" styleClass="texto"/>
+										</td>
+										<td>
+											<h:outputText value="#{etq.estadoFormato}" />
+										</td>
+										<td>
+											<h:outputText value="#{etq.referenciaCustodio}" styleClass="texto"/>
+										</td>
+		    						</tr>
+		    						<tr>
+										<td>
+											<h:selectOneMenu id="tipoBeneficiario"
+	                                        	value="#{consultaDetalleEjerDerCap.parametros.idTipoBeneficiario}"
+	                                            styleClass="textoControles">
+	                                            <f:selectItem itemValue="-1" itemLabel="#{etq.seleccionaTipoBeneficiario}" />
+	                                            <f:selectItems value="#{consultaDetalleEjerDerCap.catalogoTiposBeneficiario}"/>
+											</h:selectOneMenu>
+										</td>
+										<td>
+											<h:selectOneMenu id="tipoFormato"
+	                                        	value="#{consultaDetalleEjerDerCap.parametros.tipoFormato}"
+	                                            styleClass="textoControles">
+	                                            <f:selectItem itemValue="" itemLabel="#{etq.seleccioneUnFormato}" />
+	                                            <f:selectItems value="#{consultaDetalleEjerDerCap.catalogoTipoFormatosW}"/>
+											</h:selectOneMenu>
+										</td>
+										<td>
+											<h:selectOneMenu id="estadoFormatoW"
+	                                        	value="#{consultaDetalleEjerDerCap.parametros.estadoFormatoW}"
+	                                            styleClass="textoControles">
+	                                            <f:selectItems value="#{consultaDetalleEjerDerCap.catalogoEstadosFormatoW}"/>
+											</h:selectOneMenu>
+										</td>
+										<td>
+											<h:inputText id="referenciaCustodio"
+												value="#{consultaDetalleEjerDerCap.parametros.referenciaCustodio}"
+												styleClass="textoControles campoAlphaNumerico textoMayusculas"
+												size="20" maxlength="10"
+												autocomplete="off" />
+										</td>
+		    						</tr>
+		    					</table>
+		    				</td>
+		    			</tr>
+		    			<tr>
+		    				<td class="recuadroTabla" colspan="2">
+		    					<table class="tablaCriterios" align="center">
+		    						<tr>
+		    							<td>
+	                                		<h:outputText value="#{etq.montoBrutoMinus}" styleClass="texto"/>
+	                                	</td>
+	                                    <td>
+	                                        <h:outputText value="#{etq.impuestoRetenidoMinus}" styleClass="texto"/>
+	                                    </td>
+										<td>
+											<h:outputText value="#{etq.montoNetoMinus}" styleClass="texto"/>
+										</td>
+										<td>
+	                                    	<h:outputText value="#{etq.porcentajeRetencion}" styleClass="texto"/>
+										</td>
+										<td>
+											<h:outputText value="#{etq.proporcionMinus}" styleClass="texto"/>
+										</td>
+										<td>
+											<h:outputText value="#{etq.cantidadDeTitulosMinus}" styleClass="texto"/>
+										</td>
+										<td>
+											<h:outputText value="#{etq.referenceNumber}" />
+										</td>
+	                                </tr>
+	                                <tr>
+										<td>
+											<h:inputText id="montoBruto"
+												value="#{consultaDetalleEjerDerCap.parametros.montoBruto}"
+												styleClass="textoControles campoNumericoDecimal textoMayusculas"
+												size="20" maxlength="20"
+												autocomplete="off" />
+										</td>
+	                                    <td>
+	                                        <h:inputText id="impuestoRetenido"
+												value="#{consultaDetalleEjerDerCap.parametros.impuestoRetenido}"
+	                                            styleClass="textoControles campoNumericoDecimal textoMayusculas"
+	                                            size="20" maxlength="20"
+	                                            autocomplete="off" />
+										</td>
+										<td>
+											<h:inputText id="montoNeto"
+												value="#{consultaDetalleEjerDerCap.parametros.montoNeto}"
+												styleClass="textoControles campoNumericoDecimal textoMayusculas"
+												size="20" maxlength="20"
+												autocomplete="off" />
+										</td>
+										<td>
+											<h:inputText id="porcentajeRetencion"
+	                                        	value="#{consultaDetalleEjerDerCap.parametros.porcentajeRetencion}"
+	                                            styleClass="textoControles campoNumericoDecimal textoMayusculas"
+	                                            size="20" maxlength="6"
+	                                            autocomplete="off" />
+										</td>
+	                                    <td>
+	                                        <h:inputText id="proporcion"
+												value="#{consultaDetalleEjerDerCap.parametros.proporcion}"
+	                                            styleClass="textoControles campoNumericoDecimal textoMayusculas"
+	                                            size="20" maxlength="10"
+	                                            autocomplete="off"/> 
+										</td>
+	                                    <td>
+											<h:inputText id="cantidadDeTitulos"
+												value="#{consultaDetalleEjerDerCap.parametros.cantidadTitulos}"
+	                                            styleClass="textoControles campoNumerico textoMayusculas"
+	                                            size="20" maxlength="18"
+	                                            autocomplete="off" />
+										</td>
+										<td>
+											<h:inputText id="referenceNumber"
+												value="#{consultaDetalleEjerDerCap.parametros.referenceNumber}"
+	                                            styleClass="textoControles"
+	                                            size="40" maxlength="150"
+	                                            autocomplete="off" />
+										</td>
+	                                </tr>
+		    					</table>
+		    				</td>
+		    			</tr>
+		    		</table>
+    			</div>
+				<h:panelGroup id="panelResumenCriterios">
+					<div id="divResumen" style="display: none;">
+						<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+			    			<tr>
+								<td class="recuadroTabla" width="50%">
+									<table class="tablaCriterios">
+										<tr>
+											<td colspan="2">
+			    								<h:outputText value="#{etq.institucionMinus}" styleClass="texto"/>
+											</td>
+											<td>
+												<h:outputText value="#{etq.cuentaMinus}" styleClass="texto" />
+											</td>
+										</tr>
+										<tr>
+			    							<td>
+												<h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.institucion}"
+													rendered="#{!empty consultaDetalleEjerDerCap.parametros.institucion}"/>
+		                                        <h:outputText styleClass="texto" value="#{etq.todasMayusculas}"
+		                                        	rendered="#{empty consultaDetalleEjerDerCap.parametros.institucion}"/>
+			    							</td>
+			    							<td>
+												<h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.nombreInstitucion}"
+													rendered="#{!empty consultaDetalleEjerDerCap.parametros.nombreInstitucion}"/>
+		                                        <h:outputText styleClass="texto" value="#{etq.todasMayusculas}"
+		                                        	rendered="#{empty consultaDetalleEjerDerCap.parametros.nombreInstitucion}"/>
+			    							</td>
+			    							<td>
+												<h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.cuenta}"
+													rendered="#{!empty consultaDetalleEjerDerCap.parametros.cuenta}"/>
+		                                        <h:outputText styleClass="texto" value="#{etq.todasMayusculas}"
+		                                        	rendered="#{empty consultaDetalleEjerDerCap.parametros.cuenta}"/>
+			    							</td>
+										</tr>								
+									</table>
+			    				</td>
+			    				<td class="recuadroTabla" align="center"  width="50%">
+									<table class="tablaCriterios" align="center">
+										<tr>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.tv}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.emisoraMinus}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.serieMinus}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.isin}"/>
+											</td>
+										</tr>
+										<tr align="center">
+			    							<td>
+												<h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.tv}"
+													rendered="#{!empty consultaDetalleEjerDerCap.parametros.tv}"/>
+		                                        <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+		                                        	rendered="#{empty consultaDetalleEjerDerCap.parametros.tv}"/>
+			    							</td>
+			    							<td>
+												<h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.emisora}"
+													rendered="#{!empty consultaDetalleEjerDerCap.parametros.emisora}"/>
+		                                        <h:outputText styleClass="texto" value="#{etq.todasMayusculas}"
+		                                        	rendered="#{empty consultaDetalleEjerDerCap.parametros.emisora}"/>
+			    							</td>
+			    							<td>
+												<h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.serie}"
+													rendered="#{!empty consultaDetalleEjerDerCap.parametros.serie}"/>
+		                                        <h:outputText styleClass="texto" value="#{etq.todasMayusculas}"
+		                                        	rendered="#{empty consultaDetalleEjerDerCap.parametros.serie}"/>
+			    							</td>
+			    							<td>
+												<h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.isin}"
+													rendered="#{!empty consultaDetalleEjerDerCap.parametros.isin}"/>
+		                                        <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+		                                        	rendered="#{empty consultaDetalleEjerDerCap.parametros.isin}"/>
+			    							</td>
+										</tr>
+									</table>
+								</td>
+			    			</tr>
+			    			<tr>
+								<td class="recuadroTabla" align="center">
+			    					<table class="tablaCriterios" align="center">
+										<tr>
+		   									<td align="center">
+		   										<h:outputText value="#{etq.fechaCorteInicial}" styleClass="texto"/>
+		   									</td>
+		   									<td align="center">
+		   										<h:outputText value="#{etq.fechaCorteFinal}" styleClass="texto"/>
+		   									</td>
+		   									<td align="center">
+		   										<h:outputText value="#{etq.fechaPagoInicial}" styleClass="texto"/>
+		   									</td>
+		   									<td align="center">
+		   										<h:outputText value="#{etq.fechaPagoFinal}" styleClass="texto"/>
+		   									</td>
+										</tr>
+										<tr>
+	    									<td align="center">
+												<h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.fechaCorteInicial}"
+													rendered="#{!empty consultaDetalleEjerDerCap.parametros.fechaCorteInicial}"/>
+		                                        <h:outputText styleClass="texto" value="#{etq.todasMayusculas}"
+		                                        	rendered="#{empty consultaDetalleEjerDerCap.parametros.fechaCorteInicial}"/>
+	    									</td>
+	    									<td align="center">
+												<h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.fechaCorteFinal}"
+													rendered="#{!empty consultaDetalleEjerDerCap.parametros.fechaCorteFinal}"/>
+		                                        <h:outputText styleClass="texto" value="#{etq.todasMayusculas}"
+		                                        	rendered="#{empty consultaDetalleEjerDerCap.parametros.fechaCorteFinal}"/>
+	    									</td>
+	    									<td align="center">
+												<h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.fechaPagoInicial}"
+													rendered="#{!empty consultaDetalleEjerDerCap.parametros.fechaPagoInicial}"/>
+		                                        <h:outputText styleClass="texto" value="#{etq.todasMayusculas}"
+		                                        	rendered="#{empty consultaDetalleEjerDerCap.parametros.fechaPagoInicial}"/>
+	    									</td>
+	    									<td align="center">
+												<h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.fechaPagoFinal}"
+													rendered="#{!empty consultaDetalleEjerDerCap.parametros.fechaPagoFinal}"/>
+		                                        <h:outputText styleClass="texto" value="#{etq.todasMayusculas}"
+		                                        	rendered="#{empty consultaDetalleEjerDerCap.parametros.fechaPagoFinal}"/>
+	    									</td>
+										</tr>
+				    				</table>
+				    			</td>
+				    			<td class="recuadroTabla" align="center">
+			    					<table class="tablaCriterios" align="center">
+			    						<tr>
+			    							<td>
+				    							<h:outputText value="#{etq.custodio}" styleClass="texto"/>
+				    						</td>
+			    							<td>
+				    							<h:outputText value="#{etq.divisaMinus}" styleClass="texto"/>
+				    						</td>
+				    						<td>
+                                                <h:outputText value="#{etq.estadoDerecho}" styleClass="texto"/>
+                                            </td>
+			    						</tr>
+			    						<tr>
+			    							<td>
+												<h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.custodio}"
+													rendered="#{!empty consultaDetalleEjerDerCap.parametros.custodio}"/>
+		                                        <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+		                                        	rendered="#{empty consultaDetalleEjerDerCap.parametros.custodio}"/>
+			    							</td>
+			    							<td>
+												<h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.divisa}"
+													rendered="#{!empty consultaDetalleEjerDerCap.parametros.divisa}"/>
+		                                        <h:outputText styleClass="texto" value="#{etq.todasMayusculas}"
+		                                        	rendered="#{empty consultaDetalleEjerDerCap.parametros.divisa}"/>
+			    							</td>
+			    							<td>
+                                                <h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.estadoDerecho}"
+                                                    rendered="#{!empty consultaDetalleEjerDerCap.parametros.idEstadoDerecho}"/>
+                                                <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+                                                    rendered="#{empty consultaDetalleEjerDerCap.parametros.idEstadoDerecho}"/>
+                                            </td>
+			    						</tr>
+			    					</table>
+			    				</td>
+			    			</tr>
+			    			<tr>
+				    			<td class="recuadroTabla" align="center">
+			    					<table class="tablaCriterios" align="center">
+			    						<tr>
+			    							<td>
+		                                		<h:outputText value="#{etq.nombreBeneficiarioRazonSocial}" styleClass="texto"/>
+											</td>
+											<td>
+												<h:outputText value="#{etq.reportesFormatosWGIIN}" styleClass="texto" />
+											</td>
+		                                    <td>
+		                                    	<h:outputText value="#{etq.rfc}" styleClass="texto"/>
+											</td>
+		                                    <td>
+		                                        <h:outputText value="#{etq.uoiDetalle}" styleClass="texto"/>
+		                                    </td>
+		                                    <td>
+		                                        <h:outputText value="#{etq.pais}" styleClass="texto"/>
+		                                    </td>
+			    						</tr>
+			    						<tr>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.nombreBeneficiario}"
+	                                                rendered="#{!empty consultaDetalleEjerDerCap.parametros.nombreBeneficiario}"/>
+	                                            <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+	                                                rendered="#{empty consultaDetalleEjerDerCap.parametros.nombreBeneficiario}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.giin}"
+	                                                rendered="#{!empty consultaDetalleEjerDerCap.parametros.giin}"/>
+	                                            <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+	                                                rendered="#{empty consultaDetalleEjerDerCap.parametros.giin}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.rfc}"
+	                                                rendered="#{!empty consultaDetalleEjerDerCap.parametros.rfc}"/>
+	                                            <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+	                                                rendered="#{empty consultaDetalleEjerDerCap.parametros.rfc}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.uoi}"
+	                                                rendered="#{!empty consultaDetalleEjerDerCap.parametros.uoi}"/>
+	                                            <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+	                                                rendered="#{empty consultaDetalleEjerDerCap.parametros.uoi}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.pais}"
+	                                                rendered="#{!empty consultaDetalleEjerDerCap.parametros.pais}"/>
+	                                            <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+	                                                rendered="#{empty consultaDetalleEjerDerCap.parametros.pais}"/>
+	                                        </td>
+			    						</tr>
+			    					</table>
+			    				</td>
+				    			<td class="recuadroTabla" align="center">
+			    					<table class="tablaCriterios" align="center">
+			    						<tr>
+											<td>
+												<h:outputText value="#{etq.tipoBeneficiario}" styleClass="texto"/>
+											</td>
+											<td>
+												<h:outputText value="#{etq.tipoFormato}" styleClass="texto"/>
+											</td>
+											<td>
+												<h:outputText value="#{etq.estadoFormato}" />
+											</td>
+											<td>
+												<h:outputText value="#{etq.referenciaCustodio}" styleClass="texto"/>
+											</td>
+			    						</tr>
+			    						<tr>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.tipoBeneficiario}"
+	                                                rendered="#{!empty consultaDetalleEjerDerCap.parametros.tipoBeneficiario}"/>
+	                                            <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+	                                                rendered="#{empty consultaDetalleEjerDerCap.parametros.tipoBeneficiario}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.tipoFormatoPantalla}"
+	                                                rendered="#{!empty consultaDetalleEjerDerCap.parametros.tipoFormatoPantalla}"/>
+	                                            <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+	                                                rendered="#{empty consultaDetalleEjerDerCap.parametros.tipoFormatoPantalla}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.estadoFormatoW}"
+	                                                rendered="#{!empty consultaDetalleEjerDerCap.parametros.estadoFormatoW}"/>
+	                                            <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+	                                                rendered="#{empty consultaDetalleEjerDerCap.parametros.estadoFormatoW}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.referenciaCustodio}"
+	                                                rendered="#{!empty consultaDetalleEjerDerCap.parametros.referenciaCustodio}"/>
+	                                            <h:outputText styleClass="texto" value="#{etq.todasMayusculas}"
+	                                                rendered="#{empty consultaDetalleEjerDerCap.parametros.referenciaCustodio}"/>
+	                                        </td>
+			    						</tr>
+			    					</table>
+			    				</td>
+			    			</tr>
+			    			<tr>
+			    				<td class="recuadroTabla" align="center" colspan="2">
+			    					<table class="tablaCriterios" align="center">
+			    						<tr>
+			    							<td>
+		                                		<h:outputText value="#{etq.montoBrutoMinus}" styleClass="texto"/>
+		                                	</td>
+		                                    <td>
+		                                        <h:outputText value="#{etq.impuestoRetenidoMinus}" styleClass="texto"/>
+		                                    </td>
+											<td>
+												<h:outputText value="#{etq.montoNetoMinus}" styleClass="texto"/>
+											</td>
+											<td>
+		                                    	<h:outputText value="#{etq.porcentajeRetencion}" styleClass="texto"/>
+											</td>
+											<td>
+												<h:outputText value="#{etq.proporcionMinus}" styleClass="texto"/>
+											</td>
+											<td>
+												<h:outputText value="#{etq.cantidadDeTitulosMinus}" styleClass="texto"/>
+											</td>
+											<td>
+												<h:outputText value="#{etq.referenceNumber}" />
+											</td>
+		                                </tr>
+		                                <tr>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.montoBruto}"
+	                                                rendered="#{!empty consultaDetalleEjerDerCap.parametros.montoBruto}"/>
+	                                            <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+	                                                rendered="#{empty consultaDetalleEjerDerCap.parametros.montoBruto}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.impuestoRetenido}"
+	                                                rendered="#{!empty consultaDetalleEjerDerCap.parametros.impuestoRetenido}"/>
+	                                            <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+	                                                rendered="#{empty consultaDetalleEjerDerCap.parametros.impuestoRetenido}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.montoNeto}"
+	                                                rendered="#{!empty consultaDetalleEjerDerCap.parametros.montoNeto}"/>
+	                                            <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+	                                                rendered="#{empty consultaDetalleEjerDerCap.parametros.montoNeto}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.porcentajeRetencion}"
+	                                                rendered="#{!empty consultaDetalleEjerDerCap.parametros.porcentajeRetencion}"/>
+	                                            <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+	                                                rendered="#{empty consultaDetalleEjerDerCap.parametros.porcentajeRetencion}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.proporcion}"
+	                                                rendered="#{!empty consultaDetalleEjerDerCap.parametros.proporcion}"/>
+	                                            <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+	                                                rendered="#{empty consultaDetalleEjerDerCap.parametros.proporcion}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.cantidadTitulos}"
+	                                                rendered="#{!empty consultaDetalleEjerDerCap.parametros.cantidadTitulos}"/>
+	                                            <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+	                                                rendered="#{empty consultaDetalleEjerDerCap.parametros.cantidadTitulos}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaDetalleEjerDerCap.parametros.referenceNumber}"
+	                                                rendered="#{!empty consultaDetalleEjerDerCap.parametros.referenceNumber}"/>
+	                                            <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+	                                                rendered="#{empty consultaDetalleEjerDerCap.parametros.referenceNumber}"/>
+	                                        </td>
+		                                </tr>
+			    					</table>
+			    				</td>
+			    			</tr>
+			    		</table>
+					</div>
+				</h:panelGroup>
+    		</h:panelGroup>
+    	</ui:define>
+    	<ui:define name="seccionContenido">
+    		<h:panelGroup id="panelContenido">
+				<h:panelGroup rendered="#{consultaDetalleEjerDerCap.consultaEjecutada and not consultaDetalleEjerDerCap.consultaConResultados}">
+					<table width="100%" border="0" cellpadding="0px" cellspacing="0px">
+						<tr>
+							<td class="tituloTabla" width="100%">
+		                    	<h:outputText value="#{etq.sinResultados}" /> 
+							</td>
+						</tr>
+					</table>
+				</h:panelGroup>
+    			<h:panelGroup rendered="#{consultaDetalleEjerDerCap.consultaEjecutada and consultaDetalleEjerDerCap.consultaConResultados}">
+					<h:panelGroup id="panelPaginacion">
+						<table width="100%" border="0" cellpadding="0px" cellspacing="0px">
+							<tr>
+								<td align="left" class="textoEstadoCuenta">
+									<a4j:commandLink id="control_bitacora_primero"
+										action="#{consultaDetalleEjerDerCap.irPrimeraPagina}"
+										rendered="#{consultaDetalleEjerDerCap.irAlPrimero}"
+										reRender="panelContenido">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png" border="0" />
+									</a4j:commandLink>
+									<a4j:commandLink id="control_bitacora_atras_fast"
+										action="#{consultaDetalleEjerDerCap.retrocederPaginasRapido}"
+										rendered="#{consultaDetalleEjerDerCap.retrocederRapido}"
+										reRender="panelContenido">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png" border="0" />
+									</a4j:commandLink>
+									<a4j:commandLink id="control_bitacora_atras"
+										action="#{consultaDetalleEjerDerCap.retrocederPagina}"
+										rendered="#{consultaDetalleEjerDerCap.retroceder}"
+										reRender="panelContenido">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png" border="0" />
+									</a4j:commandLink>
+									<a4j:commandLink id="control_bitacora_adelante"
+										action="#{consultaDetalleEjerDerCap.avanzarPagina}"
+										rendered="#{consultaDetalleEjerDerCap.avanzar}"
+										reRender="panelContenido">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png" border="0" />
+									</a4j:commandLink>
+									<a4j:commandLink id="control_bitacora_adelante_fast"
+										action="#{consultaDetalleEjerDerCap.avanzarPaginasRapido}"
+										rendered="#{consultaDetalleEjerDerCap.avanzarRapido}"
+										reRender="panelContenido">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png" border="0" />
+									</a4j:commandLink>
+									<a4j:commandLink id="control_bitacora_ultimo"
+										action="#{consultaDetalleEjerDerCap.irUltimaPagina}"
+										rendered="#{consultaDetalleEjerDerCap.irAlUltimo}"
+										reRender="panelContenido">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png" border="0" />
+									</a4j:commandLink>
+									<br />
+									<h:outputText value="#{etq.mostrando}" styleClass="textoResumen" />
+									<h:outputText value="#{consultaDetalleEjerDerCap.numeroPagina}" styleClass="textoResumen" />
+									<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+									<h:outputText value="#{consultaDetalleEjerDerCap.totalPaginas}" styleClass="textoResumen" />
+									<h:outputText value="#{etq.cierre}" styleClass="textoResumen" />
+									&#160;&#160;&#160;
+									<h:outputText value="#{consultaDetalleEjerDerCap.paginaVO.totalRegistros}" styleClass="textoResumen" converter="formatoEnteroConverter" />
+									&#160;
+									<h:outputText styleClass="textoResumen" value="#{etq.registrosEncontrados}" />
+								</td>
+								<td style="text-align: right;"  class="textoEstadoCuenta">
+									<h:outputText escape="false" value="#{etq.registrosPorPagina}" styleClass="textoResumen" />
+									<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+										value="#{consultaDetalleEjerDerCap.paginaVO.registrosXPag}">
+										<f:selectItem itemLabel="1" itemValue="1" />
+										<f:selectItem itemLabel="2" itemValue="2" />
+										<f:selectItem itemLabel="5" itemValue="5" />
+										<f:selectItem itemLabel="10" itemValue="10" />
+										<f:selectItem itemLabel="20" itemValue="20" />
+										<f:selectItem itemLabel="50" itemValue="50" />
+										<a4j:support event="onchange" reRender="panelContenido" actionListener="#{consultaDetalleEjerDerCap.paginarResultados}" />
+									</h:selectOneMenu>
+								</td>
+							</tr>
+						</table>
+					</h:panelGroup>
+					
+					<h:panelGroup id="panelResultados">
+						<table width="100%" border="0" cellpadding="0px" cellspacing="0px">
+							<tr>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.idDerecho}" />
+								</th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.institucionMinus}" />
+                                </th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.cuentaMinus}" />
+                                </th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.uoiDetalle}" />
+                                </th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.referenciaCustodio}" />
+                                </th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.tv}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.emisoraMinus}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.serieMinus}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.isin}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.fechaCorteMinus}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+								 <h:outputText value="#{etq.fechaPago}" />
+								</th>
+								<th colspan="3" class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.custodio}" />
+								</th>
+							</tr>
+							<tr>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.nombreBeneficiarioRazonSocial}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.direccionMinus}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.pais}" />
+								</th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.tipoFormato}" />
+                                </th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.fechaFormato}" />
+                                </th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.estadoFormato}" />
+                                </th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.reportesFormatosWGIIN}" />
+                                </th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.referenceNumber}" />
+                                </th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.exemptPayeeCode}" />
+                                </th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.exemptionFromFatcaReportingCode}" />
+                                </th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.fechaNacimiento}" />
+                                </th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.ssn_ein}" />
+                                </th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.tiin}" />
+                                </th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.tipoBeneficiario}" />
+                                </th>
+							</tr>
+							<tr>
+							    <th  class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.tipoDerecho}" />
+                                </th>
+								<th  class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.porcentajeRetencion}" />
+								</th>
+								<th colspan="2" class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.cantidadTit}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.rfc}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.proporcionMinus}" />
+								</th>
+								<th class="tituloTabla">
+									<h:outputText value="#{etq.fee}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.montoBrutoMinus}" />
+								</th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.montoFee}" />
+                                </th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.impuestoRetenidoMinus}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.montoNetoMinus}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.divisaMinus}" />
+								</th>
+								<th colspan="2" class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.estado}" />
+								</th>
+							</tr>
+							
+							<t:dataList value="#{consultaDetalleEjerDerCap.resultadosConsulta}" var="resultado" rowIndexVar="indice">
+								<tr>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+										<h:outputText value="#{resultado.idDerechoCapital}" />
+									</td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}  centrado">
+                                        <h:outputText value="#{resultado.idFolioInstitucion}" />
+                                    </td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}  centrado">
+                                        <h:outputText value="#{resultado.cuenta}" />
+                                    </td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}  centrado">
+                                        <h:outputText value="#{resultado.uoi}" />
+                                    </td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}  centrado">
+                                        <h:outputText value="#{resultado.adp}" />
+                                    </td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+										<h:outputText value="#{resultado.tipoValor}" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{resultado.emisora}" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{resultado.serie}" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno wordWrap':'renglonTablaDos wordWrap'} centrado">
+										<h:outputText value="#{resultado.isin}" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}  centrado">
+										<h:outputText value="#{resultado.fechaCorte}" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}  centrado">
+										<h:outputText value="#{resultado.fechaPago}" />
+									</td>
+									<td colspan="3" class="#{indice%2 == 0 ?'renglonTablaUno wordWrap':'renglonTablaDos wordWrap'}  centrado">
+										<h:outputText value="#{resultado.custodio}" />
+									</td>
+								</tr>
+								<tr>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+										<h:outputText value="#{resultado.beneficiario}" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+										<h:outputText value="#{resultado.domicilio.street} #{resultado.domicilio.outerNumber} #{resultado.domicilio.interiorNumber} #{resultado.domicilio.postalCode} #{resultado.domicilio.cityTown} #{resultado.domicilio.stateProvince}" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+										<h:outputText value="#{resultado.paisIncorporacion}" />
+									</td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+                                        <!-- <h:outputText value="#{resultado.tipoFormato}" /> -->
+                                        <h:outputText value="#{resultado.formatoPantalla}" />
+                                    </td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+                                        <h:outputText value="#{resultado.fechaFormatoW}" />
+                                    </td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+                                        <h:outputText value="#{resultado.estadoW}" />
+                                    </td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+                                        <h:outputText value="#{resultado.giin}" />
+                                    </td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+                                        <h:outputText value="#{resultado.referenceNumber}" />
+                                    </td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+                                        <h:outputText value="#{resultado.exempPayeeCode}" />
+                                    </td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+                                        <h:outputText value="#{resultado.exemptFatcaRepCode}" />
+                                    </td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+                                        <h:outputText value="#{resultado.fechaNacimientoFW}" />
+                                    </td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+                                        <h:outputText value="#{resultado.ssnEin}" />
+                                    </td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+                                        <h:outputText value="#{resultado.tiin}" />
+                                    </td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+                                        <h:outputText value="#{resultado.tipoBeneficiario.descTipoBeneficiario}" />
+                                    </td>
+								</tr>
+								<tr>
+								    <td  class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+                                        <h:outputText value="#{resultado.tipoDerecho}" />
+                                    </td>
+									<td  class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{resultado.porcentajeRetencionReal} #{etq.porcentaje}" />
+									</td>
+									<td colspan="2" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{resultado.asignacion}" >
+											<f:convertNumber pattern="###,###,###,###,###,###" />
+										</h:outputText>
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{resultado.rfc}" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{resultado.proporcion}" converter="formatoDecimalLargoConverter" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{resultado.fee}" converter="formatoDecimalLargoConverter" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{resultado.montoBruto}" converter="formatoMonedaConverter" />
+									</td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+                                        <h:outputText value="#{resultado.montoFee}" converter="formatoMonedaConverter" />
+                                    </td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{resultado.impuestoRetenido}" converter="formatoMonedaConverter" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{resultado.montoNeto}" converter="formatoMonedaConverter" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{resultado.divisa}" />
+									</td>
+									<td colspan="2" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{resultado.descEstatusDerecho}" />
+									</td>
+								</tr>
+							</t:dataList>
+                            <tr>
+                                <td class="tituloTabla wordWrap" colspan="2">
+                                    <h:outputText value="#{etq.subtotal}"  />
+                                </td>
+                                <td class="tituloTabla wordWrap" colspan="2">
+                                    <h:outputText value="#{consultaDetalleEjerDerCap.consultaDerechosBeneficiarioTO.subtotalAsignacion}" >
+                                        <f:convertNumber pattern="###,###,###,###,###,###" />
+                                    </h:outputText>
+                                </td>
+                                <td class="tituloTabla wordWrap" colspan="3" >
+                                    &nbsp;
+                                </td>
+                                <td class="tituloTabla wordWrap">
+                                    <h:outputText value="#{consultaDetalleEjerDerCap.consultaDerechosBeneficiarioTO.subtotalMontoBruto}"
+                                        converter="formatoMonedaConverter" />
+                                </td>
+                                <td class="tituloTabla wordWrap">
+                                    <h:outputText value="#{consultaDetalleEjerDerCap.consultaDerechosBeneficiarioTO.subtotalMontoFee}"
+                                        converter="formatoMonedaConverter" />
+                                </td>
+                                <td class="tituloTabla wordWrap">
+                                    <h:outputText value="#{consultaDetalleEjerDerCap.consultaDerechosBeneficiarioTO.subtotalImpuestoRetenido}"
+                                        converter="formatoMonedaConverter" />
+                                </td>
+                                <td class="tituloTabla wordWrap">
+                                    <h:outputText value="#{consultaDetalleEjerDerCap.consultaDerechosBeneficiarioTO.subtotalMontoNeto}"
+                                        converter="formatoMonedaConverter" />
+                                </td>
+                                <td class="tituloTabla wordWrap" colspan="3">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tituloTabla wordWrap" colspan="2">
+                                    <h:outputText value="#{etq.totalMinus}" />
+                                </td>
+                                <td class="tituloTabla wordWrap" colspan="2">
+                                    <h:outputText value="#{consultaDetalleEjerDerCap.consultaDerechosBeneficiarioTO.totalAsignacion}" >
+                                        <f:convertNumber pattern="###,###,###,###,###,###" />
+                                    </h:outputText>
+                                </td>
+                                <td class="tituloTabla wordWrap" colspan="3" >
+                                    &nbsp;
+                                </td>
+                                <td class="tituloTabla wordWrap">
+                                    <h:outputText value="#{consultaDetalleEjerDerCap.consultaDerechosBeneficiarioTO.totalMontoBruto}"
+                                        converter="formatoMonedaConverter" />
+                                </td>
+                                <td class="tituloTabla wordWrap">
+                                    <h:outputText value="#{consultaDetalleEjerDerCap.consultaDerechosBeneficiarioTO.totalMontoFee}"
+                                        converter="formatoMonedaConverter" />
+                                </td>
+                                <td class="tituloTabla wordWrap">
+                                    <h:outputText value="#{consultaDetalleEjerDerCap.consultaDerechosBeneficiarioTO.totalImpuestoRetenido}"
+                                        converter="formatoMonedaConverter" />
+                                </td>
+                                <td class="tituloTabla wordWrap">
+                                    <h:outputText value="#{consultaDetalleEjerDerCap.consultaDerechosBeneficiarioTO.totalMontoNeto}"
+                                        converter="formatoMonedaConverter" />
+                                </td>
+                                <td class="tituloTabla wordWrap" colspan="3">
+                                    &nbsp;
+                                </td>
+                            </tr>
+						</table>
+						<br />
+						<table width="100%" border="0" cellpadding="0px" cellspacing="0px">
+							<tr>
+								<td align="right" width="100%">
+				                    <h:commandButton actionListener="#{consultaDetalleEjerDerCapExportacion.generarExportacionPDF}"
+										action="consultaDetalleEjerDerCapPDF"
+										image="/images/pdf.gif"
+										title="Exportar a PDF todos los resultados de la consulta"
+										id="generarPdf"
+										onclick="bloquearBotonesReportes(['generarXls', 'generarPdf']);" />
+									&#160;&#160;
+			                        <h:commandButton actionListener="#{consultaDetalleEjerDerCapExportacion.generarExportacionXLS}"
+										action="consultaDetalleEjerDerCapXLS"
+										image="/images/excel-file.gif"
+										title="Exportar a XLS todos los resultados de la consulta"
+										id="generarXls"
+										onclick="bloquearBotonesReportes(['generarXls', 'generarPdf']);" />
+										
+									<div id="monitorPeticionReporte" style="display: none;">
+										<h:panelGroup id="panelMonitorPeticionReporte">
+											<h:graphicImage value="/images/ajax-loader.gif" />
+											&#160;&#160;
+											<h:outputText value="#{etq.reporteEnProceso}" />
+											<a4j:commandButton id="btnActualizarEstadoPeticion"
+												image="/images/transparent.gif"
+												styleClass="submit"
+												actionListener="#{consultaDetalleEjerDerCapExportacion.actualizarEstadoPeticion}"
+												reRender="panelMonitorPeticionReporte"
+												oncomplete="desbloquearBotonesReportes(#{consultaDetalleEjerDerCapExportacion.peticionReporteCompleta}, ['generarXls', 'generarPdf']);"/>
+										</h:panelGroup>
+									</div>
+										
+								</td>
+							</tr>
+						</table>
+					</h:panelGroup>
+				</h:panelGroup>
+    		</h:panelGroup>
+    	</ui:define>
+		<ui:define name="botones">
+			<h:panelGroup id="panelBotones">
+				<div class="refrescar" style="float: left;">
+	        		 <a4j:status id="commonStatus">
+						<f:facet name="start">
+							<h:panelGroup>
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								<h:outputText value="#{etq.buscando}" />
+							</h:panelGroup>
+						</f:facet>
+					</a4j:status> 	
+	        	</div>	
+	        	<div class="limpiar">
+					<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+						styleClass="submit"
+						actionListener="#{consultaDetalleEjerDerCap.limpiar}"/>
+				</div>
+				<div class="buscar">
+					<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+						styleClass="submit"
+						actionListener="#{consultaDetalleEjerDerCap.consultar}"
+						reRender="panelMensajes, panelResumenCriterios, panelContenido"
+						oncomplete="mostrarResumenCriteriosBusqueda();" />
+				</div>
+				<div id="botonEditarCriterios" class="editar" style="display: none; float:right;" >            
+	            	<input type="image" class="submit"
+						src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+						alt="Editar Criterios"
+						title="Editar Criterios"
+						onclick="mostrarCriteriosBusqueda();return false;" />                      	
+	           	</div>    	
+			</h:panelGroup>
+           	<h:panelGroup>           		
+				<ol style="font-size:9px; color:#498FED; font-weight: bold" >          		
+					<li>
+						<h:outputText 
+						value="Si no se captura ninguna fecha, se tomaran los útimos 90 días respecto a la actual en la Fecha Pago."
+						style="font-size:9px; color:#498FED; font-weight: bold" />
+					</li>
+					<li>
+						<h:outputText 
+						value="Si se captura solo una fecha inicial, se tomaran los siguientes 90 días respecto a la fecha proporcionada."
+						style="font-size:9px; color:#498FED; font-weight: bold" />
+					</li>
+					<li>
+						<h:outputText 
+						value="Si se captura solo una fecha final, se tomaran los 90 días anteriores respecto a la fecha proporcionada."
+						style="font-size:9px; color:#498FED; font-weight: bold" />
+					</li>
+				</ol>
+			</h:panelGroup>
+		</ui:define>
+    
+    </ui:composition>
+</html>

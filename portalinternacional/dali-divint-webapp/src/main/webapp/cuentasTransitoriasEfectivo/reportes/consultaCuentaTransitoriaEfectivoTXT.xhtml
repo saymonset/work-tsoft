@@ -1,0 +1,135 @@
+<html xmlns:txt="http://indeval.com/jsf/txt">
+<txt:document documentName="cuentasTesoreriaEfectivo"
+              documentTitle="Consulta de Cuentas Transitorias"
+              fecha="#{cuentasTransitoriasEfectivoController.fechaActual}"
+              institucion="">
+    <txt:table>
+        <txt:row>
+            <txt:col header="" value="#{etq.custodio}: #{cuentasTransitoriasEfectivoController.custodioConsulta}"
+                     size="30"/>
+        </txt:row>
+        <txt:row>
+            <txt:col header="" value="#{etq.divisaMinus}: #{cuentasTransitoriasEfectivoController.divisaCustodia}"
+                     size="30"/>
+        </txt:row>
+        <txt:row>
+            <txt:col header=""
+                     value="#{etq.fechaInicioCT}: #{cuentasTransitoriasEfectivoController.fechaInicioFormateada}"
+                     size="30"/>
+        </txt:row>
+        <txt:row>
+            <txt:col header="" value="#{etq.fechaFinCT}: #{cuentasTransitoriasEfectivoController.fechaFinFormateada}"
+                     size="30"/>
+        </txt:row>
+        <txt:row>
+            <txt:col header=""
+                     value="#{etq.folioRelacionado}: #{cuentasTransitoriasEfectivoController.referenciaBuscar_2}"
+                     size="30"/>
+        </txt:row>
+        <txt:row>
+            <txt:col header="" value="" size="50"/>
+        </txt:row>
+        <txt:row>
+            <txt:col header="" value="" size="50"/>
+        </txt:row>
+    </txt:table>
+
+    <txt:table>
+        <txt:row>
+            <txt:col header="" value="*" size="1"/>
+            <txt:col header="" value="***************" size="15"/>
+            <txt:col header="" value="***************" size="15"/>
+            <txt:col header="" value="***************" size="15"/>
+            <txt:col header="" value="*" size="1"/>
+        </txt:row>
+    </txt:table>
+    <txt:table>
+        <txt:row>
+            <txt:col header="" value="*" size="1"/>
+            <txt:col header="#{etq.custodio}" value="" size="15"/>
+            <txt:col header="#{etq.divisaMinus}" value="" size="15"/>
+            <txt:col header="#{etq.monto}" value="" size="15"/>
+            <txt:col header="" value="*" size="1"/>
+        </txt:row>
+    </txt:table>
+    <txt:table value="#{cuentasTransitoriasEfectivoController.negativos}" var="row">
+        <txt:row>
+            <txt:col header="" value="*" size="1"/>
+            <txt:col header="" value="#{row.custodio}" size="15"/>
+            <txt:col header="" value="#{row.divisa}" size="15"/>
+            <txt:col header="" value="#{row.total}" size="15"/>
+            <txt:col header="" value="*" size="1"/>
+        </txt:row>
+    </txt:table>
+    <txt:table>
+        <txt:row>
+            <txt:col header="" value="*" size="1"/>
+            <txt:col header="" value="***************" size="15"/>
+            <txt:col header="" value="***************" size="15"/>
+            <txt:col header="" value="***************" size="15"/>
+            <txt:col header="" value="*" size="1"/>
+        </txt:row>
+    </txt:table>
+
+
+
+    <txt:iterator var="divisas" value="#{cuentasTransitoriasEfectivoController.foliosAgrupadosDtos}">
+        <txt:table>
+            <txt:row>
+                <txt:col header="" value="" size="30"/>
+            </txt:row>
+            <txt:row>
+                <txt:col header="#{divisas.divisa}" value="" size="30"/>
+            </txt:row>
+        </txt:table>
+        <txt:row>
+            <txt:iterator var="folioR" value="#{divisas.referencias}">
+                <txt:table>
+                    <txt:row>
+                        <txt:col header="#{folioR.folioRelacionado}" value="" size="20"/>
+                        <txt:col header="#{folioR.divisa}" value="" size="15"/>
+                        <txt:col header="#{folioR.custodio}" value="" size="15"/>
+                        <txt:col header="#{folioR.total}" value="" size="15"/>
+                    </txt:row>
+                </txt:table>
+            </txt:iterator>
+        </txt:row>
+
+        <txt:table>
+            <txt:row>
+                <txt:col header="" value="" size="35"/>
+                <txt:col header="#{etq.totalMinus} : #{divisas.monto} " value="" size="30"/>
+            </txt:row>
+        </txt:table>
+    </txt:iterator>
+
+    <txt:table>
+        <txt:row>
+            <txt:col header="" value="" size="50"/>
+        </txt:row>
+        <txt:row>
+            <txt:col header="" value="" size="50"/>
+        </txt:row>
+    </txt:table>
+
+    <txt:table>
+        <txt:row>
+            <txt:col header="#{etq.referencia}" value="" size="20"/>
+            <txt:col header="#{etq.tipoMensaje}" value="" size="15"/>
+            <txt:col header="#{etq.divisaMinus}" value="" size="15"/>
+            <txt:col header="#{etq.custodio}" value="" size="15"/>
+            <txt:col header="#{etq.monto}" value="" size="15"/>
+        </txt:row>
+    </txt:table>
+    <txt:table value="#{cuentasTransitoriasEfectivoController.registrosNoReferenciados}" var="row">
+        <txt:row>
+            <txt:col header="" value="#{row.referenciaOperacion}" size="20"/>
+            <txt:col header="" value="#{row.tipoMensaje}" size="15"/>
+            <txt:col header="" value="#{row.divisa}" size="15"/>
+            <txt:col header="" value="#{row.custodio}" size="15"/>
+            <txt:col header="" value="#{row.total}" size="15"/>
+        </txt:row>
+    </txt:table>
+
+</txt:document>
+</html>

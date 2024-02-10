@@ -1,0 +1,454 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+              version="1.2">
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+
+        <navigation-case>
+            <from-outcome>consultaBitacoraEnvOpPdf</from-outcome>
+            <to-view-id>/envioOperaciones/consultaBitacoraEnvOpPDF.xhtml</to-view-id>
+        </navigation-case>
+
+
+        <navigation-case>
+            <from-outcome>consultaBitacoraEnvOpXls</from-outcome>
+            <to-view-id>/envioOperaciones/consultaBitacoraEnvOpXLS.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>cambiaEstadosSICPdf</from-outcome>
+            <to-view-id>/divinternacional/cambiaEstadosSICPdf.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>cambiaEstadosSICAutPdf</from-outcome>
+            <to-view-id>/divinternacional/cambiaEstadosSICAutPdf.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>cambiaEstadosSICHistorialPdf</from-outcome>
+            <to-view-id>/divinternacional/cambiaEstadosSICHistorialPdf.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>cambiaEstadosSICistorialXls</from-outcome>
+            <to-view-id>/divinternacional/cambiaEstadosSICHistorialXls.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>cambiaEstadosSICXls</from-outcome>
+            <to-view-id>/divinternacional/cambiaEstadosSICXls.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>cambiaEstadosSICAutXls</from-outcome>
+            <to-view-id>/divinternacional/cambiaEstadosSICAutXls.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>cambiaEdoCambioBovXls</from-outcome>
+            <to-view-id>/divinternacional/cambiaEdoCambioBovXls.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>cambiaEdoCambioBovAutXls</from-outcome>
+            <to-view-id>/divinternacional/cambiaEdoCambioBovAutXls.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>cambiaEdoCambioBovHistorialXls</from-outcome>
+            <to-view-id>/divinternacional/cambiaEdoCambioBovHistorialXls.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>cambiaEdoCambioBovHistorialPdf</from-outcome>
+            <to-view-id>/divinternacional/cambiaEdoCambioBovHistorialPdf.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>consultaOperacionesSICPdf</from-outcome>
+            <to-view-id>/divinternacional/consultaOperacionesSICPdf.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>consultaOperacionesSICXls</from-outcome>
+            <to-view-id>/divinternacional/consultaOperacionesSICXls.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>bitacoraFileTransferPdf</from-outcome>
+            <to-view-id>/divinternacional/bitacoraFileTransferPdf.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>bitacoraFileTransferXls</from-outcome>
+            <to-view-id>/divinternacional/bitacoraFileTransferXls.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>conteoAutomaticoSaldoPdf</from-outcome>
+            <to-view-id>/conteoAutomaticoSaldo/conteoAutomaticoSaldosPdf.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>conteoAutomaticoSaldoXls</from-outcome>
+            <to-view-id>/conteoAutomaticoSaldo/conteoAutomaticoSaldosXls.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>detalleConsultaOperacionesSIC</from-outcome>
+            <to-view-id>/divinternacional/detalleConsultaOperacionesSIC.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>detalleConsultaOperacionesSICPDF</from-outcome>
+            <to-view-id>/divinternacional/detalleConsultaOperacionesSICPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>detalleConsultaOperacionesSICXls</from-outcome>
+            <to-view-id>/divinternacional/detalleConsultaOperacionesSICXls.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>detalleLiqParcialPDF</from-outcome>
+            <to-view-id>/divinternacional/detalleLiqParcialPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>detalleLiqParcialXls</from-outcome>
+            <to-view-id>/divinternacional/detalleLiqParcialXls.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>detalleErrorConsultaOperacionesSic</from-outcome>
+            <to-view-id>/divinternacional/detalleErrorConsultaOperacionesSic.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>consultaTopeCirculanteXLS</from-outcome>
+            <to-view-id>/divinternacional/consultaTopeCirculanteXLS.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>consultaTopeCirculantePdf</from-outcome>
+            <to-view-id>/divinternacional/consultaTopeCirculantePdf.xhtml</to-view-id>
+        </navigation-case>
+
+        <!-- Fideicomisos -->
+        <navigation-case>
+            <from-outcome>fideicomisoBanamexPdf</from-outcome>
+            <to-view-id>/fideicomiso/fideicomisoBanamexPdf.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>fideicomisoBanamexXls</from-outcome>
+            <to-view-id>/fideicomiso/fideicomisoBanamexXls.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>fideicomisoNafinsaPdf</from-outcome>
+            <to-view-id>/fideicomiso/fideicomisoNafinsaPdf.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>fideicomisoNafinsaXls</from-outcome>
+            <to-view-id>/fideicomiso/fideicomisoNafinsaXls.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>fideicomisoInbursaPdf</from-outcome>
+            <to-view-id>/fideicomiso/fideicomisoInbursaPdf.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>fideicomisoInbursaXls</from-outcome>
+            <to-view-id>/fideicomiso/fideicomisoInbursaXls.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>fideicomisoInstActualPdf</from-outcome>
+            <to-view-id>/fideicomiso/fideicomisoInstActualPdf.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>fideicomisoInstActualXls</from-outcome>
+            <to-view-id>/fideicomiso/fideicomisoInstActualXls.xhtml</to-view-id>
+        </navigation-case>
+
+        <!-- Administracion de Custodios/Depositantes -->
+        <navigation-case>
+            <from-outcome>admonCustodiosDepositantesPdf</from-outcome>
+            <to-view-id>/administracion/admonCustodiosDepositantesPdf.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>admonCustodiosDepositantesXls</from-outcome>
+            <to-view-id>/administracion/admonCustodiosDepositantesXls.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>consultaBeneficiariosPDF</from-outcome>
+            <to-view-id>/beneficiarios/reportes/consultaBeneficiariosPDF.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>consultaBeneficiariosXLS</from-outcome>
+            <to-view-id>/beneficiarios/reportes/consultaBeneficiariosXLS.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>consultaBeneficiariosTXT</from-outcome>
+            <to-view-id>/beneficiarios/reportes/consultaBeneficiariosTXT.xhtml</to-view-id>
+        </navigation-case>
+
+        <!-- NUEVOS REPORTES BENEFICIARIOS -->
+        <navigation-case>
+            <from-outcome>consultaBeneficiariosSinDireccionPDF</from-outcome>
+            <to-view-id>/beneficiarios/reportes/consultaBeneficiariosSinDireccionPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>consultaBeneficiariosSinDireccionXLS</from-outcome>
+            <to-view-id>/beneficiarios/reportes/consultaBeneficiariosSinDireccionXLS.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>consultaBeneficiariosSinDireccionTXT</from-outcome>
+            <to-view-id>/beneficiarios/reportes/consultaBeneficiariosSinDireccionTXT.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>consultaBeneficiariosRFCPDF</from-outcome>
+            <to-view-id>/beneficiarios/reportes/consultaBeneficiariosRFCPDF.xhtml</to-view-id>
+        </navigation-case>
+        <!-- NUEVOS REPORTES BENEFICIARIOS  FIN -->
+
+
+        <navigation-case>
+            <from-outcome>consultaHistoricoBeneficiariosPDF</from-outcome>
+            <to-view-id>/beneficiarios/reportes/consultaHistoricaBeneficiariosPDF.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>consultaHistoricoBeneficiariosXLS</from-outcome>
+            <to-view-id>/beneficiarios/reportes/consultaHistoricaBeneficiariosXLS.xhtml</to-view-id>
+        </navigation-case>
+
+
+        <navigation-case>
+            <from-outcome>consultaBeneficiariosXLSW8BEN</from-outcome>
+            <to-view-id>/beneficiarios/reportes/consultaBeneficiariosXLSW8BEN.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>consultaBeneficiariosXLSW8IMY</from-outcome>
+            <to-view-id>/beneficiarios/reportes/consultaBeneficiariosXLSW8IMY.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>consultaBeneficiariosXLSW9</from-outcome>
+            <to-view-id>/beneficiarios/reportes/consultaBeneficiariosXLSW9.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>consultaEmisionesPDF</from-outcome>
+            <to-view-id>/consultaEmisiones/consultaEmisionesPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>consultaEmisionesXLS</from-outcome>
+            <to-view-id>/consultaEmisiones/consultaEmisionesXLS.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>consultaStatementsPDF</from-outcome>
+            <to-view-id>/statements/consultaStatementsPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>consultaStatementsXLS</from-outcome>
+            <to-view-id>/statements/consultaStatementsXLS.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>consultaStatementsTXT</from-outcome>
+            <to-view-id>/statements/consultaStatementsTXT.xhtml</to-view-id>
+        </navigation-case>
+
+        <!-- Calendario Derechos Internacional -->
+        <navigation-case>
+            <from-outcome>calendarioEmisionesDeudaExtPDF</from-outcome>
+            <to-view-id>/ejercicioDerechosInt/calendarioEmisionesDeudaExtPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>calendarioEmisionesDeudaExtXLS</from-outcome>
+            <to-view-id>/ejercicioDerechosInt/calendarioEmisionesDeudaExtXLS.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>calendarioEmisionesDeudaExtXLSNormal</from-outcome>
+            <to-view-id>/ejercicioDerechosInt/calendarioEmisionesDeudaExtXLSNormal.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>bitacoraCalendarioEmisionesDeudaExtPDF</from-outcome>
+            <to-view-id>/ejercicioDerechosInt/bitacoraCalendarioEmisionesDeudaExtPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>calendarioEmisionesDeudaExtPDFNormal</from-outcome>
+            <to-view-id>/ejercicioDerechosInt/calendarioEmisionesDeudaExtPDFNormal.xhtml</to-view-id>
+        </navigation-case>
+        <!--Conciliaciones Internacional-->
+        <navigation-case>
+            <from-outcome>conciliacionesInternacionalPDF</from-outcome>
+            <to-view-id>/conciliacionInternacional/conciliacionesInternacionalPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>conciliacionesInternacionalXLS</from-outcome>
+            <to-view-id>/conciliacionInternacional/conciliacionesInternacionalXLS.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>consultaDetalleConciliacionInternacionalPDF</from-outcome>
+            <to-view-id>/conciliacionInternacional/consultaDetalleConciliacionInternacionalPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>consultaDetalleConciliacionInternacionalXLS</from-outcome>
+            <to-view-id>/conciliacionInternacional/consultaDetalleConciliacionInternacionalXLS.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>conciliacionInternacionalXLSAuditoria</from-outcome>
+            <to-view-id>/conciliacionInternacional/conciliacionInternacionalXLSAuditoria.xhtml</to-view-id>
+        </navigation-case>
+
+        <!-- Confirmaciones -->
+        <navigation-case>
+            <from-outcome>confirmacionIntPDF</from-outcome>
+            <to-view-id>/conciliacionInternacional/confirmacionIntPDF.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>confirmacionIntXLS</from-outcome>
+            <to-view-id>/conciliacionInternacional/confirmacionIntXLS.xhtml</to-view-id>
+        </navigation-case>
+
+        <!--Conciliaciones Efectivo-->
+        <navigation-case>
+            <from-outcome>conciliacionesEfectivoPDF</from-outcome>
+            <to-view-id>/conciliacionInternacional/conciliacionesEfectivoPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>conciliacionesEfectivoXLS</from-outcome>
+            <to-view-id>/conciliacionInternacional/conciliacionesEfectivoXLS.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>detalleConciliacionesEfectivoPDF</from-outcome>
+            <to-view-id>/conciliacionInternacional/consultaDetalleConciliacionesEfectivoPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>detalleConciliacionesEfectivoXLS</from-outcome>
+            <to-view-id>/conciliacionInternacional/consultaDetalleConciliacionesEfectivoXLS.xhtml</to-view-id>
+        </navigation-case>
+
+        <!-- Administración de cuentas de efectivo -->
+        <navigation-case>
+            <from-outcome>admonCuentaEfectivoIntPDF</from-outcome>
+            <to-view-id>/conciliacionInternacional/admonCuentaEfectivoIntPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>admonCuentaEfectivoIntXLS</from-outcome>
+            <to-view-id>/conciliacionInternacional/admonCuentaEfectivoIntXLS.xhtml</to-view-id>
+        </navigation-case>
+
+        <!-- Multicarga Internacional -->
+        <navigation-case>
+            <from-outcome>detalleErrorAdpXls</from-outcome>
+            <to-view-id>/cargaMultiple/detalleErrorAdpXls.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>detalleErrorMultiempresaXls</from-outcome>
+            <to-view-id>/cargaMultiple/detalleErrorMultiempresaXls.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>fileTransferCapturaBenefDetalleXls</from-outcome>
+            <to-view-id>/beneficiarios/filetransfer/fileTransferCapturaBenefDetalleXls.xhtml</to-view-id>
+        </navigation-case>
+        <!-- EventosCorporativos -->
+        <navigation-case>
+            <from-outcome>eventosCorporativosIndevalPDF</from-outcome>
+            <to-view-id>/eventosCorporativos/eventosCorporativosIndevalPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>eventosCorporativosIndevalXLS</from-outcome>
+            <to-view-id>/eventosCorporativos/eventosCorporativosIndevalXLS.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>eventosCorporativosPDF</from-outcome>
+            <to-view-id>/eventosCorporativos/eventosCorporativosPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>eventosCorporativosXLS</from-outcome>
+            <to-view-id>/eventosCorporativos/eventosCorporativosXLS.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>tiposDerechoPDF</from-outcome>
+            <to-view-id>/eventosCorporativos/catalogos/tiposDerechoPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>tiposDerechoXLS</from-outcome>
+            <to-view-id>/eventosCorporativos/catalogos/tiposDerechoXLS.xhtml</to-view-id>
+        </navigation-case>
+        <!-- CalendarioCapitales -->
+        <navigation-case>
+            <from-outcome>calendarioCapitalesPDF</from-outcome>
+            <to-view-id>/calendarioCapitalesDistribucion/reportes/calendarioCapitalesPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>calendarioCapitalesConsultaPDF</from-outcome>
+            <to-view-id>/calendarioCapitalesDistribucion/reportes/calendarioCapitalesConsultaPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>calendarioCapitalesXLS</from-outcome>
+            <to-view-id>/calendarioCapitalesDistribucion/reportes/calendarioCapitalesXLS.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>calendarioCapitalesConsultaXLS</from-outcome>
+            <to-view-id>/calendarioCapitalesDistribucion/reportes/calendarioCapitalesConsultaXLS.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>calendarioHistoricoCapitalesPDF</from-outcome>
+            <to-view-id>/calendarioCapitalesDistribucion/reportes/calendarioHistoricoCapitalesPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>calendarioHistoricoCapitalesXLS</from-outcome>
+            <to-view-id>/calendarioCapitalesDistribucion/reportes/calendarioHistoricoCapitalesXLS.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>envioCalendarioCapitalesPDF</from-outcome>
+            <to-view-id>/calendarioCapitalesDistribucion/reportes/envioCalendarioCapitalesPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>envioCalendarioCapitalesXLS</from-outcome>
+            <to-view-id>/calendarioCapitalesDistribucion/reportes/envioCalendarioCapitalesXLS.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>mensajesAutorizadosLegislacionPDF</from-outcome>
+            <to-view-id>/calendarioCapitalesDistribucion/reportes/consultaMensajesAutorizadosLegislacionPDF.xhtml
+            </to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>mensajesAutorizadosLegislacionXLS</from-outcome>
+            <to-view-id>/calendarioCapitalesDistribucion/reportes/consultaMensajesAutorizadosLegislacionXLS.xhtml
+            </to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>consultaEmisionesPDFLegSic</from-outcome>
+            <to-view-id>/calendarioCapitalesDistribucion/reportes/consultaEmisionesPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>consultaEmisionesXLSLegSic</from-outcome>
+            <to-view-id>/calendarioCapitalesDistribucion/reportes/consultaEmisionesXLS.xhtml</to-view-id>
+        </navigation-case>
+
+        <!-- Cuentas Transitorias Efectivo -->
+        <navigation-case>
+            <from-outcome>consultaCuentaTransitoriaEfectivoXLS</from-outcome>
+            <to-view-id>/cuentasTransitoriasEfectivo/reportes/consultaCuentaTransitoriaEfectivoXLS.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>consultaCuentaTransitoriaEfectivoPDF</from-outcome>
+            <to-view-id>/cuentasTransitoriasEfectivo/reportes/consultaCuentaTransitoriaEfectivoPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>consultaCuentaTransitoriaEfectivoTXT</from-outcome>
+            <to-view-id>/cuentasTransitoriasEfectivo/reportes/consultaCuentaTransitoriaEfectivoTXT.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+</faces-config>

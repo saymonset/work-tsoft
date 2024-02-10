@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls" xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document documentName="ConciliacionInternacional" documentTitle="Reporte Conciliación Auditoría"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        fecha="#{consultaBitacoraEnvOpBean.fechaActual}">
+        
+        <xls:table value="#{conciliacionesIntBean.paginaReportes.registros}" var="conciliacion">
+            <xls:row>
+				<xls:col header="#{etq.fechaMensaje}" value="#{!empty conciliacion.fechaMensaje ? conciliacion.fechaMensaje : 'NA'}" align="center"  pattern="dd/MM/yyyy HH:mm:ss"/>
+								
+				<xls:col header="#{etq.tv}" value="#{!empty conciliacion.tv ? conciliacion.tv : 'NA'}" align="center" />				
+				<xls:col header="#{etq.emisoraMinus}" value="#{!empty conciliacion.emisora ? conciliacion.emisora : 'NA'}" align="center" />				
+				<xls:col header="#{etq.serieMinus}" value="#{!empty conciliacion.serie ? conciliacion.serie : 'NA'}" align="center" />				
+				<xls:col header="#{etq.isin}" value="#{!empty conciliacion.isin ? conciliacion.isin : 'NA'}" align="center" />				
+				<xls:col header="#{etq.cuentasMinus}" value="#{!empty conciliacion.cuentas  ?  conciliacion.cuentas : 'NA'}" align="center" />
+				<xls:col header="#{etq.custodio}" value="#{(!empty conciliacion.custodio) and (!empty conciliacion.custodio.codigoBanco) ? conciliacion.custodio.codigoBanco : 'NA'}" align="center" />
+				<xls:col header="Posición MT535" value="#{!empty conciliacion.posicionMensaje ? conciliacion.posicionMensaje : 'NA'}" align="right"  pattern="###,###,###,###,###,##0.######" />
+				<xls:col header="#{etq.bovedaDaliMinus}" value="#{(!empty conciliacion.boveda) and (!empty conciliacion.boveda.nombreCorto) ? conciliacion.boveda.nombreCorto : 'NA'}" align="center"  />
+				<xls:col header="#{etq.posicionDali}" value="#{!empty conciliacion.posicionDali ? conciliacion.posicionDali : 'NA'}" align="right"  pattern="###,###,###,###,###,##0" />
+				<xls:col header="#{etq.valorNominalMinus}" value="#{!empty conciliacion.valorNominal ? conciliacion.valorNominal : 'NA'}" align="right" pattern="###,###,###,###,###,##0.######" />												
+				<xls:col header="#{etq.diferencia}" value="#{!empty conciliacion.diferencia ? conciliacion.diferencia : 'NA'}" align="right"   pattern="###,###,###,###,###,##0.##"/>
+				<xls:col header="#{etq.existencia}" value="#{!empty conciliacion.existencia ? conciliacion.existenciaCompleto : 'NA'}" align="center" />
+				<xls:col header="#{etq.fechaConciliacionMinus}" value="#{!empty conciliacion.fechaConciliacion ? conciliacion.fechaConciliacion : 'NA'}" align="center"  pattern="dd/MM/yyyy HH:mm:ss"/>
+				<xls:col header="#{etq.folioConciliacionMinus}" value="#{ !empty conciliacion.conciliacion ? conciliacion.conciliacion : 'NA'}" align="center" />
+				<xls:col header="Comentarios" value="" align="center" />								
+			</xls:row>
+        </xls:table>
+    </xls:document>
+</html>

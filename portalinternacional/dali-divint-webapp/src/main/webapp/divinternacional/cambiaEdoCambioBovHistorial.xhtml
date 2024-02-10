@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+		<ui:define name="tituloEncabezado">
+		</ui:define>
+
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+				    src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js"></script>
+			<script language="javascript" type="text/javascript"
+				    src="#{facesContext.externalContext.requestContextPath}/js/cambiaEstadoOperacionesSic.js"></script>
+		</ui:define>
+
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.sistemaIntCot}" />
+		</ui:define>
+
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.solHistorialCB}"></h:outputText>
+		</ui:define>
+
+		<ui:define name="criterios">			
+			<a4j:keepAlive beanName="cambiaEdoOpsCambioBovedaBean" />
+			<h:panelGroup id="mensajeUsuario">
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"  
+						           errorClass="error" ajaxRendered="true" showDetail="false"
+						           showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+				</div>
+			</h:panelGroup>
+
+			<h:panelGroup id="panelCriterios">
+				<div style='display: "inline"' id="divCriterios">
+					<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="center">
+						<tr>
+							<td class="recuadroTabla" >
+								<table class="tablaCriterios"> 
+									<tr>
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.folioControl}" />
+										</td>
+									</tr>
+									<tr>									
+										<td align="center">
+											<h:inputText autocomplete="off" value="#{cambiaEdoOpsCambioBovedaBean.folioControlParam}" styleClass="textoControles campoNumerico"/>
+										</td>										
+									</tr>
+								</table>
+							</td>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center" >
+									<tr align="center">
+										<td nowrap="true" colspan="2" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.autorizacion}" /> </b>
+										</td>
+									</tr>
+									<tr align="center">
+										<td nowrap="true">
+											<h:outputText styleClass="texto" value="#{etq.fechaInicial}" />
+										</td>
+										<td nowrap="true">
+											<h:outputText styleClass="texto" value="#{etq.fechaFinal}" />
+										</td>
+									</tr>
+									<tr align="center">
+										<td>										
+											<rich:calendar id="fechaInicialAut"
+														inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+												       value="#{cambiaEdoOpsCambioBovedaBean.fechaInicialAut}"
+												       	datePattern="dd/MM/yyyy"  tabindex="120"  isDayEnabled="isDayEnabled"/>
+										</td>
+										<td>										
+											<rich:calendar id="fechaFinalAut" 
+														inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+												       value="#{cambiaEdoOpsCambioBovedaBean.fechaFinalAut}"
+												       	datePattern="dd/MM/yyyy"  tabindex="130" isDayEnabled="isDayEnabled"/>										
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center" >
+									<tr align="center">
+										<td nowrap="true" colspan="2" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.solicitud}" /> </b>
+										</td>
+									</tr>
+									<tr align="center">
+										<td nowrap="true">
+											<h:outputText styleClass="texto" value="#{etq.fechaInicial}" />
+										</td>
+										<td nowrap="true">
+											<h:outputText styleClass="texto" value="#{etq.fechaFinal}" />
+										</td>
+									</tr>
+									<tr align="center">
+										<td>										
+											<rich:calendar id="fechaInicialOP"
+														inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+												       value="#{cambiaEdoOpsCambioBovedaBean.fechaInicialOp}"
+												       	datePattern="dd/MM/yyyy"  tabindex="120"  isDayEnabled="isDayEnabled"/>
+										</td>
+										<td>										
+											<rich:calendar id="fechaFinalOp" 
+														inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+												       value="#{cambiaEdoOpsCambioBovedaBean.fechaFinalOp}"
+												       	datePattern="dd/MM/yyyy"  tabindex="130" isDayEnabled="isDayEnabled"/>										
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>							
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr>									  									   
+									   <td nowrap="true" align="center"  colspan="2"> <h:outputText value="#{etq.custodio}"  /></td>									   
+									</tr>
+									
+									<tr>									   									   
+									   <td nowrap="true" align="center" colspan="2"><h:selectOneMenu styleClass="textoControles"
+												value="#{cambiaEdoOpsCambioBovedaBean.custodio}"
+												tabindex="150">
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+											    <f:selectItems value="#{cambiaEdoOpsCambioBovedaBean.listaCustodios}"/>
+                            			 </h:selectOneMenu>
+									   </td>
+									</tr>
+								</table>
+							</td>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr>
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.operacion}" />
+										</td>
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.tipoOp}" />
+										</td>										
+									</tr>
+									<tr>
+										<td align="center">
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{cambiaEdoOpsCambioBovedaBean.operacion}" tabindex="140">
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+												<f:selectItems value="#{opcionesCatalogosBean.operaciones}" />
+											</h:selectOneMenu>
+										</td>
+										<td align="center">
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{cambiaEdoOpsCambioBovedaBean.tipoOperacion}"
+												tabindex="150">
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+												<f:selectItems
+													value="#{opcionesCatalogosBean.tiposOperacion}" />
+											</h:selectOneMenu>
+										</td>									
+									</tr>
+								</table>
+							</td>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr>
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.estatusPrevio}" />
+										</td>
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.estatusSolicitado}" />
+										</td>										
+									</tr>
+									<tr>
+										<td align="center">
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{cambiaEdoOpsCambioBovedaBean.estatusAnterior}" tabindex="80">
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+												<f:selectItems value="#{opcionesCatalogosBean.estados}" />
+											</h:selectOneMenu>
+										</td>
+										<td align="center">
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{cambiaEdoOpsCambioBovedaBean.estatusNuevo}" tabindex="80">
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+												<f:selectItems value="#{opcionesCatalogosBean.estados}" />
+											</h:selectOneMenu>
+										</td>									
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+					
+					
+				</div>				
+			</h:panelGroup>
+
+		</ui:define><!-- Fin criterios -->
+
+		<ui:define name="botones">
+
+			<h:panelGroup id="botones">				
+				<div class="refrescar" style="float: left;">
+	        		 <a4j:status id="commonStatus">
+						<f:facet name="start">
+							<h:panelGroup>
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								<h:outputText value="#{etq.buscando}"></h:outputText>
+							</h:panelGroup>
+						</f:facet>
+					</a4j:status> 	
+	        	</div>
+				<div class="limpiar">
+					<h:commandButton id="botonLimpiar" image="/images/transparent.gif" styleClass="submit"
+						             actionListener="#{cambiaEdoOpsCambioBovedaBean.limpiarHistorialForma}" />
+				</div>
+				<div class="buscar">
+					<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+						               styleClass="submit"						           
+						               actionListener="#{cambiaEdoOpsCambioBovedaBean.obtenerHistorial}"
+						               reRender="containerResultados,tablaResultados,botones,mensajeUsuario">
+						          		<f:attribute name="tipo_busqueda" value="principal" />
+						          		<f:attribute name="tipo_operador_menu" value="Historial" />		             	              
+					</a4j:commandButton>
+				</div>
+           	</h:panelGroup>
+
+		</ui:define><!-- Fin botones -->
+
+		<ui:define name="seccionContenido">
+
+			<h:panelGroup id="containerResultados">
+
+				<h:panelGroup rendered="#{cambiaEdoOpsCambioBovedaBean.consultaEjecutada}">
+					<t:dataTable id="noExistenResultados"
+						value="#{cambiaEdoOpsCambioBovedaBean.paginaVO.registros}"
+						styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+						footerClass="tituloTabla" border="0" cellpadding="3px"
+						cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos"
+						rendered="#{empty cambiaEdoOpsCambioBovedaBean.paginaVO.registros}">
+						<t:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.sinResultados}"></h:outputText>
+							</f:facet>
+						</t:column>
+					</t:dataTable>
+					<br/>                 
+					<br/>
+					
+					<h:panelGroup id="tablaResultados">
+
+						<h:graphicImage value="/images/blank.gif" width="900px" height="1px"></h:graphicImage>
+									
+						
+						<h:panelGroup rendered="#{not empty cambiaEdoOpsCambioBovedaBean.paginaVO.registros}">
+							<table width="100%" border="0">
+								<tr>
+									<td align="left" class="textoEstadoCuenta">
+										<a4j:commandLink id="control_bitacora_primero"
+											action="#{cambiaEdoOpsCambioBovedaBean.irPrimeraPagina}"
+											rendered="#{cambiaEdoOpsCambioBovedaBean.irAlPrimero}"
+											reRender="containerInfoPaginacionBitacora,tablaResultados,containerResultados">
+											<img src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png" border="0" />
+										</a4j:commandLink>
+										<a4j:commandLink id="control_bitacora_atras_fast"
+											action="#{cambiaEdoOpsCambioBovedaBean.retrocederPaginasRapido}"
+											rendered="#{cambiaEdoOpsCambioBovedaBean.retrocederRapido}"
+											reRender="containerResultados,containerInfoPaginacionBitacora,tablaResultados">
+											<img src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png" border="0" />
+										</a4j:commandLink>
+										<a4j:commandLink id="control_bitacora_atras"
+											action="#{cambiaEdoOpsCambioBovedaBean.retrocederPagina}"
+											rendered="#{cambiaEdoOpsCambioBovedaBean.retroceder}"
+											reRender="containerResultados,containerInfoPaginacionBitacora,tablaResultados">
+											<img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png" border="0" />
+										</a4j:commandLink>
+										<a4j:commandLink id="control_bitacora_adelante"
+											action="#{cambiaEdoOpsCambioBovedaBean.avanzarPagina}"
+											rendered="#{cambiaEdoOpsCambioBovedaBean.avanzar}"
+											reRender="containerResultados,containerInfoPaginacionBitacora,tablaResultados">
+											<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png" border="0" />
+										</a4j:commandLink>
+										<a4j:commandLink id="control_bitacora_adelante_fast"
+											action="#{cambiaEdoOpsCambioBovedaBean.avanzarPaginasRapido}"
+											rendered="#{cambiaEdoOpsCambioBovedaBean.avanzarRapido}"
+											reRender="containerResultados,containerInfoPaginacionBitacora,tablaResultados">
+											<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png" border="0" />
+										</a4j:commandLink>
+										<a4j:commandLink id="control_bitacora_ultimo"
+											action="#{cambiaEdoOpsCambioBovedaBean.irUltimaPagina}"
+											rendered="#{cambiaEdoOpsCambioBovedaBean.irAlUltimo}"
+											reRender="containerResultados,containerInfoPaginacionBitacora,tablaResultados">
+											<img src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png" border="0" />
+										</a4j:commandLink>
+										<br/>
+										<h:outputText value="#{etq.mostrando}" styleClass="textoResumen" />
+										<h:outputText value="#{cambiaEdoOpsCambioBovedaBean.numeroPagina}" styleClass="textoResumen" />
+										<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+										<h:outputText value="#{cambiaEdoOpsCambioBovedaBean.totalPaginas}" styleClass="textoResumen" />
+										<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+										&#160;&#160;&#160;
+										<h:outputText value="#{cambiaEdoOpsCambioBovedaBean.paginaVO.totalRegistros}"
+											styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+										&#160;
+										<h:outputText styleClass="textoResumen" value="#{etq.registrosEncontrados}" />
+									</td>
+									<td align="right" class="textoEstadoCuenta">
+										<h:outputText escape="false" value="#{etq.registrosPorPagina}" styleClass="textoResumen" />
+										<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+											value="#{cambiaEdoOpsCambioBovedaBean.paginaVO.registrosXPag}">
+											<f:selectItem itemLabel="1" itemValue="1" />
+											<f:selectItem itemLabel="2" itemValue="2" />
+											<f:selectItem itemLabel="5" itemValue="5" />
+											<f:selectItem itemLabel="10" itemValue="10" />
+											<f:selectItem itemLabel="20" itemValue="20" />
+											<f:selectItem itemLabel="50" itemValue="50" />
+											<a4j:support event="onchange"
+												reRender="containerResultados,containerInfoPaginacionBitacora,tablaResultados,mensajeUsuario"
+												actionListener="#{cambiaEdoOpsCambioBovedaBean.obtenerHistorial}">											
+											    <f:attribute name="tipo_busqueda" value="paginador" />
+											    <f:attribute name="tipo_operador_menu" value="Historial" />	
+											</a4j:support>
+										</h:selectOneMenu>
+									</td>
+								</tr>
+							</table>
+						</h:panelGroup>
+								
+					<rich:dataTable	id="resultadosRich"	styleClass="tablaGeneral" headerClass="tituloTabla" width="100%" 
+					footerClass="tituloTabla" rowClasses="renglonTablaUno, renglonTablaDos" 
+					rendered="#{not empty cambiaEdoOpsCambioBovedaBean.paginaVO.registros}" 
+					border="0" var="bitacora" value="#{cambiaEdoOpsCambioBovedaBean.paginaVO.registros}">
+							<f:facet name="header">
+								<rich:columnGroup>
+									<rich:column styleClass="tituloTabla">
+										<h:outputText value="#{etq.folioControl}"/>                                
+									</rich:column>	
+									<rich:column styleClass="tituloTabla">
+										<h:outputText value="#{etq.id}"/>                                
+									</rich:column>	
+									<rich:column styleClass="tituloTabla">
+										<h:outputText value="#{etq.folioMinus}"/>                                
+									</rich:column>
+									<rich:column styleClass="tituloTabla">
+										<h:outputText value="#{etq.custodio}"/>                                
+									</rich:column>
+									<rich:column  styleClass="tituloTabla">
+										<h:panelGroup>
+											<table width="100%">
+												<tr class="">
+													<td>
+														<h:outputText  value="#{etq.tv}" />
+														&#160;
+														<h:outputText  value="#{etq.emisoraMinus}" />
+														&#160;
+														<h:outputText value="#{etq.serieMinus}" />														
+													</td>
+												</tr>
+												<tr class="">
+													<td align="center">
+														<h:outputText  value="#{etq.isin}" />
+													</td>
+												</tr>
+											</table>
+										</h:panelGroup>                              
+									</rich:column>
+									<rich:column styleClass="tituloTabla">
+										<h:outputText value="#{etq.cantidadOperada}"/>                                
+									</rich:column>
+									<rich:column styleClass="tituloTabla">
+										<h:outputText value="#{etq.operacion}"/>                                
+									</rich:column>
+									<rich:column styleClass="tituloTabla">
+										<h:outputText value="#{etq.estatusPrevio}"/>                                
+									</rich:column>				
+									<rich:column styleClass="tituloTabla">
+										<h:outputText value="#{etq.estatusSolicitado}"/>                                
+									</rich:column>
+									<rich:column styleClass="tituloTabla">
+										<h:outputText value="#{etq.usuarioSolicito}"/>                                
+									</rich:column>
+									<rich:column styleClass="tituloTabla">
+										<h:outputText value="#{etq.fechaBitacora}"/>                                
+									</rich:column>
+									<rich:column styleClass="tituloTabla">
+										<h:outputText value="#{etq.usuarioAutorizo}"/>                                
+									</rich:column>
+									<rich:column styleClass="tituloTabla">
+										<h:outputText value="#{etq.fechaAutorizo}"/>                                
+									</rich:column>									
+									<rich:column styleClass="tituloTabla">
+										<h:outputText value="#{etq.estatusBitacora}"/>                                
+									</rich:column>	
+																			
+								</rich:columnGroup>
+							</f:facet>
+							<rich:columnGroup>
+							<rich:column>				
+									<h:outputText styleClass="texto textoPeque12" value="#{bitacora.folioControl}" />       
+							</rich:column>
+							<rich:column>				
+									<h:outputText styleClass="texto textoPeque12"
+										value="#{bitacora.claveTipoInstitucion}" />           
+							</rich:column>
+							<rich:column >				
+									<h:outputText styleClass="texto textoPeque12"
+										value="#{bitacora.folioInstitucion}" />			   
+							</rich:column>
+							<rich:column >				
+									<h:outputText styleClass="texto textoPeque12"
+										value="#{bitacora.detalleCustodio}" />			   
+							</rich:column>
+							<rich:column >				
+									<table>
+										<tr>
+											<td>
+												<h:outputText styleClass="texto textoPeque12" value="#{bitacora.claveTipoValor}" />
+												<h:outputText value="#{etq.pipe}"></h:outputText>
+												&#160;
+												<h:outputText styleClass="texto textoPeque12" value="#{bitacora.clavePizarra}" />
+												<h:outputText value="#{etq.pipe}"></h:outputText>
+												&#160;
+												<h:outputText styleClass="texto textoPeque12" value="#{bitacora.serie}" />
+												<h:outputText value="#{etq.pipe}"></h:outputText>											
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<h:outputText styleClass="texto textoPeque12" value="#{bitacora.isin}" />
+											</td>
+										</tr>
+									</table>
+							</rich:column>
+							<rich:column >				
+									<h:outputText styleClass="texto textoPeque12" value="#{bitacora.cantidadTitulos}"
+														converter="formatoEnteroConverter" style="white-space:nowrap" />
+							</rich:column>
+							<rich:column >				
+									<h:outputText styleClass="texto textoPeque12" value="#{bitacora.operacion}" />
+							</rich:column>
+							<rich:column>				
+									<table width="100%">									
+										<tr>
+											<td align="center">
+												<h:outputText styleClass="texto textoPeque12" value="#{bitacora.estatusOperacionAnterior}" />
+											</td>
+										</tr>
+									</table>
+							</rich:column>
+							<rich:column >				
+									<table width="100%">									
+										<tr>
+											<td align="center">
+												<h:outputText styleClass="texto textoPeque12" value="#{bitacora.estatusOperacionNueva}" />
+											</td>
+										</tr>
+									</table>
+							</rich:column>
+							<rich:column >				
+									<h:outputText styleClass="texto textoPeque12" value="#{bitacora.cveUsuarioOperador}"/>
+							</rich:column>
+							<rich:column >				
+									<h:outputText styleClass="texto textoPeque12" value="#{bitacora.fechaSolicitudOperador}">
+														<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm:ss" locale="es_MX" timeZone="America/Mexico_City"/>
+													</h:outputText>
+							</rich:column>
+							<rich:column >				
+									<h:outputText styleClass="texto textoPeque12" value="#{bitacora.cveUsuarioAutorizo}"/>
+							</rich:column>
+							<rich:column >				
+									<h:outputText styleClass="texto textoPeque12" value="#{bitacora.fechaSolicitudAutorizador}">
+														<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm:ss" locale="es_MX" timeZone="America/Mexico_City"/>
+													</h:outputText>
+							</rich:column>						
+							<rich:column >				
+									<h:outputText styleClass="texto textoPeque12" value="#{bitacora.descEstatusBitacora}"/>
+							</rich:column>		
+							
+							<rich:column colspan="14" breakBefore="true">								
+									<h:outputText styleClass="texto textoPeque12"
+														value="#{bitacora.motivoCambio}" />			   
+							</rich:column>					
+							
+							</rich:columnGroup>
+							<f:facet name="footer">
+									<h:outputText value="" />
+							</f:facet>										
+					</rich:dataTable>
+					
+					<table cellpadding="0" cellspacing="0" border="0" align="center"
+						width="900px">
+						<tr align="right">
+							<td align="right"><h:panelGroup id="botonesExportar">
+									<h:panelGroup
+										style="display: #{(not empty cambiaEdoOpsCambioBovedaBean.paginaVO.registros)? 'inline':'none'}">
+
+										<h:outputText value="Exportar los resultados"></h:outputText>
+									
+										<h:commandButton actionListener="#{cambiaEdoOpsCambioBovedaBean.generarReportesXls}"
+											action="cambiaEdoCambioBovHistorialPdf"
+											image="/images/pdf.gif"
+											title="Exportar a PDF todos los resultados de la consulta"
+											id="generarPdf"/>
+                           				&#160;&#160;
+                          				<h:commandButton
+											actionListener="#{cambiaEdoOpsCambioBovedaBean.generarReportesXls}"
+											action="cambiaEdoCambioBovHistorialXls"
+											image="/images/excel-file.gif"
+											title="Exportar a Excel todos los resultados de la consulta"
+											id="generarExcel" >											
+										</h:commandButton>
+									</h:panelGroup>
+								</h:panelGroup></td>
+						</tr>
+					</table>					
+					
+
+				</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define><!-- Fin seccionContenido -->
+
+	</ui:composition>
+
+	<!-- FIN DEL DECORATE -->
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xls="http://indeval.com/jsf/xls"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document documentName="calendarioEmisionesDeudaExt" documentTitle="Consulta de Emisiones"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        fecha="#{consultaBitacoraEnvOpBean.fechaActual}">
+
+        <xls:table value="#{calendarioEmisionesDeudaExtBean}" var="dummy">
+            <xls:row>
+                <xls:col header="#{etq.tv}" value="#{!empty calendarioEmisionesDeudaExtBean.tipoValor ? calendarioEmisionesDeudaExtBean.tipoValor : 'TODOS'}" align="center" />
+                <xls:col header="#{etq.emisoraMinus}" value="#{!empty calendarioEmisionesDeudaExtBean.emisora ? calendarioEmisionesDeudaExtBean.emisora : 'TODAS'}" align="center" />
+                <xls:col header="#{etq.serieMinus}" value="#{!empty calendarioEmisionesDeudaExtBean.serie ? calendarioEmisionesDeudaExtBean.serie : 'TODAS'}" align="center" />
+				<xls:col header="#{etq.cuponMinus}" value="#{!empty calendarioEmisionesDeudaExtBean.cupon ? calendarioEmisionesDeudaExtBean.cupon : 'TODOS'}" align="center" />                
+				<xls:col header="#{etq.isin}" value="#{!empty calendarioEmisionesDeudaExtBean.isin ? calendarioEmisionesDeudaExtBean.isin : 'TODOS'}" align="center"/>                
+				<xls:col header="#{etq.fechaCorteMinus}" value="#{!empty calendarioEmisionesDeudaExtBean.fechaCorte?calendarioEmisionesDeudaExtBean.fechaCorte:'TODAS'}" align="center" pattern="dd/MM/yyyy"/>
+				<xls:col header="#{etq.fechaPago}" value="#{!empty calendarioEmisionesDeudaExtBean.fechaPago?calendarioEmisionesDeudaExtBean.fechaPago:'TODAS'}" align="center" pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.divisaMinus}" value="#{calendarioEmisionesDeudaExtBean.selectedDivisa}" align="center" />
+                <xls:col header="#{etq.custodio}" value="#{calendarioEmisionesDeudaExtBean.selectedCustodio}" align="center" />
+                <xls:col header="#{etq.estatus}" value="#{calendarioEmisionesDeudaExtBean.selectedEstado}" align="center"/>
+                <xls:col header="#{etq.referencia}" value="#{!empty calendarioEmisionesDeudaExtBean.refCustodio?calendarioEmisionesDeudaExtBean.refCustodio:'TODAS'}" align="center"/>
+				<xls:col header="#{etq.caev}" value="#{calendarioEmisionesDeudaExtBean.selectedTipoPagoCAEV}" align="center" />
+				<xls:col header="#{etq.camv}" value="#{calendarioEmisionesDeudaExtBean.selectedTipoPagoCAMV}" align="center" />
+            </xls:row>
+        </xls:table>
+
+        <xls:subtitle value="#{etq.registrosEncontrados}: #{calendarioEmisionesDeudaExtBean.totalRegistros}" />
+
+        <xls:table value="#{calendarioEmisionesDeudaExtBean.paginaReportes.registros}" var="derecho">
+           <xls:row>
+				<xls:col header="#{etq.referencia}" value="#{derecho.referencia}" align="center" />
+				<xls:col header="#{etq.tv}" value="#{derecho.tipoValor}" align="center" />
+				<xls:col header="#{etq.emisoraMinus}" value="#{derecho.emisora}" align="center" />
+				<xls:col header="#{etq.serieMinus}" value="#{derecho.serie}" align="center" />
+				<xls:col header="#{etq.cuponMinus}" value="#{derecho.cupon}" align="center" />
+				<xls:col header="#{etq.isin}" value="#{derecho.isin}" align="center" />				
+				<xls:col header="#{etq.fechaCorteMinus}" value="#{derecho.fechaCorte}" align="center" pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.fechaPago}" value="#{derecho.fechaPago}" align="center"  pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.diasMensaje}" value="#{empty derecho.diasMensaje and derecho.has566 ? derecho.diasVerificacion : derecho.diasMensaje}" align="center" />				
+				<xls:col header="#{etq.tipoTasa}" value="#{derecho.tipoTasa}" align="center" />
+				<xls:col header="#{etq.tasaPorcentaje}" value="#{empty derecho.tasa and derecho.has566 ? derecho.tasaVerificacion : derecho.tasa}" align="center" />
+				<xls:col header="#{etq.factor}" value="#{empty derecho.factor and derecho.has566 ? derecho.factorVerificacion : derecho.factor}" align="center" />
+				<xls:col header="#{etq.valorNominalMinus}" value="#{derecho.valorNominal}" align="center" pattern="###,###,###,###,###,##0.00" />
+				<xls:col header="#{etq.divisaMinus}" value="#{derecho.divisa}" align="center" />	
+				<xls:col header="#{etq.custodio}" value="#{derecho.custodio.codigoBanco}" align="center" />			
+				<xls:col header="#{etq.estado}" value="#{derecho.estado.descripcion eq 'SUSPENDIDO' ? 'EN PROCESO' : derecho.estado.descripcion}" align="center" />
+			</xls:row> 
+        </xls:table>
+
+    </xls:document>
+</html>

@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:composition template="/layoutConsultas.xhtml" >
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/admonCustodiosDepositantes.js"></script>
+		</ui:define>
+
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.sistemaIntCot}" />
+		</ui:define>
+
+		<ui:define name="tituloEncabezado">
+			<h:outputText
+				value="#{etq.admonCustodiosDepositanes} - #{etq.buscarEmision}"></h:outputText>
+		</ui:define>
+
+		<ui:define name="criterios">					
+			<a4j:keepAlive beanName="admonCustodiosDepositantesController" />
+			<a4j:keepAlive beanName="admonCustodiosDepositantesDepLiqController" />
+			<a4j:keepAlive beanName="admonCustodiosDepositantesEmiController" />
+			<a4j:keepAlive beanName="admonCustodiosDepositantesConsultaEmiController" />
+			<a4j:keepAlive beanName="admonCustodiosDepositantesConsultaDepLiqController" />
+									
+			
+			<h:panelGroup id="mensajeUsuario">
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+				
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+				</div>
+			</h:panelGroup>
+			<h:panelGroup id="panelCriterios">
+        		<div style='display: "inline"' id="divCriterios">
+        			<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="center">
+        				<tr>
+	        				<td class="recuadroTabla">
+        						<table class="tablaCriterios">
+        							<tr align="center">
+        								<td nowrap="true" colspan="3" align="center">
+                                           	<b> <h:outputText styleClass="texto" value="#{etq.custodio}" /> </b>
+                                       	</td>
+                                       	<td nowrap="true" colspan="4" align="center">
+                                           	<b> <h:outputText styleClass="texto" value="#{etq.emisionMinus}" /> </b>
+                                       	</td>
+        							</tr>
+	        							<tr align="center">
+										<td>
+											<h:outputText styleClass="texto" value="#{etq.participanteMinus}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto" value="#{etq.cuentaMinus}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto" value="#{etq.nombreInstitucion}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto" value="#{etq.tv}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto" value="#{etq.emisoraMinus}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto" value="#{etq.serieMinus}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto" value="#{etq.formaOperar}" />
+										</td>
+									</tr>
+									<tr align="center">
+										<td>										
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="idFolioTraspasante" readonly="true"
+													value="#{admonCustodiosDepositantesConsultaEmiController.claveParticipante}" size="5"
+													maxlength="5" styleClass="textoControles" >
+												</h:inputText>
+											</h:panelGroup>
+
+										</td>
+										<td>
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="cuentaTraspasante"  readonly="true"
+													value="#{admonCustodiosDepositantesConsultaEmiController.cuentaParticipante}" size="4"
+													maxlength="4" styleClass="textoControles" />
+												<input type="hidden" id="nombre_id_folio_traspasante"
+													name="nombre_id_folio_traspasante"
+													value="daliForm:idFolioTraspasante" />												
+											</h:panelGroup>
+										</td>
+										<td>
+										<h:inputText autocomplete="off" id="nombreTraspasante" readonly="true"
+											value="#{admonCustodiosDepositantesConsultaEmiController.nombreCortoParticipante}" size="40"
+											maxlength="40" styleClass="textoControles" />
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="tv" 
+												value="#{admonCustodiosDepositantesConsultaEmiController.emisionVO.tv}" size="5"
+												maxlength="5" styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="10" />
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="emisora" 
+												value="#{admonCustodiosDepositantesConsultaEmiController.emisionVO.emisora}" size="10"
+												maxlength="10" styleClass="textoControles textoMayusculas" tabindex="20" />
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="serie" 
+												value="#{admonCustodiosDepositantesConsultaEmiController.emisionVO.serie}" size="10"
+												maxlength="10" styleClass="textoControles textoMayusculas" tabindex="30" />
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="formaOperar" 
+												value="#{admonCustodiosDepositantesConsultaEmiController.formaOperar}" size="5"
+												maxlength="4" styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="40" />
+										</td>								
+									</tr>
+        						</table>
+	        				</td>
+        				</tr>
+        			</table>
+        		</div>
+        	</h:panelGroup>
+        	<h:panelGroup id="panelResumen">
+        		<h:panelGroup rendered="true">
+        			<div id="divResumen" style="display: #{admonCustodiosDepositantesConsultaEmiController.consultaEmisionesEjecutada ? 'inline' : 'none'}">
+        				<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="center">
+        					<tr>
+        						<td class="recuadroTabla">
+        							<table class="tablaCriterios">
+	        							<tr align="center">
+	        								<td nowrap="true" colspan="3" align="center">
+                                            	<b> <h:outputText styleClass="texto" value="#{etq.custodio}" /> </b>
+                                        	</td>
+                                        	<td nowrap="true" colspan="4" align="center">
+                                            	<b> <h:outputText styleClass="texto" value="#{etq.emisionMinus}" /> </b>
+                                        	</td>
+	        							</tr>	        							
+	        							<tr align="center">
+											<td>
+												<h:outputText styleClass="texto" value="#{etq.participanteMinus}" />
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{etq.cuentaMinus}" />
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{etq.nombreInstitucion}" />
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{etq.tv}" />
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{etq.emisoraMinus}" />
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{etq.serieMinus}" />
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{etq.formaOperar}" />
+											</td>
+										</tr>
+										<tr align="center">
+											<td>
+												<h:outputText value="#{admonCustodiosDepositantesConsultaEmiController.claveParticipante}"/>
+											</td>
+											<td>
+												<h:outputText value="#{admonCustodiosDepositantesConsultaEmiController.cuentaParticipante}"/>
+											</td>
+											<td>
+												<h:outputText value="#{admonCustodiosDepositantesConsultaEmiController.nombreCortoParticipante}"/>
+											</td>
+											<td>
+												<h:outputText value="#{admonCustodiosDepositantesConsultaEmiController.emisionVO.tv}"/>
+											</td>
+											<td>
+												<h:outputText value="#{admonCustodiosDepositantesConsultaEmiController.emisionVO.emisora}"/>
+											</td>
+											<td>
+												<h:outputText value="#{admonCustodiosDepositantesConsultaEmiController.emisionVO.serie}"/>
+											</td>
+											<td>
+												<h:outputText value="#{admonCustodiosDepositantesConsultaEmiController.formaOperar}"/>
+											</td>
+										</tr>
+	        						</table>
+        						</td>
+        					</tr>
+        				</table>
+        			</div>
+        		</h:panelGroup>        	
+        	</h:panelGroup>		
+		</ui:define>
+		<ui:define name="seccionContenido">
+			<h:panelGroup id="containerResultados">
+				 <t:dataTable id="noExistenResultados" value="#{admonCustodiosDepositantesConsultaEmiController.paginaVO.registros}"
+	                styleClass="tablaGeneral" headerClass="tituloTabla" width="100%" footerClass="tituloTabla" border="0"
+	                cellpadding="3px" cellspacing="0px" columnClasses="everyColumn"
+	                rowClasses="renglonTablaUno, renglonTablaDos"
+	                rendered="#{empty admonCustodiosDepositantesConsultaEmiController.paginaVO.registros and admonCustodiosDepositantesConsultaEmiController.consultaEmisionesEjecutada}">
+
+	                <t:column>
+	                    <f:facet name="header">
+	                        <h:outputText value="#{etq.sinResultados}"></h:outputText>
+	                    </f:facet>
+	                </t:column>
+                </t:dataTable>
+                <h:panelGroup rendered="#{not empty admonCustodiosDepositantesConsultaEmiController.paginaVO.registros}">
+                	<table width="100%" border="0">
+                		<tr>
+							<td align="left" class="textoEstadoCuenta">
+								<a4j:commandLink id="control_bitacora_primero"
+									action="#{admonCustodiosDepositantesConsultaEmiController.irPrimeraPagina}"
+									rendered="#{admonCustodiosDepositantesConsultaEmiController.irAlPrimero}"
+									reRender="tablaResultados,botonesExportar,containerResultados">
+									<img
+										src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+										border="0" />
+								</a4j:commandLink>
+	
+								<a4j:commandLink id="control_bitacora_atras_fast"
+									action="#{admonCustodiosDepositantesConsultaEmiController.retrocederPaginasRapido}"
+									rendered="#{admonCustodiosDepositantesConsultaEmiController.retrocederRapido}"
+									reRender="containerResultados,tablaResultados,botonesExportar">
+									<img
+										src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+										border="0" />
+								</a4j:commandLink>
+	
+								<a4j:commandLink id="control_bitacora_atras"
+									action="#{admonCustodiosDepositantesConsultaEmiController.retrocederPagina}"
+									rendered="#{admonCustodiosDepositantesConsultaEmiController.retroceder}"
+									reRender="containerResultados,tablaResultados,botonesExportar">
+									<img
+										src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+										border="0" />
+								</a4j:commandLink>
+								<a4j:commandLink id="control_bitacora_adelante"
+									action="#{admonCustodiosDepositantesConsultaEmiController.avanzarPagina}"
+									rendered="#{admonCustodiosDepositantesConsultaEmiController.avanzar}"
+									reRender="containerResultados,tablaResultados,botonesExportar">
+									<img
+										src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+										border="0" />
+								</a4j:commandLink>
+	
+								<a4j:commandLink id="control_bitacora_adelante_fast"
+									action="#{admonCustodiosDepositantesConsultaEmiController.avanzarPaginasRapido}"
+									rendered="#{admonCustodiosDepositantesConsultaEmiController.avanzarRapido}"
+									reRender="containerResultados,tablaResultados,botonesExportar">
+									<img
+										src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+										border="0" />
+	
+								</a4j:commandLink>
+	
+								<a4j:commandLink id="control_bitacora_ultimo"
+									action="#{admonCustodiosDepositantesConsultaEmiController.irUltimaPagina}"
+									rendered="#{admonCustodiosDepositantesConsultaEmiController.irAlUltimo}"
+									reRender="containerResultados,tablaResultados,botonesExportar">
+									<img
+										src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+										border="0" />
+								</a4j:commandLink>
+	
+	
+								<br />
+								<h:outputText value="#{etq.mostrando}"
+									styleClass="textoResumen" />
+								<h:outputText value="#{admonCustodiosDepositantesConsultaEmiController.numeroPagina}"
+									styleClass="textoResumen" />
+								<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+								<h:outputText value="#{admonCustodiosDepositantesConsultaEmiController.totalPaginas}"
+									styleClass="textoResumen" />
+								<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+								&#160;&#160;&#160;
+								<h:outputText
+									value="#{admonCustodiosDepositantesConsultaEmiController.paginaVO.totalRegistros}"
+									styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+								&#160;
+								<h:outputText styleClass="textoResumen"
+									value="#{etq.registrosEncontrados}" />
+							</td>
+							<td align="right" class="textoEstadoCuenta">
+								<h:outputText escape="false" value="#{etq.registrosPorPagina}"
+									styleClass="textoResumen" />
+								<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+									value="#{admonCustodiosDepositantesConsultaEmiController.paginaVO.registrosXPag}">
+									<f:selectItem itemLabel="1" itemValue="1" />
+									<f:selectItem itemLabel="2" itemValue="2" />
+									<f:selectItem itemLabel="5" itemValue="5" />
+									<f:selectItem itemLabel="10" itemValue="10" />
+									<f:selectItem itemLabel="20" itemValue="20" />
+									<f:selectItem itemLabel="50" itemValue="50" />
+									<a4j:support event="onchange"
+										reRender="containerResultados,tablaResultados,botonesExportar,mensajeUsuario"
+										actionListener="#{admonCustodiosDepositantesConsultaEmiController.buscarEmisiones}" />
+								</h:selectOneMenu>
+							</td>
+						</tr>
+                	</table>
+				</h:panelGroup>
+				<h:panelGroup>				
+					<h:dataTable id="resultados"
+						value="#{admonCustodiosDepositantesConsultaEmiController.paginaVO.registros}"
+						var="sicEmision" 
+						rendered="#{not empty admonCustodiosDepositantesConsultaEmiController.paginaVO.registros}"
+						styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+						footerClass="tituloTabla" border="0" cellpadding="3px"
+						cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos">											
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.tv}" />
+							</f:facet>
+							<h:panelGroup>
+								<div class="columnaTexto">
+									<h:outputText value="#{sicEmision.emision.instrumento.claveTipoValor}"/>
+								</div>
+							</h:panelGroup>	
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.emisoraMinus}" />
+							</f:facet>
+							<h:panelGroup>
+								<div class="columnaTexto">
+									<h:outputText value="#{sicEmision.emision.emisora.clavePizarra}"/>
+								</div>
+							</h:panelGroup>	
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.serieMinus}" />
+							</f:facet>
+							<h:panelGroup>
+								<div class="columnaTexto">
+									<h:outputText value="#{sicEmision.emision.serie}"/>
+								</div>
+							</h:panelGroup>	
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.formaOperar}" />
+							</f:facet>
+							<h:panelGroup>
+								<div class="columnaTexto">
+									<h:outputText value="#{sicEmision.formaOper}"/>
+								</div>
+							</h:panelGroup>	
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.estatus}"/>
+							</f:facet>
+							<h:panelGroup>
+								<div class="columnaTexto">
+									<h:outputText value="#{sicEmision.estatusRegistro}"/>
+								</div>
+							</h:panelGroup>
+						</h:column>
+						
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.accionesMinus}" />
+							</f:facet>
+						
+							<h:panelGroup>
+							
+								<div class="columnaTexto">							
+									<h:outputLink value="#{facesContext.externalContext.requestContextPath}/administracion/admonCustodiosDepEdicionEmision.faces">							
+										<f:param name="idEmision" value="#{sicEmision.idSicEmisiones}"/>
+										<f:param name="clave" value="#{admonCustodiosDepositantesConsultaEmiController.claveParticipante}"/>
+										<f:param name="cuenta" value="#{admonCustodiosDepositantesConsultaEmiController.cuentaParticipante}"/>
+										<f:param name="nombre" value="#{admonCustodiosDepositantesConsultaEmiController.nombreCortoParticipante}"/>
+										<h:outputText value="Editar"></h:outputText>
+									</h:outputLink>	
+									&#160;&#160;
+									<h:commandLink actionListener="#{admonCustodiosDepositantesConsultaEmiController.borrarEmisionById}" value="Borrar">
+										<f:attribute name="idSicEmision" value="#{sicEmision.idSicEmisiones}" />
+									</h:commandLink>																
+								</div>							
+							</h:panelGroup>
+						</h:column>												
+					</h:dataTable>
+				</h:panelGroup>							
+			</h:panelGroup>
+		</ui:define>
+		<ui:define name="botones">
+			<h:panelGroup id="botones">
+         		<div class="refrescar" style="float: left;">
+	        		 <a4j:status id="commonStatus">
+						<f:facet name="start">
+							<h:panelGroup>
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								<h:outputText value="#{etq.buscando}"></h:outputText>
+							</h:panelGroup>
+						</f:facet>
+					</a4j:status> 	
+	        	</div>
+	        	<div class="limpiar">
+	                <h:commandButton id="botonLimpiar" image="/images/transparent.gif" styleClass="submit" tabindex="60"
+	                    actionListener="#{admonCustodiosDepositantesConsultaEmiController.limpiarForma}"/>	               
+	            </div>
+	            <div class="buscar">
+	                <a4j:commandButton id="botonBuscar" image="/images/transparent.gif" styleClass="submit" tabindex="50"	                	
+	                	oncomplete='$j("#divCriterios").css("display","none");'
+	                    actionListener="#{admonCustodiosDepositantesConsultaEmiController.buscarEmisiones}"
+	                    reRender="botones,containerResultados,panelResumen">	 	                    	                   
+                    </a4j:commandButton>
+	            </div>
+	            
+	            <div class="editar" style="display:#{admonCustodiosDepositantesConsultaEmiController.consultaEmisionesEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios">            
+	            	<input type="image" class="submit"
+						src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+						alt="Editar Criterios" title="Editar Criterios"
+						onclick='javascript:presentarCriterios();return false;' 
+						tabindex="80"/>
+				</div>
+				<div class="cancelar" style="display:inline ;float:right;">
+	                <h:commandButton id="botonCancelar" image="/images/transparent.gif" 
+	                	styleClass="submit" tabindex="70"
+	                	actionListener="#{admonCustodiosDepositantesController.cancelar}"
+	                    action="regresaAdmonCustDep" />
+	            </div>
+        	</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</html>

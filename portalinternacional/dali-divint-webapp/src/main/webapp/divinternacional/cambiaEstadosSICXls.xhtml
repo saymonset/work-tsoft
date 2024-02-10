@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xls="http://indeval.com/jsf/xls"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+<xls:document documentName="CambioOperaciones" documentTitle="Solicitar Cambio de Estado"
+              landscape="true" >
+
+	<xls:table value="#{cambiaEstadoOperacionesBean}"
+			var="filtro">
+			<xls:row>
+				<xls:col align="center"  value="#{etq.institucionMinus}:" oddColorDark="true"/>
+				<xls:col align="center"  value="#{cambiaEstadoOperacionesBean.agenteFirmado.id} #{cambiaEstadoOperacionesBean.agenteFirmado.folio} #{cambiaEstadoOperacionesBean.agenteFirmado.razon}" />
+			</xls:row>
+			<xls:row>
+				<xls:col align="center"  	value="#{etq.fechaMinus}:" />
+				<xls:col align="center"		value="#{cambiaEstadoOperacionesBean.fechaActual}" pattern="dd/MM/yyyy" />
+			</xls:row>
+	</xls:table>
+
+	<xls:subtitle value="Filtros"/>
+	<xls:table value="#{cambiaEstadoOperacionesBean}"
+			var="filtro">
+			<xls:row>
+				<xls:col align="center" collspan="1" header="#{etq.folioControl}"
+					value="#{cambiaEstadoOperacionesBean.foliosConcatComa}" />			
+			</xls:row>
+	</xls:table>	
+	
+	<xls:table value="#{cambiaEstadoOperacionesBean}"  
+			var="filtro">
+			<xls:row >
+			<xls:col align="center" collspan="2" header="Total de Registros" 
+					value="#{cambiaEstadoOperacionesBean.resultados.totalRegistros}" />
+			</xls:row>
+	</xls:table>
+				
+	<xls:subtitle value="Datos"/>
+    <xls:table value="#{cambiaEstadoOperacionesBean.resultados.registros}" var="bitacora" borraLista="false">
+        <xls:row>       			 
+        	<xls:col collspan="1" header="#{etq.folioControl}" value="#{bitacora.folioControl}"
+        			 align="CENTER"/>
+			<xls:col collspan="1" header="#{etq.id}" value="#{bitacora.cuentaNombrada.institucion.tipoInstitucion.claveTipoInstitucion}"
+        			 align="CENTER"/>        			 
+    		<xls:col collspan="1" header="#{etq.folioMinus}" value="#{bitacora.cuentaNombrada.institucion.folioInstitucion}" 
+    			align="CENTER"/>
+    			<xls:col collspan="1" header="#{etq.custodio}" value="#{bitacora.catBic.detalleCustodio}"
+        			 align="CENTER"/>
+        	<xls:col collspan="1" header="#{etq.tv} #{etq.emisoraMinus} #{etq.serieMinus} #{etq.cuponMinus} #{etq.isin}" 
+        		value="#{bitacora.emision.instrumento.claveTipoValor}  #{bitacora.emision.emisora.clavePizarra} #{bitacora.emision.serie} 
+        	 	#{bitacora.claveCupon} #{bitacora.emision.isin}"
+        			 align="CENTER"/>
+     	    <xls:col collspan="1" header="#{etq.cantidadOperada}" value="#{bitacora.cantidadTitulos}"
+        			 align="CENTER"/>		 
+    		<xls:col collspan="1" header="#{etq.estatusActual}" value="#{bitacora.estatusOperacion.descEstatusOperacion}"
+        			 align="CENTER"/>   
+      		<xls:col collspan="1" header="#{etq.estatusNuevo}" value="#{bitacora.bitacoraOperacionesSic.estatusOperacion.descEstatusOperacion}"
+        			 align="CENTER" rendered="#{empty cambiaEstadoOperacionesBean.paginaParcialidadesVO.registros}" />           		 
+        			 		 	 		 		 
+        </xls:row>      
+    </xls:table>
+    
+	<xls:subtitle value="Parcialidades" rendered="#{not empty cambiaEstadoOperacionesBean.paginaParcialidadesVO.registros}"/>
+    <xls:table value="#{cambiaEstadoOperacionesBean.paginaParcialidadesVO.registros}" var="detalle" borraLista="false"
+    			rendered="#{not empty cambiaEstadoOperacionesBean.paginaParcialidadesVO.registros}">
+        <xls:row>       			 
+        	<xls:col collspan="1" header="#{etq.folioControl}" value="#{detalle.folioControlLiquidacion}" align="CENTER"/>
+			<xls:col collspan="1" header="#{etq.fechaHoraLiquidacionRVEX}" value="#{detalle.fechaLiquidacion}" align="CENTER"/>        			 
+    		<xls:col collspan="1" header="#{etq.parcialLiquidado}" value="#{detalle.parcialLiquidado}"  align="CENTER"/>
+    		<xls:col collspan="1" header="#{etq.remanente}" value="#{detalle.remanente}" align="CENTER"/>
+     	    <xls:col collspan="1" header="#{etq.estatusParcialidad}" value="#{detalle.estatusOperacion.descEstatusOperacion}" align="CENTER"/>
+    		<xls:col collspan="1" header="#{etq.estatusNuevo}" value="" align="CENTER"/>
+        			 		 	 		 		 
+        </xls:row>      
+    </xls:table>
+</xls:document>
+</html>

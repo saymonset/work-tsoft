@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:pdf="http://indeval.com/jsf/pdf"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="conciliacionesIntDetalle" documentTitle="Conciliacion Internacional"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        landscape="true" fecha="#{consultaBitacoraEnvOpBean.fechaActual}"
+        imageResource="/images/indeval.jpg">
+        <pdf:table value="detalleConciliacionesIntBean" currentBean="emision" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{detalleConciliacionesIntBean}" currentBean="emision" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.folioConciliacionMinus}" value="#{!empty detalleConciliacionesIntBean.folio ? detalleConciliacionesIntBean.folio : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.fechaMensajeInicio}" value="#{detalleConciliacionesIntBean.fechaMensajeInicio}" align="center" rendered="#{!empty detalleConciliacionesIntBean.fechaMensajeInicio}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaMensajeInicio}" value="TODAS" rendered="#{empty detalleConciliacionesIntBean.fechaMensajeInicio}" align="center">
+				     <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+                <pdf:col header="#{etq.fechaMensajeFin}" value="#{detalleConciliacionesIntBean.fechaMensajeFin }" align="center" rendered="#{!empty detalleConciliacionesIntBean.fechaMensajeFin }">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaMensajeFin}" value="TODAS" rendered="#{empty detalleConciliacionesIntBean.fechaMensajeFin}" align="center">
+				     <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+                <pdf:col header="#{etq.custodio}" value="#{!empty detalleConciliacionesIntBean.custodio ?  detalleConciliacionesIntBean.selectedCustodio : 'NA'}" align="center" />
+                <pdf:col header="#{etq.bovedaDaliMinus}" value="#{!empty detalleConciliacionesIntBean.boveda ? detalleConciliacionesIntBean.selectedBoveda : 'NA'}" align="center" />
+                
+                <pdf:col header="#{etq.fechaConciliacionInicio}" value="#{detalleConciliacionesIntBean.fechaConciliacionInicio}" align="center" rendered="#{!empty detalleConciliacionesIntBean.fechaConciliacionInicio}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaConciliacionInicio}" value="TODAS" rendered="#{empty detalleConciliacionesIntBean.fechaConciliacionInicio}" align="center">
+				    <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+                <pdf:col header="#{etq.fechaConciliacionFin}" value="#{detalleConciliacionesIntBean.fechaConciliacionFin }" align="center" rendered="#{!empty detalleConciliacionesIntBean.fechaConciliacionFin }">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaConciliacionFin}" value="TODAS" rendered="#{empty detalleConciliacionesIntBean.fechaConciliacionFin}" align="center">
+				    <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+                <pdf:col header="#{etq.conDiferencia}" value="#{!empty detalleConciliacionesIntBean.conDiferencia  ? (detalleConciliacionesIntBean.conDiferencia ? 'Si' : 'No') : 'NA'}"  align="center"/>
+                <pdf:col header="#{etq.tv}" value="#{!empty detalleConciliacionesIntBean.tipoValor ? detalleConciliacionesIntBean.tipoValor : 'TODOS'}" align="center" />                  
+				<pdf:col header="#{etq.emisoraMinus}" value="#{!empty detalleConciliacionesIntBean.emisora ? detalleConciliacionesIntBean.emisora : 'TODOS'}" align="center" />
+				<pdf:col header="#{etq.serieMinus}" value="#{!empty detalleConciliacionesIntBean.serie ? detalleConciliacionesIntBean.serie : 'TODOS'}" align="center" />
+				<pdf:col header="#{etq.isin}" value="#{!empty detalleConciliacionesIntBean.isin ? detalleConciliacionesIntBean.isin : 'TODOS'}" align="center" />				
+            </pdf:row>
+        </pdf:table>
+        
+        <pdf:br/>
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{detalleConciliacionesIntBean.paginaReportes.totalRegistros}"/>
+        <pdf:br/>
+
+        <pdf:table value="#{detalleConciliacionesIntBean.paginaReportes.registros}" currentBean="conciliacion">
+            <pdf:row>
+				<pdf:col header="#{etq.fechaMensaje}" value="#{conciliacion.fechaMensaje}" align="center" rendered="#{!empty conciliacion.fechaMensaje}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaMensaje}" value="N/A" align="center" rendered="#{empty conciliacion.fechaMensaje}" />
+				
+				
+				<pdf:col header="#{etq.fechaConciliacionMinus}" value="#{conciliacion.fechaConciliacion}" align="center" rendered="#{!empty conciliacion.fechaConciliacion}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaConciliacionMinus}" value="N/A" align="center" rendered="#{empty conciliacion.fechaConciliacion}" />
+				
+				
+				<pdf:col header="#{etq.folioConciliacionMinus}" value="#{conciliacion.conciliacion}" align="center" />
+				
+				<pdf:col header="#{etq.custodio}" value="#{conciliacion.custodio.codigoBanco}" align="center" rendered="#{(!empty conciliacion.custodio) and (!empty conciliacion.custodio.codigoBanco) }"/>
+				<pdf:col header="#{etq.custodio}" value="N/A" align="center" rendered="#{(empty conciliacion.custodio) or (empty conciliacion.custodio.codigoBanco) }"/>
+				
+				<pdf:col header="#{etq.cuentasMinus}" value="#{conciliacion.cuentas}" align="center" />
+				
+				<pdf:col header="#{etq.tv}" value="#{conciliacion.tv}" align="center" />
+				
+				<pdf:col header="#{etq.emisoraMinus}" value="#{conciliacion.emisora}" align="center" />
+				
+				<pdf:col header="#{etq.serieMinus}" value="#{conciliacion.serie}" align="center" />
+				
+				<pdf:col header="#{etq.isin}" value="#{conciliacion.isin}" align="center" />
+				
+				<pdf:col header="#{etq.posAVAI}" value="#{conciliacion.posAVAI}" align="right"  >
+					<f:convertNumber pattern="###,###,###,###,###,##0.######" />
+				</pdf:col>
+				
+				<pdf:col header="#{etq.posNAVL}" value="#{conciliacion.posNAVL}" align="right"  >
+					<f:convertNumber pattern="###,###,###,###,###,##0.######" />
+				</pdf:col>
+				
+				<pdf:col header="#{etq.posBLOK}" value="#{conciliacion.posBLOK}" align="right"  >
+					<f:convertNumber pattern="###,###,###,###,###,##0.######" />
+				</pdf:col>
+				
+				<pdf:col header="#{etq.posBLCA}" value="#{conciliacion.posBLCA}" align="right"  >
+					<f:convertNumber pattern="###,###,###,###,###,##0.######" />
+				</pdf:col>
+				
+				<pdf:col header="#{etq.posPEND}" value="#{conciliacion.posPEND}" align="right"  >
+					<f:convertNumber pattern="###,###,###,###,###,##0.######" />
+				</pdf:col>
+				
+				<pdf:col header="#{etq.posPENR}" value="#{conciliacion.posPENR}" align="right"  >
+					<f:convertNumber pattern="###,###,###,###,###,##0.######" />
+				</pdf:col>
+				
+				<pdf:col header="#{etq.posAGGR}" value="#{conciliacion.posicionMensaje}" align="right" rendered="#{!empty conciliacion.posicionMensaje}">
+					<f:convertNumber pattern="###,###,###,###,###,##0.######" />
+				</pdf:col>
+				<pdf:col header="#{etq.posicionMensaje}" value="N/A" align="right" rendered="#{empty conciliacion.posicionMensaje}"/>
+				
+				
+				<pdf:col header="#{etq.posicionDali}" value="#{conciliacion.posicionDali}" align="right" rendered="#{!empty conciliacion.posicionDali}"  >
+					<f:convertNumber pattern="###,###,###,###,###,##0" />
+				</pdf:col>
+				<pdf:col header="#{etq.posicionDali}" value="N/A" align="right" rendered="#{empty conciliacion.posicionDali}"  />
+				
+				
+				<pdf:col header="#{etq.bovedaDaliMinus}" value="#{conciliacion.boveda.nombreCorto}" align="center" rendered ="#{(!empty conciliacion.boveda) and (!empty conciliacion.boveda.nombreCorto) }" />
+				<pdf:col header="#{etq.bovedaDaliMinus}" value="#{conciliacion.boveda.nombreCorto}" align="center" rendered ="#{(empty conciliacion.boveda) or (empty conciliacion.boveda.nombreCorto) }" />
+				
+				<pdf:col header="#{etq.diferencia}" value="#{conciliacion.diferencia}" align="right"  rendered="#{!empty conciliacion.diferencia}" >
+					<f:convertNumber pattern="###,###,###,###,###,##0.######" />
+				</pdf:col>
+				<pdf:col header="#{etq.diferencia}" value="N/A" align="right"  rendered="#{empty conciliacion.diferencia}" />
+				
+				<pdf:col header="#{etq.existencia}" value="#{conciliacion.existenciaCompleto}" align="center" />
+				
+			</pdf:row>
+        </pdf:table>
+
+    </pdf:document>
+</html>

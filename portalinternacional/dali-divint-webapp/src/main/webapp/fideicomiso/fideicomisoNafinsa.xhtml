@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich" xmlns:t="http://myfaces.apache.org/tomahawk">
+    <!-- DECORATE -->
+
+    <ui:composition template="/layoutConsultas.xhtml">
+    
+   		<ui:define name="head">
+            <script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/fideicomiso.js"></script>
+        </ui:define>
+        
+        <ui:define name="tituloSeccion">
+            <h:outputText value="#{etq.divisionInternacional}" />
+        </ui:define>
+        
+        <ui:define name="subtituloSeccion">
+            <h:outputText value="#{etq.sistemaIntCot}" />
+        </ui:define>
+
+        <ui:define name="tituloEncabezado">
+            <h:outputText value="#{etq.fideicomisoMinus}"></h:outputText>
+        </ui:define>
+        
+        <ui:define name="criterios">
+        	<a4j:keepAlive beanName="fideicomisoNafinsaController" />
+        	<h:outputText id="init" value="#{fideicomisoNafinsaController.init}"/>
+        	
+        	<h:panelGroup id="mensajeUsuario">
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+				
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+				</div>
+			</h:panelGroup>
+			
+        	<h:panelGroup id="panelCriterios">
+        		<div style='display: "inline"' id="divCriterios">
+        			<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="center">
+        				<tr>
+        					<td class="recuadroTabla">
+        						<table class="tablaCriterios">
+        							<tr align="center">
+                                        <td nowrap="true" colspan="2" align="center">
+                                            <b> <h:outputText styleClass="texto" value="#{etq.agenteFirmado}" /> </b>
+                                        </td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td>
+                                            <h:outputText styleClass="texto" value="#{etq.participante}" />
+                                        </td>
+                                        <td>
+                                            <h:outputText styleClass="texto" value="#{etq.cuentasMinus}" />
+                                        </td>
+                                        <td>
+                                        	<h:outputText styleClass="texto" value="#{etq.tipoMinus}" />
+                                        </td>
+                                        <td>
+                                        	<h:outputText styleClass="texto" value="#{etq.fechaMinus}" />
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr align="center">
+                                    	<td>
+                                    		<h:panelGroup>
+                                    			<h:outputText id="idFolioTraspasante"
+                                                    value="#{fideicomisoNafinsaController.agente.id} #{fideicomisoNafinsaController.agente.folio}" />
+                                    		</h:panelGroup>
+                                    	</td>
+                                    	<td>
+                                    		<h:panelGroup>
+                                    			<h:outputText id="cuentas" value="#{fideicomisoNafinsaController.cuentas}"/>
+                                    		</h:panelGroup>
+                                    	</td>                                    	
+                                    	<td>
+                                    		<h:panelGroup>
+                                    			<h:outputText id="tipo" value="#{fideicomisoNafinsaController.tipo1} #{fideicomisoNafinsaController.tipo2}"/>                                    			
+                                    		</h:panelGroup>                                    		
+                                    	</td>
+                                    	<td>
+											<rich:calendar id="fecha" 
+												value="#{fideicomisoNafinsaController.fechaConsulta}"
+												datePattern="dd/MM/yyyy"
+												inputSize="11"
+												inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;"
+												isDayEnabled="isDayEnabled" />
+                                    	</td>                                                                        	
+                                    </tr>
+        						</table>
+        					</td>
+        				</tr>
+        			</table>
+        		</div>
+        	</h:panelGroup>
+        	
+        	<h:panelGroup id="panelResumen">
+        		<h:panelGroup rendered="true">
+        			<div id="divResumen" style="display: #{fideicomisoNafinsaController.consultaEjecutada ? 'inline' : 'none'}">
+        				<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="center">
+        					<tr>
+	        					<td class="recuadroTabla">
+	        						<table class="tablaCriterios">
+	        							<tr align="center">
+	                                        <td nowrap="true" colspan="2" align="center">
+	                                            <b> <h:outputText styleClass="texto" value="#{etq.agenteFirmado}" /> </b>
+	                                        </td>
+	                                    </tr>
+	                                    <tr align="center">
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{etq.participante}" />
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{etq.cuentasMinus}" />
+	                                        </td>
+	                                        <td>
+	                                        	<h:outputText styleClass="texto" value="#{etq.tipoMinus}" />
+	                                        </td>
+	                                        <td>
+	                                        	<h:outputText styleClass="texto" value="#{etq.fechaMinus}" />
+	                                        </td>
+	                                    </tr>
+	                                    
+	                                    <tr align="center">
+	                                    	<td>
+                                    			<h:outputText value="#{fideicomisoNafinsaController.agente.id}#{fideicomisoNafinsaController.agente.folio}" />	                                    		
+	                                    	</td>
+	                                    	<td>	                                    		
+                                    			<h:outputText value="#{fideicomisoNafinsaController.cuentas}"/>	                                    		
+	                                    	</td>                                    	
+	                                    	<td>	                                    		
+                                    			<h:outputText  value="#{fideicomisoNafinsaController.tipo1} #{fideicomisoNafinsaController.tipo2}"/>                                    				                                    		                                    	
+	                                    	</td>
+	                                    	<td>
+	                                    		<h:outputText value="#{fideicomisoNafinsaController.fechaConsulta}" converter="formatoFechaCortaConverter" />
+	                                    	</td>                                                                        	
+	                                    </tr>
+	        						</table>
+	        					</td>
+        					</tr>
+        				</table>
+        			</div>
+        		</h:panelGroup>        		        
+        	</h:panelGroup>
+        </ui:define>
+        
+        <ui:define name="seccionContenido">
+         	 <h:panelGroup id="containerResultados">         	 
+         	 	<t:dataTable id="noExistenResultados" value="#{fideicomisoNafinsaController.listaFideicomisos}"
+	                styleClass="tablaGeneral" headerClass="tituloTabla" width="100%" footerClass="tituloTabla" border="0"
+	                cellpadding="3px" cellspacing="0px" columnClasses="everyColumn"
+	                rowClasses="renglonTablaUno, renglonTablaDos"
+	                rendered="#{empty fideicomisoNafinsaController.agenteFideicomisoActual.agenteFideicomisoVOs and fideicomisoNafinsaController.consultaEjecutada}">
+
+	                <t:column>
+	                    <f:facet name="header">
+	                        <h:outputText value="#{etq.sinResultados}"></h:outputText>
+	                    </f:facet>
+	
+	                </t:column>
+                </t:dataTable>
+                
+         	 	<h:panelGroup rendered="#{!empty fideicomisoNafinsaController.listaFideicomisos and fideicomisoNafinsaController.consultaEjecutada}">
+         	 		<h:panelGroup>
+         	 			<h:outputText value="#{etq.mostrando}"
+									styleClass="textoResumen" />
+						<h:outputText value="#{fideicomisoNafinsaController.indiceEmisionActual+1}"
+									styleClass="textoResumen" />
+						<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+						<h:outputText value="#{fideicomisoNafinsaController.totalEmisiones}"
+									styleClass="textoResumen" />
+						<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+							&#160;&#160;&#160;
+						<h:outputText
+							value="#{fideicomisoNafinsaController.totalEmisiones}"
+							styleClass="textoResumen"></h:outputText>
+								&#160;
+						<h:outputText styleClass="textoResumen"
+								value="#{etq.registrosEncontrados}" />
+         	 		</h:panelGroup>
+                   	<h:panelGrid columns="3" cellspacing="5" rendered="true" styleClass="recuadroTabla">
+                   		<a4j:commandButton rendered="#{fideicomisoNafinsaController.indiceEmisionActual ge 1}"
+							value="#{etq.menorQue}"  actionListener="#{fideicomisoNafinsaController.emisionAnterior}"
+							reRender="containerResultados,panelClaveValor,botonesExportar" image="/images/control_atras.png"/>	
+						<h:panelGrid columns="2" columnClasses="columnaCentral"  >
+							<t:outputText styleClass="tablaItem" value="Emision"/>
+							<t:outputText styleClass="granTotal" value="[#{fideicomisoNafinsaController.emisionActual.tv} #{fideicomisoNafinsaController.emisionActual.emisora} #{fideicomisoNafinsaController.emisionActual.serie} #{fideicomisoNafinsaController.emisionActual.cupon} #{fideicomisoNafinsaController.emisionActual.alta}]"/>
+						</h:panelGrid>
+                    	<a4j:commandButton rendered="#{fideicomisoNafinsaController.indiceEmisionActual lt (fideicomisoNafinsaController.totalEmisiones-1)}"
+							value="#{etq.mayorQue}"  actionListener="#{fideicomisoNafinsaController.emisionSiguiente}"
+							reRender="containerResultados,panelClaveValor,botonesExportar" image="/images/control_adelante.png"/>
+                   	</h:panelGrid>
+                   	                  
+         	 		<h:panelGrid columns="2" border="0">
+         	 		
+         	 			<h:panelGrid id="panelClaveValor" columns="4" 
+         	 				headerClass="tituloTabla"
+         	 				rowClasses="renglonTablaUno" rendered="#{not empty fideicomisoNafinsaController.emisionActual}">
+         	 				<f:facet name="header">
+         	 					<h:outputText value="#{etq.claveVal}" />
+         	 				</f:facet>
+         	 				
+         	 				
+         	 				<h:outputText value="#{etq.tv}" styleClass="recuadroTabla"/>
+         	 				<h:outputText value="#{etq.emisoraMinus}" styleClass="recuadroTabla"/>
+         	 				<h:outputText value="#{etq.serieMinus}" styleClass="recuadroTabla"/>
+         	 				<h:outputText value="#{etq.cuponMinus}" styleClass="recuadroTabla"/>
+         	 				
+         	 				
+         	 				<h:outputText value="#{fideicomisoNafinsaController.emisionActual.tv}"/>
+         	 				<h:outputText value="#{fideicomisoNafinsaController.emisionActual.emisora}"/>
+         	 				<h:outputText value="#{fideicomisoNafinsaController.emisionActual.serie}"/>
+         	 				<h:outputText value="#{fideicomisoNafinsaController.emisionActual.cupon}"/>         	 				
+         	 			</h:panelGrid>
+         	 			
+         	 			<h:panelGrid id="panelAlta" columns="3"         	 				
+         	 				rowClasses="renglonTablaUno">
+         	 				<f:facet name="header">
+								<h:outputText value="." style="color:white" />
+							</f:facet>
+							<h:outputText value="#{etq.altaMinus}" styleClass="recuadroTabla"/>
+         	 				<h:outputText value="#{etq.ultimoHecho}" styleClass="recuadroTabla"/>
+         	 				<h:outputText value="#{etq.valorNominalMinus}" styleClass="recuadroTabla"/>         	 				
+							         	 				
+							<h:outputText value="#{fideicomisoNafinsaController.emisionActual.alta}"/>
+         	 				<h:outputText value="#{fideicomisoNafinsaController.emisionActual.ultimoHecho}"/>
+         	 	
+       	 					<h:panelGroup>
+  	 							<div class="columnaMoneda">
+     	 							<h:outputText value="#{fideicomisoNafinsaController.emisionActual.valorNominal}"/>
+  	 							</div>      	 												         	 			
+         	 				</h:panelGroup>
+         	 			</h:panelGrid>         	 			         	 			         	 		
+         	 		</h:panelGrid>
+         	 		<h:panelGroup>
+         	 			<table width="900px">
+					 		<tr>
+					 			<td colspan="2">
+					 				<h:panelGroup id="panelArqueos">
+         	 							<h:panelGroup rendered="#{!empty fideicomisoNafinsaController.agenteFideicomisoActual.agenteFideicomisoVOs and fideicomisoNafinsaController.consultaEjecutada}">
+       	 								<h:dataTable value="#{fideicomisoNafinsaController.agenteFideicomisoActual.agenteFideicomisoVOs}" var="item"
+					       	 				headerClass="tituloTabla"
+					       	 				footerClass="tituloTabla" 
+					       	 				rowClasses="renglonTablaUno, renglonTablaDos" width="100%">
+       	 									<h:column>
+				       	 						<f:facet name="header">
+				       	 							<h:outputText value="#{etq.idMinus} #{etq.agente}"/>         	 							
+				       	 						</f:facet>
+				       	 						<h:panelGroup>
+				       	 							<div class="columnaTexto">
+		        	 									<h:outputText value="#{item.id}"/>
+		        	 								</div>
+				       	 						</h:panelGroup>
+				       	 					</h:column>
+				       	 					<h:column>
+				       	 						<f:facet name="header">
+				       	 							<h:outputText value="#{etq.folioMinus} #{etq.agente}"/>         	 							
+				       	 						</f:facet>
+				       	 						<h:panelGroup>
+				       	 							<div class="columnaTexto">
+				        	 							<h:outputText value="#{item.folio}"/>
+				        	 						</div>
+				        	 					</h:panelGroup>
+				       	 					</h:column>
+				       	 					<h:column>
+				       	 						<f:facet name="header">
+				       	 							<h:outputText value="#{etq.cuentaMinus} #{etq.agente}"/>         	 							
+				       	 						</f:facet>
+				       	 						<h:panelGroup>
+				       	 							<div class="columnaTexto">
+				        	 							<h:outputText value="#{item.cuenta}"/>
+				        	 						</div>	         	 				
+				        	 					</h:panelGroup>
+				       	 					</h:column>         	 					
+				       	 					<h:column>
+				       	 						<f:facet name="header">
+				       	 							<h:outputText value="#{etq.nombreCorto}"/>         	 							
+				       	 						</f:facet>
+				       	 						<h:panelGroup>
+				       	 							<div class="columnaTexto">
+				        	 							<h:outputText value="#{item.nombreCorto}"/>
+				        	 						</div>
+				        	 					</h:panelGroup>
+				        	 					<f:facet name="footer">
+				        	 						<h:outputText value="#{etq.totalCveNumAgentes} #{fideicomisoNafinsaController.agenteFideicomisoActual.totalAgentes}"/>
+				        	 					</f:facet>	         	 					
+				       	 					</h:column>         	 					
+				       	 					<h:column>
+				       	 						<f:facet name="header">
+				       	 							<h:outputText value="#{etq.posicionActual}"/>         	 							
+				       	 						</f:facet>
+				       	 						<h:panelGroup>
+			       	 							<div class="columnaMoneda">
+			        	 							<h:outputText value="#{item.posicionActual}" converter="formatoEnteroConverter"/>
+			       	 							</div>
+				        	 					</h:panelGroup>
+				        	 					<f:facet name="footer">
+				       	 							<h:panelGroup>
+					         	 						<div class="columnaMoneda">
+					         	 							<h:outputText value="#{fideicomisoNafinsaController.agenteFideicomisoActual.totalPosicionActual}" converter="formatoEnteroConverter"/>
+					       	 							</div>
+			       	 								</h:panelGroup>
+			        	 						</f:facet>
+        	 					
+       	 									</h:column>
+				       	 					<h:column>
+				       	 						<f:facet name="header">
+	       	 										<h:outputText value="#{etq.valuacionMercadoMinus}"/>         	 							
+	       	 									</f:facet>
+	       	 									<h:panelGroup>
+				       	 							<div class="columnaMoneda">
+				        	 							<h:outputText value="#{item.valuacionMercado}" converter="formatoEnteroConverter"/>
+				       	 							</div>
+	      	 									</h:panelGroup>
+			        	 						<f:facet name="footer">
+					       	 						<h:panelGroup>
+					         	 						<div class="columnaMoneda">
+					         	 							<h:outputText value="#{fideicomisoNafinsaController.agenteFideicomisoActual.totalValuacionMercadoActual}" converter="formatoEnteroConverter"/>
+					         	 						</div>
+	       	 										</h:panelGroup>
+	        	 								</f:facet>
+	       	 								</h:column>
+	       	 								<h:column rendered="#{fideicomisoNafinsaController.historico}">
+				       	 						<f:facet name="header">
+				       	 							<h:outputText value="#{etq.valuacionNominalMinus}"/>         	 							
+				       	 						</f:facet>
+				      	 						<h:panelGroup>
+				       	 							<div class="columnaMoneda">
+				        	 							<h:outputText value="#{item.valuacionNominal}" converter="formatoEnteroConverter"/>
+				        	 						</div>
+				        	 					</h:panelGroup>
+				        	 					<f:facet name="footer">
+				        	 						<h:panelGroup>
+				         	 						<div class="columnaMoneda">
+				         	 							<h:outputText value="#{fideicomisoNafinsaController.agenteFideicomisoActual.totalValuacionNominalActual}" converter="formatoEnteroConverter"/>
+				         	 						</div>
+				        	 						</h:panelGroup>
+				        	 					</f:facet>
+				       	 					</h:column>
+       	 								</h:dataTable>
+       	 							</h:panelGroup>
+       	 						</h:panelGroup>
+		 				  	</td>
+						  </tr>
+						  <tr>
+						  	<td align="center">
+						  		<h:panelGroup>
+		       	 					<table width="100%">
+		       	 						<tr>
+		       	 							<td class="tituloTabla">
+		       	 								<h:outputText value="#{etq.estadisticasAgente}"/>
+		       	 							</td>
+		       	 						</tr>
+		       	 						<tr>
+		       	 							<td align="center">
+		       	 								<h:dataTable value="#{fideicomisoNafinsaController.agenteFideicomisoActual.estadisticasFideicomisosPorAgenteVO}" 
+		       	 									var="itemEstAgente"
+		       	 									headerClass="recuadroTabla"  
+		       	 									rowClasses="renglonTablaUno, renglonTablaDos" width="100%">
+		       	 									<h:column>
+						       	 						<f:facet name="header">
+						       	 							<h:outputText value="#{etq.agente}"/>
+						       	 						</f:facet>
+						       	 						<h:panelGroup>
+				       	 									<div class="columnaTexto">						       	 		
+		       	 												<h:outputText value="#{itemEstAgente.agenteFideicomisoVO.id} #{itemEstAgente.agenteFideicomisoVO.folio} #{itemEstAgente.agenteFideicomisoVO.cuenta}"/>
+		       	 											</div>
+		       	 										</h:panelGroup>		       	 										
+						       	 					</h:column>
+						       	 					<h:column>
+						       	 						<f:facet name="header">
+						       	 							<h:outputText value="#{etq.porcentajeMinus}"/>
+						       	 						</f:facet>
+						       	 						<h:panelGroup>
+				       	 									<div class="columnaTexto">						       	 			
+						       	 								<h:outputText value="#{itemEstAgente.porcentaje} %"/>
+						       	 							</div>
+						       	 						</h:panelGroup>									       	 						
+						       	 					</h:column>
+		       	 								</h:dataTable>
+		       	 							</td>
+		       	 							<td>
+		       	 								<h:panelGroup>
+		       	 									<table width="100%">
+						       	 						<tr>
+						       	 							<td class="tituloTabla">
+						       	 								<h:outputText value="#{etq.estadisticasCuenta}"/>
+						       	 							</td>
+						       	 						</tr>
+						       	 						<tr>
+						       	 							<td>		       	 									       	 							
+										       	 				<h:dataTable value="#{fideicomisoNafinsaController.agenteFideicomisoActual.estadisticasFideicomisoPorCuentaVO}"
+										       	 					headerClass="recuadroTabla" 
+										       	 					var="itemCuenta" rowClasses="renglonTablaUno, renglonTablaDos"
+										       	 					width="100%">
+										       	 					<h:column>
+										       	 						<f:facet name="header">
+										       	 							<h:outputText value="#{etq.cuentaMinus}"/>
+										       	 						</f:facet>
+										       	 						<h:panelGroup>
+											       	 						<div class="columnaTexto">
+							       	 											<h:outputText value="#{itemCuenta.cuenta}"/>
+											       	 						</div>						       	 						
+										       	 						</h:panelGroup>						       	 		
+										       	 					</h:column>
+										       	 					<h:column>
+										       	 						<f:facet name="header">
+										       	 							<h:outputText value="#{etq.porcentajeMinus}"/>
+										       	 						</f:facet>
+										       	 						<h:panelGroup>
+											       	 						<div class="columnaTexto">						       	 			
+										       	 								<h:outputText value="#{itemCuenta.porcentaje} %"/>
+										       	 							</div>									       	 						
+										       	 						</h:panelGroup>
+										       	 					</h:column>
+										       	 				</h:dataTable>		       	 				
+						       	 							</td>		       	 								       	 					
+						       	 						</tr>
+		       	 									</table>
+		       	 								</h:panelGroup>
+		       	 							</td>
+		       	 						</tr>		       	 					
+		       	 					</table>
+	       	 					</h:panelGroup>			       	 						       	 						       	 			
+						  	</td>
+						  </tr>
+						  
+						</table>
+
+         	 		</h:panelGroup> 
+         	 		<h:panelGroup id="totalArqueos">                           
+	                 	<h:panelGroup rendered="#{!fideicomisoNafinsaController.historico}">
+	                 		<table width="100%">
+    	 						<tr>
+									<td colspan="2" class="tituloTabla">
+										<h:outputText value="#{etq.totalGralArqueo}"/>
+									</td>    	 									
+								</tr>
+								<tr align="center">
+									<td class="recuadroTabla">
+										<b><h:outputText value="#{etq.numEmisiones}"/></b>
+									</td>
+									<td class="recuadroTabla">
+										<b><h:outputText value="#{etq.saldoMinus}"/></b>
+									</td>
+								</tr>
+								<tr>
+									<td class="recuadroTabla">
+										<div class="columnaTexto">
+											<h:outputText value="#{fideicomisoNafinsaController.agenteFideicomisoActual.totalEmisiones}" converter="formatoEnteroConverter"/>
+										</div>
+									</td>
+									
+									<td class="recuadroTabla">
+										<div class="columnaMoneda">
+	                 						<h:outputText value="#{fideicomisoNafinsaController.agenteFideicomisoActual.saldoTotal}" converter="formatoEnteroConverter"/>
+	                 					</div>
+									</td>
+								</tr>		       	 								
+		       	 			</table>	                 		
+	                 	</h:panelGroup>
+	                 	
+	                 	<h:panelGroup rendered="#{fideicomisoNafinsaController.historico}">
+	                 		<table width="100%">
+    	 						<tr>
+									<td colspan="4" class="tituloTabla">
+										<h:outputText value="#{etq.totalGralArqueo}"/>
+									</td>    	 									
+								</tr>
+								<tr align="center">
+									<td class="recuadroTabla">
+										<b><h:outputText value="#{etq.numEmisiones}"/></b>
+									</td>
+									<td class="recuadroTabla">
+										<b><h:outputText value="#{etq.saldoMinus}"/></b>
+									</td>
+									<td class="recuadroTabla">
+										<b><h:outputText value="#{etq.totalValMercado}"/></b>
+									</td>
+									<td class="recuadroTabla">
+										<b><h:outputText value="#{etq.totalValNominal}"/></b>
+									</td>
+								</tr>
+								<tr>
+									<td class="recuadroTabla">
+										<div class="columnaTexto">
+											<h:outputText value="#{fideicomisoNafinsaController.agenteFideicomisoActual.totalEmisiones}" converter="formatoEnteroConverter"/>
+										</div>
+									</td>
+									
+									<td class="recuadroTabla">
+										<div class="columnaMoneda">
+	                 						<h:outputText value="#{fideicomisoNafinsaController.agenteFideicomisoActual.saldoTotal}" converter="formatoEnteroConverter"/>
+	                 					</div>
+									</td>
+									
+									<td class="recuadroTabla">
+										<div class="columnaMoneda">
+	                 						<h:outputText value="#{fideicomisoNafinsaController.agenteFideicomisoActual.totalValuacionMercado}" converter="formatoEnteroConverter"/>
+	                 					</div>
+									</td>
+									
+									<td class="recuadroTabla">
+										<div class="columnaMoneda">
+	                 						<h:outputText value="#{fideicomisoNafinsaController.agenteFideicomisoActual.totalValuacionNominal}" converter="formatoEnteroConverter"/>
+	                 					</div>
+									</td>
+								</tr>		       	 								
+		       	 			</table>		       	 				                 			                 	
+	                 	</h:panelGroup>                                                                          	
+                	 </h:panelGroup>                 
+         	 	</h:panelGroup>
+         	 	<br/>
+				<br/>
+				<table cellpadding="0" cellspacing="0" border="0" align="center"
+					width="900px">
+					<tr align="right">
+						<td align="right">
+							<h:panelGroup id="botonesExportar">
+								<h:panelGroup
+									style="display: #{(!empty fideicomisoNafinsaController.listaFideicomisos and fideicomisoNafinsaController.consultaEjecutada)? 'inline' : 'none'}">
+		
+									<h:outputText value="Exportar los resultados"></h:outputText>
+									<h:commandButton actionListener="#{fideicomisoNafinsaController.generarReportes}"
+										action="fideicomisoNafinsaPdf"
+										image="/images/pdf.gif"
+										title="Exportar a PDF todos los resultados de la consulta"
+										id="generarPdf"
+										onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);"/>
+		                        				&#160;&#160;
+									<h:commandButton actionListener="#{fideicomisoNafinsaController.generarReportes}"
+		                       			action="fideicomisoNafinsaXls"
+		                       			image="/images/excel-file.gif"
+		                       			title="Exportar a Excel todos los resultados de la consulta" 
+		                         		id="generarExcel"
+		                         		onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);">
+		                            </h:commandButton>
+		                            <div id="monitorPeticionReporte" style="display: none;">
+											<h:panelGroup id="panelMonitorPeticionReporte">
+												<h:graphicImage value="/images/ajax-loader.gif" />
+												&#160;&#160;
+												<h:outputText value="#{etq.reporteEnProceso}" />
+												<a4j:commandButton id="btnActualizarEstadoPeticion"
+													image="/images/transparent.gif"
+													styleClass="submit"
+													actionListener="#{fideicomisoNafinsaController.actualizarEstadoPeticion}"
+													reRender="panelMonitorPeticionReporte"
+													oncomplete="desbloquearBotonesReportes(#{fideicomisoNafinsaController.peticionReporteCompleta}, ['generarExcel', 'generarPdf']);"/>
+											</h:panelGroup>
+									</div>
+								</h:panelGroup>
+							</h:panelGroup>
+		
+						</td>
+					</tr>
+				</table>        	 		         	 		       	 			       	 
+       	 	</h:panelGroup>
+                          	
+         </ui:define>
+               
+        
+         <ui:define name="botones">         
+         	<h:panelGroup id="botones">
+         		<div class="refrescar" style="float: left;">
+	        		 <a4j:status id="commonStatus">
+						<f:facet name="start">
+							<h:panelGroup>
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								<h:outputText value="#{etq.buscando}"></h:outputText>
+							</h:panelGroup>
+						</f:facet>
+					</a4j:status> 	
+	        	</div>
+	            <div class="limpiar">
+	                <h:commandButton id="botonLimpiar" image="/images/transparent.gif" styleClass="submit" tabindex="140"
+	                    actionListener="#{fideicomisoNafinsaController.limpiar}">
+	                </h:commandButton>
+	            </div>
+	            <div class="buscar">
+	                <a4j:commandButton id="botonBuscar" image="/images/transparent.gif" styleClass="submit" tabindex="130"	                	
+	                	oncomplete='$j("#divCriterios").css("display","none");'
+	                    actionListener="#{fideicomisoNafinsaController.obtenerArqueos}"
+	                    reRender="botones,panelResumen,containerResultados,mensajeUsuario,totalArqueos,botonesExportar">	 
+	                	<f:attribute name="totalArqueo" value="totalArqueo"/>    	                   	
+                    </a4j:commandButton>
+	            </div>
+	            <div class="editar" style="display:#{fideicomisoNafinsaController.consultaEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios">            
+			            	<input type="image" class="submit"
+								src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+								alt="Editar Criterios" title="Editar Criterios"
+								onclick='javascript:presentarCriterios();return false;' />                      	
+	           	</div>
+			</h:panelGroup>
+         </ui:define>
+         
+	</ui:composition>
+
+</html>        

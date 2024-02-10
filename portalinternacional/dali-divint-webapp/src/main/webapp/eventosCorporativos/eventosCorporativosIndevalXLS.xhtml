@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls" xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document documentName="ConsultaEventosCorporativos" documentTitle="Eventos Corporativos"
+        institucion="#{eventosCorporativosBean.agenteFirmado.id} #{eventosCorporativosBean.agenteFirmado.folio} #{eventosCorporativosBean.agenteFirmado.razon}" 
+         fecha="#{eventosCorporativosBean.fechaActual}" >
+        
+        <xls:table value="#{eventosCorporativosBean}" var="evco" >
+            <xls:row>
+                <xls:col header="#{etq.tv}" value="#{not empty eventosCorporativosBean.tipoValor ? eventosCorporativosBean.tipoValor : 'TODOS'}"   />
+                <xls:col header="#{etq.emisoraMinus}" value="#{not empty  eventosCorporativosBean.emisora ? eventosCorporativosBean.emisora : 'TODAS'}"   />
+                <xls:col header="#{etq.serieMinus}" value="#{not empty  eventosCorporativosBean.serie ?  eventosCorporativosBean.serie : 'TODAS'}"   />
+				<xls:col header="#{etq.isin}" value="#{not empty eventosCorporativosBean.isin ? eventosCorporativosBean.isin : 'TODOS'}"   />
+				<xls:col header="#{etq.folioMinus}" value="#{not empty eventosCorporativosBean.idEventoCorporativo ? eventosCorporativosBean.idEventoCorporativo : 'TODOS'}"   />				
+				<xls:col header="#{etq.custodio}" value="#{eventosCorporativosBean.selectedCustodio}"   />
+				<xls:col header="#{etq.tipoEvento}" value="#{eventosCorporativosBean.selectedTipoEvento}"   />
+				<xls:col header="#{etq.estado}" value="#{eventosCorporativosBean.selectedEstado}"   />				
+			
+				<xls:col header="#{etq.tipoMercadoMinus}" value="#{eventosCorporativosBean.selectedMercado}"   />
+				<xls:col header="#{etq.tipoDerechoMO}" value="#{eventosCorporativosBean.selectedTipoDerechoMO}"   />
+				<xls:col header="#{etq.tipoDerechoML}" value="#{eventosCorporativosBean.selectedTipoDerechoML}"   />
+				
+				
+				<xls:col header="#{etq.fechaCreacion} Inicio" value="#{empty eventosCorporativosBean.fechaCreacionInicio ? 'TODAS' : eventosCorporativosBean.fechaCreacionInicio}"    pattern="dd/MM/yyyy" />
+				
+				
+                 <xls:col header="#{etq.fechaCreacion} Fin" value="#{empty eventosCorporativosBean.fechaCreacionFin ? 'TODAS' : eventosCorporativosBean.fechaCreacionFin}"   pattern="dd/MM/yyyy" />
+							
+				
+				<xls:col header="#{etq.fechaRegistro} Inicio" value="#{empty eventosCorporativosBean.fechaRegistroInicio ? 'TODAS' : eventosCorporativosBean.fechaRegistroInicio}"   pattern="dd/MM/yyyy" />
+				
+				<xls:col header="#{etq.fechaRegistro} Fin" value="#{empty eventosCorporativosBean.fechaRegistroFin ? 'TODAS' : eventosCorporativosBean.fechaRegistroFin}"   pattern="dd/MM/yyyy" />
+				
+				<xls:col header="#{etq.fechaPago} Inicio" value="#{empty eventosCorporativosBean.fechaPagoInicio ? 'TODAS' : eventosCorporativosBean.fechaPagoInicio}"   pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.fechaPago} Fin" value="#{empty eventosCorporativosBean.fechaPagoFin ? 'TODAS' : eventosCorporativosBean.fechaPagoFin}"   pattern="dd/MM/yyyy" />
+	
+				<xls:col header="#{etq.fechaLimiteIndeval} Inicio" value="#{empty eventosCorporativosBean.fechaIndevalInicio ? 'TODAS' : eventosCorporativosBean.fechaIndevalInicio}"   pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.fechaLimiteIndeval} Fin" value="#{empty eventosCorporativosBean.fechaIndevalFin ? 'TODAS' : eventosCorporativosBean.fechaIndevalFin}"   pattern="dd/MM/yyyy" />
+				
+				<xls:col header="#{etq.fechaLimiteCliente} Inicio" value="#{empty eventosCorporativosBean.fechaIndevalInicio ? 'TODAS' : eventosCorporativosBean.fechaIndevalInicio}"    pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.fechaLimiteCliente} Fin" value="#{empty eventosCorporativosBean.fechaClienteFin ? 'TODAS' : eventosCorporativosBean.fechaClienteFin}"   pattern="dd/MM/yyyy" />
+				
+                
+			</xls:row>
+			
+        </xls:table>
+        
+       
+         <xls:subtitle value="#{etq.registrosEncontrados}: #{eventosCorporativosBean.totalRegistros}" />
+        
+
+         <xls:table value="#{eventosCorporativosBean.paginaReportes.registros}" var="evco" >
+            <xls:row >
+            	
+				<xls:col header="#{etq.folioMinus}" value="#{evco.idEventoCorporativo}"   />
+				<xls:col header="#{etq.tipoMercadoMinus}" value="#{!empty evco.tipoMercado ? evco.tipoMercado.codigo : ''}"   />
+				<xls:col header="#{etq.tipoDerechoML}" value="#{!empty evco.tipoDerechoML ? evco.tipoDerechoML.tipoDerecho : ''}"   />
+				<xls:col header="#{etq.tipoDerechoMO}" value="#{!empty evco.tipoDerechoMO ? evco.tipoDerechoMO.tipoDerecho: ''}"   />
+				<xls:col header="#{etq.tipoEvento}" value="#{!empty evco.tipoEvento ? evco.tipoEvento.descripcion : ''}"   />
+				
+				
+						
+				<xls:col header="#{etq.fechaCreacion}" value="#{evco.fechaCreacion}"    pattern="dd/MM/yyyy HH:mm" />
+				
+				<xls:col header="#{etq.fechaRegistro}" value="#{evco.fechaRegistro}"   pattern="dd/MM/yyyy" />
+				
+				
+				<xls:col header="#{etq.fechaPago}" value="#{evco.fechaPago}"   pattern="dd/MM/yyyy" />
+			
+				
+				<xls:col header="#{etq.fechaLimiteCliente}" value="#{evco.fechaCliente}"   pattern="dd/MM/yyyy HH:mm" />
+				
+				<xls:col header="#{etq.fechaLimiteIndeval}" value="#{evco.fechaIndeval}"   pattern="dd/MM/yyyy HH:mm" />
+
+				<xls:col header="#{etq.tipoValorEmisoraSerie}" value="#{evco.tipoValor}/#{evco.emisora}/#{evco.serie}"   />
+			
+				<xls:col header="#{etq.isin}" value="#{evco.isin}"   />
+				
+				<xls:col header="#{etq.custodio}" value="#{empty evco.custodio ? '' : evco.custodio.codigoBanco}"   />
+				
+				<xls:col header="#{etq.estado}" value="#{empty evco.estado ? '' : evco.estado.estado}"   />
+				
+				
+			</xls:row>
+        </xls:table>        
+		<xls:subtitle  value="La fecha de pago será efectiva siempre y cuando el custodio haya confirmado y acreditado lo correspondiente al evento corporativo." />
+        <xls:br/>
+        <xls:subtitle  value="La fecha límite cliente no indica las fechas límite de las opciones, favor de consultar el detalle del evento." />
+        <xls:br/>
+        <xls:subtitle  value="El horario corresponde a tiempo de México." /> 
+    </xls:document>
+</html>

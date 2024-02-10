@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:xls="http://indeval.com/jsf/xls" 
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document documentName="ConciliacionesEfectivo" documentTitle="Conciliación de Efectivo"
+        institucion="#{conciliacionesEfectivoIntBean.agenteFirmado.id} #{conciliacionesEfectivoIntBean.agenteFirmado.folio} #{conciliacionesEfectivoIntBean.agenteFirmado.razon}" 
+        fecha="#{conciliacionesEfectivoIntBean.fechaActual}">
+       
+        <xls:table value="#{conciliacionesEfectivoIntBean}" var="conciliacion" >
+            <xls:row>
+            	<xls:col header="#{etq.bicCode}" value="#{conciliacionesEfectivoIntBean.bicCodeSelected}" />
+            	<xls:col header="#{etq.divisaMinus}" value="#{conciliacionesEfectivoIntBean.divisaSelected}" />
+            	<xls:col header="#{etq.cuentas}" value="#{conciliacionesEfectivoIntBean.cuentaSelected}" />
+            	<xls:col header="#{etq.cuentasCustodia}" value="#{conciliacionesEfectivoIntBean.cuentaCustodia ? 'Si' : 'No'}" />	
+            	<xls:col header="#{etq.cuentasComercial}" value="#{conciliacionesEfectivoIntBean.cuentaComercial ? 'Si' : 'No'}" />
+            	<xls:col header="#{etq.conDiferencia}" value="#{conciliacionesEfectivoIntBean.diferencia ? 'Si' : 'No'}" />
+                <xls:col header="#{etq.folioConciliacion}" value="#{!empty conciliacionesEfectivoIntBean.folioConciliacion ? conciliacionesEfectivoIntBean.folioConciliacion : 'TODOS'}" />
+                <xls:col header="#{etq.folioMensaje}" value="#{!empty conciliacionesEfectivoIntBean.folioMensaje ? conciliacionesEfectivoIntBean.folioMensaje : 'TODOS'}" />
+                <xls:col header="#{etq.referenciaMT}" value="#{!empty conciliacionesEfectivoIntBean.referenciaMT ? conciliacionesEfectivoIntBean.referenciaMT : 'TODAS'}" />
+                <xls:col header="#{etq.fechaBalanceInicio}" value="#{!empty conciliacionesEfectivoIntBean.fechaBalanceInicio ? conciliacionesEfectivoIntBean.fechaBalanceInicio : 'TODAS'}" pattern="dd/MM/yyyy"/>					
+                <xls:col header="#{etq.fechaBalanceFin}" value="#{!empty conciliacionesEfectivoIntBean.fechaBalanceFin ? conciliacionesEfectivoIntBean.fechaBalanceFin : 'TODAS' }" pattern="dd/MM/yyyy"/>
+                <xls:col header="#{etq.fechaElaboracionInicio}" value="#{!empty conciliacionesEfectivoIntBean.fechaElaboracionInicio ? conciliacionesEfectivoIntBean.fechaElaboracionInicio : 'TODAS'}" pattern="dd/MM/yyyy HH:mm"/>					
+                <xls:col header="#{etq.fechaElaboracionFin}" value="#{!empty conciliacionesEfectivoIntBean.fechaElaboracionFin ? conciliacionesEfectivoIntBean.fechaElaboracionFin : 'TODAS' }" pattern="dd/MM/yyyy HH:mm"/>
+            </xls:row>
+        </xls:table>
+        
+         <xls:subtitle value="#{etq.registrosEncontrados}: #{conciliacionesEfectivoIntBean.totalRegistros}" />
+
+        <xls:table value="#{conciliacionesEfectivoIntBean.paginaReportes.registros}" var="conciliacion">
+            <xls:row>            	
+				<xls:col header="#{etq.folioConciliacion}" value="#{conciliacion.folioConciliacion}" />
+				<xls:col header="#{etq.referencia}" value="#{conciliacion.referencia}" />
+				<xls:col header="#{etq.folioMensaje}" value="#{conciliacion.statementNumber}" />
+				
+				<xls:col header="#{etq.fechaElaboracion}" value="#{!empty conciliacion.listaBitacoraConciliacionEfectivo[0].fechaEmision ? conciliacion.listaBitacoraConciliacionEfectivo[0].fechaEmision : 'N/A'}" pattern="dd/MM/yyyy HH:mm"/>
+				<xls:col header="#{etq.fechaBalance}" value="#{!empty conciliacion.fechaBalance ? conciliacion.fechaBalance : 'N/A'}" pattern="dd/MM/yyyy"/>
+				
+				<xls:col header="#{etq.custodioBic}" value="#{conciliacion.bicCode}" />
+				
+				<xls:col header="#{etq.cuentaMinus}" value="#{conciliacion.cuenta}" />
+				
+				<xls:col header="#{etq.divisaMinus}" value="#{conciliacion.divisa}" />
+				
+				<xls:col header="#{etq.saldoInicialMT}" value="#{!empty conciliacion.balanceInicio ? conciliacion.balanceInicio : 'N/A' }" pattern="###,###,###,###,###,##0.##"/>
+				<xls:col header="#{etq.netoMovimientos}" value="#{!empty conciliacion.netoMovimientos ? conciliacion.netoMovimientos : 'N/A' }" pattern="###,###,###,###,###,##0.##"/>
+				<xls:col header="#{etq.saldoFinalMT}" value="#{!empty conciliacion.balanceFinal ? conciliacion.balanceFinal : 'N/A' }" pattern="###,###,###,###,###,##0.##"/>
+				<xls:col header="#{etq.saldoBoveda}" value="#{!empty conciliacion.saldoBoveda ? conciliacion.saldoBoveda : 'N/A' }" pattern="###,###,###,###,###,##0.##"/>
+				<xls:col header="#{etq.diferencia}" value="#{(conciliacion.saldoBoveda != null and conciliacion.balanceFinal != null) ? (conciliacion.balanceFinal - conciliacion.saldoBoveda) : 'N/A' }" pattern="###,###,###,###,###,##0.##"/>
+				<xls:col header="#{etq.saldoComprobacion}" value="#{(conciliacion.balanceFinal != null and conciliacion.balanceInicio != null and conciliacion.netoMovimientos != null) ? (conciliacion.balanceFinal - (conciliacion.balanceInicio + conciliacion.netoMovimientos)) : 'N/A' }" pattern="###,###,###,###,###,##0.##"/>
+			</xls:row>
+        </xls:table>
+        
+        <xls:table value="#{conciliacionesEfectivoIntBean}" var="conciliacion" rendered="#{conciliacionesEfectivoIntBean.totales}">
+            <xls:row>
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="#{conciliacionesEfectivoIntBean.totalSaldoInicial}" pattern="###,###,###,###,###,##0.##" />
+            	<xls:col value="#{conciliacionesEfectivoIntBean.totalNetoMovimientos}" pattern="###,###,###,###,###,##0.##" />
+            	<xls:col value="#{conciliacionesEfectivoIntBean.totalSaldoFinal}" pattern="###,###,###,###,###,##0.##" />
+            	<xls:col value="#{conciliacionesEfectivoIntBean.totalSaldoBoveda}" pattern="###,###,###,###,###,##0.##" />
+            	<xls:col value="#{conciliacionesEfectivoIntBean.totalDiferencia}" pattern="###,###,###,###,###,##0.##" />
+            	<xls:col value="#{conciliacionesEfectivoIntBean.totalSaldoComprobacion}" pattern="###,###,###,###,###,##0.##" />
+            </xls:row>
+		</xls:table>
+		
+    </xls:document>
+</html>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:indeval="http://indeval.com/indeval"
+	>
+	
+	<ui:composition template="/layoutDali.xhtml">
+		
+		
+		<ui:define name="body">
+		<script  languaje="javascript">
+					var autorizado = false;
+		</script>
+		
+		
+			<h:form id="daliForm"  enctype="multipart/form-data">
+			
+				<h1><span><ui:insert name="tituloEncabezado">REGISTRO DE OPERACION </ui:insert></span></h1>
+	            <div class="clear">
+				</div>
+				<iframe class="divModal"  id="detalleFileTransfer"  frameborder="0"   aling="top"></iframe>
+				<iframe class="divModal"  id="firmaDigital"  frameborder="0"  scrolling="no" aling="top"></iframe>
+				<table width="900px" cellpadding="0px" cellspacing="0px">
+	                    	
+	                        <tr>
+	                        	<td>
+	                        		<ui:insert name="seccionForma">
+	                        		</ui:insert>
+	                            </td>
+	                        </tr>
+	                        <tr>
+	                        	<td >
+	                        		<ui:insert name="botones">
+	                        		</ui:insert>
+	                            	
+	                                
+	                            </td>
+	                        </tr>
+	             </table>
+				
+			</h:form>
+			<script  languaje="javascript">
+				autorizado = true;
+			</script>
+		
+		
+		<div class="warning tablaNoDisp" style="display:none">
+			<h:graphicImage url="/images/warning.gif"/>&#160;<h:outputText value="#{etq.operacionNoDisponible}"/>
+		</div>
+		
+			
+		<script languaje="javascript">
+			if(!autorizado){
+				$j('.tablaNoDisp').style("display",'inline');
+			}
+		</script>
+		</ui:define>
+		
+		
+	
+	</ui:composition>
+	
+	
+</html>

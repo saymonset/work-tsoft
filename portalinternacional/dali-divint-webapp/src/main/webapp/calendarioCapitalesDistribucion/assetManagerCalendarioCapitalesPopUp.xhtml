@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <ui:composition template="/layoutPopUp.xhtml"> 
+    	<ui:define name="head">	
+    		<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/calendarioEmisiones.js">
+			</script>	
+
+			
+		</ui:define>
+        <ui:define name="subtitulo">
+        </ui:define>
+        <ui:define name="body">
+        	<h:form id="assetManagerForm">         
+            	<h:outputText value="#{consultaEmisionesCalendarioBean.initPopUp}" />
+            	<a4j:keepAlive beanName="consultaEmisionesCalendarioBean" />
+            	<h:panelGroup id="mensajeUsuario">
+			<div style="min-height: 100%;">
+				<rich:messages warnClass="warning" infoClass="info"
+					errorClass="error" ajaxRendered="true" showDetail="false"
+					showSummary="true" layout="list">
+					<f:facet name="infoMarker">
+						<h:panelGroup>
+							<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+					</f:facet>
+					<f:facet name="errorMarker">
+						<h:panelGroup>
+							<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+					</f:facet>
+				</rich:messages>
+				<div id="divWarnings" class="warning" style="display: none;">
+					<p id="textoWarning"></p>
+				</div>
+			</div>
+		</h:panelGroup>
+			<td class="recuadroTabla" align="center">
+				<table align="center" width="50%" border="0" cellpadding="0px"
+					cellspacing="5px">
+					<tr>
+					</tr>
+					<tr>
+						<td align="center"><h:outputText styleClass="texto"
+								value="#{etq.tv}" /></td>
+						<td align="center"><h:outputText styleClass="texto"
+								value="#{etq.emisoraMinus}" /></td>
+						<td align="center"><h:outputText styleClass="texto"
+								value="#{etq.serieMinus}" /></td>
+						<td align="center"><h:outputText styleClass="texto"
+								value="#{etq.isin}" /></td>
+						<td align="center"><h:outputText styleClass="texto"
+								value="#{etq.custodio}" /></td>
+						<td align="center"><h:outputText styleClass="texto"
+								value="Listada" /></td>
+
+					</tr>
+					<tr>
+						<td><h:outputText
+								value="#{consultaEmisionesCalendarioBean.vEmisionesCalendario.tipoValor}" />
+						</td>
+						<td><h:outputText
+								value="#{consultaEmisionesCalendarioBean.vEmisionesCalendario.emisora}" />
+						</td>
+						<td><h:outputText
+								value="#{consultaEmisionesCalendarioBean.vEmisionesCalendario.serie}" />
+						</td>
+						<td><h:outputText
+								value="#{consultaEmisionesCalendarioBean.vEmisionesCalendario.isin}" /></td>
+						<td><h:outputText
+								value="#{consultaEmisionesCalendarioBean.vEmisionesCalendario.custodioDesc}" />
+						</td>
+						<td><h:outputText
+								value="#{consultaEmisionesCalendarioBean.vEmisionesCalendario.estadoEmision}" />
+						</td>
+					</tr>
+					<tr>
+
+					</tr>
+					<tr>
+
+					</tr>
+				</table>
+
+			</td>
+			<h:panelGroup id="panelBotones" >
+				<table  align="center" width="50%" border="0" cellpadding="0px"
+						cellspacing="5px">
+					<tr>
+						<td align="center"><h:inputTextarea cols="30" rows="10" required="true" id="textArea_1"
+								maxlength="300" value="#{consultaEmisionesCalendarioBean.descripcionAsset}"  /></td>
+								<td align="center">
+								<a4j:commandButton id="btnEliminar"
+								rendered="#{!empty consultaEmisionesCalendarioBean.descripcionAsset}"
+								image="/images/eliminar.png"
+								value="Eliminar" 
+								actionListener="#{consultaEmisionesCalendarioBean.eliminarAsset}"
+								oncomplete="consultaGeneral();"
+								reRender="panelBotones">						
+							</a4j:commandButton>
+							</td>
+	                    
+						<td align="center">
+						<div class="guardar" style="float: left;">
+						<a4j:commandButton id="btnGuardar"
+						        image="/images/transparent.gif" styleClass="submit"
+								value="Guardar"
+								actionListener="#{consultaEmisionesCalendarioBean.guardarAsset}"
+								oncomplete="consultaGuardar();"
+								reRender="panelBotones">							
+							</a4j:commandButton>
+							</div>
+							</td>
+						
+							
+						<td>
+							<div class="cancelar" style="float: left;">
+								<h:commandButton id="botonCancelarModificaPorcentaje"
+									image="/images/transparent.gif" styleClass="submit"
+									onclick="cerrarSinRefrescar();" />
+							</div>
+						</td>
+					</tr>
+				</table>
+			</h:panelGroup>	
+
+		</h:form>				 
+        </ui:define>
+        
+    </ui:composition>
+
+</html>

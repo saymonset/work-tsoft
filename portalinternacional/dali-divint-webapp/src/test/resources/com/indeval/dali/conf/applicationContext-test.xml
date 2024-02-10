@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<bean id="dataSourceDali"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName"
+			value="oracle.jdbc.driver.OracleDriver">
+		</property>
+		<property name="url"
+			value="jdbc:oracle:thin:@10.100.230.42:1521:homology">
+		</property>
+		<property name="username" value="liqval_user3"></property>
+		<property name="password" value="liqval_user3"></property>
+		<property name="minIdle" value="10"></property>
+		<property name="removeAbandoned" value="true" />
+		<property name="initialSize" value="1" />
+		<property name="logAbandoned" value="true" />
+		<property name="maxIdle" value="10" />
+		<property name="removeAbandonedTimeout" value="60000" />
+	</bean>
+	
+	<bean id="dataSourceInternacional"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName"
+			value="oracle.jdbc.driver.OracleDriver">
+		</property>
+		<property name="url"
+			value="jdbc:oracle:thin:@10.100.230.42:1521:homology">
+		</property>
+		<property name="username" value="liqval_user2"></property>
+		<property name="password" value="liqval_user2"></property>
+		<property name="minIdle" value="10"></property>
+		<property name="removeAbandoned" value="true" />
+		<property name="initialSize" value="1" />
+		<property name="logAbandoned" value="true" />
+		<property name="maxIdle" value="10" />
+		<property name="removeAbandonedTimeout" value="60000" />
+	</bean>
+
+	<!--bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="configLocations"
+			value="classpath*:/com/indeval/dali/conf/hibernate.cfg.xml" />
+		<property name="schemaUpdate" value="false" />
+		<property name="exposeTransactionAwareSessionFactory"
+			value="false" />
+		<property name="dataSource">
+			<ref bean="dataSourceInternacional"></ref>
+		</property>
+		
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.Oracle10gDialect
+				</prop>
+				<prop key="hibernate.query.factory_class">
+					org.hibernate.hql.classic.ClassicQueryTranslatorFactory
+				</prop>
+			</props>
+		</property>
+	</bean-->
+
+<!-- the transactional advice (what 'happens'; see the <aop:advisor/> bean below) -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<!-- the transactional semantics... -->
+		<tx:attributes>
+			<!-- other methods use the default transaction settings (see below) -->
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- ensure that the above transactional advice runs for any execution
+		of an operation defined by the FooService interface -->
+	<aop:config>
+		<aop:pointcut id="defaultServiceOperation"
+			expression="execution(* com.indeval.portaldali.application.*.services.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice"
+			pointcut-ref="defaultServiceOperation" />
+	</aop:config>
+	<aop:config>
+		<aop:pointcut id="defaultServiceOperationPortal"
+			expression="execution(* com.indeval.portaldali.middleware.services.*.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice"
+			pointcut-ref="defaultServiceOperationPortal" />
+	</aop:config>
+	<aop:config>
+		<aop:pointcut id="defaultServiceOperationPortal2"
+			expression="execution(* com.indeval.portallegado.middleware.services.*.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice"
+			pointcut-ref="defaultServiceOperationPortal2" />
+	</aop:config>
+	<tx:advice id="defaultTxAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="*" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+	
+	
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactoryInternacional" />
+	</bean>
+
+	<aop:aspectj-autoproxy/>
+	
+</beans>

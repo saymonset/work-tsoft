@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xls="http://indeval.com/jsf/xls"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+	<xls:document documentName="administracionCustodios"
+		documentTitle="Consulta Administraci&#243;n Custodios/Depositantes"
+		institucion="#{admonCustodiosDepositantesController.agenteFirmado.id} #{admonCustodiosDepositantesController.agenteFirmado.folio} #{admonCustodiosDepositantesController.agenteFirmado.razon}"
+		fecha="#{admonCustodiosDepositantesController.fechaActual}"
+		imageResource="/images/indeval.jpg">
+
+		<xls:subtitle value="#{etq.custodio}" />
+
+		<xls:table value="#{admonCustodiosDepositantesController}"
+			var="encabezadoCustodio">
+			<xls:row>
+				<xls:col header="#{etq.custodio}" value="" />
+				<xls:col header="" value="" />
+				<xls:col header="" value="" />
+				<xls:col header="#{etq.bics}" value="" />
+				<xls:col header="" value="" />
+				<xls:col header="#{etq.generales}" value="" />
+				<xls:col header="" value="" />
+				<xls:col header="" value="" />
+				<xls:col header="" value="" />
+				<xls:col header="" value="" />
+			</xls:row>
+		</xls:table>
+
+		<xls:table
+			value="#{admonCustodiosDepositantesController.custodioActual.catBic}"
+			var="custodioActual">
+			<xls:row>
+
+				<xls:col header="#{etq.participanteMinus}"
+					value="#{custodioActual.cuentaNombrada.institucion.tipoInstitucion.claveTipoInstitucion}#{custodioActual.cuentaNombrada.institucion.folioInstitucion}" />
+				<xls:col header="#{etq.cuentaMinus}" value="#{custodioActual.cuentaNombrada.cuenta}" />
+				<xls:col header="#{etq.nombre} #{etq.custodio}" value="#{custodioActual.cuentaNombrada.razonSocialCuenta}" />
+				<xls:col header="#{etq.produccionMinus}" value="#{custodioActual.bicProd}" />
+				<xls:col header="#{etq.entrenamientoMinus}" value="#{custodioActual.bicPrueba}" />
+				<xls:col header="#{etq.cuentaIndevalMinus}" value="#{custodioActual.cuentaIndeval}" />
+                <xls:col header="#{etq.abreviacion}" value="#{admonCustodiosDepositantesController.custodioActual.abreviacionCustodio}" />
+                <xls:col header="#{etq.nombreCorto}" value="#{admonCustodiosDepositantesController.custodioActual.nombreCorto}" />
+                <xls:col header="#{etq.msgCustodio}" value="#{custodioActual.detalleCustodio}" />
+				<xls:col header="#{etq.pais}" value="#{custodioActual.pais}" />
+				<xls:col header="#{etq.mercadoMinus}" value="#{custodioActual.mercado}" />
+                <xls:col header="#{etq.factorCal}" value="#{admonCustodiosDepositantesController.custodioActual.factorCalculado}" />
+				<xls:col header="#{etq.estatus}" value="#{custodioActual.status}" />
+				<xls:col header="#{etq.moneda}" value="#{custodioActual.moneda}" />
+				<xls:col header="#{etq.estatusRegistro}" value="#{custodioActual.estatusRegistro}" />
+			</xls:row>
+		</xls:table>
+
+		<xls:subtitle value="#{etq.depositosLiq}" />
+
+		<xls:table
+			value="#{admonCustodiosDepositantesController.custodioActual.sicDetalles}"
+			var="sicDetalle">
+			<xls:row>
+				<xls:col header="#{etq.bicDepositoLiq}" value="#{sicDetalle.bicDepLiq}" />
+				<xls:col header="#{etq.depositoLiq}" value="#{sicDetalle.depLiq}" />
+				<xls:col header="#{etq.idDepositoLiq}" value="#{sicDetalle.idDepLiq}" />
+				<xls:col header="#{etq.estatusRegistro}" value="#{sicDetalle.estatusRegistro}" />
+			</xls:row>
+		</xls:table>
+
+		<xls:subtitle value="#{etq.emisiones}" />
+
+		<xls:table
+			value="#{admonCustodiosDepositantesController.custodioActual.sicEmisiones}"
+			var="sicEmision">
+			<xls:row>
+				<xls:col header="#{etq.tv}" value="#{sicEmision.emision.instrumento.claveTipoValor}" />
+				<xls:col header="#{etq.emisoraMinus}" value="#{sicEmision.emision.emisora.clavePizarra}" />
+				<xls:col header="#{etq.serieMinus}" value="#{sicEmision.emision.serie}" />
+				<xls:col header="#{etq.formaOperar}" value="#{sicEmision.formaOper}" />
+				<xls:col header="#{etq.estatusRegistro}" value="#{sicEmision.estatusRegistro}" />
+			</xls:row>
+		</xls:table>
+
+	</xls:document>
+</html>

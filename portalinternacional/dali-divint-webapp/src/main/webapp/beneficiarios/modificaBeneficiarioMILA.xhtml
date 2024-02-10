@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <ui:composition template="/layoutConsultas.xhtml">
+        <ui:define name="head">
+            <script language="javascript" type="text/javascript"
+                    src="#{facesContext.externalContext.requestContextPath}/js/beneficiarios.js">
+            </script>
+            <style>
+				.top {
+				    vertical-align: top;
+				    
+				}
+				.infoFiles {
+				    height: 202px;
+				    overflow: auto;
+				}
+				.columnaDocumentosUno{width: 70%; }
+        		.columnaDocumentosDos{width: 30%; }
+				</style>
+        </ui:define>
+
+        <ui:define name="tituloSeccion">
+            <h:outputText value="#{etq.beneficiarios}" />
+        </ui:define>
+        <ui:define name="subtituloSeccion">
+            <h:outputText value="#{etq.modificacionBeneficiarios}"></h:outputText>
+        </ui:define>
+
+
+        <ui:define name="criterios">
+			<a4j:keepAlive beanName="modificaBeneficiarioMILABean" />
+            <a4j:keepAlive beanName="consultaBeneficiariosBean" />
+            <a4j:keepAlive beanName="consultaBeneficiariosBean.param" />
+
+            <table>
+                <tr>
+                    <td>
+                        <h:panelGroup id="criterios">
+                            <table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+                                   align="left">
+                                <tr>
+                                    <td style="width: 110px">
+                                        <h:outputText value="#{etq.custodio}" styleClass="textoNegritas" />
+                                    </td>
+                                    <td style="width: 780px">
+                                        <h:outputText id="lstCustodios"
+                                                      value="#{modificaBeneficiarioMILABean.mapaCustodios[modificaBeneficiarioMILABean.custodio]}" />
+                                        <h:inputHidden id="idCustodio" value="#{modificaBeneficiarioMILABean.custodio}" />
+                                    </td>
+                                </tr>
+                                <tr style="height: 10px">
+                                    <td colspan="2">
+                                        &#160;
+                                    </td>
+                                </tr>
+                                <tr  align="left">
+                                    <td>
+                                        <h:outputText value="#{etq.tipoBeneficiario}" styleClass="textoNegritas" />
+                                    </td>
+                                    <td>
+                                        <h:outputText id="lstTipoBenef"
+                                                      value="#{modificaBeneficiarioMILABean.mapaTipoBeneficiario[modificaBeneficiarioMILABean.tipoBeneficiario]}" />
+                                        <h:inputHidden id="idTipoBenef" value="#{modificaBeneficiarioMILABean.tipoBeneficiario}" />
+                                        <h:inputHidden id="idTipoPersona" value="#{modificaBeneficiarioMILABean.forma.personaFisica}" />
+                                        <h:inputHidden id="tipoFormato" value="#{modificaBeneficiarioMILABean.forma.formato}" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </h:panelGroup>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:panelGroup id="mensajeUsuario">
+                            <div style="min-height: 21px;">
+                                <rich:messages warnClass="warning" infoClass="info"
+                                               errorClass="error" ajaxRendered="true" showDetail="false"
+                                               showSummary="true" layout="list">
+                                    <f:facet name="infoMarker">
+                                        <h:panelGroup>
+                                            <h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+                                    </f:facet>
+
+                                    <f:facet name="errorMarker">
+                                        <h:panelGroup>
+                                            <h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+                                    </f:facet>
+                                </rich:messages>
+
+                                <div id="divWarnings" class="warning" style="display:none;">
+                                    <p id="textoWarning">
+                                    </p>
+                                </div>
+                            </div>
+                        </h:panelGroup>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:panelGroup id="encabezado">
+                            <table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+                                <tr>
+                                    <td width="440px">
+                                        <h:outputText value="#{etq.institucionMinus}" />
+                                    </td>
+                                    <td width="440px">
+                                        <h:outputText value="#{etq.milaFechaFormato}" styleClass="texto" />
+                                    </td>
+                                    <td width="440px">
+                                        <h:outputText value="#{etq.estado}" styleClass="texto" />
+                                    </td>
+                                </tr>
+                               <tr>
+                                    <td>
+                                        <h:dataTable value="#{modificaBeneficiarioMILABean.forma.institucion}"
+                                                     var="institucion" style="width: 100%">
+                                            <h:column>
+                                                <h:outputText styleClass="texto textoPeque12" value="#{institucion}" /><br />
+                                            </h:column>
+                                        </h:dataTable>
+                                    </td>
+                                    <td>
+                                        <rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+                                                       value="#{modificaBeneficiarioMILABean.forma.fechaFormato}"
+                                                       datePattern="dd/MM/yyyy" />
+                                    </td>
+                                    <td>
+	                                    <h:outputText styleClass="textoControles" id="activo" value="#{modificaBeneficiarioMILABean.forma.activo == '1' ? 'Activo' : modificaBeneficiarioMILABean.forma.activo == '0' ? 'Inactivo' : ''}"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </h:panelGroup>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:panelGroup id="general" style="width: 100%">
+                            <table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+                                <tr>
+                                    <td colspan="2">
+                                        <u><b><h:outputText value="#{etq.formaMILA}" styleClass="textoNegritas" /></b></u>
+                                    </td>
+                                </tr>
+                                <tr style="height: 5px">
+                                    <td colspan="2">
+                                        &#160;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="PARTE I" styleClass="textoBenefPartes"/>&#160;&#160;
+                                        <h:outputText value="#{etq.milaParte1Titulo}" /></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 440px">
+                                        <b><h:outputText value="1" /></b>&#160;&#160;
+                                        <h:outputText value="#{etq.milaIdentificacionMila}" />
+                                    </td>
+                                    <td style="width: 440px">
+                                        <b> <h:outputText value=" " /></b>&#160;&#160;
+                                        <h:outputText value=" " />
+                                    </td>
+                                </tr>
+                                 <tr>
+                                     <td colspan="2">
+                                     	 <h:panelGrid id="gridIdentificion" columns="2" border="0" align="left">
+	                                     	 <h:panelGroup>
+	                                            <h:inputText autocomplete="off" id="numeroIdentificacion" readonly="true" styleClass="textoControles" value="#{modificaBeneficiarioMILABean.forma.numeroIdentificacion}"/>
+	                                         </h:panelGroup>
+	                                         <h:panelGroup>
+	                                        	 &#160;&#160;
+	                                            <h:inputHidden id="isIndeval" value="#{modificaBeneficiarioMILABean.forma.indeval}" />                   
+	                                         </h:panelGroup>
+                                         </h:panelGrid>
+                                    </td>
+                                </tr>
+ 								<tr>
+ 								   <td colspan="2">
+ 								    <h:panelGrid width="100%" id="gridIdentificionGrupo" columns="3" border="0" align="left">
+ 								       <h:panelGroup>
+ 								       	 <b><h:outputText value="2" /></b>&#160;&#160;
+                                        	<h:outputText value="#{etq.milaNombre}" />
+ 								       </h:panelGroup>
+ 								       <h:panelGroup>
+ 								       	<b><h:outputText value="3" /></b>&#160;&#160;
+                                        	<h:outputText value="#{etq.milaNacionalidad}" rendered="#{modificaBeneficiarioMILABean.forma.personaFisica}" />
+ 								       		<h:outputText value="#{etq.milaPaisOrganizacion}" rendered="#{!modificaBeneficiarioMILABean.forma.personaFisica}" />
+ 								       </h:panelGroup>
+ 								       <h:panelGroup>
+ 								       	<b/>&#160;&#160;
+ 								       </h:panelGroup>
+ 								       <h:panelGroup>
+	 								       <h:panelGrid columns="3" width="100%" rendered="#{modificaBeneficiarioMILABean.forma.personaFisica}">
+	                                            <h:outputText value=" " />
+	                                            <h:outputText value=" " />
+	                                            <h:outputText value=" " />
+	                                            <h:inputText autocomplete="off" id="nombre" value="#{modificaBeneficiarioMILABean.forma.nombre}"
+	                                                         styleClass="textoControles" size="20" maxlength="40"
+	                                                         style="text-transform: uppercase;" >
+	                                            </h:inputText>
+	                                            <h:inputText autocomplete="off" id="apPaterno" value="#{modificaBeneficiarioMILABean.forma.apellidoPaterno}"
+	                                                         styleClass="textoControles" size="20" maxlength="29"
+	                                                         style="text-transform: uppercase;" >
+	                                           </h:inputText>
+	                                            <h:inputText autocomplete="off" id="apMaterno" value="#{modificaBeneficiarioMILABean.forma.apellidoMaterno}"                                            			 
+	                                                         styleClass="textoControles" size="20" maxlength="29"
+	                                                         style="text-transform: uppercase;" >
+	                                           </h:inputText>
+	                                        </h:panelGrid>
+	                                        <h:panelGroup rendered="#{!modificaBeneficiarioMILABean.forma.personaFisica}">
+	                                            <h:inputText autocomplete="off" id="razonSocial" value="#{modificaBeneficiarioMILABean.forma.razonSocial}"
+	                                                         styleClass="textoControles" size="50" maxlength="100"
+	                                                         style="text-transform: uppercase;" />
+	                                        </h:panelGroup>
+ 								       </h:panelGroup>
+ 								       <h:panelGroup>
+		 								       <h:panelGrid id="gridNacionalidad" columns="1" border="0" align="left">
+		                                    	<h:selectOneMenu styleClass="textoControles" id="nacionalidad" value="#{modificaBeneficiarioMILABean.forma.paisNacionalidad}">
+												    <f:selectItem itemValue="-1" itemLabel="Selecciona"/>
+											        <f:selectItems value="#{modificaBeneficiarioMILABean.listaPaises}" />
+											         <a4j:support event="onchange" actionListener="#{modificaBeneficiarioMILABean.cambiaPaisNacionalidad}"
+                                                                         reRender="gridIdentificionGrupoDos" ajaxSingle="true"/>
+											    </h:selectOneMenu>
+										    </h:panelGrid>
+ 								       </h:panelGroup>
+ 								      		<b/>&#160;&#160;
+ 								       <h:panelGroup>
+ 								       </h:panelGroup>
+ 								    </h:panelGrid>
+ 								</td>
+                                </tr>
+ 								<tr>
+ 								   <td colspan="2">
+ 								    <h:panelGrid width="100%" id="gridIdentificionGrupoDos" columns="3" border="0" align="left" columnClasses="columnaDocumentosUno columnaDocumentosDos">
+ 								       <h:panelGroup  rendered="#{!modificaBeneficiarioMILABean.forma.personaFisica}" >
+ 								       	 <b><h:outputText value="4" /></b>&#160;&#160;
+                                        	<h:outputText value="#{etq.milaSectorEconomico}" />
+ 								       </h:panelGroup>
+ 								       <h:panelGroup>
+ 								       	<b><h:outputText value="5" rendered="#{!modificaBeneficiarioMILABean.forma.personaFisica}" /><h:outputText value="4" rendered="#{modificaBeneficiarioMILABean.forma.personaFisica}"/></b>&#160;&#160;
+                                        	<h:outputText value="#{etq.milaTipoDocumento}" />
+ 								       </h:panelGroup>
+								       	<h:panelGroup rendered="#{modificaBeneficiarioMILABean.mexicano and modificaBeneficiarioMILABean.forma.personaFisica}" columns="1" border="0" align="left">
+								       		 	<h:panelGroup>
+	 								       		<b><h:outputText value="4a" /></b>&#160;&#160;
+												<h:outputText value="#{etq.milaRfc}" />
+											</h:panelGroup>
+										</h:panelGroup>
+										<h:panelGroup>
+											<h:panelGrid id="mostrarTextoOtrosGroup" columns="1" border="0" align="left">
+												<h:panelGroup  rendered="#{modificaBeneficiarioMILABean.mostrarOtros}">
+													<b><h:outputText value="4a" rendered="#{modificaBeneficiarioMILABean.forma.personaFisica}" /><h:outputText value="5a" rendered="#{!modificaBeneficiarioMILABean.forma.personaFisica}" /></b>&#160;&#160;
+													<h:outputText value="#{etq.milaNombreDocumentoRequerido}" />
+												</h:panelGroup>
+												<h:panelGroup  rendered="#{!modificaBeneficiarioMILABean.mostrarOtros}">
+									    			&#160;&#160;&#160;&#160;&#160;&#160;
+									    		</h:panelGroup>	
+										</h:panelGrid>
+										</h:panelGroup>
+ 								        <h:panelGroup  rendered="#{modificaBeneficiarioMILABean.forma.personaFisica and !modificaBeneficiarioMILABean.mexicano}">
+									    	&#160;&#160;&#160;&#160;&#160;&#160;
+									    </h:panelGroup>
+ 								       <h:panelGroup rendered="#{!modificaBeneficiarioMILABean.forma.personaFisica}">
+											<h:panelGrid id="gridSectorEconomico" columns="1" border="0" align="left">
+		                                    	<h:selectOneMenu styleClass="textoControles" id="sectorEconomico" value="#{modificaBeneficiarioMILABean.forma.sectorEconomico}">
+												    <f:selectItem itemValue="-1" itemLabel="Selecciona"/>
+												     <f:selectItems value="#{modificaBeneficiarioMILABean.listaSectorEconomico}" />
+											    </h:selectOneMenu>
+										    </h:panelGrid>
+ 								       </h:panelGroup>
+ 								       <h:panelGroup>
+		 								       <h:panelGrid id="gridSectorTipoDocumento" columns="1" border="0" align="left">
+		                                    	<h:selectOneMenu styleClass="textoControles" id="tipoDocumento" value="#{modificaBeneficiarioMILABean.forma.tipoDocumento}">
+												    <f:selectItem itemValue="-1" itemLabel="Selecciona" itemDisabled="#{!modificaBeneficiarioMILABean.mostrarSeleccionarTipoDocumento}"/>
+												    <f:selectItems value="#{modificaBeneficiarioMILABean.listaTipoDocumentos}"/>
+												    <a4j:support event="onchange" actionListener="#{modificaBeneficiarioMILABean.cambiaTipoDocumento}"
+                                                                         reRender="nombreDocumentoGroup, mostrarTextoOtrosGroup, numeroDocumento" ajaxSingle="true"/>
+											    </h:selectOneMenu>
+										    </h:panelGrid>
+ 								       </h:panelGroup>
+ 								       <h:panelGroup rendered="#{modificaBeneficiarioMILABean.forma.personaFisica and modificaBeneficiarioMILABean.mexicano}">
+ 								      		 <h:panelGrid columns="1" border="0" align="left">
+												 <h:inputText autocomplete="off" id="rfc" value="#{modificaBeneficiarioMILABean.forma.rfc}"
+		                                                         style="text-transform: uppercase;" styleClass="textoControles" size="20" maxlength="13"/> 
+	                                         </h:panelGrid>
+ 								       </h:panelGroup>
+ 								        <h:panelGroup id="nombreDocumentoGroup">
+									     	<h:inputText autocomplete="off" id="nombreDocumento" value="#{modificaBeneficiarioMILABean.forma.nombreDocumento}"
+                                                       style="text-transform: uppercase;" styleClass="textoControles" size="45" maxlength="100" 
+                                                       rendered="#{modificaBeneficiarioMILABean.mostrarOtros}"/>
+                                            <h:panelGroup  rendered="#{!modificaBeneficiarioMILABean.mostrarOtros}">
+									    	&#160;&#160;&#160;&#160;&#160;&#160;
+									   		 </h:panelGroup>
+									    </h:panelGroup>
+									    <h:panelGroup rendered="#{modificaBeneficiarioMILABean.forma.personaFisica and !modificaBeneficiarioMILABean.mexicano}">
+ 								      		 <h:panelGroup  rendered="#{!modificaBeneficiarioMILABean.mostrarOtros}">
+									    	&#160;&#160;&#160;&#160;&#160;&#160;
+									   		 </h:panelGroup>
+ 								       </h:panelGroup>
+ 								       <h:panelGroup rendered="#{!modificaBeneficiarioMILABean.forma.personaFisica}">
+ 								       	 <b><h:outputText value="6" /></b>&#160;&#160;
+                                        	<h:outputText value="#{etq.milaCaracterEntidad}" />
+ 								       </h:panelGroup>
+ 								       <h:panelGroup>
+ 								       		<b><h:outputText value="7" rendered="#{!modificaBeneficiarioMILABean.forma.personaFisica}" /><h:outputText value="5" rendered="#{modificaBeneficiarioMILABean.forma.personaFisica}" /></b>&#160;&#160;
+                                       	 <h:outputText value="#{etq.milaNumeroDocumento}" />
+ 								       </h:panelGroup>
+ 								       <h:panelGroup>
+											&#160;&#160;&#160;&#160;
+ 								       </h:panelGroup>
+ 								       <h:panelGroup rendered="#{modificaBeneficiarioMILABean.forma.personaFisica}">
+											&#160;&#160;&#160;&#160;
+ 								       </h:panelGroup>
+ 								       <h:panelGroup rendered="#{!modificaBeneficiarioMILABean.forma.personaFisica}">
+											<h:panelGrid id="gridCaracterEntidad" columns="1" border="0" align="left">
+		                                    	<h:selectOneMenu styleClass="textoControles" id="caracterEntidad" value="#{modificaBeneficiarioMILABean.forma.caracterEntidad}">
+												    <f:selectItem itemValue="-1" itemLabel="Selecciona"/>
+												     <f:selectItems value="#{modificaBeneficiarioMILABean.listaTipoEmpresa}" />
+											    </h:selectOneMenu>
+										    </h:panelGrid>
+ 								       </h:panelGroup>
+ 								       <h:panelGroup>
+		 								     <h:inputText autocomplete="off" id="numeroDocumento" value="#{modificaBeneficiarioMILABean.forma.numeroDocumento}"
+	                                                        style="text-transform: uppercase;" styleClass="textoControles" size="20" maxlength="18"/> 
+ 								       </h:panelGroup>
+ 								        <h:panelGroup>
+											&#160;&#160;&#160;&#160;
+ 								       </h:panelGroup>
+ 								       <h:panelGroup rendered="#{modificaBeneficiarioMILABean.forma.personaFisica}">
+											&#160;&#160;&#160;&#160;
+ 								       </h:panelGroup>
+ 								    </h:panelGrid>
+ 								</td>
+                                </tr>                                
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="PARTE II" /></b>&#160;&#160;
+                                        <b><h:outputText value="#{etq.milaDireccion}" /></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:panelGrid style="width: 100%" columns="3">
+                                            <h:outputText value="#{etq.milaDireccionCalle}" />
+                                            <h:outputText value="#{etq.milaDireccionNumeroExterior}" />
+                                            <h:outputText value="#{etq.milaDireccionNumeroInterior}" />
+                                            <h:inputText autocomplete="off" id="calleResidencial" value="#{modificaBeneficiarioMILABean.forma.calleResidencial}"
+                                                         styleClass="textoControles" size="100" maxlength="40" style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="numeroExteriorResidencial" styleClass="textoControles" size="40" maxlength="8"
+                                                         value="#{modificaBeneficiarioMILABean.forma.numeroExteriorResidencial}" style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="numeroInteriorResidencial" styleClass="textoControles" size="20" maxlength="8"
+                                                         value="#{modificaBeneficiarioMILABean.forma.numeroInteriorResidencial}" style="text-transform: uppercase;" />
+                                        </h:panelGrid>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:panelGrid style="width: 100%" columns="2" columnClasses="columnaDocumentosUno columnaDocumentosDos">
+                                            <h:outputText value="#{etq.milaDireccionCodigoPostal}" />
+                                            <h:outputText value="#{etq.milaDireccionCiudadPoblacion}" />
+                                            <h:inputText autocomplete="off" id="codigoPostalResidencial" styleClass="textoControles" size="50" maxlength="8"
+                                                         value="#{modificaBeneficiarioMILABean.forma.codigoPostalResidencial}" style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="cityTownResidencial" styleClass="textoControles" size="50" maxlength="30"
+                                                         value="#{modificaBeneficiarioMILABean.forma.cityTownResidencial}" style="text-transform: uppercase;" />
+                                            <h:outputText value="#{etq.milaDireccionPais}" />
+                                            <h:outputText value="#{etq.milaDireccionEstadoProvincia}" />
+                                            <h:panelGrid id="gridPaisDireccion" columns="2" border="0" align="left">
+		                                    	<h:selectOneMenu styleClass="textoControles" id="paisDireccion" value="#{modificaBeneficiarioMILABean.forma.paisDireccion}">
+												     <f:selectItem itemValue="-1" itemLabel="Selecciona"/>
+											        <f:selectItems value="#{modificaBeneficiarioMILABean.listaPaises}" />
+											    <a4j:support event="onchange" actionListener="#{modificaBeneficiarioMILABean.cambiaPaisDireccion}"
+                                                                         reRender="estadoCaptura" ajaxSingle="true"/>
+											    </h:selectOneMenu>
+									        </h:panelGrid>
+									        <h:panelGroup id="estadoCaptura">
+	                                           	<h:selectOneMenu styleClass="textoControles" id="stateProvinceResidencialCombo" value="#{modificaBeneficiarioMILABean.forma.codigoEstadoEntidad}" rendered="#{modificaBeneficiarioMILABean.comboEstado}">
+												    <f:selectItem itemValue="-1" itemLabel="Selecciona"/>
+												     <f:selectItems value="#{modificaBeneficiarioMILABean.listaEstados}" />
+											    </h:selectOneMenu>
+												<h:inputText autocomplete="off" id="stateProvinceResidencialLibre" styleClass="textoControles" size="50" maxlength="50"
+	                                                        value="#{modificaBeneficiarioMILABean.forma.stateProvinceResidencial}" style="text-transform: uppercase;" rendered="#{!modificaBeneficiarioMILABean.comboEstado}" />  
+	                                        </h:panelGroup>  
+                                        </h:panelGrid>
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="PARTE III" /></b>&#160;&#160;
+                                        <b><h:outputText value="#{etq.milaInformacionContacto}" /></b>
+                                    </td>
+                                </tr>
+                                <tr>
+ 								   <td colspan="2">
+ 								    <h:panelGrid width="100%" id="gridContacto" columns="3" border="0" align="left">
+ 								       <h:panelGroup>
+ 								       	 <b><h:outputText value="" /></b>&#160;&#160;
+                                        	<h:outputText value="#{etq.milaDireccionEmail}" />
+ 								       </h:panelGroup>
+ 								       <h:panelGroup>
+ 								       	<b><h:outputText value="" /></b>&#160;&#160;
+                                        	<h:outputText value="#{etq.milaTelefono}" />
+ 								       </h:panelGroup>
+ 								       <h:panelGroup>
+ 								       	<b><h:outputText value="" /></b>&#160;&#160;
+                                       	 <h:outputText value="#{etq.milaFax}" />
+ 								       </h:panelGroup>
+ 								       <h:panelGroup>
+ 								      		<h:panelGrid id="gridEmail" columns="1" border="0" align="left">
+											  <h:inputText autocomplete="off" id="email" value="#{modificaBeneficiarioMILABean.forma.email}"
+	                                                         styleClass="textoControles" size="80" maxlength="50"/> 
+	                                        </h:panelGrid>
+ 								       </h:panelGroup>
+ 								       <h:panelGroup>
+		 								       <h:panelGrid id="gridTelefono" columns="1" border="0" align="left">
+		                                    	 <h:inputText autocomplete="off" id="telefono" value="#{modificaBeneficiarioMILABean.forma.telefono}"
+	                                                         styleClass="textoControles" size="40" maxlength="20"/>
+										    </h:panelGrid>
+ 								       </h:panelGroup>
+ 								       <h:panelGroup>
+ 								         <h:panelGrid id="gridFax" columns="1" border="0" align="left">
+		                                    	 <h:inputText autocomplete="off" id="fax" value="#{modificaBeneficiarioMILABean.forma.fax}"
+	                                                         styleClass="textoControles" size="40" maxlength="20"/>
+										    </h:panelGrid>
+ 								       </h:panelGroup>
+ 								    </h:panelGrid>
+ 								</td>
+                                </tr>  
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="PARTE IV" /></b>&#160;&#160;
+                                        <b><h:outputText value="#{etq.milaInformacionAdicional}" /></b>
+                                    </td>
+                                </tr>
+                                <tr>
+ 								   <td colspan="2">
+ 								    <h:panelGrid width="100%" id="gridDatosAdicionales" columns="1" border="0" align="left">
+ 								       <h:panelGroup>
+ 								       	 <b><h:outputText value="" /></b>&#160;&#160;
+                                        	<h:outputText value="#{etq.milaReferencia}" />
+ 								       </h:panelGroup>
+ 								       <h:panelGroup>
+ 								      		<h:panelGrid id="gridReferencia" columns="1" border="0" align="left">
+											   <h:inputText autocomplete="off" id="numeroReferencia" value="#{modificaBeneficiarioMILABean.forma.numeroReferencia}"
+                                                     styleClass="textoControles" size="100" maxlength="100" />
+	                                        </h:panelGrid>
+ 								       </h:panelGroup>
+ 								    </h:panelGrid>
+ 								</td>
+                                </tr>  
+                               <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="PARTE V" /></b>&#160;&#160;
+                                        <b><h:outputText value="#{etq.milaDocumentosAgregar}" /></b>
+                                    </td>
+                                </tr>
+                                <tr>
+ 								   <td colspan="2">
+ 								    <h:panelGrid id="gridDatosAdicionalesAgregar" columns="1" border="0" align="left">
+ 								        <h:panelGroup>
+ 								       	<b><h:outputText value="" /></b>&#160;&#160;
+                                        	<h:outputText value="#{etq.milaAdjuntar}" />
+ 								       </h:panelGroup>
+ 								       <h:panelGroup>
+	 								        <h:panelGrid columns="2" columnClasses="top,top">
+			                                    	  <rich:fileUpload fileUploadListener="#{modificaBeneficiarioMILABean.listener}"
+										                maxFilesQuantity="#{modificaBeneficiarioMILABean.uploadsAvailable}"
+										                id="upload"
+										                immediateUpload="#{modificaBeneficiarioMILABean.autoUpload}"
+										                acceptedTypes="jpg, jpeg, gif, png, bmp, pdf" allowFlash="true"
+										                addControlLabel="#{etq.milaAgregar}" cancelEntryControlLabel="#{etq.milaCancelar}" 
+										                clearAllControlLabel="#{etq.milaCancelarTodo}" clearControlLabel="#{etq.milaLimpiar}" doneLabel="#{etq.milaListo}"
+										                progressLabel="#{etq.milaProgeso}" sizeErrorLabel="#{etq.milaErrorTamano}" stopControlLabel="#{etq.milaDetener}" stopEntryControlLabel="#{etq.milaDetener}"
+										                transferErrorLabel="#{etq.milaErrorTransferencia}" uploadControlLabel="#{etq.milaSubir}"
+										                noDuplicate="true">
+										                <a4j:support event="onuploadcomplete" reRender="info" />
+										            </rich:fileUpload>
+ 								        	 <h:panelGroup id="info" >
+							               		 <rich:panel bodyClass="infoFiles" width="400">
+								                   	 <f:facet name="header">
+								                        <h:outputText value="#{etq.milaArchivosSubidos}" />
+								                    </f:facet>
+								                    <h:outputText value="#{etq.milaArchivosNoHay}"
+								                        rendered="#{modificaBeneficiarioMILABean.size==0}" />
+								                    <rich:dataGrid columns="1" value="#{modificaBeneficiarioMILABean.files}"
+								                        var="file" rowKeyVar="row">
+								                        <rich:panel bodyClass="rich-laguna-panel-no-header">
+								                            <h:panelGrid columns="2">
+								                                <a4j:mediaOutput element="img" mimeType="#{file.mime}"
+								                                    createContent="#{modificaBeneficiarioMILABean.paint}" value="#{row}"
+								                                    style="width:80px; height:80px;" cacheable="false" rendered="#{file.preview}">
+								                                    <f:param value="#{modificaBeneficiarioMILABean.timeStamp}" name="time"/>  
+								                                </a4j:mediaOutput>
+								                                <h:graphicImage url="/images/pdfDocument.png" width="80" height="80" rendered="#{!file.preview}" />
+								                                <h:panelGrid columns="2">
+								                                    <h:outputText value="#{etq.milaArchivoNombre}" />
+								                                    <h:outputLink value="ObtieneFormatoMILA">
+																	    <f:param name="funcion" value="descargarDocumento" />
+																	    <f:param name="nombreDocumento" value="#{file.name}" />
+																	    <h:outputText value="#{file.name}" />
+																	</h:outputLink>
+								                                    <h:outputText value="#{etq.milaArchivoSize}" />
+								                                    <h:outputText value="#{file.sizeString}" />
+								                                </h:panelGrid>
+								                            </h:panelGrid>
+								                        </rich:panel>
+								                    </rich:dataGrid>
+								                </rich:panel>
+								                <rich:spacer height="3"/>
+								                <br />
+								                <a4j:commandLink action="#{modificaBeneficiarioMILABean.clearUploadData}"
+								                    reRender="info, upload" value="#{etq.milaBorrarArchivos} "
+								                    rendered="#{modificaBeneficiarioMILABean.size>0}" styleClass="texto">
+								                    <h:graphicImage value="/images/page_refresh.png"/>
+								                 </a4j:commandLink>
+								         	</h:panelGroup>
+							           	</h:panelGrid>
+							            </h:panelGroup>
+ 								    </h:panelGrid>
+ 								</td>
+                                </tr>  
+                            </table>
+                            <a4j:outputPanel ajaxRendered="true">
+                                <script languaje="javascript">
+                                </script>
+                            </a4j:outputPanel>
+                        </h:panelGroup>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:panelGroup id="botones">
+                            <div class="guardar">
+                                <h:commandButton id="botonGuardar" image="/images/transparent.gif"
+                                                   styleClass="submit" action="#{modificaBeneficiarioMILABean.guardar}">
+                                    <f:setPropertyActionListener target="#{consultaBeneficiariosBean.banderaInicio}" value="false" />
+                                </h:commandButton>
+                            </div>
+                            <div class="cancelar">
+                                <h:commandButton id="botonCancelar" image="/images/transparent.gif"
+                                                   styleClass="submit" action="consultaBeneficiarios" >
+                                    <f:setPropertyActionListener target="#{consultaBeneficiariosBean.banderaInicio}" value="false" />
+                                </h:commandButton>
+                            </div>
+                        </h:panelGroup>
+                    </td>
+                </tr>
+            </table>
+        </ui:define>
+
+    </ui:composition>
+</html>

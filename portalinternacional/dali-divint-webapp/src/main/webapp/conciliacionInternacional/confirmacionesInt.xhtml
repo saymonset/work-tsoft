@@ -1,0 +1,862 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+	
+		<ui:define name="tituloEncabezado">
+
+		</ui:define>
+		<ui:define name="head">	
+			<style type="text/css">
+				.columnSender{
+					width:50px; 
+				}
+			</style>
+				
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/confirmacionesInt.js">
+			</script>
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/Color.js">
+			</script>
+		</ui:define>
+		<ui:define name="tituloSeccion">
+			<h:outputText value="Notificaciones de Efectivo" />
+		</ui:define>
+
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="Notificaciones de Efectivo"></h:outputText>
+		</ui:define>
+
+
+
+		<ui:define name="criterios">
+
+			<h:outputText value="#{confirmacionIntBean.init}" />
+			<a4j:keepAlive beanName="confirmacionIntBean" />
+			<h:panelGroup id="panelCriterios">				
+				<div style='display: "inline"' id="divCriterios">
+					<table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+						align="center">
+						<tr>							
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center" border="0">
+									
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.bicCode}" />
+										</td>
+										<td align="center" >
+											<h:outputText styleClass="texto" value="#{etq.divisaMinus}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.cuentas}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.tipoMensaje}" />
+										</td>
+										<td align="center">
+										</td>
+									</tr>
+									<tr align="center">
+										<td>
+											<h:panelGroup>
+												<rich:orderingList value="#{confirmacionIntBean.listBic}" var="bic" listHeight="100" listWidth="150" selection="#{confirmacionIntBean.bicSelected}"
+																   orderControlsVisible="false" fastOrderControlsVisible="false" rowKeyVar="index" id="bics" rich-ordering-list-cell-selected="color2">
+										            <rich:column  width="180">
+										                <h:outputText value="#{bic}"></h:outputText>
+										            </rich:column>
+										            <a4j:support event="onclick" ignoreDupResponses="true" requestDelay="500" action="#{confirmacionIntBean.obtieneDivisas}" reRender="divisas, cuentas"/>
+										            <a4j:support event="onkeyup" ignoreDupResponses="true" requestDelay="500" action="#{confirmacionIntBean.obtieneDivisas}" reRender="divisas, cuentas"/>
+										        </rich:orderingList>
+											</h:panelGroup>
+										</td>
+										<td>
+											<rich:orderingList value="#{confirmacionIntBean.divisas}" var="list" listHeight="100" listWidth="150" selection="#{confirmacionIntBean.divisaSelected}"
+															   orderControlsVisible="false" fastOrderControlsVisible="false" id="divisas">
+									            <rich:column  width="180">
+									                <h:outputText value="#{list}"></h:outputText>
+									            </rich:column>
+									            <a4j:support event="onclick" ignoreDupResponses="true" requestDelay="500" action="#{confirmacionIntBean.obtieneCuentas}" reRender="cuentas"/>
+									            <a4j:support event="onkeyup" ignoreDupResponses="true" requestDelay="500" action="#{confirmacionIntBean.obtieneCuentas}" reRender="cuentas"/>
+									        </rich:orderingList>
+										</td>
+										<td>
+											<rich:orderingList value="#{confirmacionIntBean.listCuentas}" var="list" listHeight="100" listWidth="150" selection="#{confirmacionIntBean.cuentaSelected}"
+															   orderControlsVisible="false" fastOrderControlsVisible="false" rowKeyVar="index" id="cuentas">
+									            <rich:column  width="180">
+									                <h:outputText value="#{list}"></h:outputText>
+									            </rich:column>
+									            <a4j:support event="onclick" ignoreDupResponses="true" requestDelay="500"/>
+									            <a4j:support event="onkeyup" ignoreDupResponses="true" requestDelay="500"/>
+									        </rich:orderingList>
+										</td>
+										<td>
+											<rich:orderingList value="#{confirmacionIntBean.listTipoMensaje}" var="list" listHeight="100" listWidth="150" selection="#{confirmacionIntBean.tipoMensajeSelected}"
+															   orderControlsVisible="false" fastOrderControlsVisible="false" rowKeyVar="index" id="tipoMensaje">
+									            <rich:column  width="180">
+									                <h:outputText value="#{list}"></h:outputText>
+									            </rich:column>
+									            <a4j:support event="onclick" ignoreDupResponses="true" requestDelay="500"/>
+									            <a4j:support event="onkeyup" ignoreDupResponses="true" requestDelay="500"/>
+									        </rich:orderingList>
+										</td>
+										<td align="center">
+											<table align="center">
+												<tr>
+													<td colspan="2" align="center">
+														<h:outputText styleClass="texto" value="#{etq.fechaRecepcionMT}" />
+													</td>												
+												</tr>
+												<tr>
+													<td>
+														<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+													       value="#{confirmacionIntBean.fechaRecepcionMensajeInicio}"
+													       datePattern="dd/MM/yyyy" tabindex="90" />
+													</td>
+													<td>
+														<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+													       value="#{confirmacionIntBean.fechaRecepcionMensajeFin}"
+													       datePattern="dd/MM/yyyy" tabindex="100" />
+													</td>
+												</tr>
+												<tr>
+													<td align="center" colspan="2">
+														<h:outputText styleClass="texto" value="#{etq.fechaCreditoDebito}" />
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+													       value="#{confirmacionIntBean.fechaCreditoDebitoInicio}" 
+													       datePattern="dd/MM/yyyy" tabindex="90" />
+													</td>
+													<td>
+														<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+													       value="#{confirmacionIntBean.fechaCreditoDebitoFin}"
+													       datePattern="dd/MM/yyyy" tabindex="100" />
+													</td>
+												</tr>
+												<tr>
+													<td align="center" colspan="2">
+														<h:outputText styleClass="texto" value="#{etq.fechaRecepcionDali}" />
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+													       value="#{confirmacionIntBean.fechaRecepcionDaliInicio}" 
+													       datePattern="dd/MM/yyyy" tabindex="90" />
+													</td>
+													<td>
+														<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+													       value="#{confirmacionIntBean.fechaRecepcionDaliFin}"
+													       datePattern="dd/MM/yyyy" tabindex="100" />
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</td>							
+						</tr>
+						<tr>			
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center" border="0">
+									<tr align="center">
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.mtEspecifico}" />
+										</td>		
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.referenciaMensaje}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.relatedReference}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.idFolioMinus}" />
+										</td>
+									</tr>
+									<tr align="center">
+										<td align="center">
+											<h:inputText autocomplete="off" id="mtEspecifico" value="#{confirmacionIntBean.mtEspecifico}" size="5"
+												maxlength="3" styleClass="textoControles campoNumerico" tabindex="20" />
+										</td>
+										<td align="center">
+											<h:inputText autocomplete="off" id="referencia" value="#{confirmacionIntBean.referencia}" size="20"
+													maxlength="16" styleClass="textoControles" tabindex="20" />
+										</td>
+										<td align="center">
+											<h:inputText autocomplete="off" id="relatedReference" value="#{confirmacionIntBean.relatedReference}" size="20"
+												maxlength="16" styleClass="textoControles" tabindex="20" />
+										</td>
+										<td align="center">
+											<h:inputText autocomplete="off" id="folio" value="#{confirmacionIntBean.folio}" size="20"
+												maxlength="20" styleClass="textoControles campoAlphaNumerico" tabindex="20" />
+										</td>
+									</tr>
+									<tr align="center">
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.isin}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.tipoNotificacion}" />
+										</td>
+									</tr>
+									<tr align="center">
+										<td align="center">
+											<h:inputText autocomplete="off" id="isin" value="#{confirmacionIntBean.isin}" size="20"
+													maxlength="50" styleClass="textoControles campoAlphaNumerico" tabindex="20" />
+										</td>
+										<td align="center">
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{confirmacionIntBean.tipoNotificacion}" tabindex="60">
+												<f:selectItem itemValue="-1" itemLabel="TODAS" />
+												<f:selectItem itemValue="1" itemLabel="CREDITO" />
+												<f:selectItem itemValue="2" itemLabel="DEBITO" />
+											</h:selectOneMenu>
+										</td>
+										<td align="center">
+											<h:selectBooleanCheckbox id="cuentasCustodia" tabindex="110" value="#{confirmacionIntBean.cuentasCustodia}" />&#160;
+											<h:outputText styleClass="texto"  value="#{etq.cuentasCustodia}" />
+										</td>
+										<td align="center">
+											<h:selectBooleanCheckbox id="cuentasComercial" tabindex="120" value="#{confirmacionIntBean.cuentasComercial}" />&#160;
+											<h:outputText styleClass="texto"  value="#{etq.cuentasComercial}" />
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td class="recuadroTabla" align="center">
+								<h:panelGroup id="panelTotales">
+									<table class="tablaCriterios" align="center" border="0">
+									<tr>
+										<td align="center" width="30%">
+											<h:selectBooleanCheckbox id="creditoDebito" tabindex="130" value="#{confirmacionIntBean.creditoDebito}" />&#160;
+											<h:outputText styleClass="texto"  value="Crédito/Débito" />
+										</td>
+										<td align="right">
+											<b>
+												<h:outputText styleClass="texto" value="#{etq.totalCreditos}" />: &#160;
+												<h:outputText styleClass="texto" value="#{confirmacionIntBean.totalCreditos}" rendered="#{!empty confirmacionIntBean.totalCreditos}" id="filtrosTotalCreditos">
+													<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+												</h:outputText>
+											</b>
+										</td>
+										<td>
+											<b>
+												<h:outputText styleClass="texto" value="#{etq.totalDebitos}" />: &#160;
+												<h:outputText styleClass="texto" value="#{confirmacionIntBean.totalDebitos}" rendered="#{!empty confirmacionIntBean.totalDebitos}" id="filtrosTotalDebitos">
+													<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+												</h:outputText>
+											</b>
+										</td>										
+									</tr>
+									</table>
+								</h:panelGroup>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</h:panelGroup>
+			<h:panelGroup id="panelResumen">
+				<h:panelGroup rendered="#{confirmacionIntBean.consultaEjecutada}">
+					<div id="divResumen" style="display: #{confirmacionIntBean.consultaEjecutada ? 'inline':'none'}">
+						<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+							<tr>
+								<td class="recuadroTabla">
+									<table class="tablaCriterios texto" border="0" style="text-align: center">
+										<tr>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.bicCode}" />
+											</td>
+											<td align="center" >
+												<h:outputText styleClass="texto" value="#{etq.divisaMinus}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.cuentas}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.tipoMensaje}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.fechaRecepcionMT}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.fechaCreditoDebito}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.fechaRecepcionDali}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.mtEspecifico}" />
+											</td>
+										</tr>
+										<tr>
+											<td align="center">
+	                                            <h:outputText styleClass="texto" value="#{confirmacionIntBean.bicSelected}"/>
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{confirmacionIntBean.divisaSelected}"/>
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{empty confirmacionIntBean.cuentaSelected ? '[TODAS]' : confirmacionIntBean.cuentaSelected}"/>
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{confirmacionIntBean.tipoMensajeSelected}"/>
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{confirmacionIntBean.fechaRecepcionMensajeInicio}" rendered="#{!empty confirmacionIntBean.fechaRecepcionMensajeInicio}"/>
+                           						<h:outputText styleClass="texto" value="TODAS" rendered="#{empty confirmacionIntBean.fechaRecepcionMensajeInicio}"/>
+												<h:outputText styleClass="texto" value=" - " />
+												<h:outputText styleClass="texto" value="#{confirmacionIntBean.fechaRecepcionMensajeFin}" rendered="#{!empty confirmacionIntBean.fechaRecepcionMensajeFin}"/>
+                                        		<h:outputText styleClass="texto" value="TODAS" rendered="#{empty confirmacionIntBean.fechaRecepcionMensajeFin}"/>
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{confirmacionIntBean.fechaCreditoDebitoInicio}" rendered="#{!empty confirmacionIntBean.fechaCreditoDebitoInicio}"/>
+                        						<h:outputText styleClass="texto" value="TODAS" rendered="#{empty confirmacionIntBean.fechaCreditoDebitoInicio}"/>
+												<h:outputText styleClass="texto" value=" - " />
+												<h:outputText styleClass="texto" value="#{confirmacionIntBean.fechaCreditoDebitoFin}" rendered="#{!empty confirmacionIntBean.fechaCreditoDebitoFin}"/>
+	                                           	<h:outputText styleClass="texto" value="TODAS" rendered="#{empty confirmacionIntBean.fechaCreditoDebitoFin}"/>
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{confirmacionIntBean.fechaRecepcionDaliInicio}" rendered="#{!empty confirmacionIntBean.fechaRecepcionDaliInicio}"/>
+                        						<h:outputText styleClass="texto" value="TODAS" rendered="#{empty confirmacionIntBean.fechaRecepcionDaliInicio}"/>
+												<h:outputText styleClass="texto" value=" - " />
+												<h:outputText styleClass="texto" value="#{confirmacionIntBean.fechaRecepcionDaliFin}" rendered="#{!empty confirmacionIntBean.fechaRecepcionDaliFin}"/>
+	                                           	<h:outputText styleClass="texto" value="TODAS" rendered="#{empty confirmacionIntBean.fechaRecepcionDaliFin}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{empty confirmacionIntBean.mtEspecifico ? 'Ninguno': confirmacionIntBean.mtEspecifico}" />
+											</td>
+										</tr>
+										<tr>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.referenciaMensaje}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.relatedReference}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.idFolioMinus}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.isin}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.cuentasCustodia}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.cuentasComercial}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.tipoNotificacion}" />
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<h:outputText styleClass="texto" value="#{confirmacionIntBean.referencia}" rendered="#{!empty confirmacionIntBean.referencia}"/>
+                           						<h:outputText styleClass="texto" value="TODAS" rendered="#{empty confirmacionIntBean.referencia}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{empty confirmacionIntBean.relatedReference ? 'TODAS': confirmacionIntBean.relatedReference}" />
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{empty confirmacionIntBean.folio ? 'TODOS': confirmacionIntBean.folio}" />
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{empty confirmacionIntBean.isin ? 'TODOS': confirmacionIntBean.isin}" />
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{confirmacionIntBean.cuentasCustodia ? 'Si':'No'}" />
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{confirmacionIntBean.cuentasComercial ? 'Si':'No'}" />
+											</td>	
+											<td>
+												<h:outputText styleClass="texto" value="TODAS" rendered="#{confirmacionIntBean.tipoNotificacion == -1}" />
+												<h:outputText styleClass="texto" value="CREDITO" rendered="#{confirmacionIntBean.tipoNotificacion == 1}" />
+												<h:outputText styleClass="texto" value="DEBITO" rendered="#{confirmacionIntBean.tipoNotificacion == 2}" />
+											</td>										
+										</tr>								
+									</table>							
+								</td>
+							</tr>
+							<tr>
+								<td class="recuadroTabla" align="center">
+									<table class="tablaCriterios" align="center" border="0">
+										<tr>
+											<td align="center" width="30%">
+												<h:outputText styleClass="texto"  value="Crédito/Débito" />: &#160;
+												<h:outputText styleClass="texto" value="#{confirmacionIntBean.creditoDebito ? 'Si':'No'}" />
+											</td>
+											<td align="right"><b>
+												<h:outputText styleClass="texto" value="#{etq.totalCreditos}" />: &#160;
+												<h:outputText styleClass="texto" value="#{confirmacionIntBean.totalCreditos}" rendered="#{!empty confirmacionIntBean.totalCreditos}">
+													<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+												</h:outputText></b>
+											</td>
+											<td><b>
+												<h:outputText styleClass="texto" value="#{etq.totalDebitos}" />: &#160;
+												<h:outputText styleClass="texto" value="#{confirmacionIntBean.totalDebitos}" rendered="#{!empty confirmacionIntBean.totalDebitos}">
+													<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+												</h:outputText></b>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>							
+						</table>															
+					</div>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+		<ui:define name="botones">
+			<h:panelGroup id="botones">				
+				<div class="refrescar" style="float: left;">
+	        		 <a4j:status id="commonStatus">
+						<f:facet name="start">
+							<h:panelGroup>
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								<h:outputText value="#{etq.buscando}"></h:outputText>
+							</h:panelGroup>
+						</f:facet>
+					</a4j:status> 	
+	        	</div>
+				<div class="limpiar">
+					<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+						styleClass="submit" 
+						onclick="limpiarTodos();"
+						actionListener="#{confirmacionIntBean.limpiar}" 
+						tabindex="6"/>
+				</div>
+				<div class="buscar">
+					<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+						styleClass="submit"
+						oncomplete='javascript:presentarResumen();limpiarTodos()'
+						actionListener="#{confirmacionIntBean.buscarConfirmaciones}"
+						reRender="containerResultados,totalesConsultas,tablaResultados,botones,mensajeUsuario,panelResumen,panelTotales"
+						tabindex="7">
+					</a4j:commandButton>
+				</div>
+				<div class="editar" style="display:#{confirmacionsIntBean.consultaEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios">            
+	            	<input type="image" class="submit"
+						src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+						alt="Editar Criterios" title="Editar Criterios"
+						onclick='javascript:presentarCriterios();return false;' />               	
+	           	</div>
+           	</h:panelGroup>
+		</ui:define>
+
+	
+
+		<ui:define name="seccionContenido">
+			<h:panelGroup id="containerResultados">
+				<h:panelGroup rendered="#{confirmacionIntBean.consultaEjecutada}">
+					<t:dataTable id="noExistenResultados"
+						value="#{confirmacionIntBean.paginaVO.registros}"
+						styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+						footerClass="tituloTabla" border="0" cellpadding="3px"
+						cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos"
+						rendered="#{empty confirmacionIntBean.paginaVO.registros}">
+
+						<t:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.sinResultados}"></h:outputText>
+							</f:facet>
+						</t:column>
+					</t:dataTable>
+					
+					<br/>
+					<br/>
+					<br/>
+					<h:panelGroup id="tablaResultados">						
+						<h:graphicImage value="/images/blank.gif" width="900px"
+							height="1px"></h:graphicImage>
+						<h:panelGroup
+							rendered="#{not empty confirmacionIntBean.paginaVO.registros}">
+							<table width="100%" border="0">
+								<tr>
+									<td align="left" class="textoEstadoCuenta">
+										<a4j:commandLink id="control_bitacora_primero"
+											action="#{confirmacionIntBean.irPrimeraPagina}"
+											rendered="#{confirmacionIntBean.irAlPrimero}"
+											reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,containerResultados">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_atras_fast"
+											action="#{confirmacionIntBean.retrocederPaginasRapido}"
+											rendered="#{confirmacionIntBean.retrocederRapido}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_atras"
+											action="#{confirmacionIntBean.retrocederPagina}"
+											rendered="#{confirmacionIntBean.retroceder}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+												border="0" />
+										</a4j:commandLink>
+										<a4j:commandLink id="control_bitacora_adelante"
+											action="#{confirmacionIntBean.avanzarPagina}"
+											rendered="#{confirmacionIntBean.avanzar}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_adelante_fast"
+											action="#{confirmacionIntBean.avanzarPaginasRapido}"
+											rendered="#{confirmacionIntBean.avanzarRapido}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+												border="0" />
+
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_ultimo"
+											action="#{confirmacionIntBean.irUltimaPagina}"
+											rendered="#{confirmacionIntBean.irAlUltimo}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+												border="0" />
+										</a4j:commandLink>
+										
+										<a4j:commandButton id="control_bitacora_actual"
+								            action="#{confirmacionIntBean.irPaginaActual}"
+								            style="visibility: hidden;"               
+							            	reRender="containerResultados">          
+								        </a4j:commandButton>
+
+										<br />
+										<h:outputText value="#{etq.mostrando}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{confirmacionIntBean.numeroPagina}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+										<h:outputText value="#{confirmacionIntBean.totalPaginas}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+										&#160;&#160;&#160;
+										<h:outputText
+											value="#{confirmacionIntBean.paginaVO.totalRegistros}"
+											styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+										&#160;
+										<h:outputText styleClass="textoResumen"
+											value="#{etq.registrosEncontrados}" />
+									</td>
+									<td align="right" class="textoEstadoCuenta">
+										<h:outputText escape="false" value="#{etq.registrosPorPagina}"
+											styleClass="textoResumen" />
+										<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+											value="#{confirmacionIntBean.paginaVO.registrosXPag}">
+											<f:selectItem itemLabel="1" itemValue="1" />
+											<f:selectItem itemLabel="2" itemValue="2" />
+											<f:selectItem itemLabel="5" itemValue="5" />
+											<f:selectItem itemLabel="10" itemValue="10" />
+											<f:selectItem itemLabel="20" itemValue="20" />
+											<f:selectItem itemLabel="50" itemValue="50" />
+											<f:selectItem itemLabel="100" itemValue="100" />
+											<f:selectItem itemLabel="1000" itemValue="1000" />
+											<a4j:support event="onchange"
+												reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,mensajeUsuario"
+												action="#{confirmacionIntBean.ejecutarConsulta}" >
+                                                
+                                            </a4j:support>
+										</h:selectOneMenu>&#160;&#160;&#160;&#160;&#160;
+									</td>
+								</tr>
+							</table>
+						</h:panelGroup>
+						
+						<h:inputHidden id="idConciliacionHidden"/>
+						<h:inputHidden id="reporteAuditoria"/>
+						<h:dataTable id="resultados"
+							value="#{confirmacionIntBean.paginaVO.registros}"
+							var="con"
+							rendered="#{not empty confirmacionIntBean.paginaVO.registros}"
+							styleClass="tablaGeneral centrado" headerClass="tituloTabla" width="100%"
+							footerClass="texto textoPeque12" border="0" cellpadding="3px"
+							cellspacing="0px" columnClasses="everyColumn" style="width:98%;"
+							rowClasses="renglonTablaUno, renglonTablaDos">
+							<!-- Folio Id Confirmacion  -->
+							<h:column >
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.folioConf}" />
+								</f:facet>
+								<table align="left">
+								<tr>
+									<td>
+										<h:panelGroup rendered="true">
+											<a href="javascript:detalleResultadoMensaje(#{con.idConfirmacion});" title="Muestra el mensaje Swift">
+												<img src="#{facesContext.externalContext.requestContextPath}/images/msg.gif"  />
+											</a>
+										</h:panelGroup>
+									</td>
+									<td>
+										<h:outputText styleClass="texto textoPeque12" value="#{con.idConfirmacion}" />
+									</td>
+								</tr>	
+								</table>
+							</h:column>
+							<!-- Referencia Mensaje  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.referenciaMensaje}" />
+								</f:facet>
+									<h:outputText styleClass="#{(con.ops == 'SIC' or con.ops == 'CRP') ? 'textoSic' : 'texto textoPeque12'}" value="#{con.referenciaMensaje}" />									
+							</h:column>
+							<!-- Related Mensaje  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.relatedReference}" />
+								</f:facet>
+								<h:outputText styleClass="#{(con.ops == 'SIC' or con.ops == 'CRP') ? 'textoSic' : 'texto textoPeque12'}" value="#{con.relatedReference}" />									
+							</h:column>
+							<!-- Fecha Recepcion MT  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaRecepcionMT}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{con.fechaEmision}" rendered="#{not empty con.fechaEmision}" converter="formatoFechaLargaConverter"/>					
+							</h:column>	
+							<!-- Fecha Recepcion Dali  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaRecepcionDali}" />									
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{con.fechaRecepcionDali}" rendered="#{not empty con.fechaRecepcionDali}" converter="formatoFechaLargaConverter"/>																
+							</h:column>	
+							<!-- Fecha Credito Debito  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaCreditoDebito}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{con.fechaCreditoDebito}" rendered="#{not empty con.fechaCreditoDebito}" converter="formatoFechaLargaConverter"/>
+							</h:column>	
+							<!-- Tipo Mensaje  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.tipoMensaje}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{con.tipoMensaje}" />																	
+							</h:column>
+							<!-- Custodio / BIC -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.custodioBic}"/>
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{con.bicCode}" />														
+							</h:column>
+							<!-- Cuenta -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.cuentaMinus}"/>
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{con.cuenta}" />
+								<f:facet name="footer">
+									<h:panelGroup rendered="#{confirmacionIntBean.totales}">
+                                		<h:outputText value="Totales" style="font-weight:bold;" />
+                                	</h:panelGroup>
+                                </f:facet>											
+							</h:column>
+							<!-- Divisa -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.divisaMinus}"/>
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{con.divisa}" />														
+							</h:column>
+							<!-- Credito -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.credito}"/>
+								</f:facet>
+								<div style="text-align:right">
+									<h:outputText styleClass="#{(con.hash == '1') ? 'color1' : ((con.hash == '2') ? 'color2' : 'texto textoPeque12')}" value="#{con.cantidad}" rendered="#{con.tipoMensaje == '910' and con.cantidad != null}">
+										<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+									</h:outputText>
+								</div>
+								<f:facet name="footer">
+									<h:panelGroup rendered="#{confirmacionIntBean.totales}">
+										<div style="text-align:right">
+											<h:outputText value="#{confirmacionIntBean.totalCreditosPaginado}" style="font-weight:bold;">
+                                				<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+                                			</h:outputText>
+                                		</div>
+                                	</h:panelGroup>
+                                </f:facet>											
+							</h:column>
+							<!-- Debito -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.debito}"/>
+								</f:facet>
+								<div style="text-align:right">
+									<h:outputText styleClass="#{(con.hash == '1') ? 'color1' : ((con.hash == '2') ? 'color2' : 'texto textoPeque12')}" value="#{con.cantidad}" rendered="#{con.tipoMensaje != '910' and con.cantidad != null}">
+										<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+									</h:outputText>
+								</div>
+								<f:facet name="footer">
+									<h:panelGroup rendered="#{confirmacionIntBean.totales}">
+										<div style="text-align:right">
+	                                		<h:outputText value="#{confirmacionIntBean.totalDebitosPaginado}" style="font-weight:bold;">
+	                                			<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+	                                		</h:outputText>
+	                                	</div>
+	                                </h:panelGroup>
+                                </f:facet>													
+							</h:column>
+							<!-- Comentarios Dali -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.isin}"/>
+								</f:facet>
+								<h:panelGroup rendered="#{empty con.comentariosDali and (!empty sessionScope.roles['NOTIF_EFECTIVO_INT_SU'] or !empty sessionScope.roles['NOTIF_EFECTIVO_INT'])}">
+									<a href="javascript:actualizaComentarioDali(#{con.idConfirmacion}, '#{con.comentariosDali}');" title="Agrega Comentario Dali">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/edit.png"  />
+									</a>
+								</h:panelGroup>
+								<h:panelGroup rendered="#{!empty con.comentariosDali and !empty sessionScope.roles['NOTIF_EFECTIVO_INT_SU']}">
+									<a href="javascript:actualizaComentarioDali(#{con.idConfirmacion}, '#{con.comentariosDali}');" title="Edita Comentario Dali">
+										<h:outputText styleClass="texto textoPeque12" value="#{con.comentariosDali}" rendered="#{!empty con.comentariosDali}"/>
+									</a>
+								</h:panelGroup>		
+								<h:panelGroup rendered="#{!empty con.comentariosDali and !empty sessionScope.roles['NOTIF_EFECTIVO_INT']}">
+									<h:outputText styleClass="texto textoPeque12" value="#{con.comentariosDali}" rendered="true"/>
+								</h:panelGroup>												
+							</h:column>
+							<!-- id folio -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.idFolioMinus}"/>
+								</f:facet>
+								<h:panelGroup rendered="#{empty con.idFolio and (!empty sessionScope.roles['NOTIF_EFECTIVO_INT_SU'] or !empty sessionScope.roles['NOTIF_EFECTIVO_INT'])}">
+									<a href="javascript:actualizaIdFolio(#{con.idConfirmacion}, '#{con.idFolio}');" title="Agrega Id Folio">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/edit.png"  />
+									</a>
+								</h:panelGroup>
+								<h:panelGroup rendered="#{!empty con.idFolio and !empty sessionScope.roles['NOTIF_EFECTIVO_INT_SU']}">
+									<a href="javascript:actualizaIdFolio(#{con.idConfirmacion}, '#{con.idFolio}');" title="Edita Id Folio">
+										<h:outputText styleClass="texto textoPeque12" value="#{con.idFolio}" rendered="#{!empty con.idFolio}"/>
+									</a>
+								</h:panelGroup>		
+								<h:panelGroup rendered="#{!empty con.idFolio and !empty sessionScope.roles['NOTIF_EFECTIVO_INT']}">
+									<h:outputText styleClass="texto textoPeque12" value="#{con.idFolio}"/>
+								</h:panelGroup>									
+							</h:column>
+							<!-- Ordering Customer -->
+							<h:column>
+								<f:facet name="header">
+									<h:panelGroup>
+										<h:outputText value="&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+										<h:outputText value="&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.orderingCustomerE}"/>
+										<h:outputText value="&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+										<h:outputText value="&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+									</h:panelGroup>
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{con.orderingCustomer}" />
+							</h:column>
+							<!-- Ordering Institution -->
+							<h:column>
+								<f:facet name="header">
+									<h:panelGroup>
+										<h:outputText value="&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+										<h:outputText value="&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.orderingInstitutionE}"/>
+										<h:outputText value="&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+										<h:outputText value="&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+									</h:panelGroup>
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{con.orderingInstitution}" />														
+							</h:column>
+							<!-- Sender Reference Info -->
+							<h:column>
+								<f:facet name="header" headerClass="columnSender">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.senderReferenceInfo}"/>
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{con.detalle}"/>													
+							</h:column>
+						</h:dataTable>
+					</h:panelGroup>
+					<!-- ================================= EXPORTAR ============================================================ -->
+					<h:panelGroup id="totalesConsultas"
+						rendered="#{not empty confirmacionIntBean.paginaVO.registros}">					
+					<table cellpadding="0" cellspacing="0" border="0" align="center"
+						width="900px">
+						<tr align="right">
+							<td align="right">
+								<h:panelGroup id="botonesExportar">
+									<h:panelGroup
+										style="display: #{(confirmacionIntBean.consultaEjecutada and not empty confirmacionIntBean.paginaVO.registros)? 'inline' : 'none'}">
+
+										<h:outputText value="Exportar los resultados"></h:outputText>
+										
+										<h:commandButton actionListener="#{confirmacionIntBean.generarReportes}"
+											action="confirmacionIntPDF"
+											image="/images/pdf.gif"
+											title="Exportar a PDF todos los resultados de la consulta"
+											id="generarPdf"
+											onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);"/>
+                           				&#160;&#160;
+
+                          				<h:commandButton actionListener="#{confirmacionIntBean.generarReportes}"
+                          					action="confirmacionIntXLS"
+                          					image="/images/excel-file.gif"
+                          					title="Exportar a Excel todos los resultados de la consulta" 
+                            				id="generarExcel"
+                            				onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);">
+                           				</h:commandButton>
+                           				<div id="monitorPeticionReporte" style="display: none;">
+											<h:panelGroup id="panelMonitorPeticionReporte">
+												<h:graphicImage value="/images/ajax-loader.gif" />
+												&#160;&#160;
+												<h:outputText value="#{etq.reporteEnProceso}" />
+												<a4j:commandButton id="btnActualizarEstadoPeticion"
+													image="/images/transparent.gif"
+													styleClass="submit"
+													actionListener="#{confirmacionIntBean.actualizarEstadoPeticion}"
+													reRender="panelMonitorPeticionReporte"
+													oncomplete="desbloquearBotonesReportes(#{confirmacionIntBean.peticionReporteCompleta}, ['generarExcel', 'generarPdf']);"/>
+											</h:panelGroup>
+										</div>
+									</h:panelGroup>
+								</h:panelGroup>
+
+							</td>
+						</tr>
+					</table>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+
+
+	</ui:composition>
+
+
+	<!-- FIN DEL DECORATE -->
+</html>

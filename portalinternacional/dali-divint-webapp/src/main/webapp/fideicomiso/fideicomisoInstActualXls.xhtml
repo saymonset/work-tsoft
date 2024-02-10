@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xls="http://indeval.com/jsf/xls"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+
+	<xls:document documentName="fideicomisoInstitucionActual"
+		documentTitle="Consulta Fideicomiso Instituci&#243;n Actual"
+		institucion="#{fideicomisoInstitucionActualController.agenteFirmado.id} #{fideicomisoInstitucionActualController.agenteFirmado.folio} #{fideicomisoInstitucionActualController.agenteFirmado.razon}"
+		fecha="#{fideicomisoInstitucionActualController.fechaActual}">
+
+		<xls:subtitle value="#{etq.filtros}" />
+
+		<xls:table value="#{fideicomisoInstitucionActualController}"
+			var="criterios">
+			<xls:row>
+				<xls:col header="#{etq.participante}"
+					value="#{fideicomisoInstitucionActualController.idFolioInstitucion}" />
+				<xls:col header="#{etq.cuentasMinus}"
+					value="#{fideicomisoInstitucionActualController.cuentas}" />
+				<xls:col header="#{etq.tipoMinus}"
+					value="#{fideicomisoInstitucionActualController.tipo1}" />
+				<xls:col header="#{etq.fechaMinus}"
+					value="#{fideicomisoInstitucionActualController.fechaConsulta}"
+					pattern="dd/MM/yyyy" />
+			</xls:row>
+		</xls:table>
+
+		<xls:subtitle value="#{etq.resultadosMinus}" />
+		<xls:iterator
+			value="#{fideicomisoInstitucionActualController.listaFideicomisos}"
+			var="emisionActual">
+			<xls:table value="#{fideicomisoInstitucionActualController}"
+				var="dummy1">
+				<xls:row>
+					<xls:col header="#{etq.tv}" value="#{emisionActual.emisionVO.tv}" />
+					<xls:col header="#{etq.emisoraMinus}"
+						value="#{emisionActual.emisionVO.emisora}" />
+					<xls:col header="#{etq.serieMinus}"
+						value="#{emisionActual.emisionVO.serie}" />
+					<xls:col header="#{etq.cuponMinus}"
+						value="#{emisionActual.emisionVO.cupon}" />
+					<xls:col header="#{etq.altaMinus}"
+						value="#{emisionActual.emisionVO.alta}" />
+					<xls:col header="#{etq.ultimoHecho}"
+						value="#{emisionActual.emisionVO.ultimoHecho}" />
+					<xls:col header="#{etq.valorNominalMinus}"
+						value="#{emisionActual.emisionVO.valorNominal}" />
+				</xls:row>
+			</xls:table>
+			<xls:table value="#{fideicomisoInstitucionActualController}"
+				var="datosValor">
+				<xls:row>
+					<xls:col header="#{etq.datosValorMinus}" value="" />
+				</xls:row>
+			</xls:table>
+			<xls:table value="#{emisionActual.agenteFideicomisoVOs}"
+				var="agenteArqueo">
+				<xls:row>
+					<xls:col header="#{etq.idMinus} #{etq.agente}"
+						value="#{agenteArqueo.id}" />
+					<xls:col header="#{etq.folioMinus} #{etq.agente}"
+						value="#{agenteArqueo.folio}" />
+					<xls:col header="#{etq.cuentaMinus} #{etq.agente}"
+						value="#{agenteArqueo.cuenta}" />
+					<xls:col header="#{etq.nombreCorto}"
+						value="#{agenteArqueo.nombreCorto}" />
+					<xls:col header="#{etq.posicionActual}"
+						value="#{agenteArqueo.posicionActual}"
+						pattern="###,###,###,###,###,##0" />
+
+					<xls:col header="#{etq.valuacionMercadoMinus}"
+						value="#{agenteArqueo.valuacionMercado}"
+						pattern="###,###,###,###,###,##0" />
+					<xls:col header="#{etq.valuacionNominalMinus}"
+						value="#{agenteArqueo.valuacionNominal}"
+						rendered="#{fideicomisoInstitucionActualController.historico}"
+						pattern="###,###,###,###,###,##0" />
+				</xls:row>
+			</xls:table>
+			<xls:table value="#{fideicomisoInstitucionActualController}"
+				var="totalListaArqueo">
+				<xls:row>
+					<xls:col header="" value="" />
+					<xls:col header="" value="" />
+					<xls:col header="" value="" />
+					<xls:col header="#{etq.totalCveNumAgentes}"
+						value="#{emisionActual.totalAgentes}"
+						pattern="###,###,###,###,###,##0" />
+					<xls:col header="#{etq.totalPosicionActual}"
+						value="#{emisionActual.totalPosicionActual}"
+						pattern="###,###,###,###,###,##0" />
+					<xls:col header="#{etq.totalValMercado}"
+						value="#{emisionActual.totalValuacionMercadoActual}"
+						pattern="###,###,###,###,###,##0" />
+
+					<xls:col header="#{etq.totalValNominal}"
+						value="#{emisionActual.totalValuacionNominalActual}"
+						rendered="#{fideicomisoInstitucionActualController.historico}"
+						pattern="###,###,###,###,###,##0" />
+
+				</xls:row>
+			</xls:table>
+			<xls:table value="#{fideicomisoInstitucionActualController}"
+				var="estadisticaAgente">
+				<xls:row>
+					<xls:col header="#{etq.estadisticasAgente}" value="" />
+				</xls:row>
+			</xls:table>
+
+			<xls:table
+				value="#{emisionActual.estadisticasFideicomisosPorAgenteVO}"
+				var="itemEstAgente">
+				<xls:row>
+					<xls:col header="#{etq.agente}"
+						value="#{itemEstAgente.agenteFideicomisoVO.id} #{itemEstAgente.agenteFideicomisoVO.folio} #{itemEstAgente.agenteFideicomisoVO.cuenta}" />
+					<xls:col header="#{etq.porcentajeMinus} (%)"
+						value="#{itemEstAgente.porcentaje}"
+						pattern="###,###,###,###,###,##0.00" />
+				</xls:row>
+			</xls:table>
+
+			<xls:table value="#{fideicomisoInstitucionActualController}"
+				var="estadisticaCuenta">
+				<xls:row>
+					<xls:col header="#{etq.estadisticasCuenta}" value="" />
+				</xls:row>
+			</xls:table>
+
+			<xls:table
+				value="#{emisionActual.estadisticasFideicomisoPorCuentaVO}"
+				var="itemCuenta">
+				<xls:row>
+					<xls:col header="#{etq.cuentaMinus}" value="#{itemCuenta.cuenta}" />
+					<xls:col header="#{etq.porcentajeMinus} (%)"
+						value="#{itemCuenta.porcentaje}"
+						pattern="###,###,###,###,###,##0.00" />
+
+				</xls:row>
+			</xls:table>
+
+		</xls:iterator>
+
+		<xls:table value="#{fideicomisoInstitucionActualController}"
+			var="totalGeneral">
+			<xls:row>
+				<xls:col header="#{etq.totalGralArqueo}" value="" />
+			</xls:row>
+		</xls:table>
+
+		<xls:table
+			value="#{fideicomisoInstitucionActualController.listaFideicomisos[0]}"
+			var="totales">
+			<xls:row>
+				<xls:col header="#{etq.numEmisiones}"
+					value="#{totales.totalEmisiones}" />
+				<xls:col header="#{etq.saldoMinus}" value="#{totales.saldoTotal}"
+					pattern="###,###,###,###,###,##0" />
+
+				<xls:col header="#{etq.totalValMercado}"
+					value="#{totales.totalValuacionMercado}"
+					rendered="#{fideicomisoInstitucionActualController.historico}"
+					pattern="###,###,###,###,###,##0" />
+				<xls:col header="#{etq.valuacionNominalMinus}"
+					value="#{totales.totalValuacionNominal}"
+					rendered="#{fideicomisoInstitucionActualController.historico}"
+					pattern="###,###,###,###,###,##0" />
+			</xls:row>
+		</xls:table>
+	</xls:document>
+</html>

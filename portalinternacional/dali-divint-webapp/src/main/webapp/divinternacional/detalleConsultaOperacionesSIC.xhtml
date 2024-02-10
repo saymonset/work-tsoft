@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutPopUpDetalleSic.xhtml">
+	<ui:define name="head">
+            <link rel="stylesheet" type="text/css" media="all"
+                  href="#{facesContext.externalContext.requestContextPath}/css/beneficiarioActivo.css" />
+        </ui:define>
+        <ui:define name="titulo">
+		<b>Consulta de Movimientos (Detalle)</b>
+        </ui:define>
+	
+	<ui:define name="body">
+	<h:outputText value="#{consultaOperacionesBean.detalle}" />
+	<a4j:keepAlive beanName="consultaOperacionesBean" />
+	
+	<table align="left"  width="900px" border="0" cellpadding="5px" cellspacing="0px" >
+		<tr><td>
+			<table align="left" width="900px" border="0" cellpadding="3px" cellspacing="0px" style="tablaCriterios">
+				<tr>
+		  			<td class="tituloTabla" colspan="8" align="left"><h:outputText value="Agente"  styleClass="textoNegritas  textoMayusculas" style="font-size:10px;"/></td>
+		  		</tr>
+			  	<tr>
+			  		<td align="center"><h:outputText value="#{etq.folioControl}" styleClass="textoNegritas"/></td>
+			  		<td align="center"><h:outputText value="#{etq.referenciaOperacion}" styleClass="textoNegritas"/></td>
+			  		<td align="center"><h:outputText value="#{etq.fechaHoraAlta}" styleClass="textoNegritas"/></td>
+			  		<td align="center"><h:outputText value="#{etq.fechaHoraLiquidacionTlp}" styleClass="textoNegritas"/></td>
+			  		<td align="center"><h:outputText value="#{etq.fechaHoraHabilitada}" styleClass="textoNegritas"/></td>
+			  		<td align="center"><h:outputText value="#{etq.id}" styleClass="textoNegritas"/></td>
+			  		<td align="center"><h:outputText value="#{etq.folioMinus}" styleClass="textoNegritas"/></td>
+			  		<td align="center"><h:outputText value="#{etq.cuentaMinus}" styleClass="textoNegritas"/></td>
+		 	    </tr>
+		 	    <tr >
+			  		<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.folioControl}" styleClass="texto textoPeque12"/></td>
+			  		<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.referenciaOperacion}" styleClass="texto textoPeque12"/></td>
+			  		<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.fechaAlta}" converter="formatoFechaLargaConverter" styleClass="texto textoPeque12"/></td>
+			  		<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.fechaLiquidacionTlp}" converter="formatoFechaLargaConverter" styleClass="texto textoPeque12"/></td>
+			  		<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.fechaHoraHabilitada}" converter="formatoFechaLargaConverter" styleClass="texto textoPeque12"/></td>
+			  		<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.cuentaNombrada.institucion.tipoInstitucion.claveTipoInstitucion}"  styleClass="texto textoPeque12"/></td>
+			  		<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.cuentaNombrada.institucion.folioInstitucion}"  styleClass="texto textoPeque12"/></td>
+			  		<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.cuentaNombrada.cuenta}" styleClass="texto textoPeque12"/></td>
+		 	    </tr>
+	    	</table></td>
+		</tr>
+		<tr><td>
+			<table align="left" width="900px" border="0" cellpadding="3px" cellspacing="0px" style="tablaCriterios">
+		 		<tr>
+		  			<td class="tituloTabla" colspan="5" align="left"><h:outputText value="#{etq.emisionMinus}" styleClass="textoNegritas  textoMayusculas" /></td>
+		  		</tr>
+		 	    <tr>
+			  		<td align="center"><h:outputText value="#{etq.tv}" styleClass="textoNegritas"/></td>
+			  		<td align="center"><h:outputText value="#{etq.emisoraMinus}" styleClass="textoNegritas"/></td>
+			  		<td align="center"><h:outputText value="#{etq.serieMinus}" styleClass="textoNegritas"/></td>
+			  		<td align="center"><h:outputText value="#{etq.cuponMinus}" styleClass="textoNegritas"/></td>
+			  		<td align="center"><h:outputText value="#{etq.isin}" styleClass="textoNegritas"/></td>
+		 	    </tr>
+		 	    <tr  style="recuadroTabla" >
+			  		<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.emision.instrumento.claveTipoValor}" styleClass="texto textoPeque12"/></td>	  		
+			  		<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.emision.emisora.clavePizarra}" styleClass="texto textoPeque12"/></td>
+					<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.emision.serie}" styleClass="texto textoPeque12"/></td>
+					<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.claveCupon}" styleClass="texto textoPeque12"/></td>
+					<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.emision.isin}" styleClass="texto textoPeque12"/></td>
+		 	    </tr>
+		 	    <tr >
+			  		<td colspan="5"><h:outputText value=" " /></td>	  		
+		 	    </tr>
+		 	   	
+	 	 	</table>
+			</td>
+		</tr>
+		<tr><td>
+			<table align="left" width="900px" border="0" cellpadding="3px" cellspacing="0px" style="tablaCriterios">
+		 		<tr>
+		  			<td class="tituloTabla" colspan="8" align="left"><h:outputText value="Custodio"  styleClass="textoNegritas textoMayusculas"/></td>
+		  		</tr>
+		  		 <tr>
+		  		 	<td align="center"><h:outputText value="#{etq.descripcionCustodia}" styleClass="textoNegritas"/></td>
+		  		 	<td align="center"><h:outputText value="#{etq.descripcionCuenta}" styleClass="textoNegritas"/></td>
+	  				
+ 	    		</tr>
+ 	    		<tr>
+ 	    			<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.catBic.detalleCustodio}" styleClass="texto textoPeque12"/></td>
+ 	    			<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.catBic.bicProd}" styleClass="texto textoPeque12"/></td>
+ 	    			
+ 			    </tr>
+ 	     	</table> 
+			</td>
+		</tr>
+		<tr><td>
+			<table align="left" width="900px" border="0" cellpadding="3px" cellspacing="0px" style="tablaCriterios">
+		 		<tr>
+		  			<td class="tituloTabla" colspan="4" align="left"><h:outputText value="Contraparte" styleClass="textoNegritas textoMayusculas" /></td>
+		  		</tr>
+		  		 <tr>
+	  				<td align="center"><h:outputText value="#{etq.cuentaContraparte}" styleClass="textoNegritas"/></td>
+	  				<td align="center"><h:outputText value="#{etq.descContraparte}" styleClass="textoNegritas"/></td>
+	  				<td align="center"><h:outputText value="#{etq.depositante}" styleClass="textoNegritas"/></td>
+	  				<td align="center"><h:outputText value="#{etq.instruccEspeciales}" styleClass="textoNegritas"/></td>
+	  				
+ 	    		</tr>
+ 	    		<tr>
+	  				<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.cuentaContraparte}" styleClass="texto textoPeque12 textoMayusculas"/></td>
+	  				<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.descContraparte}" styleClass="texto textoPeque12 textoMayusculas"/></td>
+	  				<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.sicDetalle.depLiq}" styleClass="texto textoPeque12 textoMayusculas"/></td>
+	  				<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.instruccEspeciales}"  styleClass="texto textoPeque12 textoMayusculas"/></td>
+		 	    </tr>
+ 	 	 	</table> 
+			</td>
+		</tr>
+		<tr><td>
+			<table align="left" width="900px" border="0" cellpadding="3px" cellspacing="0px" style="tablaCriterios">
+		 		<tr>
+		  			<td class="tituloTabla" colspan="4" align="left"><h:outputText value="Beneficiario Final"  styleClass="textoNegritas textoMayusculas"/></td>
+		  		</tr>
+		  		<tr>
+	  				<td align="center"><h:outputText value="#{etq.nomCtaBenef}" styleClass="textoNegritas"/></td>
+	  				<td align="center"><h:outputText value="#{etq.numCtaBenef}" styleClass="textoNegritas"/></td>
+	  				<td align="center"><h:outputText value="#{etq.importe}" styleClass="textoNegritas"/></td>
+	  				<td align="center"><h:outputText value="#{etq.divisaMinus}" styleClass="textoNegritas"/></td>
+ 	    		</tr> 	      
+ 	    		<tr>
+	  				<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.nomCtaBenef}" styleClass="texto textoPeque12 textoMayusculas"/></td>
+	  				<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.numCtaBenef}" styleClass="texto textoPeque12 textoMayusculas"/></td>
+	  				<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.importe}"
+	  								converter="formatoMonedaConverter" style="white-space: nowrap" styleClass="texto textoPeque12 textoMayusculas"/></td>
+	  				<td align="center"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.divisa}" styleClass="texto textoPeque12 textoMayusculas"/></td>
+ 	    		</tr>
+		 	</table> 
+			</td>
+		</tr>
+		<tr><td>
+			<table align="left" width="900px" border="0" cellpadding="3px" cellspacing="0px" style="tablaCriterios">
+		 		<tr>
+		  			<td class="tituloTabla" colspan="4" align="left" height="10px"><h:outputText value=" "  /></td>
+		  		</tr>
+		  		<tr>
+	  				<td><h:outputText value="#{etq.cantidadOperada}" styleClass="textoNegritas"/></td>
+	  				<td><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.cantidadTitulos}" converter="formatoEnteroConverter"/></td>
+	  				
+	  				<td><h:outputText value="#{etq.tipoOp}" styleClass="textoNegritas"/></td>
+	  				<td colspan="1"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.descTipoMensaje}" styleClass="texto textoPeque12"/></td>
+ 	   		   </tr>
+ 	    	   <tr>
+	  				<td><h:outputText value="#{etq.fechaLiquidacionMinus}" styleClass="textoNegritas"/></td>
+	  				<td><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.fechaLiquidacion}" converter="formatoFechaCortaConverter"/></td>
+	  				<td><h:outputText value="#{etq.fechaAprobacion}"  styleClass="textoNegritas"/></td>
+	  				<td colspan="1"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.fecha530}" converter="formatoFechaLargaConverter"/></td>
+ 	    	  	</tr>
+ 	    	  	<tr>
+	  				<td ><h:outputText value="#{etq.msgConfirmacion}" styleClass="textoNegritas"/></td>
+	  				<td ><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.tipoMensajeConfirmacion}" /></td>
+	  				<td><h:outputText value="#{etq.msgEfectivo}" styleClass="textoNegritas"/></td>
+	  				<td colspan="1"><h:outputText value="#{consultaOperacionesBean.detalleOperacionSic.mensajeEfectivo}" /></td>
+ 	    	  	</tr>
+ 	    	  	<tr>
+	  				<td ><h:outputText value="#{etq.liquidacionParcial}" styleClass="textoNegritas"/></td>
+	  				<td ><h:outputText value="#{not empty consultaOperacionesBean.detalleOperacionSic.liquidacionParcial ? consultaOperacionesBean.detalleOperacionSic.liquidacionParcial : 'NO'}" /></td>
+ 	    	  	</tr>
+		  	</table> 
+			</td>
+		</tr>	
+		<tr><td>
+			<table align="left" width="900px" border="0" cellpadding="3px" cellspacing="0px" style="tablaCriterios">
+		 		<tr align="right">
+		 			<td align="right" width="700px"></td>
+		  			<td  align="right" >
+		  			<h:form>
+					<h:panelGroup id="botonesExportar"  >
+										<h:outputText value="Exportar los resultados" ></h:outputText>
+										<h:commandButton 
+											action="detalleConsultaOperacionesSICPDF"
+											image="/images/pdf.gif"
+											title="Exportar a PDF todos los resultados de la consulta"
+											id="generarPdf"/>
+                           				&#160;&#160;
+
+                          				<h:commandButton 
+                          					action="detalleConsultaOperacionesSICXls"
+                          					image="/images/excel-file.gif"
+                          					title="Exportar a Excel todos los resultados de la consulta" 
+                            				id="generarExcel">
+                           				</h:commandButton>
+							</h:panelGroup>				
+						</h:form>	
+		  			</td>
+		  		</tr>
+		  	</table> 
+			</td>
+		</tr>	
+	</table>
+	
+	</ui:define>
+  </ui:composition>
+</html>

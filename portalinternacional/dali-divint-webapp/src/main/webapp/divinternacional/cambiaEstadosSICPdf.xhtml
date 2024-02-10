@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:pdf="http://indeval.com/jsf/pdf"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+<pdf:document documentName="CambioOperaciones" documentTitle="Cambio de Operaciones del Sistema Internacional de Cotizaciones"
+              landscape="true" institucion="#{cambiaEstadoOperacionesBean.agenteFirmado.id} #{cambiaEstadoOperacionesBean.agenteFirmado.folio} #{cambiaEstadoOperacionesBean.agenteFirmado.razon}"
+			  fecha="#{cambiaEstadoOperacionesBean.fechaActual}" imageResource="/images/indeval.jpg">
+	
+	<pdf:subtitle value="Filtros"/>
+	<pdf:table value="#{cambiaEstadoOperacionesBean}"
+			currentBean="filtro" widthPercentage="100">
+			<pdf:row>				
+				<pdf:col align="center" collspan="1" header="#{etq.folioControl}"
+					value="#{cambiaEstadoOperacionesBean.folioControlParam}" />				
+			</pdf:row>
+	</pdf:table>
+	
+	<pdf:table value="#{cambiaEstadoOperacionesBean}" currentBean="filtro" widthPercentage="20" align="left">
+		<pdf:row>	
+			<pdf:col align="center" collspan="1" header="Total de Registros"
+					value="#{cambiaEstadoOperacionesBean.resultados.totalRegistros}" />
+		</pdf:row>
+	</pdf:table>
+	
+	<pdf:subtitle value="Datos"/>
+    <pdf:table value="#{cambiaEstadoOperacionesBean.resultados.registros}"  currentBean="bitacora" widthPercentage="100" maxColums="18" borraLista="false">
+        <pdf:row>						
+        	<pdf:col header="#{etq.folioControl}" value="#{bitacora.folioControl}"	 align="CENTER"/>
+        	<pdf:col header="#{etq.id}" value="#{bitacora.cuentaNombrada.institucion.tipoInstitucion.claveTipoInstitucion}"	 align="CENTER"/>      		
+        	<pdf:col header="#{etq.folioMinus}" value="#{bitacora.cuentaNombrada.institucion.folioInstitucion}" align="CENTER"/>    
+        	<pdf:col  header="#{etq.custodio}" value="#{bitacora.catBic.detalleCustodio}" align="CENTER"/>
+        	<pdf:col header="#{etq.tv} #{etq.emisoraMinus} #{etq.serieMinus} #{etq.cuponMinus} #{etq.isin}"
+        	 value="#{bitacora.emision.instrumento.claveTipoValor}  #{bitacora.emision.emisora.clavePizarra} #{bitacora.emision.serie} 
+        	 #{bitacora.claveCupon} #{bitacora.emision.isin}" 
+        			 align="CENTER"/> 
+        	<pdf:col header="#{etq.cantidadOperada}" value="#{bitacora.cantidadTitulos}"
+        			 align="CENTER"/>        	
+            <pdf:col header="#{etq.operacion}" value="#{bitacora.descTipoMensaje}" 
+        			 align="CENTER"/> 
+            <pdf:col header="#{etq.estatusActual}" value="#{bitacora.estatusOperacion.descEstatusOperacion}" 
+        			 align="CENTER"/>
+   			  <pdf:col header="#{etq.estatusNuevo}" value="#{bitacora.bitacoraOperacionesSic.estatusOperacion.descEstatusOperacion}" 
+        			 align="CENTER"/>	
+      	</pdf:row>
+  	</pdf:table>
+</pdf:document>
+</html>

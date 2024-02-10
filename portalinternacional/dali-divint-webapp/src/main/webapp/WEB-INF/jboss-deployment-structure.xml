@@ -1,0 +1,19 @@
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.2">
+    <deployment>
+    	<exclusions>
+			<module name="javax.faces.api" slot="main"/>
+			<module name="com.sun.jsf-impl" slot="main"/>
+			<module name="org.jboss.as.web"/>
+		</exclusions>
+		<dependencies>
+        <!-- for packaged JSF -->
+        	<module name="org.jboss.as.web" services="none"/>
+      	</dependencies>
+
+		
+		<exclude-subsystems>
+		  <subsystem name="webservices" />
+		</exclude-subsystems>
+		
+    </deployment>
+</jboss-deployment-structure>

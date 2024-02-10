@@ -1,0 +1,46 @@
+td {
+	text-align:left;
+}
+
+.negritas {
+	font-weight: bold;
+	color: red;
+}
+
+.negrita {
+	font-weight: bold;
+}
+
+.sinSubrayar {
+	text-decoration: none;
+}
+
+
+
+inplace{
+            border: none;
+        }
+        .hover {
+            color: #{a4jSkin.generalTextColor};
+            background-color :#{a4jSkin.tipBorderColor};
+        }
+        .columns {
+            width: 33%; 
+        }
+        
+        
+.guardar input.submit {
+	margin: 0;
+	padding: 0;
+	background: url(../images/guardar.gif) 0 0 no-repeat;
+	width: 85px;
+	height: 28px;
+}
+
+.guardar input.submit:hover {
+	margin: 0;
+	padding: 0;
+	background: url(../images/guardar.gif) -85px 0 no-repeat;
+	width: 85px;
+	height: 28px;
+}

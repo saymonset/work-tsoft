@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="consultaEmisiones" documentTitle="Consulta de Emisiones"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        landscape="true" fecha="#{consultaBitacoraEnvOpBean.fechaActual}"
+        imageResource="/images/indeval.jpg">
+        <pdf:table value="consultaEmisionesBean" currentBean="emision" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{consultaEmisionesBean}" currentBean="emision" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.tv}" value="#{!empty consultaEmisionesBean.emision.tv ? consultaEmisionesBean.emision.tv : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.emisoraMinus}" value="#{!empty consultaEmisionesBean.emision.emisora ? consultaEmisionesBean.emision.emisora : 'TODAS'}" align="center" />
+                <pdf:col header="#{etq.serieMinus}" value="#{!empty consultaEmisionesBean.emision.serie ? consultaEmisionesBean.emision.serie : 'TODAS'}" align="center" />
+                <pdf:col header="#{etq.isin}" value="#{!empty consultaEmisionesBean.emision.isin ? consultaEmisionesBean.emision.isin : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.custodio}" value="#{!empty consultaEmisionesBean.catBic.detalleCustodio ? consultaEmisionesBean.catBic.detalleCustodio : 'TODOS'}" align="center"/>
+                <pdf:col header="#{etq.estatus}" value="#{!empty consultaEmisionesBean.estatusEmisionesDTO.descripcion ? consultaEmisionesBean.estatusEmisionesDTO.descripcion : 'TODOS'}" align="center"/>
+            </pdf:row>
+        </pdf:table>
+        
+        <pdf:br/>
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{consultaEmisionesBean.totalRegistros}"/>
+        <pdf:br/>
+
+        <pdf:table value="#{consultaEmisionesBean.resultados.registros}" currentBean="emisiones">
+            <pdf:row>
+                <pdf:col header="#{etq.tv}" value="#{emisiones.emision.instrumento.claveTipoValor}" align="center"/>
+                <pdf:col header="#{etq.emisoraMinus}" value="#{emisiones.emision.emisora.clavePizarra}" align="center"/>
+                <pdf:col header="#{etq.serieMinus}" value="#{emisiones.emision.serie}" align="center"/>
+                <pdf:col header="#{etq.isin}" value="#{emisiones.emision.isin}" align="center"/>
+                <pdf:col header="#{etq.moneda}" value="#{emisiones.emision.divisa.descripcion}" align="center"/>
+                <pdf:col header="#{etq.estatus}" value="#{emisiones.emision.estatusEmisiones.descripcion}" align="center"/>
+                <pdf:col header="#{etq.valorNominalMinus}" value="#{emisiones.emision.valorNominal}" align="center">
+                	<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaEmision}" value="#{emisiones.emision.fechaEmision}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.custodio}" value="#{emisiones.catBic.detalleCustodio}" align="center"/>
+            </pdf:row>
+        </pdf:table>
+
+    </pdf:document>
+</html>

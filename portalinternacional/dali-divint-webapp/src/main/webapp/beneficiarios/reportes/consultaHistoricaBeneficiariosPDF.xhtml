@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cvt="http://indeval.com/jsf/converters">
+
+
+    <pdf:document documentName="bitacoraBeneficiarios" documentTitle="Bit&#225;cora de Beneficiarios"
+                  institucion="#{consultaHistoricaBeneficiariosBean.agenteFirmado.id} #{consultaHistoricaBeneficiariosBean.agenteFirmado.folio} #{consultaHistoricaBeneficiariosBean.agenteFirmado.razon}"
+                  landscape="true" fecha="#{consultaHistoricaBeneficiariosBean.fechaActual}"
+                  imageResource="/images/indeval.jpg">
+        <pdf:table value="consultaHistoricaBeneficiariosBean" currentBean="resultado" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{consultaHistoricaBeneficiariosBean}" currentBean="resultado" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.custodio}" value="#{consultaHistoricaBeneficiariosBean.mapaCustodios[consultaHistoricaBeneficiariosBean.param.custodio]}" align="center" />
+                <pdf:col header="#{etq.tipoBeneficiario}" value="#{consultaHistoricaBeneficiariosBean.mapaTipoBeneficiario[consultaHistoricaBeneficiariosBean.param.tipoBeneficiario]}" align="center" />
+                <pdf:col header="#{etq.institucionMinus}" value="#{consultaHistoricaBeneficiariosBean.idFolioInstitucion} - #{consultaHistoricaBeneficiariosBean.nombreInstitucion}" align="center" />
+                <pdf:col header="#{etq.formato}" value="#{(consultaHistoricaBeneficiariosBean.param.formato eq '-1') ? 'NINGUNO' : consultaHistoricaBeneficiariosBean.param.formato}" align="center" />
+                <pdf:col header="#{etq.fechaRegistro} Inicio" value="#{consultaHistoricaBeneficiariosBean.param.fechaRegistroInicio}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaRegistro} Fin" value="#{consultaHistoricaBeneficiariosBean.param.fechaRegistroFin}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.uoi}" value="#{consultaHistoricaBeneficiariosBean.param.uoiNumber}" align="center" />
+                <pdf:col header="#{etq.nombreBeneficiario} o #{etq.razonSocial}" value="#{consultaHistoricaBeneficiariosBean.param.nombreRazonSocial}" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:br />
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{consultaHistoricaBeneficiariosBean.paginaReportes.totalRegistros}" />
+        <pdf:subtitle value="Datos"/>
+        <pdf:table value="#{consultaHistoricaBeneficiariosBean.paginaReportes.registros}" currentBean="registro">
+            <pdf:row>
+                <pdf:col header="#{etq.institucionMinus}" align="CENTER"
+                         value="#{registro.beneficiario.nombresInstituciones}" />
+                <pdf:col header="#{etq.custodio}" value="#{consultaHistoricaBeneficiariosBean.mapaCustodios[registro.beneficiario.idCuentaNombrada]}"
+                         align="CENTER" />
+                
+                <pdf:col header="#{etq.formato}" value="#{registro.beneficiario.tipoFormatoPantalla}" align="CENTER" />
+                
+                <pdf:col header="#{etq.nombreBeneficiario} o #{etq.razonSocial}"  value="#{registro.beneficiario.nombreGeneral}" />
+                <pdf:col header="#{etq.tipoBeneficiario}" value="#{registro.beneficiario.tipoBeneficiario.descTipoBeneficiario}" />
+                <pdf:col header="#{etq.uoi}"  value="#{registro.beneficiario.uoiNumber}" />
+                <pdf:col header="#{etq.estatusBeneficiarioAnterior}"  value="#{registro.statusAnterior.descStatusBenef}" />
+                <pdf:col header="#{etq.estatusBeneficiarioNuevo}"  value="#{registro.statusNuevo.descStatusBenef}" />
+                <pdf:col header="#{etq.fechaCambio}" value="#{registro.fechaAlta}" align="CENTER" >
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+                </pdf:col>
+            </pdf:row>
+        </pdf:table>
+    </pdf:document>
+</html>

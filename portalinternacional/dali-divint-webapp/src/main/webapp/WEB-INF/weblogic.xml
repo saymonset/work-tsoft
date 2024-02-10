@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<weblogic-web-app
+	xmlns="http://www.bea.com/ns/weblogic/90"
+	xmlns:j2ee="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bea.com/ns/weblogic/90 http://www.bea.com/ns/weblogic/90/weblogic-web-app.xsd">
+	<!-- Agrega al descriptor la validez de maximo 10 minutos para el almacenado de la sesion -->
+	<session-descriptor>
+		<timeout-secs>900</timeout-secs>
+		<sharing-enabled>true</sharing-enabled>
+	</session-descriptor>
+	<container-descriptor>
+		<servlet-reload-check-secs>-1</servlet-reload-check-secs>
+	</container-descriptor>
+	<context-root>/dali-divint</context-root>
+</weblogic-web-app>

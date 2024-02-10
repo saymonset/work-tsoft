@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:xls="http://indeval.com/jsf/xls"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+       <xls:document documentName="detalleCargaBeneficiarios" documentTitle="Reporte de Carga" >        
+	        <xls:table value="#{fileTransferCapturaBeneBean.detalleCarga}" var="detalle" >
+	            <xls:row>
+					<xls:col header="#{etq.tipoFormato}" value="#{detalle.tipoFormato}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.tipoBeneficiario}" value="#{detalle.tipoBeneficiario}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.custodio}" value="#{detalle.claveCustodio}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.idInstitucion}" value="#{detalle.claveInstitucion}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.fechaFormato}" value="#{detalle.fechaFormato}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.estado}" value="#{detalle.estado}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.NAME_ORGANIZATION}" value="#{detalle.campo1}" 	align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.COUNTRY_INCORPORATION}" value="#{detalle.campo2}" 	align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.NAME_OF_DISREGARDED_ENTITY}" value="#{detalle.campo3}" 	align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.CHAPTER_3_STATUS}" value="#{detalle.campo4a}" 	align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.COMPLETE_PART_III}" value="#{detalle.campo4b}" 	align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.CHAPTER_4_STATUS}" value="#{detalle.campo5}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.PERMANENT_RESIDENCE_ADDRESS}" 	value="#{detalle.campo6a}" 	align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.CITY_TOWN_6B}" value="#{detalle.campo6b}" 	align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.COUNTRY_6C}" 	value="#{detalle.campo6c}" 	align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.MAILING_ADDRESS}" value="#{detalle.campo7a}" 	align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.CITY_TOWN_7B}" value="#{detalle.campo7b}" 	align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.COUNTRY_7C}" 	value="#{detalle.campo7c}" 	align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.US_TIN}" value="#{detalle.campo8}" 	align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.GIIN_9a}" value="#{detalle.campo9a}" 	align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.FOREING_TIN}"	value="#{detalle.campo9b}" 	align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.REFERENCE_NUMBER}" value="#{detalle.campo10}" 	align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.CHAPTER_4_STATUS_11_A}" value="#{detalle.campo11a}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.CHAPTER_4_STATUS_11_B}" value="#{detalle.campo11b}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.CHAPTER_4_STATUS_11_C}" value="#{detalle.campo11c}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.CHAPTER_4_STATUS_11_D}" value="#{detalle.campo11d}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.CHAPTER_4_STATUS_11_E}" value="#{detalle.campo11e}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.ADDRESS_BRANCH}" value="#{detalle.campo12a}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.CITY_TOWN_12B}" value="#{detalle.campo12b}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.COUNTRY_12C}" value="#{detalle.campo12c}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.GIIN_13}" value="#{detalle.campo13}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.CLAIM_TAX_TREATY_BENEFITS_A}" value="#{detalle.campo14a}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.CLAIM_TAX_TREATY_BENEFITS_B}" value="#{detalle.campo14b}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.CLAIM_TAX_TREATY_BENEFITS_C}" value="#{detalle.campo14c}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.SPECIAL_RATES_CONDITIONS_ARTICLE}" value="#{detalle.campo15a}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.SPECIAL_RATES_CONDITIONS_RATE_WITHHOLDING}" value="#{detalle.campo15b}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.SPECIAL_RATES_CONDITIONS_TYPE_INCOME}" value="#{detalle.campo15c}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.SPECIAL_RATES_CONDITIONS_REASON_1}" value="#{detalle.campo15d}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.SPECIAL_RATES_CONDITIONS_REASON_2}" value="#{detalle.campo15e}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.PRINT_NAME}" value="#{detalle.printName}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.CAMPO_1}" value="#{detalle.anexo1}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.CAMPO_2}" value="#{detalle.anexo2}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.CAMPO_3}" value="#{detalle.anexo3}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.CAMPO_4}" value="#{detalle.anexo4}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.CAMPO_5}" value="#{detalle.anexo5}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etqfiletransferw8.CAMPO_6}" value="#{detalle.anexo6}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.numeroRegistro}" value="#{detalle.numeroRegistro}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>   
+					<xls:col header="#{etq.descripcionError}" value="#{detalle.descripcionError}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+	            </xls:row>
+	        </xls:table>
+	   </xls:document>
+
+</html>

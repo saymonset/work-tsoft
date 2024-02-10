@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xls="http://indeval.com/jsf/xls"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document documentName="ConciliacionesInternacionales" documentTitle="Conciliacion Internacional"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        fecha="#{consultaBitacoraEnvOpBean.fechaActual}">
+       
+        <xls:table value="#{conciliacionesIntBean}" var="emision" >
+            <xls:row>
+                <xls:col header="#{etq.folioConciliacionMinus}" value="#{!empty conciliacionesIntBean.folio ? conciliacionesIntBean.folio : 'TODOS'}" align="center" />
+                <xls:col header="#{etq.fechaMensajeInicio}" value="#{!empty conciliacionesIntBean.fechaMensajeInicio ? conciliacionesIntBean.fechaMensajeInicio : 'TODAS'}" align="center"  pattern="dd/MM/yyyy"/>					
+                <xls:col header="#{etq.fechaMensajeFin}" value="#{!empty conciliacionesIntBean.fechaMensajeFin ? conciliacionesIntBean.fechaMensajeFin : 'TODAS' }" align="center"  pattern="dd/MM/yyyy"/>
+                <xls:col header="#{etq.custodio}" value="#{conciliacionesIntBean.selectedCustodio}" align="center" />
+                <xls:col header="#{etq.bovedaDaliMinus}" value="#{conciliacionesIntBean.selectedBoveda}" align="center" />
+                <xls:col header="#{etq.fechaConciliacionInicio}" value="#{!empty conciliacionesIntBean.fechaConciliacionInicio ? conciliacionesIntBean.fechaConciliacionInicio : 'TODAS'}" align="center"  pattern="dd/MM/yyyy"/>
+                <xls:col header="#{etq.fechaConciliacionFin}" value="#{!empty conciliacionesIntBean.fechaConciliacionFin ? conciliacionesIntBean.fechaConciliacionFin : 'TODAS' }" align="center"  pattern="dd/MM/yyyy"/>
+                <xls:col header="#{etq.diferenciaPosicion}" value="#{conciliacionesIntBean.difPos ? 'Si' : 'No'}"  align="center"/>    
+                <xls:col header="#{etq.diferenciaEmisionesCustodio}" value="#{conciliacionesIntBean.difCust ? 'Si' : 'No'}"  align="center"/>               
+                <xls:col header="#{etq.diferenciaEmisionesDali}" value="#{conciliacionesIntBean.difDali ? 'Si' : 'No'}"  align="center"/>
+                <xls:col header="#{etq.porConciliar}" value="#{conciliacionesIntBean.porConc ? 'Si' : 'No'}"  align="center"/>	
+                <xls:col header="#{etq.enBovedasNacionales}" value="#{conciliacionesIntBean.conciliacionNacional ? 'Si' : 'No'}"  align="center"/>				
+            </xls:row>
+        </xls:table>
+        
+        <xls:subtitle value="#{etq.registrosEncontrados}: #{conciliacionesIntBean.totalRegistros}" />
+
+        <xls:table value="#{conciliacionesIntBean.paginaReportes.registros}" var="conciliacion">
+            <xls:row>            	
+				<xls:col header="#{etq.folioConciliacionMinus}" value="#{conciliacion.id}" align="center" />				
+				<xls:col header="#{etq.custodio}" value="#{!empty conciliacion.custodio ? conciliacion.custodio.codigoBanco : 'N/A'}" align="center" />				
+				<xls:col header="#{etq.fechaMensaje}" value="#{!empty conciliacion.fechaMensaje ? conciliacion.fechaMensaje : 'N/A'}" align="center"   pattern="dd/MM/yyyy HH:mm:ss"/>
+				<xls:col header="#{etq.fechaConciliacionMinus}" value="#{!empty conciliacion.fechaConciliacion ? conciliacion.fechaConciliacion : 'N/A'}" align="center" pattern="dd/MM/yyyy HH:mm:ss"/>
+				<xls:col header="#{etq.posicionMensaje}" value="#{!empty conciliacion.posicionGlobalMensaje ? conciliacion.posicionGlobalMensaje : 'N/A'}" align="right" pattern="###,###,###,###,###,##0.######"/>					
+				<xls:col header="#{etq.posicionDali}" value="#{!empty conciliacion.posicionDali ? conciliacion.posicionDali : 'N/A' }" align="right"   pattern="###,###,###,###,###,##0" />
+				<xls:col header="#{etq.bovedaDaliMinus}" value="#{!empty conciliacion.bovedaDali ? conciliacion.bovedaDali.nombreCorto : 'N/A'}" align="center"  />
+				<xls:col header="#{etq.diferencia}" value="#{!empty conciliacion.diferencia ? conciliacion.diferencia : 'N/A' }" align="right"   pattern="###,###,###,###,###,##0.######"/>
+				<xls:col header="#{etq.porConciliar}" value="#{conciliacion.estatusConciliacion.id lt 4  ? 'Si' : 'No'}"  align="center"/>
+				<xls:col header="#{etq.diferenciaEmisionesDali}" value="#{conciliacion.diferenciaEmisionesDali ? 'Si' : 'No'}" align="center" />
+				<xls:col header="#{etq.diferenciaEmisionesCustodio}" value="#{conciliacion.diferenciaEmisionesMensaje ? 'Si' : 'No'}" align="center" />
+			</xls:row>
+        </xls:table>
+
+    </xls:document>
+</html>

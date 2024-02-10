@@ -1,0 +1,750 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+		<ui:define name="tituloEncabezado">
+		</ui:define>
+
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+				    src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js"></script>
+			<script language="javascript" type="text/javascript"
+				    src="#{facesContext.externalContext.requestContextPath}/js/cambiaEstadoOperacionesSic.js"></script>
+		</ui:define>
+
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.sistemaIntCot}" />
+		</ui:define>
+
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{(tipo_operador_menu eq 'Operador')? (etq.encOperadorCB):(etq.encAutorizadorCB)}"></h:outputText>
+		</ui:define>
+
+		<ui:define name="criterios">
+
+			<h:outputText value="#{cambiaEdoOpsCambioBovedaBean.init}" />
+			<a4j:keepAlive beanName="cambiaEdoOpsCambioBovedaBean" />
+
+			<h:panelGroup id="mensajeUsuario">
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"  
+						           errorClass="error" ajaxRendered="true" showDetail="false"
+						           showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+				</div>
+			</h:panelGroup>
+
+			<h:panelGroup id="panelCriterios">
+				<div style='display: "inline"' id="divCriterios">
+					<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="center">
+						<tr>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr>
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.folioControl}" />
+										</td>
+									</tr>
+									<tr>									
+										<td align="center">
+											<h:inputTextarea cols="30" rows="13" value="#{cambiaEdoOpsCambioBovedaBean.folioControlParam}" 
+											                 styleClass="textoControles campoNumericoEnter"/>
+										</td>										
+									</tr>
+								</table>
+							</td>
+
+						</tr>
+					</table>
+				</div>				
+			</h:panelGroup>
+
+		</ui:define><!-- Fin criterios -->
+
+		<ui:define name="botones">
+
+			<h:panelGroup id="botones">				
+				<div class="refrescar" style="float: left;">
+	        		 <a4j:status id="commonStatus">
+						<f:facet name="start">
+							<h:panelGroup>
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								<h:outputText value="#{etq.buscando}"></h:outputText>
+							</h:panelGroup>
+						</f:facet>
+					</a4j:status> 	
+	        	</div>
+				<div class="limpiar">
+					<h:commandButton id="botonLimpiar" image="/images/transparent.gif" styleClass="submit"
+						             actionListener="#{cambiaEdoOpsCambioBovedaBean.limpiar}" />
+				</div>
+				<div class="buscar">
+					<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+						               styleClass="submit"
+						               oncomplete=''
+						               actionListener="#{cambiaEdoOpsCambioBovedaBean.obtenerOperaciones}"
+						               reRender="containerResultados,tablaResultados,botones,mensajeUsuario">
+			               <f:attribute name="tipo_operador_menu" value="#{tipo_operador_menu}" />
+			               <f:attribute name="tipo_busqueda" value="principal" />
+					</a4j:commandButton>
+				</div>
+           	</h:panelGroup>
+
+		</ui:define><!-- Fin botones -->
+
+		<ui:define name="seccionContenido">
+
+			<h:panelGroup id="containerResultados">
+
+				<h:panelGroup rendered="#{cambiaEdoOpsCambioBovedaBean.consultaEjecutada}">
+
+					<t:dataTable id="noExistenResultados"
+						value="#{cambiaEdoOpsCambioBovedaBean.paginaVO.registros}"
+						styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+						footerClass="tituloTabla" border="0" cellpadding="3px"
+						cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos"
+						rendered="#{empty cambiaEdoOpsCambioBovedaBean.paginaVO.registros}">
+						<t:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.sinResultados}"></h:outputText>
+							</f:facet>
+						</t:column>
+					</t:dataTable>
+					<br/>
+                    <br/>
+					<br/>
+
+					<h:panelGroup rendered="#{not empty cambiaEdoOpsCambioBovedaBean.paginaVO.registros}">
+						<div id="botonesMensaje" style="display: #{(cambiaEdoOpsCambioBovedaBean.consultaEjecutada)? 'inline':'none'}">
+							<table width="900px" align="right">
+								<tr style="display: #{(tipo_operador_menu eq 'Operador')? 'inline':'none'};float:right;">
+									<td align="right">
+										<a4j:commandButton id="btnActualizarMotivo" value="#{etq.btnActualizarMotivos}"
+											onclick="deshabilitarBoton('btnActualizarMotivo');"											
+											actionListener="#{cambiaEdoOpsCambioBovedaBean.actualizarMotivos}"										
+											reRender="containerResultados,tablaResultados,mensajeUsuario">
+										</a4j:commandButton>
+									</td>
+								</tr>
+								<tr style="display: #{(tipo_operador_menu eq 'Operador')? 'inline':'none'};float:right;">
+									<td align="right">
+										<a4j:commandButton id="btnCancelarCambios" value="#{etq.btnCancelarCambios}"
+											onclick="deshabilitarBoton('btnCancelarCambios');"											
+											actionListener="#{cambiaEdoOpsCambioBovedaBean.cancelarCambios}"										
+											reRender="containerResultados,tablaResultados,mensajeUsuario">
+										</a4j:commandButton>
+									</td>
+								</tr>
+								<tr style="display: #{(tipo_operador_menu eq 'Operador')? 'inline':'none'};float:right;">
+									<td align="right">
+										<a4j:commandButton id="btnAplicarCambios" value="#{etq.btnAplicarCambios}"
+											onclick="if (!validoAplicarCambios('btnAplicarCambios')) return false;"											
+											actionListener="#{cambiaEdoOpsCambioBovedaBean.aplicarCambios}"
+											reRender="containerResultados,tablaResultados,mensajeUsuario">
+										</a4j:commandButton>
+									</td>
+								</tr>							
+								<tr style="display: #{(tipo_operador_menu eq 'Autorizador')? 'inline':'none'};float:right;">
+									<td align="right">
+										<a4j:commandButton id="btnAutorizarCambios" value="#{etq.autorizarCambios}"
+											onclick="if(!mensajeConfirmacion()){return true;}"											
+											actionListener="#{cambiaEdoOpsCambioBovedaBean.autorizarCambios}"
+											reRender="containerResultados,tablaResultados,mensajeUsuario">
+										</a4j:commandButton>
+									</td>
+								</tr>
+							</table>
+						</div>	
+					</h:panelGroup>
+					<br/>
+					<br/>
+					<br/>
+					
+					<h:panelGroup id="tablaResultados">
+
+						<h:graphicImage value="/images/blank.gif" width="900px" height="1px"></h:graphicImage>
+						
+						<h:panelGroup rendered="#{not empty cambiaEdoOpsCambioBovedaBean.paginaVO.registros and tipo_operador_menu eq 'Operador'}">
+						<table width="100%" border="0">
+							<tr>
+								<td nowrap="true" align="left">
+									<h:outputText styleClass="texto" value="Motivo del cambio:" />
+								</td>
+							</tr>
+							<tr>
+								<td align="left">
+									<h:inputTextarea cols="180" rows="7" id="idInputMotivoCambio" 
+									                 value="#{cambiaEdoOpsCambioBovedaBean.motivoCambio}" 
+									                 styleClass="textoControles" />
+								</td>
+							</tr>
+						</table>
+						
+						</h:panelGroup >
+						
+						
+						<h:panelGroup rendered="#{not empty cambiaEdoOpsCambioBovedaBean.paginaVO.registros}">
+						
+						
+							<table width="100%" border="0">
+								<tr>
+									<td align="left" class="textoEstadoCuenta">
+										<a4j:commandLink id="control_bitacora_primero"
+											action="#{cambiaEdoOpsCambioBovedaBean.irPrimeraPagina}"
+											rendered="#{cambiaEdoOpsCambioBovedaBean.irAlPrimero}"
+											reRender="containerInfoPaginacionBitacora,tablaResultados,containerResultados">
+											<img src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png" border="0" />
+										</a4j:commandLink>
+										<a4j:commandLink id="control_bitacora_atras_fast"
+											action="#{cambiaEdoOpsCambioBovedaBean.retrocederPaginasRapido}"
+											rendered="#{cambiaEdoOpsCambioBovedaBean.retrocederRapido}"
+											reRender="containerResultados,containerInfoPaginacionBitacora,tablaResultados">
+											<img src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png" border="0" />
+										</a4j:commandLink>
+										<a4j:commandLink id="control_bitacora_atras"
+											action="#{cambiaEdoOpsCambioBovedaBean.retrocederPagina}"
+											rendered="#{cambiaEdoOpsCambioBovedaBean.retroceder}"
+											reRender="containerResultados,containerInfoPaginacionBitacora,tablaResultados">
+											<img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png" border="0" />
+										</a4j:commandLink>
+										<a4j:commandLink id="control_bitacora_adelante"
+											action="#{cambiaEdoOpsCambioBovedaBean.avanzarPagina}"
+											rendered="#{cambiaEdoOpsCambioBovedaBean.avanzar}"
+											reRender="containerResultados,containerInfoPaginacionBitacora,tablaResultados">
+											<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png" border="0" />
+										</a4j:commandLink>
+										<a4j:commandLink id="control_bitacora_adelante_fast"
+											action="#{cambiaEdoOpsCambioBovedaBean.avanzarPaginasRapido}"
+											rendered="#{cambiaEdoOpsCambioBovedaBean.avanzarRapido}"
+											reRender="containerResultados,containerInfoPaginacionBitacora,tablaResultados">
+											<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png" border="0" />
+										</a4j:commandLink>
+										<a4j:commandLink id="control_bitacora_ultimo"
+											action="#{cambiaEdoOpsCambioBovedaBean.irUltimaPagina}"
+											rendered="#{cambiaEdoOpsCambioBovedaBean.irAlUltimo}"
+											reRender="containerResultados,containerInfoPaginacionBitacora,tablaResultados">
+											<img src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png" border="0" />
+										</a4j:commandLink>
+										<br/>
+										<h:outputText value="#{etq.mostrando}" styleClass="textoResumen" />
+										<h:outputText value="#{cambiaEdoOpsCambioBovedaBean.numeroPagina}" styleClass="textoResumen" />
+										<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+										<h:outputText value="#{cambiaEdoOpsCambioBovedaBean.totalPaginas}" styleClass="textoResumen" />
+										<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+										&#160;&#160;&#160;
+										<h:outputText value="#{cambiaEdoOpsCambioBovedaBean.paginaVO.totalRegistros}"
+											styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+										&#160;
+										<h:outputText styleClass="textoResumen" value="#{etq.registrosEncontrados}" />
+									</td>
+									<td align="right" class="textoEstadoCuenta">
+										<h:outputText escape="false" value="#{etq.registrosPorPagina}" styleClass="textoResumen" />
+										<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+											value="#{cambiaEdoOpsCambioBovedaBean.paginaVO.registrosXPag}">
+											<f:selectItem itemLabel="1" itemValue="1" />
+											<f:selectItem itemLabel="2" itemValue="2" />
+											<f:selectItem itemLabel="5" itemValue="5" />
+											<f:selectItem itemLabel="10" itemValue="10" />
+											<f:selectItem itemLabel="20" itemValue="20" />
+											<f:selectItem itemLabel="50" itemValue="50" />
+											<f:selectItem itemLabel="100" itemValue="100" />
+											<f:selectItem itemLabel="150" itemValue="150" />
+											<f:selectItem itemLabel="200" itemValue="200" />
+											<a4j:support event="onchange"
+												reRender="containerResultados,containerInfoPaginacionBitacora,tablaResultados,mensajeUsuario"
+												actionListener="#{cambiaEdoOpsCambioBovedaBean.obtenerOperaciones}">
+											    <f:attribute name="tipo_operador_menu" value="#{tipo_operador_menu}" />
+											    <f:attribute name="tipo_busqueda" value="paginador" />
+											</a4j:support>
+										</h:selectOneMenu>
+									</td>
+								</tr>
+							</table>
+						</h:panelGroup>
+
+						<h:dataTable id="resultados"
+							value="#{cambiaEdoOpsCambioBovedaBean.paginaVO.registros}"
+							var="bitacora"
+							rendered="#{not empty cambiaEdoOpsCambioBovedaBean.paginaVO.registros and tipo_operador_menu eq 'Operador'}"
+							styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+							footerClass="tituloTabla" border="0" cellpadding="3px"
+							cellspacing="0px" columnClasses="everyColumn"
+							rowClasses="renglonTablaUno, renglonTablaDos">
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.folioControl}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{bitacora.folioControl}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.id}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12"
+									value="#{bitacora.cuentaNombrada.institucion.tipoInstitucion.claveTipoInstitucion}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.folioMinus}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12"
+									value="#{bitacora.cuentaNombrada.institucion.folioInstitucion}" />
+							</h:column>
+
+							<!-- h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.cuentaMinus}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12"
+									value="#{bitacora.cuentaNombrada.cuenta}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.cuentaContraparte}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12 textoMayusculas" value="#{bitacora.cuentaContraparte}"/>
+							</h:column-->
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.custodio}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12 textoMayusculas" value="#{bitacora.catBic.detalleCustodio}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:panelGroup>
+										<table width="100%">
+											<tr class="tituloTabla">
+												<td>
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.tv}" />
+													&#160;
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.emisoraMinus}" />
+													&#160;
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.serieMinus}" />
+													&#160;
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.cuponMinus}" />
+												</td>
+											</tr>
+											<tr class="tituloTabla">
+												<td align="center">
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.isin}" />
+												</td>
+											</tr>
+										</table>
+									</h:panelGroup>
+								</f:facet>
+								<table>
+									<tr>
+										<td>
+											<h:outputText styleClass="texto textoPeque12" value="#{bitacora.emision.instrumento.claveTipoValor}" />
+											<h:outputText value="#{etq.pipe}"></h:outputText>
+											&#160;
+											<h:outputText styleClass="texto textoPeque12" value="#{bitacora.emision.emisora.clavePizarra}" />
+											<h:outputText value="#{etq.pipe}"></h:outputText>
+											&#160;
+											<h:outputText styleClass="texto textoPeque12" value="#{bitacora.emision.serie}" />
+											<h:outputText value="#{etq.pipe}"></h:outputText>
+                                            &#160;
+											<h:outputText styleClass="texto textoPeque12" value="#{bitacora.claveCupon}" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h:outputText styleClass="texto textoPeque12" value="#{bitacora.emision.isin}" />
+										</td>
+									</tr>
+								</table>
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.cantidadOperada}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{bitacora.cantidadTitulos}"
+									converter="formatoEnteroConverter" style="white-space:nowrap" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.operacion}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{bitacora.descTipoMensaje}" />
+							</h:column>
+
+							<!-- h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.importe}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{bitacora.importe}"
+									converter="formatoMonedaChileConverter" style="white-space: nowrap" />
+							</h:column-->
+							
+							<h:column rendered="#{(tipo_operador_menu eq 'Autorizador')? 'true':'false'}">
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.usuarioBitacora}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{bitacora.bitacoraOperacionesSic.cveUsuarioOperador}"/>
+							</h:column>
+							
+							<h:column rendered="#{(tipo_operador_menu eq 'Autorizador')? 'true':'false'}">
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaBitacora}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{bitacora.bitacoraOperacionesSic.fechaSolicitudOperador}">
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm:ss" locale="es_MX" timeZone="America/Mexico_City"/>
+								</h:outputText>
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:panelGroup>
+										<table width="100%">											
+											<tr>
+												<td align="center">
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.estatusActual}" />
+												</td>
+											</tr>
+										</table>
+									</h:panelGroup>
+								</f:facet>
+								<table width="100%">									
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto textoPeque12" value="#{bitacora.estatusOperacion.descEstatusOperacion}" />
+										</td>
+									</tr>
+								</table>
+							</h:column>
+
+							<h:column rendered="#{(tipo_operador_menu eq 'Operador')? 'true':'false'}">								
+								<f:facet name="header">
+									<h:panelGroup>									
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.estatusNuevo}" />
+										<h:selectOneMenu id="estatusNuevoTodos" styleClass="textoControles"
+                                                         tabindex="80"
+                                                         onchange="cambiaEstatusTodos(this);">
+                                            <f:selectItem itemValue="-1" itemLabel="----" />
+                                            <f:selectItems value="#{opcionesCatalogosBean.estados}" />
+                                        </h:selectOneMenu>
+									</h:panelGroup>
+								</f:facet>									
+								<h:panelGroup>
+                                        <h:selectOneMenu styleClass="estatus_#{bitacora.folioControl}"
+                                        				 
+                                                         value="#{bitacora.estado}" 
+                                                         tabindex="80">
+                                            <f:selectItem itemValue="-1" itemLabel="----" />
+                                            <f:selectItems value="#{opcionesCatalogosBean.estados}" />
+                                        </h:selectOneMenu>
+                                        <script language="javascript">
+                                            combosEstatus[iCombos++] = $j(".estatus_#{bitacora.folioControl}");
+                                        </script>
+								</h:panelGroup>
+							</h:column>
+							
+							<h:column rendered="#{(tipo_operador_menu eq 'Autorizador')? 'true':'false'}">								
+								<f:facet name="header">
+									<h:panelGroup>									
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.estatusNuevo}" />										
+									</h:panelGroup>
+								</f:facet>									
+								<h:panelGroup>
+									<h:selectOneMenu styleClass="estatus_#{bitacora.folioControl}" readonly="true" disabled="true"
+                                                         value="#{bitacora.bitacoraOperacionesSic.idEstatusOperacionNuevo}" 
+                                                         tabindex="80">
+                                            <f:selectItem itemValue="-1" itemLabel="----" />
+                                            <f:selectItems value="#{opcionesCatalogosBean.estados}" />
+									</h:selectOneMenu>
+								</h:panelGroup>
+							</h:column>
+
+							<h:column rendered="#{(tipo_operador_menu eq 'Autorizador')? 'true':'false'}">
+								<f:facet name="header">
+									<h:panelGroup>
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.autorizarCambios}" />
+										<br/>
+										<h:selectBooleanCheckbox value="false" onclick="autorizarTodos(this);"/>
+									</h:panelGroup>
+								</f:facet>
+								<h:panelGroup>
+									<h:selectBooleanCheckbox value="#{bitacora.autorizo}"
+										disabled="#{bitacora.autorizada}"  style="margin-left: auto;margin-right: auto;display: block;"
+										styleClass="autorizar_#{bitacora.folioControl}" />
+									<script language="javascript">
+										checkAutorizar[iAutorizar++] = $j(".autorizar_#{bitacora.folioControl}");
+									</script>
+								</h:panelGroup>
+							</h:column>
+							
+							<h:column rendered="#{(tipo_operador_menu eq 'Operador')? 'true':'false'}">
+								<f:facet name="header">
+									<h:panelGroup>
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.cancelarMinus}" />
+										<br/>
+										<h:selectBooleanCheckbox value="false" onclick="cancelarTodos(this);"/>
+									</h:panelGroup>
+								</f:facet>
+								<h:panelGroup>
+									<h:selectBooleanCheckbox value="#{bitacora.cancela}"
+										disabled="#{bitacora.cancelo}"  style="margin-left: auto;margin-right: auto;display: block;"
+										styleClass="cancelar_#{bitacora.folioControl}" />
+									<script language="javascript">
+										checkCancelar[iCancelar++] = $j(".cancelar_#{bitacora.folioControl}");
+									</script>
+								</h:panelGroup>
+							</h:column>
+							
+							<h:column rendered="#{(tipo_operador_menu eq 'Operador')? 'true':'false'}">
+								<f:facet name="header">
+									<h:panelGroup>
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.btnActualizarMotivos}" />
+										<br/>
+										<h:selectBooleanCheckbox value="false" onclick="actualizarMTodos(this);"/>
+									</h:panelGroup>
+								</f:facet>
+								<h:panelGroup>
+									<h:selectBooleanCheckbox value="#{bitacora.actualizaCambio}"
+										disabled="#{bitacora.cancelo}"  style="margin-left: auto;margin-right: auto;display: block;"
+										styleClass="autorizar_#{bitacora.folioControl}" />
+									<script language="javascript">
+										checkActualizarMotivo[iActMotivo++] = $j(".autorizar_#{bitacora.folioControl}");
+									</script>
+								</h:panelGroup>
+							</h:column>
+						
+							
+							<f:facet name="footer">
+								<h:outputText value="" />
+							</f:facet>
+
+						</h:dataTable>
+						
+				<rich:dataTable 
+					id="resultadosRich"                    
+					styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+					footerClass="tituloTabla" rowClasses="renglonTablaUno, renglonTablaDos"
+					rendered="#{not empty cambiaEdoOpsCambioBovedaBean.paginaVO.registros and tipo_operador_menu eq 'Autorizador'}" 
+					border="0" var="bitacora" value="#{cambiaEdoOpsCambioBovedaBean.paginaVO.registros}">
+							
+							<f:facet name="header">
+								<rich:columnGroup>
+									<rich:column styleClass="tituloTabla">
+										<h:outputText  value="#{etq.folioControl}"/>                                
+									</rich:column>	
+									<rich:column styleClass="tituloTabla">
+										<h:outputText  value="#{etq.id}"/>                                
+									</rich:column>	
+									<rich:column styleClass="tituloTabla">
+										<h:outputText value="#{etq.folioMinus}"/>                                
+									</rich:column>
+									<rich:column styleClass="tituloTabla">
+										<h:outputText value="#{etq.custodio}"/>                                
+									</rich:column>
+									<rich:column>
+										<h:panelGroup>
+											<table width="100%">
+												<tr class="tituloTabla">
+													<td>
+														<h:outputText  value="#{etq.tv}" />
+														&#160;
+														<h:outputText  value="#{etq.emisoraMinus}" />
+														&#160;
+														<h:outputText  value="#{etq.serieMinus}" />
+														&#160;
+														<h:outputText  value="#{etq.cuponMinus}" />
+													</td>
+												</tr>
+												<tr class="tituloTabla">
+													<td align="center">
+														<h:outputText  value="#{etq.isin}" />
+													</td>
+												</tr>
+											</table>
+										</h:panelGroup>                              
+									</rich:column>
+									<rich:column styleClass="tituloTabla">
+										<h:outputText  value="#{etq.cantidadOperada}"/>                                
+									</rich:column>
+									<rich:column styleClass="tituloTabla">
+										<h:outputText value="#{etq.operacion}"/>                                
+									</rich:column>
+									<rich:column styleClass="tituloTabla">
+										<h:outputText value="#{etq.usuarioBitacora}"/>                                
+									</rich:column>
+									<rich:column styleClass="tituloTabla">
+										<h:outputText value="#{etq.fechaBitacora}"/>                                
+									</rich:column>
+									<rich:column styleClass="tituloTabla">
+										<h:outputText value="#{etq.estatusActual}"/>                                
+									</rich:column>				
+									<rich:column styleClass="tituloTabla">
+										<h:outputText  value="#{etq.estatusNuevo}"/>                                
+									</rich:column>
+									<rich:column styleClass="tituloTabla"> 
+										<h:panelGroup>
+											<h:outputText styleClass="texto textoPeque12 " value="#{etq.autorizarCambios}"/>
+											<br/>
+											<h:selectBooleanCheckbox value="false" onclick="autorizarTodos(this);"/>
+										</h:panelGroup>
+									</rich:column>				
+								</rich:columnGroup>
+							</f:facet>
+							<rich:columnGroup>
+							<rich:column>				
+									<h:outputText styleClass="texto textoPeque12" value="#{bitacora.folioControl}" />       
+							</rich:column>
+							<rich:column>				
+									<h:outputText styleClass="texto textoPeque12"
+										value="#{bitacora.cuentaNombrada.institucion.tipoInstitucion.claveTipoInstitucion}" />           
+							</rich:column>
+							<rich:column >				
+									<h:outputText styleClass="texto textoPeque12"
+										value="#{bitacora.cuentaNombrada.institucion.folioInstitucion}" />			   
+							</rich:column>
+							<rich:column >				
+									<h:outputText styleClass="texto textoPeque12"
+										value="#{bitacora.catBic.detalleCustodio}" />			   
+							</rich:column>
+							<rich:column >				
+									<table>
+										<tr>
+											<td>
+												<h:outputText styleClass="texto textoPeque12" value="#{bitacora.emision.instrumento.claveTipoValor}" />
+												<h:outputText value="#{etq.pipe}"></h:outputText>
+												&#160;
+												<h:outputText styleClass="texto textoPeque12" value="#{bitacora.emision.emisora.clavePizarra}" />
+												<h:outputText value="#{etq.pipe}"></h:outputText>
+												&#160;
+												<h:outputText styleClass="texto textoPeque12" value="#{bitacora.emision.serie}" />
+												<h:outputText value="#{etq.pipe}"></h:outputText>
+												&#160;
+												<h:outputText styleClass="texto textoPeque12" value="#{bitacora.claveCupon}" />
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<h:outputText styleClass="texto textoPeque12" value="#{bitacora.emision.isin}" />
+											</td>
+										</tr>
+									</table>
+							</rich:column>
+							<rich:column >				
+									<h:outputText styleClass="texto textoPeque12" value="#{bitacora.cantidadTitulos}"
+														converter="formatoEnteroConverter" style="white-space:nowrap" />
+							</rich:column>
+							<rich:column >				
+									<h:outputText styleClass="texto textoPeque12" value="#{bitacora.descTipoMensaje}" />
+							</rich:column>
+							<rich:column >				
+									<h:outputText styleClass="texto textoPeque12" value="#{bitacora.bitacoraOperacionesSic.cveUsuarioOperador}"/>
+							</rich:column>
+							<rich:column >				
+									<h:outputText styleClass="texto textoPeque12" value="#{bitacora.bitacoraOperacionesSic.fechaSolicitudOperador}">
+														<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm:ss" locale="es_MX" timeZone="America/Mexico_City"/>
+													</h:outputText>
+							</rich:column>
+							<rich:column >				
+									<table width="100%">									
+										<tr>
+											<td align="center">
+												<h:outputText styleClass="texto textoPeque12" value="#{bitacora.estatusOperacion.descEstatusOperacion}" />
+											</td>
+										</tr>
+									</table>
+							</rich:column>
+							<rich:column >				
+									<h:panelGroup>
+										<h:selectOneMenu styleClass="estatus_#{bitacora.folioControl}" readonly="true" disabled="true"
+															 value="#{bitacora.bitacoraOperacionesSic.idEstatusOperacionNuevo}" 
+															 tabindex="80">
+												<f:selectItem itemValue="-1" itemLabel="----" />
+												<f:selectItems value="#{opcionesCatalogosBean.estados}" />
+										</h:selectOneMenu>
+									</h:panelGroup>
+							</rich:column>
+							<rich:column >				
+									<h:panelGroup class="grupoAutoriza">
+										<h:selectBooleanCheckbox value="#{bitacora.autorizo}"
+											disabled="#{bitacora.autorizada}"  style="margin-left: auto;margin-right: auto;display: block;"
+											styleClass="autorizar_#{bitacora.folioControl}" />
+										<script language="javascript">
+											checkAutorizar[iAutorizar++] = $j(".autorizar_#{bitacora.folioControl}");
+										</script>
+									</h:panelGroup>
+							</rich:column>
+							
+							<rich:column colspan="13" breakBefore="true">								
+									<h:outputText styleClass="texto textoPeque12"
+														value="#{bitacora.bitacoraOperacionesSic.motivoCambio}" />			   
+							</rich:column>
+							</rich:columnGroup>
+							<f:facet name="footer">
+									<h:outputText value="" />
+							</f:facet>
+										
+					</rich:dataTable>
+
+					<table cellpadding="0" cellspacing="0" border="0" align="center"
+						width="900px">
+						<tr align="right">
+							<td align="right"><h:panelGroup id="botonesExportar">
+									<h:panelGroup
+										style="display: #{(not empty cambiaEdoOpsCambioBovedaBean.paginaVO.registros)? 'inline':'none'}">
+
+										<h:outputText value="Exportar los resultados"></h:outputText>									
+	
+                          				<h:commandButton
+											actionListener="#{cambiaEdoOpsCambioBovedaBean.generarReportesXls}"
+											action="#{cambiaEdoOpsCambioBovedaBean.defineFlujo}"
+											image="/images/excel-file.gif"
+											title="Exportar a Excel todos los resultados de la consulta"
+											id="generarExcel" >
+											<f:attribute name="tipo_operador_menu" value="#{tipo_operador_menu}" />
+										</h:commandButton>
+									</h:panelGroup>
+								</h:panelGroup></td>
+						</tr>
+					</table>
+
+				</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define><!-- Fin seccionContenido -->
+
+	</ui:composition>
+
+	<!-- FIN DEL DECORATE -->
+</html>

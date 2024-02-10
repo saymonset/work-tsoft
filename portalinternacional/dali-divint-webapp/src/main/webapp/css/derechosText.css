@@ -1,0 +1,18 @@
+.textOnCenter {
+    text-align: center;
+}
+.textOnLeft {
+    text-align: left;
+}
+.textOnRight {
+    text-align: right;
+}
+.derechoSubtotales {
+    text-align: right;
+    font-weight:bold;
+    font-size:11px;
+}
+.campoAlphaNumericoEmisora {
+	text-transform: uppercase;
+	text-decoration:uppercase;
+}

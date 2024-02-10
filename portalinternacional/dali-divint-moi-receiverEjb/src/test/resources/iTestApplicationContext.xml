@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<description>
+		AplicationContext de configuracion de objetos de acceso a datos
+	</description>
+
+    <bean id="dataSourceInternacional"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+        destroy-method="close">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+        <property name="url">
+            <value>
+                <![CDATA[jdbc:oracle:thin:@10.100.144.6:1521:homology]]>
+            </value>
+        </property>
+        <property name="username" value="dali_admin" />
+        <property name="password" value="dali08" />
+    </bean>
+
+    <bean id="dataSourceDali"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+        destroy-method="close">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+        <property name="url">
+            <value>
+                <![CDATA[jdbc:oracle:thin:@10.100.144.6:1521:homology]]>
+            </value>
+        </property>
+        <property name="username" value="dali_admin" />
+        <property name="password" value="dali08" />
+    </bean>
+	
+	<bean id="securityDataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url">
+			<value>
+				<![CDATA[jdbc:oracle:thin:@10.100.144.8:1521:pcmmv]]>
+			</value>
+		</property>
+		<property name="username" value="pcmmv_segu04" />
+		<property name="password" value="pcmmv_segu04" />
+	</bean>
+
+</beans>

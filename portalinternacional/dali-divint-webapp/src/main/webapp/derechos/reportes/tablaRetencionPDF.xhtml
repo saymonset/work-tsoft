@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:pdf="http://indeval.com/jsf/pdf"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="tablaRetencionDerecho" documentTitle="Consulta Tabla de Retención del Derecho"
+                  institucion="#{consultaTablaRetencionBean.agenteFirmado.id} #{consultaTablaRetencionBean.agenteFirmado.folio} #{consultaTablaRetencionBean.agenteFirmado.razon}"
+                  landscape="true" fecha="#{consultaTablaRetencionBean.fechaActual}"
+                  imageResource="/images/indeval.jpg"> 
+        <pdf:table value="consultaTablaRetencionBean" currentBean="resultado" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{consultaTablaRetencionBean}" currentBean="resultado" widthPercentage="100">
+            <pdf:row>                
+                <pdf:col header="#{etq.tv}" value="#{consultaTablaRetencionBean.derechoSeleccionado.emision.tv}" align="center" />
+                <pdf:col header="#{etq.divisaMinus}" value="#{consultaTablaRetencionBean.derechoSeleccionado.divisa}" align="center" />
+                <pdf:col header="#{etq.emisoraMinus}" value="#{consultaTablaRetencionBean.derechoSeleccionado.emision.emisora}" align="center" />
+                <pdf:col header="#{etq.bovedaMinus}" value="#{consultaTablaRetencionBean.derechoSeleccionado.bovedaCustodio}" align="center" />
+                <pdf:col header="#{etq.serieMinus}" value="#{consultaTablaRetencionBean.derechoSeleccionado.emision.serie}" align="center" />
+                <pdf:col header="#{etq.estado}" value="#{consultaTablaRetencionBean.derechoSeleccionado.descEstatusDerecho}" align="center"/>                    
+                <pdf:col header="#{etq.cuponMinus}" value="#{consultaTablaRetencionBean.derechoSeleccionado.emision.cupon}" align="center"/>
+                <pdf:col header="#{etq.fechaCorteMinus}" value="#{consultaTablaRetencionBean.derechoSeleccionado.fechaCorte}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.isin}" value="#{consultaTablaRetencionBean.derechoSeleccionado.emision.isin}" align="center"/>
+                <pdf:col header="#{etq.fechaPago}" value="#{consultaTablaRetencionBean.derechoSeleccionado.fechaPago}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.proporcionMinus}" value="#{consultaTablaRetencionBean.proporcion}" align="center"/>
+                <pdf:col header="#{etq.fee}" value="#{consultaTablaRetencionBean.fee}" align="center" rendered="#{!consultaTablaRetencionBean.requiereBeneficiarios}"/>                
+                <pdf:col header="#{etq.porcentajeRetencionMinus}" value="#{consultaTablaRetencionBean.porcentajeRetencion}" align="center" rendered="#{!consultaTablaRetencionBean.requiereBeneficiarios}"/>
+            </pdf:row>
+        </pdf:table>
+        <pdf:br />
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{consultaTablaRetencionBean.paginaReportes.totalRegistros}" />       
+        <pdf:subtitle value="Datos"/>
+        <pdf:table value="#{consultaTablaRetencionBean.paginaReportes.registros}" currentBean="detalle" borraLista="false">
+            <pdf:row>
+                <pdf:col header="#{etq.institucionMinus}" value="#{detalle.claveInstitucion} #{detalle.nombreInstitucion}"
+                         align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.cuentaMinus}" value="#{detalle.cuenta}" 
+                         align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.porcentajeRetencionMinus}" value="#{detalle.porcentajeRetencion}"
+                         align="CENTER" oddColorDark="true">
+                         <f:convertNumber pattern="#0.######'%'"/>
+                </pdf:col>
+                <pdf:col header="#{etq.cantidadDeTitulosMinus}" value="#{detalle.asignacion}" 
+                		 align="CENTER" oddColorDark="true">
+                		 <f:convertNumber pattern="#,##0"/>
+                </pdf:col>
+                <pdf:col header="#{etq.montoBrutoMinus}" value="#{detalle.monto}" 
+                		 align="CENTER" oddColorDark="true">
+                		 <f:convertNumber pattern="'$'##,##0.00"/>
+                </pdf:col>
+                <pdf:col header="#{etq.fee}" value="#{detalle.montoFee}" 
+                		 align="CENTER" oddColorDark="true">
+                		 <f:convertNumber pattern="'$'##,##0.00" redered="#{!consultaTablaRetencionBean.requiereBeneficiarios}"/>
+                </pdf:col>                
+                <pdf:col header="#{etq.impuestoRetenidoMinus}" value="#{detalle.montoRetenido}"
+                         align="CENTER" oddColorDark="true" >
+		 				<f:convertNumber pattern="'$'##,##0.00"/>
+                </pdf:col>                         
+                <pdf:col header="#{etq.montoNetoMinus}" value="#{detalle.montoPagado}" 
+                		 align="CENTER" oddColorDark="true">
+                		 <f:convertNumber pattern="'$'##,##0.00"/>
+                </pdf:col>                    
+                <pdf:col header="#{etq.estado}" value="#{consultaTablaRetencionBean.derechoSeleccionado.descEstatusDerecho}" 
+                		 align="CENTER" oddColorDark="true" />                                		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{consultaTablaRetencionBean.porcentajeKeys}" currentBean="porcentaje">
+            <pdf:row>
+                <pdf:col header="" value="Subtotal"
+                         align="CENTER" oddColorDark="true" />
+                <pdf:col header="" value="" 
+                         align="CENTER" oddColorDark="true" />
+                <pdf:col header="" value="#{porcentaje}"
+                         align="CENTER" oddColorDark="true">
+                         <f:convertNumber pattern="#0.##'%'"/>
+                </pdf:col>
+                <pdf:col header="" value="#{consultaTablaRetencionBean.subtotalesXPorcentaje[porcentaje].asignacion}" 
+                		 align="CENTER" oddColorDark="true">
+                		 <f:convertNumber pattern="#,##0"/>
+                </pdf:col>
+                <pdf:col header="" value="#{consultaTablaRetencionBean.subtotalesXPorcentaje[porcentaje].monto}" 
+                		 align="CENTER" oddColorDark="true">
+                		 <f:convertNumber pattern="'$'##,##0.00"/>
+                </pdf:col>
+                <pdf:col header="" redered="#{!consultaTablaRetencionBean.requiereBeneficiarios}" value="#{consultaTablaRetencionBean.subtotalesXPorcentaje[porcentaje].montoFee}" 
+                		 align="CENTER" oddColorDark="true" >
+                		 <f:convertNumber pattern="'$'##,##0.00"/>
+                </pdf:col>                
+                <pdf:col header="" value="#{consultaTablaRetencionBean.subtotalesXPorcentaje[porcentaje].montoRetenido}"
+                         align="CENTER" oddColorDark="true" >
+		 				<f:convertNumber pattern="'$'##,##0.00"/>
+                </pdf:col>                         
+                <pdf:col header="" value="#{consultaTablaRetencionBean.subtotalesXPorcentaje[porcentaje].montoPagado}" 
+                		 align="CENTER" oddColorDark="true">
+                		 <f:convertNumber pattern="'$'##,##0.00"/>
+                </pdf:col>                    
+                <pdf:col header="" value="" 
+                		 align="CENTER" oddColorDark="true" />                                		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{consultaTablaRetencionBean}" currentBean="dummy">
+            <pdf:row>
+                <pdf:col header="" value="#{etq.total}"
+                         align="CENTER" oddColorDark="true" />
+                <pdf:col header="" value="" 
+                         align="CENTER" oddColorDark="true" />
+                <pdf:col header="" value=""
+                         align="CENTER" oddColorDark="true">
+                </pdf:col>
+                <pdf:col header="" value="#{consultaTablaRetencionBean.totalTitulos}" 
+                		 align="CENTER" oddColorDark="true">
+                		 <f:convertNumber pattern="#,##0"/>
+                </pdf:col>
+                <pdf:col header="" value="#{consultaTablaRetencionBean.total.monto}" 
+                		 align="CENTER" oddColorDark="true">
+                		 <f:convertNumber pattern="'$'##,##0.00"/>
+                </pdf:col>
+                <pdf:col header="" redered="#{!consultaTablaRetencionBean.requiereBeneficiarios}" value="#{consultaTablaRetencionBean.total.montoFee}" 
+                		 align="CENTER" oddColorDark="true">
+                		 <f:convertNumber pattern="'$'##,##0.00"/>
+                </pdf:col>                
+                <pdf:col header="" value="#{consultaTablaRetencionBean.total.montoRetenido}"
+                         align="CENTER" oddColorDark="true" >
+		 				<f:convertNumber pattern="'$'##,##0.00"/>
+                </pdf:col>                         
+                <pdf:col header="" value="#{consultaTablaRetencionBean.total.montoPagado}" 
+                		 align="CENTER" oddColorDark="true">
+                		 <f:convertNumber pattern="'$'##,##0.00"/>
+                </pdf:col>                    
+                <pdf:col header="" value="" 
+                		 align="CENTER" oddColorDark="true" />                                		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		
+            </pdf:row>
+        </pdf:table>        
+    </pdf:document>
+</html>

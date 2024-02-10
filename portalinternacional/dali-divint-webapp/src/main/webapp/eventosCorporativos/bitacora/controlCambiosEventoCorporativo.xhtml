@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+          <ui:composition template="/layoutPopUp.xhtml"> 
+              <ui:define name="head">	
+    		<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/eventosCorporativos.js">				
+			</script>	
+			</ui:define>
+          
+            <ui:define name="subtitulo">
+           		<h:outputText value="Control de Cambios" />  
+        	</ui:define>
+        	<ui:define name="body">
+	        	<h:panelGroup id="seccionContenido">	
+		        	    
+			        <h:form id="bitacoraCCForm">
+
+
+					<h:panelGroup id="containerResultados" >
+					    <h:outputText value="#{controlCambiosCorporativosBean.init}" />
+						<a4j:keepAlive beanName = "controlCambiosCorporativosBean"  />
+
+						<div style="padding-left: 100px;">	
+						<h:dataTable   
+						style="width: 100%;padding-top: 20px;" 
+						value="#{controlCambiosCorporativosBean.listaBitacora}"
+						var="detalle" 		
+						id="resultados"
+						styleClass="tablaGeneral centrado" headerClass="tituloTabla" width="100%"
+						footerClass="texto textoPeque12" border="0" cellpadding="3px"
+						cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos"> 
+							
+							
+							<!-- ID -->
+							<h:column >
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="id" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" id="testingID" value="#{detalle.idBitacoraCambios}" />
+							</h:column>	 
+							<!-- FOLIO -->
+							<h:column >
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="Folio Evento" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{detalle.idEventoCorporativo}" />
+							</h:column>
+							<!-- EVENTO ORIGINAL -->
+							<h:column >
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="Evento Original" />
+								</f:facet>
+								<a href="javascript:verEventoCorporativoOriginal(#{detalle.idBitacoraCambios});">                          	                       
+		                       		<h:graphicImage value="/images/search.png"></h:graphicImage>	
+		                        </a> 
+							</h:column>
+							<!-- USUARIO MODIFICACION -->					
+							<h:column >
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="Usuario modificacion" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{detalle.usuario}" />
+							</h:column>	 	
+							<!-- FECHA MODIFICACION -->					
+							<h:column > 
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="Fecha modificacion" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{detalle.fechaModificacion}" >
+			               							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Mexico/General" />
+									 				</h:outputText>
+							</h:column>	 
+							<!-- VISIBLE PARTICIPANTE -->					
+							<h:column >
+
+								<f:facet name="header">	
+									<h:panelGroup>
+										<table>	
+											<tr> <td>
+												<h:outputText styleClass="texto textoPeque12" value="No visible al participante" />
+											</td></tr>
+													<!--PONER EN EL BOTON DE ABAJO rendered="#{!empty sessionScope.roles['INT_EVCO_AUT'] or !empty sessionScope.roles['INT_EVCO_SU']}" -->
+											<tr> <td>				
+												<h:commandButton
+												rendered="#{!empty sessionScope.roles['INT_EVCO_AUT'] or !empty sessionScope.roles['INT_EVCO_SU']}"
+												onclick="this.disabled=false;if(!confirmarCambioEstatus()){this.disabled=false;return false;}"
+												action="#{controlCambiosCorporativosBean.cambiarEstatus}"  
+												tabindex="8"												
+												reRender="containerResultados"
+												value="Cambiar Visibilidad">
+													<f:setPropertyActionListener value="#{controlCambiosCorporativosBean.idEventoCorporativo}"   target="#{controlCambiosCorporativosBean.idEventoCorporativo}"/>
+												</h:commandButton>
+											</td></tr>
+										</table>
+									</h:panelGroup>
+								</f:facet>
+									<input type="hidden" value="#{detalle.idBitacoraCambios}"   id="check_#{detalle.idBitacoraCambios}"/> 
+								    <h:selectBooleanCheckbox 
+								    onchange="ponNombreIdCheckBitacora(this,#{detalle.idBitacoraCambios});"
+								    id="check#{detalle.idBitacoraCambios}" value="#{detalle.visibleCheck}" onclick="javascript:seleccionarCheckBitacora(this.checked,#{detalle.idBitacoraCambios})"/>
+							</h:column>	  	
+
+						</h:dataTable>	
+						</div>			
+
+					</h:panelGroup>
+						<h:inputText autocomplete="off" id="idsCambioEstatus" style="display:none" value="#{controlCambiosCorporativosBean.idsCambioEstatus}" />	
+						<h:inputText autocomplete="off" id="idsCambiosEstatusFalse" style="display:none" value="#{controlCambiosCorporativosBean.idsCambiosEstatusFalse}" />
+					</h:form>
+														
+								
+								<iframe class="divModal"  id="bitacora"  frameborder="0" align="top"></iframe>
+				</h:panelGroup>
+			</ui:define>
+          </ui:composition>
+</html>

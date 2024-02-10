@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:composition template="/layoutPopUp.xhtml">
+		<ui:define name="head">						
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/confirmacionesInt.js">
+			</script>	
+			<style type="text/css">
+			.my-floated-elements {
+					float: none
+					}
+				@media screen
+				  {
+				.forscreen { display:block; }
+				.forprinting { display:none; }
+				  }
+				@media print
+				  {
+				.forscreen { display:none; }
+				.forprinting { display:block; 
+						overflow: visible;
+						float: none; }
+				  }
+			</style>		
+		</ui:define>
+		<ui:define name="titulo">
+			Mensaje Confirmación
+		</ui:define>
+		<ui:define name="subtitulo">
+		</ui:define>
+		<ui:define name="body">
+			<div id="forma" class="forscreen my-floated-elements" >
+			<h:form id="formaBitacoraConfirmacion">
+				<h:outputText value="#{bitacoraConfirmacionIntBean.init}"/>
+				<a4j:keepAlive beanName="bitacoraConfirmacionIntBean" />
+				<h:panelGroup id="panelResultados">
+					<table>
+						<tr>
+							<td valign="top">
+								<h:panelGroup id="panelTextArea">	
+									<h:inputTextarea id="swiftMensaje" readonly="true" cols="60" rows="15" class="printable" value="#{bitacoraConfirmacionIntBean.bitacoraConfirmacion.mensaje}"/>
+								</h:panelGroup>
+							</td>
+						</tr>
+						<tr>
+							<td align="center"><br/>
+								<h:panelGroup>
+									<h:outputText value="Exportar los resultados"></h:outputText>
+										
+									<h:commandButton actionListener="#{bitacoraConfirmacionIntBean.generarReportes}"											
+										image="/images/pdf.gif"
+										title="Exportar a PDF el mensaje"
+										id="generarPdf"/>
+									&#160;&#160;            
+				                    <a href="javascript:printTextareaContent('formaBitacoraConfirmacion:swiftMensaje','printing_div_id')">
+										Imprimir Mensaje
+									</a>              				
+								</h:panelGroup>
+							</td>
+						</tr>
+					</table>
+				</h:panelGroup>
+			</h:form>
+			</div>
+			<div id="printing_div_id" class="forprinting" style="white-space:pre-line; align:left"></div>
+		</ui:define>
+	</ui:composition>
+</html>

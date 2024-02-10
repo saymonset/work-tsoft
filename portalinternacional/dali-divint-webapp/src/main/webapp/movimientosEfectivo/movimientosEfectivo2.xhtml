@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+
+<ui:composition template="/layoutCaptura.xhtml">
+	<ui:define name="head">
+		<script language="javascript" type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/js/movimientosEfectivo.js"></script>
+	</ui:define>
+
+	<ui:define name="tituloSeccion">
+		<h:outputText value="#{etq.divisionInternacional}" />
+	</ui:define>
+	<ui:define name="subtituloSeccion">
+		<h:outputText value="#{etq.sistemaIntCot}" />
+	</ui:define>
+	<ui:define name="tituloEncabezado">
+		<h:outputText value="#{etq.capturaMovEfectivo}"/>
+	</ui:define>
+
+	<ui:define name="seccionForma">
+		<a4j:keepAlive beanName="movimientosEfectivoBean" />
+		<h:panelGroup id="init">
+			<h:outputText value="#{movimientosEfectivoBean.inicializar}"/>
+		</h:panelGroup>
+
+		<h:panelGroup id="general">
+			<table width="100%" cellpadding="opx" cellspacing="0px">
+				<tr>
+					<td colspan="2"><h:panelGroup id="mensajeUsuario">
+							<div style="min-height: 21px;">
+								<rich:messages warnClass="warning" infoClass="info"
+									errorClass="error" ajaxRendered="true" showDetail="false"
+									showSummary="true" layout="list">
+									<f:facet name="infoMarker">
+										<h:panelGroup>
+											<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+									</f:facet>
+									<f:facet name="errorMarker">
+										<h:panelGroup>
+											<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+									</f:facet>
+								</rich:messages>
+
+								<div id="divWarnings" class="warning" style="display: none;">
+									<p id="textoWarning"></p>
+								</div>
+							</div>
+						</h:panelGroup></td>
+				</tr>
+
+				<tr>
+					<td width="100%"><h:panelGrid columns="3" width="100%"
+							id="seleccionCuentaTraspasante">
+							<f:facet name="header">
+								<h:outputText value="#{etq.participanteMinus}"
+									styleClass="texto" />
+							</f:facet>
+							<h:outputText value="" styleClass="texto" />
+							<h:outputText value="#{etq.participanteMinus}" styleClass="texto" />
+							<h:outputText value="#{etq.institucion}" styleClass="texto" />
+
+							<h:outputText value="#{etq.institucion}" styleClass="texto" />
+							<h:panelGroup>
+								<h:inputText autocomplete="off" id="idInstitucion" size="4"
+									maxlength="4" value="#{movimientosEfectivoBean.claveInstitucion}"
+									styleClass="textoControles" tabindex="10">
+									<a4j:support event="onchange" 
+									actionListener="#{movimientosEfectivoBean.validarParticipante}"
+									reRender="init" />
+								</h:inputText>
+								
+								
+								
+								
+							</h:panelGroup>
+							<h:inputText autocomplete="off"
+								id="nombreInstitucionParticipante" size="25" readonly="true"
+								value="#{movimientosEfectivoBean.nombreInstitucion}"
+								styleClass="textoControles textoMayusculas" />
+
+							<h:outputText value="#{etq.divisaMinus}" styleClass="texto" />
+							<h:panelGroup>
+								<h:panelGroup id="panelDivisas">
+									<h:selectOneMenu id="divisa" required="false" tabindex="30" 
+							value="#{movimientosEfectivoBean.efectivoInternacionalVO.divisa.idString}">								
+								<f:selectItems value="#{movimientosEfectivoBean.divisas}" />
+							<a4j:support event="onchange" actionListener="#{movimientosEfectivoBean.seleccionarDivisa}"
+								 />								
+						</h:selectOneMenu>
+								</h:panelGroup>
+							</h:panelGroup>
+							<h:column></h:column>
+							<h:outputText value="#{etq.bovedaMinus}" styleClass="texto" />
+							<h:panelGroup>
+								<h:panelGroup id="panelBoveda">
+									<h:inputHidden id="idBoveda"
+										value="#{movimientosEfectivoBean.boveda}" />
+									<h:selectOneMenu id="boveda2"
+										value="#{movimientosEfectivoBean.boveda}"
+										styleClass="textoControles readonly">
+										<f:selectItem itemValue="-1"
+											itemLabel="#{etq.seleccioneUnaBoveda}" />
+										<f:selectItems value="#{movimientosEfectivoBean.bovedas}" />
+									</h:selectOneMenu>
+								</h:panelGroup>
+							</h:panelGroup>
+							<h:column></h:column>
+							<h:outputText value="#{etq.tipoMovimiento}" styleClass="texto" />
+							<h:panelGroup id="panelTpoMovimiento">
+									<h:selectOneRadio value="#{movimientosEfectivoBean.idTipoMovimiento}">
+										<f:selectItem itemValue="1" itemLabel="Depósito" />
+										<f:selectItem itemValue="2" itemLabel="Retiro" />
+									</h:selectOneRadio>
+							</h:panelGroup>
+							<h:column></h:column>
+							<h:outputText value="#{etq.saldoDisponibleMinus}"
+								styleClass="texto" />
+							<h:inputText autocomplete="off" id="txtSaldoDisponible" size="25"
+								readonly="true"
+								value="#{movimientosEfectivoBean.saldoDisponible}"
+								styleClass="textoControles textoMayusculas" />
+							<h:column></h:column>
+							<h:outputText value="#{etq.importe}" styleClass="texto" />
+							<h:inputText autocomplete="off" id="txtImporte" size="25"
+								value="#{movimientosEfectivoBean.importe}"
+								styleClass="textoControles textoMayusculas" />
+							<h:column></h:column>
+							<h:outputText value="#{etq.saldoActual}" styleClass="texto" />
+							<h:inputText autocomplete="off" id="txtSaldoActual" size="25"
+								value="#{movimientosEfectivoBean.saldoActual}"
+								styleClass="textoControles textoMayusculas" />
+							<h:column></h:column>
+							<h:outputText value="#{etq.referenciaNumerica}"
+								styleClass="texto" />
+							<h:inputText autocomplete="off" id="txtReferenciaNumerica"
+								size="25" value="#{movimientosEfectivoBean.referenciaNumerica}"
+								styleClass="textoControles textoMayusculas" />
+							<h:column></h:column>
+							<h:outputText value="#{etq.referenciaRelacionada}"
+								styleClass="texto" />
+							<h:inputText autocomplete="off" id="txtReferenciaRelacionada"
+								size="25"
+								value="#{movimientosEfectivoBean.referenciaRelacionada}"
+								styleClass="textoControles textoMayusculas" />
+							<h:column></h:column>
+							<h:outputText value="#{etq.informacionRemesas}"
+								styleClass="texto" />
+							<h:inputText autocomplete="off" id="txtInformacionRemesas"
+								size="25" value="#{movimientosEfectivoBean.informacionRemesas}"
+								styleClass="textoControles textoMayusculas" />
+							<h:column></h:column>
+							<h:outputText value="#{etq.notasComentarios}" styleClass="texto" />
+							<h:inputText autocomplete="off" id="txtNotasComentarios"
+								size="25" value="#{movimientosEfectivoBean.notasComentarios}"
+								styleClass="textoControles textoMayusculas" />
+							<h:column></h:column>
+						</h:panelGrid></td>
+
+
+				</tr>
+				<tr>
+					<td colspan="2">&#160;</td>
+				</tr>
+				<tr>
+					<td colspan="2"><h:outputText value="#{etq.asterisco}"
+							styleClass="required" /> <h:outputText value="#{etq.requeridos}"
+							styleClass="texto" /></td>
+				</tr>
+
+			</table>
+		</h:panelGroup>
+	</ui:define>
+	<ui:define name="botones">
+		<div class="refrescar" style="float: left;">
+			<a4j:status id="commonStatus">
+				<f:facet name="start">
+					<h:panelGroup>
+						<h:graphicImage value="/images/ajax-loader.gif" />
+						<h:outputText value="#{etq.buscando}"></h:outputText>
+					</h:panelGroup>
+				</f:facet>
+			</a4j:status>
+		</div>
+		<h:panelGrid width="25%">
+			<h:panelGroup id="botones">
+				<div class="limpiar">
+					<a4j:commandButton id="botonLimpiar"
+						image="/images/transparent.gif" styleClass="submit"
+						actionListener="#{movimientosEfectivoBean.limpiar}"
+						reRender="init,general,botones"
+						onclick="deshabilitarBoton('botonLimpiar');"
+						oncomplete="habilitarBoton('botonLimpiar')" tabindex="130" />
+				</div>
+				<!-- 		            <div class="guardar"> -->
+				<!-- 		                <a4j:commandButton id="botonBuscar" image="/images/transparent.gif" styleClass="submit" -->
+				<!-- 		                    actionListener="#{capturaTraspasosBean.guardar}"  -->
+				<!-- 		                    rendered="#{!capturaTraspasosBean.isoYaFirmado}" -->
+				<!-- 		                    reRender="general,botones,mensajeUsuario"  -->
+				<!-- 		                    onclick="if(confirmarGuardar()){removeApplet();deshabilitarBoton('botonBuscar');}else return false;"  -->
+				<!-- 		                    oncomplete="habilitarBoton('botonBuscar')" -->
+				<!-- 		                    tabindex="120"/> -->
+				<!-- 		            </div> -->
+				<div class="guardar">
+					<h:commandButton id="botonConfirmar2"
+						image="/images/transparent.gif" styleClass="submit"
+						actionListener="#{movimientosEfectivoBean.aplicar}" tabindex="120">
+					</h:commandButton>
+				</div>
+			</h:panelGroup>
+		</h:panelGrid>
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

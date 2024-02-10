@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xls="http://indeval.com/jsf/xls">
+
+<xls:document documentName="cuentasTesoreriaEfectivo"
+              documentTitle="Consulta de Cuentas Transitorias"
+              fecha="#{cuentasTransitoriasEfectivoController.fechaActual}"
+              institucion="">
+
+    <xls:table value="#{cuentasTransitoriasEfectivoController}" var="filtros">
+        <xls:row>
+            <xls:col header="#{etq.custodio}" value="#{filtros.custodioConsulta}"/>
+            <xls:col header="#{etq.divisaMinus}" value="#{filtros.divisaCustodia}"/>
+            <xls:col header="#{etq.fechaInicioCT}" value="#{filtros.fechaInicioFormateada}"/>
+            <xls:col header="#{etq.fechaFinCT}" value="#{filtros.fechaFinFormateada}"/>
+            <xls:col header="#{etq.folioRelacionado}" value="#{filtros.referenciaBuscar_2}"/>
+        </xls:row>
+    </xls:table>
+
+    <xls:table var="row"
+               value="#{cuentasTransitoriasEfectivoController.negativos}">
+        <xls:row>
+            <xls:col header="#{etq.custodio}" value="#{row.custodio}"/>
+            <xls:col header="#{etq.divisaMinus}" value="#{row.divisa}"/>
+            <xls:col header="#{etq.monto}" value="#{row.total}"/>
+        </xls:row>
+    </xls:table>
+
+    <xls:iterator var="divisas" value="#{cuentasTransitoriasEfectivoController.foliosAgrupadosDtos}">
+        <xls:row>
+            <xls:col header="" value="#{divisas.divisa}"/>
+        </xls:row>
+        <xls:row>
+            <xls:col>
+                <xls:table var="folio" value="#{divisas.referencias}">
+                    <xls:row>
+                        <xls:col header="#{etq.referencia}" value="#{folio.folioRelacionado}"/>
+                        <xls:col header="#{etq.divisaMinus}" value="#{folio.divisa}"/>
+                        <xls:col header="#{etq.custodio}" value="#{folio.custodio}"/>
+                        <xls:col header="#{etq.monto}" value="#{folio.total}"/>
+                    </xls:row>
+                </xls:table>
+            </xls:col>
+        </xls:row>
+        <xls:row>
+            <xls:col header="" value="#{etq.totalMinus}"/>
+            <xls:col header="" value="#{divisas.monto}"/>
+        </xls:row>
+    </xls:iterator>
+
+    <xls:table var="row"
+               value="#{cuentasTransitoriasEfectivoController.registrosNoReferenciados}">
+        <xls:row>
+            <xls:col header="#{etq.referencia}" value="#{row.referenciaOperacion}"/>
+            <xls:col header="#{etq.tipoMensaje}" value="#{row.tipoMensaje}"/>
+            <xls:col header="#{etq.divisaMinus}" value="#{row.divisa}"/>
+            <xls:col header="#{etq.custodio}" value="#{row.custodio}"/>
+            <xls:col header="#{etq.monto}" value="#{row.total}"/>
+            <xls:col header="#{etq.mensajeMinus}" value="#{row.mensajeISO}"/>
+        </xls:row>
+    </xls:table>
+</xls:document>
+</html>

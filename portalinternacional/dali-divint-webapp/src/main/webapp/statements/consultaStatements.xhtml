@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:t="http://myfaces.apache.org/tomahawk">
+    <!-- DECORATE -->
+
+    <ui:composition template="/layoutConsultas.xhtml">
+        <ui:define name="head">
+        </ui:define>
+
+        <ui:define name="tituloSeccion">
+            <h:outputText value="#{etq.divisionInternacional}" />
+        </ui:define>
+        <ui:define name="subtituloSeccion">
+            <h:outputText value="#{etq.statements}" />
+        </ui:define>
+        <ui:define name="tituloEncabezado">
+            <h:outputText value="#{etq.consultaStatements}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="criterios">
+            <a4j:keepAlive beanName="consultaStatementsController" />
+            <a4j:keepAlive beanName="consultaStatementsController.param" />
+
+            <h:panelGroup id="init">
+                <h:outputText value="#{consultaStatementsController.init}" />
+            </h:panelGroup>
+
+            <h:panelGroup id="criterios">
+                <br />
+                <br />
+
+                <table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+                    <tr>
+                        <td colspan="4">
+                            <div style="min-height: 21px;" colspan="2">
+                                <rich:messages warnClass="warning" infoClass="info"
+                                               errorClass="error" ajaxRendered="true" showDetail="false"
+                                               showSummary="true" layout="list">
+                                    <f:facet name="infoMarker">
+                                        <h:panelGroup>
+                                            <h:graphicImage url="/images/accept.png" />&#160;
+                                        </h:panelGroup>
+                                    </f:facet>
+
+                                    <f:facet name="errorMarker">
+                                        <h:panelGroup>
+                                            <h:graphicImage url="/images/warning.gif" />&#160;
+                                        </h:panelGroup>
+                                    </f:facet>
+                                </rich:messages>
+
+                                <div id="divWarnings" class="warning" style="display:none;">
+                                    <p id="textoWarning">
+                                    </p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 110px">
+                            <h:outputText value="#{etq.institucionMinus}" />
+                        </td>
+                        <td style="width: 330px">
+                            <a4j:region>
+                                <table align="left" width="100%">
+                                    <tr>
+                                        <td width="70px">
+                                            <h:inputText autocomplete="off" id="idFolioInstitucion" value="#{consultaStatementsController.idFolioInstitucion}"
+                                                         styleClass="textoControles campoNumerico" size="5" maxlength="5"
+                                                         readonly="#{!consultaStatementsController.institucionIndeval}">
+                                                <a4j:support event="onchange" actionListener="#{consultaStatementsController.obtenerDatosParticipante}"
+                                                             reRender="nombreInstitucionTraspasante" ajaxSingle="true"/>
+                                            </h:inputText>
+                                        </td>
+                                        <td>
+                                            <h:inputText autocomplete="off" id="nombreInstitucionTraspasante" size="25"
+                                                         readonly="true"
+                                                         value="#{consultaStatementsController.nombreInstitucion}"
+                                                         styleClass="textoControles" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </a4j:region>
+                        </td>
+                        <td style="width: 110px">
+                            <h:outputText value="#{etq.formato}" />
+                        </td>
+                        <td style="width: 330px">
+                            <h:selectOneMenu id="lstFormato" value="#{consultaStatementsController.param.formato}"
+                                             styleClass="textoControles">
+                                <f:selectItem itemValue="-1" itemLabel="#{etq.seleccioneUnFormato}" />
+                                <f:selectItem itemValue="W8BEN" itemLabel="W8BEN" />
+                                <f:selectItem itemValue="W8IMY" itemLabel="W8IMY" />
+                                <f:selectItem itemValue="W9" itemLabel="W9" />
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr style="height: 5px">
+                        <td colspan="4" />
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputText value="#{etq.nombreBeneficiario} o #{etq.razonSocial}" />
+                        </td>
+                        <td>
+                            <h:inputText autocomplete="off" id="txtNombreRazon" value="#{consultaStatementsController.param.nombre}"
+                                         styleClass="textoControles textoMayusculas" size="50" maxlength="200" />
+                        </td>
+                        <td>
+                            <h:outputText value="#{etq.tipoBeneficiario}" />
+                        </td>
+                        <td>
+                            <h:selectOneMenu id="lstTipoBeneficiario" value="#{consultaStatementsController.param.idTipoBeneficiario}"
+                                             styleClass="textoControles">
+                                <f:selectItem itemValue="-1" itemLabel="#{etq.seleccioneUnTipoBeneficiario}" />
+                                <f:selectItems value="#{consultaStatementsController.tiposBeneficiarios}"/>
+                            </h:selectOneMenu>
+                        </td>
+                    </tr>
+                    <tr style="height: 5px">
+                        <td colspan="4" />
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputText value="#{etq.tv}" />
+                        </td>
+                        <td>
+                            <h:inputText autocomplete="off" id="txtTv" value="#{consultaStatementsController.param.tv}"
+                                         styleClass="textoControles textoMayusculas" size="50" maxlength="4" />
+                        </td>
+                        <td>
+                            <h:outputText value="#{etq.emisoraMinus}" />
+                        </td>
+                        <td>
+                            <h:inputText autocomplete="off" id="txtEmisora" value="#{consultaStatementsController.param.emisora}"
+                                         styleClass="textoControles textoMayusculas" size="50" maxlength="7" />
+                        </td>
+                    </tr>
+                    <tr style="height: 5px">
+                        <td colspan="4" />
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputText value="#{etq.serieMinus}" />
+                        </td>
+                        <td>
+                            <h:inputText autocomplete="off" id="txtSerie" value="#{consultaStatementsController.param.serie}"
+                                         styleClass="textoControles textoMayusculas" size="50" maxlength="6" />
+                        </td>
+                        <td>
+                            <h:outputText value="#{etq.isin}" />
+                        </td>
+                        <td>
+                            <h:inputText autocomplete="off" id="txtIsin" value="#{consultaStatementsController.param.isin}"
+                                         styleClass="textoControles textoMayusculas" size="50" maxlength="12" />
+                        </td>
+                    </tr>
+                    <tr style="height: 5px">
+                        <td colspan="4" />
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputText value="#{etq.fechaRegistro}" />
+                        </td>
+                        <td>
+                            <rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+                                           value="#{consultaStatementsController.param.fechaRegistroInicio}"
+                                           datePattern="dd/MM/yyyy" />
+                            <br />
+                            <br />
+                            <rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+                                           value="#{consultaStatementsController.param.fechaRegistroFin}"
+                                           datePattern="dd/MM/yyyy" />
+                        </td>
+                        <td>
+                            <h:outputText value="#{etq.fechaPago}" />
+                        </td>
+                        <td>
+                            <rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+                                           value="#{consultaStatementsController.param.fechaPagoInicio}"
+                                           datePattern="dd/MM/yyyy" />
+                            <br />
+                            <br />
+                            <rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+                                           value="#{consultaStatementsController.param.fechaPagoFin}"
+                                           datePattern="dd/MM/yyyy" />
+                        </td>
+                    </tr>
+                    <tr style="height: 5px">
+                        <td colspan="4" />
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputText value="#{etq.archivo}" />
+                        </td>
+                        <td>
+                            <h:inputText autocomplete="off" id="txtArchivo" value="#{consultaStatementsController.param.archivo}"
+                                         styleClass="textoControles textoMayusculas" size="50" maxlength="200" />
+                        </td>
+                        <td>
+                            <h:outputText value="#{etq.w8benAdp}" rendered="#{!empty sessionScope.roles['INT_BEN_INDEVAL']}" />
+                        </td>
+                        <td>
+                            <h:inputText autocomplete="off" id="adp" value="#{consultaStatementsController.param.adp}"
+                                         styleClass="textoControles textoMayusculas" size="12" maxlength="10"
+                                         rendered="#{!empty sessionScope.roles['INT_BEN_INDEVAL']}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputText value="#{etq.porcentajeRetencionMinus}" />
+                        </td>
+                        <td>
+                        
+                            <h:inputText autocomplete="off" id="porcentaje" value="#{consultaStatementsController.param.porcentaje}"
+                            			 tabindex="10"
+                                         styleClass="textoControles campoNumerico" size="10" maxlength="2" />
+                                         
+                        
+                        </td>
+                        <td>
+                            <h:outputText value="#{etq.custodio}" />
+                        </td>
+                        <td>
+                            <h:selectOneMenu id="custodioNombre" value="#{consultaStatementsController.param.custodio}"
+                                             styleClass="textoControles">
+                                <f:selectItem itemValue="-1" itemLabel="Seleccione un custodio" />
+                                <f:selectItems value="#{consultaStatementsController.listaCustodios}"/>
+                            </h:selectOneMenu>            
+                        </td>
+                   </tr>
+                </table>
+            </h:panelGroup>
+
+        </ui:define>
+
+
+        <ui:define name="botones">
+            <div class="refrescar" style="float: left;">
+                <a4j:status id="commonStatus">
+                    <f:facet name="start">
+                        <h:panelGroup>
+                            <h:graphicImage value="/images/ajax-loader.gif" />
+                            <h:outputText value="#{etq.buscando}"></h:outputText>
+                        </h:panelGroup>
+                    </f:facet>
+                </a4j:status>
+            </div>
+            <div class="limpiar">
+                <h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+                                   styleClass="submit" 
+                                   actionListener="#{consultaStatementsController.limpiar}"
+                                   />
+            </div>
+            <div class="buscar">
+                <a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+                                   styleClass="submit"
+                                   actionListener="#{consultaStatementsController.buscar}"
+                                   reRender="containerResultados" />
+            </div>
+        </ui:define>
+
+
+        <ui:define name="seccionContenido">
+            <h:panelGroup id="containerResultados">
+                <h:panelGroup rendered="#{consultaStatementsController.consultaEjecutada}">
+
+                    <t:dataTable id="noExistenResultados" var="reg"
+                                 value="#{consultaStatementsController.paginaVO.registros}"
+                                 styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+                                 footerClass="tituloTabla" border="0" cellpadding="3px"
+                                 cellspacing="0px" columnClasses="everyColumn"
+                                 rowClasses="renglonTablaUno, renglonTablaDos"
+                                 rendered="#{empty consultaStatementsController.paginaVO.registros}">
+                        <t:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{etq.sinResultados}"></h:outputText>
+                            </f:facet>
+
+                        </t:column>
+                    </t:dataTable>
+
+                    <br/>
+
+                    <h:panelGroup rendered="#{not empty consultaStatementsController.paginaVO.registros}">
+
+                        <table width="100%" border="0">
+                            <tr>
+                                <td align="left" class="textoEstadoCuenta">
+                                    <a4j:commandLink id="control_bitacora_primero"
+                                                     action="#{consultaStatementsController.irPrimeraPagina}"
+                                                     rendered="#{consultaStatementsController.irAlPrimero}"
+                                                     reRender="containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+                                            border="0" />
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_atras_fast"
+                                                     action="#{consultaStatementsController.retrocederPaginasRapido}"
+                                                     rendered="#{consultaStatementsController.retrocederRapido}"
+                                                     reRender="containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+                                            border="0" />
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_atras"
+                                                     action="#{consultaStatementsController.retrocederPagina}"
+                                                     rendered="#{consultaStatementsController.retroceder}"
+                                                     reRender="containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+                                            border="0" />
+                                    </a4j:commandLink>
+                                    <a4j:commandLink id="control_bitacora_adelante"
+                                                     action="#{consultaStatementsController.avanzarPagina}"
+                                                     rendered="#{consultaStatementsController.avanzar}"
+                                                     reRender="containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+                                            border="0" />
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_adelante_fast"
+                                                     action="#{consultaStatementsController.avanzarPaginasRapido}"
+                                                     rendered="#{consultaStatementsController.avanzarRapido}"
+                                                     reRender="containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+                                            border="0" />
+
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_ultimo"
+                                                     action="#{consultaStatementsController.irUltimaPagina}"
+                                                     rendered="#{consultaStatementsController.irAlUltimo}"
+                                                     reRender="containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+                                            border="0" />
+                                    </a4j:commandLink>
+
+
+                                    <br />
+                                    <h:outputText value="#{etq.mostrando}"
+                                                  styleClass="textoResumen" />
+                                    <h:outputText value="#{consultaStatementsController.numeroPagina}"
+                                                  styleClass="textoResumen" />
+                                    <h:outputText value="#{etq.de}" styleClass="textoResumen" />
+                                    <h:outputText value="#{consultaStatementsController.totalPaginas}"
+                                                  styleClass="textoResumen" />
+                                    <h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+                                    &#160;&#160;&#160;
+                                    <h:outputText
+                                        value="#{consultaStatementsController.paginaVO.totalRegistros}"
+                                        styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+                                    &#160;
+                                    <h:outputText styleClass="textoResumen"
+                                                  value="#{etq.registrosEncontrados}" />
+                                </td>
+                                <td style="text-align: right;"  class="textoEstadoCuenta">
+                                    <h:outputText escape="false" value="#{etq.registrosPorPagina}"
+                                                  styleClass="textoResumen" />
+                                    <h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+                                                     value="#{consultaStatementsController.paginaVO.registrosXPag}">
+                                        <f:selectItem itemLabel="1" itemValue="1" />
+                                        <f:selectItem itemLabel="2" itemValue="2" />
+                                        <f:selectItem itemLabel="5" itemValue="5" />
+                                        <f:selectItem itemLabel="10" itemValue="10" />
+                                        <f:selectItem itemLabel="20" itemValue="20" />
+                                        <f:selectItem itemLabel="50" itemValue="50" />
+                                        <a4j:support event="onchange"
+                                                     reRender="containerResultados"
+                                                     actionListener="#{consultaStatementsController.obtenerRegistros}" />
+                                    </h:selectOneMenu>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </h:panelGroup>
+
+                    <t:dataTable id="resultados"
+                                 value="#{consultaStatementsController.paginaVO.registros}"
+                                 var="statement"
+                                 rendered="#{not empty consultaStatementsController.paginaVO.registros}"
+                                 styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+                                 footerClass="pieTabla" border="0" cellpadding="3px"
+                                 cellspacing="0px" columnClasses="everyColumn texto textoPeque12 textoArriba"
+                                 rowClasses="renglonTablaUno, renglonTablaDos">
+
+                        <t:column style="white-space: nowrap">
+                            <h:outputText value="#{etq.emisionMinus}" styleClass="textoNegritas" />
+                            <br />
+                            <h:outputText value="#{statement.tv} | #{statement.emisora} | #{statement.serie}" />
+                            <br />
+                            <br />
+                            <h:outputText value="#{etq.isin}" styleClass="textoNegritas" />
+                            <br />
+                            <h:outputText value="#{statement.isin}" />
+                            <br />
+                            <br />
+                            <h:outputText value="#{etq.institucionMinus}" styleClass="textoNegritas" />
+                            <br />
+                            <h:outputText value="#{statement.idFolio}-#{statement.nombreInstitucion}" />
+                        </t:column>
+                        <t:column style="padding-left: 20px;">
+                            <f:facet name="header">
+                                <h:outputText value="#{etq.fechasMinus}" />
+                            </f:facet>
+                            <h:outputText value="#{etq.registro}:" styleClass="textoNegritas" />
+                            <br />
+                            <h:outputText value="#{statement.fechaRegistro}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                            <br />
+                            <br />
+                            <h:outputText value="#{etq.pago}: " styleClass="textoNegritas" />
+                            <br />
+                            <h:outputText value="#{statement.fechaPago}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </t:column>
+                        <t:column style="padding-left: 20px;">
+                            <f:facet name="header">
+                                <h:outputText value="#{etq.beneficiarioFinal}" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:panelGroup>
+                                    <h:outputText value="#{etq.totalesMinus} por Pag" />
+                                    <br />
+                                    <br />
+                                    <h:outputText value="#{etq.totalesMinus}" styleClass="textoNegritas" />
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:outputText value="#{etq.nombre}:" styleClass="textoNegritas" />&#160;&#160;
+                            <h:outputText style="text-transform: uppercase"
+                                value="#{statement.nombre}" />
+                            <br />
+                            <br />
+                            <h:outputText value="#{etq.direccionMinus}:" styleClass="textoNegritas" />
+                            <br />
+                            <h:outputText style="text-transform: uppercase"
+                                value="#{not statement.cargoInstitucion ? statement.direccion : consultaStatementsController.domiciliosFiscales[statement.idInstitucion].domicilioCompleto}" />
+                            <br />
+                            <br />
+                            <h:outputText value="#{etq.pais}:" styleClass="textoNegritas" />&#160;&#160;
+                            <h:outputText style="text-transform: uppercase"
+                                value="#{not statement.cargoInstitucion ?  statement.pais : consultaStatementsController.domiciliosFiscales[statement.idInstitucion].pais.descripcionPais}" />&#160;&#160;&#160;&#160;&#160;
+                            <h:outputText value="#{etq.w8benAdp}:" styleClass="textoNegritas" />&#160;&#160;
+                            <h:outputText value="#{not empty statement.adp ? statement.adp : '.'}" />&#160;&#160;&#160;&#160;&#160;
+                            <h:outputText value="#{etq.tipoBeneficiario}:" styleClass="textoNegritas" />&#160;&#160;
+                            <h:outputText value="#{statement.tipoBeneficiario}" />
+                            <br />
+                            <br />
+                            <h:outputText value="#{etq.rfc}:" styleClass="textoNegritas" />&#160;&#160;
+                            <h:outputText value="#{statement.rfc}" />&#160;&#160;&#160;&#160;&#160;
+                            <h:outputText value="#{etq.formato}:" styleClass="textoNegritas" />&#160;&#160;
+                            <h:outputText value="#{statement.formato}" />&#160;&#160;&#160;&#160;&#160;
+                            <h:outputText value="#{etq.estatus}:" styleClass="textoNegritas" />&#160;&#160;
+                            <h:outputText value="#{statement.statusOwner}" />
+                        </t:column>
+                        
+                        <t:column  style="padding-left: 20px;">
+                            <f:facet name="header">
+                                <h:outputText value="#{etq.custodio}" />
+                            </f:facet>
+                            <h:outputText value="#{statement.custodio}">
+                               
+                            </h:outputText>
+                        </t:column>
+                        
+                        <t:column style="text-align: right;">
+                            <f:facet name="header">
+                                <h:outputText value="#{etq.porcentajeRetencionMinus}" />
+                            </f:facet>
+                            <h:outputText value="#{statement.porcentajeRetencion}">
+                                <f:convertNumber pattern="#,##0'%'" />
+                            </h:outputText>
+                        </t:column>
+                        <t:column style="text-align: right;">
+                            <f:facet name="header">
+                                <h:outputText value="#{etq.cantidadTit}" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:panelGroup>
+                                    <h:outputText value="#{consultaStatementsController.paginaVO.valores['totalPagPosicion']}">
+                                        <f:convertNumber pattern="#,##0" />
+                                    </h:outputText>
+                                    <br />
+                                    <br />
+                                    <h:outputText styleClass="textoNegritas"
+                                                  value="#{consultaStatementsController.paginaVO.valores['totalPosicion']}">
+                                        <f:convertNumber pattern="#,##0" />
+                                    </h:outputText>
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:outputText value="#{statement.numeroTitulos}">
+                                <f:convertNumber pattern="#,##0" />
+                            </h:outputText>
+                        </t:column>
+                        <t:column style="text-align: right;">
+                            <f:facet name="header">
+                                <h:outputText value="#{etq.proporcionMinus}" />
+                            </f:facet>
+                            <h:outputText value="#{statement.proporcion}">
+                                <f:convertNumber pattern="#,##0.000000"/>
+                            </h:outputText>
+                        </t:column>
+                        <t:column style="text-align: right;">
+                            <f:facet name="header">
+                                <h:outputText value="#{etq.dividendoMinus}" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:panelGroup>
+                                    <h:outputText value="#{consultaStatementsController.paginaVO.valores['totalPagDividendo']}">
+                                        <f:convertNumber pattern="'$'##,##0.00" />
+                                    </h:outputText>
+                                    <br />
+                                    <br />
+                                    <h:outputText styleClass="textoNegritas"
+                                                  value="#{consultaStatementsController.paginaVO.valores['totalDividendo']}">
+                                        <f:convertNumber pattern="'$'##,##0.00" />
+                                    </h:outputText>
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:outputText value="#{statement.dividendo}">
+                                <f:convertNumber pattern="'$'##,##0.00" />
+                            </h:outputText>
+                        </t:column>
+                        <t:column style="text-align: right;">
+                            <f:facet name="header">
+                                <h:outputText value="#{etq.impuestoMinus}" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:panelGroup>
+                                    <h:outputText value="#{consultaStatementsController.paginaVO.valores['totalPagImpuestos']}">
+                                        <f:convertNumber pattern="'$'##,##0.00" />
+                                    </h:outputText>
+                                    <br />
+                                    <br />
+                                    <h:outputText styleClass="textoNegritas"
+                                                  value="#{consultaStatementsController.paginaVO.valores['totalImpuestos']}">
+                                        <f:convertNumber pattern="'$'##,##0.00" />
+                                    </h:outputText>
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:outputText value="#{statement.impuesto}">
+                                <f:convertNumber pattern="'$'##,##0.00" />
+                            </h:outputText>
+                        </t:column>
+                        <t:column style="text-align: right;">
+                            <f:facet name="header">
+                                <h:outputText value="#{etq.dividendoNetoMinus}" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <h:panelGroup>
+                                    <h:outputText value="#{consultaStatementsController.paginaVO.valores['totalPagDividendoNeto']}">
+                                        <f:convertNumber pattern="'$'##,##0.00" />
+                                    </h:outputText>
+                                    <br />
+                                    <br />
+                                    <h:outputText styleClass="textoNegritas"
+                                                  value="#{consultaStatementsController.paginaVO.valores['totalDividendoNeto']}">
+                                        <f:convertNumber pattern="'$'##,##0.00" />
+                                    </h:outputText>
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:outputText value="#{statement.dividendoNeto}">
+                                <f:convertNumber pattern="'$'##,##0.00" />
+                            </h:outputText>
+                        </t:column>
+                    </t:dataTable>
+                    <br />
+                    <t:div style="width: 100%; text-align: right; display: #{(not empty consultaStatementsController.paginaVO.registros)? 'inline' : 'none'}" >
+                        <h:commandButton actionListener="#{consultaStatementsController.generarReportes}"
+                                         action="consultaStatementsPDF"
+                                         image="/images/pdf.gif"
+                                         title="Exportar a PDF todos los resultados de la consulta"
+                                         id="generarPdf" 
+                                         onclick="bloquearBotonesReportes(['generarXls', 'generarPdf','generarTxt']);" />
+                                         &#160;&#160;
+                        <h:commandButton actionListener="#{consultaStatementsController.generarReportes}"
+                                         action="consultaStatementsXLS"
+                                         image="/images/excel-file.gif"
+                                         title="Exportar a XLS todos los resultados de la consulta"
+                                         id="generarXls"
+                                         onclick="bloquearBotonesReportes(['generarXls', 'generarPdf','generarTxt']);"  />
+                                         &#160;&#160;
+                        <h:commandButton actionListener="#{consultaStatementsController.generarReportes}"
+                                         action="consultaStatementsTXT"
+                                         image="/images/TXT.gif"
+                                         title="Exportar a TXT todos los resultados de la consulta"
+                                         id="generarTxt" 
+                                         onclick="bloquearBotonesReportes(['generarXls', 'generarPdf','generarTxt']);" />
+                                         &#160;&#160;
+   					    <div id="monitorPeticionReporte" style="display: none;">
+							 <h:panelGroup id="panelMonitorPeticionReporte">
+										   <h:graphicImage value="/images/ajax-loader.gif" />
+										   &#160;&#160;
+										   <h:outputText value="#{etq.reporteEnProceso}" />
+										   <a4j:commandButton id="btnActualizarEstadoPeticion"
+													image="/images/transparent.gif"
+													styleClass="submit"
+													actionListener="#{consultaStatementsController.actualizarEstadoPeticion}"
+													reRender="panelMonitorPeticionReporte"
+													oncomplete="desbloquearBotonesReportes(#{consultaStatementsController.peticionReporteCompleta}, ['generarXls', 'generarPdf','generarTxt']);"/>
+								</h:panelGroup>
+						</div>                      
+                    </t:div>
+                </h:panelGroup>
+            </h:panelGroup>
+        </ui:define>
+
+
+    </ui:composition>
+
+</html>
+

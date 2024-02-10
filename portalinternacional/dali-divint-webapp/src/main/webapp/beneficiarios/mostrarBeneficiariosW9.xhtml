@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:t="http://myfaces.apache.org/tomahawk">
+
+    <ui:composition template="/layoutPopUp.xhtml">
+        <ui:define name="head">
+            <link rel="stylesheet" type="text/css" media="all"
+                  href="#{facesContext.externalContext.requestContextPath}/css/beneficiarioActivo.css" />
+        </ui:define>
+        <ui:define name="titulo">
+		Beneficiario Existente
+        </ui:define>
+        <ui:define name="subtitulo">
+        </ui:define>
+        <ui:define name="body">
+            <h:form id="formaBenefActivo">
+                <a4j:keepAlive beanName="mostrarBeneficiarioActivoBean" />
+                <a4j:keepAlive beanName="mostrarBeneficiarioActivoBean.forma" />
+
+                <h:outputText value="#{mostrarBeneficiarioActivoBean.init}" />
+                <h:panelGroup id="general2">
+                    <table>
+                        <tr>
+                            <td>
+                                <div style="min-height: 21px;">
+                                    <rich:messages warnClass="warning" infoClass="info"
+                                                   errorClass="error" ajaxRendered="true" showDetail="false"
+                                                   showSummary="true" layout="list">
+                                        <f:facet name="infoMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/accept.png" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+
+                                        <f:facet name="errorMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/warning.gif" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+                                    </rich:messages>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <t:div rendered="#{not (mostrarBeneficiarioActivoBean.forma eq null)}">
+                                    <table width="850px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:outputText value="#{etq.institucionMinus}" styleClass="textoNegritas"
+                                                              rendered="#{mostrarBeneficiarioActivoBean.mostrarFormaGuardar}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:panelGroup rendered="#{mostrarBeneficiarioActivoBean.mostrarFormaGuardar}">
+                                                    <a4j:region>
+                                                        <table align="left" border="0" style="text-align: left;">
+                                                            <tr>
+                                                                <td>
+                                                                    <h:inputText autocomplete="off" id="idFolioInstitucion" value="#{mostrarBeneficiarioActivoBean.idFolioInstitucion}"
+                                                                                 styleClass="textoControles campoNumerico"
+                                                                                 size="5" maxlength="5" readonly="#{!capturaOperacionesDIBean.institucionIndeval}">
+                                                                        <a4j:support event="onchange" actionListener="#{mostrarBeneficiarioActivoBean.obtenerDatosParticipante}"
+                                                                                     reRender="nombreInstitucionTraspasante" ajaxSingle="true"/>
+                                                                    </h:inputText>
+                                                                </td>
+                                                                <td>
+                                                                    <h:inputText autocomplete="off" id="nombreInstitucionTraspasante" size="25"
+                                                                                 readonly="true"
+                                                                                 value="#{mostrarBeneficiarioActivoBean.nombreInstitucion}"
+                                                                                 styleClass="textoControles" />
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </a4j:region>
+                                                </h:panelGroup>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h:outputText value="#{etq.custodio}" styleClass="textoNegritas" />
+                                            </td>
+                                            <td>
+                                                <h:outputText value="#{etq.tipoBeneficiario}" styleClass="textoNegritas" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h:outputText id="lstCustodios"
+                                                              value="#{mostrarBeneficiarioActivoBean.mapaCustodios[mostrarBeneficiarioActivoBean.forma.custodio]}" />
+                                            </td>
+                                            <td>
+                                                <h:outputText id="lstTipoBenef"
+                                                              value="#{mostrarBeneficiarioActivoBean.mapaTipoBeneficiario[mostrarBeneficiarioActivoBean.forma.idTipoBeneficiario]}" />
+                                            </td>
+                                        </tr>
+                                        <tr style="height: 5px">
+                                            <td colspan="2">
+                                                &#160;
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h:outputText value="#{etq.fechaFormato}" styleClass="textoNegritas" />
+                                                &#160;&#160;
+                                                <h:outputText id="fechaFormato"
+                                                              value="#{mostrarBeneficiarioActivoBean.forma.fechaFormato}" />
+                                            </td>
+                                           <td>
+                                            <h:outputText value="Estado: " styleClass="textoNegritas" />
+                                           &#160;&#160;
+                                           <h:outputText id="activo"
+                                                              value="#{mostrarBeneficiarioActivoBean.forma.activo == '1' ? 'Activo' : mostrarBeneficiarioActivoBean.forma.activo == '0' ? 'Inactivo' : '---'}" />
+                                       		</td>
+                                        </tr>
+                                        <tr style="height: 5px">
+                                            <td colspan="2">
+                                                &#160;
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <u><b><h:outputText value="#{etq.formaW9}" styleClass="textoNegritas" /></b></u>
+                                            </td>
+                                        </tr>
+                                        <tr style="height: 5px">
+                                            <td colspan="2">
+                                                &#160;
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:outputText value="#{etq.w9Name}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:outputText id="razonSocial" value="#{mostrarBeneficiarioActivoBean.forma.razonSocial}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:outputText value="#{etq.w9BusinessName}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:outputText id="bussinessName" value="#{mostrarBeneficiarioActivoBean.forma.bussinesName}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:outputText value="#{etq.w9TypeTaxPayer}" />
+                                                &#160;&#160;&#160;
+                                                <h:outputText value="#{mostrarBeneficiarioActivoBean.forma.descripcionTipoTaxPayer}-#{mostrarBeneficiarioActivoBean.forma.taxClassification eq ('-----')?'': mostrarBeneficiarioActivoBean.forma.taxClassification}#{mostrarBeneficiarioActivoBean.forma.otherDescription eq ('-----')? '': mostrarBeneficiarioActivoBean.forma.otherDescription}"/>
+                                            </td>
+                                        </tr>
+                                        <tr style="height: 5px">
+                                            <td colspan="2">
+                                                &#160;
+                                            </td>
+                                        </tr>
+                                        <!--tr>
+                                            <td colspan="2">
+                                                <h:selectBooleanCheckbox id="exemptPayee"
+                                                                         value="#{mostrarBeneficiarioActivoBean.forma.exemptPayee}"
+                                                                         disabled="true" /> &#160;&#160;
+                                                <h:outputText value="#{etq.w9ExemptPayee}" />
+                                            </td>
+                                        </tr-->
+                                        <tr style="height: 5px">
+                                            <td colspan="2">
+                                                &#160;
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:outputText value="#{etq.w9Address}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:panelGrid style="width: 100%" columns="3">
+                                                    <h:outputText value="#{etq.w9Street}" />
+                                                    <h:outputText value="#{etq.w9OuterNumber}" />
+                                                    <h:outputText value="#{etq.w9InteriorNumber}" />
+                                                    <h:outputText id="calleResidencial"
+                                                                  value="#{mostrarBeneficiarioActivoBean.forma.calleResidencial}" />
+                                                    <h:outputText id="numeroExteriorResidencial"
+                                                                  value="#{mostrarBeneficiarioActivoBean.forma.numeroExteriorResidencial}" />
+                                                    <h:outputText id="numeroInteriorResidencial"
+                                                                  value="#{mostrarBeneficiarioActivoBean.forma.numeroInteriorResidencial}" />
+                                                </h:panelGrid>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:panelGrid style="width: 100%" columns="3">
+                                                    <h:outputText value="#{etq.w9ZipCode}" />
+                                                    <h:outputText value="#{etq.w9City}" />
+                                                    <h:outputText value="#{etq.w9State}" />
+                                                    <h:outputText id="codigoPostalResidencial"
+                                                                  value="#{mostrarBeneficiarioActivoBean.forma.codigoPostalResidencial}" />
+                                                    <h:outputText id="cityTownResidencial"
+                                                                  value="#{mostrarBeneficiarioActivoBean.forma.cityTownResidencial}" />
+                                                    <h:outputText id="stateProvinceResidencial"
+                                                                  value="#{mostrarBeneficiarioActivoBean.forma.stateProvinceResidencial}" />
+                                                </h:panelGrid>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:outputText value="#{etq.w9RequesterName}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:outputText id="requesterNameAddress"
+                                                              value="#{mostrarBeneficiarioActivoBean.forma.requesterNameAddress}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:outputText value="#{etq.w9ListAccountNumber}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:outputText id="listAccountNumbers"
+                                                              value="#{mostrarBeneficiarioActivoBean.forma.listAccountNumbers}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:outputText value="#{etq.w9SSN}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:outputText id="ssn" value="#{mostrarBeneficiarioActivoBean.forma.ssn}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:outputText value="#{etq.w9Or}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:outputText value="#{etq.w9EmployerIdNumber}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:outputText id="ssemployerIdNumbn" value="#{mostrarBeneficiarioActivoBean.forma.employerIdNumb}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:outputText value="#{etq.w9ExemptPayeeCode}" />
+                								&#160;&#160;
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                            	<h:outputText 
+                                                	value="#{mostrarBeneficiarioActivoBean.forma.exemptPayeeW9.idExemptPayeeW9 != null ? mostrarBeneficiarioActivoBean.forma.exemptPayeeW9.fatcaCode : ''}" />
+                                                &#160;&#160;
+                                                <h:outputText
+                                                	value="#{mostrarBeneficiarioActivoBean.forma.exemptPayeeW9.idExemptPayeeW9 != null ? mostrarBeneficiarioActivoBean.forma.exemptPayeeW9.description : 'None'}" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:outputText value="#{etq.w9ExemptionFromFatcaReportingCode}" />
+                								&#160;&#160;
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h:outputText 
+                                                	value="#{mostrarBeneficiarioActivoBean.forma.exemptionFatcaW9.idExemptionFatcaW9 != null ? mostrarBeneficiarioActivoBean.forma.exemptionFatcaW9.fatcaCode : ''}" />
+                                                &#160;&#160;
+                                                <h:outputText 
+                                             		value="#{mostrarBeneficiarioActivoBean.forma.exemptionFatcaW9.idExemptionFatcaW9 != null ? mostrarBeneficiarioActivoBean.forma.exemptionFatcaW9.description : 'None'}" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </t:div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <t:div rendered="#{not (mostrarBeneficiarioActivoBean.forma eq null)}">
+                                    <div class="guardar">
+                                        <a4j:commandButton id="botonGuardar2" image="/images/transparent.gif"
+                                                           styleClass="submit" reRender="general2"
+                                                           action="#{mostrarBeneficiarioActivoBean.guardar}"
+                                                           oncomplete=" window.scrollTo(0,0); "
+                                                           rendered="#{mostrarBeneficiarioActivoBean.mostrarFormaGuardar}" />
+                                    </div>
+                                </t:div>
+                            </td>
+                        </tr>
+                    </table>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+		<ui:define name="tituloEncabezado">
+
+		</ui:define>
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/multicarga.js">
+		    </script>		
+		</ui:define>
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.multicargaInternacional}" />
+		</ui:define>	
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.consolaAutorizacion}"></h:outputText>
+		</ui:define>
+
+		<ui:define name="criterios">
+			<h:outputText value="#{consolaAutorizacionBean.init}" />
+			<a4j:keepAlive beanName="consolaAutorizacionBean" />
+			
+			<h:panelGroup id="mensajeUsuario">
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+				
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+				</div>
+			</h:panelGroup>
+			<!-- ************************************  INICIA TABLA DE CRITERIOS A INGRESAR   *********************************** -->			
+			<h:panelGroup id="panelCriterios">			
+				<div style='display: "inline"' id="divCriterios">				
+					<table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+						align="center">
+						<tr>							
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">									
+									<tr align="center">
+										<td nowrap="true" colspan="2">
+											<h:outputText styleClass="texto" value="#{etq.fechaCarga}" />
+										</td>																																							
+									</tr>
+									<tr align="center">
+										<td>
+											<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+										       value="#{consolaAutorizacionBean.fechaCargaInicio}"
+										       datePattern="dd/MM/yyyy" tabindex="110" />											
+										</td>
+										<td>
+											<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+										       value="#{consolaAutorizacionBean.fechaCargaFin}"
+										       datePattern="dd/MM/yyyy" tabindex="120" />
+										</td>																
+									</tr>
+								</table>
+							</td>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">									
+									<tr align="center">																												
+										<td nowrap="true">
+											<h:outputText styleClass="texto" value="#{etq.estadoRegistroMinus}" />
+										</td>										
+									</tr>
+									<tr align="center">										
+										<td align="center">
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{consolaAutorizacionBean.estadoOperacionCadena}"
+												tabindex="150">
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+											    <f:selectItems value="#{consolaAutorizacionBean.listaEstadoRegistro}"/>
+                            			 	</h:selectOneMenu>											
+										</td>								
+									</tr>
+								</table>
+							</td>						
+						</tr>
+						<tr>							
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">									
+									<tr align="center">
+										<td nowrap="true" colspan="2">
+											<h:outputText styleClass="texto" value="#{etq.fechaActualizacion}" />
+										</td>																																						
+									</tr>
+									<tr align="center">
+										<td>
+											<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+										       value="#{consolaAutorizacionBean.fechaActualizacionInicio}"
+										       datePattern="dd/MM/yyyy" tabindex="110" />											
+										</td>
+										<td>
+											<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+										       value="#{consolaAutorizacionBean.fechaActualizacionFin}"
+										       datePattern="dd/MM/yyyy" tabindex="120" />
+										</td>																	
+									</tr>
+								</table>
+							</td>							
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">									
+									<tr align="center">																													
+										<td nowrap="true">
+											<h:outputText styleClass="texto" value="#{etq.tipoOp}" />
+										</td>										
+									</tr>
+									<tr align="center">										
+										<td align="center">
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{consolaAutorizacionBean.tipoOperacionCadena}"
+												tabindex="150">
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+											    <f:selectItems value="#{consolaAutorizacionBean.listaTipoOperacion}"/>
+                            			 	</h:selectOneMenu>											
+										</td>								
+									</tr>
+								</table>							
+							</td>						
+						</tr>
+					</table>
+				</div>				
+			</h:panelGroup>
+			
+			<!-- ****************************** FIN DE LA TABLA DE CRITERIOS ******************************* -->
+			<!-- ****************************** INICIA TABLA DE RESUMEN DE DATOS INGRESADOS ***************** -->
+			
+			<h:panelGroup id="panelResumen">
+				<h:panelGroup rendered="#{consolaAutorizacionBean.consultaEjecutada}">
+					<div id="divResumen" style="display: #{consolaAutorizacionBean.consultaEjecutada ? 'inline':'none'}">
+							<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+							<tr>
+								<td class="recuadroTabla">
+									<table class="tablaCriterios texto" border="0" style="text-align: center">
+										
+										<tr>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.fechaCargaInicio}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.fechaCargaFin}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.estadoRegistroMinus}" />
+											</td>																															
+										</tr>
+										<tr align="center">
+											<td>
+												<h:outputText styleClass="texto" value="#{consolaAutorizacionBean.fechaCargaInicio}" rendered="#{!empty consolaAutorizacionBean.fechaCargaInicio}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{empty consolaAutorizacionBean.fechaCargaInicio}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{consolaAutorizacionBean.fechaCargaFin}" rendered="#{!empty consolaAutorizacionBean.fechaCargaFin}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{empty consolaAutorizacionBean.fechaCargaFin}"/>
+											</td>											
+											<td>
+												<h:outputText styleClass="texto" value="#{consolaAutorizacionBean.selectedEstado}" rendered="#{!empty consolaAutorizacionBean.estadoOperacionCadena and consolaAutorizacionBean.estadoOperacionCadena ne '-1'}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{consolaAutorizacionBean.estadoOperacionCadena eq '-1'}"/>
+											</td>											
+										</tr>
+										<tr>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.fechaActualizacionInicio}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.fechaActualizacionFin}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.tipoOp}" />
+											</td>																					
+										</tr>
+										<tr>
+											<td>
+												<h:outputText styleClass="texto" value="#{consolaAutorizacionBean.fechaActualizacionInicio}" rendered="#{!empty consolaAutorizacionBean.fechaActualizacionInicio}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{empty consolaAutorizacionBean.fechaActualizacionInicio}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{consolaAutorizacionBean.fechaActualizacionFin}" rendered="#{!empty consolaAutorizacionBean.fechaActualizacionFin}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{empty consolaAutorizacionBean.fechaActualizacionFin}"/>
+											</td>											
+											<td>
+												<h:outputText styleClass="texto" value="#{consolaAutorizacionBean.selectedTipo}" rendered="#{!empty consolaAutorizacionBean.tipoOperacionCadena and consolaAutorizacionBean.tipoOperacionCadena ne '-1'}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{consolaAutorizacionBean.tipoOperacionCadena eq '-1'}"/>
+											</td>																				
+										</tr>										
+									</table>							
+								</td>
+							</tr>								
+						</table>								
+					</div>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+		
+		<!-- ****************************** FIN DE LA TABLA DE RESUMEN DE DATOS INGRESADOS ***************** -->
+		
+		<!-- ****************************** INICIA TABLA DE BOTONES***************************************** -->
+		
+		<ui:define name="botones">
+			<h:panelGroup id="botones">				
+				<div class="refrescar" style="float: left;">
+	        		 <a4j:status id="commonStatus">
+						<f:facet name="start">
+							<h:panelGroup>
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								<h:outputText value="#{etq.buscando}"></h:outputText>
+							</h:panelGroup>
+						</f:facet>
+					</a4j:status> 	
+	        	</div>
+				<div class="limpiar">
+					<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+						styleClass="submit" 						
+						actionListener="#{consolaAutorizacionBean.limpiar}" 
+						tabindex="8"/>
+				</div>
+				<div class="buscar">
+					<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+						styleClass="submit"
+						oncomplete='javascript:presentarResumen();'
+						actionListener="#{consolaAutorizacionBean.buscarDetalleMulticargas}"
+						reRender="containerResultados,totalesConsultas,tablaResultados,botones,mensajeUsuario,panelResumen"
+						tabindex="7">
+                        <f:setPropertyActionListener value="true"
+                                                     target="#{consolaAutorizacionBean.banderaBitacoraConsulta}" />
+					</a4j:commandButton>
+				</div>
+				<div class="editar" style="display:#{consolaAutorizacionBean.consultaEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios">            
+	            	<input type="image" class="submit"
+						src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+						alt="Editar Criterios" title="Editar Criterios"
+						onclick='javascript:presentarCriterios();return false;' />                      	
+	           	</div>
+           	</h:panelGroup>
+		</ui:define>
+	
+	<!-- ****************************** FIN DE LA TABLA DE BOTONES***************************************** -->
+
+
+	<!-- ***************************** INICIA TABLA SIN RESULTADOS **************************************** -->
+
+	<ui:define name="seccionContenido">
+			<h:panelGroup id="containerResultados">
+				<h:panelGroup rendered="#{consolaAutorizacionBean.consultaEjecutada}">
+					<t:dataTable id="noExistenResultados"
+						value="#{consolaAutorizacionBean.paginaVO.registros}"
+						styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+						footerClass="tituloTabla" border="0" cellpadding="3px"
+						cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos"
+						rendered="#{empty consolaAutorizacionBean.paginaVO.registros}">
+						<t:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.sinResultados}"></h:outputText>
+							</f:facet>
+						</t:column>
+					</t:dataTable>
+					
+	<!-- ***************************** TERMINA TABLA SIN RESULTADOS **************************************** -->
+					<br/>
+					<br/>
+					<br/>						
+	<!-- **************************** INICIA BOTONES RESULTADO ********************************************* -->							
+						<h:panelGroup id="tablaResultados">						
+						<h:graphicImage value="/images/blank.gif" width="900px"
+							height="1px"></h:graphicImage>
+						<h:panelGroup
+							rendered="#{not empty consolaAutorizacionBean.paginaVO.registros}">
+							<table width="100%" border="0">
+								<tr>
+									<td align="left" class="textoEstadoCuenta">
+										<a4j:commandLink id="control_bitacora_primero"
+											action="#{consolaAutorizacionBean.irPrimeraPagina}"
+											rendered="#{consolaAutorizacionBean.irAlPrimero}"
+											reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,containerResultados">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_atras_fast"
+											action="#{consolaAutorizacionBean.retrocederPaginasRapido}"
+											rendered="#{consolaAutorizacionBean.retrocederRapido}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_atras"
+											action="#{consolaAutorizacionBean.retrocederPagina}"
+											rendered="#{consolaAutorizacionBean.retroceder}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+												border="0" />
+										</a4j:commandLink>
+										<a4j:commandLink id="control_bitacora_adelante"
+											action="#{consolaAutorizacionBean.avanzarPagina}"
+											rendered="#{consolaAutorizacionBean.avanzar}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_adelante_fast"
+											action="#{consolaAutorizacionBean.avanzarPaginasRapido}"
+											rendered="#{consolaAutorizacionBean.avanzarRapido}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+												border="0" />
+
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_ultimo"
+											action="#{consolaAutorizacionBean.irUltimaPagina}"
+											rendered="#{consolaAutorizacionBean.irAlUltimo}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+												border="0" />
+										</a4j:commandLink>
+																													
+										<br />
+										<h:outputText value="#{etq.mostrando}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{consolaAutorizacionBean.numeroPagina}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+										<h:outputText value="#{consolaAutorizacionBean.totalPaginas}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+										&#160;&#160;&#160;
+										<h:outputText
+											value="#{consolaAutorizacionBean.paginaVO.totalRegistros}"
+											styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+										&#160;
+										<h:outputText styleClass="textoResumen"
+											value="#{etq.registrosEncontrados}" />
+									</td>
+									<td align="right" class="textoEstadoCuenta">
+										<h:outputText escape="false" value="#{etq.registrosPorPagina}"
+											styleClass="textoResumen" />
+										<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+											value="#{consolaAutorizacionBean.paginaVO.registrosXPag}">
+											<f:selectItem itemLabel="1" itemValue="1" />
+											<f:selectItem itemLabel="2" itemValue="2" />
+											<f:selectItem itemLabel="5" itemValue="5" />
+											<f:selectItem itemLabel="10" itemValue="10" />
+											<f:selectItem itemLabel="20" itemValue="20" />
+											<f:selectItem itemLabel="50" itemValue="50" />
+											<f:selectItem itemLabel="100" itemValue="100" />
+											<a4j:support event="onchange"
+												reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,mensajeUsuario"
+												action="#{consolaAutorizacionBean.ejecutarConsulta}" >
+                                                <f:setPropertyActionListener value="false"
+                                                                             target="#{consolaAutorizacionBean.banderaBitacoraConsulta}" />
+                                            </a4j:support>
+										</h:selectOneMenu>&#160;&#160;&#160;&#160;&#160;
+									</td>
+								</tr>
+							</table>
+						</h:panelGroup>
+	<!-- **************************** TERMINA BOTONES RESULTADO ********************************************* -->						
+						
+						<h:dataTable id="resultados"
+							value="#{consolaAutorizacionBean.paginaVO.registros}"
+							var="multicarga"
+							rendered="#{!empty consolaAutorizacionBean.paginaVO.registros}"
+							styleClass="tablaGeneral centrado" headerClass="tituloTabla" width="100%"
+							footerClass="tituloTabla" border="0" cellpadding="3px"
+							cellspacing="0px" columnClasses="everyColumn"
+							rowClasses="renglonTablaUno, renglonTablaDos">
+						<!-- Fecha Carga  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaCarga}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{multicarga.fechaHoraCarga}"  converter="formatoFechaLargaConverter" />									
+							</h:column>
+							
+						<!-- Numero de Registros  -->
+							<h:column >
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.registros}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{multicarga.numeroRegistros}" />								
+							</h:column>
+							
+						<!-- Tipo de Operacion  -->
+							<h:column >
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.tipoMinus}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{multicarga.tipoOperacionMulticarga.tipoOperacionMulticarga}" />								
+							</h:column>
+								
+						<!-- Nombre Archivo  -->
+							<h:column >
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.nombreArchivo}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{multicarga.nombreArchivo}" />								
+							</h:column>	
+						
+						<!-- Detalle Carga  -->
+							<h:column >
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.detalle}" />
+								</f:facet>
+								<a href="javascript:detalleArchivo(#{multicarga.idMulticargaInternacional}, '#{multicarga.nombreArchivo}' )" >	
+									<img src="#{facesContext.externalContext.requestContextPath}/images/TXT.gif" border="0" />
+								</a>								
+							</h:column>	
+						
+						<!-- Nombre Usuario Carga  -->
+							<h:column >
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.usuarioMinus}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{multicarga.nombreUsuarioCarga}" />								
+							</h:column>
+									
+						<!-- Estado de la Operacion  -->
+							<h:column >
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.estado}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{multicarga.estadoMulticarga.estadoMulticarga}" />								
+							</h:column>
+										
+						<!-- Fecha de Actualizacion  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaActualizacion}" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{multicarga.fechaHoraActualizacion}" rendered="#{not empty multicarga.fechaHoraActualizacion}" converter="formatoFechaLargaConverter"/>
+									<h:outputText styleClass="texto textoPeque12" value="Sin Actualizar" rendered="#{empty multicarga.fechaHoraActualizacion}" />									
+							</h:column>	
+							
+						<!-- Boton Borrar  -->
+							<h:column >
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.borrar}" />
+								</f:facet>
+								<h:panelGroup id="panelBorrarArchivo" rendered="#{multicarga.estadoMulticarga.idEstadoMulticarga eq '1' or multicarga.estadoMulticarga.idEstadoMulticarga eq '2' or multicarga.estadoMulticarga.idEstadoMulticarga eq '4'}" >
+									<a4j:commandButton id="borrarArchivo"
+												onclick="if(! confirmarBorrarArchivo(#{multicarga.estadoMulticarga.idEstadoMulticarga}) ){ return false; }" 												
+												actionListener="#{consolaAutorizacionBean.borrarArchivo}"
+												reRender="containerResultados,totalesConsultas,tablaResultados,mensajeUsuario"
+												title="#{etq.borrarArchivo}"
+												image="/images/cancel.png">												
+												<f:attribute name="idRegistro" value="#{multicarga.idMulticargaInternacional}" />
+									</a4j:commandButton>
+								</h:panelGroup>																																												
+							</h:column>
+							
+						<!-- Boton Autorizar  -->
+							<h:column >
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.autorizar}" />
+								</f:facet>
+									<h:panelGroup id="panelAutorizarArchivo" rendered="#{multicarga.estadoMulticarga.idEstadoMulticarga eq '1'}" >
+									<a4j:commandButton id="autorizarArchivo"
+												onclick="if(! confirmarAutorizacionArchivo() ){ return false; }" 												
+												actionListener="#{consolaAutorizacionBean.autorizarArchivo}"
+												reRender="containerResultados,totalesConsultas,tablaResultados,mensajeUsuario"
+												title="#{etq.autorizarArchivo}"
+												image="/images/accept.png">												
+												<f:attribute name="idRegistro" value="#{multicarga.idMulticargaInternacional}" />
+												<f:attribute name="tipoOperacion" value="#{multicarga.tipoOperacionMulticarga.idTipoOperacionMulticarga}" />												
+									</a4j:commandButton>
+								</h:panelGroup>									
+							</h:column>													
+						</h:dataTable>
+					</h:panelGroup>
+					
+	<!-- ************************************ TERMINAN COLUMNAS DE LA CONSULTA ************************************* -->
+	<!-- *********************************** SECCION PARA EXPORTAR LOS REGISTROS CON ERROR ************************ -->
+						
+				<h:panelGroup id="totalesConsultas"
+						rendered="#{consolaAutorizacionBean.showLink}">					
+					<table cellpadding="0" cellspacing="0" border="0" align="center"
+						width="900px">
+						<tr align="right">
+							<td align="right">
+								<h:panelGroup id="botonesExportar">
+									<h:panelGroup
+										style="display: #{(consolaAutorizacionBean.showLink and not empty consolaAutorizacionBean.listaErrores)? 'inline' : 'none'}">
+										<h:outputText value="Exportar los Errores"></h:outputText>																				
+                          				<h:commandButton
+                          					action="#{consolaAutorizacionBean.muestraErroresCarga}"
+                          					image="/images/excel-file.gif"
+                          					title="#{etq.exportarErroresExcel}"  
+                            				id="generarExcel">
+                           				</h:commandButton>
+									</h:panelGroup>
+								</h:panelGroup>
+
+							</td>
+						</tr>
+					</table>
+					</h:panelGroup>
+					
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+
+
+	</ui:composition>
+
+
+	<!-- FIN DEL DECORATE -->
+</html>
+

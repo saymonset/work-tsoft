@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+      xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+		<ui:define name="head">
+			<!-- <script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/derechos.js">
+            </script>-->
+		</ui:define>
+		
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.altaCustodiosCSDR}" />
+		</ui:define>
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.altaConfigCsdr}"></h:outputText>
+		</ui:define>		
+        
+		<ui:define name="seccionContenido">
+			<a4j:keepAlive beanName="settlementDisciplineRegimeController" />
+			<h:outputText value="#{settlementDisciplineRegimeController.initNuevaConfiguracion}" />
+			<h:panelGroup id="mensajeUsuario">
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+		
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+				
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+				</div>
+			</h:panelGroup>
+			<br />
+			<h:panelGroup id="panelCriterios">
+				<fieldset>
+					<legend>#{etq.configCustodio}</legend>
+						<div style='display: "inline"' id="divCriterios">
+							<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="center">
+								<tr>
+									<td align="center">
+										<h:outputText styleClass="texto" value="#{etq.cuentaMinus}" rendered="#{settlementDisciplineRegimeController.tipoConfiguracion eq 'Custodio'}" />
+										<h:outputText styleClass="texto" value="#{etq.folioInstitucion}" rendered="#{settlementDisciplineRegimeController.tipoConfiguracion eq 'Institucion'}" />
+									</td>
+									<td align="center">
+										<h:outputText styleClass="texto" value="#{etq.msgCustodio}" rendered="#{settlementDisciplineRegimeController.tipoConfiguracion eq 'Custodio'}" />
+										<h:outputText styleClass="texto" value="#{etq.institucionMinus}" rendered="#{settlementDisciplineRegimeController.tipoConfiguracion eq 'Institucion'}" />
+									</td>							
+									<td align="center">
+		                                <h:outputText styleClass="texto" value="#{etq.holdAndRelease}" />
+									</td>
+									<td align="center">
+		                                <h:outputText styleClass="texto" value="#{etq.liquidacionParcial}" />
+									</td>
+									<td align="center">
+		                                <h:outputText styleClass="texto" value="#{etq.cancelacionBillateral}" />
+									</td>
+								</tr>
+								<tr>
+									<td align="center">
+										<!-- Configuracion para Custodios -->
+										<h:outputText id="cuenta" readonly="true" styleClass="texto" value="#{settlementDisciplineRegimeController.settDisciplineRegimeVO.cuenta}"
+											rendered="#{settlementDisciplineRegimeController.tipoConfiguracion eq 'Custodio'}">
+										</h:outputText>
+										<!-- Configuracion para instituciones -->
+										<h:outputText id="folio" readonly="true" styleClass="texto" value="#{settlementDisciplineRegimeController.settDisciplineRegimeVO.folioInstitucion}"
+											rendered="#{settlementDisciplineRegimeController.tipoConfiguracion eq 'Institucion'}">
+										</h:outputText>
+									</td>
+									<td align="center">
+										<!-- Configuracion para Custodios -->
+										<h:selectOneMenu styleClass="textoControles" id="custodio" rendered="#{settlementDisciplineRegimeController.tipoConfiguracion eq 'Custodio'}"
+											value="#{settlementDisciplineRegimeController.selectedItemConfiguracion}" tabindex="1">
+											<f:selectItem itemValue="-1" itemLabel="Todos" />
+											<f:selectItems value="#{settlementDisciplineRegimeController.custodiosCSDR}" />
+											<a4j:support event="onchange" reRender="cuenta" actionListener="#{settlementDisciplineRegimeController.seleccionaConfiguracion}">
+											</a4j:support>
+										</h:selectOneMenu>
+									</td>
+									<td align="center">
+		                                <h:selectOneMenu styleClass="textoControles" style="width: 60px" id="holdAndRelease"
+		                                	value="#{settlementDisciplineRegimeController.settDisciplineRegimeVO.holdAndRelease}" tabindex="2">
+		                                    <f:selectItem itemLabel="Inactivo" itemValue="0" />
+		                                    <f:selectItem itemLabel="Activo" itemValue="1" />
+										</h:selectOneMenu>
+									</td>
+									<td align="center">
+		                                <h:selectOneMenu styleClass="textoControles" style="width: 60px" id="partialSettlement" 
+		                                	value="#{settlementDisciplineRegimeController.settDisciplineRegimeVO.partialSettlement}" tabindex="3">
+		                                    <f:selectItem itemLabel="Inactivo" itemValue="0" />
+		                                    <f:selectItem itemLabel="Activo" itemValue="1" />
+		                                </h:selectOneMenu>
+									</td>
+									<td align="center">
+		                                <h:selectOneMenu styleClass="textoControles" style="width: 60px" id="bilateralCanellation"
+		                                	value="#{settlementDisciplineRegimeController.settDisciplineRegimeVO.bilateralCancellation}" tabindex="4">
+		                                    <f:selectItem itemLabel="Inactivo" itemValue="0" />
+		                                    <f:selectItem itemLabel="Activo" itemValue="1" />
+		                                </h:selectOneMenu>
+									</td>
+								</tr>
+							</table>
+							<br />
+							<table width="100%" border="0" align="right">
+								<tr style="text-align: right; font-weight: bold;">
+									<td width="98%">&nbsp;</td>
+									<td width="2%">
+									</td>
+									<td width="2%">
+										<div class="buscar">
+											<a4j:commandButton id="btnGuardarConfig"
+															onclick=""
+														   	value="Guardar"	
+														   	action="#{settlementDisciplineRegimeController.guardar}"
+														   	styleClass="cssbutton"
+														   	reRender="panelCriterios"
+														   	alt="Guardar Configuración"
+														   	title="Guardar Configuración" >
+											</a4j:commandButton>
+										</div>
+									</td>
+									<td width="2%">
+										<div class="cancelar">
+											<a4j:commandButton id="btnCancelarConfig"
+															onclick=""
+										                 	value="Cancelar"
+														 	action="#{settlementDisciplineRegimeController.cancelar}"
+														 	styleClass="cssbutton"
+														 	reRender="panelCriterios"
+														 	alt="Cancelar Configuración"
+														 	title="Cancelar Configuración">
+											</a4j:commandButton>
+										</div>
+									</td>
+									<td width="2%">
+										<div class="limpiar">
+											<a4j:commandButton id="btnLimpiarConfig"
+															onclick=""
+										                 	value="Limpiar"
+														 	action="#{settlementDisciplineRegimeController.limpiar}"
+														 	styleClass="cssbutton"
+														 	reRender="panelCriterios"
+														 	alt="Limpiar Configuración"
+														 	title="Limpiar Configuración">
+											</a4j:commandButton>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</fieldset>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+        http://www.springframework.org/schema/context  
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd  
+        http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd">
+	
+
+
+<bean id="capitalRemoteEjb" class="org.springframework.jndi.JndiObjectFactoryBean" 
+	lazy-init="true">
+        <property name="jndiName"> 
+           <value>ejb:Ejercicios/EjerciciosEJB//CapitalBean!com.indeval.sidv.ejercicios.derechos.patrimoniales.middleware.ejb.Capital</value>
+        </property>
+       
+        <property name="proxyInterface">
+			<value>com.indeval.sidv.ejercicios.derechos.patrimoniales.middleware.ejb.Capital</value>
+		</property>
+        <property name="lookupOnStartup"> 
+            <value>false</value>
+        </property>
+    </bean>
+    
+</beans>

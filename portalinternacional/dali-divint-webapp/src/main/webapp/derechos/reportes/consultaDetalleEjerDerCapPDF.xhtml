@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:pdf="http://indeval.com/jsf/pdf"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="consultaresultadoEjerDerCapExportacion"
+    	documentTitle="Consulta Derechos Pagados De Beneficiarios"
+		institucion="#{consultaDetalleEjerDerCapExportacion.agenteFirmado.id} #{consultaDetalleEjerDerCapExportacion.agenteFirmado.folio} #{consultaDetalleEjerDerCapExportacion.agenteFirmado.razon}"
+		landscape="true" fecha="#{consultaDetalleEjerDerCapExportacion.fechaActual}"
+		imageResource="/images/indeval.jpg">
+
+		<pdf:table value="#{consultaDetalleEjerDerCapExportacion.parametros}" currentBean="parametros">
+			<pdf:row>
+				<pdf:col header="#{etq.institucionMinus}" value="#{consultaDetalleEjerDerCapExportacion.desParamInstitucion}" align="center" />
+				<pdf:col header="#{etq.cuentaMinus}" value="#{consultaDetalleEjerDerCapExportacion.desParamCuenta}" align="center" />			
+				<pdf:col header="#{etq.tv}" value="#{consultaDetalleEjerDerCapExportacion.descParamTV}" align="center" />
+				<pdf:col header="#{etq.emisoraMinus}" value="#{consultaDetalleEjerDerCapExportacion.descParamEmisora}" align="center" />
+				<pdf:col header="#{etq.serieMinus}" value="#{consultaDetalleEjerDerCapExportacion.desParamSerie}" align="center" />					
+				<pdf:col header="#{etq.isin}" value="#{consultaDetalleEjerDerCapExportacion.desParamIsin}" align="center" />	
+			</pdf:row>
+		</pdf:table>
+        <pdf:table value="#{consultaDetalleEjerDerCapExportacion.parametros}" currentBean="parametros">
+              <pdf:row>
+              	<pdf:col header="#{etq.fechaCorteInicial}" value="#{consultaDetalleEjerDerCapExportacion.desParamFechaCorteInicial}" align="center">
+              		<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+              	</pdf:col>
+              	<pdf:col header="#{etq.fechaCorteFinal}" value="#{consultaDetalleEjerDerCapExportacion.desParamFechaCorteFinal}" align="center">
+              		<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+              	</pdf:col>
+                <pdf:col header="#{etq.fechaPagoInicial}" value="#{consultaDetalleEjerDerCapExportacion.desParamFechaPagoInicial}" align="center">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+                </pdf:col>
+                <pdf:col header="#{etq.fechaPagoFinal}" value="#{consultaDetalleEjerDerCapExportacion.desParamFechaPagoFinal}" align="center">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+                </pdf:col>
+                <pdf:col header="#{etq.custodio}" value="#{consultaDetalleEjerDerCapExportacion.desParamCustodio}" align="center"/>                    
+                <pdf:col header="#{etq.divisaMinus}" value="#{consultaDetalleEjerDerCapExportacion.desParamDivisa}" align="center" />  
+                <pdf:col header="#{etq.estadoDerecho}" value="#{consultaDetalleEjerDerCapExportacion.descParamEstadoDerecho}" align="center" />               
+             </pdf:row> 
+        </pdf:table>
+        <pdf:table value="#{consultaDetalleEjerDerCapExportacion.parametros}" currentBean="parametros">
+            <pdf:row>
+                <pdf:col header="#{etq.nombreBeneficiarioRazonSocial}" value="#{consultaDetalleEjerDerCapExportacion.descParamNombreBeneficiario}" align="center" />
+                <pdf:col header="#{etq.reportesFormatosWGIIN}" value="#{consultaDetalleEjerDerCapExportacion.descParamGiin}" />
+                <pdf:col header="#{etq.rfc}" value="#{consultaDetalleEjerDerCapExportacion.descParamRFC}" align="center" />
+                <pdf:col header="#{etq.uoiDetalle}" value="#{consultaDetalleEjerDerCapExportacion.descParamUOI}" align="center" />
+                <pdf:col header="#{etq.pais}" value="#{consultaDetalleEjerDerCapExportacion.descParamPais}" align="center" />
+                <pdf:col header="#{etq.tipoBeneficiario}" value="#{consultaDetalleEjerDerCapExportacion.descParamTipoBeneficiario}" align="center" />
+                <pdf:col header="#{etq.tipoFormato}" value="#{consultaDetalleEjerDerCapExportacion.descParamTipoFormato}" />
+                <pdf:col header="#{etq.estadoFormato}" value="#{consultaDetalleEjerDerCapExportacion.descParamEstadoFormatoW}" />
+                <pdf:col header="#{etq.referenciaCustodio}" value="#{consultaDetalleEjerDerCapExportacion.descParamReferenciaCustodio}" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{consultaDetalleEjerDerCapExportacion.parametros}" currentBean="parametros">
+            <pdf:row>
+                <pdf:col header="#{etq.montoBrutoMinus}" value="#{consultaDetalleEjerDerCapExportacion.descParamMontoBruto}" align="center" />
+                <pdf:col header="#{etq.impuestoRetenidoMinus}" value="#{consultaDetalleEjerDerCapExportacion.descParamImpuestoRetenido}" align="center" />
+                <pdf:col header="#{etq.montoNetoMinus}" value="#{consultaDetalleEjerDerCapExportacion.descParamMontoNeto}" align="center" />
+                <pdf:col header="#{etq.porcentajeRetencion}" value="#{consultaDetalleEjerDerCapExportacion.descParamPorcentajeRetencion}" align="center" />
+                <pdf:col header="#{etq.proporcionMinus}" value="#{consultaDetalleEjerDerCapExportacion.descParamProporcion}" align="center" />
+                <pdf:col header="#{etq.cantidadDeTitulosMinus}" value="#{consultaDetalleEjerDerCapExportacion.descParamCantidadTitulos}" align="center" />
+                <pdf:col header="#{etq.referenceNumber}" value="#{consultaDetalleEjerDerCapExportacion.descParamReferenceNumber}"/>
+            </pdf:row>
+        </pdf:table>
+
+		<pdf:table value="#{consultaDetalleEjerDerCapExportacion.parametros}" currentBean="parametros">
+			<pdf:row>
+				<pdf:col header="#{etq.registrosEncontrados}" value="#{consultaDetalleEjerDerCapExportacion.paginaVO.totalRegistros}" align="center" />
+			</pdf:row>
+		</pdf:table>
+
+        <pdf:table value="#{consultaDetalleEjerDerCapExportacion.resultadosConsulta}" currentBean="resultado" maxColums="14">
+            <pdf:row>
+            	<pdf:col header="#{etq.idDerecho}" value="#{resultado.idDerechoCapital}" align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.institucionMinus}" value="#{resultado.idFolioInstitucion}" align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.cuentaMinus}" value="#{resultado.cuenta}" align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.uoi}" value="#{resultado.uoi}" align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.referenciaCustodio}" value="#{resultado.adp}" align="CENTER" oddColorDark="true"/>
+            	<pdf:col header="#{etq.tv}" value="#{resultado.tipoValor}" align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.emisoraMinus}" value="#{resultado.emisora}" align="CENTER" oddColorDark="true" />
+            	<pdf:col header="#{etq.serieMinus}" value="#{resultado.serie}" align="CENTER" oddColorDark="true" />                         
+                <pdf:col header="#{etq.isin}" value="#{resultado.isin}" align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.fechaCorteMinus}" value="#{resultado.fechaCorte}" align="CENTER" oddColorDark="true" >
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaPago}" value="#{resultado.fechaPago}" align="CENTER" oddColorDark="true">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col collspan="3" header="#{etq.custodio}" value="#{resultado.custodio}" align="CENTER" oddColorDark="true" />
+           </pdf:row> 
+           <pdf:row>        
+                <pdf:col header="#{etq.nombreBeneficiarioRazonSocial}" value="#{resultado.beneficiario}" align="CENTER" oddColorDark="true"/>                    
+                <pdf:col header="#{etq.direccionMinus}" 
+                	value="#{resultado.domicilio.street} #{resultado.domicilio.outerNumber} #{resultado.domicilio.interiorNumber} #{resultado.domicilio.postalCode} #{resultado.domicilio.cityTown} #{resultado.domicilio.stateProvince}" 
+                	align="CENTER" oddColorDark="true"/> 
+                <pdf:col header="#{etq.pais}" value="#{resultado.paisIncorporacion}" align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.tipoFormato}" value="#{resultado.formatoPantalla}" align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.fechaFormato}" value="#{resultado.fechaFormatoW}" align="center" oddColorDark="true">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.estadoFormato}" value="#{resultado.estadoW}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.reportesFormatosWGIIN}" value="#{resultado.giin}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.referenceNumber}" value="#{resultado.referenceNumber}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.exemptPayeeCode}" value="#{resultado.exempPayeeCode}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.exemptionFromFatcaReportingCode}" value="#{resultado.exemptFatcaRepCode}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.fechaNacimiento}" value="#{resultado.fechaNacimientoFW}" align="center" oddColorDark="true">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.ssn_ein}" value="#{resultado.ssnEin}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.tiin}" value="#{resultado.tiin}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.tipoBeneficiario}" value="#{resultado.tipoBeneficiario.descTipoBeneficiario}" align="CENTER" oddColorDark="true" />
+           </pdf:row>   
+           <pdf:row>
+           <pdf:col header="#{etq.tipoDerecho}"
+                    value="#{resultado.tipoDerecho}" align="CENTER" oddColorDark="true">
+                </pdf:col>
+                <pdf:col header="#{etq.porcentajeRetencion}" 
+                	value="#{resultado.porcentajeRetencionReal} #{etq.porcentaje}" align="CENTER" oddColorDark="true">
+                </pdf:col>          
+                <pdf:col header="#{etq.cantidadTit}" collspan="2" value="#{resultado.asignacion}" align="CENTER" oddColorDark="true">
+                	<f:convertNumber pattern="###,###,###,###,###,###" />
+                </pdf:col>
+                <pdf:col header="#{etq.rfc}" value="#{resultado.rfc}" align="CENTER" oddColorDark="true"/>      		          
+                <pdf:col header="#{etq.proporcionMinus}" value="#{resultado.proporcion}" align="CENTER" oddColorDark="true">
+                	<f:convertNumber pattern="#####0.0##########" />
+                </pdf:col>    
+                <pdf:col header="#{etq.fee}" value="#{resultado.fee}" align="CENTER" oddColorDark="true">
+                	<f:convertNumber pattern="#####0.0##########" />
+                </pdf:col>      
+                <pdf:col header="#{etq.montoBrutoMinus}" value="#{resultado.montoBruto}" align="CENTER" oddColorDark="true">
+					<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+				</pdf:col>
+                <pdf:col header="#{etq.montoFee}" value="#{resultado.montoFee}" align="CENTER" oddColorDark="true">
+                    <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                </pdf:col>
+                <pdf:col header="#{etq.impuestoRetenidoMinus}" value="#{resultado.impuestoRetenido}" align="CENTER" oddColorDark="true">
+					<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+				</pdf:col>
+                <pdf:col header="#{etq.montoNetoMinus}" value="#{resultado.montoNeto}" align="CENTER" oddColorDark="true">
+					<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+				</pdf:col>
+                <pdf:col header="#{etq.divisaMinus}" value="#{resultado.divisa}" align="CENTER" oddColorDark="true"/>                		
+                <pdf:col collspan="2" header="#{etq.estado}" value="#{resultado.descEstatusDerecho}" align="CENTER" oddColorDark="true"/>                		                                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{consultaDetalleEjerDerCapExportacion.resultadosConsulta}" currentBean="resultado" maxColums="14">
+            <pdf:row>
+                <pdf:col collspan="2" footer="#{etq.totalMinus}" align="center" oddColorDark="true" />          
+                <pdf:col collspan="2" align="CENTER" oddColorDark="true" footer="#{consultaDetalleEjerDerCapExportacion.consultaDerechosBeneficiarioTO.totalAsignacion}">
+                    <f:convertNumber pattern="###,###,###,###,###,###" />
+                </pdf:col>
+                <pdf:col />                        
+                <pdf:col />    
+                <pdf:col />      
+                <pdf:col align="CENTER" oddColorDark="true" footer="#{consultaDetalleEjerDerCapExportacion.consultaDerechosBeneficiarioTO.totalMontoBruto}">
+                    <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                </pdf:col>
+                <pdf:col align="CENTER" oddColorDark="true" footer="#{consultaDetalleEjerDerCapExportacion.consultaDerechosBeneficiarioTO.totalMontoFee}">
+                    <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                </pdf:col>
+                <pdf:col align="CENTER" oddColorDark="true" footer="#{consultaDetalleEjerDerCapExportacion.consultaDerechosBeneficiarioTO.totalImpuestoRetenido}">
+                    <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                </pdf:col>
+                <pdf:col align="CENTER" oddColorDark="true" footer="#{consultaDetalleEjerDerCapExportacion.consultaDerechosBeneficiarioTO.totalMontoNeto}">
+                    <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                </pdf:col>
+                <pdf:col />
+                <pdf:col collspan="2" />                                                                                                                                                                                                                                                                                                                                       
+            </pdf:row>
+        </pdf:table>
+    </pdf:document>
+</html>

@@ -1,0 +1,2 @@
+# Desinstalar los componentes (2 de 2)
+undeploy dali-divint-moi-receiver.ear --server-groups=grupo-portal-dali

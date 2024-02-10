@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rich="http://richfaces.org/rich">
+
+<ui:composition template="/layoutConsultas.xhtml">
+	<ui:define name="tituloEncabezado">
+
+	</ui:define>
+	<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/custodiosDepositantes.js"></script>
+	</ui:define>
+
+	<ui:define name="tituloSeccion">
+		<h:outputText value="#{etq.consultaEmisionesCustodiosDepositantes}" />
+	</ui:define>
+
+	<ui:define name="tituloEncabezado">
+		<h:outputText value="#{etq.consultaEmisionesCustodiosDepositantes}" />
+	</ui:define>
+
+
+	<ui:define name="criterios">
+
+		<a4j:keepAlive beanName="custodiosDepositantesBean" />
+		<a4j:keepAlive beanName="custodiosDepositantesBean.custodiosDto" />
+		
+		<h:panelGroup id="init">
+                <h:outputText value="#{custodiosDepositantesBean.init}" />
+        </h:panelGroup>
+		
+		<h:panelGroup id="panelCriterios">
+			<div style='display: "inline"' id="divCriterios">
+				<table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+					align="center">
+
+					<tr>
+						<td class="recuadroTabla" align="center">
+							<table class="tablaCriterios" align="center">
+								<tr>
+									<td colspan="4" align="center"><b> <h:outputText
+												styleClass="texto" value="#{etq.claveValor}" />
+									</b></td>
+								</tr>
+								<tr>
+									<td align="center"><h:outputText styleClass="texto"
+											value="#{etq.tv}" /></td>
+									<td align="center"><h:outputText styleClass="texto"
+											value="#{etq.emisoraMinus}" /></td>
+									<td align="center"><h:outputText styleClass="texto"
+											value="#{etq.serieMinus}" /></td>
+									<td align="center"><h:outputText styleClass="texto"
+											value="#{etq.isin}" /></td>							
+									<td align="center"><h:outputText styleClass="texto"
+											value="#{etq.bicProd}" /></td>
+									<td align="center"><h:outputText styleClass="texto"
+											value="#{etq.detalleCustodio}" /></td>
+								</tr>
+								<tr align="center">
+										<td>
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="tipoValor" 
+													value="#{custodiosDepositantesBean.custodiosDto.tv}" size="4"
+													maxlength="4" styleClass="textoControles textoMayusculas campoAlphaNumericoAsterisco" tabindex="1" />
+											</h:panelGroup>
+										</td>
+										<td>
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="emisora" size="7" maxlength="7"
+													value="#{custodiosDepositantesBean.custodiosDto.emisora}"
+													required="false" styleClass="textoControles textoMayusculas campoAlphaNumericoEmisora" tabindex="2" />
+											</h:panelGroup>
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="serie"
+												value="#{custodiosDepositantesBean.custodiosDto.serie}" size="14"
+												maxlength="6" styleClass="textoControles textoMayusculas campoAlphaNumericoSerie" tabindex="3" />
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="isin"
+												value="#{custodiosDepositantesBean.custodiosDto.isin}" size="14"
+												maxlength="12" styleClass="textoControles campoAlphaNumerico textoMayusculas" tabindex="4" />
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="bicProd"
+												value="#{custodiosDepositantesBean.custodiosDto.bicProd}" size="20"
+												maxlength="12" styleClass="textoControles campoAlphaNumerico textoMayusculas" tabindex="4" />
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="detalle"
+												value="#{custodiosDepositantesBean.custodiosDto.detalleCustodio}" size="40"
+												maxlength="35" styleClass="textoControles campoAlphaNumerico textoMayusculas" tabindex="4" />
+										</td>
+									</tr>
+
+
+							</table>
+						</td>
+					</tr>
+				</table>
+
+			</div>
+		</h:panelGroup>
+		<!-- FIN panelCriterios -->
+		
+		
+		<h:panelGroup id="panelResumen">
+				<h:panelGroup rendered="#{custodiosDepositantesBean.consultaEjecutada}">
+					<div id="divResumen" style="display: #{custodiosDepositantesBean.consultaEjecutada ? 'inline':'none'}">
+						<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+							<tr>
+								<td class="recuadroTabla">
+									<table class="tablaCriterios texto" border="0" style="text-align: center">
+										<tr>
+											<td colspan="4" align="center">
+												<b> <h:outputText styleClass="texto" value="#{etq.claveValor}" /> </b>
+											</td>
+										</tr>
+										<tr>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.tv}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.emisoraMinus}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.serieMinus}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.isin}" />
+											</td>											
+									
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.bicProd}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.detalleCustodio}" />
+											</td>
+										</tr>
+										<tr align="center">
+											<td>
+												<h:panelGroup>
+													<h:outputText styleClass="texto" value="#{custodiosDepositantesBean.custodiosDto.tv}" rendered="#{!empty custodiosDepositantesBean.custodiosDto.tv}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty custodiosDepositantesBean.custodiosDto.tv}"/>
+												</h:panelGroup>
+											</td>
+											<td>
+												<h:panelGroup>
+													<h:outputText styleClass="texto" value="#{custodiosDepositantesBean.custodiosDto.emisora}" rendered="#{!empty custodiosDepositantesBean.custodiosDto.emisora}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty custodiosDepositantesBean.custodiosDto.emisora}"/>
+												</h:panelGroup>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{custodiosDepositantesBean.custodiosDto.serie}" rendered="#{!empty custodiosDepositantesBean.custodiosDto.serie}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty custodiosDepositantesBean.custodiosDto.serie}"/>
+											</td>
+											<td>
+	                                            <h:outputText styleClass="texto" value="#{custodiosDepositantesBean.custodiosDto.isin}" rendered="#{!empty custodiosDepositantesBean.custodiosDto.isin}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty custodiosDepositantesBean.custodiosDto.isin}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{custodiosDepositantesBean.custodiosDto.bicProd}" rendered="#{!empty custodiosDepositantesBean.custodiosDto.bicProd}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{empty custodiosDepositantesBean.custodiosDto.bicProd}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{custodiosDepositantesBean.custodiosDto.detalleCustodio}" rendered="#{!empty custodiosDepositantesBean.custodiosDto.detalleCustodio}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{empty custodiosDepositantesBean.custodiosDto.detalleCustodio}"/>
+											</td>
+										</tr>										
+									</table>							
+								</td>
+							</tr>								
+						</table>															
+					</div>
+				</h:panelGroup>
+			</h:panelGroup>
+			<!-- FIN panelResumen -->
+		
+	</ui:define>
+	<!-- FIN criterios -->
+	<ui:define name="botones">
+			<h:panelGroup id="botones">				
+				<div class="refrescar" style="float: left;">
+	        		 <a4j:status id="commonStatus">
+						<f:facet name="start">
+							<h:panelGroup>
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								<h:outputText value="#{etq.buscando}"></h:outputText>
+							</h:panelGroup>
+						</f:facet>
+					</a4j:status> 	
+	        	</div>
+				<div class="limpiar">
+					<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+						styleClass="submit" 
+						actionListener="#{custodiosDepositantesBean.limpiar}" 
+						tabindex="8"/>
+				</div>
+				<div class="buscar">
+					<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+						styleClass="submit"
+						oncomplete='javascript:presentarResumen();'
+						actionListener="#{custodiosDepositantesBean.buscar}"
+						reRender="containerResultados, botones, panelResumen"						
+						tabindex="7">
+                      
+					</a4j:commandButton>
+				</div>	
+				
+				<div class="editar" style="display:#{custodiosDepositantesBean.consultaEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios">            
+	            	<input type="image" class="submit"
+						src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+						alt="Editar Criterios" title="Editar Criterios"
+						onclick='javascript:presentarCriterios();return false;' />                      	
+	           	</div>	
+					
+           	</h:panelGroup>
+		</ui:define>
+		<!-- FIN botones -->
+		
+		
+		<ui:define name="seccionContenido">
+			<h:panelGroup id="containerResultados">
+				<h:panelGroup rendered="#{custodiosDepositantesBean.consultaEjecutada}">
+					<!-- sinResultados -->
+					<t:dataTable id="noExistenResultados"
+						value="#{custodiosDepositantesBean.paginaVO.registros}"
+						styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+						footerClass="tituloTabla" border="0" cellpadding="3px"
+						cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos"
+						rendered="#{empty custodiosDepositantesBean.paginaVO.registros}">
+
+						<t:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.sinResultados}"></h:outputText>
+							</f:facet>
+
+						</t:column>
+					</t:dataTable>
+					<!-- FIN sinResultados -->
+					
+					<br/>
+							
+							
+						<h:panelGroup
+							rendered="#{not empty custodiosDepositantesBean.paginaVO.registros}">
+							
+							<table width="100%" border="0">
+								<tr>
+									<td align="left" class="textoEstadoCuenta">
+									
+										<a4j:commandLink id="control_bitacora_primero"
+                                                     action="#{custodiosDepositantesBean.irPrimeraPagina}"
+                                                     rendered="#{custodiosDepositantesBean.irAlPrimero}"
+                                                     reRender="containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+                                            border="0" />
+                                    	</a4j:commandLink>
+										
+										<a4j:commandLink id="control_bitacora_atras_fast"
+                                                     action="#{custodiosDepositantesBean.retrocederPaginasRapido}"
+                                                     rendered="#{custodiosDepositantesBean.retrocederRapido}"
+                                                     reRender="containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+                                            border="0" />
+                                   	 	</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_atras"
+                                                     action="#{custodiosDepositantesBean.retrocederPagina}"
+                                                     rendered="#{custodiosDepositantesBean.retroceder}"
+                                                     reRender="containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+                                            border="0" />
+                                    	</a4j:commandLink>
+										
+
+										<a4j:commandLink id="control_bitacora_adelante"
+                                                     action="#{custodiosDepositantesBean.avanzarPagina}"
+                                                     rendered="#{custodiosDepositantesBean.avanzar}"
+                                                     reRender="containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+                                            border="0" />
+                                    	</a4j:commandLink>										
+
+										<a4j:commandLink id="control_bitacora_adelante_fast"
+                                                     action="#{custodiosDepositantesBean.avanzarPaginasRapido}"
+                                                     rendered="#{custodiosDepositantesBean.avanzarRapido}"
+                                                     reRender="containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+                                            border="0" />
+                                    	</a4j:commandLink>
+										
+										<a4j:commandLink id="control_bitacora_ultimo"
+                                                     action="#{custodiosDepositantesBean.irUltimaPagina}"
+                                                     rendered="#{custodiosDepositantesBean.irAlUltimo}"
+                                                     reRender="containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+                                            border="0" />
+                                    	</a4j:commandLink>
+
+										<br />
+										<h:outputText value="#{etq.mostrando}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{custodiosDepositantesBean.numeroPagina}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+										<h:outputText value="#{custodiosDepositantesBean.totalPaginas}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+										&#160;&#160;&#160;
+										<h:outputText
+											value="#{custodiosDepositantesBean.paginaVO.totalRegistros}"
+											styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+										&#160;
+										<h:outputText styleClass="textoResumen"
+											value="#{etq.registrosEncontrados}" />
+									</td>
+									
+									<td align="right" class="textoEstadoCuenta">
+										<h:outputText escape="false" value="#{etq.registrosPorPagina}"
+											styleClass="textoResumen" />
+										<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+											value="#{custodiosDepositantesBean.paginaVO.registrosXPag}">
+											<f:selectItem itemLabel="1" itemValue="1" />
+											<f:selectItem itemLabel="2" itemValue="2" />
+											<f:selectItem itemLabel="5" itemValue="5" />
+											<f:selectItem itemLabel="10" itemValue="10" />
+											<f:selectItem itemLabel="20" itemValue="20" />
+											<f:selectItem itemLabel="50" itemValue="50" />
+											<f:selectItem itemLabel="100" itemValue="100" />
+											<a4j:support event="onchange"
+												reRender="containerResultados, panelResumen"
+												action="#{custodiosDepositantesBean.ejecutarConsultaPorRegistros}" >
+                                                
+                                            </a4j:support>
+										</h:selectOneMenu>
+									</td>
+								</tr>
+							</table>
+						</h:panelGroup>
+						
+						<h:dataTable id="resultados"
+							value="#{custodiosDepositantesBean.paginaVO.registros}"
+							var="data"
+							rendered="#{not empty custodiosDepositantesBean.paginaVO.registros}"
+							styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+							footerClass="pieTabla" border="0" cellpadding="3px"
+							cellspacing="0px" columnClasses="everyColumn texto textoPeque12 textoArriba"
+							rowClasses="renglonTablaUno, renglonTablaDos">
+
+							<h:column>
+								<f:facet name="header" >
+									<h:outputText  value="#{etq.tv}"/>
+								</f:facet>
+								<h:outputText value="#{data.tv}" />								
+							</h:column>
+							
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#{etq.emisoraMinus}"/>
+								</f:facet>
+								<h:outputText value="#{data.emisora}"/>						
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#{etq.serieMinus}" />
+								</f:facet>
+								<h:outputText value="#{data.serie}" />				
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#{etq.isin}" />
+								</f:facet>
+								<h:outputText value="#{data.isin}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#{etq.detalleCustodio}" />
+								</f:facet>
+								<h:outputText value="#{data.detalleCustodio}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#{etq.cuentaMinus}" />
+								</f:facet>
+									<h:outputText value="#{data.cuenta}" />
+							</h:column>
+							
+							<h:column>
+								<f:facet name="header">
+									<h:outputText
+										value="#{etq.detalleDepositante}" />
+								</f:facet>
+								<h:outputText value="#{data.depLiq}" />
+							</h:column>
+              
+                            
+						</h:dataTable>
+					
+
+                  
+
+					<h:panelGroup id="totalesConsultas"
+						rendered="#{not empty custodiosDepositantesBean.paginaVO.registros}">
+
+					
+					<!-- BOTONES EXPORTAR --> 
+					<table cellpadding="0" cellspacing="0" border="0" align="center"
+						width="900px">
+						<tr align="right">
+							<td align="right">
+								
+									<h:panelGroup
+										style="display: #{(custodiosDepositantesBean.consultaEjecutada and not empty custodiosDepositantesBean.paginaVO.registros)? 'inline' : 'none'}">
+
+										<h:outputText value="Exportar los resultados"></h:outputText>&#160;&#160;
+										<h:commandButton actionListener="#{custodiosDepositantesBean.generarReporteXml}"
+											action="consultaEmisionesPDF"
+											image="/images/xml.png"
+											title="Exportar a XML todos los resultados de la consulta"
+											id="generarXml"/>
+     
+									</h:panelGroup>
+								
+
+							</td>
+						</tr>
+					</table>
+					<!-- FIN BOTONES EXPORTAR -->
+					
+					
+					
+					</h:panelGroup>
+
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+		<!-- FIN seccionContenido -->
+
+
+</ui:composition>
+</html>

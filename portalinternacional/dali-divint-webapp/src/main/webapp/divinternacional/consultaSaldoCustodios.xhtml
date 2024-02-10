@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Cambio Multidivisas-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	  xmlns:a4j="http://richfaces.org/a4j"
+	  xmlns:rich="http://richfaces.org/rich"
+	  xmlns:t="http://myfaces.apache.org/tomahawk"
+	  xmlns:indeval="http://indeval.com/indeval">
+
+<ui:composition template="/layoutCaptura.xhtml">
+	<ui:define name="head">
+
+	</ui:define>
+
+	<ui:define name="tituloSeccion">
+		<h:outputText value="Consulta de Saldo de Custodios" />
+	</ui:define>
+	<ui:define name="subtituloSeccion">
+		<h:outputText value="" />
+	</ui:define>
+
+	<ui:define name="tituloEncabezado">
+		<h:outputText value="Criterios:"></h:outputText>
+	</ui:define>
+
+	<ui:define name="seccionForma">
+		<a4j:keepAlive beanName="consultaSaldoCustodiosBean" />
+		<h:panelGroup id="init">
+			<h:outputText value="#{consultaSaldoCustodiosBean.inicializar}"/>
+		</h:panelGroup>
+		<h:panelGroup id="mensajeUsuario">
+			<div style="min-height: 21px;">
+				<rich:messages warnClass="warning" infoClass="info"
+							   errorClass="error" ajaxRendered="true" showDetail="false"
+							   showSummary="true" layout="list">
+					<f:facet name="infoMarker">
+						<h:panelGroup>
+							<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+					</f:facet>
+
+					<f:facet name="errorMarker">
+						<h:panelGroup>
+							<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+					</f:facet>
+				</rich:messages>
+
+				<div id="divWarnings" class="warning" style="display:none;">
+					<p id="textoWarning">
+					</p>
+				</div>
+			</div>
+		</h:panelGroup>
+		<h:panelGroup id="general">
+			<table width="50%" border="0" cellspacing="5" align="center">
+				<tr>
+					<td align="left">
+						<h:outputText styleClass="texto" value="Divisa" />
+					</td>
+					<td align="center">
+						<h:selectOneMenu id="divisa" required="false" tabindex="30"
+										 value="#{consultaSaldoCustodiosBean.efectivoInternacionalVO.divisa.idString}">
+							<f:selectItems value="#{consultaSaldoCustodiosBean.listaDivisa}" />
+							<a4j:support event="onchange" actionListener="#{consultaSaldoCustodiosBean.seleccionarDivisa}"
+										 reRender="boveda" />
+						</h:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td align="left">
+						<h:outputText styleClass="texto" value="Bóveda" />
+					</td>
+					<td align="center">
+						<h:selectOneMenu id="boveda" required="false" tabindex="30"
+										 value="Selecciona una Divisa primero">
+							<f:selectItems value="#{consultaSaldoCustodiosBean.bovedas}" />
+							<a4j:support event="onchange" actionListener="#{consultaSaldoCustodiosBean.seleccionarBoveda}"
+										 />
+						</h:selectOneMenu>
+					</td>
+				</tr>
+			</table>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>
+</html>

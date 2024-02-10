@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+        http://www.springframework.org/schema/context  
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd  
+        http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd">
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+
+    
+
+    <!-- SERVICIO QUE REALIZA LAS LLAMADAS A LOS EJB DE EJERCICIOS MAV -->
+    <bean id="capitalesService" class="com.indeval.portalinternacional.middleware.ws.service.impl.CapitalesServiceImpl">
+        <property name="capitalEJB">
+            <ref bean="capitalRemoteEjb" />
+        </property>
+    </bean>
+
+    <!-- BEAN QUE HACE REFERENCIA AL SERVICIO QUE SERA EXPUESTO COMO WEB SERVICE -->
+    <bean id="derechosCapitalesServiceImpl" class="com.indeval.portalinternacional.middleware.ws.impl.DerechosCapitalesWSServiceImpl">
+        <property name="capitalesService">
+            <ref bean="capitalesService" />
+        </property> 
+    </bean>
+
+	<!-- ENDPOINT DEL SERVICIO WEB -->
+	<jaxws:endpoint id="derechosCapitalesService" 
+	                implementor="#derechosCapitalesServiceImpl" 
+	                address="/DerechosCapitalesWS">
+	</jaxws:endpoint>
+
+</beans>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls">
+
+
+    <xls:document documentName="bitacoraBeneficiarios" documentTitle="Bit&#225;cora de Beneficiarios"
+                  institucion="#{consultaHistoricaBeneficiariosBean.agenteFirmado.id} #{consultaHistoricaBeneficiariosBean.agenteFirmado.folio} #{consultaHistoricaBeneficiariosBean.agenteFirmado.razon}"
+                  fecha="#{consultaHistoricaBeneficiariosBean.fechaActual}" >
+        <xls:table value="consultaHistoricaBeneficiariosBean" var="resultado">
+            <xls:row>
+                <xls:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </xls:row>
+        </xls:table>
+        <xls:table value="#{consultaHistoricaBeneficiariosBean}" var="resultado">
+            <xls:row>
+                <xls:col header="#{etq.custodio}" value="#{consultaHistoricaBeneficiariosBean.mapaCustodios[consultaHistoricaBeneficiariosBean.param.custodio]}" align="center" />
+                <xls:col header="#{etq.tipoBeneficiario}" value="#{consultaHistoricaBeneficiariosBean.mapaTipoBeneficiario[consultaHistoricaBeneficiariosBean.param.tipoBeneficiario]}" align="center" />
+                <xls:col header="#{etq.institucionMinus}" value="#{consultaHistoricaBeneficiariosBean.idFolioInstitucion} - #{consultaHistoricaBeneficiariosBean.nombreInstitucion}" align="center" />
+                <xls:col header="#{etq.formato}" value="#{(consultaHistoricaBeneficiariosBean.param.formato eq '-1') ? 'NINGUNO' : consultaHistoricaBeneficiariosBean.param.formato }" align="center" />
+                <xls:col header="#{etq.fechaRegistro} Inicio" value="#{consultaHistoricaBeneficiariosBean.param.fechaRegistroInicio}" align="center" pattern="dd-MM-yyyy" />
+                <xls:col header="#{etq.fechaRegistro} Fin" value="#{consultaHistoricaBeneficiariosBean.param.fechaRegistroFin}" align="center" pattern="dd-MM-yyyy" />
+                <xls:col header="#{etq.uoi}" value="#{consultaHistoricaBeneficiariosBean.param.uoiNumber}" align="center" />
+                <xls:col header="#{etq.nombreBeneficiario} o #{etq.razonSocial}" value="#{consultaHistoricaBeneficiariosBean.param.nombreRazonSocial}" align="center" />
+            </xls:row>
+        </xls:table>
+        <xls:br />
+        <xls:subtitle value="#{etq.registrosEncontrados}: #{consultaHistoricaBeneficiariosBean.paginaReportes.totalRegistros}" />
+        <xls:subtitle value="Datos"/>
+        <xls:table value="#{consultaHistoricaBeneficiariosBean.paginaReportes.registros}" var="registro">
+            <xls:row>
+                <xls:col header="#{etq.institucionMinus}" align="CENTER"
+                         value="#{registro.beneficiario.nombresInstitucionesConPipe}" />
+                <xls:col header="#{etq.custodio}" value="#{consultaHistoricaBeneficiariosBean.mapaCustodios[registro.beneficiario.idCuentaNombrada]}"
+                         align="CENTER" />
+                
+                <xls:col header="#{etq.formato}" value="#{registro.beneficiario.tipoFormatoPantalla}" align="CENTER" />
+                
+                <xls:col header="#{etq.nombreBeneficiario} o #{etq.razonSocial}"  value="#{registro.beneficiario.nombreGeneral}" />
+                <xls:col header="#{etq.tipoBeneficiario}" value="#{registro.beneficiario.tipoBeneficiario.descTipoBeneficiario}" />
+                <xls:col header="#{etq.uoi}"  value="#{registro.beneficiario.uoiNumber}" />
+                <xls:col header="#{etq.estatusBeneficiarioAnterior}"  value="#{registro.statusAnterior.descStatusBenef}" />
+                <xls:col header="#{etq.estatusBeneficiarioNuevo}"  value="#{registro.statusNuevo.descStatusBenef}" />
+                <xls:col header="#{etq.fechaCambio}" value="#{registro.fechaAlta}" align="CENTER" pattern="dd/MM/yyyy HH:mm:ss"  />
+            </xls:row>
+        </xls:table>
+    </xls:document>
+</html>

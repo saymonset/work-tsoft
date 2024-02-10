@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+      xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/derechos.js">
+            </script>
+		</ui:define>
+		
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.derechos}" />
+		</ui:define>
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.consultaHorariosBeneficiarios}"></h:outputText>
+		</ui:define>
+
+		<ui:define name="seccionContenido">
+			<a4j:keepAlive beanName="adminHorarioDerechoBean" />
+			<h:outputText value="#{adminHorarioDerechoBean.init}" />
+			<h:panelGroup id="botonesGroup" rendered="#{not empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN']}">
+				<table width="100%" border="0">
+					<tr>
+						<td style="text-align: right;" colspan="2">
+							<h:commandButton id="botonAgregar" value="#{etq.agregarHorario}" action="#{adminHorarioDerechoBean.agregarHorario}"/>
+							<a4j:commandButton id="botoneliminar" value="#{etq.eliminarHorario}" actionListener="#{adminHorarioDerechoBean.eliminaHorario}" onclick="if(!confirm('&#191;Estas seguro que deseas eliminar los horarios seleccionados&#63;')) { return false; }" reRender="containerResultados"/>                                
+						</td>
+					</tr>
+				</table>
+			</h:panelGroup>																					
+			<h:panelGroup id="containerResultados">								
+				<t:dataTable id="noExistenResultados"
+					value="#{adminHorarioDerechoBean.lstHorarios}"
+					styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+					footerClass="tituloTabla" border="0" cellpadding="3px"
+					cellspacing="0px" columnClasses="everyColumn"
+					rowClasses="renglonTablaUno, renglonTablaDos"
+					rendered="#{empty adminHorarioDerechoBean.lstHorarios}">
+					<t:column>
+						<f:facet name="header">
+							<h:outputText value="#{etq.sinResultados}"></h:outputText>
+						</f:facet>
+
+					</t:column>
+				</t:dataTable>					
+				<h:dataTable id="resultados"
+					value="#{adminHorarioDerechoBean.lstHorarios}"
+					var="horario"
+					rendered="#{not empty adminHorarioDerechoBean.lstHorarios}"
+					styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+					footerClass="tituloTabla" border="0" cellpadding="3px"
+					cellspacing="0px" columnClasses="everyColumn"
+					rowClasses="renglonTablaUno, renglonTablaDos">
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.custodio}" />
+						</f:facet>							
+                           <h:outputText styleClass="texto textoPeque12" value="#{adminHorarioDerechoBean.mapaCustodios[horario.idCuentaNombrada]}" />														
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.porcentajeRetencionMinus}" />
+						</f:facet>							
+                           <h:outputText styleClass="texto textoPeque12" value="#{horario.porcentajeRet}" />														
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.tv}" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{horario.tv}" />
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.emisoraMinus}" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{horario.emisora}" />
+					</h:column>
+                    <h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.serieMinus}" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{horario.serie}" />
+                    </h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.idFolio}" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{horario.idFolio}" />
+                    </h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.numeroDiasFecha}" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{horario.dias}" />
+                    </h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.horaFecha}" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{horario.horaCompuesta}"/>
+                    </h:column>                                                            					
+                    <h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.vencimientoFecha}" />
+						</f:facet>						
+						<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaDespuesDeCorte}" rendered="#{horario.esDespuesFechaCorte}"/>
+						<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaAntesDePago}" rendered="#{!horario.esDespuesFechaCorte}"/>
+                    </h:column>
+                    <h:column>
+						<f:facet name="header">
+							<h:selectBooleanCheckbox onclick="javascript:checkControls();" id="checkPrincipal"/>
+						</f:facet>
+						<h:selectBooleanCheckbox value="#{horario.eliminado}"/>
+                    </h:column>
+                    <h:column>
+						<f:facet name="header">
+							<h:outputText value="" />
+						</f:facet>						
+						<h:commandLink styleClass="texto textoPeque12 sinSubrayar" action="#{adminHorarioDerechoBean.actualizarHorario}" rendered="#{not empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN']}">
+							<f:setPropertyActionListener target="#{adminHorarioDerechoBean.selectedHorario}" value="#{horario}"/>
+			            	<h:graphicImage value="/images/edit.png"/>			                                			                                                               
+			            </h:commandLink>
+                    </h:column>                                         
+                   </h:dataTable>
+			</h:panelGroup>
+		</ui:define>						
+	</ui:composition>
+</html>
+

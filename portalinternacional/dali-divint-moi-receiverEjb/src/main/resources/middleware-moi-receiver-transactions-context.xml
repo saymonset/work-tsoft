@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+  <description>
+    AplicationContext de configuracion de los servicios de Seguridad.
+  </description>
+
+	<bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
+    	<property name="transactionManagerName" value="java:jboss/TransactionManager"/>
+    	 <property name="userTransactionName" value="java:jboss/UserTransaction" />
+    	
+	</bean>
+	
+  <!-- the transactional advice (i.e. what 'happens'; see the <aop:advisor/> bean below) -->
+  <tx:advice id="txAdvice" transaction-manager="transactionManager">
+    <!-- the transactional semantics... -->
+    <tx:attributes>
+      <tx:method name="get*" read-only="true"
+        propagation="NOT_SUPPORTED" />
+      <tx:method name="find*" read-only="true"
+        propagation="NOT_SUPPORTED" />
+      <!-- other methods use the default transaction settings (see below) -->
+      <tx:method name="receiverMessages" read-only="false"
+        propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+    </tx:attributes>
+  </tx:advice>
+  
+  <aop:config proxy-target-class="true">
+    <aop:pointcut id="serviceMethods"
+      expression="execution(* com.indeval.receiver.middleware.services.*.*ServiceImpl*.*(..))" />
+    <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods" />
+  </aop:config>
+</beans>

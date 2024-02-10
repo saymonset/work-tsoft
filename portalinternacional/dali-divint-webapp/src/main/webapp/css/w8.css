@@ -1,0 +1,48 @@
+@CHARSET "UTF-8";
+
+.partesFormatos{
+    display: none;
+    text-align: justify;
+}
+
+.textoW8 {
+	font-size: 9px;
+	font-family: Tahoma, Arial, Helvetica, sans-serif;
+	color: #606060;
+	text-transform: uppercase;
+}
+
+.textoW8Deatalle {
+	font-size: 9px;
+	font-family: Tahoma, Arial, Helvetica, sans-serif;
+	font-style: italic;
+	color: #606060;
+	text-transform: uppercase;
+}
+
+.partIII{}
+.partIV{}
+.partV{}
+.partVI{}
+.partVII{}
+.partVIII{}
+.partIX{}
+.partX{}
+.partXI{}
+.partXII{}
+.partXIII{}
+.partXIV{}
+.partXV{}
+.partXVI{}
+.partXVII{}
+.partXVIII{}
+.partXIX{}
+.partXX{}
+.partXXI{}
+.partXXII{}
+.partXXIII{}
+.partXXIV{}
+.partXXV{}
+.partXXVI{}
+.partXXVII{}
+.partXXVIII{}

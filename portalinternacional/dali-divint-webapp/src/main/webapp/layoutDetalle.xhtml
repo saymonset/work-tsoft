@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en">
+	
+	<ui:composition template="#{facesContext.externalContext.requestContextPath}/layoutDali.xhtml">
+	
+		<ui:define name="seccionEncabezado">
+			<h1><span><ui:insert name="tituloEncabezado">DETALLE DE OPERACION </ui:insert></span></h1>
+                    <table width="900px" cellpadding="0px" cellspacing="0px">
+                    	<tr>
+                        	<td >
+                            	<ui:insert name="mensajeUsuario">
+                            	</ui:insert>
+                            </td>
+                        </tr>
+                        
+                    </table>
+		</ui:define>
+		<ui:define name="seccionContenido">
+			<table width="900px" cellpadding="0px" cellspacing="0px">
+                    	
+                        <tr>
+                        	<td>
+                        		<ui:insert name="seccionForma">
+                        		</ui:insert>
+                            </td>
+                        </tr>
+                        <tr>
+                        	<td >
+                        		<ui:insert name="botones">
+                        		</ui:insert>
+                            	
+                                
+                            </td>
+                        </tr>
+                    </table>
+		</ui:define>
+		
+		
+	
+	</ui:composition>
+	
+	
+</html>

@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:t="http://myfaces.apache.org/tomahawk">
+<!-- @author Jacito -->
+
+<ui:composition template="/layoutConsultas.xhtml">
+    <ui:define name="tituloEncabezado"></ui:define>
+
+    <ui:define name="head">
+        <script type="text/javascript"
+                src="#{facesContext.externalContext.requestContextPath}/js/detallesMensajeCuentasTransitorias.js"/>
+
+        <script type="text/javascript">
+            function mostrarDetalleCuentaTransitoriaEfectivo(referencia) {
+                console.log(referencia);
+                console.log(contextPath);
+                url = contextPath + '/cuentasTransitoriasEfectivo/detalleCuentaTransitoriaEfectivo.faces?referencia=' + referencia;
+                console.log(url);
+                consultasMostrarDivModal('Detalle Referencia', encodeURI(url), 500, 1000);
+            }
+
+            function mostrarMensajeIso(idRegistro) {
+                console.log(idRegistro);
+                console.log(contextPath);
+                url = contextPath + '/cuentasTransitoriasEfectivo/detalleCuentaTransitoriaEfectivoNoReferenciada.faces?idRegistro=' + idRegistro;
+                console.log(url);
+                consultasMostrarDivModal('Detalle Mensaje ISO', encodeURI(url), 300, 900);
+            }
+        </script>
+    </ui:define>
+
+    <ui:define name="tituloSeccion">
+        <h:outputText value="#{etq.divisionInternacional}"/>
+    </ui:define>
+
+    <ui:define name="subtituloSeccion">
+        <h:outputText value="#{etq.sistemaIntCot}"/>
+    </ui:define>
+
+    <ui:define name="tituloEncabezado">
+        <h:outputText value="#{etq.consultaOperaciones}"/>
+    </ui:define>
+
+
+    <ui:define name="criterios">
+        <a4j:keepAlive beanName="cuentasTransitoriasEfectivoController"/>
+
+        <h:outputText value="#{cuentasTransitoriasEfectivoController.init}"/>
+        <h:panelGroup id="mensajeUsuario">
+            <div style="min-height: 21px;">
+                <rich:messages warnClass="warning" infoClass="info"
+                               errorClass="error" ajaxRendered="true" showDetail="false"
+                               showSummary="true" layout="list">
+                    <f:facet name="infoMarker">
+                        <h:panelGroup>
+                            <h:graphicImage url="/images/accept.png"/>&#160;</h:panelGroup>
+                    </f:facet>
+
+                    <f:facet name="errorMarker">
+                        <h:panelGroup>
+                            <h:graphicImage url="/images/warning.gif"/>&#160;</h:panelGroup>
+                    </f:facet>
+                </rich:messages>
+
+                <div id="divWarnings" class="warning" style="display:none;">
+                    <p id="textoWarning">
+                    </p>
+                </div>
+            </div>
+        </h:panelGroup>
+        <h:panelGroup id="panelCriterios">
+            <div style='display: inline' id="divCriterios">
+                <table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+                       align="center">
+                    <tr>
+                        <td class="recuadroTabla" align="center">
+                            <table class="tablaCriterios" align="center">
+                                <tr>
+                                    <td align="center">
+                                        <h:outputText value="#{etq.custodio}"/>
+                                    </td>
+                                    <td align="center">
+                                        <h:outputText styleClass="texto" value="#{etq.divisaMinus}"/>
+                                    </td>
+                                    <td align="center">
+                                        <h:outputText styleClass="texto" value="#{etq.fechaInicioCT}"/>
+                                    </td>
+                                    <td align="center">
+                                        <h:outputText styleClass="texto" value="#{etq.fechaFinCT}"/>
+                                    </td>
+                                    <td align="center">
+                                        <h:outputText styleClass="texto" value="#{etq.folioRelacionado}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <h:selectOneMenu styleClass="textoControles"
+                                                         value="#{cuentasTransitoriasEfectivoController.idCustodioConsulta}"
+                                                         tabindex="150">
+                                            <f:selectItem itemValue="-1" itemLabel="Todos"/>
+                                            <f:selectItems
+                                                    value="#{cuentasTransitoriasEfectivoController.listaCustodios}"/>
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td align="center">
+                                        <h:selectOneMenu styleClass="textoControles"
+                                                         value="#{cuentasTransitoriasEfectivoController.idDivisaConsulta}"
+                                                         tabindex="90">
+                                            <f:selectItem itemValue="-1" itemLabel="Todas"/>
+                                            <f:selectItems
+                                                    value="#{cuentasTransitoriasEfectivoController.listaDivisas}"/>
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td align="center">
+                                        <rich:calendar inputClass="textoControles"
+                                                       inputStyle="background-color: #ffffe6;"
+                                                       inputSize="14"
+                                                       datePattern="dd/MM/yyyy" tabindex="120"
+                                                       popup="true"
+                                                       direction="auto"
+                                                       id="id-txt-fecha-inicio"
+                                                       value="#{cuentasTransitoriasEfectivoController.fechaInicio}"/>
+                                    </td>
+                                    <td align="center">
+                                        <rich:calendar inputClass="textoControles"
+                                                       inputStyle="background-color: #ffffe6;"
+                                                       inputSize="14"
+                                                       datePattern="dd/MM/yyyy" tabindex="120"
+                                                       popup="true"
+                                                       direction="auto"
+                                                       id="id-txt-fecha-final"
+                                                       value="#{cuentasTransitoriasEfectivoController.fechaFin}"/>
+                                    </td>
+                                    <td align="center">
+                                        <h:inputText autocomplete="off" id="referenciaBuscar"
+                                                     value="#{cuentasTransitoriasEfectivoController.referenciaBuscar_1}"
+                                                     size="20"
+                                                     maxlength="16" styleClass="textoControles" tabindex="120"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+        </h:panelGroup>
+
+        <h:panelGroup id="panelResumen">
+            <h:panelGroup rendered="#{cuentasTransitoriasEfectivoController.consultaEjecutada}">
+                <div id="divResumen"
+                     style="display: #{cuentasTransitoriasEfectivoController.consultaEjecutada ? 'inline':'none'}">
+                    <table width="900px" border="0" cellpadding="0px" cellspacing="5px">
+                        <tr>
+                            <td class="recuadroTabla">
+                                <table class="tablaCriterios texto" border="0" style="text-align: center">
+                                    <tr style="display: flex;">
+                                        <td align="center" style="display: block; width: 20%;">
+                                            <h:outputText value="#{etq.custodio}"/>
+                                        </td>
+                                        <td align="center" style="display: block; width: 20%;">
+                                            <h:outputText styleClass="texto" value="#{etq.divisaMinus}"/>
+                                        </td>
+                                        <td align="center"
+                                            style="display: #{cuentasTransitoriasEfectivoController.fechaInicioFormateada == null ? 'none':'block'};  width: 20%;">
+                                            <h:outputText styleClass="texto" value="#{etq.fechaInicioCT}"/>
+                                        </td>
+                                        <td align="center"
+                                            style="display: #{cuentasTransitoriasEfectivoController.fechaFinFormateada == null ? 'none':'block'};  width: 20%;">
+                                            <h:outputText styleClass="texto" value="#{etq.fechaFinCT}"/>
+                                        </td>
+                                        <td align="center"
+                                            style="display: #{cuentasTransitoriasEfectivoController.referenciaBuscar_1 == null ? 'none':'block'};  width: 20%;">
+                                            <h:outputText styleClass="texto" value="#{etq.folioRelacionado}"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="display: flex;">
+                                        <td align="center" style="display: block;  width: 20%;">
+                                            <h:outputText
+                                                    value="#{cuentasTransitoriasEfectivoController.custodioConsulta}"/>
+                                        </td>
+                                        <td align="center" style="display: block;  width: 20%;">
+                                            <h:outputText
+                                                    value="#{cuentasTransitoriasEfectivoController.divisaCustodia}"/>
+                                        </td>
+                                        <td align="center"
+                                            style="display: #{cuentasTransitoriasEfectivoController.fechaInicioFormateada == null ? 'none':'block'};  width: 20%;">
+                                            <h:outputText
+                                                    value="#{cuentasTransitoriasEfectivoController.fechaInicioFormateada}"/>
+                                        </td>
+                                        <td align="center"
+                                            style="display: #{cuentasTransitoriasEfectivoController.fechaFinFormateada == null ? 'none':'block'};  width: 20%;">
+                                            <h:outputText
+                                                    value="#{cuentasTransitoriasEfectivoController.fechaFinFormateada}"/>
+                                        </td>
+                                        <td align="center"
+                                            style="display: #{cuentasTransitoriasEfectivoController.referenciaBuscar_1 == null ? 'none':'block'};  width: 20%;">
+                                            <h:outputText
+                                                    value="#{cuentasTransitoriasEfectivoController.referenciaBuscar_2}"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:define>
+
+    <ui:define name="botones">
+        <h:panelGroup id="botones">
+            <div class="refrescar" style="float: left;">
+                <a4j:status id="commonStatus">
+                    <f:facet name="start">
+                        <h:panelGroup>
+                            <h:graphicImage value="/images/ajax-loader.gif"/>
+                            <h:outputText value="#{etq.buscando}"></h:outputText>
+                        </h:panelGroup>
+                    </f:facet>
+                </a4j:status>
+            </div>
+            <div class="limpiar">
+                <h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+                                 styleClass="submit"
+                                 actionListener="#{cuentasTransitoriasEfectivoController.limpiar}"/>
+            </div>
+            <div class="buscar">
+                <a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+                                   styleClass="submit"
+                                   oncomplete='javascript:consultasPresentarResumen();'
+                                   action="#{cuentasTransitoriasEfectivoController.consultarAction}"
+                                   reRender="containerResultados,totalesConsultas,tablaResultados,botones,mensajeUsuario,panelResumen">
+                </a4j:commandButton>
+            </div>
+            <div class="editar"
+                 style="display:#{cuentasTransitoriasEfectivoController.consultaEjecutada?'inline':'none'};float:right;"
+                 id="botonEditarCriterios">
+                <input type="image" class="submit"
+                       src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+                       alt="Editar Criterios" title="Editar Criterios"
+                       onclick='javascript:consultasPresentarCriterios();return false;'/>
+            </div>
+        </h:panelGroup>
+    </ui:define>
+
+    <ui:define name="seccionContenido">
+        <h:panelGroup id="containerResultados">
+            <h:panelGroup rendered="#{cuentasTransitoriasEfectivoController.consultaEjecutada}">
+
+                <br/>
+
+                <table class="tablaGeneral" width="900px" cellspacing="0px">
+                    <tr>
+                        <th class="tituloTabla resaltarNegativoTotal" style="text-align: center">
+                            <h:outputText styleClass="texto" value="#{etq.custodio}"/>
+                        </th>
+                        <th class="tituloTabla resaltarNegativoTotal" style="text-align: center">
+                            <h:outputText styleClass="texto" value="#{etq.divisaMinus}"/>
+                        </th>
+                        <th class="tituloTabla resaltarNegativoTotal" style="text-align: center">
+                            <h:outputText styleClass="texto" value="#{etq.monto}"/>
+                        </th>
+                    </tr>
+                    <t:dataList var="folio" value="#{cuentasTransitoriasEfectivoController.negativos}"
+                                rowIndexVar="indice">
+                        <tr>
+                            <td style="text-align: center;"
+                                class="#{indice%2 == 0 ?'resaltarNegativoRenglon1':'resaltarNegativoRenglon2'}">
+                                <h:outputText styleClass="texto textoPeque12" value="#{folio.custodio}"/>
+                            </td>
+                            <td style="text-align: center;"
+                                class="#{indice%2 == 0 ?'resaltarNegativoRenglon1':'resaltarNegativoRenglon2'}">
+                                <h:outputText styleClass="texto textoPeque12" value="#{folio.divisa}"/>
+                            </td>
+                            <td style="text-align: center;"
+                                class="#{indice%2 == 0 ?'resaltarNegativoRenglon1':'resaltarNegativoRenglon2'}">
+                                <h:outputText value="#{folio.total}"
+                                              styleClass="texto textoPeque12"
+                                              style="font-weight:bold;"
+                                              converter="formatoMonedaConverter">
+                                    <f:convertNumber pattern="###,###,###,###,###,##0.00"/>
+                                </h:outputText>
+                            </td>
+                        </tr>
+                    </t:dataList>
+                    <tr style="background: transparent; border: none;">
+                        <td colspan="4" style="background: transparent; border: none;">
+                            <br/>
+                        </td>
+                    </tr>
+                </table>
+
+                <br/>
+
+                <table class="tablaGeneral" width="900px" cellspacing="0px">
+                    <t:dataList var="divisas"
+                                value="#{cuentasTransitoriasEfectivoController.foliosAgrupadosDtos}">
+                        <tr>
+                            <td class="tituloTabla" colspan="4" style="background: #acd0de; color: #017eaf;">
+                                <h:outputText value="#{divisas.divisa}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="tituloTabla" style="text-align: center">
+                                <h:outputText styleClass="texto" value="#{etq.referencia}"/>
+                            </th>
+                            <th class="tituloTabla" style="text-align: center">
+                                <h:outputText styleClass="texto" value="#{etq.divisaMinus}"/>
+                            </th>
+                            <th class="tituloTabla" style="text-align: center">
+                                <h:outputText styleClass="texto" value="#{etq.custodio}"/>
+                            </th>
+                            <th class="tituloTabla" style="text-align: center">
+                                <h:outputText styleClass="texto" value="#{etq.monto}"/>
+                            </th>
+                        </tr>
+                        <t:dataList var="folio" value="#{divisas.referencias}" rowIndexVar="indice">
+                            <tr>
+                                <td style="text-align: center;"
+                                    class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                    <a href="javascript:mostrarDetalleCuentaTransitoriaEfectivo(#{folio.folioRelacionado})">
+                                        <h:outputText styleClass="texto textoPeque12"
+                                                      value="#{folio.folioRelacionado}"/>
+                                    </a>
+                                </td>
+                                <td style="text-align: center;"
+                                    class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                    <h:outputText styleClass="texto textoPeque12" value="#{folio.divisa}"/>
+                                </td>
+                                <td style="text-align: center;"
+                                    class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                    <h:outputText styleClass="texto textoPeque12" value="#{folio.custodio}"/>
+                                </td>
+                                <td style="text-align: center;"
+                                    class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} #{folio.montoNegativo ? 'resaltarNegativo':''}">
+                                    <h:outputText value="#{folio.total}"
+                                                  styleClass="texto textoPeque12"
+                                                  style="font-weight:bold;"
+                                                  converter="formatoMonedaConverter">
+                                        <f:convertNumber pattern="###,###,###,###,###,##0.00"/>
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                        </t:dataList>
+                        <tr>
+                            <td colspan="3" class="tituloTabla">
+                                <h:outputText styleClass="texto" value="#{etq.totalMinus}"/>
+                            </td>
+                            <td class="tituloTabla  #{divisas.montoNegativo ? 'resaltarNegativoTotal':''}">
+                                <h:outputText value="#{divisas.monto}" converter="formatoMonedaConverter">
+                                    <f:convertNumber pattern="###,###,###,###,###,##0.00"/>
+                                </h:outputText>
+                            </td>
+                        </tr>
+                        <tr style="background: transparent; border: none;">
+                            <td colspan="4" style="background: transparent; border: none;">
+                                <br/>
+                            </td>
+                        </tr>
+                    </t:dataList>
+                </table>
+
+                <br/>
+
+                <table class="tablaGeneral" width="900px" cellspacing="0px">
+                    <tr>
+                        <th class="tituloTabla" style="text-align: center">
+                            <h:outputText styleClass="texto" value="#{etq.referencia}"/>
+                        </th>
+                        <th class="tituloTabla" style="text-align: center">
+                            <h:outputText styleClass="texto" value="#{etq.tipoMensaje}"/>
+                        </th>
+                        <th class="tituloTabla" style="text-align: center">
+                            <h:outputText styleClass="texto" value="#{etq.divisaMinus}"/>
+                        </th>
+                        <th class="tituloTabla" style="text-align: center">
+                            <h:outputText styleClass="texto" value="#{etq.monto}"/>
+                        </th>
+                        <th class="tituloTabla" style="text-align: center">
+                            <h:outputText styleClass="texto" value="#{etq.custodio}"/>
+                        </th>
+                        <th class="tituloTabla" style="text-align: center">
+                            <h:outputText styleClass="texto" value="#{etq.mensajeMinus}"/>
+                        </th>
+                        <th class="tituloTabla" style="text-align: center">
+                            <h:outputText styleClass="texto" value="#{etq.relacionar}"/>
+                        </th>
+                    </tr>
+                    <t:dataList value="#{cuentasTransitoriasEfectivoController.registrosNoReferenciados}"
+                                var="row" id="tablaRegistrosNoReferenciados" rowIndexVar="indice">
+                        <tr>
+                            <td style="text-align: center;"
+                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                <h:outputText styleClass="texto textoPeque12" value="#{row.referenciaOperacion}"/>
+                            </td>
+                            <td style="text-align: center;"
+                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                <h:outputText styleClass="texto textoPeque12" value="#{row.tipoMensaje}"/>
+                            </td>
+                            <td style="text-align: center;"
+                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                <h:outputText styleClass="texto textoPeque12" value="#{row.divisa}"/>
+                            </td>
+                            <td style="text-align: center;"
+                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                <h:outputText value="#{row.total}"
+                                              styleClass="texto textoPeque12"
+                                              style="font-weight:bold;"
+                                              converter="formatoMonedaConverter">
+                                    <f:convertNumber pattern="###,###,###,###,###,##0.00"/>
+                                </h:outputText>
+                            </td>
+                            <td style="text-align: center;"
+                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                <h:outputText styleClass="texto textoPeque12" value="#{row.custodio}"/>
+                            </td>
+                            <td style="text-align: center;"
+                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                <a href="javascript:mostrarMensajeIso(#{row.idRegistro});"
+                                   title="Muestra el mensaje Swift">
+                                    <img src="#{facesContext.externalContext.requestContextPath}/images/msg.gif"
+                                         alt="Mensaje ISO"/>
+                                </a>
+                            </td>
+                            <td style="text-align: center;"
+                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                <h:selectBooleanCheckbox styleClass="textoControles" value="#{row.relacionar}">
+                                    <a4j:jsFunction name="actualizarSeleccion"
+                                                    action="#{cuentasTransitoriasEfectivoController.asignarAction()}"/>
+                                </h:selectBooleanCheckbox>
+                            </td>
+                        </tr>
+                    </t:dataList>
+                </table>
+
+                <table cellpadding="0" cellspacing="0" border="0" align="center"
+                       width="900px">
+                    <tr align="right">
+                        <td align="right">
+                            <h:panelGroup id="botonesExportar">
+                                <h:panelGroup
+                                        style="display: #{cuentasTransitoriasEfectivoController.exportarContenido ? 'inline' : 'none'}">
+                                    <h:outputText value="Exportar los resultados"></h:outputText>
+                                    <h:commandButton
+                                            id="generarTXT"
+                                            action="consultaCuentaTransitoriaEfectivoTXT"
+                                            actionListener="#{cuentasTransitoriasEfectivoController.generarReportes}"
+                                            style="display: 'inline'"
+                                            image="/images/TXT.gif"
+                                            title="Crear el archivo de consulta de Cuentas de Tesoreria en Efectivo - TXT"
+                                            onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf', 'generarTXT']);"/>
+                                    &#160;
+                                    <h:commandButton
+                                            id="generarExcel"
+                                            action="consultaCuentaTransitoriaEfectivoXLS"
+                                            actionListener="#{cuentasTransitoriasEfectivoController.generarReportes}"
+                                            style="display: 'inline'"
+                                            image="/images/excel-file.gif"
+                                            title="Crear el archivo de consulta de Cuentas de Tesoreria en Efectivo - XLS"
+                                            onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf', 'generarTXT']);"/>
+                                    &#160;
+                                    <h:commandButton
+                                            id="generarPdf"
+                                            action="consultaCuentaTransitoriaEfectivoPDF"
+                                            actionListener="#{cuentasTransitoriasEfectivoController.generarReportes}"
+                                            style="display: 'inline'"
+                                            image="/images/pdf.gif"
+                                            title="Crear el archivo de consulta de Cuentas de Tesoreria en Efectivo - PDF"
+                                            onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf', 'generarTXT']);"/>
+                                    &#160;
+                                    <div id="monitorPeticionReporte" style="display: none;">
+                                        <h:panelGroup id="panelMonitorPeticionReporte">
+                                            <h:graphicImage value="/images/ajax-loader.gif"/>
+                                            &#160;&#160;
+                                            <h:outputText value="#{etq.reporteEnProceso}"/>
+                                            <a4j:commandButton id="btnActualizarEstadoPeticion"
+                                                               image="/images/transparent.gif"
+                                                               styleClass="submit"
+                                                               actionListener="#{cuentasTransitoriasEfectivoController.actualizarEstadoPeticion}"
+                                                               reRender="panelMonitorPeticionReporte"
+                                                               oncomplete="desbloquearBotonesReportes(#{cuentasTransitoriasEfectivoController.peticionReporteCompleta}, ['generarTXT','generarExcel', 'generarPdf']);"/>
+                                        </h:panelGroup>
+                                    </div>
+
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="tablaGeneral" width="900px" cellspacing="0px">
+                    <tr>
+                        <th class="tituloTabla" style="text-align: center" colspan="3">
+                            <h:outputText styleClass="texto" value="#{etq.agrupacionMensajes}"/>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td width="20%">
+                            <h:outputText styleClass="texto" value="#{etq.referenciaAsignar}"/>
+                        </td>
+                        <td width="20%">
+                            <h:inputText autocomplete="off" id="referenciaAsignar"
+                                         value="#{cuentasTransitoriasEfectivoController.referenciaAsignar}" size="20"
+                                         maxlength="16" styleClass="textoControles" tabindex="120"/>
+                        </td>
+                        <td width="60%" style="text-align: center;">
+                            <div class="asignarBoveda">
+                                <a4j:commandButton id="botonAsignar" image="/images/transparent.gif"
+                                                   styleClass="submit"
+                                                   action="#{cuentasTransitoriasEfectivoController.asignarAction}"
+                                                   reRender="containerResultados,totalesConsultas,tablaResultados,botones,mensajeUsuario,panelResumen">
+                                </a4j:commandButton>
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:define>
+
+
+</ui:composition>
+</html>
+

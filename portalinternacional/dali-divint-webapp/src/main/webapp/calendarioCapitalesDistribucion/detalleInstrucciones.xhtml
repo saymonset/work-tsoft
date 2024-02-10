@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:t="http://myfaces.apache.org/tomahawk">
+
+    <ui:composition template="/layoutPopUp.xhtml"> 
+    	<ui:define name="head">	
+    		<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/calendarioHistoricoCapitales.js">
+				
+			</script>				
+		</ui:define>
+        <ui:define name="subtitulo">
+        </ui:define>
+        <ui:define name="body">
+        	<h:form id="instruccionesForm">         
+            	<h:outputText value="#{etq.instruccionesTitulo}" />
+            	<h:outputText value="#{instruccionCapitalesBean.init}" />
+            	<a4j:keepAlive beanName="instruccionCapitalesBean" />
+            	<h:panelGroup id="mensajeUsuario">
+            <div style="min-height: 100%;">
+                <rich:messages warnClass="warning" infoClass="info"
+                    errorClass="error" ajaxRendered="true" showDetail="false"
+                    showSummary="true" layout="list">
+                    <f:facet name="infoMarker">
+                        <h:panelGroup>
+                            <h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+                    </f:facet>
+
+                    <f:facet name="errorMarker">
+                        <h:panelGroup>
+                            <h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+                    </f:facet>
+                </rich:messages>
+
+                <div id="divWarnings" class="warning" style="display: none;" >
+                    <p id="textoWarning"></p>
+                </div>
+            </div>
+        </h:panelGroup>               							
+		 <h:graphicImage value="/images/blank.gif" width="900px"
+	                    height="1px">
+	     </h:graphicImage>
+         <table width="100%">
+         	<tr>
+           		<td align="left" width="100%" colspan="2">
+      				<h:panelGroup id="tablaResultados" rendered="#{not empty instruccionCapitalesBean.instruccion}">
+      					<table border="0" class="tablaGeneral" width="100%" cellspacing="0px"
+                  				style="display: #{empty instruccionCapitalesBean.instruccion ? 'none' : 'inline-table'}">                           
+             		 		<tr>
+                    		 	<th class="tituloTabla">
+                            		<h:outputText value="#{etq.folioMensaje}" />
+                            	</th>
+                            	<th class="tituloTabla"> 
+                            		<h:outputText value="#{etq.insLiga}" />                            		
+                            	</th>                            	
+                            	<th class="tituloTabla"> 
+                            		<h:outputText value="#{etq.insTagsEliminacion}" />                            		
+                            	</th>                            	
+                            	<th class="tituloTabla">
+                                	<h:outputText value="#{etq.insOpcionesMensaje}" />                                
+                                </th>                                                     	                            	                                                                                                                              
+							</tr>														                                                     
+                            <tr>                                
+                            	<td class = "renglonTablaUno centrado" >
+                            		<h:outputText value="#{instruccionCapitalesBean.instruccion.idHistorico}" rendered="#{!empty instruccionCapitalesBean.instruccion.idHistorico}" />
+                            		<h:outputText value="-" rendered="#{empty instruccionCapitalesBean.instruccion.idHistorico}" />
+                            		
+                            	</td>
+                            	<td class = "renglonTablaUno centrado" >
+                            		<h:outputText value="#{instruccionCapitalesBean.instruccion.liga}" rendered="#{!empty instruccionCapitalesBean.instruccion.liga}"/>
+                            		<h:outputText value="-" rendered="#{empty instruccionCapitalesBean.instruccion.liga}"/>                                		
+                            	</td>                                	
+                            	<td class = "renglonTablaUno centrado" >                                			
+                            			<h:outputText value="#{instruccionCapitalesBean.instruccion.tagsEliminacion}" rendered="#{!empty instruccionCapitalesBean.instruccion.tagsEliminacion}"/>
+                            			<h:outputText value="-" rendered="#{empty instruccionCapitalesBean.instruccion.tagsEliminacion}"/>
+                            	</td>
+                            	<td class = "renglonTablaUno centrado" >
+                            		<h:outputText value="#{instruccionCapitalesBean.instruccion.opcionesMensajes}" rendered="#{!empty instruccionCapitalesBean.instruccion.opcionesMensajes}"/>
+                            		<h:outputText value="-" rendered="#{empty instruccionCapitalesBean.instruccion.opcionesMensajes}"/>
+                            		
+                            	</td>                                               	                                				                                                                             
+                            </tr>                                                                                            
+                    	</table>                    
+             		</h:panelGroup>
+             		<br/>
+             		<br/>
+             		<br/>     			
+                  </td>
+                 </tr>
+                 <tr>
+                 	<td align="left" width="50%" class="recuadroTabla">
+                 		<h:panelGroup id="tablaForm" >
+      						<table width="50%" cellspacing="0px" class="tablaCriterios" align="center">
+      							<tr>
+      								<td align="right" colspan="2">
+      									<h:outputText styleClass="texto" value="#{etq.insLiga}" />		      								
+      								</td>
+      								<td></td>
+      								<td align="left">
+      									
+      									<h:inputText styleClass="textoControles campoNumerico" value="#{instruccionCapitalesBean.liga}" 
+      										size="10" autocomplete="off" maxlength="16" tabindex="10" onblur="buscaIsin();"/>
+      									
+      								</td>
+      								<td align="left" colspan="2" width="50%">
+	      								<h:panelGroup id="panelMensaje" >
+	      									<h:outputText id="mensajeIsin" styleClass="#{instruccionCapitalesBean.isinValidoRequerido ? 'textoExitoIsin' : 'textoErrorIsin'}" 
+	      										value="#{instruccionCapitalesBean.mensajeLiga}" rendered="#{instruccionCapitalesBean.muestraMensaje}" />
+	      								</h:panelGroup>	      									
+      								</td>
+      							</tr>
+      							<tr>
+      								<td align="right" colspan="2">
+      									<h:outputText styleClass="texto" value="#{etq.insTagsEliminacion}" />		      								
+      								</td>
+      								<td></td>
+      								<td align="left" colspan="3">
+      									<h:selectManyListbox styleClass="textoControles" value = "#{instruccionCapitalesBean.tagsSeleccionados}"  tabindex="20" rows="10" disabled="#{instruccionCapitalesBean.contieneTags}">      										 
+      										 <f:selectItems value="#{instruccionCapitalesBean.tagsEliminacion}" />
+      									</h:selectManyListbox>
+      								</td>      							
+      							</tr>
+      							<tr>
+      								<td align="right" colspan="2">
+      									<h:outputText styleClass="texto" value="#{etq.insOpcionesMensaje}" />
+      								</td>
+      								<td></td>      								
+      								<td align="left" colspan="3">
+      									<h:selectManyListbox styleClass="textoControles" value = "#{instruccionCapitalesBean.tagsOpcionesIso}"  tabindex="30" rows="10" disabled="#{instruccionCapitalesBean.contieneOpciones}" >      										 
+      										 <f:selectItems value="#{instruccionCapitalesBean.opcionesMensaje}" />
+      									</h:selectManyListbox>
+      								</td>      							
+      							</tr>      				                				
+                  			</table>
+                  		</h:panelGroup>			                 	
+                 	</td>
+                 </tr>
+                 <tr>
+                 	<td align="right" width="50%">
+                 		<h:panelGroup id="tablaBotones" >
+                 			<h:inputHidden id="indicadorCambio" value="#{instruccionCapitalesBean.sufrioModificacion}" />
+                 			<table width="20%" cellspacing="0px" align="right">
+                 				<tr>
+                 					<td align="right">
+										<div style="display:none;">							
+ 											<a4j:commandButton id="buscarIsin" 
+ 												styleClass="submit"											
+ 												requestDelay="1000"
+ 												actionListener="#{instruccionCapitalesBean.buscaIsin}" reRender="panelMensaje"/>									
+ 										</div>     							
+          							</td>
+          							<td align="right">
+     									<div>								
+											<a4j:commandButton id="botonEliminar" image="/images/eliminar.png" 
+												rendered="#{not empty instruccionCapitalesBean.instruccion.id}"
+												styleClass="submit"											
+												requestDelay="1000"
+												actionListener="#{instruccionCapitalesBean.eliminarInstruccion}"																						
+												tabindex="40" title="#{etq.insEliminarIns}" oncomplete="consultaGeneral();" 
+												reRender="instruccionesForm"/>										
+										</div>     							
+          							</td>
+             						<td align="left">
+             							<div class="limpiar">
+			                				<a4j:commandButton id="botonLimpiar" image="/images/transparent.gif" 
+					                				styleClass="submit" 
+					                				requestDelay="1000" tabindex="50"
+					                				actionListener="#{instruccionCapitalesBean.limpiar}"
+					                				reRender="instruccionesForm"/>
+	           							</div>		
+             						</td>
+             						<td align="left">             					
+	           							<div class="guardar">
+												<a4j:commandButton id="botonGuardar" image="/images/transparent.gif"
+													styleClass="submit"											
+													requestDelay="1000"
+													actionListener="#{instruccionCapitalesBean.guardarIntruccion}"													
+													tabindex="60" oncomplete="consultaGeneral();" 
+													reRender="instruccionesForm"/>										
+										</div>	             							             							   		
+             						</td>
+             					</tr>
+                 			</table>
+                 		</h:panelGroup>
+                 	</td>
+                 </tr>                                 
+        	</table>
+		</h:form>				 
+   	</ui:define>        
+ </ui:composition>
+</html>

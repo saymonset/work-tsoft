@@ -1,0 +1,794 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich" xmlns:t="http://myfaces.apache.org/tomahawk">
+    <!-- DECORATE -->
+
+    <ui:decorate template="#{facesContext.externalContext.requestContextPath}/layoutConsultas.xhtml">
+
+        <ui:define name="head">
+            <script language="javascript" type="text/javascript"
+                src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js"></script>
+            <script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/consultaBitacoraEnvOp.js"></script>
+        </ui:define>
+        <ui:define name="tituloSeccion">
+            <h:outputText value="#{etq.divisionInternacional}" />
+        </ui:define>
+        <ui:define name="subtituloSeccion">
+            <h:outputText value="#{etq.sistemaIntCot}" />
+        </ui:define>
+
+        <ui:define name="tituloEncabezado">
+            <h:outputText value="#{etq.bitacoraEnvOp}"></h:outputText>
+        </ui:define>
+        <ui:define name="criterios">
+            <a4j:keepAlive beanName="consultaBitacoraEnvOpBean" />
+            <h:outputText value="#{consultaBitacoraEnvOpBean.init}" />
+            <h:panelGroup id="panelCriterios">
+                <div style='display: "inline"' id="divCriterios">
+                    <table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="center">
+                        <tr>
+                            <td class="recuadroTabla">
+                                <table class="tablaCriterios">
+                                    <tr align="center">
+                                        <td nowrap="true" colspan="2" align="center">
+                                            <b> <h:outputText styleClass="texto" value="#{etq.agenteFirmado}" /> </b>
+                                        </td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td>
+                                            <h:outputText styleClass="texto" value="#{etq.participante}" />
+                                        </td>
+                                        <td>
+                                            <h:outputText styleClass="texto" value="#{etq.cuentaMinus}" />
+                                        </td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td>
+
+                                            <h:panelGroup>
+                                                <h:inputText autocomplete="off" id="idFolioTraspasante"
+                                                    value="#{consultaBitacoraEnvOpBean.idFolioTraspasante}" size="5" maxlength="5"
+                                                    styleClass="textoControles textoParticipante campoAlphaNumericoAsterisco"
+                                                    tabindex="10" />
+                                                <rich:suggestionbox for="idFolioTraspasante"
+                                                    suggestionAction="#{seleccionarPosicionesBean.buscarParticipante}"
+                                                    var="coincidencia"
+                                                    fetchValue="#{coincidencia.tipoInstitucion.claveTipoInstitucion}#{coincidencia.folioInstitucion}"
+                                                    minChars="1" width="200" nothingLabel="Sin coincidencias">
+                                                    <h:column>
+                                                        <h:outputText
+                                                            value="#{coincidencia.tipoInstitucion.claveTipoInstitucion}#{coincidencia.folioInstitucion}" /> - <h:outputText
+                                                            value="#{coincidencia.nombreCorto}" />
+                                                    </h:column>
+                                                </rich:suggestionbox>
+                                            </h:panelGroup>
+
+                                        </td>
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:inputText autocomplete="off" id="cuentaTraspasante" size="4"
+                                                    styleClass="textoControles textoCuenta campoNumericoAsterisco"
+                                                    readonly="false" value="#{consultaBitacoraEnvOpBean.params.cuentaTrasp}"
+                                                    tabindex="20" />
+                                                <input type="hidden" id="nombre_id_folio_traspasante"
+                                                    name="nombre_id_folio_traspasante" value="daliForm:idFolioTraspasante" />
+                                                <rich:suggestionbox for="cuentaTraspasante"
+                                                    suggestionAction="#{seleccionarPosicionesBean.buscarCuentaTraspasante}"
+                                                    var="coincidencia" fetchValue="#{coincidencia.cuenta}" minChars="1"
+                                                    width="350" nothingLabel="Sin coincidencias">
+                                                    <h:column>
+                                                        <h:outputText styleClass="texto" value="#{coincidencia.cuenta}" /> - <h:outputText
+                                                            value="#{coincidencia.nombreCuenta}" />
+                                                    </h:column>
+
+                                                </rich:suggestionbox>
+                                            </h:panelGroup>
+                                        </td>
+
+
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="recuadroTabla" align="center">
+                                <table class="tablaCriterios" align="center">
+                                    <tr>
+                                        <td colspan="4" align="center">
+                                            <b> <h:outputText styleClass="texto" value="#{etq.claveValor}" /> </b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.tv}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.emisoraMinus}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.serieMinus}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.cuponMinus}" />
+                                        </td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:inputText autocomplete="off" id="tipoValor" value="#{consultaBitacoraEnvOpBean.params.tv}"
+                                                    size="7" maxlength="4"
+                                                    styleClass="textoControles textoTipoValor campoAlphaNumericoAsterisco"
+                                                    tabindex="30" />
+                                                <rich:suggestionbox for="tipoValor"
+                                                    suggestionAction="#{seleccionarPosicionesBean.buscarTiposValorPorPrefijo}"
+                                                    var="coincidencia" fetchValue="#{coincidencia.claveTipoValor}" minChars="1"
+                                                    width="300" immediate="false" nothingLabel="Sin coincidencias">
+                                                    <h:column>
+                                                        <h:outputText value="#{coincidencia.claveTipoValor}" /> - <h:outputText
+                                                            value="#{coincidencia.descripcion}" />
+                                                    </h:column>
+                                                </rich:suggestionbox>
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:inputText autocomplete="off" id="emisora" value="#{consultaBitacoraEnvOpBean.params.emisora}"
+                                                    size="7" maxlength="7"
+                                                    styleClass="textoControles textoEmisora campoAlphaNumericoAsterisco"
+                                                    tabindex="40" />
+                                                <rich:suggestionbox for="emisora"
+                                                    suggestionAction="#{seleccionarPosicionesBean.buscarEmisorasPorPrefijo}"
+                                                    var="coincidencia" fetchValue="#{coincidencia.clavePizarra}" minChars="1"
+                                                    width="300" immediate="false" nothingLabel="Sin coincidencias">
+                                                    <h:column>
+                                                        <h:outputText value="#{coincidencia.clavePizarra}" />
+                                                    </h:column>
+                                                </rich:suggestionbox>
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:inputText autocomplete="off" id="serie" value="#{consultaBitacoraEnvOpBean.params.serie}" size="7"
+                                                    maxlength="6" styleClass="textoControles textoSerie campoAlphaNumericoAsterisco"
+                                                    tabindex="50" />
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                            <h:inputText autocomplete="off" id="cupon" value="#{consultaBitacoraEnvOpBean.params.cupon}" size="7"
+                                                maxlength="4" styleClass="textoControles campoAlphaNumerico textoCupon"
+                                                tabindex="60" />
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <h:panelGroup>
+                                                <a href="javascript: mostrarPosiciones();" tabindex="70"> <h:graphicImage
+                                                        value="/images/search.png"></h:graphicImage> <h:outputText
+                                                        value="#{etq.buscarPosicionMinus}" styleClass="texto" /> </a>&#160;&#160;&#160;
+                                    <a href="javascript:limpiarDatosPosicion();" tabindex="80"> <h:graphicImage
+                                                        value="/images/page_refresh.png"></h:graphicImage> <h:outputText
+                                                        value="#{etq.limpiarPosicionMinus}" styleClass="texto" /> </a>
+
+                                            </h:panelGroup>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </td>
+                            <td class="recuadroTabla" align="center">
+                                <table class="tablaCriterios" align="center">
+                                    <tr>
+                                        <td nowrap="true" align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.estatus}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center">
+                                            <h:selectOneMenu styleClass="texto"
+                                                value="#{consultaBitacoraEnvOpBean.params.estatusRegistro}" tabindex="90">
+                                                <f:selectItem itemValue="" itemLabel="Todos" />
+                                                <f:selectItem itemValue="EN" itemLabel="EN" />
+                                                <f:selectItem itemValue="NE" itemLabel="NE" />
+                                                <f:selectItem itemValue="ACK" itemLabel="ACK" />
+                                                <f:selectItem itemValue="NAK" itemLabel="NAK" />
+                                            </h:selectOneMenu>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="recuadroTabla" align="center">
+                                <table class="tablaCriterios" align="center">
+                                    <tr align="center">
+                                        <td nowrap="true">
+                                            <h:outputText styleClass="texto" value="#{etq.fechaConcertacionMinus}" />
+                                        </td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td>
+											<rich:calendar id="fechaConcertacion" 
+												value="#{consultaBitacoraEnvOpBean.params.fechaConcertacion}"
+												datePattern="dd/MM/yyyy"
+												inputSize="11"
+												inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;"
+												isDayEnabled="isDayEnabled" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="recuadroTabla" align="center">
+                                <table class="tablaCriterios" align="center">
+                                    <tr align="center">
+                                        <td nowrap="true">
+                                            <h:outputText styleClass="texto" value="#{etq.fechaLiquidacionMinus}" />
+                                        </td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td>
+											<rich:calendar id="fechaLiquidacion" 
+												value="#{consultaBitacoraEnvOpBean.params.fechaLiquidacion}"
+												datePattern="dd/MM/yyyy"
+												inputSize="11"
+												inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;"
+												isDayEnabled="isDayEnabled" />
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </td>
+                            <td class="recuadroTabla" align="center">
+                                <table class="tablaCriterios" align="center">
+                                    <tr align="center">
+                                        <td nowrap="true">
+                                            <h:outputText styleClass="texto" value="#{etq.folioDescripcionMinus}" />
+                                        </td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td>
+                                            <h:inputText autocomplete="off" value="#{consultaBitacoraEnvOpBean.params.referenciaOperacion}"
+                                                styleClass="textoControles campoNumerico" size="20" maxlength="16" tabindex="120" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+
+            </h:panelGroup>
+			<h:panelGroup id="panelResumen">
+            	<h:panelGroup rendered="#{consultaBitacoraEnvOpBean.consultaEjecutada}">
+            		<div id="divResumen" style="display: #{consultaBitacoraEnvOpBean.consultaEjecutada ? 'inline' : 'none'}">
+            			<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+            				<tr>
+            					<td class="recuadroTabla">
+            						<table class="tablaCriterios texto" border="0" style="text-align: center">
+            							<tr>
+            								<td nowrap="true" colspan="2" align="center">
+            									<b> <h:outputText styleClass="texto" value="#{etq.agenteFirmado}" /> </b>
+											</td>											
+            							</tr>
+            							<tr align="center">
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{etq.participante}" />
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{etq.cuentaMinus}" />
+	                                        </td>
+                                    	</tr>
+                                    	<tr align="center">
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaBitacoraEnvOpBean.idFolioTraspasante}" rendered="#{!empty consultaBitacoraEnvOpBean.idFolioTraspasante}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{empty consultaBitacoraEnvOpBean.idFolioTraspasante}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaBitacoraEnvOpBean.params.cuentaTrasp}" rendered="#{!empty consultaBitacoraEnvOpBean.params.cuentaTrasp}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty consultaBitacoraEnvOpBean.params.cuentaTrasp}"/>
+	                                        </td>
+                                    	</tr>
+									</table>
+            					</td>
+           						<td class="recuadroTabla">
+            						<table class="tablaCriterios texto" border="0" style="text-align: center">
+            							<tr>
+            								<td nowrap="true" colspan="4" align="center">
+            									<b> <h:outputText styleClass="texto" value="#{etq.claveValor}" /> </b>
+											</td>											
+            							</tr>
+            							<tr align="center">
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{etq.tv}" />
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{etq.emisoraMinus}" />
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{etq.serieMinus}" />
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{etq.cuponMinus}" />
+	                                        </td>
+                                    	</tr>
+                                    	<tr align="center">
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaBitacoraEnvOpBean.params.tv}" rendered="#{!empty consultaBitacoraEnvOpBean.params.tv}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{empty consultaBitacoraEnvOpBean.params.tv}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaBitacoraEnvOpBean.params.emisora}" rendered="#{!empty consultaBitacoraEnvOpBean.params.emisora}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty consultaBitacoraEnvOpBean.params.emisora}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaBitacoraEnvOpBean.params.serie}" rendered="#{!empty consultaBitacoraEnvOpBean.params.serie}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty consultaBitacoraEnvOpBean.params.serie}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaBitacoraEnvOpBean.params.cupon}" rendered="#{!empty consultaBitacoraEnvOpBean.params.cupon}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{empty consultaBitacoraEnvOpBean.params.cupon}"/>
+	                                        </td>
+                                    	</tr>                                    	
+									</table>
+            					</td>
+            					<td class="recuadroTabla">
+            						<table class="tablaCriterios texto" border="0" style="text-align: center">
+            							<tr>
+            								<td>
+            									<h:outputText styleClass="texto" value="#{etq.estatus}" />
+            								</td>
+            							</tr>
+            							<tr>
+            								<td>
+            									<h:outputText styleClass="texto" value="#{consultaBitacoraEnvOpBean.params.estatusRegistro}" rendered="#{!empty consultaBitacoraEnvOpBean.params.estatusRegistro}"/>
+            									<h:outputText styleClass="texto" value="TODOS" rendered="#{empty consultaBitacoraEnvOpBean.params.estatusRegistro}"/>
+            								</td>
+            							</tr>
+            						</table>
+            					</td>            				
+            				</tr>
+            				<tr>
+            					<td class="recuadroTabla">
+            						<table class="tablaCriterios texto" border="0" style="text-align: center">
+            							<tr>
+            								<td>
+            									<h:outputText styleClass="texto" value="#{etq.fechaConcertacionMinus}" />
+            								</td>
+            							</tr>
+            							<tr>
+            								<td>
+            									<h:outputText styleClass="texto" value="#{consultaBitacoraEnvOpBean.params.fechaConcertacion}" converter="formatoFechaCortaConverter"/>
+            								</td>
+            							</tr>
+            						</table>
+            					</td>
+            					<td class="recuadroTabla">
+            						<table class="tablaCriterios texto" border="0" style="text-align: center">
+            							<tr>
+            								<td>
+            									<h:outputText styleClass="texto" value="#{etq.fechaLiquidacionMinus}" />
+            								</td>
+            							</tr>
+            							<tr>
+            								<td>
+            									<h:outputText styleClass="texto" value="#{consultaBitacoraEnvOpBean.params.fechaLiquidacion}" converter="formatoFechaCortaConverter"/>
+            								</td>
+            							</tr>
+            						</table>
+            					</td>
+            					<td class="recuadroTabla">
+            						<table class="tablaCriterios texto" border="0" style="text-align: center">
+            							<tr>
+            								<td>
+            									<h:outputText styleClass="texto" value="#{etq.folioDescripcionMinus}" />
+            								</td>
+            							</tr>
+            							<tr>
+            								<td>
+            									<h:outputText styleClass="texto" value="#{consultaBitacoraEnvOpBean.params.referenciaOperacion}" rendered="#{!empty consultaBitacoraEnvOpBean.params.referenciaOperacion}"/>
+            									<h:outputText styleClass="texto" value="TODOS" rendered="#{empty consultaBitacoraEnvOpBean.params.referenciaOperacion}"/>
+            								</td>
+            							</tr>
+            						</table>
+            					</td>
+            				</tr>
+            			</table>
+            		</div>
+            	</h:panelGroup>            
+            </h:panelGroup>
+
+        </ui:define>
+
+        <ui:define name="seccionContenido">
+            <h:panelGroup id="totalesConsultas">
+                <h:panelGroup
+                    rendered="#{consultaBitacoraEnvOpBean.consultaEjecutada and not empty consultaBitacoraEnvOpBean.resultados.registros}">
+
+                    <table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="center">
+                        <tr align="center">
+                            <td class="recuadroTabla" colspan="4">
+                                <h:outputText styleClass="texto" value="#{etq.totalesMinus}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputText styleClass="texto" value="#{etq.nak}" />
+                                &#160;
+                                <h:outputText styleClass="texto" value="#{etq.dosPuntos}" />
+                                &#160;
+                                <h:outputText styleClass="texto" value="#{consultaBitacoraEnvOpBean.resultados.valores['NAK']}" />
+                            </td>
+                            <td>
+                                <span class="textoAzulDetalle"> <h:outputText styleClass="texto" value="#{etq.ack}" /> </span>
+                                &#160;
+                                <span class="textoAzulDetalle"> <h:outputText styleClass="texto" value="#{etq.dosPuntos}" />
+                                </span> &#160;
+                                <h:outputText styleClass="texto" value="#{consultaBitacoraEnvOpBean.resultados.valores['ACK']}" />
+
+                            </td>
+                            <td>
+                                <span class="textoAzulDetalle"><h:outputText styleClass="textoAzulDetalle"
+                                        value="#{etq.noEnviados}" /> </span> &#160;
+                                <span class="textoAzulDetalle"> <h:outputText styleClass="texto" value="#{etq.dosPuntos}" />
+                                </span> &#160;
+                                <h:outputText styleClass="texto" value="#{consultaBitacoraEnvOpBean.resultados.valores['NE']}" />
+                            </td>
+                            <td>
+                                <span class="textoAzulDetalle"><h:outputText styleClass="texto" value="#{etq.enviados}" />
+                                </span> &#160;
+                                <span class="textoAzulDetalle"><h:outputText styleClass="texto" value="#{etq.dosPuntos}" />
+                                </span> &#160;
+                                <h:outputText styleClass="texto" value="#{consultaBitacoraEnvOpBean.resultados.valores['EN']}" />
+                            </td>
+                        </tr>
+                    </table>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup id="containerInfoPaginacionBitacora">
+                <h:panelGroup
+                    rendered="#{consultaBitacoraEnvOpBean.consultaEjecutada and not empty consultaBitacoraEnvOpBean.resultados.registros}">
+                    <table width="100%" border="0">
+                        <tr>
+                            <td align="left" class="textoEstadoCuenta">
+                                <a4j:commandLink id="control_bitacora_primero"
+                                    action="#{consultaBitacoraEnvOpBean.irPrimeraPagina}"
+                                    rendered="#{consultaBitacoraEnvOpBean.irAlPrimero}"
+                                    reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                    <img src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+                                        border="0" />
+                                </a4j:commandLink>
+
+                                <a4j:commandLink id="control_bitacora_atras_fast"
+                                    action="#{consultaBitacoraEnvOpBean.retrocederPaginasRapido}"
+                                    rendered="#{consultaBitacoraEnvOpBean.retrocederRapido}"
+                                    reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                    <img src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+                                        border="0" />
+                                </a4j:commandLink>
+
+                                <a4j:commandLink id="control_bitacora_atras"
+                                    action="#{consultaBitacoraEnvOpBean.retrocederPagina}"
+                                    rendered="#{consultaBitacoraEnvOpBean.retroceder}"
+                                    reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                    <img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+                                        border="0" />
+                                </a4j:commandLink>
+                                <a4j:commandLink id="control_bitacora_adelante"
+                                    action="#{consultaBitacoraEnvOpBean.avanzarPagina}"
+                                    rendered="#{consultaBitacoraEnvOpBean.avanzar}"
+                                    reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                    <img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+                                        border="0" />
+                                </a4j:commandLink>
+
+                                <a4j:commandLink id="control_bitacora_adelante_fast"
+                                    action="#{consultaBitacoraEnvOpBean.avanzarPaginasRapido}"
+                                    rendered="#{consultaBitacoraEnvOpBean.avanzarRapido}"
+                                    reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                    <img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+                                        border="0" />
+
+                                </a4j:commandLink>
+
+                                <a4j:commandLink id="control_bitacora_ultimo" action="#{consultaBitacoraEnvOpBean.irUltimaPagina}"
+                                    rendered="#{consultaBitacoraEnvOpBean.irAlUltimo}"
+                                    reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                    <img src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+                                        border="0" />
+                                </a4j:commandLink>
+
+                                <br />
+								<h:outputText value="#{etq.mostrando}"
+									styleClass="textoResumen" />
+								<h:outputText value="#{consultaBitacoraEnvOpBean.numeroPagina}"
+									styleClass="textoResumen" />
+								<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+								<h:outputText value="#{consultaBitacoraEnvOpBean.totalPaginas}"
+									styleClass="textoResumen" />
+								<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+								&#160;&#160;&#160;
+								<h:outputText
+									value="#{consultaBitacoraEnvOpBean.paginaVO.totalRegistros}"
+									styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+								&#160;
+								<h:outputText styleClass="textoResumen"
+									value="#{etq.registrosEncontrados}" />
+											
+                            </td>
+                            <td align="right" class="textoEstadoCuenta">
+                                <h:outputText escape="false" value="#{etq.registrosPorPagina}" styleClass="texto" />
+                                <h:selectOneMenu id="tamanioPagina" styleClass="texto"
+                                    value="#{consultaBitacoraEnvOpBean.paginaVO.registrosXPag}">
+                                    <f:selectItem itemLabel="1" itemValue="1" />
+                                    <f:selectItem itemLabel="2" itemValue="2" />
+                                    <f:selectItem itemLabel="5" itemValue="5" />
+                                    <f:selectItem itemLabel="10" itemValue="10" />
+                                    <f:selectItem itemLabel="20" itemValue="20" />
+                                    <f:selectItem itemLabel="50" itemValue="50" />
+                                    <a4j:support event="onchange"
+                                        reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar"
+                                        actionListener="#{consultaBitacoraEnvOpBean.buscarOperaciones}" />
+                                </h:selectOneMenu>
+                            </td>
+                        </tr>
+                    </table>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup id="containerResultados">
+                <h:panelGroup rendered="#{consultaBitacoraEnvOpBean.consultaEjecutada}">
+
+                    <t:dataTable id="noExistenResultados" value="#{consultaBitacoraEnvOpBean.resultados}"
+                        styleClass="tablaGeneral" headerClass="tituloTabla" width="100%" footerClass="tituloTabla" border="0"
+                        cellpadding="3px" cellspacing="0px" columnClasses="everyColumn"
+                        rowClasses="renglonTablaUno, renglonTablaDos"
+                        rendered="#{empty consultaBitacoraEnvOpBean.resultados.registros}">
+
+                        <t:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{etq.sinResultados}"></h:outputText>
+                            </f:facet>
+
+                        </t:column>
+                    </t:dataTable>
+                </h:panelGroup>
+                <h:panelGroup id="tablaResultados">
+                	<table border="0" class="tablaGeneral" width="900px"
+						cellspacing="0px" style="display: #{(consultaBitacoraEnvOpBean.consultaEjecutada and not empty consultaBitacoraEnvOpBean.resultados.registros )?'inLine':'none'}; width: 900px; table-layout: fixed">
+						<tr>
+							<td colspan="16" ><img src="#{facesContext.externalContext.requestContextPath}/images/blank.gif" width="900px" height="0px"  style="height: 1px"/></td>
+						</tr>
+							<tr>
+								<th colspan="3" class="tituloTabla">
+									<h:outputText value="#{etq.referenciaMensaje}" />
+								</th>
+								<th colspan="3" class="tituloTabla">
+									<h:outputText value="#{etq.folioDescripcionMinus}" />
+								</th>
+								<th colspan="3" class="tituloTabla">
+									<h:outputText value="#{etq.idMinus}#{etq.folioMinus} #{etq.traspasanteMinus}" />
+								</th>
+								<th colspan="2" class="tituloTabla">
+									<h:outputText value="#{etq.cuentaMinus} #{etq.traspasanteMinus}" />
+								</th>
+								<th colspan="3" class="tituloTabla">
+									<h:outputText value="#{etq.idMinus}#{etq.folioMinus} #{etq.receptorMinus}" />
+								</th>
+								<th colspan="2" class="tituloTabla">
+									<h:outputText value="#{etq.cuentaMinus} #{etq.receptorMinus}" />
+								</th>
+							</tr>
+							<tr>
+								<th rowspan="2" class="tituloTabla">
+									<h:outputText value="#{etq.estatusRegistro}" />
+								</th>
+								<th colspan="4" class="tituloTabla">
+									<h:outputText value="#{etq.tvEmisoraSerieCupon}" />
+								</th>
+								<th colspan="3" class="tituloTabla">
+									<h:outputText value="#{etq.cantidadTit}" />
+								</th>
+								<th colspan="2" class="tituloTabla">
+									<h:outputText value="#{etq.importeSigno}" />
+								</th>
+								<th colspan="2" class="tituloTabla">
+									<h:outputText value="#{etq.folioControl}" />
+								</th>
+								<th colspan="2" class="tituloTabla">
+									<h:outputText value="#{etq.tipoOp}" />
+								</th>
+								<th colspan="2" class="tituloTabla">
+									<h:outputText value="#{etq.origen}" />
+								</th>
+							</tr>
+							<tr>
+								<th colspan="3" class="tituloTabla">
+									<h:outputText value="#{etq.mercadoMinus}" />
+								</th>
+								<th colspan="3" class="tituloTabla">
+									<h:outputText value="#{etq.fechaConcertacionMinus}" />
+								</th>
+								<th colspan="3" class="tituloTabla">
+									<h:outputText value="#{etq.fechaLiquidacionMinus}" />
+								</th>
+								<th colspan="3" class="tituloTabla">
+									<h:outputText value="#{etq.error}" />
+								</th>
+								<th colspan="3" class="tituloTabla">
+									<h:outputText value="#{etq.compra}" />
+								</th>
+							</tr>
+							<t:dataList value="#{consultaBitacoraEnvOpBean.resultados.registros}" 
+								var="bitacora" rowIndexVar="indice">
+								<tr>
+									<th colspan="3" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{bitacora.referenciaMensaje}" />
+									</th>
+									<th colspan="3" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{bitacora.referenciaOperacion}" />
+									</th>
+									<th colspan="3" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{bitacora.idTrasp} #{bitacora.folioTrasp}" />
+									</th>
+									<th colspan="2" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{bitacora.cuentaTrasp}" />
+									</th>
+									<th colspan="3" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{bitacora.idRecep} #{bitacora.folioRecep}" />
+									</th>
+									<th colspan="2" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{bitacora.cuentaRecep}" />
+									</th>
+								</tr>
+								<tr>
+									<th rowspan="2" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{bitacora.estatusRegistro}" />
+									</th>
+									<th colspan="4" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{bitacora.tv}|#{bitacora.emisora}|#{bitacora.serie}|#{bitacora.cupon}" />
+									</th>
+									<th colspan="3" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{bitacora.cantidadTitulos}" >
+											<f:convertNumber integerOnly="true" />
+										</h:outputText>
+									</th>
+									<th colspan="2" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{bitacora.monto}" converter="formatoMonedaConverter" />
+									</th>
+									<th colspan="2" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{bitacora.folioControl}" />
+									</th>
+									<th colspan="2" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{bitacora.tipoInstruccion}" />
+									</th>
+									<th colspan="2" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{bitacora.origenRegistro}" />
+									</th>
+								</tr>
+								<tr>
+									<th colspan="3" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{bitacora.mercado}" />
+									</th>
+									<th colspan="3" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{bitacora.fechaConcertacion}" 
+											converter="formatoFechaCortaConverter" />
+									</th>
+									<th colspan="3" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{bitacora.fechaLiquidacion}" 
+											converter="formatoFechaCortaConverter" />
+									</th>
+									<th colspan="3" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{bitacora.codigoError}" />
+									</th>
+									<th colspan="3" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{bitacora.marcaCompra}" />
+									</th>
+								</tr>
+							</t:dataList>
+							<tr>
+									<th colspan="5" class="tituloTabla centrado">
+										<h:outputText value="TOTAL" />
+									</th>
+									<th colspan="3" class="renglonTablaUno centrado">
+										<h:outputText value="#{consultaBitacoraEnvOpBean.resultados.valores['totalTitulos']}" >
+											<f:convertNumber integerOnly="true" />
+										</h:outputText>
+									</th>
+									<th colspan="2" class="renglonTablaUno centrado">
+										<h:outputText value="#{consultaBitacoraEnvOpBean.resultados.valores['totalImporte']}"
+                                        	converter="formatoMonedaConverter" />
+									</th>
+									<th colspan="6" class="renglonTablaUno centrado">
+										&#160;
+									</th>
+								</tr>
+						</table>                    
+				</h:panelGroup>				
+			</h:panelGroup>
+			
+            <table cellpadding="0" cellspacing="0" border="0" align="center" width="900px">
+                <tr align="right">
+                    <td align="right">
+                        <h:panelGroup id="botonesExportar">
+                            <h:panelGroup
+                               style="display: #{(consultaBitacoraEnvOpBean.consultaEjecutada and not empty consultaBitacoraEnvOpBean.resultados.registros)? 'inline' : 'none'}">
+
+                                <h:outputText value="Exportar los resultados"></h:outputText>
+                                <h:commandButton actionListener="#{consultaBitacoraEnvOpBean.generarReportes}"
+                                	action="consultaBitacoraEnvOpPdf"
+                                	image="/images/pdf.gif"
+                                	title="Exportar a PDF todos los resultados de la consulta" 
+                                	id="generarPdf"/>                                                                    
+                            &#160;&#160;
+                           		<h:commandButton actionListener="#{consultaBitacoraEnvOpBean.generarReportes}"
+                           			action="consultaBitacoraEnvOpXls"
+                           			image="/images/excel-file.gif"
+                           			title="Exportar a Excel todos los resultados de la consulta" 
+                            		id="generarExcel"/>                                    
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                    </td>
+                </tr>
+            </table>
+            <table align="left" width="100%">
+					<tr>
+						<td height="25px" align="left">
+							<a4j:status id="commonStatus">
+								<f:facet name="start">
+									<h:panelGroup>
+										<h:graphicImage value="/images/ajax-loader.gif" />
+										<h:outputText value="#{etq.buscando}"></h:outputText>
+									</h:panelGroup>
+								</f:facet>
+							</a4j:status>
+						</td>
+					</tr>
+				</table>
+            <a4j:outputPanel ajaxRendered="true">
+                <script languaje="javascript">
+                            restringirCapturasNumericas();
+                            restringirCapturasNumericasGuion();
+                            restringirCapturasNumericasDecimales();
+                            restringirCapturasAlphaNumericas();
+                            restringirCapturasNumericasAsterisco();
+                            restringirCapturasAlphaNumericasAsterisco();
+                            restringirCapturasAlphaAsterisco(); 
+                            setMaxLengths();
+                        </script>
+            </a4j:outputPanel>
+
+        </ui:define>
+
+        <ui:define name="botones">
+        	<h:panelGroup id="botones">
+	            <div class="limpiar">
+	                <h:commandButton id="botonLimpiar" image="/images/transparent.gif" styleClass="submit" tabindex="140"
+	                    actionListener="#{consultaBitacoraEnvOpBean.limpiar}">
+	                </h:commandButton>
+	            </div>
+	            <div class="buscar">
+	                <a4j:commandButton id="botonBuscar" image="/images/transparent.gif" styleClass="submit" tabindex="130"
+	                	onclick='$j("#divCriterios").css("display","none");'
+	                    actionListener="#{consultaBitacoraEnvOpBean.buscarOperaciones}"
+	                    reRender="containerResultados,totalesConsultas,tablaResultados,containerInfoPaginacionBitacora,botonesExportar,botones,panelResumen" />
+	            </div>
+	            <div class="editar" style="display:#{consultaBitacoraEnvOpBean.consultaEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios">            
+			            	<input type="image" class="submit"
+								src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+								alt="Editar Criterios" title="Editar Criterios"
+								onclick='javascript:presentarCriterios();return false;' />                      	
+	           	</div>
+			</h:panelGroup>
+        </ui:define>
+    </ui:decorate>
+
+
+    <!-- FIN DEL DECORATE -->
+</html>
+

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls" xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document
+    	documentName="#{etqEventosCorporativos.nombreDoctoListasDistribucion}"
+    	documentTitle="#{etqEventosCorporativos.listasDistribucion}"
+        institucion="#{listaDistribucionBean.agenteFirmado.id} #{listaDistribucionBean.agenteFirmado.folio} #{listaDistribucionBean.agenteFirmado.razon}" 
+        fecha="#{listaDistribucionBean.fechaActual}" >
+
+        <xls:table value="#{listaDistribucionBean}" var="bean" widthPercentage="100" maxColums="11" >
+            <xls:row>
+                <xls:col header="#{etqEventosCorporativos.nombreLista}" value="#{!empty listaDistribucionBean.nombreListaDistribucion ? listaDistribucionBean.nombreListaDistribucion : 'Todos'}" />
+                <xls:col header="#{etqEventosCorporativos.estado}" value="#{listaDistribucionBean.descripcionEstatus}" />	             
+			</xls:row>			
+        </xls:table>
+
+         <xls:subtitle value="#{etq.registrosEncontrados}: #{listaDistribucionBean.totalRegistrosExportacion}" />
+        
+         <xls:table value="#{listaDistribucionBean.listasDistribucion}" var="detalle" currentBean="detalle" widthPercentage="100" maxColums="7">
+            <xls:row >
+				<xls:col header="#{etqEventosCorporativos.identificador}" value="#{detalle.idLista}"  />
+				<xls:col header="#{etqEventosCorporativos.nombreLista}" value="#{detalle.nombre}" />
+				<xls:col header="Descripción" value="#{detalle.descripcion}" />										
+				<xls:col header="#{etqEventosCorporativos.estado}" value="#{detalle.inactivo == 0 ? 'Activo': 'Inactivo' }" />
+			</xls:row>
+        </xls:table>
+        
+
+    </xls:document>
+</html>

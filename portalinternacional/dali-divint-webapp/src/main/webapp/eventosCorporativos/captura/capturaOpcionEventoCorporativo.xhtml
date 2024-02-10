@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	
+	<ui:composition template="/layoutPopUp.xhtml">
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/eventosCorporativosCreacion.js">
+			</script>
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/eventosCorporativosEdicion.js">
+			</script>
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/ckeditor/ckeditor.js">
+			</script>
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/ckeditor/adapters/jquery.js">
+			</script>
+			<style>
+				.stylePanel{
+					margin-left:0px;
+					margin-rigth:auto;
+				}
+
+			</style>
+		</ui:define>
+		<ui:define name="titulo">
+		</ui:define>
+		<ui:define name="subtitulo">
+		</ui:define>
+		<ui:define name="body">
+			<a4j:form id="formOpciones">
+			<rich:separator height="10" lineType="none"/>
+			<h:outputText value="#{dialogoGeneralEventoCorporativoBean.init}" />
+
+			<h:panelGroup id="mensajeUsuario">
+						<h:inputHidden id='validacion' value="#{dialogoGeneralEventoCorporativoBean.validacionHecha}"></h:inputHidden>
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+				
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+				</div>
+
+			</h:panelGroup>
+
+				<h:panelGrid columns="1">
+					<h:panelGrid columns="2" cellpadding="1px" cellspacing="1px" styleClass="stylePanel">
+						<h:inputTextarea styleClass="classOpcion" id="txtOpciones" value="#{dialogoGeneralEventoCorporativoBean.txtHtmlArea}"/>
+						<h:panelGrid columns="2" cellpadding="5px" cellspacing="5px">
+							<h:selectBooleanCheckbox id="chkDefault" value="#{dialogoGeneralEventoCorporativoBean.valDefault}"/>
+							<h:outputText value="Default"/>
+						</h:panelGrid>
+						<h:panelGrid columns="1" styleClass="stylePanel">
+							<h:panelGrid columns="6" styleClass="stylePanel" cellspacing="10px">
+								<h:outputText value="Fechas Límite:"/>
+								<h:outputText value=""/>
+								<h:outputText value=""/>
+								<h:outputText value=""/>
+								<h:outputText value=""/>
+								<h:outputText value=""/>
+								
+							    
+							    <h:outputText value=" Indeval: " />
+								<rich:calendar inputClass="textoControles"
+											   inputStyle="background-color: #ffffe6;" 
+											   inputSize="14"
+							                   datePattern="dd/MM/yyyy HH:mm" 
+							                   tabindex="120" 
+							                   direction="auto" 
+							                    
+							                   id="fecha-ind"
+							                   value="#{dialogoGeneralEventoCorporativoBean.fechaIn}"/>
+							                   
+							    <h:outputText value=" Participante: " />
+								<rich:calendar inputClass="textoControles"
+											   inputStyle="background-color: #ffffe6;" 
+											   inputSize="14"
+							                   datePattern="dd/MM/yyyy HH:mm"
+							                   tabindex="120" 
+							                   direction="auto" 							                   
+							                    
+							                   id="fecha-cli"
+							                   value="#{dialogoGeneralEventoCorporativoBean.fechaCli}"/>
+							    
+							    <h:outputText value=" Pago: " />
+								<rich:calendar inputClass="textoControles"
+											   inputStyle="background-color: #ffffe6;" 
+											   inputSize="14"
+							                   datePattern="dd/MM/yyyy" 
+							                   tabindex="120" 
+							                   direction="auto" 
+							                    
+							                   id="fecha-pago"
+							                   value="#{dialogoGeneralEventoCorporativoBean.fechaTiPa}"/>
+						    </h:panelGrid>
+						</h:panelGrid>
+						<h:outputText value=""/>
+						<h:panelGroup style="display:block; text-align:center">
+							<a4j:commandButton value="Agregar Opción"
+							action="#{dialogoGeneralEventoCorporativoBean.validaOpciones}"  
+							id="btn-agregarOpcion" 
+							render="input"
+							onclick="insertarValor();"
+							oncomplete="cierraDialogOptions();"
+							reRender="resumenOpciones,mensajeUsuario">						
+							</a4j:commandButton>
+						</h:panelGroup>
+					</h:panelGrid>
+				</h:panelGrid>
+
+				<!-- DEFINICION DE HIDDENS QUE ME PERMITIRAN CAPTURAR LOS VALORES CAPTURADOS EN EL DIALOGO -->
+				<h:inputHidden id='txtHtmlTextOpc' value="#{dialogoGeneralEventoCorporativoBean.txtHtmlArea}"></h:inputHidden>
+				<h:inputHidden id='chkDefaultOpc' ></h:inputHidden>
+				<h:inputHidden id='txtFechaLimOpc' ></h:inputHidden>
+				<h:inputHidden id='txtFechaIndOpc' ></h:inputHidden>
+				<h:inputHidden id='txtFechaPagoOpc' ></h:inputHidden>
+			</a4j:form>
+		</ui:define>
+	</ui:composition>
+</html>

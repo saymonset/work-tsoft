@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+	version="1.2">
+		
+	<converter>
+		<converter-id>formatoEnteroConverter</converter-id>
+		<converter-class>
+			com.indeval.portalinternacional.presentation.converter.FormatoNumeroEnteroConverter
+		</converter-class>
+	</converter>
+	<converter>
+		<converter-id>formatoFechaLargaConverter</converter-id>
+		<converter-class>
+			com.indeval.portalinternacional.presentation.converter.FormatoFechaLargoConverter
+		</converter-class>
+	</converter>
+	<converter>
+		<converter-id>formatoFechaCortaConverter</converter-id>
+		<converter-class>
+			com.indeval.portalinternacional.presentation.converter.FormatoFechaCortoConverter
+		</converter-class>
+	</converter>		
+	<converter>
+		<converter-id>formatoMonedaConverter</converter-id>
+		<converter-class>
+			com.indeval.portalinternacional.presentation.converter.FormatoMonedaConverter
+		</converter-class>
+	</converter>
+    <converter>
+		<converter-id>formatoMonedaChileConverter</converter-id>
+		<converter-class>
+			com.indeval.portalinternacional.presentation.converter.FormatoMonedaChileConverter
+		</converter-class>
+	</converter>
+	<converter>
+		<converter-id>formatoDecimalLargoConverter</converter-id>
+		<converter-class>
+			com.indeval.portalinternacional.presentation.converter.FormatoDecimalLargoConverter
+		</converter-class>
+	</converter>
+	<converter>
+		<converter-id>formatoDecimalConverter</converter-id>
+		<converter-class>
+			com.indeval.portalinternacional.presentation.converter.FormatoDecimalConverter
+		</converter-class>
+	</converter>
+	<converter>
+		<converter-id>formatoPorcentajeConverter</converter-id>
+		<converter-class>
+			com.indeval.portalinternacional.presentation.converter.FormatoPorcentajeConverter
+		</converter-class>
+	</converter>		
+	<converter>
+		<converter-id>formatoBigIntegerSepararMilesConverter</converter-id>
+		<converter-class>
+			com.indeval.portalinternacional.presentation.converter.FormatoBigIntegerSepararMilesConverter
+		</converter-class>
+	</converter>	
+	<converter>
+		<converter-id>upperCaseConverter</converter-id>
+		<converter-class>
+			com.indeval.portalinternacional.presentation.converter.UpperCaseConverter
+		</converter-class>
+	</converter>
+
+</faces-config>

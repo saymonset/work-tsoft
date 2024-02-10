@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:composition template="/layoutPopUpConciliacion.xhtml">
+		<ui:define name="head">						
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/conciliacionesEfectivoInt.js">
+			</script>	
+		</ui:define>
+		<ui:define name="titulo">
+			Comentarios
+		</ui:define>
+		<ui:define name="subtitulo">
+		</ui:define>
+		<ui:define name="body">
+			<h:form id="comentariosConciliacion">
+				<h:outputText value="#{comentariosEfectivoBean.init}" />
+				<a4j:keepAlive beanName="comentariosEfectivoBean" />
+				<h:panelGroup id="panelResultados">
+					<table width="90%">
+						<tr>
+							<td>
+								<h:dataTable id="tablaComentarios" width="100%" rowClasses="renglonTablaUno, renglonTablaDos"
+									value="#{comentariosEfectivoBean.listaComentarios}" var="comentario">
+									
+									<h:column>
+										<table width="100%" cellspacing="5">
+											<tr>
+												<td align="left">
+													<h:outputText value="#{comentario.usuario}" />	
+												</td>
+												<td align="right">
+													<h:outputText value="#{comentario.fecha}" />	
+												</td>
+											</tr>
+											<tr>
+												<td align="left" colspan="2">
+													<h:outputText value="#{comentario.comentario}" />
+												</td>
+											</tr>
+										</table>
+									</h:column>
+								</h:dataTable>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:panelGroup id="mensajeUsuario">
+									<div style="min-height: 21px;">						
+										<rich:messages warnClass="warning" infoClass="info"
+											errorClass="error" ajaxRendered="true" showDetail="false"
+											showSummary="true" layout="list">
+											<f:facet name="infoMarker">
+												<h:panelGroup>
+													<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+											</f:facet>
+					
+											<f:facet name="errorMarker">
+												<h:panelGroup>
+													<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+											</f:facet>
+										</rich:messages>
+									
+										<div id="divWarnings" class="warning" style="display:none;">
+											<p id="textoWarning">						
+											</p>
+										</div>
+									</div>
+								</h:panelGroup>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:inputTextarea id="comentariosArea" value="#{comentariosEfectivoBean.comentario}"
+									cols="40" rows="10" class="campoAlphaNumericoEspacio" />
+							</td>
+						</tr>
+						<tr>
+							<td align="center">
+								<div class="cancelar">
+									<h:commandButton id="botonCancelar" image="/images/transparent.gif"
+										styleClass="submit" onclick="cierraDialog();" />
+								</div>
+								<div class="guardar">
+									<a4j:commandButton id="botonGuardar" image="/images/transparent.gif" styleClass="submit"
+										actionListener="#{comentariosEfectivoBean.guardarComentario}" reRender="tablaComentarios" />
+								</div>
+							</td>
+						</tr>
+					</table>
+				</h:panelGroup>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</html>

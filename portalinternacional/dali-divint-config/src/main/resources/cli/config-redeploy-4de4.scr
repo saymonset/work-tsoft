@@ -1,0 +1,2 @@
+# Despliegue de componentes (4 de 4)
+deploy dali-divint.war --force

@@ -1,0 +1,1367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+		<ui:define name="tituloEncabezado">
+
+		</ui:define>
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js"></script>
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/consultaOperacionesSic.js"></script>
+				
+		</ui:define>
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.sistemaIntCot}" />
+		</ui:define>
+
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.consultaOperaciones}"></h:outputText>
+		</ui:define>
+
+
+
+		<ui:define name="criterios">
+
+			<h:outputText value="#{consultaOperacionesBean.init}" />
+			<a4j:keepAlive beanName="consultaOperacionesBean" />
+			<h:panelGroup id="mensajeUsuario">
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+				
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+				</div>
+			</h:panelGroup>
+			<h:panelGroup id="panelCriterios">
+				<div style='display: "inline"' id="divCriterios">
+					<table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+						align="center">
+						<tr>
+							<td class="recuadroTabla">
+								<table class="tablaCriterios">
+									<tr align="center">
+										<td nowrap="true" colspan="2" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.agente}" /> </b>
+										</td>
+									</tr>
+									<tr align="center">
+										<td>
+											<h:outputText styleClass="texto"
+												value="#{etq.participanteMinus}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto" value="#{etq.cuentaMinus}" />
+										</td>
+
+									</tr>
+									<tr align="center">
+										<td>
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="idFolioTraspasante"
+													value="#{consultaOperacionesBean.idfolio}" size="5"
+													maxlength="5" styleClass="textoControles campoNumericoAsterisco  #{consultaOperacionesBean.institucionIndeval ? '' : 'readonly'}" />
+											</h:panelGroup>
+
+										</td>
+										<td>
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="cuentaTraspasante"
+													value="#{consultaOperacionesBean.cuentaAgente}" size="4"
+													maxlength="4" styleClass="textoControles textoMayusculas campoNumericoAsterisco" tabindex="10" />
+												<input type="hidden" id="nombre_id_folio_traspasante"
+													name="nombre_id_folio_traspasante"
+													value="daliForm:idFolioTraspasante" />
+											</h:panelGroup>
+
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr>
+										<td colspan="4" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.claveValor}" /> </b>
+										</td>
+									</tr>
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.tv}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.emisoraMinus}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.serieMinus}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.cuponMinus}" />
+										</td>
+									</tr>
+									<tr align="center">
+										<td>
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="tipoValor"
+													value="#{consultaOperacionesBean.idTipoValor}" size="7"
+													maxlength="7" styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="20" />
+											</h:panelGroup>
+										</td>
+										<td>
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="emisora" size="7" maxlength="7"
+													value="#{consultaOperacionesBean.emisora}"
+													required="false" styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="30" />
+											</h:panelGroup>
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="serie"
+												value="#{consultaOperacionesBean.serie}" size="7"
+												maxlength="6" styleClass="textoControles campoAlphaNumericoSerie textoMayusculas" tabindex="40" />
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="cupon"
+												value="#{consultaOperacionesBean.cupon}" size="7"
+												maxlength="4" styleClass="textoControles campoNumerico textoMayusculas" tabindex="50" />
+										</td>
+									</tr>
+									<tr>
+										<td colspan="4">
+											<h:panelGroup>
+												<a href="javascript: mostrarPosiciones();" tabindex="60">
+													<h:graphicImage value="/images/search.png"></h:graphicImage>
+													<h:outputText value="#{etq.buscarPosicionMinus}"
+														styleClass="texto" /> </a>&#160;&#160;&#160;
+                                    			<a
+													href="javascript:limpiarDatosPosicion();" tabindex="70">
+													<h:graphicImage value="/images/page_refresh.png"></h:graphicImage>
+													<h:outputText value="#{etq.limpiarPosicionMinus}"
+														styleClass="texto" /> </a>
+
+											</h:panelGroup>
+										</td>
+									</tr>
+
+								</table>
+							</td>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr>
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.ingresoOperacion}" />
+										</td>
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.estatus}" />
+										</td>
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.divisa}" />
+										</td>
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.importe}" />
+										</td>
+									</tr>
+									<tr>
+										<td align="center">
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{consultaOperacionesBean.origenOperacion}"
+												tabindex="150">
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+												<f:selectItems
+													value="#{opcionesCatalogosBean.origenesOperacion}" />
+											</h:selectOneMenu>
+										</td>
+										<td align="center">
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{consultaOperacionesBean.estado}" tabindex="80">
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+												<f:selectItems value="#{opcionesCatalogosBean.estados}" />
+											</h:selectOneMenu>
+										</td>
+										<td align="center">
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{consultaOperacionesBean.divisa}" tabindex="90">
+												<f:selectItem itemValue="-1" itemLabel="Todas" />
+												<f:selectItems value="#{opcionesCatalogosBean.divisas}" />
+											</h:selectOneMenu>
+										</td>
+										<td align="center">
+											<h:inputText autocomplete="off" id="importe"
+												value="#{consultaOperacionesBean.importe}" size="18"
+												maxlength="17"
+												styleClass="textoControles campoNumericoDecimalDosDecimales"
+												tabindex="100" converter="formatoMonedaConverter">
+												<a4j:support event="onchange" reRender="importe"/>												
+											</h:inputText>
+										</td>
+									</tr>
+									<tr>
+									   <td nowrap="true" align="center" colspan="2"><h:outputText value="#{etq.isin}" styleClass="texto"  /></td>									   
+									   <td nowrap="true" align="center"  colspan="2"> <h:outputText value="#{etq.custodio}"  /></td>									   
+									</tr>
+									
+									<tr>									   
+									   <td nowrap="true" align="center" colspan="2"><h:inputText autocomplete="off" value="#{consultaOperacionesBean.isin}" styleClass="textoControles campoAlphaNumerico textoMayusculas" size="30" maxlength="30"/></td>									   
+									   <td nowrap="true" align="center" colspan="2"><h:selectOneMenu styleClass="textoControles"
+												value="#{consultaOperacionesBean.custodio}"
+												tabindex="150">
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+											    <f:selectItems value="#{consultaOperacionesBean.listaCustodios}"/>
+                            			 </h:selectOneMenu>
+									   </td>
+									</tr>
+								</table>
+							</td>
+
+						</tr>
+						<tr>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr align="center">
+										<td nowrap="true">
+											<h:outputText styleClass="texto"
+												value="#{etq.cantidadOperada}" />
+										</td>
+									</tr>
+									<tr align="center">
+
+										<td>
+											<h:inputText autocomplete="off"
+												value="#{consultaOperacionesBean.cantidadOperada}"
+												tabindex="110" styleClass="textoControles campoNumerico"
+												id="cantidadOperada" maxlength="10" size="12" />
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr align="center">
+										<td nowrap="true">
+											<h:outputText styleClass="texto" value="#{etq.fechaInicial}" />
+										</td>
+										<td nowrap="true">
+											<h:outputText styleClass="texto" value="#{etq.fechaFinal}" />
+										</td>
+									</tr>
+									<tr align="center">
+										<td>										
+											<rich:calendar id="fechaInicialConsulta"
+														inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+												       value="#{consultaOperacionesBean.fechaInicialConsulta}"
+												       	datePattern="dd/MM/yyyy"  tabindex="120"  isDayEnabled="isDayEnabled"/>
+										</td>
+										<td>										
+											<rich:calendar id="fechaFinalConsulta" 
+														inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+												       value="#{consultaOperacionesBean.fechaFinalConsulta}"
+												       	datePattern="dd/MM/yyyy"  tabindex="130" isDayEnabled="isDayEnabled"/>										
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr>
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.operacion}" />
+										</td>
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.tipoOp}" />
+										</td>
+										
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto"  value="#{etq.referenciaOperacion}" />
+										</td>
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.folioControl}" />
+										</td>
+									</tr>
+									<tr>
+										<td align="center">
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{consultaOperacionesBean.operacion}" tabindex="140">
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+												<f:selectItems value="#{opcionesCatalogosBean.operaciones}" />
+											</h:selectOneMenu>
+										</td>
+										<td align="center">
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{consultaOperacionesBean.tipoOperacion}"
+												tabindex="150">
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+												<f:selectItems
+													value="#{opcionesCatalogosBean.tiposOperacion}" />
+											</h:selectOneMenu>
+										</td>
+										
+										<td align="center">
+											<h:inputText autocomplete="off" id="referenciaOperacion" value="#{consultaOperacionesBean.referenciaOperacion}"
+											styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas"
+											 maxlength="15" size="8" />
+										</td>
+										
+										<td align="center">
+											<h:inputText autocomplete="off" id="folioControl"
+												value="#{consultaOperacionesBean.folioControl}" size="7"
+												maxlength="30" styleClass="textoControles campoNumerico" tabindex="160" 
+												onchange="validarSiNumero(this.value);" />
+										</td>
+									</tr>
+                        <tr>
+                            <!-- Adicion del combo de Depositante/Liquidador 17May17 -->
+                            <td align="center" colspan="4">
+                                <table class="tablaCriterios" align="center">
+                                    <tr>
+                                        <td nowrap="true" align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.depliq}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center">
+                                            <h:panelGroup id="depliq">    
+                                                <h:selectOneMenu styleClass="texto" tabindex="170" 
+                                                                 value="#{consultaOperacionesBean.depliq}">
+                                                    <f:selectItem itemValue="-1" itemLabel="Todos" />
+                                                    <f:selectItems value="#{consultaOperacionesBean.listaDepLiq}" />
+                                                </h:selectOneMenu>
+                                            </h:panelGroup>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+								</table>
+							</td>
+
+						</tr>
+					</table>
+				</div>				
+			</h:panelGroup>
+			<h:panelGroup id="panelResumen">
+				<h:panelGroup rendered="#{consultaOperacionesBean.consultaEjecutada}">
+					<div id="divResumen" style="display: #{consultaOperacionesBean.consultaEjecutada ? 'inline':'none'}">
+						<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+							<tr>
+								<td class="recuadroTabla">
+									<table class="tablaCriterios texto" border="0" style="text-align: center">
+										<tr align="center">
+											<td nowrap="true" colspan="2" align="center" style="text-align: center" >
+												<b> <h:outputText styleClass="texto "
+														value="#{etq.agente}" /></b>
+											</td>
+										</tr>
+										<tr align="center">
+											<td>
+												<h:outputText styleClass="texto"
+													value="#{etq.participanteMinus}" />
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{etq.cuentaMinus}" />
+											</td>	
+										</tr>
+										<tr align="center">
+										<td>											
+											<h:outputText 
+												value="#{consultaOperacionesBean.participanteSeleccionado}" />										
+										</td>
+										<td>
+											<h:outputText value="#{consultaOperacionesBean.cuentaSeleccionada}" />																				
+										</td>
+									</tr>
+									</table>
+								</td>
+								<td class="recuadroTabla">
+									<table class="tablaCriterios texto" border="0" style="text-align: center">
+										<tr>
+											<td colspan="4" align="center">
+												<b> <h:outputText styleClass="texto"
+														value="#{etq.claveValor}" /> </b>
+											</td>
+										</tr>
+										<tr>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.tv}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.emisoraMinus}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.serieMinus}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.cuponMinus}" />
+											</td>
+										</tr>
+										<tr align="center">
+											<td>
+												<h:panelGroup>
+													<h:outputText value="#{consultaOperacionesBean.tipoValorSeleccionado}" />
+												</h:panelGroup>
+											</td>
+											<td>
+												<h:panelGroup>
+													<h:outputText value="#{consultaOperacionesBean.emisoraSeleccionada}" />
+												</h:panelGroup>
+											</td>
+											<td>
+												<h:outputText value="#{consultaOperacionesBean.serieSeleccionada}" />
+											</td>
+											<td>
+												<h:outputText value="#{consultaOperacionesBean.cuponSeleccionado}" />
+											</td>
+										</tr>										
+									</table>							
+								</td>
+								<td class="recuadroTabla">
+									<table class="tablaCriterios texto" border="0" style="text-align: center">
+										<tr>
+											<td nowrap="true" align="center">
+												<h:outputText styleClass="texto" value="#{etq.ingresoOperacion}" />
+											</td>
+											<td nowrap="true" align="center">
+												<h:outputText styleClass="texto" value="#{etq.estatus}" />
+											</td>
+											<td nowrap="true" align="center">
+												<h:outputText styleClass="texto" value="#{etq.divisa}" />
+											</td>
+											<td nowrap="true" align="center">
+												<h:outputText styleClass="texto" value="#{etq.importe}" />
+											</td>
+										</tr>
+										<tr>											
+											<td align="center">
+												<h:outputText value="#{consultaOperacionesBean.origenSeleccionado}" />
+											</td>
+											<td align="center">
+												<h:outputText value="#{consultaOperacionesBean.estatusSeleccionado}" />																									
+											</td>
+											<td align="center">
+												<h:outputText value="#{consultaOperacionesBean.divisaSeleccionada}" />													
+											</td>
+											<td align="center">
+												<h:outputText value="#{consultaOperacionesBean.importeSeleccionado}" />													
+											</td>
+										</tr>		
+										<tr>
+									  		 <td><h:outputText value="#{etq.isin}" styleClass="texto"  /></td>
+									   		<td><h:outputText value="#{not empty consultaOperacionesBean.isin ?  consultaOperacionesBean.isin : 'TODOS' }"  styleClass="texto" /></td>
+									   		<td><h:outputText value="#{etq.custodio}" styleClass="texto" /></td>
+									   		<td><h:outputText value="#{consultaOperacionesBean.custodio == '-1' ? 'TODOS' : consultaOperacionesBean.custodio}"/>
+									   		</td>
+									</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td class="recuadroTabla">
+									<table class="tablaCriterios texto" border="0" style="text-align: center">
+										<tr align="center">
+											<td nowrap="true">
+												<h:outputText styleClass="texto"
+													value="#{etq.cantidadOperada}" />
+											</td>
+										</tr>
+										<tr align="center">
+	
+											<td>
+												<h:outputText value="#{consultaOperacionesBean.cantidadSeleccionada}" />
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td class="recuadroTabla">
+									<table class="tablaCriterios texto" border="0" style="text-align: center">
+										<tr align="center">
+											<td nowrap="true">
+												<h:outputText styleClass="texto" value="#{etq.fechaInicial}" />
+											</td>
+											<td nowrap="true">
+												<h:outputText styleClass="texto" value="#{etq.fechaFinal}" />
+											</td>
+										</tr>
+										<tr align="center">
+											<td>
+												<h:outputText value="#{consultaOperacionesBean.fechaInicialSeleccionada}" />												
+											</td>
+											<td>
+												<h:outputText value="#{consultaOperacionesBean.fechaFinalSeleccionada}" />
+											</td>
+										</tr>										
+									</table>								
+								</td>
+								<td class="recuadroTabla">
+									<table class="tablaCriterios texto" border="0" style="text-align: center">
+										<tr>
+											<td nowrap="true" align="center">
+												<h:outputText styleClass="texto" value="#{etq.operacion}" />
+											</td>
+											<td nowrap="true" align="center">
+												<h:outputText styleClass="texto" value="#{etq.tipoOp}" />
+											</td>
+											
+											<td nowrap="true" align="center">
+												<h:outputText styleClass="texto" value="#{etq.referenciaOperacion}" />
+											</td>
+											<td nowrap="true" align="center">
+												<h:outputText styleClass="texto" value="#{etq.folioControl}" />
+											</td>
+										</tr>
+										<tr>
+											<td align="center">
+												<h:outputText value="#{consultaOperacionesBean.operacionSeleccionada}" />												
+											</td>
+											<td align="center">
+												<h:outputText value="#{consultaOperacionesBean.tipoOperacionSeleccionada}" />
+											</td>
+																						
+											<td align="center">
+												<h:outputText value="#{consultaOperacionesBean.referenciaOperacionSeleccionado}" />
+											</td>
+											<td align="center">
+												<h:outputText value="#{consultaOperacionesBean.folioControlSeleccionado}" />												
+											</td>
+										</tr>
+										<tr>
+										    <!-- Adicion del combo de Depositante/Liquidador 17May17 -->
+                            <td align="center" colspan="4">
+                                <table class="tablaCriterios" align="center">
+                                    <tr>
+                                        <td nowrap="true" align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.depliq}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                            <td align="center">
+                                                <h:outputText value="#{consultaOperacionesBean.depositanteLiquidadorSeleccionado}" />                                                
+                                            </td>
+                                    </tr>
+                                </table>
+                            </td>
+										</tr>
+									</table>
+								</td>
+							</tr>										
+						</table>															
+					</div>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+		<ui:define name="botones">
+			<h:panelGroup id="botones">				
+				<div class="refrescar" style="float: left;">
+	        		 <a4j:status id="commonStatus">
+						<f:facet name="start">
+							<h:panelGroup>
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								<h:outputText value="#{etq.buscando}"></h:outputText>
+							</h:panelGroup>
+						</f:facet>
+					</a4j:status> 	
+	        	</div>
+				<div class="limpiar">
+					<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+						styleClass="submit"
+						actionListener="#{consultaOperacionesBean.limpiar}" />
+				</div>
+				<div class="buscar">
+					<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+						styleClass="submit"
+						oncomplete='javascript:presentarResumen();'
+						action="#{consultaOperacionesBean.obtenerOperaciones}"
+						reRender="containerResultados,totalesConsultas,tablaResultados,botones,mensajeUsuario,panelResumen" >
+						<a4j:actionparam name="navCuentaiDebeBitacorear" value="true" 
+							assignTo="#{consultaOperacionesBean.debeDejarBitacora}" />
+					</a4j:commandButton>
+				</div>
+				<div class="editar" style="display:#{consultaOperacionesBean.consultaEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios">            
+	            	<input type="image" class="submit"
+						src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+						alt="Editar Criterios" title="Editar Criterios"
+						onclick='javascript:presentarCriterios();return false;' />                      	
+	           	</div>
+           	</h:panelGroup>
+		</ui:define>
+
+
+
+
+
+
+
+		<ui:define name="seccionContenido">
+			<h:panelGroup id="containerResultados">
+				<h:panelGroup
+					rendered="#{consultaOperacionesBean.consultaEjecutada}">
+
+
+
+					<t:dataTable id="noExistenResultados"
+						value="#{consultaOperacionesBean.paginaVO.registros}"
+						styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+						footerClass="tituloTabla" border="0" cellpadding="3px"
+						cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos"
+						rendered="#{empty consultaOperacionesBean.paginaVO.registros}">
+
+						<t:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.sinResultados}"></h:outputText>
+							</f:facet>
+
+						</t:column>
+					</t:dataTable>
+					
+					<br/>
+					<br/>
+					<br/>									
+						<h:panelGroup
+							rendered="#{not empty consultaOperacionesBean.paginaVO.registros}">
+							<div id="botonesMensaje" style="display: #{(consultaOperacionesBean.consultaEjecutada and (consultaOperacionesBean.usuarioRolIndeval or consultaOperacionesBean.esUsuarioCambioBoveda) )? 'inline':'none'}">
+								<table width="900px" align="right">
+									<tr>
+										<td align="right">
+
+                                          <h:panelGroup>
+											<a4j:commandButton id="conMensaje" value="#{etq.conMensaje}"
+												onclick="deshabilitarBoton('conMensaje');"
+												oncomplete="habilitarBoton('conMensaje');"
+												action="#{consultaOperacionesBean.actualizar}"
+												reRender="containerResultados,totalesConsultas,tablaResultados,mensajeUsuario">												
+												<a4j:actionparam name="navCuentaiDebeBitacorear"  value="true" 
+													assignTo="#{consultaOperacionesBean.conMensaje}" />	
+											</a4j:commandButton>
+										  </h:panelGroup>
+											<a4j:commandButton id="sinMensaje" value="#{etq.sinMensaje}"
+												onclick="deshabilitarBoton('sinMensaje');"
+												oncomplete="habilitarBoton('sinMensaje');"
+												action="#{consultaOperacionesBean.actualizar}"
+												reRender="containerResultados,totalesConsultas,tablaResultados,mensajeUsuario">
+		
+												<a4j:actionparam name="navCuentaiDebeBitacorear"  value="false" 
+													assignTo="#{consultaOperacionesBean.conMensaje}" />
+													
+											</a4j:commandButton>
+										</td>
+									</tr>
+								</table>
+							</div>	
+						</h:panelGroup>
+					<br/>
+					<br/>
+					<br/>
+					<h:panelGroup id="tablaResultados">
+					
+						<h:graphicImage value="/images/blank.gif" width="900px"
+							height="1px"></h:graphicImage>
+						<h:panelGroup
+							rendered="#{not empty consultaOperacionesBean.paginaVO.registros}">
+
+							<table width="100%" border="0">
+								<tr>
+									<td align="left" class="textoEstadoCuenta">
+										<a4j:commandLink id="control_bitacora_primero"
+											action="#{consultaOperacionesBean.irPrimeraPagina}"
+											rendered="#{consultaOperacionesBean.irAlPrimero}"
+											reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,containerResultados">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_atras_fast"
+											action="#{consultaOperacionesBean.retrocederPaginasRapido}"
+											rendered="#{consultaOperacionesBean.retrocederRapido}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_atras"
+											action="#{consultaOperacionesBean.retrocederPagina}"
+											rendered="#{consultaOperacionesBean.retroceder}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+												border="0" />
+										</a4j:commandLink>
+										<a4j:commandLink id="control_bitacora_adelante"
+											action="#{consultaOperacionesBean.avanzarPagina}"
+											rendered="#{consultaOperacionesBean.avanzar}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_adelante_fast"
+											action="#{consultaOperacionesBean.avanzarPaginasRapido}"
+											rendered="#{consultaOperacionesBean.avanzarRapido}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+												border="0" />
+
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_ultimo"
+											action="#{consultaOperacionesBean.irUltimaPagina}"
+											rendered="#{consultaOperacionesBean.irAlUltimo}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+												border="0" />
+										</a4j:commandLink>
+
+
+										<br />
+										<h:outputText value="#{etq.mostrando}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{consultaOperacionesBean.numeroPagina}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+										<h:outputText value="#{consultaOperacionesBean.totalPaginas}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+										&#160;&#160;&#160;
+										<h:outputText
+											value="#{consultaOperacionesBean.paginaVO.totalRegistros}"
+											styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+										&#160;
+										<h:outputText styleClass="textoResumen"
+											value="#{etq.registrosEncontrados}" />
+									</td>
+									<td align="right" class="textoEstadoCuenta">
+										<h:outputText escape="false" value="#{etq.registrosPorPagina}"
+											styleClass="textoResumen" />
+										<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+											value="#{consultaOperacionesBean.paginaVO.registrosXPag}">
+											<f:selectItem itemLabel="1" itemValue="1" />
+											<f:selectItem itemLabel="2" itemValue="2" />
+											<f:selectItem itemLabel="5" itemValue="5" />
+											<f:selectItem itemLabel="10" itemValue="10" />
+											<f:selectItem itemLabel="20" itemValue="20" />
+											<f:selectItem itemLabel="50" itemValue="50" />
+											<a4j:support event="onchange"
+												reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,mensajeUsuario"
+												action="#{consultaOperacionesBean.obtenerOperaciones}" />
+										</h:selectOneMenu>
+									</td>
+								</tr>
+							</table>
+						</h:panelGroup>
+						<h:dataTable id="resultados"
+							value="#{consultaOperacionesBean.paginaVO.registros}"
+							var="bitacora"
+							rendered="#{not empty consultaOperacionesBean.paginaVO.registros}"
+							styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+							footerClass="tituloTabla" border="0" cellpadding="3px"
+							cellspacing="0px" columnClasses="everyColumn"
+							rowClasses="renglonTablaUno, renglonTablaDos">
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.folioControl}" />
+								</f:facet>
+								<a href="javascript:detalleResultado(#{bitacora.folioControl})" >	
+								<h:outputText styleClass="texto textoPeque12"
+									value="#{bitacora.folioControl}" />
+								</a>	
+							</h:column>
+							
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.referenciaOperacion}" />
+								</f:facet>
+									
+								<h:outputText styleClass="texto textoPeque12"
+									value="#{bitacora.referenciaOperacion}" />
+								
+							</h:column>
+							
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaHoraAlta}"/>
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{bitacora.fechaAlta}" converter="formatoFechaLargaConverter"/>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaHoraLiquidacionTlp}"/>
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{bitacora.fechaLiquidacionTlp}" converter="formatoFechaLargaConverter"/>
+							</h:column>
+								<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaHoraHabilitada}"/>
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{bitacora.fechaHoraHabilitada}" converter="formatoFechaLargaConverter"/>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.id}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12"
+									value="#{bitacora.cuentaNombrada.institucion.tipoInstitucion.claveTipoInstitucion}" />
+							</h:column>
+
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.folioMinus}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12"
+									value="#{bitacora.cuentaNombrada.institucion.folioInstitucion}" />
+							</h:column>
+
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.cuentaMinus}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12"
+									value="#{bitacora.cuentaNombrada.cuenta}" />
+							</h:column>
+
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12"
+										value="#{etq.cuentaContraparte}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12 textoMayusculas"
+									value="#{bitacora.cuentaContraparte}" />
+							</h:column>
+							
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12"
+										value="#{etq.custodio}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12 textoMayusculas"
+									value="#{bitacora.catBic.detalleCustodio}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:panelGroup>
+										<table width="100%">
+											<tr class="tituloTabla">
+												<td>
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.tv}" />
+													&#160;
+													<h:outputText styleClass="texto textoPeque12"
+														value="#{etq.emisoraMinus}" />
+													&#160;
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.serieMinus}" />
+													&#160;
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.cuponMinus}" />
+												</td>
+											</tr>
+											<tr class="tituloTabla">
+												<td align="center">
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.isin}" />
+												</td>
+											</tr>
+										</table>
+									</h:panelGroup>
+
+								</f:facet>
+
+								<table>
+									<tr>
+										<td>
+											<h:outputText styleClass="texto textoPeque12"
+												value="#{bitacora.emision.instrumento.claveTipoValor}" />
+											<h:outputText value="#{etq.pipe}"></h:outputText>
+											&#160;
+											<h:outputText styleClass="texto textoPeque12"
+												value="#{bitacora.emision.emisora.clavePizarra}" />
+											<h:outputText value="#{etq.pipe}"></h:outputText>
+											&#160;
+											<h:outputText styleClass="texto textoPeque12"
+												value="#{bitacora.emision.serie}" />
+											<h:outputText value="#{etq.pipe}"></h:outputText>
+											<h:outputText styleClass="texto textoPeque12" value="#{bitacora.claveCupon}" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h:outputText styleClass="texto textoPeque12"
+												value="#{bitacora.emision.isin}" />
+										</td>
+									</tr>
+
+								</table>
+
+
+
+							</h:column>
+
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText styleClass="texto textoPeque12"
+                                        value="#{etq.depliq}" />
+                                </f:facet>
+                                <h:outputText styleClass="texto textoPeque12 textoMayusculas"
+                                    value="#{bitacora.depositanteLiquidador}" />
+                            </h:column>
+
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.cantidadOperada}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12"
+									value="#{bitacora.cantidadTitulos}"
+									converter="formatoEnteroConverter" style="white-space:nowrap" />
+							</h:column>
+							<h:column>								
+								<f:facet name="header">
+									<h:panelGroup>
+										<table width="100%">
+											<tr class="tituloTabla">
+												<td align="center">
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.cantidadOperadaLiqParcial}"  />
+												</td>
+											</tr>
+											<tr class="tituloTabla">
+												<td align="center">
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.remanente}"  />
+												</td>
+											</tr>
+										</table>
+									</h:panelGroup>
+								</f:facet>
+								<table width="100%">
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto textoPeque12" value="#{bitacora.cantidadTitulosParcial}" converter="formatoEnteroConverter" style="white-space:nowrap" />
+										</td>
+									</tr>
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto textoPeque12" value="#{bitacora.remanente}" converter="formatoEnteroConverter" style="white-space:nowrap" />
+										</td>
+									</tr>
+								</table>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.operacion}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12"
+									value="#{bitacora.descTipoMensaje}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:panelGroup>
+										<table width="100%">
+											<tr class="tituloTabla">
+												<td align="center">
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaOperacion}"  />
+												</td>
+											</tr>
+											<tr class="tituloTabla">
+												<td align="center">
+													<h:outputText styleClass="texto textoPeque12"
+														value="#{etq.fechaLiquidacionMinus}" />
+												</td>
+											</tr>
+										</table>
+									</h:panelGroup>
+
+
+								</f:facet>
+								<table width="100%">
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto textoPeque12" 
+												value="#{bitacora.fechaOperacion}" converter="formatoFechaCortaConverter" />
+										</td>
+									</tr>
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto textoPeque12"
+												value="#{bitacora.fechaLiquidacion}" converter="formatoFechaCortaConverter" />
+										</td>
+									</tr>
+								</table>
+
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:panelGroup>
+										<table width="100%">
+											<tr>
+												<td align="center">
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaActualizacion}"/>
+												</td>
+											</tr>
+											<tr>
+												<td align="center">
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.divisaMinus}" />
+												</td>
+											</tr>
+										</table>
+									</h:panelGroup>
+
+								</f:facet>
+								<table width="100%">
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto textoPeque12"
+												value="#{bitacora.fechaActualizacion}" converter="formatoFechaCortaConverter"/>
+										</td>
+									</tr>
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto textoPeque12" value="#{bitacora.divisa}" />
+										</td>
+									</tr>
+								</table>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.importe}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{bitacora.importe}"
+									converter="formatoMonedaChileConverter" style="white-space: nowrap" />
+							</h:column>
+							<h:column>								
+								<f:facet name="header">
+									<h:panelGroup>
+										<table width="100%">
+											<tr class="tituloTabla">
+												<td align="center">
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.importeOperadoLiqParcial}"  />
+												</td>
+											</tr>
+											<tr class="tituloTabla">
+												<td align="center">
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.importeOperadoLiqParcialPend}"  />
+												</td>
+											</tr>
+										</table>
+									</h:panelGroup>
+								</f:facet>
+								<table width="100%">
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto textoPeque12" value="#{bitacora.importeParcial}" converter="formatoMonedaChileConverter" style="white-space:nowrap" />
+										</td>
+									</tr>
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto textoPeque12" value="#{bitacora.remanenteEfectivo}" converter="formatoMonedaChileConverter" style="white-space:nowrap" />
+										</td>
+									</tr>
+								</table>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:panelGroup>
+										<table width="100%">
+											<tr>
+												<td align="center">
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.error}" />
+												</td>
+											</tr>											
+										</table>
+									</h:panelGroup>
+								</f:facet>
+								<table width="100%">
+									<tr>
+										<td align="center">
+											<h:outputLink id="error"
+												title="#{bitacora.errorSwift.descErrorSwift} / #{bitacora.errorSwift.descErrorSwiftEspa} "
+												value="javascript:detalleError(#{bitacora.folioControl})">																					
+												<h:outputText styleClass="texto textoPeque12"
+													value="#{bitacora.errorSwift.codigoErrorSwift}" />
+											</h:outputLink>
+										</td>
+									</tr>									
+								</table>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.liquidacionParcial}" />
+								</f:facet>
+								<h:panelGroup rendered="#{bitacora.estatusOperacion.idEstatusOperacion eq '18' or bitacora.estatusOperacion.idEstatusOperacion eq '19' or bitacora.estatusOperacion.idEstatusOperacion eq '20'
+													   or bitacora.estatusOperacion.idEstatusOperacion eq '22' or bitacora.estatusOperacion.idEstatusOperacion eq '23' or (bitacora.estatusOperacion.idEstatusOperacion eq '9' and not empty bitacora.remanente)}">
+									<a href="javascript:detalleSettlementPartial(#{bitacora.folioControl})">	
+										<h:outputText styleClass="texto textoPeque12" value="#{bitacora.folioControl}" />
+									</a>
+								</h:panelGroup>	
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:panelGroup>
+										<table width="100%">											
+											<tr>
+												<td align="center">
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.estatus}" />
+												</td>
+											</tr>
+										</table>
+									</h:panelGroup>
+								</f:facet>
+								<table width="100%">									
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto textoPeque12"
+												value="#{bitacora.estatusOperacion.descEstatusOperacion}" />
+										</td>
+									</tr>
+								</table>
+
+							</h:column>
+							
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.estatusPfi}" />
+								</f:facet>
+								<h:outputLink id="pfi" title="#{bitacora.refMsjPfi}" value="javascript:void">
+									<h:outputText styleClass="texto textoPeque12" value="#{bitacora.stPfi548}" />
+								</h:outputLink>
+							</h:column>
+						
+							<h:column rendered="#{consultaOperacionesBean.esUsuarioCambioBoveda}">
+								<f:facet name="header">
+									<h:panelGroup>
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.regresarPosicion}" />
+										<h:selectBooleanCheckbox value="false"
+											onclick="regresaPosicionTodos(this);" />
+									</h:panelGroup>
+								</f:facet>
+								<h:panelGroup>
+										<h:selectBooleanCheckbox value="#{bitacora.regresoPosicion}"
+											disabled="#{!bitacora.regresaPosicion}"
+											onclick="quitarMarca('libera_#{bitacora.idOperacionesSic}');quitarMarca('autoriza_#{bitacora.idOperacionesSic}');quitarMarca('cancela_#{bitacora.idOperacionesSic}');quitarMarca('confirma_#{bitacora.idOperacionesSic}');quitarMarca('habilitar_#{bitacora.idOperacionesSic}');quitarMarca('regresa_#{bitacora.idOperacionesSic}')"
+											styleClass="regresaPosicion_#{bitacora.idOperacionesSic}" />
+										<script language="javascript">
+										checkRegresaPosicion[iRegresaPosicion++] = $j(".regresaPosicion_#{bitacora.idOperacionesSic}");											
+										</script>									
+								</h:panelGroup>
+							</h:column>
+                        
+                            <h:column rendered="#{consultaOperacionesBean.usuarioRolIndeval or consultaOperacionesBean.esUsuarioCambioBoveda}">                              
+                                <f:facet name="header">
+                                    <h:panelGroup>                                  
+                                        <h:outputText styleClass="texto textoPeque12" value="#{etq.liberar}"/>
+                                        <h:selectBooleanCheckbox value="false"
+                                            onclick="liberarTodos(this);" />                                        
+                                    </h:panelGroup>
+                                </f:facet>                                  
+                                <h:panelGroup>                                  
+                                        <h:selectBooleanCheckbox value="#{bitacora.libero}"
+                                            disabled="#{!bitacora.libera or bitacora.estatusOperacion.idEstatusOperacion eq '18' or bitacora.estatusOperacion.idEstatusOperacion eq '19' or bitacora.estatusOperacion.idEstatusOperacion eq '20'}"
+                                            onclick="quitarMarca('autoriza_#{bitacora.idOperacionesSic}');quitarMarca('cancela_#{bitacora.idOperacionesSic}');quitarMarca('confirma_#{bitacora.idOperacionesSic}');quitarMarca('habilitar_#{bitacora.idOperacionesSic}');quitarMarca('regresa_#{bitacora.idOperacionesSic}')"
+                                            styleClass="libera_#{bitacora.idOperacionesSic}" />
+                                        <script language="javascript">
+                                            checkLibera[iLibera++] = $j(".libera_#{bitacora.idOperacionesSic}");                                            
+                                        </script>                                   
+                                </h:panelGroup>
+                            </h:column>
+								
+							
+							<!-- aki va un converter -->		
+												
+							<h:column rendered="#{consultaOperacionesBean.usuarioRolIndeval or consultaOperacionesBean.esUsuarioCambioBoveda}">
+								<f:facet name="header">
+									<h:panelGroup>									
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.autorizar}" />
+											<h:selectBooleanCheckbox value="false"
+												onclick="autorizarTodos(this);" />									
+									</h:panelGroup>
+								</f:facet>
+								<h:panelGroup>									
+									<h:selectBooleanCheckbox value="#{bitacora.autorizo}"
+										disabled="#{!bitacora.autoriza}"
+										onclick="quitarMarca('libera_#{bitacora.idOperacionesSic}');quitarMarca('cancela_#{bitacora.idOperacionesSic}');quitarMarca('confirma_#{bitacora.idOperacionesSic}');quitarMarca('habilitar_#{bitacora.idOperacionesSic}');quitarMarca('regresa_#{bitacora.idOperacionesSic}')"
+										styleClass="autoriza_#{bitacora.idOperacionesSic}" />
+									<script language="javascript">
+										checkAutoriza[iAutoriza++] = $j(".autoriza_#{bitacora.idOperacionesSic}");
+									</script>								
+								</h:panelGroup>
+							</h:column>
+							<h:column rendered="#{consultaOperacionesBean.usuarioRolIndeval or consultaOperacionesBean.esUsuarioCambioBoveda}">											
+								<f:facet name="header">										
+									<h:panelGroup>										
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.cancelarMinus}" />
+										<h:selectBooleanCheckbox value="false"
+											onclick="cancelarTodos(this);" />										
+									</h:panelGroup>
+								</f:facet>
+								<h:panelGroup>
+										<h:selectBooleanCheckbox value="#{bitacora.cancelo}"
+											disabled="#{!bitacora.cancela or bitacora.estatusOperacion.idEstatusOperacion eq '18' or bitacora.estatusOperacion.idEstatusOperacion eq '19' or bitacora.estatusOperacion.idEstatusOperacion eq '20' or bitacora.estatusOperacion.idEstatusOperacion eq '23'}"
+											onclick="quitarMarca('libera_#{bitacora.idOperacionesSic}');quitarMarca('autoriza_#{bitacora.idOperacionesSic}');quitarMarca('confirma_#{bitacora.idOperacionesSic}');quitarMarca('habilitar_#{bitacora.idOperacionesSic}');quitarMarca('regresa_#{bitacora.idOperacionesSic}')"
+											styleClass="cancela_#{bitacora.idOperacionesSic}" />
+										<script language="javascript">
+											checkCancela[iCancela++] = $j(".cancela_#{bitacora.idOperacionesSic}");
+										</script>									
+								</h:panelGroup>									
+							</h:column>
+
+
+
+                            <h:column rendered="#{consultaOperacionesBean.usuarioRolIndeval or consultaOperacionesBean.esUsuarioCambioBoveda}">
+								<f:facet name="header">
+									<h:panelGroup>
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.confirmarMinus}" />
+											<h:selectBooleanCheckbox value="false" onclick="confirmaTodos(this);" disabled="#{!consultaOperacionesBean.adminSicMILA}" />
+									</h:panelGroup>
+								</f:facet>
+								<h:panelGroup>
+									<h:selectBooleanCheckbox value="#{bitacora.confirmo}"
+										disabled="#{!bitacora.confirma || !consultaOperacionesBean.adminSicMILA}"
+										onclick="quitarMarca('libera_#{bitacora.idOperacionesSic}');quitarMarca('cancela_#{bitacora.idOperacionesSic}');quitarMarca('autoriza_#{bitacora.idOperacionesSic}');quitarMarca('habilitar_#{bitacora.idOperacionesSic}');quitarMarca('regresa_#{bitacora.idOperacionesSic}')"
+										styleClass="confirma_#{bitacora.idOperacionesSic}" />
+									<script language="javascript">
+										checkConfirma[iConfirma++] = $j(".confirma_#{bitacora.idOperacionesSic}");
+									</script>
+								</h:panelGroup>
+							</h:column>
+                            <h:column rendered="#{consultaOperacionesBean.usuarioRolIndeval and consultaOperacionesBean.adminSicMILA}">
+								<f:facet name="header">
+									<h:panelGroup>
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.regresarMinus}" />
+											<h:selectBooleanCheckbox value="false" onclick="regresaTodos(this);" disabled="#{!consultaOperacionesBean.adminSicMILA}" />
+									</h:panelGroup>
+								</f:facet>
+								<h:panelGroup>
+									<h:selectBooleanCheckbox value="#{bitacora.regreso}"
+										disabled="#{!bitacora.regresa || !consultaOperacionesBean.adminSicMILA}"
+										onclick="quitarMarca('libera_#{bitacora.idOperacionesSic}');quitarMarca('cancela_#{bitacora.idOperacionesSic}');quitarMarca('autoriza_#{bitacora.idOperacionesSic}');quitarMarca('habilitar_#{bitacora.idOperacionesSic}');quitarMarca('confirma_#{bitacora.idOperacionesSic}')"
+										styleClass="regresa_#{bitacora.idOperacionesSic}" />
+									<script language="javascript">
+										checkRegresa[iRegresa++] = $j(".regresa_#{bitacora.idOperacionesSic}");
+									</script>
+								</h:panelGroup>
+							</h:column>
+
+							
+							<h:column>
+								<f:facet name="header">
+									<h:panelGroup>
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.habilitar}" />
+											<h:selectBooleanCheckbox value="false" onclick="habilitarTodos(this);" />
+												<div id="contenedorBotonHabilitar">
+													<a4j:commandButton id="botonHabilitar" value="#{etq.habilitar}"
+													action="#{consultaOperacionesBean.actualizarHabilitar}"
+													onclick="this.disabled=true"
+													oncomplete="document.getElementById('daliForm:resultados:botonHabilitar').disabled=false"
+													eventsQueue="evqu" ignoreDupResponses="true"
+													requestDelay="1000"
+													reRender="containerResultados,totalesConsultas,tablaResultados,mensajeUsuario"
+													image="/images/accept.png">
+													</a4j:commandButton>
+												</div>
+											</h:panelGroup>
+								</f:facet>
+								<h:panelGroup>
+									<h:selectBooleanCheckbox value="#{bitacora.habilito}"
+										disabled="#{!bitacora.habilitar}"
+										onclick="quitarMarca('libera_#{bitacora.idOperacionesSic}');quitarMarca('cancela_#{bitacora.idOperacionesSic}');quitarMarca('autoriza_#{bitacora.idOperacionesSic}');quitarMarca('confirma_#{bitacora.idOperacionesSic}');quitarMarca('regresa_#{bitacora.idOperacionesSic}')"				
+										styleClass="habilitar_#{bitacora.idOperacionesSic}" />
+									<script language="javascript">
+										checkHabilitar[iHabilitar++] = $j(".habilitar_#{bitacora.idOperacionesSic}");
+									</script>
+								</h:panelGroup>
+							</h:column>
+
+
+                            
+							<f:facet name="footer">
+								<h:outputText value="Pendiente" />
+							</f:facet>
+
+						</h:dataTable>
+					</h:panelGroup>
+					<h:panelGroup id="totalesConsultas"
+						rendered="#{not empty consultaOperacionesBean.paginaVO.registros}">
+
+					<table cellpadding="0" cellspacing="0" border="0" align="center"
+						width="900px">
+						<tr align="right">
+							<td align="right">
+								<h:panelGroup id="botonesExportar">
+									<h:panelGroup
+										style="display: #{(consultaOperacionesBean.consultaEjecutada and not empty consultaOperacionesBean.paginaVO.registros)? 'inline' : 'none'}">
+
+										<h:outputText value="Exportar los resultados" />
+										<h:commandButton actionListener="#{consultaOperacionesExportacionBean.generarReportes}"
+											action="consultaOperacionesSICPdf"
+											image="/images/pdf.gif"
+											title="Exportar a PDF todos los resultados de la consulta"
+											id="generarPdf"
+											onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);"/>
+                           				&#160;&#160;
+                          				<h:commandButton actionListener="#{consultaOperacionesExportacionBean.generarReportes}"
+                          					action="consultaOperacionesSICXls"
+                          					image="/images/excel-file.gif"
+                          					title="Exportar a Excel todos los resultados de la consulta" 
+                            				id="generarExcel"
+                            				onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);" />
+                           				
+										<div id="monitorPeticionReporte" style="display: none;">
+											<h:panelGroup id="panelMonitorPeticionReporte">
+												<h:graphicImage value="/images/ajax-loader.gif" />
+												&#160;&#160;
+												<h:outputText value="#{etq.reporteEnProceso}" />
+												<a4j:commandButton id="btnActualizarEstadoPeticion"
+													image="/images/transparent.gif"
+													styleClass="submit"
+													actionListener="#{consultaOperacionesExportacionBean.actualizarEstadoPeticion}"
+													reRender="panelMonitorPeticionReporte"
+													oncomplete="desbloquearBotonesReportes(#{consultaOperacionesExportacionBean.peticionReporteCompleta}, ['generarExcel', 'generarPdf']);"/>
+											</h:panelGroup>
+										</div>
+                           				
+									</h:panelGroup>
+								</h:panelGroup>
+
+							</td>
+						</tr>
+					</table>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+
+
+	</ui:composition>
+
+
+	<!-- FIN DEL DECORATE -->
+</html>
+

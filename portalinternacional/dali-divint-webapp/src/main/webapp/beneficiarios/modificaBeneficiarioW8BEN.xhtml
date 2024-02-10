@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <ui:composition template="/layoutConsultas.xhtml">
+        <ui:define name="head">
+            <script language="javascript" type="text/javascript"
+                    src="#{facesContext.externalContext.requestContextPath}/js/beneficiarios.js">
+            </script>
+        </ui:define>
+
+        <ui:define name="tituloSeccion">
+            <h:outputText value="#{etq.beneficiarios}" />
+        </ui:define>
+        <ui:define name="subtituloSeccion">
+            <h:outputText value="#{etq.modificacionBeneficiarios}"></h:outputText>
+        </ui:define>
+
+
+        <ui:define name="criterios">
+            <a4j:keepAlive beanName="modificaBeneficiarioBean" />
+            <a4j:keepAlive beanName="consultaBeneficiariosBean" />
+            <a4j:keepAlive beanName="consultaBeneficiariosBean.param" />
+
+            <table>
+                <tr>
+                    <td>
+                        <h:panelGroup id="criterios">
+                            <table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+                                   align="left">
+                                <tr>
+                                    <td style="width: 110px">
+                                        <h:outputText value="#{etq.custodio}" styleClass="textoNegritas" />
+                                    </td>
+                                    <td style="width: 780px">
+                                        <h:outputText id="lstCustodios"
+                                                      value="#{modificaBeneficiarioBean.mapaCustodios[modificaBeneficiarioBean.forma.custodio]}" />
+                                    </td>
+                                </tr>
+                                <tr style="height: 10px">
+                                    <td colspan="2">
+                                        &#160;
+                                    </td>
+                                </tr>
+                                <tr  align="left">
+                                    <td>
+                                        <h:outputText value="#{etq.tipoBeneficiario}" styleClass="textoNegritas" />
+                                    </td>
+                                    <td>
+                                        <h:outputText id="lstTipoBenef"
+                                                      value="#{modificaBeneficiarioBean.mapaTipoBeneficiario[modificaBeneficiarioBean.forma.idTipoBeneficiario]}" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </h:panelGroup>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:panelGroup id="mensajeUsuario">
+                            <div style="min-height: 21px;">
+                                <rich:messages warnClass="warning" infoClass="info"
+                                               errorClass="error" ajaxRendered="true" showDetail="false"
+                                               showSummary="true" layout="list">
+                                    <f:facet name="infoMarker">
+                                        <h:panelGroup>
+                                            <h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+                                    </f:facet>
+
+                                    <f:facet name="errorMarker">
+                                        <h:panelGroup>
+                                            <h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+                                    </f:facet>
+                                </rich:messages>
+
+                                <div id="divWarnings" class="warning" style="display:none;">
+                                    <p id="textoWarning">
+                                    </p>
+                                </div>
+                            </div>
+                        </h:panelGroup>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:panelGroup id="encabezado">
+                            <table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+                                <tr>
+                                    <td width="440px">
+                                        <h:outputText value="#{etq.institucionMinus}" />
+                                    </td>
+                                    <td width="440px">
+                                        <h:outputText value="#{etq.fechaFormato}" styleClass="texto" />
+                                    </td>
+                                    <td width="440px">
+                                        <h:outputText value="#{etq.estado}" styleClass="texto" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:dataTable value="#{modificaBeneficiarioBean.forma.institucion}"
+                                                     var="institucion" style="width: 100%">
+                                            <h:column>
+                                                <h:outputText styleClass="texto textoPeque12" value="#{institucion}" /><br />
+                                            </h:column>
+                                        </h:dataTable>
+                                    </td>
+                                    <td>
+                                        <rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+                                                       value="#{modificaBeneficiarioBean.forma.fechaFormato}"
+                                                       datePattern="dd/MM/yyyy" />
+                                    </td>
+                                    <td>
+	                                    <h:outputText styleClass="textoControles" id="activo" value="#{modificaBeneficiarioBean.forma.activo == '1' ? 'Activo' : modificaBeneficiarioBean.forma.activo == '0' ? 'Inactivo' : ''}"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </h:panelGroup>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:panelGroup id="general" style="width: 100%">
+                            <table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+                                <tr>
+                                    <td colspan="2">
+                                        <u><b><h:outputText value="#{etq.formaW8BEN}" styleClass="textoNegritas" /></b></u>
+                                    </td>
+                                </tr>
+                                <tr style="height: 5px">
+                                    <td colspan="2">
+                                        &#160;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="PART I" styleClass="textoBenefPartes"/>&#160;&#160;
+                                        <h:outputText value="#{etq.w8benPart1Title}" /></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 440px">
+                                        <b><h:outputText value="1" /></b>&#160;&#160;
+                                        <h:outputText value="#{etq.w8benNombre}" />
+                                    </td>
+                                    <td style="width: 440px">
+                                        <b><h:outputText value="2" /></b>&#160;&#160;
+                                        <h:outputText value="#{etq.w8benPais}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:panelGrid columns="3" width="100%" rendered="#{modificaBeneficiarioBean.forma.personaFisica}">
+                                            <h:outputText value=" " />
+                                            <h:outputText value=" " />
+                                            <h:outputText value=" " />
+                                            <h:inputText autocomplete="off" id="nombre" value="#{modificaBeneficiarioBean.forma.nombre}"
+                                                         styleClass="textoControles" size="20" maxlength="50"
+                                                         style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="apPaterno" value="#{modificaBeneficiarioBean.forma.apellidoPaterno}"
+                                                         styleClass="textoControles" size="20" maxlength="50"
+                                                         style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="apMaterno" value="#{modificaBeneficiarioBean.forma.apellidoMaterno}"
+                                                         styleClass="textoControles" size="20" maxlength="50"
+                                                         style="text-transform: uppercase;" />
+                                        </h:panelGrid>
+                                        <h:panelGroup rendered="#{!modificaBeneficiarioBean.forma.personaFisica}">
+                                            <h:inputText autocomplete="off" id="razonSocial" value="#{modificaBeneficiarioBean.forma.razonSocial}"
+                                                         styleClass="textoControles" size="50" maxlength="200"
+                                                         style="text-transform: uppercase;" />
+                                        </h:panelGroup>
+                                    </td>
+                                    <td>
+                                        <h:inputText autocomplete="off" id="pais" value="#{modificaBeneficiarioBean.forma.pais}"
+                                                     styleClass="textoControles" size="50" maxlength="50"
+                                                     style="text-transform: uppercase;" >
+                                            <a4j:support event="onchange" actionListener="#{modificaBeneficiarioBean.copiaPaisW8BEN}"
+                                                         reRender="txtLine9a2" ajaxSingle="true"/>
+                                        </h:inputText>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="3" /></b>&#160;&#160;
+                                        <h:outputText value="#{etq.w8benTipoBeneficiario}" />
+                                        &#160;&#160;&#160;
+                                        <h:panelGroup>
+                                            <t:selectOneRadio id="tipoPropietario" styleClass="textoControles"
+                                                              value="#{modificaBeneficiarioBean.forma.tipoPropietario}"
+                                                              layout="spread" forceId="true" forceIdIndex="false">
+                                                <f:selectItems value="#{modificaBeneficiarioBean.forma.lstTipoPropietario}"/>
+                                            </t:selectOneRadio>
+                                            <h:panelGrid columns="6" style="width: 100%">
+                                                <t:radio for="daliForm:tipoPropietario" index="0" />
+                                                <t:radio for="daliForm:tipoPropietario" index="1" />
+                                                <t:radio for="daliForm:tipoPropietario" index="2" />
+                                                <t:radio for="daliForm:tipoPropietario" index="3" />
+                                                <t:radio for="daliForm:tipoPropietario" index="4" />
+                                                <t:radio for="daliForm:tipoPropietario" index="5" />
+                                                <t:radio for="daliForm:tipoPropietario" index="6" />
+                                                <t:radio for="daliForm:tipoPropietario" index="7" />
+                                                <t:radio for="daliForm:tipoPropietario" index="8" />
+                                                <t:radio for="daliForm:tipoPropietario" index="9" />
+                                                <t:radio for="daliForm:tipoPropietario" index="10" />
+                                                <t:radio for="daliForm:tipoPropietario" index="11" />
+                                                <t:radio for="daliForm:tipoPropietario" index="12" />
+                                            </h:panelGrid>
+                                        </h:panelGroup>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="4" /></b>&#160;&#160;
+                                        <b><h:outputText value="#{etq.w8benDireccionResidencial}" /></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:panelGrid style="width: 100%" columns="3">
+                                            <h:outputText value="#{etq.w8benStreet}" />
+                                            <h:outputText value="#{etq.w8benOuterNumber}" />
+                                            <h:outputText value="#{etq.w8benInteriorNumber}" />
+                                            <h:inputText autocomplete="off" id="calleResidencial" value="#{modificaBeneficiarioBean.forma.calleResidencial}"
+                                                         styleClass="textoControles" size="100" maxlength="100" style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="numeroExteriorResidencial" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{modificaBeneficiarioBean.forma.numeroExteriorResidencial}" style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="numeroInteriorResidencial" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{modificaBeneficiarioBean.forma.numeroInteriorResidencial}" style="text-transform: uppercase;" />
+                                        </h:panelGrid>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:panelGrid style="width: 100%" columns="3">
+                                            <h:outputText value="#{etq.w8benPostalCode}" />
+                                            <h:outputText value="#{etq.w8benCityTown}" />
+                                            <h:outputText value="#{etq.w8benStatePorvince}" />
+                                            <h:inputText autocomplete="off" id="codigoPostalResidencial" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{modificaBeneficiarioBean.forma.codigoPostalResidencial}" style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="cityTownResidencial" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{modificaBeneficiarioBean.forma.cityTownResidencial}" style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="stateProvinceResidencial" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{modificaBeneficiarioBean.forma.stateProvinceResidencial}" style="text-transform: uppercase;" />
+                                        </h:panelGrid>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:outputText value="#{etq.w8benPaisResidencial}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:inputText autocomplete="off" id="paisResidencial" value="#{modificaBeneficiarioBean.forma.paisResidencial}"
+                                                     styleClass="textoControles" size="50" maxlength="50" style="text-transform: uppercase;" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="5" /></b>&#160;&#160;
+                                        <b><h:outputText value="#{etq.w8benDireccionPostal}" /></b>
+                                        &#160;&#160;&#160;
+                                        <h:selectBooleanCheckbox id="direccionPostalDeshabilitada"
+                                                                 value="#{modificaBeneficiarioBean.forma.disabledDireccionPostal}"
+                                                                 onclick="javascript:bloqueaDireccionPostalW8(this.checked);" />
+                                        &#160;
+                                        <h:outputText value="#{etq.w8benDisableMalingAddress}"
+                                                      for="direccionPostalDeshabilitada" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:panelGrid style="width: 100%" columns="3">
+                                            <h:outputText value="#{etq.w8benStreet}" />
+                                            <h:outputText value="#{etq.w8benOuterNumber}" />
+                                            <h:outputText value="#{etq.w8benInteriorNumber}" />
+                                            <h:inputText autocomplete="off" id="callePostal" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{modificaBeneficiarioBean.forma.callePostal}" style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="numeroExteriorPostal" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{modificaBeneficiarioBean.forma.numeroExteriorPostal}" style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="numeroInteriorPostal" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{modificaBeneficiarioBean.forma.numeroInteriorPostal}" style="text-transform: uppercase;" />
+                                        </h:panelGrid>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:panelGrid style="width: 100%" columns="3">
+                                            <h:outputText value="#{etq.w8benPostalCode}" />
+                                            <h:outputText value="#{etq.w8benCityTown}" />
+                                            <h:outputText value="#{etq.w8benStatePorvince}" />
+                                            <h:inputText autocomplete="off" id="codigoPostalPostal" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{modificaBeneficiarioBean.forma.codigoPostalPostal}" style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="cityTownPostal" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{modificaBeneficiarioBean.forma.cityTownPostal}" style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="stateProvincePostal" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{modificaBeneficiarioBean.forma.stateProvincePostal}" style="text-transform: uppercase;" />
+                                        </h:panelGrid>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:outputText value="#{etq.w8benPaisPostal}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:inputText autocomplete="off" id="paisPostal" value="#{modificaBeneficiarioBean.forma.paisPostal}"
+                                                     styleClass="textoControles" size="50" maxlength="50" style="text-transform: uppercase;" />
+                                    </td>
+                                </tr>
+                                <tr style="height: 5px">
+                                    <td colspan="2">
+                                        &#160;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b><h:outputText value="6" /></b>&#160;&#160;
+                                        <h:outputText value="#{etq.w8benUSIdNumber}" />
+                                    </td>
+                                    <td>
+                                        <b><h:outputText value="7" /></b>&#160;&#160;
+                                        <h:outputText value="#{etq.w8benRFC}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:inputText autocomplete="off" id="usIdNumber" value="#{modificaBeneficiarioBean.forma.taxPayerIdNumber}"
+                                                     styleClass="textoControles" size="30" maxlength="30" readonly="true" />
+                                        &#160;&#160;
+                                        <h:panelGroup>
+                                            <t:selectOneRadio id="tipoTaxPayerIdNumber" styleClass="textoControles"
+                                                              value="#{modificaBeneficiarioBean.forma.typeTaxPayerIdNumber}"
+                                                              layout="spread" forceId="true" forceIdIndex="false" >
+                                                <f:selectItems value="#{modificaBeneficiarioBean.forma.lstTaxPayerIdNumber}"/>
+                                            </t:selectOneRadio>
+                                            <h:panelGrid columns="2">
+                                                <t:radio for="daliForm:tipoTaxPayerIdNumber" index="0" />
+                                                <t:radio for="daliForm:tipoTaxPayerIdNumber" index="1" />
+                                            </h:panelGrid>
+                                        </h:panelGroup>
+                                    </td>
+                                    <td>
+                                        <h:inputText autocomplete="off" id="RFC" value="#{modificaBeneficiarioBean.forma.rfc}"
+                                                     styleClass="textoControles" size="30" maxlength="30" style="text-transform: uppercase;" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="8" /></b>&#160;&#160;
+                                        <h:outputText value="#{etq.w8benReferenceNumber}" />
+                                        &#160;&#160;&#160;
+                                        <h:panelGroup rendered="#{!modificaBeneficiarioBean.forma.campos.referenceNumbers}" >
+                                            <h:selectBooleanCheckbox id="referenceNumberDeshabilitada"
+                                                                     value="#{modificaBeneficiarioBean.forma.disabledreferenceNumber}"
+                                                                     onclick="javascript:bloqueaReferenceNumber(this.checked);" />
+                                            &#160;
+                                            <h:outputText value="#{etq.deshabilitar}"
+                                                          for="referenceNumberDeshabilitada" />
+                                        </h:panelGroup>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:inputText autocomplete="off" id="numeroReferencia" value="#{modificaBeneficiarioBean.forma.numeroReferencia}"
+                                                     styleClass="textoControles" size="100" maxlength="100"
+                                                     readonly="#{modificaBeneficiarioBean.forma.campos.referenceNumbers}" />
+                                    </td>
+                                </tr>
+                                <tr style="height: 5px">
+                                    <td colspan="2">
+                                        &#160;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="PART II" styleClass="textoBenefPartes"/>&#160;&#160;
+                                        <h:outputText value="#{etq.w8benPart2Title}" /></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="9" /></b>&#160;&#160;
+                                        <h:outputText value="#{etq.w8benPart2Subtitle1}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="9a" /></b>&#160;&#160;
+                                        <h:selectBooleanCheckbox id="cbLine9a1"
+                                                                 value="#{modificaBeneficiarioBean.forma.line9a1}"
+                                                                 disabled="#{modificaBeneficiarioBean.forma.campos.field9a}" />
+                                        &#160;&#160;
+                                        <h:outputText value="#{etq.w8benLine9apart1}" />
+                                        &#160;
+                                        <h:inputText autocomplete="off" id="txtLine9a2" value="#{modificaBeneficiarioBean.forma.line9a2}"
+                                                     styleClass="textoControles" size="30" maxlength="50" style="text-transform: uppercase;"
+                                                     readonly="#{modificaBeneficiarioBean.forma.campos.field9aResidencePlace}"/>
+                                        &#160;
+                                        <h:outputText value="#{etq.w8benLine9apart2}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="9b" /></b>&#160;&#160;
+                                        <h:selectBooleanCheckbox id="cbLine9b"
+                                                                 value="#{modificaBeneficiarioBean.forma.line9b}"
+                                                                 disabled="#{modificaBeneficiarioBean.forma.campos.field9b}" /> &#160;&#160;
+                                        <h:outputText value="#{etq.w8benLine9b}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="9c" /></b>&#160;&#160;
+                                        <h:selectBooleanCheckbox id="cbLine9c"
+                                                                 value="#{modificaBeneficiarioBean.forma.line9c}"
+                                                                 disabled="#{modificaBeneficiarioBean.forma.campos.field9c}" /> &#160;&#160;
+                                        <h:outputText value="#{etq.w8benLine9c}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="9d" /></b>&#160;&#160;
+                                        <h:selectBooleanCheckbox id="cbLine9d"
+                                                                 value="#{modificaBeneficiarioBean.forma.line9d}"
+                                                                 disabled="#{modificaBeneficiarioBean.forma.campos.field9d}" /> &#160;&#160;
+                                        <h:outputText value="#{etq.w8benLine9d}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="9e" /></b>&#160;&#160;
+                                        <h:selectBooleanCheckbox id="cbLine9e"
+                                                                 value="#{modificaBeneficiarioBean.forma.line9e}"
+                                                                 disabled="#{modificaBeneficiarioBean.forma.campos.field9e}"/> &#160;&#160;
+                                        <h:outputText value="#{etq.w8benLine9e}" />
+                                    </td>
+                                </tr>
+                                <tr style="height: 5px">
+                                    <td colspan="2">
+                                        &#160;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="10" /></b>&#160;&#160;
+                                        <h:outputText value="#{etq.w8benLine10part1}" />
+                                        &#160;
+                                        <h:inputText autocomplete="off" id="txtLine10p1" value="#{modificaBeneficiarioBean.forma.line10p1}"
+                                                     styleClass="textoControles" size="30" maxlength="50"
+                                                     readonly="#{modificaBeneficiarioBean.forma.campos.field10Article}" />
+                                        &#160;
+                                        <h:outputText value="#{etq.w8benLine10part2}" />
+                                        &#160;
+                                        <h:inputText autocomplete="off" id="txtLine10p2" value="#{modificaBeneficiarioBean.forma.line10p2}"
+                                                     styleClass="textoControles" size="30" maxlength="50"
+                                                     readonly="#{modificaBeneficiarioBean.forma.campos.field10Rate}" />
+                                        &#160;
+                                        <h:outputText value="#{etq.w8benLine10part3}" />
+                                        &#160;
+                                        <h:inputText autocomplete="off" id="txtLine10p3" value="#{modificaBeneficiarioBean.forma.line10p3}"
+                                                     styleClass="textoControles" size="30" maxlength="50"
+                                                     readonly="#{modificaBeneficiarioBean.forma.campos.field10TypeOfIncome}"/>
+                                        &#160;
+                                        <h:outputText value="#{etq.w8benLine10part4}" />
+                                        &#160;
+                                        <h:inputText autocomplete="off" id="txtLine10p4" value="#{modificaBeneficiarioBean.forma.line10p4}"
+                                                     styleClass="textoControles" size="100" maxlength="150"
+                                                     readonly="#{modificaBeneficiarioBean.forma.campos.field10Reasons}"/>
+                                    </td>
+                                </tr>
+                                <tr style="height: 5px">
+                                    <td colspan="2">
+                                        &#160;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="PART III" styleClass="textoBenefPartes"/>&#160;&#160;
+                                        <h:outputText value="#{etq.w8benPart3Title}" /></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="11" /></b>&#160;&#160;
+                                        <h:selectBooleanCheckbox id="cbLine11"
+                                                                 value="#{modificaBeneficiarioBean.forma.line11}"
+                                                                 disabled="#{modificaBeneficiarioBean.forma.campos.field11}"/> &#160;&#160;
+                                        <h:outputText value="#{etq.w8benLine11}" />
+                                    </td>
+                                </tr>
+                                <tr style="height: 5px">
+                                    <td colspan="2">
+                                        &#160;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:outputText value="#{etq.w8benCapacityActing}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:inputText autocomplete="off" id="capacityActing" value="#{modificaBeneficiarioBean.forma.capacityActing}"
+                                                     styleClass="textoControles" size="100" maxlength="100"
+                                                     readonly="#{modificaBeneficiarioBean.forma.campos.partIVCapacityInWhichActing}" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <a4j:outputPanel ajaxRendered="true">
+                                <script languaje="javascript">
+                                    verificaBloqueoDireccionPostal();
+                                </script>
+                            </a4j:outputPanel>
+                            <a4j:outputPanel ajaxRendered="true" rendered="#{!capturaBeneficiariosBean.forma.campos.referenceNumbers}">
+                                <script languaje="javascript">
+                                    verificaReferenceNumber();
+                                </script>
+                            </a4j:outputPanel>
+                        </h:panelGroup>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:panelGroup id="botones">
+                            <div class="guardar">
+                                <h:commandButton id="botonGuardar" image="/images/transparent.gif"
+                                                   styleClass="submit" action="#{modificaBeneficiarioBean.guardar}">
+                                    <f:setPropertyActionListener target="#{consultaBeneficiariosBean.banderaInicio}" value="false" />
+                                </h:commandButton>
+                            </div>
+                            <div class="cancelar">
+                                <h:commandButton id="botonCancelar" image="/images/transparent.gif"
+                                                   styleClass="submit" action="consultaBeneficiarios" >
+                                    <f:setPropertyActionListener target="#{consultaBeneficiariosBean.banderaInicio}" value="false" />
+                                </h:commandButton>
+                            </div>
+                        </h:panelGroup>
+                    </td>
+                </tr>
+            </table>
+        </ui:define>
+
+    </ui:composition>
+</html>

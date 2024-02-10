@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xls="http://indeval.com/jsf/xls"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document documentName="consultaBeneficiarios" documentTitle="Consulta de Beneficiarios"
+                  institucion="#{consultaBeneficiariosBean.agenteFirmado.id} #{consultaBeneficiariosBean.agenteFirmado.folio} #{consultaBeneficiariosBean.agenteFirmado.razon}"
+                  fecha="#{consultaBeneficiariosBean.fechaActual}" >
+        <xls:table value="consultaBeneficiariosBean" var="dummy">
+            <xls:row>
+                <xls:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </xls:row>
+        </xls:table>
+        <xls:table value="#{consultaBeneficiariosBean}" var="resultado">
+            <xls:row>
+                <xls:col header="#{etq.custodio}" value="#{consultaBeneficiariosBean.mapaCustodios[consultaBeneficiariosBean.param.custodio]}" align="center" />
+                <xls:col header="#{etq.tipoBeneficiario}" value="#{consultaBeneficiariosBean.mapaTipoBeneficiario[consultaBeneficiariosBean.param.tipoBeneficiario]}" align="center" />
+                <xls:col header="#{etq.institucionMinus}" value="#{consultaBeneficiariosBean.idFolioInstitucion} - #{consultaBeneficiariosBean.nombreInstitucion}" align="center" />
+                <xls:col header="#{etq.formato}" value="#{(consultaBeneficiariosBean.param.formato eq '-1') ? 'NINGUNO' : consultaBeneficiariosBean.param.formato }" align="center" />
+                <xls:col header="#{etq.estatusBeneficiario}" value="#{consultaBeneficiariosBean.mapaStatusBenef[consultaBeneficiariosBean.param.statusBenef]}" align="center" />
+                <xls:col header="#{etq.uoi}" value="#{consultaBeneficiariosBean.param.uoiNumber}" align="center" />
+                <xls:col header="#{etq.fechaRegistro} Inicio" value="#{consultaBeneficiariosBean.param.fechaRegistroInicio}" align="center">
+                	<cvt:simpleDateConverter pattern="dd-MM-yyyy"/>
+                </xls:col>
+                <xls:col header="#{etq.fechaRegistro} Fin" value="#{consultaBeneficiariosBean.param.fechaRegistroFin}" align="center">
+                	<cvt:simpleDateConverter pattern="dd-MM-yyyy"/>
+                </xls:col>
+                <xls:col header="#{etq.fechaFormato} Inicio" value="#{consultaBeneficiariosBean.param.fechaFormatoInicio}" align="center">
+                	<cvt:simpleDateConverter pattern="dd-MM-yyyy"/>
+                </xls:col>
+                <xls:col header="#{etq.fechaFormato} Fin" value="#{consultaBeneficiariosBean.param.fechaFormatoFin}" align="center">
+                	<cvt:simpleDateConverter pattern="dd-MM-yyyy"/>
+                </xls:col>
+                <xls:col header="#{etq.fechaDeAutorizacion} Inicio" value="#{consultaBeneficiariosBean.param.fechaAutorizacionInicio}" align="center">
+                	<cvt:simpleDateConverter pattern="dd-MM-yyyy"/>
+                </xls:col>
+                <xls:col header="#{etq.fechaDeAutorizacion} Fin" value="#{consultaBeneficiariosBean.param.fechaAutorizacionFin}" align="center">
+                	<cvt:simpleDateConverter pattern="dd-MM-yyyy"/>
+                </xls:col>
+                <xls:col header="#{etq.nombreBeneficiario} o #{etq.razonSocial}" value="#{consultaBeneficiariosBean.param.nombreRazonSocial}" align="center" />
+                <xls:col header="#{etq.w8benReferenceNumber}" value="#{consultaBeneficiariosBean.param.referenceNumber}" align="center" />
+            </xls:row>
+        </xls:table>
+        <xls:br />
+        <xls:subtitle value="#{etq.registrosEncontrados}: #{consultaBeneficiariosBean.paginaReportes.totalRegistros}" />
+        <xls:br />
+        <xls:subtitle value="Datos"/>
+        <xls:table value="#{consultaBeneficiariosBean.paginaReportes.registros}" var="detalle">
+            <xls:row>
+                <xls:col header="#{etq.institucionMinus}" value="#{detalle.nombresInstitucionesConPipe}" align="CENTER" />
+                <xls:col header="#{etq.custodio}" value="#{consultaBeneficiariosBean.mapaCustodios[detalle.idCuentaNombrada]}" align="CENTER" />
+                <xls:col header="#{etq.formato}" value="#{detalle.tipoFormato eq 'W8BEN2014' ? 'W8BEN' : detalle.tipoFormato}" align="CENTER" />
+                <xls:col header="#{etq.nombreBeneficiario}" value="#{detalle.nombreGeneral}" />
+                <xls:col header="#{etq.tipoBeneficiario}" value="#{detalle.tipoBeneficiario.descTipoBeneficiario}" />
+                <xls:col header="#{etq.fechaRegistro}" value="#{detalle.fechaRegistro}" align="CENTER">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss"/>
+                </xls:col>
+                <xls:col header="#{etq.fechaFormato}" value="#{detalle.fechaFormato}" align="CENTER">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+                </xls:col>
+                <xls:col header="#{etq.w8benAdp}" value="#{detalle.adp}" align="CENTER" />
+                <xls:col header="#{etq.estatusBeneficiario}" value="#{detalle.statusBenef.descStatusBenef}" align="CENTER" />
+                <xls:col header="#{etq.uoi}" value="#{detalle.uoiNumber}" align="CENTER" />
+                <xls:col header="#{etq.porcentajeRetencionMinus}" value="#{detalle.statusBenef.descStatusBenef ne 'AUTORIZADO' ? '30' : (empty detalle.porcentajeRetencion ? consultaBeneficiariosBean.mapaPorcentajes[detalle.idCuentaNombrada][detalle.tipoBeneficiario.idTipoBeneficiario] : detalle.porcentajeRetencion)} %" align="CENTER" />
+                <xls:col header="#{etq.w8benDireccionResidencialOnly}" align="LEFT" collspan="3" 
+                         value="#{detalle.domicilioW8Normal.street} #{detalle.domicilioW8Normal.outerNumber} #{detalle.domicilioW8Normal.interiorNumber},#{detalle.domicilioW8Normal.postalCode},#{detalle.domicilioW8Normal.cityTown},#{detalle.domicilioW8Normal.stateProvince}" />
+                <xls:col header="#{etq.w8benPaisResidencialOnly}" value="#{detalle.domicilioW8Normal.country}" align="LEFT" />
+                <xls:col header="#{etq.w8benDireccionPostalOnly}" align="LEFT" collspan="3" 
+                         value="#{detalle.domicilioW8Correo.street} #{detalle.domicilioW8Correo.outerNumber} #{detalle.domicilioW8Correo.interiorNumber},#{detalle.domicilioW8Correo.postalCode},#{detalle.domicilioW8Correo.cityTown},#{detalle.domicilioW8Correo.stateProvince}" />
+                <xls:col header="#{etq.w8benPaisResidencialOnly}" value="#{detalle.domicilioW8Correo.country}" align="LEFT"  />
+                <xls:col header="#{etq.w8benUSIdNumberOnly}"
+                         value="#{detalle.formatoW8IMY.taxpayerIdNumb} - #{consultaBeneficiariosBean.mapaTaxPayerIdNumer[detalle.formatoW8IMY.tipoTaxIdNumb]}"
+                         align="CENTER" />
+                <xls:col header="#{etq.w8benRFC}" align="CENTER" value="#{detalle.formatoW8IMY.foreignTaxIdNumb}#{detalle.formatoW8BEN.foreignTaxIdNumb}" />
+                <xls:col header="#{etq.w8benReferenceNumber}" align="CENTER" value="#{detalle.formatoW8IMY.referenceNumbers}#{detalle.formatoW8BEN.referenceNumbers}"  />
+                <xls:col header="#{etq.w8ben2014fechaNacimientoSP}" value="#{detalle.formatoW8BEN.fechaNacimiento}" align="CENTER" pattern="dd/MM/yyyy" />
+                <xls:col header="#{etq.w8benCapacityActingOnly}" align="CENTER" value="#{detalle.formatoW8BEN.capacityActing}" />
+                <xls:col header="#{etq.W8ben2014SignerSP}" align="CENTER" value="#{detalle.formatoW8BEN.signer}" />
+            </xls:row>
+        </xls:table>
+    </xls:document>
+</html>

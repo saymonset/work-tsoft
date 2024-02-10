@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd" 
+              version="1.2">
+
+	<managed-bean>
+		<managed-bean-name>cambiaEstadoOperacionesBean</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portalinternacional.presentation.controller.CambiaEstadoOperacionesController
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		
+		<managed-property>
+			<property-name>divisionInternacionalService</property-name>
+			<value>#{divisionInternacionalService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>registrosXPag</property-name>
+			<value>#{50}</value>
+		</managed-property>
+	</managed-bean>
+    <managed-bean>
+        <managed-bean-name>cambiaEdoOpsCambioBovedaBean</managed-bean-name>
+        <managed-bean-class>
+            com.indeval.portalinternacional.presentation.controller.CambiaEdoOpsCambioBovedaController
+        </managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        
+        <managed-property>
+            <property-name>divisionInternacionalService</property-name>
+            <value>#{divisionInternacionalService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>registrosXPag</property-name>
+            <value>#{50}</value>
+        </managed-property>
+    </managed-bean>
+
+</faces-config>

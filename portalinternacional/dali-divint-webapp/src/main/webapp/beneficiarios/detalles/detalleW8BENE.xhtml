@@ -1,0 +1,158 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+    xmlns:t="http://myfaces.apache.org/tomahawk">
+
+	<table style="width: 100%; border: 0;" cellpadding="0px" cellspacing="4px" align="left">
+		<tr>
+			<td style="width: 25%; vertical-align: top; text-align: left;">
+				<h:outputText styleClass="texto textoPeque12 negrita" value="#{etq.nombreBeneficiario}" />
+			</td>
+			<td style="width: 25%; vertical-align: top; text-align: left;">
+				<h:outputText styleClass="texto textoPeque12 negrita" value="#{etq.tipoBeneficiario}" />
+			</td>
+			<td style="width: 25%; vertical-align: top; text-align: left;">
+				<h:outputText styleClass="texto textoPeque12 negrita" value="#{etq.fechaRegistro}" />
+			</td>
+			<td style="width: 25%; vertical-align: top; text-align: left;">
+				<h:outputText styleClass="texto textoPeque12 negrita" value="#{etq.fechaFormato}" />
+			</td>
+			<td style="width: 25%; vertical-align: top; text-align: left;">
+				<h:outputText styleClass="texto textoPeque12 negrita" value="#{etq.estatusBeneficiario}" />
+			</td>
+		</tr>
+		<tr>
+			<td style="width: 25%; vertical-align: top; text-align: left;">
+				<h:outputText styleClass="texto textoPeque12" value="#{beneficiario.razonSocial != null ? beneficiario.razonSocial : beneficiario.nombreCompleto}" />
+			</td>
+			<td style="width: 25%; vertical-align: top; text-align: left;">
+				<h:outputText styleClass="texto textoPeque12" value="#{beneficiario.descTipoBeneficiario}#{beneficiario.idTipoBeneficiario eq 15 ? ' (OTROS) ':''}" />
+			</td>
+			<td style="width: 25%; vertical-align: top; text-align: left;">
+				<h:outputText styleClass="texto textoPeque12" value="#{beneficiario.fechaRegistro}"
+                              converter="formatoFechaLargaConverter" />
+			</td>
+			<td style="width: 25%; vertical-align: top; text-align: left;">
+                <h:outputText styleClass="texto textoPeque12" value="#{beneficiario.fechaFormato}"
+                              converter="formatoFechaCortaConverter" />
+			</td>
+			<td style="width: 25%; vertical-align: top; text-align: left;">
+				<h:outputText styleClass="texto textoPeque12 negrita" value="#{beneficiario.descStatusBeneficiario}" 
+					style="color: #{beneficiario.descStatusBeneficiario eq 'AUTORIZADO'? 'green' : 'red' }" />
+			</td>
+		</tr>
+
+		<!-- Direccion recidencial permanente -->
+		<tr>
+			<td colspan="5">
+				<table style="width: 100%; border: 0;" cellpadding="0" cellspacing="0">
+					<tr>
+						<td style="width: 80%">
+							<h:outputText styleClass="texto textoPeque12 negrita" value="#{etq.w8benDireccionResidencialOnly}" />
+						</td>
+						<td style="width: 20%">
+							<h:outputText styleClass="texto textoPeque12 negrita" value="#{etq.w8benPaisResidencialOnly}" />
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 80%">
+							<h:outputText styleClass="texto textoPeque12" value="#{beneficiario.partIcmp6a}" />
+							&#160;&#160;
+							<h:outputText styleClass="texto textoPeque12" value="#{beneficiario.partIcmp6b}" />
+						</td>
+						<td style="width: 20%">
+							<h:outputText styleClass="texto textoPeque12" value="#{beneficiario.partIcmp6c}" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<!-- Direccion correo -->
+		<tr>
+			<td colspan="5">
+				<table style="width: 100%; border: 0;" cellpadding="0" cellspacing="0">
+					<tr>
+						<td style="width: 80%">
+							<h:outputText styleClass="texto textoPeque12 negrita" value="#{etq.w8benDireccionPostalOnly}" />
+						</td>
+						<td style="width: 20%">
+							<h:outputText styleClass="texto textoPeque12 negrita" value="#{etq.w8benPaisResidencialOnly}" />
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 80%">
+							<h:outputText styleClass="texto textoPeque12" value="#{beneficiario.partIcmp7a}" />
+							&#160;&#160;
+							<h:outputText styleClass="texto textoPeque12" value="#{beneficiario.partIcmp7b}" />
+						</td>
+						<td style="width: 20%">
+							<h:outputText styleClass="texto textoPeque12" value="#{beneficiario.partIcmp7c}" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<!-- U.S. taxpayer identification, GIIN, TIN, Reference number -->
+		<tr>
+			<td colspan="5">
+				<table style="width: 100%; border: 1;" cellpadding="0" cellspacing="0">
+					<tr>
+						<td style="width: 35%">
+							<h:outputText styleClass="texto textoPeque12 negrita" value="#{etqw8bene.usTaxpayerId}" />
+						</td>
+						<td style="width: 15%">
+							<h:outputText styleClass="texto textoPeque12 negrita" value="#{etqw8bene.giin}" />
+						</td>
+						<td style="width: 20%">
+							<h:outputText styleClass="texto textoPeque12 negrita" value="#{etqw8bene.foreingTin}" />
+						</td>
+						<td style="width: 30%">
+							<h:outputText styleClass="texto textoPeque12 negrita" value="#{etqw8bene.referenceNumber}" />
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 35%">
+							<h:outputText styleClass="texto textoPeque12" value="#{beneficiario.partIcmp8}" />
+						</td>
+						<td style="width: 15%">
+							<h:outputText styleClass="texto textoPeque12" value="#{beneficiario.partIcmp9a2}" />
+						</td>
+						<td style="width: 20%">
+							<h:outputText styleClass="texto textoPeque12" value="#{beneficiario.partIcmp9b2}" />
+						</td>
+						<td style="width: 30%">
+							<h:outputText styleClass="texto textoPeque12" value="#{beneficiario.partIcmp10}" />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+        <tr>
+            <td colspan="5">
+                <t:div rendered="#{!empty sessionScope.roles['INT_BEN_INDEVAL']}">
+                    <a href="javascript:muestraAsignaAdpBeneficiario(#{beneficiario.idBeneficiario});">
+                        <h:outputText styleClass="texto textoPeque12 negrita sinSubrayar" value="#{etq.w8benAdp}"  />
+                        &#160;&#160;
+                        <h:outputText styleClass="texto textoPeque12 sinSubrayar" value="#{beneficiario.adp}" />
+                    </a>
+                </t:div>
+                <t:div rendered="#{empty sessionScope.roles['INT_BEN_INDEVAL']}">
+                    <h:outputText styleClass="texto textoPeque12 negrita sinSubrayar" value="#{etq.w8benAdp}"  />
+                    &#160;&#160;
+                    <h:outputText styleClass="texto textoPeque12 sinSubrayar" value="#{beneficiario.adp}" />
+                </t:div>
+            </td>
+        </tr>
+        <tr>
+        	<td>
+        		<h:outputText styleClass="texto textoPeque12 negrita" value="Estado:" />
+                &#160;&#160;
+                <h:outputText styleClass="texto textoPeque12 sinSubrayar" value="#{beneficiario.activo == '1' ? 'Activo' : beneficiario.activo == '0' ? 'Inactivo' : '---'}" />
+        	</td>
+        </tr>
+    </table>
+
+</html>

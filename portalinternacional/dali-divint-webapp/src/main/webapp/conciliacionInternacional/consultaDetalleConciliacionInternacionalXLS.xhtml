@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xls="http://indeval.com/jsf/xls"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document documentName="ConciliacionIntDetalle" documentTitle="Consulta Detalle Conciliacion"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        fecha="#{consultaBitacoraEnvOpBean.fechaActual}">
+
+        <xls:table value="#{detalleConciliacionesIntBean}" var="emision">
+            <xls:row>
+                <xls:col header="#{etq.folioConciliacionMinus}" value="#{!empty detalleConciliacionesIntBean.folio ? detalleConciliacionesIntBean.folio : 'TODOS'}" align="center" />
+                <xls:col header="#{etq.fechaMensajeInicio}" value="#{!empty detalleConciliacionesIntBean.fechaMensajeInicio ? detalleConciliacionesIntBean.fechaMensajeInicio  : 'NA' }" align="center"  pattern="dd/MM/yyyy" />					
+                <xls:col header="#{etq.fechaMensajeFin}" value="#{!empty detalleConciliacionesIntBean.fechaMensajeFin ? detalleConciliacionesIntBean.fechaMensajeFin : 'NA' }" align="center"  pattern="dd/MM/yyyy"/>				
+                <xls:col header="#{etq.custodio}" value="#{!empty detalleConciliacionesIntBean.custodio ?  detalleConciliacionesIntBean.selectedCustodio : 'NA'}" align="center" />
+                <xls:col header="#{etq.bovedaDaliMinus}" value="#{!empty detalleConciliacionesIntBean.boveda ? detalleConciliacionesIntBean.selectedBoveda : 'NA'}" align="center" />                
+                <xls:col header="#{etq.fechaConciliacionInicio}" value="#{!empty detalleConciliacionesIntBean.fechaConciliacionInicio ? detalleConciliacionesIntBean.fechaConciliacionInicio : 'NA'}" align="center"  pattern="dd/MM/yyyy"/>				
+                <xls:col header="#{etq.fechaConciliacionFin}" value="#{!empty detalleConciliacionesIntBean.fechaConciliacionFin ? detalleConciliacionesIntBean.fechaConciliacionFin : 'NA'}" align="center"  pattern="dd/MM/yyyy"/>				
+                <xls:col header="#{etq.conDiferencia}" value="#{!empty detalleConciliacionesIntBean.conDiferencia  ? (detalleConciliacionesIntBean.conDiferencia ? 'Si' : 'No') : 'NA'}"  align="center"/>
+                <xls:col header="#{etq.tv}" value="#{!empty detalleConciliacionesIntBean.tipoValor ? detalleConciliacionesIntBean.tipoValor : 'TODOS'}" align="center" />                  
+				<xls:col header="#{etq.emisoraMinus}" value="#{!empty detalleConciliacionesIntBean.emisora ? detalleConciliacionesIntBean.emisora : 'TODOS'}" align="center" />
+				<xls:col header="#{etq.serieMinus}" value="#{!empty detalleConciliacionesIntBean.serie ? detalleConciliacionesIntBean.serie : 'TODOS'}" align="center" />
+				<xls:col header="#{etq.isin}" value="#{!empty detalleConciliacionesIntBean.isin ? detalleConciliacionesIntBean.isin : 'TODOS'}" align="center" />				
+            </xls:row>
+        </xls:table>
+        <xls:br>
+        	<xls:subtitle value="#{etq.registrosEncontrados}: #{detalleConciliacionesIntBean.totalRegistros}" />
+		</xls:br>
+        <xls:table value="#{detalleConciliacionesIntBean.paginaReportes.registros}" var="conciliacion" borraLista="false">
+            <xls:row>
+				<xls:col header="#{etq.fechaMensaje}" value="#{!empty conciliacion.fechaMensaje ? conciliacion.fechaMensaje : 'NA'}" align="center"  pattern="dd/MM/yyyy HH:mm:ss"/>
+				<xls:col header="#{etq.fechaConciliacionMinus}" value="#{!empty conciliacion.fechaConciliacion ? conciliacion.fechaConciliacion : 'NA'}" align="center"  pattern="dd/MM/yyyy HH:mm:ss"/>
+				<xls:col header="#{etq.folioConciliacionMinus}" value="#{ !empty conciliacion.conciliacion ? conciliacion.conciliacion : 'NA'}" align="center" />				
+				<xls:col header="#{etq.custodio}" value="#{(!empty conciliacion.custodio) and (!empty conciliacion.custodio.codigoBanco) ? conciliacion.custodio.codigoBanco : 'NA'}" align="center" />
+				<xls:col header="#{etq.cuentasMinus}" value="#{!empty conciliacion.cuentas  ?  conciliacion.cuentas : 'NA'}" align="center" />				
+				<xls:col header="#{etq.tv}" value="#{!empty conciliacion.tv ? conciliacion.tv : 'NA'}" align="center" />				
+				<xls:col header="#{etq.emisoraMinus}" value="#{!empty conciliacion.emisora ? conciliacion.emisora : 'NA'}" align="center" />				
+				<xls:col header="#{etq.serieMinus}" value="#{!empty conciliacion.serie ? conciliacion.serie : 'NA'}" align="center" />				
+				<xls:col header="#{etq.isin}" value="#{!empty conciliacion.isin ? conciliacion.isin : 'NA'}" align="center" />				
+				<xls:col header="#{etq.posAVAI}" value="#{!empty conciliacion.posAVAI ? conciliacion.posAVAI : 'NA'}" align="right" pattern="###,###,###,###,###,##0.######"/>				
+				<xls:col header="#{etq.posNAVL}" value="#{!empty conciliacion.posNAVL ? conciliacion.posNAVL : 'NA'}" align="right" pattern="###,###,###,###,###,##0.######"/>				
+				<xls:col header="#{etq.posBLOK}" value="#{!empty conciliacion.posBLOK ? conciliacion.posBLOK : 'NA'}" align="right" pattern="###,###,###,###,###,##0.######"/>				
+				<xls:col header="#{etq.posBLCA}" value="#{!empty conciliacion.posBLCA ? conciliacion.posBLCA : 'NA'}" align="right" pattern="###,###,###,###,###,##0.######"/>				
+				<xls:col header="#{etq.posPEND}" value="#{!empty conciliacion.posPEND ? conciliacion.posPEND : 'NA'}" align="right" pattern="###,###,###,###,###,##0.######"/>				
+				<xls:col header="#{etq.posPENR}" value="#{!empty conciliacion.posPENR ? conciliacion.posPENR : 'NA'}" align="right" pattern="###,###,###,###,###,##0.######"/>	
+				<xls:col header="#{etq.valorNominalMinus}" value="#{!empty conciliacion.valorNominal ? conciliacion.valorNominal : 'NA'}" align="right" pattern="###,###,###,###,###,##0.######"	/>		
+				<xls:col header="#{etq.posAGGR}" value="#{!empty conciliacion.posicionMensaje ? conciliacion.posicionMensaje : 'NA'}" align="right"  pattern="###,###,###,###,###,##0.######" />
+				<xls:col header="#{etq.posicionDali}" value="#{!empty conciliacion.posicionDali ? conciliacion.posicionDali : 'NA'}" align="right"  pattern="###,###,###,###,###,##0" />
+				<xls:col header="#{etq.bovedaDaliMinus}" value="#{(!empty conciliacion.boveda) and (!empty conciliacion.boveda.nombreCorto) ? conciliacion.boveda.nombreCorto : 'NA'}" align="center"  />								
+				<xls:col header="#{etq.diferencia}" value="#{!empty conciliacion.diferencia ? conciliacion.diferencia : 'NA'}" align="right"   pattern="###,###,###,###,###,##0.##"/>
+				<xls:col header="#{etq.existencia}" value="#{!empty conciliacion.existencia ? conciliacion.existenciaCompleto : 'NA'}" align="center" />				
+			</xls:row>
+        </xls:table>
+	<xls:newSheet id="Detalle" value = "Detalle">
+	
+        <xls:iterator value="#{detalleConciliacionesIntBean.paginaReportes.registros}" var="conciliacion">
+        	<xls:row  >
+				<xls:col value="#{etq.fechaMensaje}" />
+				<xls:col value="#{etq.fechaConciliacionMinus}" />
+				<xls:col value="#{etq.folioConciliacionMinus}" />
+				<xls:col value="#{etq.custodio}" />
+				<xls:col value="#{etq.cuentasMinus}" />
+				<xls:col value="#{etq.tv}"/>
+				<xls:col value="#{etq.emisoraMinus}" />
+				<xls:col value="#{etq.serieMinus}" />
+				<xls:col value="#{etq.isin}" />
+				<xls:col value="#{etq.valorNominalMinus}" />
+				<xls:col value="#{etq.posicionMensaje}"/>
+				<xls:col value="#{etq.posicionDali}" />
+				<xls:col value="#{etq.bovedaDaliMinus}" />
+				<xls:col value="#{etq.diferencia}" />
+				<xls:col value="#{etq.existencia}" />
+				<xls:col value="#{etq.nombre}" />
+		</xls:row >
+            <xls:row>
+            		
+				<xls:col header="#{etq.fechaMensaje}" value="#{!empty conciliacion.fechaMensaje ? conciliacion.fechaMensaje : 'NA'}" align="center"  pattern="dd/MM/yyyy HH:mm:ss"/>
+				<xls:col header="#{etq.fechaConciliacionMinus}" value="#{!empty conciliacion.fechaConciliacion ? conciliacion.fechaConciliacion : 'NA'}" align="center"  pattern="dd/MM/yyyy HH:mm:ss"/>
+				<xls:col header="#{etq.folioConciliacionMinus}" value="#{ !empty conciliacion.conciliacion ? conciliacion.conciliacion : 'NA'}" align="center" />				
+				<xls:col header="#{etq.custodio}" value="#{(!empty conciliacion.custodio) and (!empty conciliacion.custodio.codigoBanco) ? conciliacion.custodio.codigoBanco : 'NA'}" align="center" />
+				<xls:col header="#{etq.cuentasMinus}" value="#{!empty conciliacion.cuentas  ?  conciliacion.cuentas : 'NA'}" align="center" />				
+				<xls:col header="#{etq.tv}" value="#{!empty conciliacion.tv ? conciliacion.tv : 'NA'}" align="center" />				
+				<xls:col header="#{etq.emisoraMinus}" value="#{!empty conciliacion.emisora ? conciliacion.emisora : 'NA'}" align="center" />				
+				<xls:col header="#{etq.serieMinus}" value="#{!empty conciliacion.serie ? conciliacion.serie : 'NA'}" align="center" />				
+				<xls:col header="#{etq.isin}" value="#{!empty conciliacion.isin ? conciliacion.isin : 'NA'}" align="center" />				
+				<xls:col header="#{etq.valorNominalMinus}" value="#{!empty conciliacion.valorNominal ? conciliacion.valorNominal : 'NA'}" align="right" pattern="###,###,###,###,###,##0.##"/>				
+				<xls:col header="#{etq.posicionMensaje}" value="#{!empty conciliacion.posicionMensaje ? conciliacion.posicionMensaje : 'NA'}" align="right"  pattern="###,###,###,###,###,##0.######" />
+				<xls:col header="#{etq.posicionDali}" value="#{!empty conciliacion.posicionDali ? conciliacion.posicionDali : 'NA'}" align="right"  pattern="###,###,###,###,###,##0" />
+				<xls:col header="#{etq.bovedaDaliMinus}" value="#{(!empty conciliacion.boveda) and (!empty conciliacion.boveda.nombreCorto) ? conciliacion.boveda.nombreCorto : 'NA'}" align="center"  />								
+				<xls:col header="#{etq.diferencia}" value="#{!empty conciliacion.diferencia ? conciliacion.diferencia : 'NA'}" align="right"   pattern="###,###,###,###,###,##0.######"/>
+				<xls:col header="#{etq.existencia}" value="#{!empty conciliacion.existencia ? conciliacion.existenciaCompleto : 'NA'}" align="center" />
+				<xls:col header="#{etq.nombre}" value="#{!empty conciliacion.nombre ? conciliacion.nombre : 'NA'}" align="center" />
+			</xls:row>
+			<xls:row>
+				<xls:col >					
+					<xls:table value="#{conciliacion.listaPosicionEmision}" var="lista">					
+					<xls:row >
+						<xls:col header="concepto" value="#{!empty lista.posicionEmision ? lista.posicionEmision : 'NA'}" align="right" />
+						<xls:col header="Modificador" value="#{!empty lista.conceptoPosicion ? lista.conceptoPosicion : 'NA'}" align="right" />
+						<xls:col header="Valor" value="#{!empty lista.valor ? lista.valor : 'NA'}" align="right"  pattern="###,###,###,###,###,##0.######"/>
+						<xls:col header="Moneda" value="#{!empty lista.tipoMoneda ? lista.tipoMoneda : 'NA'}" align="right" />
+					</xls:row >
+					</xls:table>
+				</xls:col >
+			</xls:row>
+        </xls:iterator>
+	</xls:newSheet>
+    </xls:document>
+</html>

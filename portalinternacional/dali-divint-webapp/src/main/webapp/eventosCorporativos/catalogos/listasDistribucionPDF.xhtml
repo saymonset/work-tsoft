@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document 
+    	documentName="ListasDistribucion" 
+    	documentTitle="Listas Distribución."
+        institucion="#{listaDistribucionBean.agenteFirmado.id} #{listaDistribucionBean.agenteFirmado.folio} #{listaDistribucionBean.agenteFirmado.razon}" 
+        landscape="true" 
+        fecha="#{listaDistribucionBean.fechaActual}"
+        imageResource="/images/indeval.jpg">
+        
+		<pdf:table value="listaDistribucionBean" currentBean="bean" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{listaDistribucionBean.criteriosConsulta}" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        
+        <pdf:table value="#{listaDistribucionBean}" currentBean="bean" widthPercentage="100" maxColums="11">
+            <pdf:row>
+                <pdf:col header="#{etqEventosCorporativos.nombreLista}" value="#{!empty listaDistribucionBean.nombreListaDistribucion ? listaDistribucionBean.nombreListaDistribucion : 'Todos'}" align="center" />
+                
+                <pdf:col header="#{etqEventosCorporativos.estado}" value="#{listaDistribucionBean.descripcionEstatus}" align="center" />		               
+			</pdf:row>
+			
+        </pdf:table>
+        
+        <pdf:br/>
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{listaDistribucionBean.totalRegistrosExportacion}" />
+        <pdf:br/>        
+        
+        <pdf:table value="#{listaDistribucionBean.listasDistribucion}" currentBean="detalle" widthPercentage="100" maxColums="11">
+            <pdf:row>
+                <pdf:col header="#{etqEventosCorporativos.identificador}" value="#{detalle.idLista}" align="center" />                	
+                <pdf:col header="#{etqEventosCorporativos.nombreLista}" value="#{detalle.nombre}" align="center" />
+                <pdf:col header="Descripción" value="#{detalle.descripcion}"  align="center"/>
+                <pdf:col header="#{etqEventosCorporativos.estado}" value="#{detalle.inactivo == 0 ? 'Activo': 'Inactivo' }" align="center" />
+			</pdf:row>
+        </pdf:table>
+
+    </pdf:document>
+</html>

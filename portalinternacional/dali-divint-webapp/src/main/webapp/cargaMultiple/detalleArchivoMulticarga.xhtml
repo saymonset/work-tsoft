@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+<!-- DECORATE -->
+
+<ui:composition template="/layoutPopUpDetalleSic.xhtml">
+	<ui:define name="titulo">
+		<b>Consulta Archivo Multicarga (Detalle)</b>
+	</ui:define>
+
+	<ui:define name="body">
+		<h:outputText value="#{detalleRegistroMulticargaBean.init}" />
+		<a4j:keepAlive beanName="detalleRegistroMulticargaBean" />
+			<h:panelGroup id="datosAdp" rendered="#{detalleRegistroMulticargaBean.registroMulticarga.tipoOperacionMulticarga.idTipoOperacionMulticarga eq '1'}" >								
+			<table align="left" width="900px" border="0" cellpadding="5px" cellspacing="0px">				
+				<tr>
+					<td class="tituloTabla" colspan="2" align="left">
+						<h:outputText value="Detalle Archivo #{detalleRegistroMulticargaBean.nombreArchivo}" styleClass="textoNegritas  textoMayusculas" />
+					</td>
+				</tr>
+				<tr>						
+					<td>																 	
+						<h:dataTable id="detalleArchivoAdp"
+							value="#{detalleRegistroMulticargaBean.registroMulticarga.listaRegistros}"
+							var="detalle"
+							rendered="#{!empty detalleRegistroMulticargaBean.registroMulticarga.listaRegistros and detalleRegistroMulticargaBean.registroMulticarga.tipoOperacionMulticarga.idTipoOperacionMulticarga eq '1'}"
+							styleClass="tablaGeneral centrado" headerClass="tituloTabla"
+							width="100%" footerClass="tituloTabla" border="0"
+							cellpadding="3px" cellspacing="0px" columnClasses="everyColumn"
+							rowClasses="renglonTablaUno, renglonTablaDos">
+							<!-- UOI  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.uoiDetalle}" />
+								</f:facet>
+							<h:outputText styleClass="texto textoPeque12"
+									value="#{detalle.uoi}" />
+							</h:column>
+
+							<!-- ADP  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.adp}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12"
+									value="#{detalle.adp}" />
+							</h:column>
+						</h:dataTable> 					
+					</td>
+				</tr>
+			</table>
+			</h:panelGroup>
+			<h:panelGroup id="datosMultiempresa" rendered="#{detalleRegistroMulticargaBean.registroMulticarga.tipoOperacionMulticarga.idTipoOperacionMulticarga eq '2'}">
+			<table align="left" width="900px" border="0" cellpadding="5px" cellspacing="0px">				
+				<tr>
+					<td class="tituloTabla" colspan="2" align="left">
+						<h:outputText value="Detalle Archivo #{detalleRegistroMulticargaBean.nombreArchivo}" styleClass="textoNegritas  textoMayusculas" />
+					</td>
+				</tr>
+				<tr>							
+					<td>						
+						<h:dataTable id="detalleArchivoMultiempresa"
+							value="#{detalleRegistroMulticargaBean.registroMulticarga.listaRegistros}"
+							var="detalle"
+							rendered="#{!empty detalleRegistroMulticargaBean.registroMulticarga.listaRegistros and detalleRegistroMulticargaBean.registroMulticarga.tipoOperacionMulticarga.idTipoOperacionMulticarga eq '2'}"
+							styleClass="tablaGeneral centrado" headerClass="tituloTabla"
+							width="100%" footerClass="tituloTabla" border="0"
+							cellpadding="3px" cellspacing="0px" columnClasses="everyColumn"
+							rowClasses="renglonTablaUno, renglonTablaDos">
+							<!-- UOI  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.uoiDetalle}" />
+								</f:facet>
+							<h:outputText styleClass="texto textoPeque12"
+									value="#{detalle.uoi}"/>
+							</h:column>
+
+							<!-- Institucion Origen  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.institucionOrigen}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12"
+									value="#{detalle.institucionOrigen}" />
+							</h:column>
+							
+								<!-- Institucion Destino  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.institucionDestino}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12"
+									value="#{detalle.institucionDestino}" />
+							</h:column>
+							
+						</h:dataTable> 					
+					</td>
+				</tr>
+			</table>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>
+</html>

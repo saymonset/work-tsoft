@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+    
+	<description>
+		AplicationContext de configuracion de jms para MOI
+	</description>
+ 
+		
+	<bean id="colaSicEstados"
+		class="org.springframework.jndi.JndiObjectFactoryBean"
+		lazy-init="true">
+		<description>Cola InternaOut en el JNDI de WL</description>
+		<property name="jndiName">
+			<value>jms/cambioEstadoSIC</value>
+		</property>
+		<property name="resourceRef">
+        	<value>true</value>
+        </property>
+	</bean>
+    
+    
+   
+	<!-- ============================= JMS TEMPLATES ================================= -->
+
+	<bean id="jmsTemplateSic"
+		class="org.springframework.jms.core.JmsTemplate102"
+		lazy-init="true">
+		<description>template sic</description>
+		<property name="connectionFactory">
+			<ref bean="jmsConnectionFactoryDivInt" />
+		</property>
+		<property name="pubSubDomain">
+			<value>false</value>
+		</property>
+		<property name="explicitQosEnabled">
+			<value>true</value>
+		</property>
+		<property name="defaultDestination">
+			<ref local="colaSicEstados" />
+		</property>
+		<property name="sessionTransacted">
+        	<value>true</value>	
+        </property>
+	</bean>
+	
+</beans>

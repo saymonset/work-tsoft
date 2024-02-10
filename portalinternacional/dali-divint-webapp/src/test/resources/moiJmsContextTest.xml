@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:amq="http://activemq.org/config/1.0"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-2.5.xsd 
+    http://activemq.org/config/1.0 
+    http://people.apache.org/repository/org.apache.activemq/xsds/activemq-core-4.1-incubator-SNAPSHOT.xsd">
+        
+<!-- 
+
+	
+ -->
+	<context:property-placeholder location="classpath:moiJms.properties"/>
+	
+    <bean id="connectionFactory"
+        class="org.springframework.jms.connection.SingleConnectionFactory"
+        depends-on="broker">
+        <property name="targetConnectionFactory">
+            <bean id="activeMqConnectionFactory"
+                class="org.apache.activemq.ActiveMQConnectionFactory">
+                <property name="useAsyncSend" value="true" />
+                <property name="brokerURL">
+                    <value><![CDATA[vm://localhost?broker.persistent=false&broker.deleteAllMessagesOnStartup=true&broker.useShutdownHook=true&broker.useJmx=false&broker.enableStatistics=false&jms.useAsyncSend=true]]></value>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+	
+	
+    <bean id="broker"
+        class="org.apache.activemq.xbean.BrokerFactoryBean">
+        <property name="config"
+            value="classpath:org/apache/activemq/xbean/activemq.xml" />
+    </bean>
+
+    <bean id="taskExecutor"
+        class="org.springframework.core.task.SimpleAsyncTaskExecutor" />    
+	
+
+    <!--  bean id="connectionFactory"
+        class="org.springframework.jndi.JndiObjectFactoryBean"
+        lazy-init="true">
+        
+        <description>
+            ConnectionFactory for JMS Server connections
+        </description>
+        <property name="jndiName">
+            <value>${connectionFactory.jndiName}</value>
+        </property>
+        <property name="resourceRef">
+        <value>true</value>
+        </property>
+    </bean-->
+	<bean id="colaMoiEstados"
+        class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg index="0" value="${moi.estados.jndiName}" />
+    </bean>
+	<!--  bean id="colaMoiEstados"
+		class="org.springframework.jndi.JndiObjectFactoryBean"
+		lazy-init="true">
+		<description>Cola InternaOut en el JNDI de WL</description>
+		<property name="jndiName">
+			<value>${moi.estados.jndiName}</value>
+		</property>
+		<property name="resourceRef">
+        <value>true</value>
+        </property>
+	</bean-->
+    
+    
+   
+	<!-- ============================= JMS TEMPLATES ================================= -->
+
+	<bean id="jmsTemplateMoi"
+		class="org.springframework.jms.core.JmsTemplate102"
+		lazy-init="true">
+		<description>template moi</description>
+		<property name="connectionFactory">
+			<ref local="connectionFactory" />
+		</property>
+		<property name="pubSubDomain">
+			<value>false</value>
+		</property>
+		<property name="explicitQosEnabled">
+			<value>true</value>
+		</property>
+		<property name="defaultDestination">
+			<ref local="colaMoiEstados" />
+		</property>
+	</bean>
+	
+</beans>

@@ -1,0 +1,32 @@
+<html xmlns:txt="http://indeval.com/jsf/txt"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cvt="http://indeval.com/jsf/converters">
+    <txt:document documentName="consultaDerechos" documentTitle="Consulta de Derechos"
+                  institucion="#{consultaDerechosBean.agenteFirmado.id} #{consultaDerechosBean.agenteFirmado.folio} #{consultaDerechosBean.agenteFirmado.razon}">      
+        <txt:table value="#{consultaDerechosBean.paginaReportes.registros}" var="detalle">
+            <txt:row>
+            	<txt:col header="#{etq.idTipoDerecho}" value="#{detalle.idTipoDerecho}" align="left" size="15"/>
+                <txt:col header="#{etq.tipoDerecho}" value="#{detalle.tipoDerecho}" align="left" size="15"/>
+                <txt:col header="#{etq.idSubTipoDerecho}" value="#{detalle.idSubTipoDerecho}" align="left" size="15"/>
+                <txt:col header="#{etq.subtipoDerecho}" value="#{detalle.subtipoDerecho}" align="left" size="50"/>
+                <txt:col header="#{etq.tv}" value="#{detalle.emision.tv}" align="left" size="8"/>
+                <txt:col header="#{etq.emisionMinus}" value="#{detalle.emision.emisora}" align="left" size="10"/>
+                <txt:col header="#{etq.serieMinus}" value="#{detalle.emision.serie}" align="left" size="10"/>
+                <txt:col header="#{etq.cuponMinus}" value="#{detalle.emision.cupon}" align="left" size="10"/>                         
+                <txt:col header="#{etq.isin}" value="#{detalle.emision.isin}" align="left" size="15"/>                    
+                <txt:col header="#{etq.fechaCorteMinus}" value="#{detalle.fechaCorte}" align="left" size="20">
+               		<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </txt:col>
+                <txt:col header="#{etq.fechaPago}" value="#{detalle.fechaPago}" align="left" size="20">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </txt:col>
+                <txt:col header="#{etq.proporcionMinus}" value="#{detalle.proporcion}" align="left" size="10">
+                	<f:convertNumber pattern="#0.00##"/>
+                </txt:col>                		 
+                <txt:col header="#{etq.divisaMinus}" value="#{detalle.divisa}" align="left" size="5"/>                		 
+                <txt:col header="#{etq.bovedaMinus}" value="#{detalle.boveda}" align="left" size="12"/>
+                <txt:col header="#{etq.estado}" value="#{detalle.estado}" align="left" size="10"/>                		                                		                                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		 
+            </txt:row>
+        </txt:table>
+    </txt:document>
+</html>

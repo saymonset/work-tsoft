@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <ui:composition template="/layoutPopUp.xhtml"> 
+    <ui:define name="head">	
+    		<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/eventosCorporativos.js">
+				
+			</script>	
+			 <script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/FileSaver.js">
+				
+			</script>
+		 <script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/jquery.wordexport.js">
+				
+			</script>
+
+			<style type="text/css">
+			.my-floated-elements {
+					float: none
+					}
+				@media screen
+				  {
+				.forscreen { display:block; }
+				.forprinting { display:none; }
+				  }
+				@media print
+				  {
+				.forscreen { display:none; }
+				.forprinting { display:block; 
+						overflow: visible;
+						float: none; }
+				  }
+			</style>
+	</ui:define>
+
+        <ui:define name="subtitulo">
+        </ui:define>
+        <ui:define name="body">
+            <h:form id="bitacoraForm">
+              <h:outputText value="#{bitacoraEventosCorporativosBean.init}" />
+						<div id="printing_div_id" class="forprinting" style="white-space:pre-line; align:left"></div>
+						
+       		</h:form>
+
+						
+						
+						
+						
+					<!-- CONTENEDOR REAL:::::: -->	
+			<div id="contenedorGeneralBitacoraEvco2">
+			 <div style="padding-bottom: 30px; text-align: center; font-weight: bold; font-size: 15px;">
+		        <h:outputText value="Resumen de evento corporativo" />   
+			</div>                
+               <table style="width: 100%;  font-size: 11px; text-align:left;">
+	               <tr style="font-size: 11px; font-weight: normal;">
+	                        <td style="float: left; width: 17%;"><h:outputText style=" font-weight: bold;" value="#{etq.folioEvento}: " /> 
+	               					<h:outputText  value="#{bitacoraEventosCorporativosBean.idEventoCorporativo}" />
+	               			</td> 
+	               			<td style="float: left; width: 28%;"><h:outputText style=" font-weight: bold;" value="#{etq.tipoEvento}: "/>
+	               			        <h:outputText value="#{bitacoraEventosCorporativosBean.tipoValor}" />
+	               			 </td> 
+	               			<td style="float: left; width: 28%;"><h:outputText style=" font-weight: bold;" value="#{etq.fechaCreacion}: "/> 
+	               			        <h:outputText value="#{bitacoraEventosCorporativosBean.fechaCreacion}" >
+		               							<f:convertDateTime pattern="#{ (empty sessionScope.roles['INT_EVCO_OP'] and empty sessionScope.roles['INT_EVCO_AUT'] and empty sessionScope.roles['INT_EVCO_SU'] ) ? 'dd/MM/yyyy' : 'dd/MM/yyyy HH:mm'}" timeZone="Mexico/General" />
+									 			</h:outputText>
+	               			</td>
+	               			<td  style="float: left; width: 24%;"><h:outputText style="text-align: left; font-weight: bold;" value="Fecha Registro: "/> 
+	               			        <h:outputText value="#{bitacoraEventosCorporativosBean.fechaRegistro}" style="text-align:left;"/>
+	               			</td>        
+	               </tr>           
+               </table>
+               <br />
+               <table style="width: 100%;  font-size: 11px; text-align:left;" >
+               		<tr style="font-size: 11px; font-weight: normal;">
+               			<td style="float: left; width: 17%;"><h:outputText style=" font-weight: bold;" value="#{etq.tv}: "/>
+               			        <h:outputText value="#{bitacoraEventosCorporativosBean.tipoValor}" />
+               			</td> 
+               			<td style="float: left; width: 28%;"><h:outputText style=" font-weight: bold;" value="#{etq.emisoraMinus}: "/>
+                        		<h:outputText value="#{bitacoraEventosCorporativosBean.emisora}" />      	
+               			</td> 
+               			<td style="float: left; width: 28%;"><h:outputText style=" font-weight: bold;" value="#{etq.serieMinus}: "/>
+               			        <h:outputText value="#{bitacoraEventosCorporativosBean.serie}" />
+               			</td> 
+               			<td style="float: left; width: 24%;"><h:outputText style=" font-weight: bold;" value="#{etq.isin}: "/> 
+               			        <h:outputText value="#{bitacoraEventosCorporativosBean.isin}" />
+               			</td>               			 
+               			
+               		</tr>           
+               </table>
+                <br /> 
+                <table style="width: 100%;  font-size: 11px; text-align:left;" >
+                	<tr style="font-size: 11px; font-weight: normal;">
+                		<td style="float: left; width: 17%;"><h:outputText style=" font-weight: bold;" value="#{etq.mercadoMinus}: "/> 
+               			        <h:outputText value="#{bitacoraEventosCorporativosBean.tipoMercado}" />
+               			</td> 
+               			
+               			<td style="float: left; width: 28%;"><h:outputText style=" font-weight: bold;" value="Tipo Derecho Mercado Local: "/> 
+               					<h:outputText value="#{bitacoraEventosCorporativosBean.tipoDerechoML}" />
+               			</td> 
+               			<td style="float: left; width: 28%;"><h:outputText style=" font-weight: bold;" value="Tipo Derecho Mercado Origen: "/> 
+               			        <h:outputText value="#{bitacoraEventosCorporativosBean.tipoDerechoMO}" />
+               			</td>   
+               			<td style="float: left; width: 24%;"><h:outputText style=" font-weight: bold;" value="#{etq.custodio}: "/> 
+               			        <h:outputText value="#{bitacoraEventosCorporativosBean.custodio}" />
+               			</td> 
+               		</tr>          
+               </table>
+               <br/> 
+               <h:panelGroup rendered="#{!empty bitacoraEventosCorporativosBean.fechaCliente or (!empty bitacoraEventosCorporativosBean.fechaIndeval and bitacoraEventosCorporativosBean.consultaIndeval) or !empty bitacoraEventosCorporativosBean.fechaPago}">
+               <div id="fechasdiv" style="width: 100%;">
+               <table id="tablaContainerFechas" align="left" style="width: 40%;height: 50px;" border="1" rules="all" >
+							<tr style=" border: black 1px solid; background-color:#A4A4A4; font-size: 11px; font-weight: bold;">
+								<h:outputLink value="myLink" rendered="#{bitacoraEventosCorporativosBean.fechaCliente != null}">
+										<td style="width: 33%">
+											<h:outputText value="#{etq.fechaLimiteCliente}"/>
+										</td>
+								</h:outputLink>
+								<h:outputLink value="myLink" rendered="#{bitacoraEventosCorporativosBean.fechaIndeval != null and bitacoraEventosCorporativosBean.consultaIndeval}">
+										<td style="width: 33%">
+											<h:outputText  value="#{etq.fechaLimiteIndeval}"/>
+										</td>
+								</h:outputLink>
+								<h:outputLink value="myLink" rendered="#{bitacoraEventosCorporativosBean.fechaPago != null}">
+											<td style="width: 33%">
+												<h:outputText  value="#{etq.fechaLimitePago}"/>
+											</td>
+								</h:outputLink>
+		  					</tr>
+               				<tr style=" border: black 1px solid; font-size: 11px; font-weight: normal;">
+               					<h:outputLink value="myLink" rendered="#{bitacoraEventosCorporativosBean.fechaCliente != null}">
+		               						<td><h:outputText value="#{bitacoraEventosCorporativosBean.fechaCliente}">
+		               							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Mexico/General" />
+									 				</h:outputText>
+									 		</td>
+               					</h:outputLink>
+               					<h:outputLink value="myLink" rendered="#{bitacoraEventosCorporativosBean.fechaIndeval != null and bitacoraEventosCorporativosBean.consultaIndeval} ">
+		               						<td><h:outputText value="#{bitacoraEventosCorporativosBean.fechaIndeval}"  >
+			               							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Mexico/General" />
+									 				</h:outputText>
+									 		</td>
+               					</h:outputLink>
+               					<h:outputLink value="myLink" rendered="#{bitacoraEventosCorporativosBean.fechaPago != null}">
+		               						<td><h:outputText value="#{bitacoraEventosCorporativosBean.fechaPago}"  >
+			               						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Mexico/General" />
+										 		</h:outputText>
+										 	</td>
+               					</h:outputLink>
+               				</tr>          				               				         					
+               	</table>               			            
+                             
+               
+              <table  style="width: 60%;height: 50px;">
+               	<tr><td> </td></tr>
+               		<tr><td> </td></tr>
+               	</table>
+               	
+ 				</div>
+ 				</h:panelGroup>								
+			  <br/>
+			  <br/>
+									<h:dataTable id="table1"  style="width: 100%;padding-top: 20px;" value="#{bitacoraEventosCorporativosBean.cuerpoVarianteBitacora}" var="item" border="0"> 
+									    <h:column>
+									        <f:facet name="header">
+									            <h:outputText value="" />
+									        </f:facet>
+											        <table style="width: 100%; font-size: 11px;" >
+											       		<tr style="font-size: 11px; font-weight: normal;">
+											       			<td align="left">
+											        			<h:outputText escape="false" value="#{item.cuerpoEventoHtml}" />
+											        		</td>
+											        	</tr>
+											        </table>
+									        <br /> 
+									        <h:panelGroup id="containerOpciones2" >
+									        	 <a4j:repeat id="repeatOpciones" var="opciones" value="#{item.opcionesList}"  rowKeyVar="index" >
+									        	 	  <table style="width: 100%; padding-top: 20px; font-size: 11px;"  >										 	 
+													 	  <tr style="font-size: 11px; font-weight: normal;">
+													 	  	<td align="left">
+														 	  <h:outputText   escape="false" value=" opcion #: #{index +1} " />
+														 	  <h:outputText style=" padding-left: 15px;" escape="false" value=" #{opciones.cuerpo}" />
+														 	</td>
+													 	  </tr>
+												 	  </table>
+												 	  <br>
+												 	  </br>	
+												 	  <div style="width: 100%; padding-left: 75px;"> 
+													  <table id="tablaContainerFechasInt" align="left" style="width: 40%;height: 50px;" border="1" rules="all" >
+													 	<tr style=" border: black 1px solid; background-color:#A4A4A4; font-size: 11px; font-weight: bold; ">
+													  		<h:outputLink value="myLink" rendered="#{opciones.fechaCliente != null}">
+													  			<td style="width: 33%;">
+													  				<h:outputText value="#{etq.fechaLimiteCliente}"/>
+													  			</td>
+													    	</h:outputLink>
+													       	<h:outputLink value="myLink" rendered="#{opciones.fechaIndeval != null and bitacoraEventosCorporativosBean.consultaIndeval}">
+													       		<td style="width: 33%;">
+																	<h:outputText  value="#{etq.fechaLimiteIndeval}"/>
+																</td>
+													       	</h:outputLink>
+													       	<h:outputLink value="myLink" rendered="#{opciones.fechaPago != null }">
+													             <td style="width: 33%;">
+																	<h:outputText  value="#{etq.fechaLimitePago}"/>
+															     </td>
+													        </h:outputLink>
+													   </tr>
+													  
+													   <tr style=" border: black 1px solid; font-size: 11px; font-weight: normal;">
+													       	<h:outputLink value="myLink" rendered="#{opciones.fechaCliente != null}">
+													        	<td><h:outputText value="#{opciones.fechaCliente}" >
+							               							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Mexico/General" />
+														 			</h:outputText></td>
+													        </h:outputLink>
+													        <h:outputLink value="myLink" rendered="#{opciones.fechaIndeval != null and bitacoraEventosCorporativosBean.consultaIndeval}">
+													       		<td><h:outputText value="#{opciones.fechaIndeval}">
+							               							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Mexico/General" />
+														 			</h:outputText></td>
+													        </h:outputLink>
+													        <h:outputLink value="myLink" rendered="#{opciones.fechaPago != null}">
+													        	<td><h:outputText value="#{opciones.fechaPago}" >
+							               							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Mexico/General" />
+														 			</h:outputText></td>
+													        </h:outputLink>
+												      </tr>          					
+												    </table>              
+												 </div>							 	
+												 </a4j:repeat>  		
+									        </h:panelGroup>
+									        
+		
+									        <div style="width: 100%; "></div>
+									        <br /> 
+									    	<table style="width: 100%; padding-left: 5%; color: black;" >
+									    		<tr>
+										    		<td align="left" style="font-size: 11px; font-weight: normal;">
+										    			<h:outputText  value="Notas:" />	
+										    		</td>
+									    		</tr>
+									    		
+									    		<ui:repeat var="notas" value="#{item.notasList}">
+									    		<tr>
+									    		 	<td align="left" style="font-size: 11px; font-weight: normal;">
+														<li> <h:outputText escape="false" value=" #{notas}" /></li>
+													</td>
+												</tr>
+												</ui:repeat>						 					             	
+										      	
+									      	</table>
+									      	<br/> 
+				        	
+
+											<table style="width: 100%; padding-left: 5%; color: black;" >
+									    		<tr>
+										    		<td align="left" style="font-size: 11px; font-weight: normal;">
+										    			<h:outputText  value="Archivos disponibles:" />	
+										    		</td>
+									    		</tr>
+									    		
+									    		<ui:repeat var="adjuntos" value="#{item.archivosList}">
+									    		<tr>
+									    		 	<td align="left" style="font-size: 11px; font-weight: normal;">
+												 		    <a href="#">
+												 			 <h:outputText escape="false" value="#{adjuntos}" />
+															</a> 
+													</td>
+												</tr>
+												</ui:repeat>						 					             	
+										      	
+									      	</table>
+											<br/> 
+									      	
+									      	
+									        <div style="width: 100%; "></div>
+									        <table style="width: 100%; color: black;" >
+									        	<tr style="font-size: 11px; font-weight: normal;">
+									        		<td align="left">
+									        			<h:outputText escape="false" value="#{item.piePaginaHtml}" />
+									        		</td>
+									        	</tr>
+									        	<tr style="font-size: 11px;  font-weight: normal;">
+									        		<td align="left" style="color:white; border-bottom: #808080 1px solid; ">
+									        			<h:outputText escape="false" value="&nbsp;." />
+									        		</td>
+									        	</tr>
+									        </table>
+															        
+									    </h:column>	
+									              
+								</h:dataTable>   
+          
+            </div>
+						<div>			
+                            <a href="javascript:printBitacoraContent('contenedorGeneralBitacoraEvco2','printing_div_id')">
+								<h:outputText value="#{etq.imprimirResultados}:"/>	
+							</a>              				
+						</div>
+						<div>			
+                            <a href="javascript:exportarAWord()" class="word-export">
+								<h:outputText value="Exporta"/>	
+							</a>              				
+						</div>  
+        </ui:define>
+        
+    </ui:composition>
+
+</html>

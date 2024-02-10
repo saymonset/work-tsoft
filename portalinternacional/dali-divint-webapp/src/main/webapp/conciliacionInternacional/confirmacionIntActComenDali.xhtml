@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:composition template="/layoutPopUp.xhtml">
+		<ui:define name="head">						
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/confirmacionesInt.js">
+			</script>	
+			<style type="text/css">
+			.my-floated-elements {
+					float: none
+					}
+				@media screen
+				  {
+				.forscreen { display:block; }
+				.forprinting { display:none; }
+				  }
+				@media print
+				  {
+				.forscreen { display:none; }
+				.forprinting { display:block; 
+						overflow: visible;
+						float: none; }
+				  }
+			</style>		
+		</ui:define>
+		<ui:define name="titulo">
+			Agrega / Actualiza Comentario Dali
+		</ui:define>
+		<ui:define name="subtitulo">
+		</ui:define>
+		<ui:define name="body">
+			<div id="forma" class="forscreen my-floated-elements" >
+			<h:form id="formaActualizaConfirmacion">
+				<h:outputText value="#{confirmacionIntBean.initComentariosDali}"/>
+				<a4j:keepAlive beanName="confirmacionIntBean" />
+				<h:panelGroup id="panelResultados">
+					<table>
+						<tr>
+							<td>
+								<h:panelGroup id="mensajeUsuario">
+									<div style="min-height: 21px;">						
+										<rich:messages warnClass="warning" infoClass="info"
+											errorClass="error" ajaxRendered="true" showDetail="false"
+											showSummary="true" layout="list">
+											<f:facet name="infoMarker">
+												<h:panelGroup>
+													<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+											</f:facet>
+					
+											<f:facet name="errorMarker">
+												<h:panelGroup>
+													<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+											</f:facet>
+										</rich:messages>
+									
+										<div id="divWarnings" class="warning" style="display:none;">
+											<p id="textoWarning">						
+											</p>
+										</div>
+									</div>
+								</h:panelGroup>
+							</td>
+						</tr>
+						<tr>
+							<td align="center"><br/>
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.folioConfirmacion}: #{confirmacionIntBean.idConfirmacion}"/>
+							</td>
+						</tr>
+						<tr>
+							<td valign="top">
+								<h:panelGroup id="panelTextArea">	
+									<h:inputTextarea id="swiftMensaje" readonly="false" cols="60" rows="15" class="campoAlphaNumericoEspacio" value="#{confirmacionIntBean.comentarioDali}"/>
+								</h:panelGroup>
+							</td>
+						</tr>
+						<tr>
+							<td align="center"><br/>
+								<div class="cancelar">
+									<h:commandButton id="botonCancelar" image="/images/transparent.gif"
+										styleClass="submit"
+										onclick="cierraDialog();" 
+										tabindex="6"/>
+								</div>
+								<div class="guardar">
+									<a4j:commandButton id="botonGuardar" image="/images/transparent.gif"
+										styleClass="submit"
+										onclick="if(!confirmaComentarioDali()){ return true;}"
+										actionListener="#{confirmacionIntBean.guardarComentariosDali}"
+										reRender="mensajeUsuario"
+										tabindex="7">
+									</a4j:commandButton>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</h:panelGroup>
+			</h:form>
+			</div>
+			<div id="printing_div_id" class="forprinting" style="white-space:pre-line; align:left"></div>
+		</ui:define>
+	</ui:composition>
+</html>

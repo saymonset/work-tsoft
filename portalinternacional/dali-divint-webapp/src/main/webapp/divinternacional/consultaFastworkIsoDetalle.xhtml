@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:composition template="/layoutPopUpFastwork.xhtml">
+		<ui:define name="head">			
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/fastwork.js">
+			</script>					
+			<style type="text/css">
+			.my-floated-elements {
+					float: none
+					}
+				@media screen
+				  {
+				.forscreen { display:block; }
+				.forprinting { display:none; }
+				  }
+				@media print
+				  {
+				.forscreen { display:none; }
+				.forprinting { display:block; 
+						overflow: visible;
+						float: none; }
+				  }
+			</style>		
+		</ui:define>
+		<ui:define name="titulo">
+		Mensaje ISO
+		</ui:define>
+		<ui:define name="subtitulo">
+		</ui:define>
+		<ui:define name="body">
+			<h:panelGroup id="panelResultados">
+				<h:outputText value="#{consultaFastworkBean.inicializarPopUp}" />
+				<h:outputText value="#{consultaFastworkBean.iso}" />
+				<a4j:keepAlive beanName="consultaFastworkBean" />
+				<h:form id="formaFastwork">
+					<table>
+						<tr>		
+							<td>
+								<h:inputTextarea id="isoMensaje" readonly="true" cols="60" rows="25" class="printable" value="#{consultaFastworkBean.isoMostrado}"></h:inputTextarea>
+							</td>
+						</tr>
+						<tr>		
+							<td>
+								
+								<table cellpadding="0" cellspacing="0" border="0" align="right">
+									<tr align="right">
+										<td align="right">
+											<h:panelGroup >
+												<h:panelGroup>
+								                    <h:commandButton id="generarTxt"
+								                    	action="#{consultaFastworkBean.generarReporteIsoTxt}"
+								                        image="/images/TXT.gif" 
+								                        title="Exportar a TXT"
+								                        immediate="true"
+														onclick="bloquearBotonesReportesFast(['generarTxt']);"/>
+													<div id="monitorPeticionReporte" style="display: none;">
+														<h:panelGroup id="panelMonitorPeticionReporte">
+															<h:graphicImage value="/images/ajax-loader.gif" />
+															&#160;&#160;
+															<h:outputText value="#{etq.reporteEnProceso}" />
+														<a4j:jsFunction name="actualizaEstadoF" action="#{consultaFastworkBean.actualizarEstadoPeticion}" 
+															oncomplete="desbloquearBotonesReportesFast(#{consultaFastworkBean.actualizarReporte}, ['generarTxt']);"
+	 														reRender="panelMonitorPeticionReporte"
+															/>
+														</h:panelGroup>
+													</div>	
+												</h:panelGroup>
+											</h:panelGroup>
+					
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</h:form>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</html>

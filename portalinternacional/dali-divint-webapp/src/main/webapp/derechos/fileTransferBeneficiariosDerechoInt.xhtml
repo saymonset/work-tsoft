@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:indeval="http://indeval.com/indeval"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en">
+
+	<ui:decorate template="/layoutCapturaMultiPart.xhtml">
+
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/derechos.js">
+			</script>
+		</ui:define>
+		
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.filetransferBeneficiarios}"></h:outputText>
+		</ui:define>
+
+
+		<ui:define name="seccionForma">
+			<a4j:keepAlive beanName="fileTransferBeneficiariosBean" />
+			<h:panelGroup id="init" rendered="#{consultaBeneficiariosBean.banderaInicio}">
+				<h:outputText value="#{fileTransferBeneficiariosBean.init}" />
+			</h:panelGroup>
+			<h:panelGroup id="general">
+				<h:outputText style="color:red" value="#{fileTransferBeneficiariosBean.error}" />
+				<h:panelGroup rendered="#{!fileTransferBeneficiariosBean.showErrors}">
+					<table cellpadding="0" cellspacing="0" border="0" width="100%" class="recuadroTabla">
+						<tr>
+                            <td colspan="7">
+                                <div style="min-height: 21px;">
+                                    <rich:messages warnClass="warning" infoClass="info"
+                                                   errorClass="error" ajaxRendered="true" showDetail="false"
+                                                   showSummary="true" layout="list">
+                                        <f:facet name="infoMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/accept.png" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+
+                                        <f:facet name="errorMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/warning.gif" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+                                    </rich:messages>
+
+                                    <div id="divWarnings" class="warning" style="display:none;">
+                                        <p id="textoWarning">
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+						<tr>
+							<td align="center"><h:outputText value="#{etq.participanteMinus}" styleClass="texto" /></td>
+							<td align="center"><h:outputText value="#{etq.fechaMinus}" styleClass="texto" /></td>
+							<td align="center"><h:outputText value="#{etq.hora}" styleClass="texto" /></td>							
+							<td align="center"><h:outputText value="#{etq.registrosCargados}" styleClass="texto" /></td>
+							<td align="center"><h:outputText value="#{etq.registrosError}" styleClass="texto" /></td>
+							<td align="center"><h:outputText value="#{etq.totalRegistros}" styleClass="texto" /></td>
+							<td align="center"><h:outputText value="#{etq.usuarioResponsable}" styleClass="texto" /></td>
+						</tr>
+						<tr>
+							<td align="center">
+								<h:outputText id="IdAgenteFirmado" value="#{fileTransferBeneficiariosBean.agenteFirmado.id}
+								#{fileTransferBeneficiariosBean.agenteFirmado.folio}" />
+							</td>
+							<td align="center">
+								<h:outputText id="fechaCarga"
+									value="#{fileTransferBeneficiariosBean.fechaCarga}"
+									converter="formatoFechaCortaConverter" />
+							</td>
+							<td align="center">
+								<h:outputText id="horaCarga"
+									value="#{fileTransferBeneficiariosBean.horaCarga}" />
+							</td>
+							<td align="center">
+								<h:outputText id="registrosCargados"
+									value="#{fileTransferBeneficiariosBean.totalCargados}" />
+							</td>
+							<td align="center">								
+								<h:outputText value="#{fileTransferBeneficiariosBean.totalError}" />
+							</td>
+							<td align="center">
+								<h:outputText id="totalRegistros"
+									value="#{fileTransferBeneficiariosBean.totalRegistros}" />
+							</td>
+							<td align="center">
+								<h:outputText id="usuarioResponsable" value="#{fileTransferBeneficiariosBean.agenteFirmado.id}
+								#{fileTransferBeneficiariosBean.agenteFirmado.folio}" />
+							</td>
+						</tr>
+					</table>	
+			</h:panelGroup>			
+
+			<h:panelGroup id="resumenCarga">
+					<!-- ************************************* tabla de resumen carga y link ******************** -->
+					<h:panelGroup rendered="#{fileTransferBeneficiariosBean.showErrors}">
+						<h:panelGroup id="resumenCarga_1" rendered="#{fileTransferBeneficiariosBean.showErrors}">
+							  <table class="tablaCriterios" cellpadding="10" cellspacing="0" border="1" width="80%" rules="none">
+							  	<caption><h:outputText value="#{etq.resumenMinus}" styleClass="texto textoNegritas" /></caption>
+							  	<tr>					  
+							  	<td>
+							  		<h:panelGroup>
+				                    	<h:outputText value="#{etq.registrosCargarMinus}:" styleClass="texto textoNegritas" style="color: #00FF80" />
+				                    	&#160;
+				                    	<t:outputText value="#{fileTransferBeneficiariosBean.totalCargados}" />	
+				                    </h:panelGroup>		       
+							  	</td>					  	
+							  	<td>
+							  		<h:panelGroup>
+				                    	<h:outputText value="#{etq.registrosError}:" styleClass="texto textoNegritas" style="color: #FF0000" />
+				                    	&#160;
+				                    	<t:outputText value="#{fileTransferBeneficiariosBean.totalError}" />
+				                    </h:panelGroup>
+							  	</td>
+							  	<td>
+							  		<h:panelGroup>
+				                    	<h:outputText value="#{etq.totalRegistros}:" styleClass="texto textoNegritas"/>
+				                    	&#160;
+				                    	<t:outputText value="#{fileTransferBeneficiariosBean.totalRegistros}" />
+				                    </h:panelGroup>
+							  	</td>
+							  	<td>
+							  		<h:panelGroup  style="align:left" 
+							  						rendered="#{fileTransferBeneficiariosBean.showErrors}">								
+										<h:outputText styleClass="texto textoNegritas" value="Descargar Detalle Carga" />								
+										&#160;&#160;
+										<h:commandButton 
+		                          					action="resumenFileTransferBeneficiariosDerecho"
+		                          					actionListener="#{fileTransferBeneficiariosBean.detalleCargaDerechoBeneficiario}"                          					
+		                          					image="/images/excel-file.gif"
+		                          					title="Exportar a Excel el resumen de la Carga" 
+		                            				id="generarExcel">
+		                           		</h:commandButton>                           		
+									</h:panelGroup>
+							  	</td>					  						  			                                 		                    		                 
+							  	</tr>		               					
+				              </table>
+						</h:panelGroup>
+
+						<!-- ************************************* Marco de tabla de informacion ******************** -->
+						<h:panelGroup id="panelResultados">
+						<table width="100%" border="0">
+							<tr>
+								<td align="left" class="textoEstadoCuenta">
+									<a4j:commandLink id="control_bitacora_primero"
+										action="#{fileTransferBeneficiariosBean.irPrimeraPagina}"
+										rendered="#{fileTransferBeneficiariosBean.irAlPrimero}"
+										reRender="resumenCarga">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_atras_fast"
+										action="#{fileTransferBeneficiariosBean.retrocederPaginasRapido}"
+										rendered="#{fileTransferBeneficiariosBean.retrocederRapido}"
+										reRender="resumenCarga">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_atras"
+										action="#{fileTransferBeneficiariosBean.retrocederPagina}"
+										rendered="#{fileTransferBeneficiariosBean.retroceder}"
+										reRender="resumenCarga">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+											border="0" />
+									</a4j:commandLink>
+									<a4j:commandLink id="control_bitacora_adelante"
+										action="#{fileTransferBeneficiariosBean.avanzarPagina}"
+										rendered="#{fileTransferBeneficiariosBean.avanzar}"
+										reRender="resumenCarga">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_adelante_fast"
+										action="#{fileTransferBeneficiariosBean.avanzarPaginasRapido}"
+										rendered="#{fileTransferBeneficiariosBean.avanzarRapido}"
+										reRender="resumenCarga">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+											border="0" />
+
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_ultimo"
+										action="#{fileTransferBeneficiariosBean.irUltimaPagina}"
+										rendered="#{fileTransferBeneficiariosBean.irAlUltimo}"
+										reRender="resumenCarga">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+											border="0" />
+									</a4j:commandLink>
+
+
+									<br />
+									<h:outputText value="#{etq.mostrando}"
+										styleClass="textoResumen" />
+									<h:outputText value="#{fileTransferBeneficiariosBean.numeroPagina}"
+										styleClass="textoResumen" />
+									<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+									<h:outputText value="#{fileTransferBeneficiariosBean.totalPaginas}"
+										styleClass="textoResumen" />
+									<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+									&#160;&#160;&#160;
+									<h:outputText
+										value="#{fileTransferBeneficiariosBean.paginaVO.totalRegistros}"
+										styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+									&#160;
+									<h:outputText styleClass="textoResumen"
+										value="#{etq.registrosEncontrados}" />
+								</td>
+								<td style="text-align: right;"  class="textoEstadoCuenta">
+									<h:outputText escape="false" value="#{etq.registrosPorPagina}"
+										styleClass="textoResumen" />
+									<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+										value="#{fileTransferBeneficiariosBean.paginaVO.registrosXPag}">
+										<f:selectItem itemLabel="1" itemValue="1" />
+										<f:selectItem itemLabel="2" itemValue="2" />
+										<f:selectItem itemLabel="5" itemValue="5" />
+										<f:selectItem itemLabel="10" itemValue="10" />
+										<f:selectItem itemLabel="20" itemValue="20" />
+										<f:selectItem itemLabel="50" itemValue="50" />
+										<a4j:support event="onchange"
+											reRender="resumenCarga"
+											actionListener="#{fileTransferBeneficiariosBean.obtenerOperaciones}" />
+									</h:selectOneMenu>
+								</td>
+							</tr>
+						</table>
+
+							<br />
+
+							<table width="100%" class="tablaGeneral" border="0">
+								<t:dataList value="#{fileTransferBeneficiariosBean.paginaVO.registros}"
+									var="item" rowIndexVar="indice" >
+									<tr>
+										<td
+											class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+											<table width="100%" cellpadding="3px" cellspacing="0px"
+												border="0">
+												<tr class="tituloTabla">
+													<td>
+														<h:outputText value="#" />
+													</td>
+													<td>
+														<h:outputText value="#{etq.usuarioMinus}" />
+													</td>
+													<td>
+														<h:outputText value="#{etq.fechaMinus}" />
+													</td>
+													<td>
+														<h:outputText value="#{etq.mensajeMinus}" />
+													</td>
+												</tr>
+												<tr>
+													<td align="center">
+														<h:outputText value="#{indice + 1}" />
+													</td>
+													<td align="center">
+														<h:outputText value="#{fileTransferBeneficiariosBean.agenteFirmado.id}#{fileTransferBeneficiariosBean.agenteFirmado.folio}" escape="false" />
+													</td>
+													<td align="center">
+														<h:outputText value="#{item.fechaRegistro}" />
+													</td>
+													<td align="center">
+														<t:outputText styleClass="fileError" value="#{item.error}" rendered="#{not empty item.error}"/>
+														<h:outputText styleClass="regFileUpload" value="Registro Correcto" rendered="#{empty item.error}"/>														
+													</td>
+												</tr>
+												<tr class="tituloTabla">
+													<td colspan="5">
+														<h:outputText styleClass="tablaitem"
+															value="#{etq.informacionMinus}" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="5">
+														<h:panelGroup rendered="#{not empty item.tv}">
+															<table cellpadding='0' cellspacing='0' align='left'	width="100%">
+																<tr>																	
+																	<td style="width: 10px;" class='tituloTabla'>
+																		<t:outputText value="#{etq.tv}" />
+																	</td>
+																	<td style="width: 10px;" class='tituloTabla'>
+																		<t:outputText value="#{etq.emisoraMinus}" />
+																	</td>
+																	<td style="width: 10px;" class='tituloTabla'>
+																		<t:outputText value="#{etq.serieMinus}" />
+																	</td>
+																	<td style="width: 10px;" class='tituloTabla'>
+																		<t:outputText value="#{etq.cuponMinus}" />
+																	</td>
+																	<td style="width: 10px;" class='tituloTabla'>
+																		<t:outputText value="#{etq.tipoDerecho}" />
+																	</td>
+																	<td style="width: 10px;" class='tituloTabla'>
+																		<t:outputText value="#{etq.subtipoDerecho}" />
+																	</td>
+																	<td style="width: 10px;" class='tituloTabla'>
+																		<t:outputText value="#{etq.cantidadDeTitulosMinus}" />
+																	</td>
+																	<td style="width: 10px;" class='tituloTabla'>
+																		<t:outputText value="#{etq.uoi}" />
+																	</td>
+																	<td style="width: 10px;" class='tituloTabla'>
+																		<t:outputText value="#{etq.fechaCorteMinus}" />
+																	</td>
+																	<td style="width: 10px;" class='tituloTabla'>
+																		<t:outputText value="#{etq.cuentaMinus}" />
+																	</td>																																																			
+																</tr>
+																<tr>
+																	<td style="width: 10px;" align="center">
+																		<t:outputText value="#{item.tv}" styleClass="regFileUpload" escape="false" />
+																	</td>
+																	<td style="width: 10px;" align="center">
+																		<t:outputText value="#{item.emisora}" styleClass="regFileUpload" escape="false" />
+																	</td>
+																	<td style="width: 10px;" align="center">
+																		<t:outputText value="#{item.serie}" styleClass="regFileUpload" escape="false" />
+																	</td>
+																	<td style="width: 10px;" align="center">
+																		<t:outputText value="#{item.cupon}" styleClass="regFileUpload" escape="false" />
+																	</td>
+																	<td style="width: 10px;" align="center">
+																		<t:outputText value="#{item.tipoDerecho}" styleClass="regFileUpload" escape="false" />
+																	</td>
+																	<td style="width: 10px;" align="center">
+																		<t:outputText value="#{item.subtipoDerecho}" styleClass="regFileUpload" escape="false" />
+																	</td>
+																	<td style="width: 10px;" align="center">
+																		<t:outputText value="#{item.cantidadTitulos}" styleClass="regFileUpload" escape="false" />
+																	</td>
+																	<td style="width: 10px;" align="center">
+																		<t:outputText value="#{item.uoi}" styleClass="regFileUpload" escape="false" />
+																	</td>
+																	<td style="width: 10px;" align="center">
+																		<t:outputText value="#{item.fechaCorte}" styleClass="regFileUpload" escape="false" />
+																	</td>
+																	<td style="width: 10px;" align="center">
+																		<t:outputText value="#{item.cuenta}" styleClass="regFileUpload" escape="false" />
+																	</td>																																		
+																</tr>
+															</table>
+														</h:panelGroup>
+														<h:panelGroup rendered="#{empty item.tv}">
+															<t:outputText style="text-align:left" value="#{item.linea}" />
+														</h:panelGroup>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr><td>&#160;</td></tr>
+								</t:dataList>
+							</table>
+						</h:panelGroup>
+						
+						<h:panelGroup id="botonesPreview">
+							<h:panelGrid width="100%">
+								<a4j:commandButton id="btnProcesar"
+									value="#{etq.procesarMinus}"
+									actionListener="#{fileTransferBeneficiariosBean.guardar}"
+									reRender="general,botones, resumenCarga, panelResultados"
+									oncomplete="window.scrollTo(0,0);" onclick="javascript:disableSubmit()"/>
+
+								<t:commandButton id="btnCancelar" value="#{etq.cancelarMinus}"
+									actionListener="#{fileTransferBeneficiariosBean.cancelar}"/>
+							</h:panelGrid>
+						</h:panelGroup>	
+			
+					</h:panelGroup>
+				</h:panelGroup>		
+			</h:panelGroup>
+		</ui:define>
+
+
+		<ui:define name="botones">
+			<h:panelGroup id="botones">
+				<h:panelGrid columns="3"
+					rendered="#{!fileTransferBeneficiariosBean.showErrors}">
+					<h:panelGroup>
+						<h:outputText value="#{etq.archivo}" />
+					</h:panelGroup>
+					<t:inputFileUpload id="beneficiarios" storage="memory"
+						value="#{fileTransferBeneficiariosBean.archivo}" size="50"
+						required="false"
+						onchange="javascript:validateSizeFile(this);" />
+					<h:commandButton id="iniciarProceso" value="Iniciar Proceso"
+						actionListener="#{fileTransferBeneficiariosBean.uploadFile}" ></h:commandButton>
+				</h:panelGrid>
+			</h:panelGroup>
+		</ui:define>
+
+	</ui:decorate>
+</html>

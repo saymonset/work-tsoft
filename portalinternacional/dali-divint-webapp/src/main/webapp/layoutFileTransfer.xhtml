@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="es" lang="es">
+	
+	<ui:composition template="/layoutGeneral.xhtml">
+		
+		<ui:define name="body">
+			<h:form id="daliForm" enctype="multipart/form-data">
+				<table width="925px" cellpadding="0px" cellspacing="0px">
+					<tr>
+						<td>
+							<h1>
+								<span>
+									<ui:insert name="seccionEncabezado" />
+								</span>
+							</h1>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<table width="100%" cellpadding="0px" cellspacing="0px">
+								<tr>
+									<td>
+                        				<ui:insert name="seccionInitPantalla" />
+                            		</td>
+                        		</tr>
+                        		<tr>
+                        			<td>
+                        				<ui:insert name="seccionMensajes"/>
+                        			</td>
+                        		</tr>
+								<tr>
+									<td>
+                        				<ui:insert name="seccionFileUpload" />
+                            		</td>
+                        		</tr>
+                        		<tr>
+                        			<td>
+                        				<ui:insert name="seccionTablaResultados" />
+                        			</td>
+                        		</tr>
+                        		<tr>
+                        			<td >
+                        				<ui:insert name="seccionBotones" />
+                            		</td>
+                        		</tr>
+             				</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</html>

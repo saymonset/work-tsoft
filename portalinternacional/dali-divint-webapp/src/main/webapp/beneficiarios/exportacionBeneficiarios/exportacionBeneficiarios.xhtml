@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+    xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+		<ui:define name="head">
+			<link rel="stylesheet" type="text/css" media="all" href="#{facesContext.externalContext.requestContextPath}/css/beneficiarioActivo.css" />
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/beneficiarios.js">
+		    </script>   
+		</ui:define>
+		
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.beneficiarios}" />
+		</ui:define>
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.exportacionBeneficiarios}" />
+		</ui:define>
+
+		<ui:define name="criterios">
+			<a4j:keepAlive beanName="exportacionBeneficiariosBean" />
+            <h:panelGroup id="init" rendered="#{exportacionBeneficiariosBean.banderaInicio}">
+				<h:outputText value="#{exportacionBeneficiariosBean.init}" />
+			</h:panelGroup>
+			
+			<br />
+			<br />
+			
+			<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+				<tr>
+				    <td colspan="4">
+				        <div style="min-height: 21px;">
+				            <rich:messages warnClass="warning" infoClass="info" errorClass="error" ajaxRendered="true" showDetail="false" showSummary="true" layout="list">
+				                <f:facet name="infoMarker">
+				                    <h:panelGroup>
+				                        <h:graphicImage url="/images/accept.png" />&#160;
+				                    </h:panelGroup>
+				                </f:facet>
+				                <f:facet name="errorMarker">
+				                    <h:panelGroup>
+				                        <h:graphicImage url="/images/warning.gif" />&#160;
+				                    </h:panelGroup>
+				                </f:facet>
+				            </rich:messages>
+				            <div id="divWarnings" class="warning" style="display:none;">
+				                <p id="textoWarning"></p>
+				            </div>
+				        </div>
+				    </td>
+				</tr>
+				<tr>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.formato}" />
+					</td>
+					<td style="width: 330px">
+						<h:selectOneMenu id="lstFormato" value="#{exportacionBeneficiariosBean.formato}"
+							styleClass="textoControles">
+							<f:selectItem itemValue="-1" itemLabel="#{etq.seleccioneUnFormato}" />
+							<f:selectItems value="#{exportacionBeneficiariosBean.formatosBeneficiarios}"/>
+						</h:selectOneMenu>
+					</td>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.fechaFormato}" />
+					</td>
+					<td style="width: 330px">
+                        <rich:calendar id="fechaRegistroInicio" inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+                                       value="#{exportacionBeneficiariosBean.fechaInicioExportacion}"
+                                       datePattern="dd/MM/yyyy" />
+                        <br />
+                        <br />
+                        <rich:calendar id="fechaRegistroFin" inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+                                       value="#{exportacionBeneficiariosBean.fechaFinExportacion}"
+                                       datePattern="dd/MM/yyyy" />
+					</td>
+				</tr>
+			</table>		
+		</ui:define>
+		
+		
+		<ui:define name="botones">
+			<div class="refrescar" style="float: left;">
+        		 <a4j:status id="commonStatus">
+					<f:facet name="start">
+						<h:panelGroup>
+							<h:graphicImage value="/images/ajax-loader.gif" />
+							<h:outputText value="#{etq.buscando}"></h:outputText>
+						</h:panelGroup>
+					</f:facet>
+				</a4j:status> 	
+        	</div>
+        	<div class="limpiar">
+				<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+					styleClass="submit"
+					action="#{exportacionBeneficiariosBean.limpiar}" immediate="true"/>
+			</div>
+			<div class="aceptar">
+				<h:panelGroup id="botonBuscarPanel">
+					<h:commandButton id="botonAceptar" 
+						actionListener="#{exportacionBeneficiariosBean.exportarBeneficiarios}"
+						action="exportacionBeneficiariosZip"
+						image="/images/transparent.gif"
+						styleClass="submit"
+					/>
+				</h:panelGroup>
+			</div>
+
+		</ui:define>
+
+		<ui:define name="seccionContenido">
+			<h:panelGroup id="containerResultados">
+
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</html>

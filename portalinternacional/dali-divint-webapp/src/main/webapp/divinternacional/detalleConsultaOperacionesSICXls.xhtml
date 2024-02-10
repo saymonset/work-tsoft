@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls" xmlns:a4j="http://richfaces.org/a4j">
+
+<xls:document documentName="DetalleConsultaOperaciones" documentTitle="Detalle Consulta de Operaciones del Sistema Internacional de Cotizaciones"
+              landscape="true"  imageResource="/images/indeval.jpg">
+	
+	
+	
+	<xls:table value="#{consultaOperacionesBean}"
+			var="filtro">
+			<xls:row>
+				<xls:col align="center"  value="#{etq.institucionMinus}:" />
+				<xls:col align="center"  value="#{consultaOperacionesBean.agenteFirmado.id} #{consultaOperacionesBean.agenteFirmado.folio} #{consultaOperacionesBean.agenteFirmado.razon}" />
+			</xls:row>
+			<xls:row>
+				<xls:col align="center"  	value="#{etq.fechaMinus}:" />
+				<xls:col align="center"		value="#{consultaOperacionesBean.fechaActual}" pattern="dd/MM/yyyy" />
+			</xls:row>
+		
+	</xls:table>
+	
+
+
+
+
+	<xls:table value="#{consultaOperacionesBean}"
+			var="filtro">
+			<xls:row>
+        		<xls:col align="center"  header="#{etq.folioControl}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.folioControl}" />
+				<xls:col align="center"  header="#{etq.referenciaOperacion}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.referenciaOperacion}" />
+				<xls:col align="center"  header="#{etq.fechaHoraAlta}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.fechaAlta}" pattern="dd/MM/yyyy HH:mm:ss"/>
+				<xls:col align="center"  header="#{etq.fechaHoraLiquidacionTlp}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.fechaLiquidacionTlp}" pattern="dd/MM/yyyy HH:mm:ss"/>
+				<xls:col align="center"  header="#{etq.fechaHoraHabilitada}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.fechaHoraHabilitada}" pattern="dd/MM/yyyy HH:mm:ss"/>
+				<xls:col align="center"  header="#{etq.id}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.cuentaNombrada.institucion.tipoInstitucion.claveTipoInstitucion}" />
+				<xls:col align="center"  header="#{etq.folioMinus}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.cuentaNombrada.institucion.folioInstitucion}" />
+				<xls:col align="center"  header="#{etq.cuentaMinus}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.cuentaNombrada.cuenta}" />
+		
+				<xls:col  align="center"  header="#{etq.tv}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.emision.instrumento.claveTipoValor}" />
+				<xls:col align="center"  header="#{etq.emisoraMinus}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.emision.emisora.clavePizarra}" />
+				<xls:col align="center"  header="#{etq.serieMinus}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.emision.serie}" />
+				<xls:col align="center"  header="#{etq.cuponMinus}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.claveCupon}" />
+				<xls:col align="center" header="#{etq.isin}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.emision.isin}" />
+	
+				<xls:col align="center"  header="#{etq.descripcionCustodia}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.catBic.detalleCustodio}" />
+				<xls:col align="center"  header="#{etq.descripcionCuenta}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.catBic.bicProd}" />
+				
+		
+				<xls:col align="left"  header="#{etq.cuentaContraparte}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.cuentaContraparte}" />
+				<xls:col align="left"  header="#{etq.descContraparte}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.descContraparte}" />
+				<xls:col align="left"  header="#{etq.depositante}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.sicDetalle.depLiq}" />
+				<xls:col align="left"  header="#{etq.instruccEspeciales}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.instruccEspeciales}" />
+
+				<xls:col align="left"  header="#{etq.nomCtaBenef}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.nomCtaBenef}" />
+				<xls:col align="left"  header="#{etq.numCtaBenef}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.numCtaBenef}" />
+				<xls:col align="left"  header="#{etq.importe}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.importe}" pattern="$###,###,###,###,###,##0.00"/>
+				<xls:col align="left"  header="#{etq.divisaMinus}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.divisa}" />
+		
+				<xls:col align="left"  header="#{etq.cantidadOperada}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.cantidadTitulos}" pattern="###,###,###,###,###"/>
+				<xls:col align="left"  header="#{etq.tipoOp}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.descTipoMensaje}" />
+				<xls:col align="left"  header="#{etq.fechaLiquidacionMinus}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.fechaLiquidacion}" pattern="dd/MM/yyyy"/>
+				<xls:col align="left"  header="#{etq.fechaAprobacion}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.fecha530}" pattern="dd/MM/yyyy HH:mm:ss"/>
+				<xls:col align="left"  header="#{etq.msgConfirmacion}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.tipoMensajeConfirmacion}" />
+				<xls:col align="left"  header="#{etq.msgEfectivo}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.mensajeEfectivo}" />
+				<xls:col align="left"  header="#{etq.liquidacionParcial}"
+					value="#{not empty consultaOperacionesBean.detalleOperacionSic.liquidacionParcial ? consultaOperacionesBean.detalleOperacionSic.liquidacionParcial : 'NO'}" />
+			</xls:row>
+	</xls:table>
+	
+</xls:document>
+</html>

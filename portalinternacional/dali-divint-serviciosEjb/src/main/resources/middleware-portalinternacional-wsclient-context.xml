@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+  <description>
+    AplicationContext del Cliente de WebService
+  </description>
+
+    <bean id="derechosCapitalesClienteWSFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+        <property name="serviceClass" value="com.indeval.portalinternacional.middleware.ws.DerechosCapitalesWSService"/>
+        <property name="address" value="${portalinternacional.derechos.capitales.ws.url}"/>
+    </bean>
+
+    <bean id="derechosCapitalesClienteWS" class="com.indeval.portalinternacional.middleware.ws.DerechosCapitalesWSService" 
+          factory-bean="derechosCapitalesClienteWSFactory" factory-method="create"/>
+
+</beans>

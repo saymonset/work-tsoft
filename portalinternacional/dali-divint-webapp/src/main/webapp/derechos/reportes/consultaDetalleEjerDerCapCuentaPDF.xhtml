@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:pdf="http://indeval.com/jsf/pdf"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cvt="http://indeval.com/jsf/converters">
+
+
+    <pdf:document documentName="consultaDetalleEjerDerCapCuentaExportacion"
+    	documentTitle="Consulta Derechos Pagados Por Cuenta"
+        institucion="#{consultaDetalleEjerDerCapCuentaExportacion.agenteFirmado.id} #{consultaDetalleEjerDerCapCuentaExportacion.agenteFirmado.folio} #{consultaDetalleEjerDerCapCuentaExportacion.agenteFirmado.razon}"
+        landscape="true" fecha="#{consultaDetalleEjerDerCapCuentaExportacion.fechaActual}"
+        imageResource="/images/indeval.jpg">
+
+		<pdf:table value="#{consultaDetalleEjerDerCapCuentaExportacion.parametros}" currentBean="parametros" maxColums="8">
+			<pdf:row>
+				<pdf:col header="#{etq.institucionMinus}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamInstitucion}" align="center" />
+             	<pdf:col header="#{etq.cuentaMinus}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamCuenta}" align="center" />
+				<pdf:col header="#{etq.tv}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamTV}" align="center" />
+				<pdf:col header="#{etq.emisoraMinus}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamEmisora}" align="center" />
+				<pdf:col header="#{etq.serieMinus}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamSerie}" align="center" />
+				<pdf:col header="#{etq.isin}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamIsin}" align="center"/>
+			</pdf:row>
+		</pdf:table>
+        <pdf:table value="#{consultaDetalleEjerDerCapCuentaExportacion.parametros}" currentBean="parametros" maxColums="8">
+              <pdf:row>
+              	<pdf:col header="#{etq.fechaCorteInicial}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamFechaCorteInicial}" align="center">
+              		<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+              	</pdf:col>
+              	<pdf:col header="#{etq.fechaCorteFinal}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamFechaCorteFinal}" align="center">
+              		<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+              	</pdf:col>
+                <pdf:col header="#{etq.fechaPagoInicial}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamFechaPagoInicial}" align="center">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+                </pdf:col>
+                <pdf:col header="#{etq.fechaPagoFinal}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamFechaPagoFinal}" align="center">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+                </pdf:col>
+                <pdf:col header="#{etq.divisaMinus}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamDivisa}" align="center" />                
+                <pdf:col header="#{etq.custodio}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamCustodio}" align="center"/>   
+                <pdf:col header="#{etq.estadoDerecho}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamEstadoDerecho}" align="center" />                  
+             </pdf:row> 
+        </pdf:table>
+        <pdf:table value="#{consultaDetalleEjerDerCapCuentaExportacion.parametros}" currentBean="parametros" maxColums="8">
+              <pdf:row>
+                <pdf:col header="#{etq.proporcionMinus}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamProporcion}" align="center" />
+                <pdf:col header="#{etq.porcentajeRetencion}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamPorcentajeRetencion}" align="center" />
+                <pdf:col header="#{etq.fee}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamFee}" align="center" />
+                <pdf:col header="#{etq.montoBrutoMinus}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamMontoBruto}" align="center" />
+				<pdf:col header="#{etq.montoFee}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamMontoFee}" align="center" />
+                <pdf:col header="#{etq.impuestoRetenidoMinus}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamImpuestoRetenido}" align="center" />
+                <pdf:col header="#{etq.montoNetoMinus}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamMontoNeto}" align="center" />
+                <pdf:col header="#{etq.existenciaFee}" value="#{consultaDetalleEjerDerCapCuentaExportacion.descParamTipoFee}" align="center" />
+             </pdf:row> 
+        </pdf:table>
+
+		<pdf:table value="#{consultaDetalleEjerDerCapCuentaExportacion.parametros}" currentBean="parametros">
+			<pdf:row>
+				<pdf:col header="#{etq.registrosEncontrados}" value="#{consultaDetalleEjerDerCapCuentaExportacion.paginaVO.totalRegistros}" align="center" />
+			</pdf:row>
+		</pdf:table>
+		
+		<pdf:table value="#{consultaDetalleEjerDerCapCuentaExportacion.resultadosConsulta.resultadosConsulta}" currentBean="registro" maxColums="20">
+            <pdf:row>
+            	<pdf:col header="#{etq.institucionMinus}" footer="#{etq.totalMinus}" value="#{registro.idFolioInstitucion}"
+            		align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.cuentaMinus}" value="#{registro.cuenta}" align="center" oddColorDark="true" />
+            	<pdf:col header="#{etq.tipoValorMinus}" value="#{registro.tipoValor}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.emisoraMinus}" value="#{registro.emisora}" align="center" oddColorDark="true" />
+            	<pdf:col header="#{etq.serieMinus}" value="#{registro.serie}" align="center" oddColorDark="true" />                         
+                <pdf:col header="#{etq.isin}" value="#{registro.isin}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.custodio}" value="#{registro.custodio}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.fechaCorteMinus}" value="#{registro.fechaCorte}" align="center" oddColorDark="true" >
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaPago}" value="#{registro.fechaPago}" align="center" oddColorDark="true">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.porcentajeRetencion}"
+                	value="#{registro.porcentajeRetencion}" align="center" oddColorDark="true" />                         
+                <pdf:col header="#{etq.cantidadTit}" value="#{registro.asignacion}"
+                	footer="#{consultaDetalleEjerDerCapCuentaExportacion.resultadosConsulta.totalAsignacion}"
+                	align="center" oddColorDark="true">
+                	<f:convertNumber pattern="###,###,###,###,###,###" />
+                </pdf:col>
+                <pdf:col header="#{etq.proporcionMinus}" value="#{registro.proporcion}" align="center" oddColorDark="true">
+                	<f:convertNumber pattern="#####0.0##########" />
+                </pdf:col>
+                <pdf:col header="#{etq.fee}" value="#{registro.fee}" align="center" oddColorDark="true">
+                	<f:convertNumber pattern="#####0.0##########" />
+                </pdf:col>
+                <pdf:col header="#{etq.divisaMinus}" value="#{registro.divisa}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.montoBrutoMinus}" value="#{registro.montoBruto}"
+                	footer="#{consultaDetalleEjerDerCapCuentaExportacion.resultadosConsulta.totalMontoBruto}"
+                	align="center" oddColorDark="true">
+                	<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                </pdf:col>
+                <pdf:col header="#{etq.montoFee}" value="#{registro.montoFee}"
+                	footer="#{consultaDetalleEjerDerCapCuentaExportacion.resultadosConsulta.totalMontoFee}"
+                	align="center" oddColorDark="true">
+                	<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                </pdf:col>
+                <pdf:col header="#{etq.impuestoRetenidoMinus}" value="#{registro.impuestoRetenido}"
+                	footer="#{consultaDetalleEjerDerCapCuentaExportacion.resultadosConsulta.totalImpuestoRetenido}"
+                	align="center" oddColorDark="true">
+                	<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                </pdf:col>
+                <pdf:col header="#{etq.montoNetoMinus}" value="#{registro.montoNeto}"
+                	footer="#{consultaDetalleEjerDerCapCuentaExportacion.resultadosConsulta.totalMontoNeto}"
+                	align="center" oddColorDark="true">
+                	<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                </pdf:col>
+                <pdf:col header="#{etq.estado}" value="#{registro.estadoDerecho}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.tipoDerecho}" value="#{registro.tipoDerecho}" align="center" oddColorDark="true" />
+           </pdf:row>
+        </pdf:table>        
+        <pdf:table value="#{consultaDetalleEjerDerCapCuentaExportacion.resultadosConsulta.totalesPorcentajeRetencion}" currentBean="registro" maxColums="20">
+            <pdf:row>
+                <pdf:col header="" value="#{etq.subtotal} #{registro.porcentajeRetencionReal} #{etq.porcentaje}" 
+                	align="center" collspan="2">
+                </pdf:col>
+                <pdf:col header="" value="" 
+                	align="center" collspan="8">
+                </pdf:col>
+                <pdf:col header="" value="#{registro.asignacion}" 
+                	align="center" >
+                	<f:convertNumber pattern="###,###,###,###,###,###" />
+                </pdf:col>
+                <pdf:col header="" value="" 
+                	align="center" collspan="3">
+                </pdf:col>
+                <pdf:col header="" value="#{registro.montoBruto}" 
+                	align="center" >
+					<f:convertNumber pattern="'$'###,###,###,###,###,##0.00" />
+                </pdf:col>
+                <pdf:col header="" value="#{registro.montoFee}" 
+                	align="center" >
+					<f:convertNumber pattern="'$'###,###,###,###,###,##0.00" />
+                </pdf:col>
+                <pdf:col header="" value="#{registro.impuestoRetenido}" 
+                	align="center" >
+					<f:convertNumber pattern="'$'###,###,###,###,###,##0.00" />
+                </pdf:col>
+                <pdf:col header="" value="#{registro.montoNeto}" 
+                	align="center" >
+					<f:convertNumber pattern="'$'###,###,###,###,###,##0.00" />
+                </pdf:col>
+                <pdf:col header="" value="" 
+                	align="center" collspan="2">
+                </pdf:col>
+            </pdf:row>
+        </pdf:table>
+    </pdf:document>
+</html>

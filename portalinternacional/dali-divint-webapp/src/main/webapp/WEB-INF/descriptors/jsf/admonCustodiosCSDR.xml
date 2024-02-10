@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd" version="1.2">
+    <!-- Controller de administracion de custodios para CSDR -->
+    <managed-bean>
+        <managed-bean-name>settlementDisciplineRegimeController</managed-bean-name>
+        <managed-bean-class>
+        	com.indeval.portalinternacional.presentation.controller.beneficiarios.SettlementDisciplineRegimeController
+        </managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+        	<property-name>settlementDisciplineRegimeService</property-name>
+        	<value>#{settlementDisciplineRegimeService}</value>
+        </managed-property>
+        <managed-property>
+        	<property-name>solicitudAutorizacionService</property-name>
+        	<value>#{solicitudAutorizacionService}</value>
+        </managed-property>
+    </managed-bean>
+    
+	<!-- Reglas de navegacion -->
+	<navigation-rule>	
+		<navigation-case>
+			<from-outcome>nuevoCustodiosCsdr</from-outcome>
+			<to-view-id>/custodios/nuevoCustodiosCSDR.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>admonCustodiosCsdr</from-outcome>
+			<to-view-id>/custodios/admonCustodiosCSDR.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+</faces-config>

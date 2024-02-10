@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<description>
+		AplicationContext de configuracion de objetos de acceso a los
+		servicios del Dispatcher
+	</description>
+
+	<bean id="errorDispatcherResolver"
+		class="com.bursatec.util.message.impl.MessageResolverImpl">
+		<description>Bean de Acceso al Message Error</description>
+
+		<property name="messageSource">
+			<bean
+				class="org.springframework.context.support.ResourceBundleMessageSource">
+				<property name="basenames">
+					<list>
+						<value>classpath:errores.properties</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="receiverOperacionesDivIntService"
+		class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ReceiverOperacionesDivIntServiceImpl"
+		lazy-init="true">
+		<property name="bitacoraOperacionesDao">
+			<ref bean="bitacoraOperacionesDao" />
+		</property>
+		<property name="catBicDao">
+			<ref bean="catBicDao" />
+		</property>
+		<property name="cuentaNombradaDao">
+			<ref bean="cuentaNombradaDao" />
+		</property>
+		<property name="dateUtilService">
+			<ref bean="dateUtilService" />
+		</property>
+		<property name="divisionInternacionalService">
+			<ref bean="divisionInternacionalReceiverService" />
+		</property>
+		<property name="emisionDao">
+			<ref bean="emisionDao" />
+		</property>
+		<property name="estatusOperacionDao">
+			<ref bean="estatusOperacionDao" />
+		</property>
+		<property name="operacionSicDao">
+			<ref bean="operacionSicDao" />
+		</property>
+		<property name="sicDetalleDao">
+			<ref bean="sicDetalleDao" />
+		</property>
+		<property name="transformaMensaje">
+			<ref bean="transformaMensaje" />
+		</property>
+		<property name="utilService">
+			<ref bean="utilService" />
+		</property>
+	</bean>
+	
+	<bean id="transformaMensaje"
+		class="com.indeval.portalinternacional.middleware.services.util.TransformaMensaje"
+		lazy-init="true">
+		<description>Bean de Transformacion de Mensajes</description>
+	</bean>
+	
+	<bean id="divisionInternacionalReceiverService"
+		class="com.indeval.portalinternacional.middleware.services.divisioninternacional.DivisionInternacionalServiceImpl">
+		<description>
+			Bean de Acceso a servicios de Division Internacional
+		</description>
+		<property name="dateUtilService">
+			<ref bean="dateUtilService" />
+		</property>
+		<property name="operacionSicDao">
+			<ref bean="operacionSicDao" />
+		</property>
+		<property name="validatorDivIntService">
+            <ref bean="validatorDivIntService" />
+        </property>
+        
+        <property name="estatusOperacionDao">
+        	<ref bean="estatusOperacionDao"/>
+        </property>
+         <property name="custodiosSinEnvioMensaje">
+	        <set>
+	           <value>DCVVCLRMXXX</value>
+	           <value>DCVDCOB1XXX</value>
+	           <value>CVLIPEP1XXX</value>
+	        </set>
+	      </property>
+	</bean>
+
+</beans>

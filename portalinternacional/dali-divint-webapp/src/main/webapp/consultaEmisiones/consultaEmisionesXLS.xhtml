@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xls="http://indeval.com/jsf/xls"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document documentName="consultaEmisiones" documentTitle="Consulta de Emisiones"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        fecha="#{consultaBitacoraEnvOpBean.fechaActual}">
+
+        <xls:table value="#{consultaEmisionesBean}" var="dummy">
+            <xls:row>
+                <xls:col header="#{etq.tv}" value="#{!empty consultaEmisionesBean.emision.tv ? consultaEmisionesBean.emision.tv : 'TODOS'}" align="center" />
+                <xls:col header="#{etq.emisoraMinus}" value="#{!empty consultaEmisionesBean.emision.emisora ? consultaEmisionesBean.emision.emisora : 'TODAS'}" align="center" />
+                <xls:col header="#{etq.serieMinus}" value="#{!empty consultaEmisionesBean.emision.serie ? consultaEmisionesBean.emision.serie : 'TODAS'}" align="center" />
+                <xls:col header="#{etq.isin}" value="#{!empty consultaEmisionesBean.emision.isin ? consultaEmisionesBean.emision.isin : 'TODOS'}" align="center" />
+                <xls:col header="#{etq.custodio}" value="#{!empty consultaEmisionesBean.catBic.detalleCustodio ? consultaEmisionesBean.catBic.detalleCustodio : 'TODOS'}" align="center"/>
+                <xls:col header="#{etq.estatus}" value="#{!empty consultaEmisionesBean.estatusEmisionesDTO.descripcion ? consultaEmisionesBean.estatusEmisionesDTO.descripcion : 'TODOS'}" align="center"/>
+            </xls:row>
+        </xls:table>
+
+        <xls:subtitle value="#{etq.registrosEncontrados}: #{consultaEmisionesBean.totalRegistros}" />
+
+        <xls:table value="#{consultaEmisionesBean.resultados.registros}" var="emisiones">
+            <xls:row>
+                <xls:col header="#{etq.tv}" value="#{emisiones.emision.instrumento.claveTipoValor}" align="center"/>
+                <xls:col header="#{etq.emisoraMinus}" value="#{emisiones.emision.emisora.clavePizarra}" align="center"/>
+                <xls:col header="#{etq.serieMinus}" value="#{emisiones.emision.serie}" align="center"/>
+                <xls:col header="#{etq.isin}" value="#{emisiones.emision.isin}" align="center"/>
+                <xls:col header="#{etq.moneda}" value="#{emisiones.emision.divisa.descripcion}" align="center"/>
+                <xls:col header="#{etq.estatus}" value="#{emisiones.emision.estatusEmisiones.descripcion}" align="center"/>
+                <xls:col header="#{etq.valorNominalMinus}" value="#{emisiones.emision.valorNominal}" align="center" pattern="$ ###,###,###,###,###,##0.00"/>
+                <xls:col header="#{etq.fechaEmision}" value="#{emisiones.emision.fechaEmision}" align="center" pattern="dd/MM/yyyy">
+                </xls:col>
+                <xls:col header="#{etq.custodio}" value="#{emisiones.catBic.detalleCustodio}" align="center"/>
+            </xls:row>
+        </xls:table>
+
+    </xls:document>
+</html>

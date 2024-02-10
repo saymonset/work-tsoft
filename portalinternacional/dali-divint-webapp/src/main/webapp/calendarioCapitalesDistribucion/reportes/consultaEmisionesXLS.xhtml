@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls" xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document documentName="consultaEmisionesCapitales" documentTitle="Emisiones Capitales Distribución"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        landscape="true" fecha="#{consultaEmisionesCalendarioBean.fechaActual}"
+        imageResource="/images/indeval.jpg">
+        <xls:table value="#{consultaEmisionesCalendarioBean}" var="emisionesCalendario" >
+            <xls:row>
+                <xls:col header="#{etq.tv}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.tipoValor ? consultaEmisionesCalendarioBean.calendarioEmisiones.tipoValor : 'TODOS'}"  />
+                <xls:col header="#{etq.emisoraMinus}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.emisora ? consultaEmisionesCalendarioBean.calendarioEmisiones.emisora : 'TODOS'}"  />
+                <xls:col header="#{etq.serieMinus}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.serie ? consultaEmisionesCalendarioBean.calendarioEmisiones.serie : 'TODOS'}"  />
+                <xls:col header="#{etq.isin}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.isin ? consultaEmisionesCalendarioBean.calendarioEmisiones.isin : 'TODOS'}"  />
+                <xls:col header="#{etq.razonSocial}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.razonSocial ? consultaEmisionesCalendarioBean.calendarioEmisiones.razonSocial : 'TODOS'}"  />
+                <xls:col header="#{etq.custodio}" value="#{!empty consultaEmisionesCalendarioBean.selectedCustodio ? consultaEmisionesCalendarioBean.selectedCustodio : 'TODOS'}"  />
+                <xls:col header="#{etq.estatusSistema}" value="#{!empty consultaEmisionesCalendarioBean.selectedEstatusSistema  ? consultaEmisionesCalendarioBean.selectedEstatusSistema : 'TODOS'}"  />
+			    <xls:col header="#{etq.fechaAltaInicio}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.fechaAltaInicio ? consultaEmisionesCalendarioBean.calendarioEmisiones.fechaAltaInicio: 'TODAS'}" pattern="dd/MM/yyyy" />
+			   <xls:col header="#{etq.fechaAltaFin}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.fechaAltaFin ? consultaEmisionesCalendarioBean.calendarioEmisiones.fechaAltaFin : 'TODAS'}" pattern="dd/MM/yyyy" />
+			    <xls:col header="#{etq.fechaBajaInicio}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.fechaBajaInicio ? consultaEmisionesCalendarioBean.calendarioEmisiones.fechaBajaInicio : 'TODAS'}" pattern="dd/MM/yyyy" />
+			    <xls:col header="#{etq.fechaBajaFin}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.fechaBajaFin ? consultaEmisionesCalendarioBean.calendarioEmisiones.fechaBajaFin : 'TODAS'}" pattern="dd/MM/yyyy" />
+			    <xls:col header="#{etq.fechaEliminadaInicio}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.fechaModificacionInicio ? consultaEmisionesCalendarioBean.calendarioEmisiones.fechaModificacionInicio : 'TODAS'}" pattern="dd/MM/yyyy" />
+			    <xls:col header="#{etq.fechaEliminadaFin}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.fechaModificacionFin ? consultaEmisionesCalendarioBean.calendarioEmisiones.fechaModificacionFin : 'TODAS'}" pattern="dd/MM/yyyy" />
+                <xls:col header="#{etq.assetManager}" value="#{consultaEmisionesCalendarioBean.calendarioEmisiones.assetManager == -1 ? 'TODOS' : consultaEmisionesCalendarioBean.calendarioEmisiones.assetManager == 0 ? 'Con Valor' : consultaEmisionesCalendarioBean.calendarioEmisiones.assetManager == 1 ? 'Sin Valor' : ''}"  />
+                <xls:col header="#{etq.paisOrigen}" value="#{consultaEmisionesCalendarioBean.calendarioEmisiones.paisOrigen == -1 ? 'TODOS' : consultaEmisionesCalendarioBean.calendarioEmisiones.paisOrigen}"  />
+                <xls:col header="#{etq.estatusRegistro}" value="#{!empty consultaEmisionesCalendarioBean.selectedEstatusRegistro ? consultaEmisionesCalendarioBean.selectedEstatusRegistro  : 'TODOS'}" />			
+				<xls:col header="#{etq.estadoEmision}" value="#{!empty consultaEmisionesCalendarioBean.selectedEstadoEmisiones  ? consultaEmisionesCalendarioBean.selectedEstadoEmisiones  : 'TODOS'}"  />
+            </xls:row>
+        </xls:table>
+        
+        <xls:br/>
+        <xls:subtitle value="#{etq.registrosEncontrados}: #{consultaEmisionesCalendarioBean.totalRegistrosReportes}"/>
+        <xls:br/>
+
+        <xls:table value="#{consultaEmisionesCalendarioBean.paginaReportes.registros}" var="vEmisionesCalendario">
+            <xls:row>
+				<xls:col header="#{etq.tv}" value="#{vEmisionesCalendario.tipoValor}"  />
+				<xls:col header="#{etq.emisoraMinus}" value="#{vEmisionesCalendario.emisora}"  />
+				<xls:col header="#{etq.serieMinus}" value="#{vEmisionesCalendario.serie}"  />
+				<xls:col header="#{etq.isin}" value="#{vEmisionesCalendario.isin}"  />
+				<xls:col header="#{etq.razonSocial}" value="#{vEmisionesCalendario.razonSocial} "  />
+				<xls:col header="#{etq.custodio}" value="#{vEmisionesCalendario.detalleCustodio} "  />
+				<xls:col header="#{etq.estatusSistema}" value="#{!empty vEmisionesCalendario.estatusRegistro ? vEmisionesCalendario.estatusRegistro : 'SIN ESTATUS'}"  />
+				<xls:col header="#{etq.fechaAlta}" value="#{vEmisionesCalendario.fechaAlta}" pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.fechaBaja}" value="#{vEmisionesCalendario.fechaBaja}" pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.fechaEliminada}" value="#{vEmisionesCalendario.fechaModificacion}" pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.assetManager}" value="#{vEmisionesCalendario.descripcion}" align="center" />
+				<xls:col header="#{etq.paisOrigen}" value="#{vEmisionesCalendario.paisOrigen}"  />
+				<xls:col header="#{etq.estatusRegistro}" value="#{vEmisionesCalendario.estatusEmision}"  />
+				<xls:col header="#{etq.estadoEmision}" value="#{vEmisionesCalendario.listada}"  />
+			</xls:row>
+        </xls:table>
+    </xls:document>
+</html>

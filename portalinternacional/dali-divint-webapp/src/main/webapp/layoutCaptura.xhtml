@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:indeval="http://indeval.com/indeval"
+	>
+	
+	<ui:decorate template="/layoutDali.xhtml">
+
+		<ui:define name="seccionEncabezado">
+		<iframe class="divModal"  id="detalle"  frameborder="0"   aling="top"></iframe>
+		<iframe class="divModal"  id="noScrolling"  frameborder="0" scrolling="no" align="top" height="500px" width="980px" style="overflow:hidden;"></iframe>
+				<script  languaje="javascript">
+					 autorizado = false;
+				</script>
+				
+				<script language="javascript" type="text/javascript"
+					src="#{facesContext.externalContext.requestContextPath}/js/capturas.js">
+				</script>
+				
+				<h1>
+				<span><ui:insert name="tituloEncabezado">REGISTRO DE OPERACION </ui:insert>
+				</span>
+				</h1>
+				<table width="900px" cellpadding="0px" cellspacing="0px">
+					<tr>
+						<td>
+														
+						</td>
+					</tr>
+
+					</table>
+			
+			
+			
+		</ui:define>
+		<ui:define name="seccionContenido">
+			<iframe class="divModal"  id="posiciones"  frameborder="0"  scrolling="no" aling="top"></iframe>
+			<iframe class="divModal"  id="firmaDigital"  frameborder="0"  scrolling="no" aling="top"></iframe>
+			
+				<table width="900px" cellpadding="0px" cellspacing="0px">
+	
+					<tr>
+						<td>
+							<ui:insert name="seccionForma">
+							</ui:insert>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div style="width: 100%; text-align: center;">
+								<ui:insert name="botones">
+								</ui:insert>
+							</div>
+						</td>
+					</tr>
+				</table>
+				
+				<a4j:outputPanel ajaxRendered="true">
+					<script languaje="javascript">
+				    	restringirCapturasNumericas();
+                        restringirCapturasNumericasGuion();
+						restringirCapturasNumericasDecimales();
+						restringirCapturasAlphaNumericas();
+						restringirCapturasNumericasAsterisco();
+						restringirCapturasAlphaNumericasAsterisco();
+						restringirCapturasAlphaAsterisco(); 
+                        restringirCapturasAlfabeticas();
+						setMaxLengths();
+						evitarPegar();
+				    </script>
+				</a4j:outputPanel>
+			
+			<script  languaje="javascript">
+					autorizado = true;
+				</script>
+			
+			<div class="warning tablaNoDisp" style="display:none">
+			<h:graphicImage url="/images/warning.gif"/>&#160;<h:outputText value="#{etq.operacionNoDisponible}"/>
+			</div>
+			<script languaje="javascript">
+				if(!autorizado){		
+					$j('.tablaNoDisp').css("display",'inline');
+				}
+			</script>
+		</ui:define>
+		
+	</ui:decorate>	
+
+</html>

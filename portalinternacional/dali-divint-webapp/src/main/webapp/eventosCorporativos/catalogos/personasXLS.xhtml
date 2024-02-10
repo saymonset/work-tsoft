@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls" xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document
+    	documentName="#{etqEventosCorporativos.nombreDoctoPersonas}"
+    	documentTitle="#{etqEventosCorporativos.personas}"
+        institucion="#{personasBean.agenteFirmado.id} #{personasBean.agenteFirmado.folio} #{personasBean.agenteFirmado.razon}" 
+        fecha="#{personasBean.fechaActual}" >
+
+        <xls:table value="#{personasBean}" var="bean" widthPercentage="100" maxColums="11" >
+            <xls:row>
+           		<xls:col header="Institución" value="#{!empty personasBean.claveInstitucion ? personasBean.claveInstitucion : 'Todas'}" />
+                <xls:col header="#{etqEventosCorporativos.nombrePersona}" value="#{!empty personasBean.nombrePersona ? personasBean.nombrePersona : 'Todos'}" />
+                <xls:col header="#{etqEventosCorporativos.correoPersona}" value="#{!empty personasBean.correoElectronico ? personasBean.correoElectronico : 'Todos'}" />
+                <xls:col header="Descripción" value="#{personasBean.descripcionSummary}" />
+                <xls:col header="#{etqEventosCorporativos.estado}" value="#{personasBean.descripcionEstatus}" />	
+                <xls:col header="Lista Distribución" value="#{personasBean.listaDistribucionDescripcion}" />             
+			</xls:row>			
+        </xls:table>
+
+         <xls:subtitle value="#{etq.registrosEncontrados}: #{personasBean.totalRegistrosExportacion}" />
+        
+         <xls:table value="#{personasBean.personas}" var="detalle" currentBean="detalle" widthPercentage="100" maxColums="7">
+            <xls:row >
+            	<xls:col header="Institución" value="#{!empty detalle.institucion ? detalle.institucion.claveInstitucion : '' }"  />
+				<xls:col header="#{etqEventosCorporativos.identificador}" value="#{detalle.idPersona}"  />				
+				<xls:col header="#{etqEventosCorporativos.nombrePersona}" value="#{detalle.nombre}" />
+				<xls:col header="#{etqEventosCorporativos.correoPersona}" value="#{detalle.correo}" />				
+				<xls:col header="#{etqEventosCorporativos.estado}" value="#{detalle.inactivo == 0 ? 'Activo': 'Inactivo' }" />				
+                <xls:col header="Listas" value="#{detalle.listas}" />
+                <xls:col header="#{etqEventosCorporativos.descripcion}" value="#{detalle.descripcion}" />
+                <xls:col header="Fecha Actualización" value="#{detalle.fechaActualizacion}" pattern="dd/MM/yyyy HH:mm"/>
+			</xls:row>
+        </xls:table>
+    </xls:document>
+</html>

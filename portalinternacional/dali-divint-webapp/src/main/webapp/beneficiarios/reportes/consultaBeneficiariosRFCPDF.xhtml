@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:pdf="http://indeval.com/jsf/pdf"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cvt="http://indeval.com/jsf/converters">
+      
+    <pdf:document documentName="consultaBeneficiariosRFC" documentTitle="Consulta de Beneficiarios RFC"
+                  institucion="#{consultaBeneficiariosRFCBean.agenteFirmado.id} #{consultaBeneficiariosRFCBean.agenteFirmado.folio} #{consultaBeneficiariosRFCBean.agenteFirmado.razon}"
+                  landscape="true" fecha="#{consultaBeneficiariosRFCBean.fechaActual}"
+                  imageResource="/images/indeval.jpg">
+        <pdf:br />
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{consultaBeneficiariosRFCBean.paginaReportes.totalRegistros}" />
+        <pdf:subtitle value="Datos"/>
+        <pdf:table value="#{consultaBeneficiariosRFCBean.paginaReportes.registros}" currentBean="detalle" maxColums="6">
+            <pdf:row>
+                <pdf:col header="#{etq.nombreBeneficiario}" rendered="#{!detalle.personaFisica}" value="#{detalle.razonSocial}" oddColorDark="true" />
+                <pdf:col header="#{etq.nombreBeneficiario}" rendered="#{detalle.personaFisica}" oddColorDark="true"
+                         value="#{detalle.nombres} #{detalle.apellidoPaterno} #{detalle.apellidoMaterno}" />
+				<pdf:col header="#{etq.custodio}" value="#{consultaBeneficiariosRFCBean.mapaCustodios[detalle.idCuentaNombrada]}" 
+                         align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.w8benRFC}" align="CENTER" oddColorDark="true" 
+                         value="#{detalle.formatoW8BEN.foreignTaxIdNumb}#{detalle.formatoW8BENE.foreingTIN}" />
+                <pdf:col header="#{etq.estatusBeneficiario}" value="#{detalle.statusBenef.descStatusBenef}" align="CENTER" oddColorDark="true"/>
+                <pdf:col header="#{etq.fechaFormato}" value="#{detalle.fechaFormato}" align="CENTER" oddColorDark="true" >
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.vigencia}" value="#{detalle.fechaVigenciaFormato}" align="CENTER" oddColorDark="true" >
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+            </pdf:row>
+        </pdf:table>
+    </pdf:document>
+</html>

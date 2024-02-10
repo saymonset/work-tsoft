@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	
+		<ui:composition template="/layoutPopUp.xhtml">
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/eventosCorporativosCreacion.js">
+			</script>
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/ckeditor/ckeditor.js">
+			</script>
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/ckeditor/adapters/jquery.js">
+			</script>
+			<style>
+				.stylePanel{
+					margin-left:0px;
+					margin-rigth:auto;
+				}
+				*{
+					margin: 0 0 0 0;
+				}
+				.textoControles{
+					font-size: 9px;
+					font-family: Tahoma, Arial, Helvetica, sans-serif;
+					color: #606060;
+				}
+				.hide-close .ui-dialog-titlebar-close { 
+					display: none 
+				}
+			</style>
+		</ui:define>
+		<ui:define name="titulo">
+		</ui:define>
+		<ui:define name="subtitulo">
+		</ui:define>
+		<ui:define name="body">
+			<a4j:form id="formNotificaciones">
+			<h:outputText value="#{dialogoGeneralEventoCorporativoBean.init}" />
+			<h:panelGroup id="mensajeUsuario">
+				<h:inputHidden id='validacion' value="#{dialogoGeneralEventoCorporativoBean.validacionHecha}"></h:inputHidden>
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+				
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+				</div>
+	
+			</h:panelGroup>
+			
+				<p id="validacionCron" class="warning" style="color:red;display:none;">	</p>
+			<div id="accordion">
+				<h3>
+					<a href="#">Configuración por minuto(s)</a>
+				</h3>
+				<div>
+					 <h:panelGrid columns="3">
+							<h:outputText value="Programar cada: " />
+							<h:inputText autocomplete="off" styleClass="campoNumerico textoControles " style="background-color: #ffffe6;"
+										  id="id-minutos"
+										  value="#{dialogoGeneralEventoCorporativoBean.minConfMinutos}" 
+										  size="2"
+										  maxlength="2"
+										  />
+							<h:outputText value="minuto(s)" />
+					</h:panelGrid>
+				</div>
+				<h3>
+					<a href="#">Configuración por hora(s)</a>
+				</h3>
+				<div>
+					<h:panelGrid columns="4">
+						<h:selectBooleanCheckbox id="chk-cada"
+							onclick="checkedCada();" value="#{dialogoGeneralEventoCorporativoBean.boolCada}"/>
+						<h:outputText value="Cada " />
+						<h:inputText autocomplete="off" size="2"
+							styleClass="textoControles campoNumerico textoMayusculas"
+							maxlength="2" id="txt-cadaCap" value="#{dialogoGeneralEventoCorporativoBean.hrsCadaHr}"/>
+						<h:outputText value="hora(s)" />
+						<!-- <h:selectBooleanCheckbox id="chk-desde" onclick="checkedDesde();" value="#{dialogoGeneralEventoCorporativoBean.boolDesde}"/>
+						<h:outputText value="Desde " />
+						<rich:inputNumberSpinner minValue="0"
+							maxValue="23" inputClass="campoNumerico textoControles" inputStyle="background-color: #ffffe6;"
+							inputSize="2" id="desde-hora" value="#{dialogoGeneralEventoCorporativoBean.hrCapDesde}"/>
+						<rich:inputNumberSpinner minValue="0"
+							maxValue="59" inputClass="campoNumerico textoControles" inputStyle="background-color: #ffffe6;"
+							inputSize="2" id="desde-minutos" value="#{dialogoGeneralEventoCorporativoBean.minCapDesde}"/>
+						<h:outputText value="" /> -->
+					</h:panelGrid>
+				</div>
+				<h3>
+					<a href="#">Configuración por día(s)</a>
+				</h3>
+				<div>
+					<h:panelGrid columns="1">
+						<h:panelGrid columns="4">
+
+							<h:selectBooleanCheckbox id="chk-dias-diario"
+								onclick="uncheckSemana();" value="#{dialogoGeneralEventoCorporativoBean.boolCadaDias}"/>
+							<h:outputText value="Cada " />
+							<h:inputText autocomplete="off" size="3"
+								onclick="checkDias();"
+								styleClass="textoControles campoNumerico textoMayusculas"
+								maxlength="3" id="txt-semana-diario" value="#{dialogoGeneralEventoCorporativoBean.diasCapDias}"/>
+							<h:outputText value="día(s)" />
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<h:selectBooleanCheckbox id="chk-sem-diario"
+								onclick="uncheckDias();" value="#{dialogoGeneralEventoCorporativoBean.boolTodos}"/>
+							<h:outputText value="Todos los días" />
+						</h:panelGrid>
+						<h:panelGrid columns="3">
+							<h:outputText value="Hora de inicio" />
+							<rich:inputNumberSpinner minValue="0"
+								maxValue="23" inputClass="campoNumerico textoControles" inputStyle="background-color: #ffffe6;"
+								inputSize="2" id="hora-diario" value="#{dialogoGeneralEventoCorporativoBean.hrCapDias}" />
+							<rich:inputNumberSpinner minValue="0"
+								maxValue="59" inputClass="campoNumerico textoControles" inputStyle="background-color: #ffffe6;"
+								inputSize="2" id="minutos-diario" value="#{dialogoGeneralEventoCorporativoBean.minCapDias}"/>
+						</h:panelGrid>
+					</h:panelGrid>
+				</div>
+				<h3>
+					<a href="#">Configuración por semana</a>
+				</h3>
+				<div>
+					<h:panelGrid columns="1">
+						<h:panelGrid columns="5">
+							<h:selectManyCheckbox id="dias-semana" value="#{dialogoGeneralEventoCorporativoBean.arrayDias}">
+								<f:selectItem itemValue="MON" itemLabel="Lunes" />
+								<f:selectItem itemValue="TUE" itemLabel="Martes" />
+								<f:selectItem itemValue="WED" itemLabel="Miércoles" />
+								<f:selectItem itemValue="THU" itemLabel="Jueves" />
+								<f:selectItem itemValue="FRI" itemLabel="Viernes" />
+							</h:selectManyCheckbox>
+						</h:panelGrid>
+						<h:panelGrid columns="3">
+							<h:outputText value="Hora programada" />
+							<rich:inputNumberSpinner minValue="0"
+								maxValue="23" inputClass="campoNumerico textoControles" inputStyle="background-color: #ffffe6;"
+								inputSize="2" id="hora-semana" value="#{dialogoGeneralEventoCorporativoBean.hrSemana}"/>
+							<rich:inputNumberSpinner minValue="0"
+								maxValue="59" inputClass="campoNumerico textoControles" inputStyle="background-color: #ffffe6;"
+								inputSize="2" id="minutos-semana" value="#{dialogoGeneralEventoCorporativoBean.minSemana}"/>
+						</h:panelGrid>
+					</h:panelGrid>
+				</div>
+				<h3>
+					<a href="#">Configuración por mes</a>
+				</h3>
+				<div>
+					<h:panelGrid columns="1">
+						<h:panelGrid columns="4">
+							<h:outputText value="El día" />
+							<h:inputText autocomplete="off" size="2"
+								styleClass="textoControles campoNumerico textoMayusculas"
+								maxlength="2" id="txt-dia-mes" value="#{dialogoGeneralEventoCorporativoBean.diaMes}"/>
+							<h:outputText value="del mes " />
+							<h:inputText autocomplete="off" size="2"
+								styleClass="textoControles campoNumerico textoMayusculas"
+								maxlength="2" id="txt-mes-mes" value="#{dialogoGeneralEventoCorporativoBean.mesMes}"/>
+						</h:panelGrid>
+						<h:panelGrid columns="3">
+							<h:outputText value="Hora programada" />
+							<rich:inputNumberSpinner minValue="0"
+								maxValue="23" inputClass="campoNumerico textoControles" inputStyle="background-color: #ffffe6;"
+								inputSize="2" id="hora-mes" value="#{dialogoGeneralEventoCorporativoBean.hrMes}"/>
+							<rich:inputNumberSpinner minValue="0"
+								maxValue="59" inputClass="campoNumerico textoControles" inputStyle="background-color: #ffffe6;"
+								inputSize="2" id="minutos-mes" value="#{dialogoGeneralEventoCorporativoBean.minMes}"/>
+						</h:panelGrid>
+					</h:panelGrid>
+				</div>
+			</div>
+			<script>
+				$j( "#accordion" ).accordion({ active: 4 });				
+			</script>
+			<h:panelGrid columns="4" cellpadding="7" cellspacing="1">
+					<h:outputText value="Destinatario:" />
+					<h:selectOneMenu styleClass="textoControles"
+											 value="#{dialogoGeneralEventoCorporativoBean.valorLista}" tabindex="140" id="id-txt-destinatario">
+								<f:selectItem itemValue="-1" itemLabel="Ninguno" />
+								<f:selectItems value="#{dialogoGeneralEventoCorporativoBean.listaDistribucionEvco}" />
+					</h:selectOneMenu>
+					<h:outputText value="Texto Notificación:" />
+					<h:inputText autocomplete="off" id="id-texto-Notificacion" styleClass="textoControles"
+						inputStyle="background-color: #ffffe6;"
+						maxlength="100" width="20" size="40"
+						value="#{dialogoGeneralEventoCorporativoBean.strTextoNotificacion}"/>
+					<h:outputText value="Fecha inicio:" />
+					<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;"
+						inputSize="14" 
+						datePattern="dd/MM/yyyy HH:mm" tabindex="120" 
+						popup="true" 
+						direction="auto" 
+						id="id-txt-fecha-inicio"
+						value="#{dialogoGeneralEventoCorporativoBean.fchInicio}"/>
+					<h:outputText value="Fecha Fin:" />
+					<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;"
+						inputSize="14"
+						datePattern="dd/MM/yyyy HH:mm" tabindex="120" 
+						popup="true" 
+						direction="auto" 
+						id="id-txt-fecha-final"
+						value="#{dialogoGeneralEventoCorporativoBean.fchFin}"/>
+				</h:panelGrid>
+				<a4j:commandButton value="Agregar Notificación" id="agregar-notificacion" 
+				onclick="this.disabled=true;"
+				action="#{dialogoGeneralEventoCorporativoBean.validaNotificaciones}"  
+				oncomplete="sendDataNotificacion();this.disabled=false;" 
+				render="input" 
+				reRender="resumenNotificaciones,mensajeUsuario"
+				/>
+			</a4j:form>
+			<!-- DEFINICION DE HIDDENS PARA MAPEAR LOS VALORES -->
+			<h:inputHidden id="horasSeccMin" />
+			<h:inputHidden id="minutosSeccMin" />
+			<h:inputHidden id="idTxtDestinatario" />
+			<h:inputHidden id="idTextoNotificacion" />
+			<h:inputHidden id="idTxtFechaInicio" />
+			<h:inputHidden id="idTxtFechaFinal" />
+			<h:inputHidden id="idNumDias" />
+			<h:inputHidden id="hrDias" />
+			<h:inputHidden id="minDias" />
+			<h:inputHidden id="diaMes" />
+			<h:inputHidden id="mesMes" />
+		</ui:define>
+		</ui:composition>
+</html>

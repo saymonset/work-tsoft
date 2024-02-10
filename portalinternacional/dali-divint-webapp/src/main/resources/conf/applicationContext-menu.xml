@@ -1,0 +1,2278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+	
+	<bean id="menuNavegacion" class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+		<property name="id" value="menuNavegacion"></property>
+		<property name="etiqueta" value="Portal DALI"></property>
+		<property name="roles">
+			<list>
+				<value>TES_CAPTURA_DALI</value>
+				<value>TES_CONSULTA_DALI</value>
+				<value>TES_MAESTRO_DALI</value>
+				
+				<value>MD_CAPT_Y_CONSULTA_DALI</value>
+				<value>MD_CONSULTA_DALI</value>
+				<value>MD_APERTURA_SISTEMA_DALI</value>
+                <value>MC_APERTURA_SISTEMA_DALI</value>
+				<value>MD_MAESTROI_DALI</value>
+				<value>MD_VENCIMIENTO_REPORTOS</value>
+				
+				<value>CAP_CAPT_CONS_DALI</value>
+				<value>CAP_CONSULTA_DALI</value>
+				
+				<value>INT_CAPT_CONS_DALI</value>
+				<value>INT_CONSULTA_DALI</value>
+				
+				<value>INT_BEN_INDEVAL</value>
+                <value>INT_BEN_CAPT_CONS</value>
+                <value>INT_BEN_CONS</value>
+
+				<value>INT_FIDE_BANAMEX</value>
+				<value>INT_FIDE_NAFINSA</value>
+				<value>INT_FIDE_INBURSA</value>
+				
+				<value>ESTADO_CUENTA</value>
+				<value>CONSULTAS_OPERACIONES</value>
+				<value>DEV_MODE_DALI</value>
+
+				<value>INGRESOS_ADMIN</value>
+				<value>INGRESOS_EXTERNO</value>
+				
+				<value>CTA_NAL_ALTA</value>
+				<value>CTA_NAL_CONSULTA</value>
+				<value>CTA_NAL_AUTORIZA</value>
+				<value>CTA_NAL_LIBERA</value>
+				<value>CTA_NAL_CANCELA</value>
+				<value>CTA_NAL_MODIFICA</value>	
+				<value>RET_NAL_ALTA</value>	
+				<value>RET_NAL_CONSULTA</value>
+				<value>RET_NAL_AUTORIZA</value>
+				<value>RET_NAL_LIBERA</value>
+								
+				<value>INT_CAL_INDEVAL</value>
+				<value>INT_CAL_INDEVAL_SU</value>
+				<value>INT_CONCILIACION_SU</value>
+				<value>INT_CONCILIACION</value>
+
+				<value>CONCILIACION_EFECTIVO_SU</value>
+				<value>CONCILIACION_EFECTIVO</value>
+				<value>NOTIF_EFECTIVO_INT</value>
+				<value>NOTIF_EFECTIVO_INT_SU</value>
+				<value>CUENTA_EFECTIVO_INT</value>
+
+                <value>INT_CAMBIO_BOVEDA</value>
+                
+                <value>INT_CAL_CAP_CONS</value>
+				<value>INT_CAL_CAP_AUT</value>
+				<value>INT_CAL_CAP_OP</value>
+				
+				<value>AUTORIZADOR</value>
+				<value>INT_AUTORIZA_SIC_RCP</value>
+				<value>INT_SALDO_CUSTODIO</value>
+			</list>
+		</property>
+		<property name="subElementosMenu">
+			<list>
+				<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+					<property name="id" value="mercadoDinero"></property>
+					<property name="etiqueta" value="Mercado de Dinero"></property>
+					<property name="roles">
+						<list>
+							<value>MD_CAPT_Y_CONSULTA_DALI</value>							
+							<value>MD_APERTURA_SISTEMA_DALI</value>				
+							<value>MD_MAESTROI_DALI</value>
+							<value>ESTADO_CUENTA</value>
+							<value>CONSULTAS_OPERACIONES</value>
+							<value>DEV_MODE_DALI</value>
+							<value>MD_VENCIMIENTO_REPORTOS</value>
+						</list>
+					</property>
+					<property name="subElementosMenu">
+						<list>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="operacionMercadoDinero"></property>
+								<property name="etiqueta" value="Operaci\u00F3n"></property>
+								<property name="roles">
+									<list>
+										<value>MD_CAPT_Y_CONSULTA_DALI</value>							
+										<value>MD_APERTURA_SISTEMA_DALI</value>				
+										<value>MD_MAESTROI_DALI</value>
+										<value>ESTADO_CUENTA</value>
+										<value>CONSULTAS_OPERACIONES</value>
+										<value>DEV_MODE_DALI</value>
+										<value>MD_VENCIMIENTO_REPORTOS</value>
+									</list>
+								</property>
+								<property name="subElementosMenu">
+									<list>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="capturaOperaciones"></property>
+											<property name="etiqueta" value="Captura de Operaciones"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali/mercadoDinero/operacion/colocacionPrimaria.faces"></property>
+											<property name="roles">
+												<list>
+													<value>MD_CAPT_Y_CONSULTA_DALI</value>
+													<value>MD_MAESTROI_DALI</value>
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="aperturaSistemas"></property>
+											<property name="etiqueta" value="Apertura de Sistema"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali/mercadoDinero/operacion/aperturaDeSistema.faces"></property>
+											<property name="roles">
+												<list>
+													<value>MD_APERTURA_SISTEMA_DALI</value>				
+													<value>MD_MAESTROI_DALI</value>
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>	
+												</list>
+											</property>
+										</bean>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="traspasosAdministrativos"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="etiqueta" value="Traspasos Administrativos"></property>
+											<property name="url" value="/dali/mercadoDinero/traspasosadministrativos/traspasosAdministrativos.faces"></property>
+											<property name="roles">
+												<list>
+													<value>INDEVAL</value>
+													<value>DEV_MODE_DALI</value>													
+												</list>
+											</property>
+										</bean>
+										<!--  vencimiento de reportos -->
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="vencimientoReportos"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="etiqueta" value="Vencimiento anticipado de Reportos"></property>
+											<property name="url" value="/dali/mercadoDinero/vencimientoReportos/vencimientoReportos.faces"></property>
+											<property name="roles">
+												<list>
+													<value>DEV_MODE_DALI</value>
+													<value>MD_VENCIMIENTO_REPORTOS</value>
+												</list>
+											</property>
+										</bean>
+									</list>
+								</property>
+							</bean>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="fileTransferMercadoDinero"></property>
+								<property name="etiqueta" value="File Transfer"></property>
+								<property name="roles">
+									<list>
+										<value>MD_CAPT_Y_CONSULTA_DALI</value>
+										<value>MD_MAESTROI_DALI</value>
+										<value>ESTADO_CUENTA</value>
+										<value>CONSULTAS_OPERACIONES</value>
+										<value>DEV_MODE_DALI</value>
+									</list>
+								</property>
+								<property name="subElementosMenu">
+									<list>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="traspasosFileTransferMercadoDinero"></property>
+											<property name="etiqueta" value="Traspasos"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali/mercadoDinero/fileTransfer/fileTransferTraspaso.faces"></property>
+											<property name="roles">
+												<list>
+													<value>MD_CAPT_Y_CONSULTA_DALI</value>
+													<value>MD_MAESTROI_DALI</value>
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+										
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="fileTransferMiscelaneaFiscalDinero"/>
+											<property name="etiqueta" value="Miscel\u00E1nea Fiscal"/>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"/>
+											<property name="url" value="/dali/mercadoDinero/fileTransferMiscelaneaFiscal/fileTransferMiscelaneaFiscalDinero.faces"/>
+											<property name="roles">
+												<list>
+													<value>MD_CAPT_Y_CONSULTA_DALI</value>
+													<value>MD_MAESTROI_DALI</value>
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+									</list>
+								</property>
+							</bean>						
+						</list>
+					</property>
+				</bean>
+				<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+					<property name="id" value="mercadoCapitales"></property>
+					<property name="etiqueta" value="Mercado de Capitales"></property>
+					<property name="roles">
+						<list>
+							<value>CAP_CAPT_CONS_DALI</value>							
+							<value>ESTADO_CUENTA</value>
+							<value>CONSULTAS_OPERACIONES</value>
+							<value>DEV_MODE_DALI</value>
+							<value>CAP_CONSULTA_DALI</value>
+                            <value>MC_APERTURA_SISTEMA_DALI</value>
+						</list>
+					</property>
+					<property name="subElementosMenu">
+						<list>
+								<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="operacionMercadoCapitales"></property>
+								<property name="etiqueta" value="Operaci\u00F3n"></property>
+								<property name="roles">
+									<list>
+										<value>CAP_CAPT_CONS_DALI</value>
+										<value>ESTADO_CUENTA</value>
+										<value>CONSULTAS_OPERACIONES</value>
+										<value>DEV_MODE_DALI</value>
+                                        <value>MC_APERTURA_SISTEMA_DALI</value>
+									</list>
+								</property>
+								<property name="subElementosMenu">
+									<list>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="operacionesMercadoCapitales"></property>
+											<property name="etiqueta" value="Captura de Operaciones"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali/mercadoCapitales/operacion/traspasoMiscelaneaFiscalCapitales.faces"></property>
+											<property name="roles">
+												<list>
+													<value>CAP_CAPT_CONS_DALI</value>
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+										
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="aperturaSistemasCapitales"></property>
+											<property name="etiqueta" value="Apertura de Sistema"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali/mercadoCapitales/operacion/aperturaDeSistemaCapitales.faces"></property>
+											<property name="roles">
+												<list>
+													<value>MC_APERTURA_SISTEMA_DALI</value>				
+													<value>MD_MAESTROI_DALI</value>
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>	
+												</list>
+											</property>
+										</bean>
+										
+										
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="traspasosAdministrativos"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="etiqueta" value="Traspasos Administrativos"></property>
+											<property name="url" value="/dali/mercadoCapitales/traspasosadministrativos/traspasosAdministrativos.faces"></property>
+											<property name="roles">
+												<list>												    
+													<value>DEV_MODE_DALI</value>
+													<value>INDEVAL</value>													
+												</list>
+											</property>
+										</bean>
+									</list>
+								</property>
+							</bean>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="fileTransferMercadoCapitales"></property>
+								<property name="etiqueta" value="File Transfer"></property>
+								<property name="roles">
+									<list>
+										<value>CAP_CAPT_CONS_DALI</value>
+										<value>ESTADO_CUENTA</value>
+										<value>CONSULTAS_OPERACIONES</value>
+										<value>DEV_MODE_DALI</value>
+									</list>
+								</property>
+								<property name="subElementosMenu">
+									<list>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="traspasosFileTransferMercadoCapitales"></property>
+											<property name="etiqueta" value="Traspasos"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali/mercadoCapitales/fileTransfer/fileTransferTraspaso.faces"></property>
+											<property name="roles">
+												<list>
+													<value>CAP_CAPT_CONS_DALI</value>
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+										
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="fileTransferMiscelaneaFiscalCapitales"/>
+											<property name="etiqueta" value="Miscel\u00E1nea Fiscal"/>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"/>
+											<property name="url" value="/dali/mercadoCapitales/fileTransferMiscelaneaFiscal/fileTransferMiscelaneaFiscalCapitales.faces"/>
+											<property name="roles">
+												<list>
+													<value>CAP_CAPT_CONS_DALI</value>
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+										
+									</list>
+								</property>
+							</bean>	
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="estadoCuentaSocInv"></property>
+								<property name="etiqueta" value="Estado de Cuenta de Soc. de Inv."></property>
+								<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+								<property name="url" value="/dali/mercadoCapitales/estadoCuentaSocInv.faces"></property>
+								<property name="roles">
+									<list>
+										<value>CAP_CAPT_CONS_DALI</value>
+										<value>CAP_CONSULTA_DALI</value>
+										<value>ESTADO_CUENTA</value>
+										<value>CONSULTAS_OPERACIONES</value>
+										<value>DEV_MODE_DALI</value>
+									</list>
+								</property>
+							</bean>
+						</list>
+					</property>
+				</bean>
+				<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+					<property name="id" value="tesoreria"></property>
+					<property name="etiqueta" value="Tesorer\u00EDa"></property>
+					<property name="roles">
+						<list>
+							<value>TES_CAPTURA_DALI</value>
+							<value>TES_CONSULTA_DALI</value>
+							<value>TES_MAESTRO_DALI</value>
+							<value>ESTADO_CUENTA</value>
+							<value>CONSULTAS_OPERACIONES</value>
+							<value>DEV_MODE_DALI</value>
+							<value>CTA_NAL_ALTA</value>
+							<value>CTA_NAL_CONSULTA</value>
+							<value>CTA_NAL_AUTORIZA</value>
+							<value>CTA_NAL_LIBERA</value>
+							<value>CTA_NAL_CANCELA</value>
+							<value>CTA_NAL_MODIFICA</value>	
+							<value>RET_NAL_ALTA</value>									
+						</list>
+					</property>
+					<property name="subElementosMenu">
+						<list>
+							<bean
+								class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="edoCuentaLiqDecretos"></property>
+								<property name="etiqueta" value="Estado de Cuenta de Liq. por Decretos"></property>
+								<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+								<property name="url"
+									value="/dali/tesoreria/estadoCuentaLiquidacionDecretos.faces"></property>
+								<property name="roles">
+									<list>
+										<value>TES_CONSULTA_DALI</value>
+										<value>TES_MAESTRO_DALI</value>
+										<value>ESTADO_CUENTA</value>
+										<value>CONSULTAS_OPERACIONES</value>
+										<value>DEV_MODE_DALI</value>
+									</list>
+								</property>
+							</bean>
+							<bean
+								class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="consultaRecuperaciones"></property>
+								<property name="etiqueta" value="Consulta de Recuperaciones"></property>
+								<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+								<property name="url"
+									value="/dali/tesoreria/mor/consultaRecuperacion.faces"></property>
+								<property name="roles">
+									<list>
+										<value>TES_CONSULTA_DALI</value>
+										<value>TES_MAESTRO_DALI</value>
+										<value>ESTADO_CUENTA</value>
+										<value>CONSULTAS_OPERACIONES</value>
+										<value>DEV_MODE_DALI</value>
+									</list>
+								</property>
+							</bean>
+							<bean
+								class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="consultaVencimientosPendientes"></property>
+								<property name="etiqueta" value="Consulta de Vencimientos Pendientes"></property>
+								<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+								<property name="url"
+									value="/dali/tesoreria/consultaVencimientosPendientes.faces"></property>
+								<property name="roles">
+									<list>
+										<value>TES_CONSULTA_DALI</value>
+										<value>TES_MAESTRO_DALI</value>
+										<value>ESTADO_CUENTA</value>
+										<value>CONSULTAS_OPERACIONES</value>
+										<value>DEV_MODE_DALI</value>
+									</list>
+								</property>
+							</bean>
+							<!-- Consulta de pagos referenciados -->
+                            <bean
+                                class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+                                <property name="id" value="consultaPagosReferenciados" />
+                                <property name="etiqueta" value="Pagos Referenciados" />
+                                <property name="urlIcono" value="/dali/images/menu/menu_item_icon.png" />
+                                <property name="url" value="/dali/tesoreria/pagosReferenciados/consultaPagosReferenciados.faces" />
+                                <property name="roles">
+                                    <list>
+                                        <value>TES_CONSULTA_DALI</value>
+                                        <value>TES_MAESTRO_DALI</value>
+                                        <value>ESTADO_CUENTA</value>
+                                        <value>CONSULTAS_OPERACIONES</value>
+                                        <value>DEV_MODE_DALI</value>
+                                    </list>
+                                </property>
+                            </bean>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="tesoreriaFondos"></property>
+								<property name="etiqueta" value="Fondos"></property>
+								<property name="roles">
+									<list>
+										<value>TES_CAPTURA_DALI</value>
+										<value>TES_MAESTRO_DALI</value>
+										<value>ESTADO_CUENTA</value>
+										<value>CONSULTAS_OPERACIONES</value>
+										<value>DEV_MODE_DALI</value>
+										<value>RET_NAL_ALTA</value>	
+									</list>
+								</property>
+								<property name="subElementosMenu">
+									<list>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="retiroFondos"></property>
+											<property name="etiqueta" value="Retiro Fondos Indeval-Banxico"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali/tesoreria/fondos/retiroFondos.faces"></property>
+											<property name="roles">
+												<list>
+													<value>TES_CAPTURA_DALI</value>
+													<value>TES_MAESTRO_DALI</value>
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="traspasosEfectivoCtasControl"></property>
+											<property name="etiqueta" value="Traspasos de Efectivo Cuentas Control"></property>
+											<property name="url" value="/dali/tesoreria/fondos/traspasosEfecCtasControl.faces"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="roles">
+												<list>
+													<value>TES_CAPTURA_DALI</value>
+													<value>TES_MAESTRO_DALI</value>
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+									</list>
+								</property>
+							</bean>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="fileTransferTesoreria"></property>
+								<property name="etiqueta" value="File Transfer"></property>
+								<property name="roles">
+									<list>
+										<value>TES_CAPTURA_DALI</value>
+										<value>TES_MAESTRO_DALI</value>									
+									</list>
+								</property>
+								<property name="subElementosMenu">
+									<list>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="fileTransferTREF"></property>
+											<property name="etiqueta" value="Traspasos de Efectivo"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali/tesoreria/fileTransfer/fileTransferTref.faces"></property>
+											<property name="roles">
+												<list>
+													<value>TES_CAPTURA_DALI</value>
+													<value>TES_MAESTRO_DALI</value>
+												</list>
+											</property>
+										</bean>
+									</list>
+								</property>
+							</bean>
+						</list>
+					</property>
+				</bean>
+				<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+					<property name="id" value="consultaOperaciones"></property>
+					<property name="etiqueta" value="Estatus de Operaciones"></property>
+					<property name="roles">
+						<list>
+							<value>TES_CONSULTA_DALI</value>
+							<value>TES_MAESTRO_DALI</value>
+
+							<value>MD_CAPT_Y_CONSULTA_DALI</value>
+							<value>MD_CONSULTA_DALI</value>
+							<value>MD_APERTURA_SISTEMA_DALI</value>
+							<value>MD_MAESTROI_DALI</value>
+
+							<value>CAP_CAPT_CONS_DALI</value>
+							<value>CAP_CONSULTA_DALI</value>
+
+							<value>INT_CAPT_CONS_DALI</value>
+							<value>INT_CONSULTA_DALI</value>
+
+							<value>ESTADO_CUENTA</value>
+							<value>CONSULTAS_OPERACIONES</value>
+							<value>DEV_MODE_DALI</value>
+							<value>RET_NAL_CONSULTA</value>
+							<value>RET_NAL_AUTORIZA</value>
+							<value>RET_NAL_LIBERA</value>
+							<value>RET_NAL_ALTA</value>
+						</list>
+					</property>
+					<property name="subElementosMenu">
+						<list>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="consultaOperacionesValores"></property>
+								<property name="etiqueta" value="Consulta de Valores y Match"></property>
+								<property name="url" value="/dali/match/matchOp.faces"></property>
+								<property name="roles">
+									<list>
+										<value>MD_CAPT_Y_CONSULTA_DALI</value>
+										<value>MD_CONSULTA_DALI</value>
+										<value>MD_APERTURA_SISTEMA_DALI</value>
+										<value>MD_MAESTROI_DALI</value>
+
+										<value>INT_CAPT_CONS_DALI</value>
+										<value>INT_CONSULTA_DALI</value>
+
+										<value>CAP_CAPT_CONS_DALI</value>
+										<value>CAP_CONSULTA_DALI</value>
+
+										<value>ESTADO_CUENTA</value>
+										<value>CONSULTAS_OPERACIONES</value>
+										<value>DEV_MODE_DALI</value>
+									</list>
+								</property>
+							</bean>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="consultaOperacionesEfectivo"></property>
+								<property name="etiqueta" value="Consulta de Efectivo"></property>
+								<property name="url" value="/dali/efectivo/estatusOpEfectivo.faces"></property>
+								<property name="roles">
+									<list>
+										<value>CAP_CAPT_CONS_DALI</value>
+										<value>CAP_CONSULTA_DALI</value>
+
+										<value>TES_CONSULTA_DALI</value>
+										<value>TES_MAESTRO_DALI</value>
+
+										<value>ESTADO_CUENTA</value>
+										<value>CONSULTAS_OPERACIONES</value>
+										<value>DEV_MODE_DALI</value>
+																	
+										<value>RET_NAL_CONSULTA</value>
+										<value>RET_NAL_AUTORIZA</value>
+										<value>RET_NAL_LIBERA</value>
+										<value>RET_NAL_ALTA</value>
+										
+									</list>
+								</property>
+							</bean>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="consultaMiscelaneaFiscal"></property>
+								<property name="etiqueta" value="Consulta de Miscel\u00E1nea Fiscal "></property>
+								<property name="url" value="/dali/match/consultaMiscelaneaFiscal.faces"></property>
+								<property name="roles">
+									<list>
+										<value>MD_CAPT_Y_CONSULTA_DALI</value>
+										<value>MD_CONSULTA_DALI</value>
+										<value>MD_APERTURA_SISTEMA_DALI</value>
+										<value>MD_MAESTROI_DALI</value>
+
+										<value>INT_CAPT_CONS_DALI</value>
+										<value>INT_CONSULTA_DALI</value>
+
+										<value>CAP_CAPT_CONS_DALI</value>
+										<value>CAP_CONSULTA_DALI</value>
+
+										<value>DEV_MODE_DALI</value>
+									</list>
+								</property>
+							</bean>
+						</list>
+					</property>
+				</bean>
+				<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+					<property name="id" value="estadoCuenta"></property>
+					<property name="etiqueta" value="Estado de Cuenta"></property>
+					<property name="roles">
+						<list>
+							<value>TES_CAPTURA_DALI</value>
+							<value>TES_CONSULTA_DALI</value>
+							<value>TES_MAESTRO_DALI</value>
+
+							<value>MD_CAPT_Y_CONSULTA_DALI</value>
+							<value>MD_CONSULTA_DALI</value>
+							<value>MD_APERTURA_SISTEMA_DALI</value>
+							<value>MD_MAESTROI_DALI</value>
+
+							<value>CAP_CAPT_CONS_DALI</value>
+							<value>CAP_CONSULTA_DALI</value>
+
+							<value>INT_CAPT_CONS_DALI</value>
+							<value>INT_CONSULTA_DALI</value>
+
+							<value>ESTADO_CUENTA</value>
+							<value>CONSULTAS_OPERACIONES</value>
+							<value>DEV_MODE_DALI</value>
+						</list>
+					</property>
+					<property name="subElementosMenu">
+						<list>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="consultaPosiciones"></property>
+								<property name="etiqueta" value="Consulta de Posiciones"></property>
+								<property name="url" value="/dali/estadocuenta/consultaPosicion.faces"></property>
+								<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+								<property name="roles">
+									<list>
+										<value>MD_CAPT_Y_CONSULTA_DALI</value>
+										<value>MD_CONSULTA_DALI</value>
+										<value>MD_APERTURA_SISTEMA_DALI</value>
+										<value>MD_MAESTROI_DALI</value>
+
+										<value>CAP_CAPT_CONS_DALI</value>
+										<value>CAP_CONSULTA_DALI</value>
+
+										<value>INT_CAPT_CONS_DALI</value>
+										<value>INT_CONSULTA_DALI</value>
+
+										<value>ESTADO_CUENTA</value>
+										<value>CONSULTAS_OPERACIONES</value>
+										<value>DEV_MODE_DALI</value>
+									</list>
+								</property>
+							</bean>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="consultaSaldos"></property>
+								<property name="etiqueta" value="Consulta de Saldos"></property>
+								<property name="url" value="/dali/estadocuenta/consultaSaldoEfectivo.faces"></property>
+								<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+								<property name="roles">
+									<list>
+										<value>CAP_CAPT_CONS_DALI</value>
+										<value>CAP_CONSULTA_DALI</value>
+
+										<value>TES_CONSULTA_DALI</value>
+										<value>TES_MAESTRO_DALI</value>
+
+										<value>MD_CAPT_Y_CONSULTA_DALI</value>
+										<value>MD_CONSULTA_DALI</value>
+										<value>MD_MAESTROI_DALI</value>
+
+										<value>ESTADO_CUENTA</value>
+										<value>CONSULTAS_OPERACIONES</value>
+										<value>DEV_MODE_DALI</value>
+
+									</list>
+								</property>
+							</bean>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="consultaMovimientos"></property>
+								<property name="urlIcono" value="/dali/images/menu/folder_gray.png"></property>
+								<property name="etiqueta" value="Consulta de Movimientos"></property>
+								<property name="roles">
+									<list>
+										<value>MD_CAPT_Y_CONSULTA_DALI</value>
+										<value>MD_CONSULTA_DALI</value>
+										<value>MD_MAESTROI_DALI</value>
+
+										<value>CAP_CAPT_CONS_DALI</value>
+										<value>CAP_CONSULTA_DALI</value>
+
+										<value>INT_CAPT_CONS_DALI</value>
+										<value>INT_CONSULTA_DALI</value>
+
+										<value>TES_CAPTURA_DALI</value>
+										<value>TES_CONSULTA_DALI</value>
+										<value>TES_MAESTRO_DALI</value>
+
+										<value>ESTADO_CUENTA</value>
+										<value>CONSULTAS_OPERACIONES</value>
+										<value>DEV_MODE_DALI</value>
+
+									</list>
+								</property>
+								<property name="subElementosMenu">
+									<list>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="consultaMovimientosValores"></property>
+											<property name="etiqueta" value="Valores"></property>
+											<property name="url" value="/dali/estadocuenta/consultaMovimientosValor.faces"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="roles">
+												<list>
+													<value>MD_CAPT_Y_CONSULTA_DALI</value>
+													<value>MD_CONSULTA_DALI</value>
+													<value>MD_MAESTROI_DALI</value>
+
+													<value>CAP_CAPT_CONS_DALI</value>
+													<value>CAP_CONSULTA_DALI</value>
+
+													<value>INT_CAPT_CONS_DALI</value>
+													<value>INT_CONSULTA_DALI</value>
+
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="consultaMovimientosEfectivo"></property>
+											<property name="etiqueta" value="Efectivo"></property>
+											<property name="url" value="/dali/estadocuenta/consultaMovimientosEfectivo.faces"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="roles">
+												<list>
+													<value>MD_CAPT_Y_CONSULTA_DALI</value>
+													<value>MD_CONSULTA_DALI</value>
+													<value>MD_MAESTROI_DALI</value>
+
+													<value>CAP_CAPT_CONS_DALI</value>
+													<value>CAP_CONSULTA_DALI</value>
+
+													<value>INT_CAPT_CONS_DALI</value>
+													<value>INT_CONSULTA_DALI</value>
+
+													<value>TES_CAPTURA_DALI</value>
+													<value>TES_CONSULTA_DALI</value>
+													<value>TES_MAESTRO_DALI</value>
+
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+									</list>
+								</property>
+							</bean>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="consultaEstadoCuenta"></property>
+								<property name="etiqueta" value="Consulta de Estado de Cuenta"></property>
+								<property name="urlIcono" value="/dali/images/menu/folder_gray.png"></property>
+								<property name="roles">
+									<list>
+										<value>MD_CAPT_Y_CONSULTA_DALI</value>
+										<value>MD_CONSULTA_DALI</value>
+										<value>MD_MAESTROI_DALI</value>
+										<value>MD_APERTURA_SISTEMA_DALI</value>
+
+										<value>CAP_CAPT_CONS_DALI</value>
+										<value>CAP_CONSULTA_DALI</value>
+
+										<value>INT_CAPT_CONS_DALI</value>
+										<value>INT_CONSULTA_DALI</value>
+
+										<value>TES_CAPTURA_DALI</value>
+										<value>TES_CONSULTA_DALI</value>
+										<value>TES_MAESTRO_DALI</value>
+
+										<value>ESTADO_CUENTA</value>
+										<value>CONSULTAS_OPERACIONES</value>
+										<value>DEV_MODE_DALI</value>
+									</list>
+								</property>
+								<property name="subElementosMenu">
+									<list>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="consultaEstadoCuentaValores"></property>
+											<property name="etiqueta" value="Valores"></property>
+											<property name="url" value="/dali/estadocuenta/consultaEstadoCuentaPosicion.faces"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="roles">
+												<list>
+													<value>MD_CAPT_Y_CONSULTA_DALI</value>
+													<value>MD_CONSULTA_DALI</value>
+													<value>MD_MAESTROI_DALI</value>
+													<value>MD_APERTURA_SISTEMA_DALI</value>
+
+													<value>CAP_CAPT_CONS_DALI</value>
+													<value>CAP_CONSULTA_DALI</value>
+
+													<value>INT_CAPT_CONS_DALI</value>
+													<value>INT_CONSULTA_DALI</value>
+
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="consultaEstadoCuentaEfectivo"></property>
+											<property name="etiqueta" value="Efectivo"></property>
+											<property name="url" value="/dali/estadocuenta/consultaEstadoCuentaSaldo.faces"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="roles">
+												<list>
+													<value>MD_CAPT_Y_CONSULTA_DALI</value>
+													<value>MD_CONSULTA_DALI</value>
+													<value>MD_MAESTROI_DALI</value>
+
+													<value>CAP_CAPT_CONS_DALI</value>
+													<value>CAP_CONSULTA_DALI</value>
+
+													<value>INT_CAPT_CONS_DALI</value>
+													<value>INT_CONSULTA_DALI</value>
+
+													<value>TES_CAPTURA_DALI</value>
+													<value>TES_CONSULTA_DALI</value>
+													<value>TES_MAESTRO_DALI</value>
+
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+									</list>
+								</property>
+							</bean>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="archivoConciliacionMercadoDinero"></property>
+								<property name="etiqueta" value="Archivo de Conciliaci\u00F3n"></property>
+								<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+								<property name="url" value="/dali/mercadoDinero/archivoConciliacion/archivoConciliacion.faces"></property>
+								<property name="roles">
+									<list>
+
+										<value>INT_CAPT_CONS_DALI</value>
+										<value>INT_CONSULTA_DALI</value>
+
+										<value>CAP_CAPT_CONS_DALI</value>
+										<value>CAP_CONSULTA_DALI</value>
+
+										<value>MD_CAPT_Y_CONSULTA_DALI</value>
+										<value>MD_CONSULTA_DALI</value>
+										<value>MD_APERTURA_SISTEMA_DALI</value>
+										<value>MD_MAESTROI_DALI</value>
+
+									</list>
+								</property>
+							</bean>
+						</list>
+					</property>
+				</bean>
+				<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+					<property name="id" value="divInternacional"></property>
+					<property name="etiqueta" value="Divisi\u00F3n Internacional"></property>
+					<property name="roles">
+						<list>
+
+							<value>INT_CAPT_CONS_DALI</value>
+							<value>INT_CONSULTA_DALI</value>
+
+							<value>INT_BEN_INDEVAL</value>
+							<value>INT_BEN_CAPT_CONS</value>
+							<value>INT_BEN_CONS</value>
+
+							<value>INT_FIDE_BANAMEX</value>
+							<value>INT_FIDE_NAFINSA</value>
+							<value>INT_FIDE_INBURSA</value>
+							
+							<value>ESTADO_CUENTA</value>
+							<value>CONSULTAS_OPERACIONES</value>
+							
+							<value>INT_CONSULTA_DALI</value>
+							<value>INT_CAL_INDEVAL</value>
+							<value>INT_CAL_INDEVAL_SU</value>
+							
+							<value>DEV_MODE_DALI</value>
+							<value>INT_SIC_OPERADOR</value>
+                            <value>INT_SIC_AUTORIZAR</value>
+                            <value>INT_CAMBIO_BOVEDA</value>
+                            
+                            <value>INT_CAL_CAP_CONS</value>
+							<value>INT_CAL_CAP_AUT</value>
+							<value>INT_CAL_CAP_OP</value>
+							
+							<value>INDEVAL</value>
+							
+							<value>INT_CON_MEN_HIST</value>
+							<value>INT_CSDR_OPERADOR</value>
+						</list>
+					</property>
+					<property name="subElementosMenu">
+						<list>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="invExtranjera"></property>
+								<property name="etiqueta" value="Inversi\u00F3n Extranjera"></property>
+								<property name="roles">
+									<list>
+
+										<value>INDEVAL</value>
+
+										<value>INT_CAPT_CONS_DALI</value>
+										<value>INT_CONSULTA_DALI</value>
+
+										<value>INT_FIDE_BANAMEX</value>
+										<value>INT_FIDE_NAFINSA</value>
+										<value>INT_FIDE_INBURSA</value>
+										
+										<value>ESTADO_CUENTA</value>
+										<value>CONSULTAS_OPERACIONES</value>
+										<value>DEV_MODE_DALI</value>
+
+									</list>
+								</property>
+								<property name="subElementosMenu">
+									<list>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="capturaTraspasos"></property>
+											<property name="etiqueta" value="Captura de Traspasos"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali-divint/inversionextranjera/capturaTraspasos.faces"></property>
+											<property name="roles">
+												<list>
+
+													<value>INT_CAPT_CONS_DALI</value>
+
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>
+
+												</list>
+											</property>
+										</bean>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="File Transfer de Inversion Extranjera"></property>
+											<property name="etiqueta" value="FileTransfer"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali-divint/inversionextranjera/fileTransfer/fileTransferInversionExtranjera.faces"></property>
+											<property name="roles">
+												<list>
+
+													<value>INT_CAPT_CONS_DALI</value>
+
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>
+
+												</list>
+											</property>
+										</bean>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="fideicomisos"></property>
+											<property name="etiqueta" value="Fideicomisos"></property>
+											<property name="roles">
+												<list>
+
+													<value>INDEVAL</value>
+
+													<value>INT_CAPT_CONS_DALI</value>
+													<value>INT_CONSULTA_DALI</value>
+
+													<value>INT_FIDE_BANAMEX</value>
+													<value>INT_FIDE_NAFINSA</value>
+													<value>INT_FIDE_INBURSA</value>
+													
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>
+
+												</list>
+											</property>
+											<property name="subElementosMenu">
+												<list>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="fideicomisoInstitucionActual"></property>
+														<property name="etiqueta" value="Consultar Fideicomiso"></property>
+														<property name="url" value="/dali-divint/fideicomiso/fideicomisoInstActual.faces"></property>
+														<property name="roles">
+															<list>
+																<value>INDEVAL</value>
+																<value>DEV_MODE_DALI</value>
+
+															</list>
+														</property>
+													</bean>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="fideicomisoBanamex"></property>
+														<property name="etiqueta" value="Fideicomiso Banamex"></property>
+														<property name="url" value="/dali-divint/fideicomiso/fideicomisoBanamex.faces"></property>
+														<property name="roles">
+															<list>
+
+																<value>INT_FIDE_BANAMEX</value>
+																<value>DEV_MODE_DALI</value>
+
+															</list>
+														</property>
+													</bean>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="fideicomisoNafinsa"></property>
+														<property name="etiqueta" value="Fideicomiso Nafinsa"></property>
+														<property name="url" value="/dali-divint/fideicomiso/fideicomisoNafinsa.faces"></property>
+														<property name="roles">
+															<list>
+
+																<value>INT_FIDE_NAFINSA</value>
+																<value>DEV_MODE_DALI</value>
+
+															</list>
+														</property>
+													</bean>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="fideicomisoInbursa"></property>
+														<property name="etiqueta" value="Fideicomiso Inbursa"></property>
+														<property name="url" value="/dali-divint/fideicomiso/fideicomisoInbursa.faces"></property>
+														<property name="roles">
+															<list>
+
+																<value>INT_FIDE_INBURSA</value>
+																<value>DEV_MODE_DALI</value>
+
+															</list>
+														</property>
+													</bean>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="topeCirculante"></property>
+														<property name="etiqueta" value="Comparaci\u00F3n de Tope y Circulante en el Fideicomiso"></property>
+														<property name="url" value="/dali-divint/divinternacional/consultaTopeCirculante.faces"></property>
+														<property name="roles">
+															<list>
+
+																<value>INT_CAPT_CONS_DALI</value>
+																<value>INT_CONSULTA_DALI</value>
+
+																<value>ESTADO_CUENTA</value>
+																<value>CONSULTAS_OPERACIONES</value>
+																<value>DEV_MODE_DALI</value>
+
+															</list>
+														</property>
+													</bean>
+												</list>
+											</property>
+										</bean>
+									</list>
+								</property>
+							</bean>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="sic"></property>
+								<property name="etiqueta" value="SIC"></property>
+								<property name="roles">
+									<list>
+
+										<value>INT_CAPT_CONS_DALI</value>
+										<value>INT_CONSULTA_DALI</value>
+
+										<value>ESTADO_CUENTA</value>
+										<value>CONSULTAS_OPERACIONES</value>
+										<value>DEV_MODE_DALI</value>
+
+                                        <value>INT_CAMBIO_BOVEDA</value>
+										<value>INT_AUTORIZA_SIC_RCP</value>
+
+									</list>
+								</property>
+								<property name="subElementosMenu">
+									<list>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="capturaOperaciones"></property>
+											<property name="etiqueta" value="Captura de Operaciones"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali-divint/divinternacional/capturaOperacionesDI.faces"></property>
+											<property name="roles">
+												<list>
+
+													<value>INT_CAPT_CONS_DALI</value>
+
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>
+
+												</list>
+											</property>
+										</bean>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="consultaOperaciones"></property>
+											<property name="etiqueta" value="Consulta de Operaciones"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali-divint/divinternacional/consultaOperacionesSIC.faces"></property>
+											<property name="roles">
+												<list>
+
+													<value>INT_CAPT_CONS_DALI</value>
+													<value>INT_CONSULTA_DALI</value>
+
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>
+                                                    <value>INT_CAMBIO_BOVEDA</value>
+                                                    
+													<value>INT_AUTORIZA_SIC_RCP</value>
+
+												</list>
+											</property>
+										</bean>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="fileTransferSIC"></property>
+											<property name="etiqueta" value="FileTransfer"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali-divint/fileTransfer/fileTransferTraspaso.faces"></property>
+											<property name="roles">
+												<list>
+
+													<value>INT_CAPT_CONS_DALI</value>
+
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>
+
+												</list>
+											</property>
+										</bean>
+                                        <bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+                                            <property name="id" value="fileTransferCB"></property>
+                                            <property name="etiqueta" value="FileTransfer Cambio de B\u00F3veda"></property>
+                                            <property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+                                            <property name="url" value="/dali-divint/fileTransferCB/fileTransferCambioBoveda.faces"></property>
+                                            <property name="roles">
+                                                <list>
+                                                    <value>INT_CAMBIO_BOVEDA</value>
+                                                </list>
+                                            </property>
+                                        </bean>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="consultaEmisiones"></property>
+											<property name="etiqueta" value="Consulta de Emisiones"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali-divint/consultaEmisiones/consultaEmisiones.faces"></property>
+											<property name="roles">
+												<list>
+
+													<value>INT_CAPT_CONS_DALI</value>
+													<value>INT_CONSULTA_DALI</value>
+
+													<value>ESTADO_CUENTA</value>
+													<value>CONSULTAS_OPERACIONES</value>
+													<value>DEV_MODE_DALI</value>
+                                                    <value>INT_CAMBIO_BOVEDA</value>
+
+												</list>
+											</property>
+										</bean>
+                                        <bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+                                            <property name="id" value="cambioEstadoCambioBoveda"></property>
+                                            <property name="etiqueta" value="Cambio Estados a Cambios de B\u00F3veda"></property>                                            
+                                            <property name="roles">
+                                                <list>
+                                                    <value>DEV_MODE_DALI</value>
+                                                    <value>INT_SIC_AUTORIZAR</value>
+                                                    <value>INT_CAMBIO_BOVEDA</value>
+                                                </list>
+                                            </property>
+                                            <property name="subElementosMenu">
+                                                <list>
+                                                    <bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+                                                        <property name="id" value="cambioEstadoCambioBovedaSolicitar"></property>
+                                                        <property name="etiqueta" value="Solicitar"></property>
+                                                        <property name="url" value="/dali-divint/divinternacional/cambiaEdoCambioBovSolicitar.faces"></property>
+                                                        <property name="roles">
+                                                            <list>
+                                                                <value>DEV_MODE_DALI</value>
+                                                                <value>INT_CAMBIO_BOVEDA</value>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+                                                    <bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+                                                        <property name="id" value="cambioEstadoCambioBovedaAutorizar"></property>
+                                                        <property name="etiqueta" value="Autorizar"></property>
+                                                        <property name="url" value="/dali-divint/divinternacional/cambiaEdoCambioBovAutorizar.faces"></property>
+                                                        <property name="roles">
+                                                            <list>
+                                                                 <value>DEV_MODE_DALI</value>
+                                                                 <value>INT_SIC_AUTORIZAR</value>                                                                                 
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+                                                    <bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+                                                        <property name="id" value="cambioEstadoCambioBovedaHistorial"></property>
+                                                        <property name="etiqueta" value="Historial"></property>
+                                                        <property name="url" value="/dali-divint/divinternacional/cambiaEdoCambioBovHistorial.faces"></property>
+                                                        <property name="roles">
+                                                            <list>
+                                                                 <value>DEV_MODE_DALI</value>
+                                                                 <value>INT_SIC_AUTORIZAR</value>
+                                                                 <value>INT_CAMBIO_BOVEDA</value>
+                                                            </list>
+                                                        </property>
+                                                    </bean>                                                                                                                                                                                             
+                                                </list>
+                                            </property>                                            
+                                        </bean>
+									</list>
+								</property>
+							</bean>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="pantallasInternas"></property>
+								<property name="etiqueta" value="Pantallas Internas"></property>
+								<property name="roles">
+									<list>
+
+										<value>INDEVAL</value>
+										<value>INT_CONCILIACION_SU</value>
+										<value>INT_CONCILIACION</value>
+										<value>INT_CARGAMULTIPLE_ADP</value>
+										<value>INT_CARGAMULTIPLE_AUT</value>
+										<value>INT_CARGAMULTIPLE_MEMP</value>
+										<value>DEV_MODE_DALI</value>
+										<value>INT_SIC_OPERADOR</value>
+                                        <value>INT_SIC_AUTORIZAR</value>
+										<value>INT_CON_MEN_HIST</value>
+										<value>INT_CSDR_OPERADOR</value>
+									</list>
+								</property>
+								<property name="subElementosMenu">
+									<list>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="admonCustodios"></property>
+											<property name="etiqueta" value="Administraci\u00F3n de Custodios"></property>
+											<property name="url" value="/dali-divint/administracion/admonCustodiosDepositantes.faces"></property>
+											<property name="roles">
+												<list>
+
+													<value>INDEVAL</value>
+
+													<value>DEV_MODE_DALI</value>
+
+												</list>
+											</property>
+										</bean>
+										<!-- Agregado para multidivisas-->
+										<!-- Consulta Saldo De Custodios Global-->
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="ConsultaSaldoDeCustodios"></property>
+											<property name="etiqueta" value="Consulta de Saldo de Custodios"></property>
+											<property name="url" value="/dali-divint/divinternacional/consultaSaldoCustodios.faces"></property>
+											<property name="roles">
+												<list>
+													<value>INDEVAL</value>
+													<value>DEV_MODE_DALI</value>
+													<value>INT_SALDO_CUSTODIO</value>
+												</list>
+											</property>
+										</bean>
+										<!-- Conciliaciones Internacional -->
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="conciliacionesInternacional"></property>
+											<property name="etiqueta" value="Conciliaciones Valores"></property>
+											<property name="roles">
+												<list>										
+													<value>INT_CONCILIACION_SU</value>
+													<value>INT_CONCILIACION</value>
+			
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+											<property name="subElementosMenu">
+												<list>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="conciliaciones"></property>
+														<property name="etiqueta" value="Conciliaciones"></property>
+														<property name="url" value="/dali-divint/conciliacionInternacional/conciliacionesInternacional.faces"></property>
+														<property name="roles">
+															<list>
+																<value>INT_CONCILIACION_SU</value>
+																<value>INT_CONCILIACION</value>
+			
+																<value>DEV_MODE_DALI</value>
+															</list>
+														</property>
+													</bean>
+			
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="detalleConciliacion"></property>
+														<property name="etiqueta" value="Consulta Detalle Conciliaciones"></property>
+														<property name="url" value="/dali-divint/conciliacionInternacional/consultaDetalleConciliacionInternacional.faces"></property>
+														<property name="roles">
+															<list>
+																<value>INT_CONCILIACION_SU</value>
+																<value>INT_CONCILIACION</value>
+						
+																<value>DEV_MODE_DALI</value>
+															</list>
+														</property>
+													</bean>
+												</list>
+											</property>
+										</bean>
+										<!-- Fin Conciliaciones Internacional -->
+										
+										<!-- Conciliaciones Efectivo -->
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="conciliacionesEfectivo"></property>
+											<property name="etiqueta" value="Conciliaciones Efectivo"></property>
+											<property name="roles">
+												<list>										
+													<value>CONCILIACION_EFECTIVO_SU</value>
+													<value>CONCILIACION_EFECTIVO</value>
+													<value>NOTIF_EFECTIVO_INT_SU</value>
+													<value>NOTIF_EFECTIVO_INT</value>
+													<value>CUENTA_EFECTIVO_INT</value>
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+											<property name="subElementosMenu">
+												<list>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="conciliacionEfectivo"></property>
+														<property name="etiqueta" value="Conciliaciones Efectivo"></property>
+														<property name="url" value="/dali-divint/conciliacionInternacional/conciliacionesEfectivo.faces"></property>
+														<property name="roles">
+															<list>
+																<value>CONCILIACION_EFECTIVO_SU</value>
+																<value>CONCILIACION_EFECTIVO</value>
+																<value>DEV_MODE_DALI</value>
+															</list>
+														</property>
+													</bean>
+			
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="detalleConciliacionEfectivo"></property>
+														<property name="etiqueta" value="Consulta Detalle Conciliaciones Efectivo"></property>
+														<property name="url" value="/dali-divint/conciliacionInternacional/consultaDetalleConciliacionEfectivo.faces"></property>
+														<property name="roles">
+															<list>
+																<value>CONCILIACION_EFECTIVO_SU</value>
+																<value>CONCILIACION_EFECTIVO</value>
+																<value>DEV_MODE_DALI</value>
+															</list>
+														</property>
+													</bean>
+													
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="notificaciones"></property>
+														<property name="etiqueta" value="Notificaciones de Efectivo"></property>
+														<property name="url" value="/dali-divint/conciliacionInternacional/confirmacionesInt.faces"></property>
+														<property name="roles">
+															<list>
+																<value>NOTIF_EFECTIVO_INT_SU</value>
+																<value>NOTIF_EFECTIVO_INT</value>
+																<value>DEV_MODE_DALI</value>
+															</list>
+														</property>
+													</bean>
+													
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="admonCuenta"></property>
+														<property name="etiqueta" value="Administraci\u00F3n de Cuentas Efectivo"></property>
+														<property name="url" value="/dali-divint/conciliacionInternacional/admonCuentaEfectivoInt.faces"></property>
+														<property name="roles">
+															<list>
+																<value>CUENTA_EFECTIVO_INT</value>
+																<value>DEV_MODE_DALI</value>
+															</list>
+														</property>
+													</bean>
+												</list>
+											</property>
+										</bean>
+										<!-- Fin Conciliaciones Efectivo -->
+										
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="topeCirculante"></property>
+											<property name="etiqueta" value="Conteo Autom\u00E1tico de Saldo"></property>
+											<property name="url" value="/dali-divint/conteoAutomaticoSaldo/conteoAutomaticoSaldos.faces"></property>
+											<property name="roles">
+												<list>
+
+													<value>INDEVAL</value>
+
+													<value>DEV_MODE_DALI</value>
+
+												</list>
+											</property>
+										</bean>
+										
+										<!-- Inicia multicarga Internacional  -->
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="multicargaInternacional"></property>
+											<property name="etiqueta" value="Carga M\u00FAltiple"></property>
+											<property name="roles">
+												<list>										
+													<value>INT_CARGAMULTIPLE_ADP</value>
+													<value>INT_CARGAMULTIPLE_AUT</value>
+													<value>INT_CARGAMULTIPLE_MEMP</value>													
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+											<property name="subElementosMenu">
+												<list>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="cargaAdp"></property>
+														<property name="etiqueta" value="Multicarga ADP"></property>
+														<property name="url" value="/dali-divint/cargaMultiple/multicargaAdp.faces"></property>
+														<property name="roles">
+															<list>
+																<value>INT_CARGAMULTIPLE_ADP</value>																
+																<value>DEV_MODE_DALI</value>
+															</list>
+														</property>
+													</bean>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="detalleConciliacion"></property>
+														<property name="etiqueta" value="Multiempresa"></property>
+														<property name="url" value="/dali-divint/cargaMultiple/multicargaMultiempresa.faces"></property>
+														<property name="roles">
+															<list>
+																<value>INT_CARGAMULTIPLE_MEMP</value>
+																<value>DEV_MODE_DALI</value>																														
+															</list>
+														</property>
+													</bean>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="autorizacion"></property>
+														<property name="etiqueta" value="Consola de Autorizaci\u00F3n"></property>
+														<property name="url" value="/dali-divint/cargaMultiple/consolaAutorizacion.faces"></property>
+														<property name="roles">
+															<list>
+																<value>INT_CARGAMULTIPLE_AUT</value>
+																<value>DEV_MODE_DALI</value>																
+															</list>
+														</property>
+													</bean>																																					
+												</list>
+											</property>
+										</bean>										
+										<!-- Fin multicarga Internacional -->										
+   
+                                        <bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+                                            <property name="id" value="cambioEdosSIC"></property>
+                                            <property name="etiqueta" value="Cambio Estados SIC"></property>                                            
+                                            <property name="roles">
+                                                <list>
+                                                    <value>DEV_MODE_DALI</value>							
+                                                    <value>INT_SIC_OPERADOR</value>
+                                                    <value>INT_SIC_AUTORIZAR</value>
+                                                </list>
+                                            </property>
+                                            <property name="subElementosMenu">
+												<list>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="cambioEdosSICOper"></property>
+														<property name="etiqueta" value="Solicitar"></property>
+														<property name="url" value="/dali-divint/divinternacional/cambiaEstadosSICOp.faces"></property>
+														<property name="roles">
+															<list>
+															    <value>DEV_MODE_DALI</value>	
+																<value>INT_SIC_OPERADOR</value>
+															</list>
+														</property>
+													</bean>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="cambioEdosSICAut"></property>
+														<property name="etiqueta" value="Autorizar"></property>
+														<property name="url" value="/dali-divint/divinternacional/cambiaEstadosSICAut.faces"></property>
+														<property name="roles">
+															<list>
+														 		 <value>DEV_MODE_DALI</value>	
+																 <value>INT_SIC_AUTORIZAR</value>																													
+															</list>
+														</property>
+													</bean>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="cambioEdosSICHistorial"></property>
+														<property name="etiqueta" value="Historial"></property>
+														<property name="url" value="/dali-divint/divinternacional/cambiaEstadosSICHistorial.faces"></property>
+														<property name="roles">
+															<list>
+														 		 <value>DEV_MODE_DALI</value>	
+																 <value>INT_SIC_AUTORIZAR</value>
+																 <value>INT_SIC_OPERADOR</value>																													
+															</list>
+														</property>
+													</bean>																																																
+												</list>
+											</property>                                            
+                                        </bean>
+                                       
+                                        <!-- Aministracion Custodios Beneficiarios -->
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="admonCustodiosBeneficiarios"></property>
+											<property name="etiqueta" value="Administraci\u00F3n de Custodios Beneficiarios"></property>
+											<property name="url" value="/dali-divint/custodios/admonCustodiosBeneficiarios.faces"></property>
+											<property name="roles">
+												<list>
+													<value>INDEVAL</value>
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+                                        
+                                        <!-- Autorizacion Custodios CSDR -->
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="admonCustodiosCSDR"></property>
+											<property name="etiqueta" value="Administraci\u00F3n Custodios Settlement Discipline Regime"></property>
+											<property name="url" value="/dali-divint/custodios/admonCustodiosCSDR.faces"></property>
+											<property name="roles">														
+												<list>
+													<value>INT_CSDR_OPERADOR</value>
+												</list>
+											</property>
+										</bean>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="fastwork"></property>
+											<property name="etiqueta" value="Mensajer\u00EDa Hist\u00F3rica"></property>
+											<property name="url" value="/dali-divint/divinternacional/consultaFastwork.faces"></property>
+											<property name="roles">
+												<list>
+													<value>INT_CON_MEN_HIST</value>
+												</list>
+											</property>
+										</bean>
+
+										<!-- Cuentas de Tesorería de Efectivo -->
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="cuentasTransitoriasEfectivo" />
+											<property name="etiqueta" value="Cuentas de Tesorer\u00EDa de Efectivo" />
+											<property name="url" value="/dali-divint/cuentasTransitoriasEfectivo/consultaCuentaTransitoriaEfectivo.faces" />
+											<property name="roles">
+												<list>
+													<value>INDEVAL</value>
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+										
+										<!-- File Transfer Cuenta Tesoreria Efectivo -->
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+                                            <property name="id" value="fileTransferCuentaEfectivoTesoreria"></property>
+                                            <property name="etiqueta" value="File Transfer Cuenta Tesorer\u00EDa Efectivo "></property>                                            
+                                            <property name="roles">
+                                                <list>
+                                                    <value>DEV_MODE_DALI</value>							
+                                                    <value>INT_SIC_OPERADOR</value>
+                                                    <value>INT_SIC_AUTORIZAR</value>
+                                                </list>
+                                            </property>
+                                            <property name="subElementosMenu">
+												<list>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="historial"></property>
+														<property name="etiqueta" value="Historial"></property>
+														<property name="url" value="/dali-divint/divinternacional/bitacoraFileTransfer.faces"></property>
+														<property name="roles">
+															<list>
+															    <value>DEV_MODE_DALI</value>	
+																<value>INT_SIC_OPERADOR</value>
+															</list>
+														</property>
+													</bean>																																																
+												</list>
+											</property>                                            
+                                        </bean>
+									</list>
+								</property>
+							</bean>
+
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="beneficiarios"></property>
+								<property name="etiqueta" value="Control de Beneficiarios"></property>
+								<property name="roles">
+									<list>
+										<value>INT_BEN_INDEVAL</value>
+										<value>INT_BEN_CAPT_CONS</value>
+										<value>INT_BEN_CONS</value>
+
+										<value>DEV_MODE_DALI</value>
+									</list>
+								</property>
+								<property name="subElementosMenu">
+									<list>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="beneficiariosConsulta"></property>
+											<property name="etiqueta" value="Consulta de Beneficiarios"></property>
+											<property name="url" value="/dali-divint/beneficiarios/consultaBeneficiarios.faces"></property>
+											<property name="roles">
+												<list>
+													<value>INT_BEN_INDEVAL</value>
+													<value>INT_BEN_CAPT_CONS</value>
+													<value>INT_BEN_CONS</value>
+
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="beneficiariosCaptura"></property>
+											<property name="etiqueta" value="Captura de Beneficiarios"></property>
+											<property name="url" value="/dali-divint/beneficiarios/capturaBeneficiarios.faces"></property>
+											<property name="roles">
+												<list>
+													<value>INT_BEN_INDEVAL</value>
+													<value>INT_BEN_CAPT_CONS</value>
+
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="beneficiariosHistorico"></property>
+											<property name="etiqueta" value="Bit\u00E1cora de Beneficiarios"></property>
+											<property name="url" value="/dali-divint/beneficiarios/historico/consultaHistoricaBeneficiarios.faces"></property>
+											<property name="roles">
+												<list>
+													<value>INT_BEN_INDEVAL</value>
+
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="fileTransferCapturaBeneficiarios"></property>
+											<property name="etiqueta" value="File Transfer Beneficiarios"></property>
+											<property name="url" value="/dali-divint/beneficiarios/filetransfer/fileTransferCapturaBene.faces"></property>
+											<property name="roles">
+												<list>
+													<value>INT_BEN_INDEVAL</value>
+													<value>INT_BEN_CAPT_CONS</value>
+
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+										<!-- File para cargar beneficiarios y actualizar estatus de forma masiva -->
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="fileCambioStatusBeneficiarios"></property>
+											<property name="etiqueta" value="Cambio de Estatus Beneficiarios"></property>
+											<property name="url" value="/dali-divint/beneficiarios/cargaStatus/cargaStatusBeneficiarios.faces"></property>
+											<property name="roles">
+												<list>
+													<value>INDEVAL</value>
+													<value>INT_BEN_INDEVAL</value>
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+										
+										<!-- Exportacion de beneficiarios -->
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="exportacionBeneficiarios"></property>
+											<property name="etiqueta" value="Exportaci\u00F3n de Beneficiarios"></property>
+											<property name="url" value="/dali-divint/beneficiarios/exportacionBeneficiarios/exportacionBeneficiarios.faces"></property>
+											<property name="roles">
+												<list>
+													<value>INDEVAL</value>
+													<value>INT_BEN_INDEVAL</value>
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+									</list>
+								</property>
+							</bean>
+
+
+					<!-- Derechos Emisiones Extranjeras -->
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="derechosEmisionesExtranjeras"></property>
+								<property name="etiqueta" value="Derechos Emisiones Extranjeras"></property>
+								<property name="roles">
+									<list>
+										<value>INT_CONSULTA_DALI</value>
+										<value>INT_CAPT_CONS_DALI</value>	
+										<value>INT_CAL_INDEVAL</value>
+										<value>INT_CAL_INDEVAL_SU</value>
+										<value>INT_BEN_INDEVAL</value>
+										<value>INT_BEN_INDEVAL_ADMIN</value>
+	                                    <value>INT_BEN_CAPT_CONS</value>
+	                                    <value>INT_BEN_CONS</value>
+	                                    <value>INT_EVCO_SU</value>
+										<value>INT_EVCO_AUT</value>
+										<value>INT_EVCO_OP</value>											
+										<value>DEV_MODE_DALI</value>
+										
+										<value>INT_CAL_CAP_CONS</value>
+										<value>INT_CAL_CAP_AUT</value>
+										<value>INT_CAL_CAP_OP</value>	
+									</list>
+								</property>
+								<property name="subElementosMenu">
+									<list>
+							<!-- Derechos Patrimoniales -->
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="derechosPatrimoniales"></property>
+											<property name="etiqueta" value="Derechos Patrimoniales"></property>
+								<property name="roles">
+									<list>
+										<value>INT_CONSULTA_DALI</value>
+										<value>INT_CAPT_CONS_DALI</value>	
+										<value>INT_CAL_INDEVAL</value>
+										<value>INT_CAL_INDEVAL_SU</value>
+										<value>INT_BEN_INDEVAL</value>
+										<value>INT_BEN_INDEVAL_ADMIN</value>
+                                        					<value>INT_BEN_CAPT_CONS</value>
+                                        					<value>INT_BEN_CONS</value>
+										<value>DEV_MODE_DALI</value>
+									</list>
+								</property>
+								<property name="subElementosMenu">
+									<list>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="derechosCapitales"></property>
+											<property name="etiqueta" value="Capitales"></property>
+											<property name="roles">
+												<list>
+													<value>INT_BEN_INDEVAL</value>
+													<value>INT_BEN_INDEVAL_ADMIN</value>
+			                                        <value>INT_BEN_CAPT_CONS</value>
+			                                        <value>INT_BEN_CONS</value>
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+											<property name="subElementosMenu">
+												<list>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="derechosConsulta"></property>
+														<property name="etiqueta" value="Consulta de Derechos"></property>
+														<property name="url" value="/dali-divint/derechos/consultaDerechos.faces"></property>								
+														<property name="roles">
+															<list>
+																<value>INT_BEN_INDEVAL</value>
+																<value>INT_BEN_INDEVAL_ADMIN</value>
+			                                                    <value>INT_BEN_CAPT_CONS</value>
+			                                                   	<value>INT_BEN_CONS</value>
+																<value>DEV_MODE_DALI</value>
+															</list>
+														</property>
+													</bean>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="fileTransferBeneficiariosDerechoInt"></property>
+														<property name="etiqueta" value="File Transfer Beneficiarios Derecho"></property>
+														<property name="url" value="/dali-divint/derechos/fileTransferBeneficiariosDerechoInt.faces"></property>								
+														<property name="roles">
+															<list>
+																<value>INT_BEN_INDEVAL</value>
+																<value>INT_BEN_INDEVAL_ADMIN</value>
+			                                                    							<value>INT_BEN_CAPT_CONS</value>
+																<value>DEV_MODE_DALI</value>
+															</list>
+														</property>
+													</bean>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="adminEmisionesInt"></property>
+														<property name="etiqueta" value="Admin. Emisiones Inter."></property>
+														<property name="url" value="/dali-divint/derechos/adminEmisionesDerechos.faces"></property>								
+														<property name="roles">
+															<list>
+																<value>INT_BEN_INDEVAL_ADMIN</value>
+																<value>INT_BEN_INDEVAL</value>                                                    
+															</list>
+														</property>
+													</bean>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="adminHorariosInt"></property>
+														<property name="etiqueta" value="Admin. Horarios Inter."></property>
+														<property name="url" value="/dali-divint/derechos/adminHorariosDerechos.faces"></property>								
+														<property name="roles">
+															<list>
+																<value>INT_BEN_INDEVAL_ADMIN</value>
+																<value>INT_BEN_INDEVAL</value>                                                    
+															</list>
+														</property>
+													</bean>																														
+													<!-- Consultas Historicas Derechos de Capital -->
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="derechosConsulta"></property>
+														<property name="etiqueta" value="Consulta Derechos Pagados de Beneficiarios"></property>
+														<property name="url" value="/dali-divint/derechos/consultaDetalleEjerDerCap.faces"></property>								
+														<property name="roles">
+															<list>
+																<value>INT_BEN_INDEVAL</value>
+																<value>INT_BEN_INDEVAL_ADMIN</value>
+			                                                    <value>INT_BEN_CAPT_CONS</value>
+			                                                   	<value>INT_BEN_CONS</value>
+																<value>DEV_MODE_DALI</value>
+															</list>
+														</property>
+													</bean>
+                                                    <bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="derechosConsultaCuenta"></property>
+														<property name="etiqueta" value="Consulta Derechos Pagados Por Cuenta"></property>
+														<property name="url" value="/dali-divint/derechos/consultaDetalleEjerDerCapCuenta.faces"></property>								
+														<property name="roles">
+															<list>
+																<value>INT_BEN_INDEVAL</value>
+																<value>INT_BEN_INDEVAL_ADMIN</value>
+			                                                    <value>INT_BEN_CAPT_CONS</value>
+			                                                   	<value>INT_BEN_CONS</value>
+																<value>DEV_MODE_DALI</value>
+															</list>
+														</property>
+													</bean>
+							
+													
+													
+													
+																				
+									</list>
+								</property>
+							</bean>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="derechosDeuda"></property>
+											<property name="etiqueta" value="Deuda"></property>
+											<property name="roles">
+												<list>
+													<value>INT_CAL_INDEVAL</value>
+													<value>INT_CAL_INDEVAL_SU</value>
+													<value>INT_CONSULTA_DALI</value>
+													<value>INT_CAPT_CONS_DALI</value>													
+													<value>INT_BEN_INDEVAL</value>
+													<value>INT_BEN_INDEVAL_ADMIN</value>
+													<value>INT_BEN_CAPT_CONS</value>
+													<value>INT_BEN_CONS</value>
+													<value>DEV_MODE_DALI</value>
+													
+												</list>
+											</property>
+											<property name="subElementosMenu">
+												<list>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="calendarioDerechosInt"></property>
+														<property name="etiqueta" value="Calendario Indeval"></property>
+														<property name="url" value="/dali-divint/ejercicioDerechosInt/calendarioEmisionesDeudaExt.faces"></property>
+														<property name="roles">
+															<list>
+																<value>INT_CAL_INDEVAL</value>
+																<value>INT_CAL_INDEVAL_SU</value>
+																<value>DEV_MODE_DALI</value>
+															</list>
+														</property>
+													</bean>
+													<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+														<property name="id" value="calendarioDerechosInt"></property>
+														<property name="etiqueta" value="Calendario"></property>
+														<property name="url" value="/dali-divint/ejercicioDerechosInt/calendarioEmisionesDeudaExtNormal.faces"></property>
+														<property name="roles">
+															<list>
+																<value>INT_CAPT_CONS_DALI</value>	
+																<value>INT_CONSULTA_DALI</value>
+																<value>INT_CAL_INDEVAL</value>
+																<value>INT_CAL_INDEVAL_SU</value>
+																<value>DEV_MODE_DALI</value>
+															</list>
+														</property>
+													</bean>
+												</list>
+											</property>
+										</bean>
+						</list>
+					</property>
+				</bean>
+				<!--FIN Derechos Patrimoniales -->
+				<!-- Eventos Corporativos -->
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+									<property name="id" value="eventosCorporativos"></property>
+									<property name="etiqueta" value="Eventos Corporativos"></property>
+									<property name="roles">
+										<list>
+											<value>INT_EVCO_SU</value>
+											<value>INT_EVCO_AUT</value>
+											<value>INT_EVCO_OP</value>
+											<value>INT_CONSULTA_DALI</value>
+											<value>INT_CAPT_CONS_DALI</value>	
+											<value>DEV_MODE_DALI</value>
+										</list>
+									</property>
+									<property name="subElementosMenu">
+										<list>
+											<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+												<property name="id" value="consultaEventoCorpIndeval"></property>
+												<property name="etiqueta" value="Consulta Eventos Corporativos Indeval"></property>
+												<property name="url" value="/dali-divint/eventosCorporativos/consultaEventosCorporativosIndeval.faces"></property>
+												<property name="roles">
+													<list>
+														<value>INT_EVCO_SU</value>
+														<value>INT_EVCO_AUT</value>
+														<value>INT_EVCO_OP</value>
+														<value>DEV_MODE_DALI</value>
+													</list>
+												</property>
+											</bean>
+											<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+												<property name="id" value="consultaEventoCorp"></property>
+												<property name="etiqueta" value="Consulta Eventos Corporativos"></property>
+												<property name="url" value="/dali-divint/eventosCorporativos/consultaEventosCorporativos.faces"></property>
+												<property name="roles">
+													<list>
+														<value>INT_CONSULTA_DALI</value>
+														<value>INT_CAPT_CONS_DALI</value>
+														<value>INT_EVCO_SU</value>
+														<value>INT_EVCO_AUT</value>
+														<value>INT_EVCO_OP</value>
+														<value>DEV_MODE_DALI</value>
+													</list>
+												</property>
+											</bean>
+										</list>
+									</property>									
+								</bean>
+					<!-- FIN EVENTOS CORPORATIVOS -->
+								<!-- Catalogos -->
+											<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+												<property name="id" value="catalogos"></property>
+												<property name="etiqueta" value="Cat\u00E1logos"></property>
+												<property name="roles">
+													<list>
+														<value>INT_EVCO_SU</value>
+														<value>INT_EVCO_AUT</value>
+														<value>INT_EVCO_OP</value>															
+														<value>INT_EVCO_LISTAS</value>														
+														<value>DEV_MODE_DALI</value>
+													</list>
+												</property>
+												<property name="subElementosMenu">
+													<list>
+														<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+															<property name="id" value="consultaEventoCorp"></property>
+															<property name="etiqueta" value="Tipo Derecho Eventos Corporativos"></property>
+															<property name="url" value="/dali-divint/eventosCorporativos/catalogos/consultaTiposDerecho.faces"></property>
+															<property name="roles">
+																<list>														
+																	<value>INT_EVCO_SU</value>
+																	<value>INT_EVCO_AUT</value>
+																	<value>INT_EVCO_OP</value>
+																	<value>DEV_MODE_DALI</value>
+																</list>
+															</property>
+														</bean>
+														<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+															<property name="id" value="personas" />
+															<property name="etiqueta" value="Personas" />
+															<property name="url" value="/dali-divint/eventosCorporativos/catalogos/personas.faces" />
+															<property name="roles">
+																<list>														
+																	<value>INT_EVCO_SU</value>
+																	<value>INT_EVCO_AUT</value>
+																	<value>INT_EVCO_OP</value>
+																	<value>INT_EVCO_LISTAS</value>	
+																	<value>DEV_MODE_DALI</value>
+																</list>
+															</property>
+														</bean>
+														<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+															<property name="id" value="listasDistribucion" />
+															<property name="etiqueta" value="Lista de Distribuci\u00F3n" />
+															<property name="url" value="/dali-divint/eventosCorporativos/catalogos/consultaListasDistribucion.faces" />
+															<property name="roles">
+																<list>														
+																	<value>INT_EVCO_SU</value>
+																	<value>INT_EVCO_AUT</value>
+																	<value>INT_EVCO_OP</value>
+																	<value>DEV_MODE_DALI</value>
+																</list>
+															</property>
+														</bean>
+													</list>
+												</property>
+											</bean>
+											<!-- Fin Catalogos  -->
+					<!-- MENU PRUEBA PARA LEGISLACION SIC-->
+
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="leg_sic"></property>
+								<property name="etiqueta" value="Calendario Capitales"></property>
+								<property name="roles">
+									<list>
+										<value>INT_CAL_CAP_CONS</value>
+										<value>INT_CAL_CAP_AUT</value>
+										<value>INT_CAL_CAP_OP</value>								
+									</list>
+								</property>
+								<property name="subElementosMenu">
+									<list>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="calCapitalesInt"></property>
+											<property name="etiqueta" value="Calendario Capitales Internacional Indeval"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali-divint/calendarioCapitalesDistribucion/calendarioCapitales.faces"></property>
+											<property name="roles">
+												<list>
+													<value>INT_CAL_CAP_OP</value>
+													<value>INT_CAL_CAP_AUT</value>													
+												</list>
+											</property>
+										</bean>
+										
+										<!-- Opción de consulta para pantalla Calendario Capitales Internacional -->
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="calCapitalesInt"></property>
+											<property name="etiqueta" value="Calendario Capitales Internacional"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali-divint/calendarioCapitalesDistribucion/calendarioCapitalesConsulta.faces"></property>
+											<property name="roles">
+												<list>													
+													<value>INT_CAL_CAP_OP</value>
+													<value>INT_CAL_CAP_CONS</value>
+													<value>INT_CAL_CAP_AUT</value>
+												</list>
+											</property>
+										</bean>
+										
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="histCapitalesInt"></property>
+											<property name="etiqueta" value="Hist\u00F3rico de Capitales Internacional"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali-divint/calendarioCapitalesDistribucion/calendarioHistoricoCapitales.faces"></property>
+											<property name="roles">
+												<list>
+													<value>INT_CAL_CAP_OP</value>
+													<value>INT_CAL_CAP_AUT</value>													
+												</list>
+											</property>
+										</bean>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="histCapitalesInt"></property>
+											<property name="etiqueta" value="Env\u00EDo de Mensajes Capitales Internacional"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali-divint/calendarioCapitalesDistribucion/envioMensajesCapitales.faces"></property>
+											<property name="roles">
+												<list>
+													<value>INT_CAL_CAP_OP</value>
+													<value>INT_CAL_CAP_AUT</value>													
+												</list>
+											</property>
+										</bean>																								
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="histCapitalesInt"></property>
+											<property name="etiqueta" value="Consulta Emisiones Capitales"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali-divint/calendarioCapitalesDistribucion/consultaEmisiones.faces"></property>
+											<property name="roles">
+												<list>
+													<value>INT_CAL_CAP_OP</value>
+													<value>INT_CAL_CAP_AUT</value>											
+												</list>
+											</property>
+										</bean>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="histCapitalesInt"></property>
+											<property name="etiqueta" value="Consulta Autorizaciones"></property>
+											<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+											<property name="url" value="/dali-divint/calendarioCapitalesDistribucion/consultaMensajesAutorizadosLegislacion.faces"></property>
+											<property name="roles">
+												<list>
+													<value>INT_CAL_CAP_OP</value>
+													<value>INT_CAL_CAP_AUT</value>																				
+												</list>
+											</property>
+										</bean>
+									</list>
+								</property>
+							</bean>
+	<!--  FIN MODULO DE PRUEBA LEGISLACION -->
+			
+							</list>
+						</property>
+					</bean>
+			<!-- FIN Derechos Emisiones Extranjeras -->		
+
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="statements"></property>
+								<property name="etiqueta" value="Statements"></property>
+								<property name="roles">
+									<list>
+										<value>INT_BEN_INDEVAL</value>
+										<value>INT_BEN_CAPT_CONS</value>
+										<value>INT_BEN_CONS</value>
+
+										<value>DEV_MODE_DALI</value>
+									</list>
+								</property>
+								<property name="subElementosMenu">
+									<list>
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="statementsCarga"></property>
+											<property name="etiqueta" value="Carga de Statements"></property>
+											<property name="url" value="/dali-divint/statements/fileTransferStatement.faces"></property>
+											<property name="roles">
+												<list>
+													<value>INT_BEN_INDEVAL</value>
+
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="archivosStatements"></property>
+											<property name="etiqueta" value="Archivos Cargados"></property>
+											<property name="url" value="/dali-divint/statements/consultaArchivosStatements.faces"></property>
+											<property name="roles">
+												<list>
+													<value>INT_BEN_INDEVAL</value>
+
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+
+										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+											<property name="id" value="statementsConsulta"></property>
+											<property name="etiqueta" value="Consulta de Statements"></property>
+											<property name="url" value="/dali-divint/statements/consultaStatements.faces"></property>
+											<property name="roles">
+												<list>
+													<value>INT_BEN_INDEVAL</value>
+													<value>INT_BEN_CAPT_CONS</value>
+													<value>INT_BEN_CONS</value>
+
+													<value>DEV_MODE_DALI</value>
+												</list>
+											</property>
+										</bean>
+
+									</list>
+								</property>
+							</bean>	
+							
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="consultaCustodiosDepositantes"></property>
+								<property name="etiqueta" value="Consulta Custodios Depositantes"></property>
+								<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+								<property name="url" value="/dali-divint/custodiosDepositantes/custodiosDepositantes.faces"></property>
+								<property name="roles">
+									<list>
+										<value>INT_CAPT_CONS_DALI</value>
+										<value>INT_CONSULTA_DALI</value>
+										<value>ESTADO_CUENTA</value>
+										<value>CONSULTAS_OPERACIONES</value>
+										<value>DEV_MODE_DALI</value>
+                                        <value>INT_CAMBIO_BOVEDA</value>
+									</list>
+								</property>
+							</bean>				
+						</list>
+					</property>
+				</bean>
+				<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+					<property name="id" value="menuIndeval"></property>
+					<property name="etiqueta" value="Indeval"></property>
+					<property name="roles">
+						<list>
+							<value>INDEVAL</value>
+							<value>DEV_MODE_DALI</value>
+							
+							<value>AUTORIZADOR</value>
+						</list>
+					</property>
+					<property name="subElementosMenu">
+						<list>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="consultaBitacoraEnvioOp"></property>
+								<property name="etiqueta" value="Consulta de Bitacora de Operaciones"></property>
+								<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+								<property name="url" value="/dali/indeval/envioOperaciones/consultaBitacoraEnvOp.faces"></property>
+								<property name="roles">
+									<list>
+										<value>INDEVAL</value>
+										<value>DEV_MODE_DALI</value>
+									</list>
+								</property>
+							</bean>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="depositoDivisas"></property>
+								<property name="etiqueta" value="Dep\u00F3sito de Divisas"></property>
+								<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+								<property name="url" value="/dali/indeval/depositoDivisas.faces"></property>
+								<property name="roles">
+									<list>
+										<value>TESORERIA_INDEVAL</value>
+										<value>DEV_MODE_DALI</value>
+									</list>
+								</property>
+							</bean>
+
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="fileTransferDepositoDivisas"/>
+								<property name="etiqueta" value="File Transfer Dep\u00F3sito de Divisas"/>
+								<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"/>
+								<property name="url" value="/dali/tesoreria/fileTransfer/fileTransfer.faces"/>
+								<property name="roles">
+									<list>
+										<value>TESORERIA_INDEVAL</value>
+										<value>DEV_MODE_DALI</value>
+									</list>
+								</property>
+							</bean>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="mensajePortal"></property>
+								<property name="etiqueta" value="Mensaje del Portal"></property>
+								<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+								<property name="url" value="/dali/indeval/mensajePortal.faces"></property>
+								<property name="roles">
+									<list>
+										<value>INT_CAP_MEN_PORTAL</value>
+										<value>DEV_MODE_DALI</value>
+									</list>
+								</property>
+							</bean>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="conciliacionModulos"></property>
+								<property name="etiqueta" value="Conciliaci\u00F3n entre M\u00F3dulos"></property>
+								<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+								<property name="url" value="/dali/indeval/conciliacionModulos/conciliacionModulos.faces"></property>
+								<property name="roles">
+									<list>
+										<value>INDEVAL</value>
+										<value>INDEVAL_REENVIO</value>
+									</list>
+								</property>
+							</bean>
+							<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+								<property name="id" value="consultaTareas"></property>
+								<property name="etiqueta" value="Bandeja de Tareas"></property>
+								<property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+								<property name="url" value="/dali/indeval/tareas/consultaTareas.faces"></property>
+								<property name="roles">
+									<list>
+										<value>AUTORIZADOR</value>
+									</list>
+								</property>
+							</bean>
+						</list>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+</beans>

@@ -1,0 +1,909 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+	
+		<ui:define name="tituloEncabezado">
+
+		</ui:define>
+		<ui:define name="head">			
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/eventosCorporativos.js">
+			</script>
+		</ui:define>
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.eventosCorporativos}" />
+		</ui:define>
+
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.consultaEventosCorporativosIndeval}"></h:outputText>
+		</ui:define>
+
+
+
+		<ui:define name="criterios">
+
+			<h:outputText value="#{eventosCorporativosBean.init}" />
+			<a4j:keepAlive beanName="eventosCorporativosBean" />		
+			
+			<h:panelGroup id="mensajeUsuario">
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+				
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+				</div>
+			</h:panelGroup>
+			<!-- Criterios de Busqueda -->
+			<h:panelGroup id="panelCriterios">				
+				<div style="display:  #{eventosCorporativosBean.consultaExterna == false? 'inline' : 'none'}" id="divCriterios">
+					<table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+						align="center">
+						<tr>							
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.tv}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.emisoraMinus}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.serieMinus}" />
+										</td>
+										
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.isin}" />
+										</td>
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.folioMinus}" />
+										</td>
+									</tr>
+									<tr align="center">
+										<td>
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="tipoValor"
+													value="#{eventosCorporativosBean.tipoValor}" size="7"
+													maxlength="4" styleClass="textoControles campoAlphaNumerico textoMayusculas" tabindex="20" />
+											</h:panelGroup>
+										</td>
+										<td>
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="emisora" size="7" maxlength="7"
+													value="#{eventosCorporativosBean.emisora}"
+													required="false" styleClass="textoControles campoAlphaNumericoEmisora textoMayusculas" tabindex="30" />
+											</h:panelGroup>
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="serie"
+												value="#{eventosCorporativosBean.serie}" size="7"
+												maxlength="6" styleClass="textoControles campoAlphaNumericoSerie textoMayusculas" tabindex="40" />
+										</td>
+										
+										<td>
+											<h:inputText autocomplete="off" id="isin"
+												value="#{eventosCorporativosBean.isin}" size="12"
+												maxlength="12" styleClass="textoControles campoAlphaNumerico textoMayusculas" tabindex="60" />
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="folio"
+												value="#{eventosCorporativosBean.idEventoCorporativo}" size="12"
+												maxlength="12" styleClass="textoControles campoNumerico textoMayusculas" tabindex="60" />
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr>
+									<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.custodio}" />
+										</td>
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.tipoEvento}" />
+										</td>
+										
+										
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.estado}" />
+										</td>
+																				
+									</tr>
+									<tr>
+										
+										<td align="center">
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{eventosCorporativosBean.custodio}" tabindex="140" >
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+												<f:selectItems value="#{eventosCorporativosBean.custodios}" />												
+											</h:selectOneMenu>
+											
+										</td>
+										<td align="center">
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{eventosCorporativosBean.tipoEvento}" tabindex="140" >
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+												<f:selectItems value="#{eventosCorporativosBean.tiposEvento}" />												
+											</h:selectOneMenu>											
+										</td>	
+											
+										<td align="center">
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{eventosCorporativosBean.estado}" tabindex="140" >
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+												<f:selectItems value="#{eventosCorporativosBean.estados}" />												
+											</h:selectOneMenu>											
+										</td>	
+																											
+									</tr>
+								</table>
+							</td>
+
+						</tr>
+						<tr>							
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr align="center">
+										<td nowrap="true">
+											<h:outputText styleClass="texto" value="#{etq.fechaCreacion}" />
+										</td>
+										<td nowrap="true">
+											<h:outputText styleClass="texto" value="#{etq.fechaRegistro}" />
+										</td>
+										
+										
+									</tr>
+									<tr align="center">
+										<td>											
+											<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+										       value="#{eventosCorporativosBean.fechaCreacionInicio}"
+										       datePattern="dd/MM/yyyy" tabindex="120" />
+										       
+										       <rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+										       value="#{eventosCorporativosBean.fechaCreacionFin}"
+										       datePattern="dd/MM/yyyy" tabindex="120" />
+											
+										</td>
+										<td>
+											<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+										       value="#{eventosCorporativosBean.fechaRegistroInicio}"
+										       datePattern="dd/MM/yyyy" tabindex="130" />
+										       
+										     <rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+										       value="#{eventosCorporativosBean.fechaRegistroFin}"
+										       datePattern="dd/MM/yyyy" tabindex="130" />
+										</td>
+										
+																			
+									</tr>							
+
+								</table>
+							</td>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr>
+										
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.fechaLimiteParticipante}" />
+										</td>	
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.fechaLimiteIndeval}" />
+										</td>									
+									</tr>
+									<tr>
+										
+										<td align="center">											
+											<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+										       value="#{eventosCorporativosBean.fechaClienteInicio}"
+										       datePattern="dd/MM/yyyy" tabindex="130" />
+										       
+										     <rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+										       value="#{eventosCorporativosBean.fechaClienteFin}"
+										       datePattern="dd/MM/yyyy" tabindex="130" />
+											
+										</td>
+										<td align="center">
+											<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+										       value="#{eventosCorporativosBean.fechaIndevalInicio}"
+										       datePattern="dd/MM/yyyy" tabindex="120" />
+										       
+										       <rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+										       value="#{eventosCorporativosBean.fechaIndevalFin}"
+										       datePattern="dd/MM/yyyy" tabindex="120" />
+										</td>													
+									</tr>
+									
+								</table>
+							</td>
+
+						</tr>
+						<tr>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr align="center">
+										<td nowrap="true">
+											<h:outputText styleClass="texto" value="#{etq.fechaPago}" />
+											
+										</td>
+										
+										
+									</tr>
+									<tr align="center">
+										<td align="center">
+											
+											<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+										       value="#{eventosCorporativosBean.fechaPagoInicio}"
+										       datePattern="dd/MM/yyyy" tabindex="130" />							       
+										      
+											<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+										       value="#{eventosCorporativosBean.fechaPagoFin}"
+										       datePattern="dd/MM/yyyy" tabindex="130" />
+										</td>
+										
+										
+																			
+									</tr>							
+
+								</table>
+							</td>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr align="center">
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="#{etq.tipoMercadoMinus}" />
+										</td>
+										<td nowrap="true">
+											<h:outputText styleClass="texto" value="#{etq.tipoDerechoMO}" />
+										</td>
+										<td nowrap="true">
+											<h:outputText styleClass="texto" value="#{etq.tipoDerechoML}" />
+										</td>
+										
+									</tr>
+									<tr align="center">	
+										<td align="center">
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{eventosCorporativosBean.tipoMercado}" tabindex="140" >
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+												<f:selectItems value="#{eventosCorporativosBean.tiposMercado}" />												
+											</h:selectOneMenu>											
+										</td>									
+										<td>
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{eventosCorporativosBean.tipoDerechoMO}" tabindex="140" >
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+												<f:selectItems value="#{eventosCorporativosBean.tiposDerechoMO}" />												
+											</h:selectOneMenu>
+										</td>
+										<td>
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{eventosCorporativosBean.tipoDerechoML}" tabindex="140" >
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+												<f:selectItems value="#{eventosCorporativosBean.tiposDerechoML}" />												
+											</h:selectOneMenu>
+										</td>																			
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</h:panelGroup>
+			<!-- Fin Criterios de Busqueda -->
+			
+			<!-- Resumen -->
+			<h:panelGroup id="panelResumen">
+				<h:panelGroup rendered="#{eventosCorporativosBean.consultaEjecutada}">
+					<div id="divResumen" style="display: #{eventosCorporativosBean.consultaEjecutada ? 'inline':'none'}">
+						<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+							<tr>
+								<td class="recuadroTabla">
+									<table class="tablaCriterios texto" border="0" style="text-align: center">
+										
+										<tr>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.tv}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.emisoraMinus}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.serieMinus}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.isin}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.folioMinus}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.custodio}" />
+											</td>	
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.tipoEvento}" />
+											</td>										
+											<td align="center">
+												<h:outputText styleClass="texto" value="Estado" />
+											</td>	
+																					
+										</tr>
+										<tr align="center">
+											<td>
+												<h:panelGroup>
+													<h:outputText styleClass="texto textoMayusculas" value="#{eventosCorporativosBean.tipoValor}" rendered="#{!empty eventosCorporativosBean.tipoValor}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{empty eventosCorporativosBean.tipoValor}"/>
+												</h:panelGroup>
+											</td>
+											<td>
+												<h:panelGroup>
+													<h:outputText styleClass="texto textoMayusculas" value="#{eventosCorporativosBean.emisora}" rendered="#{!empty eventosCorporativosBean.emisora}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty eventosCorporativosBean.emisora}"/>
+												</h:panelGroup>
+											</td>
+											<td>
+												<h:outputText styleClass="texto textoMayusculas" value="#{eventosCorporativosBean.serie}" rendered="#{!empty eventosCorporativosBean.serie}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty eventosCorporativosBean.serie}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto textoMayusculas" value="#{eventosCorporativosBean.isin}" rendered="#{!empty eventosCorporativosBean.isin}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{empty eventosCorporativosBean.isin}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{eventosCorporativosBean.idEventoCorporativo}" rendered="#{!empty eventosCorporativosBean.idEventoCorporativo}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{empty eventosCorporativosBean.idEventoCorporativo}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{eventosCorporativosBean.selectedCustodio}" rendered="#{!empty eventosCorporativosBean.custodio and eventosCorporativosBean.custodio ne '-1'}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{ eventosCorporativosBean.custodio eq '-1'}"/>
+											</td>	
+											<td>
+												<h:outputText styleClass="texto" value="#{eventosCorporativosBean.selectedTipoEvento}" rendered="#{!empty eventosCorporativosBean.tipoEvento and eventosCorporativosBean.tipoEvento ne '-1'}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{empty eventosCorporativosBean.tipoEvento or eventosCorporativosBean.tipoEvento eq '-1'}"/>
+											</td>											
+											<td>
+												<h:outputText styleClass="texto" value="#{eventosCorporativosBean.selectedEstado}" rendered="#{!empty eventosCorporativosBean.estado and eventosCorporativosBean.estado ne '-1'}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{empty eventosCorporativosBean.estado or eventosCorporativosBean.estado eq '-1'}"/>
+											</td>
+																					
+											
+										</tr>
+										<tr>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.fechaCreacion}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.fechaRegistro}" />
+											</td>
+											
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.fechaLimiteParticipante}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.fechaLimiteIndeval}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.fechaPago}" />
+											</td>											
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.tipoMercadoMinus}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.tipoDerechoMO}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.tipoDerechoML}" />
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<h:outputText styleClass="texto" value="#{empty eventosCorporativosBean.fechaCreacionInicioF ? 'NA' : eventosCorporativosBean.fechaCreacionInicioF} - #{empty eventosCorporativosBean.fechaCreacionFinF ? 'NA' : eventosCorporativosBean.fechaCreacionFinF }" rendered="#{!empty eventosCorporativosBean.fechaCreacionInicioF or !empty eventosCorporativosBean.fechaCreacionFinF}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty eventosCorporativosBean.fechaCreacionInicioF and empty eventosCorporativosBean.fechaCreacionFinF}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{empty eventosCorporativosBean.fechaRegistroInicioF ? 'NA' : eventosCorporativosBean.fechaRegistroInicioF} - #{empty eventosCorporativosBean.fechaRegistroFinF ? 'NA' : eventosCorporativosBean.fechaRegistroFinF }" rendered="#{!empty eventosCorporativosBean.fechaRegistroInicioF or !empty eventosCorporativosBean.fechaRegistroFinF}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty eventosCorporativosBean.fechaRegistroInicio and empty eventosCorporativosBean.fechaRegistroFin}"/>
+											</td>
+											
+											<td>
+												<h:outputText styleClass="texto" value="#{empty eventosCorporativosBean.fechaClienteInicioF ? 'NA' : eventosCorporativosBean.fechaClienteInicioF} - #{empty eventosCorporativosBean.fechaClienteFinF ? 'NA' : eventosCorporativosBean.fechaClienteFinF }" rendered="#{!empty eventosCorporativosBean.fechaClienteInicioF or !empty eventosCorporativosBean.fechaClienteFinF}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty eventosCorporativosBean.fechaClienteInicioF and empty eventosCorporativosBean.fechaClienteFinF}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{empty eventosCorporativosBean.fechaIndevalInicioF ? 'NA' : eventosCorporativosBean.fechaIndevalInicioF} - #{empty eventosCorporativosBean.fechaIndevalFinF ? 'NA' : eventosCorporativosBean.fechaIndevalFinF }" rendered="#{!empty eventosCorporativosBean.fechaIndevalInicioF or !empty eventosCorporativosBean.fechaIndevalFinF}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty eventosCorporativosBean.fechaIndevalInicioF and empty eventosCorporativosBean.fechaIndevalFinF}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{empty eventosCorporativosBean.fechaPagoInicioF ? 'NA' : eventosCorporativosBean.fechaPagoInicioF} - #{empty eventosCorporativosBean.fechaPagoFinF ? 'NA' : eventosCorporativosBean.fechaPagoFinF }" rendered="#{!empty eventosCorporativosBean.fechaPagoInicioF or !empty eventosCorporativosBean.fechaPagoFinF}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty eventosCorporativosBean.fechaPagoInicio and empty eventosCorporativosBean.fechaPagoFin}"/>
+											</td>
+											
+											<td>
+												<h:outputText styleClass="texto" value="#{eventosCorporativosBean.selectedMercado}" rendered="#{!empty eventosCorporativosBean.tipoMercado and eventosCorporativosBean.tipoMercado ne '-1'}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{ eventosCorporativosBean.tipoMercado eq '-1'}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{eventosCorporativosBean.selectedTipoDerechoMO}" rendered="#{!empty eventosCorporativosBean.tipoDerechoMO and eventosCorporativosBean.tipoDerechoMO ne '-1'}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{ eventosCorporativosBean.tipoDerechoMO eq '-1'}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{eventosCorporativosBean.selectedTipoDerechoML}" rendered="#{!empty eventosCorporativosBean.tipoDerechoML and eventosCorporativosBean.tipoDerechoML ne '-1'}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{ eventosCorporativosBean.tipoDerechoML eq '-1'}"/>
+											</td>
+										</tr>										
+									</table>							
+								</td>
+							</tr>								
+						</table>															
+					</div>
+				</h:panelGroup>
+				<!-- Fin Resumen -->
+			</h:panelGroup>
+		</ui:define>
+		
+		
+		
+		<ui:define name="botones">
+		<!-- Botones -->
+			<h:panelGroup id="botones">				
+				<div class="refrescar" style="float: left;">
+	        		 <a4j:status id="commonStatus">
+						<f:facet name="start">
+							<h:panelGroup>
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								<h:outputText value="#{etq.buscando}"></h:outputText>
+							</h:panelGroup>
+						</f:facet>
+					</a4j:status> 	
+	        	</div>
+				<div class="limpiar">
+					<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+						styleClass="submit" 
+						onclick="limpiarTodos();"
+						actionListener="#{eventosCorporativosBean.limpiar}" 
+						tabindex="8"/>
+				</div>
+				<div class="buscar">
+					<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+						styleClass="submit"
+						oncomplete='javascript:presentarResumen();limpiarTodos()'
+						actionListener="#{eventosCorporativosBean.buscarDerechos}"
+						reRender="containerResultados,totalesConsultas,tablaResultados,botones,mensajeUsuario,panelResumen"
+						tabindex="7">
+                        <f:setPropertyActionListener value="true"
+                                                     target="#{eventosCorporativosBean.banderaBitacoraConsulta}" />
+					</a4j:commandButton>
+				</div>
+				<div class="editar" style="display:#{consultaEmisionesBean.consultaEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios">            
+	            	<input type="image" class="submit"
+						src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+						alt="Editar Criterios" title="Editar Criterios"
+						onclick='presentarCriterios();limpiarTodos();return false;' />                      	
+	           	</div>
+	           	<div class="nuevoEvento">
+					<h:commandButton id="botonNuevoEvento" value="Crear Evento Corporativo"
+						styleClass="submit" 
+						onclick="limpiarTodos();"
+						action="capturaEventoCorporativo" 
+						tabindex="8"/>
+				</div>
+				<div align="center">
+						<h:outputText style="color: blue; font-weight:bold; " value="*Acción realizada con éxito,  Folio Evento Corporativo : #{eventosCorporativosBean.consultaExternaFolio}" rendered="#{eventosCorporativosBean.consultaExterna}" />
+				</div>
+           	</h:panelGroup>
+           	<!-- Fin Botones -->
+           	<h:panelGroup>
+           		<ol style="font-size:9px; color:#498FED; font-weight: bold">           		
+				<li><h:outputText value="La fecha de pago será efectiva siempre y cuando el custodio haya confirmado y acreditado lo correspondiente al evento corporativo." style="font-size:9px; color:#498FED; font-weight: bold" /></li>					
+				
+				<li><h:outputText value="La fecha límite cliente no indica las fechas límite de las opciones, favor de consultar el detalle del evento." style="font-size:9px; color:#498FED; font-weight: bold" /></li>
+				
+				<li><h:outputText value="El horario corresponde a tiempo de México." style="font-size:9px; color:#498FED; font-weight: bold" /></li>
+				</ol>
+           	</h:panelGroup>
+		</ui:define>
+
+		
+
+		<ui:define name="seccionContenido">			
+			<h:panelGroup id="containerResultados">
+			<!-- RESULTADOS -->
+				<h:panelGroup rendered="#{eventosCorporativosBean.consultaEjecutada}">
+					<t:dataTable id="noExistenResultados"
+						value="#{eventosCorporativosBean.paginaVO.registros}"
+						styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+						footerClass="tituloTabla" border="0" cellpadding="3px"
+						cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos"
+						rendered="#{empty eventosCorporativosBean.paginaVO.registros}">
+
+						<t:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.sinResultados}"></h:outputText>
+							</f:facet>							
+						</t:column>
+					</t:dataTable>
+				</h:panelGroup>
+					<br/>
+					<br/>
+					<br/>
+					<h:panelGroup id="tablaResultados">						
+						<h:graphicImage value="/images/blank.gif" width="900px"
+							height="1px"></h:graphicImage>
+					<!-- Navegacion -->
+					<h:panelGroup
+							rendered="#{not empty eventosCorporativosBean.paginaVO.registros}">
+							<table width="100%" border="0">
+								<tr>
+									<td align="left" class="textoEstadoCuenta">
+										<a4j:commandLink id="control_bitacora_primero"
+											action="#{eventosCorporativosBean.irPrimeraPagina}"
+											rendered="#{eventosCorporativosBean.irAlPrimero}"
+											reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,containerResultados">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_atras_fast"
+											action="#{eventosCorporativosBean.retrocederPaginasRapido}"
+											rendered="#{eventosCorporativosBean.retrocederRapido}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_atras"
+											action="#{eventosCorporativosBean.retrocederPagina}"
+											rendered="#{eventosCorporativosBean.retroceder}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+												border="0" />
+										</a4j:commandLink>
+										<a4j:commandLink id="control_bitacora_adelante"
+											action="#{eventosCorporativosBean.avanzarPagina}"
+											rendered="#{eventosCorporativosBean.avanzar}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_adelante_fast"
+											action="#{eventosCorporativosBean.avanzarPaginasRapido}"
+											rendered="#{eventosCorporativosBean.avanzarRapido}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+												border="0" />
+
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_ultimo"
+											action="#{eventosCorporativosBean.irUltimaPagina}"
+											rendered="#{eventosCorporativosBean.irAlUltimo}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<br />
+										<h:outputText value="#{etq.mostrando}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{eventosCorporativosBean.numeroPagina}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+										<h:outputText value="#{eventosCorporativosBean.totalPaginas}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+										&#160;&#160;&#160;
+										<h:outputText
+											value="#{eventosCorporativosBean.paginaVO.totalRegistros}"
+											styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+										&#160;
+										<h:outputText styleClass="textoResumen"
+											value="#{etq.registrosEncontrados}" />
+									</td>
+									<td align="right" class="textoEstadoCuenta">
+										<h:outputText escape="false" value="#{etq.registrosPorPagina}"
+											styleClass="textoResumen" />
+										<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+											value="#{eventosCorporativosBean.paginaVO.registrosXPag}">
+											<f:selectItem itemLabel="1" itemValue="1" />
+											<f:selectItem itemLabel="2" itemValue="2" />
+											<f:selectItem itemLabel="5" itemValue="5" />
+											<f:selectItem itemLabel="10" itemValue="10" />
+											<f:selectItem itemLabel="20" itemValue="20" />
+											<f:selectItem itemLabel="50" itemValue="50" />											
+											<a4j:support event="onchange"
+												reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,mensajeUsuario"
+												action="#{eventosCorporativosBean.ejecutarConsulta}" >
+                                            </a4j:support>
+										</h:selectOneMenu>&#160;&#160;&#160;&#160;&#160;
+									</td>
+								</tr>
+							</table>
+						</h:panelGroup>		
+					<!-- Resultados consulta -->
+						<h:panelGroup
+							rendered="#{not empty eventosCorporativosBean.paginaVO.registros}">
+							<h:dataTable id="resultados"
+							value="#{eventosCorporativosBean.paginaVO.registros}"
+							var="detalle"
+							rendered="#{not empty eventosCorporativosBean.paginaVO.registros}"
+							styleClass="tablaGeneral centrado" headerClass="tituloTabla" width="100%"
+							footerClass="texto textoPeque12" border="0" cellpadding="3px"
+							cellspacing="0px" columnClasses="everyColumn"
+							rowClasses="renglonTablaUno, renglonTablaDos">
+								<!-- FOLIO -->
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.folioMinus}" />
+									</f:facet>
+									<h:outputLink 
+									value="#{facesContext.externalContext.requestContextPath}/eventosCorporativos/modificacion/modificaEventoCorporativo.faces"
+									onclick="sendFolio(#{detalle.idEventoCorporativo});">
+										<f:param name="idEvco" value="#{detalle.idEventoCorporativo}"/>
+									<h:outputText styleClass="texto textoPeque12" value="#{detalle.idEventoCorporativo}" />
+									</h:outputLink>
+									<h:inputHidden id="folioConciliacion" value="#{edicionEventoCorporativoBean.idEvco}"/>
+								</h:column>
+								<!-- TIPO MERCADO -->
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.tipoMercadoMinus}" />
+									</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{detalle.tipoMercado.codigo}" />
+								</h:column>
+								<!-- TIPO DERECHO MERCADO LOCAL -->
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.tipoDerechoML}" />
+									</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{detalle.tipoDerechoML.tipoDerecho}" />
+								</h:column>
+								<!-- TIPO DERECHO MERCADO ORIGEN -->
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.tipoDerechoMO}" />
+									</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{detalle.tipoDerechoMO.tipoDerecho}" />
+								</h:column>
+								<!-- TIPO EVENTO -->
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.tipoEvento}" />
+									</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{detalle.tipoEvento.descripcion}" />
+								</h:column>
+								<!-- FECHA CREACION -->
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaCreacion}" />
+									</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{detalle.fechaCreacion}"  >
+									 	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Mexico/General" />
+									 </h:outputText>
+								</h:column>
+								<!-- FECHA REGISTRO -->
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaRegistro}" />
+									</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{detalle.fechaRegistro}"  >
+									 	<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Mexico/General" />
+									 </h:outputText>
+								</h:column>
+								<!-- FECHA PAGO -->
+								<h:column >
+									<f:facet name="header">
+										<h:panelGroup>
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaPago}" />
+										<h:outputText style="font-size:9px; color:#FFFFFF; font-weight: bold" value=" 1" />
+										</h:panelGroup>
+									</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{detalle.fechaPago}"  >
+									 	<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Mexico/General" />
+									 </h:outputText>
+								</h:column>
+								<!-- FECHA LIMITE CLIENTE -->
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaLimiteCliente}" />
+									</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{detalle.fechaCliente}"  >
+									 	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Mexico/General" />
+									 </h:outputText>
+								</h:column>
+								<!-- FECHA LIMITE INDEVAL -->
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaLimiteIndeval}" />
+									</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{detalle.fechaIndeval}"  >
+									 	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Mexico/General" />
+									 </h:outputText>
+								</h:column>
+								<!-- TV EMISORA SERIE -->
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.tipoValorEmisoraSerie}" />
+									</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{detalle.tipoValor}/#{detalle.emisora}/#{detalle.serie}"  />									 	
+								</h:column>
+								<!-- TV EMISORA ISIN -->
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.isin}" />
+									</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{detalle.isin}"  />									 	
+								</h:column>
+								<!-- CUSTODIO-->
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.custodio}" />
+									</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{detalle.custodio.codigoBanco}"  />									 	
+								</h:column>
+								<!-- RESUMEN-->
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="Resumen" />
+									</f:facet>
+									<a href="javascript:verResumen(#{detalle.idEventoCorporativo},#{eventosCorporativosBean.isConsultaIndeval});">                          	                       
+                             			<h:graphicImage value="/images/search.png"></h:graphicImage>
+                             		</a> 								 	
+								</h:column>
+								<!-- VISTA PARTICIPANTE-->
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="Vista Participante" />
+									</f:facet>
+									<a href="javascript:verParticipanteBitacora(#{detalle.idEventoCorporativo},#{eventosCorporativosBean.isConsultaIndeval});">                          	                       
+                             			<h:graphicImage value="/images/search.png"></h:graphicImage>
+                             		</a> 								 	
+								</h:column>
+								<!-- CONTROL CAMBIOS-->
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="Control Cambios" />
+									</f:facet>
+									 <a href="javascript:verControlDeCambios(#{detalle.idEventoCorporativo});">                         	                       
+                             			<h:graphicImage value="/images/search.png"></h:graphicImage>	
+                             		</a>								 	
+								</h:column>
+								<!-- ESTADO -->
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="#{etq.estado}" />
+									</f:facet>
+									<h:panelGroup>
+										<h:outputText styleClass="texto textoPeque12" value="#{detalle.estado.estado}"  />
+										<br/>
+										<h:outputText styleClass="texto textoPeque12 " style="color:blue" value="¡Actualizado!" rendered="#{detalle.actualizado}"/>
+									</h:panelGroup>									 	
+								</h:column>
+								<!-- ESTADO Cambiar -->
+								<h:column >
+									<f:facet name="header">
+										<h:panelGroup>
+											<table>
+												<tr> <td>
+												<a4j:commandButton id="botonEjecutar" value="Ejecutar"
+													styleClass="submit"		
+													onclick="this.disabled=true;getCambiosEstado();if(!confirmaEjecutar()){this.disabled=false;return false;}"	
+													oncomplete="this.disabled=false;presentarCriterios();limpiarTodos();"																				
+													actionListener="#{eventosCorporativosBean.ejecutarCambioEstado}"
+													reRender="containerResultados,totalesConsultas,tablaResultados,botones,mensajeUsuario,panelResumen"
+													tabindex="7">											
+												</a4j:commandButton>
+												</td> </tr>
+												<tr> <td>
+													 <h:selectOneMenu styleClass="textoControles" id="estadoSeleccionCombo"
+													 tabindex="140" onchange="cambiarComboAll(this);">
+														<f:selectItem itemValue="-1" itemLabel="Selecciona" />
+														<f:selectItems value="#{eventosCorporativosBean.estados}" />												
+													</h:selectOneMenu> 
+												</td> </tr>
+											</table>
+										</h:panelGroup>
+									</f:facet>									
+										<h:selectOneMenu styleClass="textoControles" id="slc_none"
+										 tabindex="140"
+										 onfocus="ponNombreId(this,#{detalle.idEventoCorporativo});"										 
+										 onchange="ponNombreId(this,#{detalle.idEventoCorporativo});"
+										 rendered ="#{(((detalle.estado.idEstado >=2 and detalle.estado.idEstado ne 6 and detalle.estado.idEstado ne 7)and !empty detalle.estados) or (!empty sessionScope.roles['INT_EVCO_AUT'] and !empty detalle.estados) or !empty sessionScope.roles['INT_EVCO_SU'] )}">
+											<f:selectItem itemValue="-1" itemLabel="Selecciona" />
+											<f:selectItems value="#{!empty sessionScope.roles['INT_EVCO_SU'] ? eventosCorporativosBean.estados : detalle.estados}" />																					
+										</h:selectOneMenu> 								 	
+								</h:column>
+							</h:dataTable>
+						</h:panelGroup>
+							<h:inputHidden id="cambiosEstado_H" value ="#{eventosCorporativosBean.idsEstados}"/>
+							<!-- ================================= EXPORTAR ============================================================ -->
+							<h:panelGroup id="totalesConsultas"
+								rendered="#{not empty eventosCorporativosBean.paginaVO.registros}">					
+							<table cellpadding="0" cellspacing="0" border="0" align="center"
+								width="900px">
+								<tr align="right">
+									<td align="right">
+										<h:panelGroup id="botonesExportar">
+											<h:panelGroup
+												style="display: #{(eventosCorporativosBean.consultaEjecutada and not empty eventosCorporativosBean.paginaVO.registros)? 'inline' : 'none'}">
+		
+												<h:outputText value="Exportar los resultados"></h:outputText>
+												
+												<h:commandButton actionListener="#{eventosCorporativosBean.generarReportes}"
+													action="eventosCorporativosIndevalPDF"
+													image="/images/pdf.gif"
+													title="Exportar a PDF todos los resultados de la consulta"
+													id="generarPdf"
+													onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);" />
+		                           				&#160;&#160;
+		
+		                          				<h:commandButton actionListener="#{eventosCorporativosBean.generarReportes}"
+		                          					action="eventosCorporativosIndevalXLS"
+		                          					image="/images/excel-file.gif"
+		                          					title="Exportar a Excel todos los resultados de la consulta" 
+		                            				id="generarExcel"
+		                            				onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);" >
+		                           				</h:commandButton>
+		                           				<div id="monitorPeticionReporte" style="display: none;">
+													<h:panelGroup id="panelMonitorPeticionReporte">
+														<h:graphicImage value="/images/ajax-loader.gif" />
+														&#160;&#160;
+														<h:outputText value="#{etq.reporteEnProceso}" />
+														<a4j:commandButton id="btnActualizarEstadoPeticion"
+															image="/images/transparent.gif"
+															styleClass="submit"
+															actionListener="#{eventosCorporativosBean.actualizarEstadoPeticion}"
+															reRender="panelMonitorPeticionReporte"
+															oncomplete="desbloquearBotonesReportes(#{eventosCorporativosBean.peticionReporteCompleta}, ['generarExcel', 'generarPdf']);"/>
+													</h:panelGroup>
+												</div>
+											</h:panelGroup>
+										</h:panelGroup>
+		
+									</td>
+								</tr>
+							</table>
+							</h:panelGroup>
+							<!-- ================================= FIN EXPORTAR ============================================================ -->
+					</h:panelGroup>
+					
+					</h:panelGroup>
+		</ui:define>
+
+
+	</ui:composition>
+
+
+	<!-- FIN DEL DECORATE -->
+</html>

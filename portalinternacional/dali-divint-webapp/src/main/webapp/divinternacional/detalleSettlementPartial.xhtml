@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutPopUpDetalleSic.xhtml">
+	<ui:define name="head">
+            <link rel="stylesheet" type="text/css" media="all"
+                  href="#{facesContext.externalContext.requestContextPath}/css/beneficiarioActivo.css" />
+                  
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/consultaOperacionesSic.js"></script>
+				
+        </ui:define>
+        <ui:define name="titulo">
+		<b>Consulta Liquidaciones Parciales</b>
+        </ui:define>
+	
+	<ui:define name="body">
+	<h:outputText value="#{consultaOperacionesBean.detalleLiqParcial}" />
+	<a4j:keepAlive beanName="consultaOperacionesBean" />
+	<h:panelGroup id="mensajeUsuario">
+		<div style="min-height: 21px;">						
+			<rich:messages warnClass="warning" infoClass="info"
+				errorClass="error" ajaxRendered="true" showDetail="false"
+				showSummary="true" layout="list">
+				<f:facet name="infoMarker">
+					<h:panelGroup>
+						<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+				</f:facet>
+
+				<f:facet name="errorMarker">
+					<h:panelGroup>
+						<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+				</f:facet>
+			</rich:messages>
+		
+			<div id="divWarnings" class="warning" style="display:none;">
+				<p id="textoWarning">										
+				</p>
+			</div>
+		</div>
+	</h:panelGroup>
+	<h:form id="daliForm" >
+		<table align="left"  width="900px" border="0" cellpadding="5px" cellspacing="0px" >
+			<tr>
+				<td>
+					<table align="left" width="900px" border="0" cellpadding="3px" cellspacing="0px" style="tablaCriterios">
+						<tr>
+			  				<td class="tituloTabla" colspan="8" align="left"><h:outputText value="#{etq.liquidacionesParciales}"  styleClass="textoNegritas  textoMayusculas" style="font-size:10px;"/></td>
+			  			</tr>
+		    		</table>
+		    	</td>
+			</tr>
+			<tr>
+				<td>
+				<h:panelGroup id="containerResultados">
+					<h:panelGroup rendered="#{consultaOperacionesBean.consultaEjecutada and not empty consultaOperacionesBean.paginaVO.registros and consultaOperacionesBean.detalleLiquidacionParcial.idEstatusOperacion ne '9'}">
+						<div align="right">
+							<a4j:commandButton id="conMensajeParcial" value="#{etq.conMensaje}"
+								actionListener="#{consultaOperacionesBean.actualizarParcialidades}"
+								reRender="containerResultados, tablaResultados, mensajeUsuario"
+								onclick="deshabilitarBoton('conMensajeParcial');deshabilitarBoton('sinMensajeParcial');deshabilitarBoton('cancelaRemanente');"
+								oncomplete="habilitarBoton('conMensajeParcial');habilitarBoton('sinMensajeParcial');habilitarBoton('cancelaRemanente');">
+								<a4j:actionparam value="true" assignTo="#{consultaOperacionesBean.conMensajeParcial}" />	
+							</a4j:commandButton>
+							<a4j:commandButton id="sinMensajeParcial" value="#{etq.sinMensaje}"
+								actionListener="#{consultaOperacionesBean.actualizarParcialidades}"
+								reRender="containerResultados, tablaResultados, mensajeUsuario"
+								onclick="deshabilitarBoton('sinMensajeParcial');deshabilitarBoton('conMensajeParcial');deshabilitarBoton('cancelaRemanente');"
+								oncomplete="habilitarBoton('sinMensajeParcial');habilitarBoton('conMensajeParcial');habilitarBoton('cancelaRemanente');" >							
+							</a4j:commandButton>
+						</div>
+					</h:panelGroup>
+		  			<h:panelGroup id="tablaResultados">						
+							<h:dataTable id="resultados"
+								value="#{consultaOperacionesBean.paginaVO.registros}"
+								var="detalle"
+								rendered="#{not empty consultaOperacionesBean.paginaVO.registros}"
+								styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+								footerClass="tituloTabla" border="0" cellpadding="3px"
+								cellspacing="0px" columnClasses="everyColumn"
+								rowClasses="renglonTablaUno, renglonTablaDos">
+	
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.folioControl}" />
+								</f:facet>	
+								<h:outputText styleClass="texto textoPeque12" value="#{detalle.folioControlLiquidacion}" />
+							</h:column>
+<!-- 							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.instruccionLiquidacion}" />
+								</f:facet>	
+								<h:outputText styleClass="texto textoPeque12" value="#{detalle.idInstruccionLiquidacion}" />
+							</h:column>
+ -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaHoraLiquidacionRVEX}" />
+								</f:facet>	
+								<h:outputText styleClass="texto textoPeque12" value="#{detalle.fechaLiquidacion}" converter="formatoFechaLargaConverter" />
+								<f:facet name="footer">
+									<h:panelGroup>
+										<h:outputText style="font-weight: bold;" value="#{etq.totalParcialidades}" />
+									</h:panelGroup>
+								</f:facet>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.parcialLiquidado}" />
+								</f:facet>	
+								<h:outputText styleClass="texto textoPeque12" value="#{detalle.parcialLiquidado}">
+									<f:convertNumber pattern="#{common.formatoEntero}"/>
+								</h:outputText>
+								<f:facet name="footer">
+									<h:panelGroup>
+										<h:outputText style="font-weight: bold; white-space:nowrap;" value="#{consultaOperacionesBean.paginaVO.valores['totalMonto']}">
+											<f:convertNumber pattern="#{common.formatoEntero}"/>
+										</h:outputText>
+									</h:panelGroup>
+								</f:facet>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.remanente}" />
+								</f:facet>	
+								<h:outputText styleClass="texto textoPeque12" converter="formatoEnteroConverter" value="#{detalle.remanente}">
+									<f:convertNumber pattern="#{common.formatoEntero}"/>
+								</h:outputText>
+								<f:facet name="footer">
+									<h:panelGroup>
+										<h:outputText style="font-weight: bold; white-space:nowrap;" value="#{consultaOperacionesBean.detalleLiquidacionParcial.remanenteOperacion}">
+											<f:convertNumber pattern="#{common.formatoEntero}"/>
+										</h:outputText>
+									</h:panelGroup>
+								</f:facet>
+							</h:column>
+							<h:column rendered="#{consultaOperacionesBean.detalleLiquidacionParcial.tipoOperacionSic eq '541'}">
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.importeOperadoLiqParcial}" />
+								</f:facet>	
+								<h:outputText styleClass="texto textoPeque12" converter="formatoMonedaChileConverter" value="#{detalle.parcialLiquidadoEfectivo}" />
+								<f:facet name="footer">
+									<h:panelGroup>
+										<h:outputText style="font-weight: bold; white-space:nowrap;" 
+											converter="formatoMonedaChileConverter" value="#{consultaOperacionesBean.paginaVO.valores['totalMontoEfectivo']}" />
+									</h:panelGroup>
+								</f:facet>
+							</h:column>
+							<h:column rendered="#{consultaOperacionesBean.detalleLiquidacionParcial.tipoOperacionSic eq '541'}">
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.remanenteEfectivo}" />
+								</f:facet>	
+								<h:outputText styleClass="texto textoPeque12" converter="formatoMonedaChileConverter" value="#{detalle.remanenteEfectivo}" />
+								<f:facet name="footer">
+									<h:panelGroup>
+										<h:outputText style="font-weight: bold; white-space:nowrap;" 
+												converter="formatoMonedaChileConverter"  value="#{consultaOperacionesBean.detalleLiquidacionParcial.remanenteEfectivoOperacion}" />
+									</h:panelGroup>
+								</f:facet>
+							</h:column>							
+<!-- 							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.liquidacionParcial}" />
+								</f:facet>	
+								<h:outputText styleClass="texto textoPeque12" value="#{detalle.numeroLiquidacion}" />
+							</h:column> -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.estatusParcialidad}" />
+								</f:facet>	
+								<h:outputText styleClass="texto textoPeque12" value="#{detalle.estatusOperacion.descEstatusOperacion}" />
+							</h:column>
+	                        <h:column>                              
+	                            <f:facet name="header">
+	                                <h:panelGroup>                                  
+	                                    <h:outputText styleClass="texto textoPeque12" value="#{etq.liberarParcialidad}" /><br />
+	                                    <h:selectBooleanCheckbox value="false" onclick="liberarTodasParcialidades(this);" />                                        
+	                                </h:panelGroup>
+	                            </f:facet>
+	                            <h:panelGroup>                            	                                  
+	                               <h:selectBooleanCheckbox value="#{detalle.libera}"
+	                                   styleClass="liberaParcialidad_#{detalle.numeroLiquidacion}_#{detalle.folioControl}"
+	                                   disabled="#{detalle.estatusOperacion.idEstatusOperacion ne '18'}"
+	                                   onclick="quitarMarca('cancelaParcialidad_#{detalle.numeroLiquidacion}_#{detalle.folioControl}')" />
+	                                   <script language="javascript">
+	                                   		checkLiberaParcialidad[iLiberaParcialidad++] = $j(".liberaParcialidad_#{detalle.numeroLiquidacion}_#{detalle.folioControl}");                                            
+	                                   </script> 
+	                            </h:panelGroup>
+	                            <h:panelGroup>
+	                            </h:panelGroup>
+								<f:facet name="footer">
+									<h:panelGroup rendered="#{not empty consultaOperacionesBean.detalleLiquidacionParcial.remanenteOperacion and consultaOperacionesBean.detalleLiquidacionParcial.remanenteOperacion ne '0' and consultaOperacionesBean.detalleLiquidacionParcial.idEstatusOperacion ne '9' and consultaOperacionesBean.detalleLiquidacionParcial.idEstatusOperacion ne '20' and consultaOperacionesBean.detalleLiquidacionParcial.idEstatusOperacion ne '23'}">
+										<a4j:commandButton id="cancelaRemanente" value="#{etq.cancelaRemanente}"
+											actionListener="#{consultaOperacionesBean.cancelaRemanente}"
+											reRender="containerResultados, tablaResultados, mensajeUsuario"
+											onclick=";deshabilitarBoton('cancelaRemanente');deshabilitarBoton('conMensajeParcial');deshabilitarBoton('sinMensajeParcial');"
+											oncomplete="habilitarBoton('cancelaRemanente');habilitarBoton('conMensajeParcial');habilitarBoton('sinMensajeParcial');">							
+										</a4j:commandButton>
+	                               	</h:panelGroup>
+	                            </f:facet>
+	                        </h:column>
+						</h:dataTable>
+		  			</h:panelGroup>
+		  		</h:panelGroup>
+				</td>
+			</tr>	
+			<tr>
+				<td>
+				<table align="left" width="900px" border="0" cellpadding="3px" cellspacing="0px" style="tablaCriterios">
+			 		<tr align="right">
+			 			<td align="right" width="700px"></td>
+			  			<td  align="right" >
+			  			<h:form>
+							<h:panelGroup id="botonesExportar"  rendered="#{not empty consultaOperacionesBean.paginaVO.registros}">
+											<h:outputText value="Exportar los resultados" ></h:outputText>
+											<h:commandButton
+											    actionListener="#{consultaOperacionesBean.generaReportes}"
+												action="detalleLiqParcialPDF"
+												image="/images/pdf.gif"
+												title="Exportar a PDF todos los resultados de la consulta"
+												id="generarPdf"/>
+	                           				&#160;&#160;
+	
+	                          				<h:commandButton
+											    actionListener="#{consultaOperacionesBean.generaReportes}"
+	                          					action="detalleLiqParcialXls"
+	                          					image="/images/excel-file.gif"
+	                          					title="Exportar a Excel todos los resultados de la consulta" 
+	                            				id="generarExcel">
+	                           				</h:commandButton>
+								</h:panelGroup>				
+							</h:form>	
+			  			</td>
+			  		</tr>
+			  	</table> 
+				</td>
+			</tr>	
+		</table>
+	</h:form>
+	</ui:define>
+  </ui:composition>
+</html>

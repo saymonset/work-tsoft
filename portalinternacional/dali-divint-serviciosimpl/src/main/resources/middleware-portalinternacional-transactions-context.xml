@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+  <description>
+    AplicationContext de configuracion de los servicios de Seguridad.
+  </description>
+
+   <bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
+    	<property name="transactionManagerName" value="java:jboss/TransactionManager"/>
+    	<property name="userTransactionName" value="java:jboss/UserTransaction" />    	
+	</bean>
+
+  <tx:advice id="txAdviceInternacional" transaction-manager="transactionManager">
+  	<tx:attributes>
+ 
+        <!-- metodos de file transfer de cambio de boveda -->
+        <tx:method name="getFileTransfer" read-only="true" propagation="NOT_SUPPORTED" />
+        <tx:method name="crearFileTransfer" read-only="true" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="salvarFileTransferCambioBoveda" read-only="false" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="cancelarFileTransfer" read-only="false" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="salvarEntregaCBEnBitacoraOperaciones" read-only="false" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception" />
+
+        <!-- metodos de cambio de boveda a emisiones sin posicion -->
+        <tx:method name="realizarCambioDeBoveda" read-only="false" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception" />
+  		<tx:method name="*" read-only="true"
+  			propagation="NOT_SUPPORTED" />
+  		 	
+        <tx:method name="grabaOperacion" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="insertaOperacionSIC" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        
+        <!-- tx:method name="actualizaOperacionSIC" read-only="false" propagation="REQUIRED" rollback-for="java.lang.Exception" / -->
+        
+        <tx:method name="altaEmision" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="altaDepositante" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="altaCustodio" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="almacenaInformacion" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="cancelaProceso" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="grabaInformacion" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="updateSicEmision" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="cancelaSicEmision" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="updateDepositante" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="cancelaDepositante" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />                                     		
+        <tx:method name="updateCustodio" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="cancelaCustodio" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="obtainLock" read-only="false"
+  			propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+  		<tx:method name="updateProcessInfo" read-only="false"
+  			propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+  		<tx:method name="releaseLock" read-only="false"
+  			propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+  		<tx:method name="insertaBeneficiario" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="agregaBeneficiarioInstitucion" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="activarBeneficiario" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="preAutorizaBeneficiario" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+		<tx:method name="actualizaBeneficiario" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+		<tx:method name="eliminaBeneficiario" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+		<tx:method name="cancelaBeneficiario" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+		<tx:method name="asignaAdpBeneficiario" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+		<tx:method name="eliminaInstitucionBeneficiario" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+		<tx:method name="copiaNombreRazonSocial" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+		<tx:method name="guardaStatement" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+		<tx:method name="borraArchivo" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="deleteBeneficiarioDerecho" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+		<tx:method name="agregaBeneficiarioDerecho" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="actualizaPosicionBeneficiario" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />
+		<tx:method name="agregaBeneficiariosDerecho" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception" />            
+		  
+        <tx:method name="agregaBeneficiarioDefault" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>                    
+        <tx:method name="eliminarEmisionSinBenef" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        <tx:method name="eliminarHorario" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        <tx:method name="agregarEmisionSinBenef" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        <tx:method name="agregarHorario" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        <tx:method name="actualizarEmisionSinBenef" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        <tx:method name="actualizarHorario" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>        
+		<tx:method name="guardaFactorSimulacion" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+		<tx:method name="guardaCarga" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+		<tx:method name="eliminaCargaExistente" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>                                                                                                            
+		<tx:method name="migracionNombre" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        <tx:method name="instruyeMensajeRetiro" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        <tx:method name="depurarFormatosFiscalesBeneficiarios" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        <tx:method name="modificaPorcentajeRetencion" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>  
+        <tx:method name="guardaRegistrosMulticargaAdp" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        <tx:method name="guardaRegistrosMulticargaMultiempresa" read-only="false"
+        	propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        <tx:method name="borrarRegistroMulticarga" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/> 
+        <tx:method name="autorizarRegistroMulticarga" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        <tx:method name="asignaValorAdpNuloBeneficiario" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        <tx:method name="eliminaInstitucionBeneficiarioMulticarga" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>    
+        <tx:method name="guardaCuentaEfectivoInt" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>   
+        <tx:method name="actualizaCuentaEfectivoInt" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        <tx:method name="guardarComentario" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        <tx:method name="actualizaComentarioDetalle" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>                                                                                                                                                             
+		<tx:method name="guardaCargaTemporal" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        <tx:method name="insertaInformacionTemporal" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/> 
+        <tx:method name="guardaBeneficiarios" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/> 
+        <tx:method name="eliminaCargaExistente" read-only="false"
+            propagation="REQUIRED" rollback-for="java.lang.Exception"/>  
+        <tx:method name="saveEventoCorporativo" read-only="false"
+        	propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        <tx:method name="saveTipoDerecho" read-only="false"
+        	propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+         <tx:method name="cambiarEstado" read-only="false"
+        	propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        <tx:method name="updateEventoCorporativo" read-only="false"
+        	propagation="REQUIRED" rollback-for="java.lang.Exception"/>    	
+        	<tx:method name="deleteAdjunto" read-only="false"
+        	propagation="REQUIRED" rollback-for="java.lang.Exception"/> 
+        <tx:method name="cambioEstadoReglasNegocio" read-only="false"
+        	propagation="REQUIRED" rollback-for="java.lang.Exception"/>  	
+        <tx:method name="guardarLista" read-only="false"
+        	propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+       	<tx:method name="insertaCambioEstatusOperador" read-only="false"
+        	propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+       	<tx:method name="cancelaSolicitudBitacoraSic" read-only="false"
+        	propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+       	<tx:method name="actualizaOperacionSICAutorizador" read-only="false"
+        	propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+       	<tx:method name="actualizaOperacionSICAutorizadorParcialidades" read-only="false"
+        	propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+       	<tx:method name="updateStatusOperacionWithParcialidad" read-only="false"
+        	propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+   	 	<tx:method name="actualizaMotivoCambioBitacoraSic" read-only="false"
+        	propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        
+		<tx:method name="procesaEnvioLegMoi" read-only="false"
+        	propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        <tx:method name="procesaAutorizacionEnvioMoiSic" read-only="false"
+        	propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+       	<tx:method name="guardarNarrrativa" read-only="false"
+       		propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+       	<tx:method name="actualizaNarrrativa" read-only="false"
+       		propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+	    <tx:method name="guardaAssetManager" read-only="false"
+		    propagation="REQUIRED" rollback-for="java.lang.Exception" />	
+	    <tx:method name="eliminaAssetManager" read-only="false"
+		    propagation="REQUIRED" rollback-for="java.lang.Exception" />
+		<tx:method name="eliminaNarrrativa" read-only="false"
+		    propagation="REQUIRED" rollback-for="java.lang.Exception" />
+    	<tx:method name="eliminaInstruccion" read-only="false"
+    		propagation="REQUIRED" rollback-for="java.lang.Exception" />
+    	<tx:method name="guardarInstruccion" read-only="false"
+    		propagation="REQUIRED" rollback-for="java.lang.Exception" />
+    	<tx:method name="actualizaInstruccion" read-only="false"
+    		propagation="REQUIRED" rollback-for="java.lang.Exception" />		    		    	
+
+		<tx:method name="crearPersona" read-only="false" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+		<tx:method name="modificarPersona" read-only="false" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+		<tx:method name="crearGrupo" read-only="false" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception" />
+		<tx:method name="modificarGrupo" read-only="false" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception" />
+		<tx:method name="crearListaDistribucion" read-only="false" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception" />
+		<tx:method name="modificarListaDistribucion" read-only="false" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception" />
+        <tx:method name="pagarDerecho" read-only="false" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception" />
+        <tx:method name="pagarBeneficiariosDerecho" read-only="false" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="procesaBeneficiariosDerecho" read-only="false" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+
+        <tx:method name="actualizarEstatusDerecho" read-only="false" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception" />
+        <tx:method name="actualizarEstatusDerechoBeneficiario" read-only="false" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="generaMensajeHistoricoCapitales" read-only="false" propagation="NOT_SUPPORTED" />
+        
+        <tx:method name="actualizaOrigenNarrativa" read-only="false" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception" />
+        
+        <tx:method name="saveFormatoFiscalTin" read-only="false" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception" />
+        <tx:method name="updateTinFormato" read-only="false" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception" />
+        <tx:method name="generarTinCobro" read-only="false" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception" />
+        <tx:method name="getBeneficiarioInstitucion" read-only="false" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="updateBeneficiario" read-only="false" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="updateBeneficiarioStatus" read-only="false" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="actualizaStatusBeneficiario" read-only="false" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+		<tx:method name="cambiaStatusBeneficiario" read-only="false" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+        <tx:method name="actualizarOperacionSic" read-only="false" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception" />
+        <tx:method name="cancelaParcialidadOperacionSIC" read-only="false" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception" />
+        
+        <tx:method name="guardaTinFormatoFiscal" read-only="false" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception" />
+        <tx:method name="actualizaFormatoFiscal" read-only="false" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception" />
+        <tx:method name="verificarEstadoPrevioDeLiberacion" read-only="false" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception" />
+       	<tx:method name="actualizaOperacionSICCambioBovedaAutorizador" read-only="false"
+        	propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+        	
+		<tx:method name="nuevaSolicitud" read-only="false" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception" />
+        
+  	</tx:attributes>
+  </tx:advice>
+
+  <aop:config proxy-target-class="true">
+    <aop:pointcut id="serviceMethodsInternacional"
+      expression="execution(* com.indeval.portalinternacional.middleware.services.*.*ServiceImpl.*(..))" />
+    <aop:advisor advice-ref="txAdviceInternacional" pointcut-ref="serviceMethodsInternacional" />
+  </aop:config>
+
+</beans>

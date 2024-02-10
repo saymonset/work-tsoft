@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+      xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/derechos.js">
+            </script>
+		</ui:define>
+		
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.derechos}" />
+		</ui:define>
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.consultaEmisionesSinBenef}"></h:outputText>
+		</ui:define>
+
+		<ui:define name="seccionContenido">
+			<a4j:keepAlive beanName="adminEmisionDerechoBean" />
+			<h:outputText value="#{adminEmisionDerechoBean.init}" />
+			<h:panelGroup id="botonesGroup" rendered="#{not empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN']}">
+				<table width="100%" border="0">
+					<tr>
+						<td style="text-align: right;" colspan="2">
+							<h:commandButton id="botonAgregar" value="#{etq.agregarEmision}" action="#{adminEmisionDerechoBean.agregarEmision}"/>
+							<a4j:commandButton id="botonEliminar" value="#{etq.eliminarEmision}" actionListener="#{adminEmisionDerechoBean.eliminaEmision}" onclick="if(!confirm('&#191;Estas seguro que deseas eliminar las emisiones seleccionadas&#63;')) { return false; }" reRender="containerResultados"/>                                
+						</td>
+					</tr>
+				</table>
+			</h:panelGroup>																					
+			<h:panelGroup id="containerResultados">								
+				<t:dataTable id="noExistenResultados"
+					value="#{adminEmisionDerechoBean.lstEmisiones}"
+					styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+					footerClass="tituloTabla" border="0" cellpadding="3px"
+					cellspacing="0px" columnClasses="everyColumn"
+					rowClasses="renglonTablaUno, renglonTablaDos"
+					rendered="#{empty adminEmisionDerechoBean.lstEmisiones}">
+					<t:column>
+						<f:facet name="header">
+							<h:outputText value="#{etq.sinResultados}"></h:outputText>
+						</f:facet>
+
+					</t:column>
+				</t:dataTable>					
+				<h:dataTable id="resultados"
+					value="#{adminEmisionDerechoBean.lstEmisiones}"
+					var="emision"
+					rendered="#{not empty adminEmisionDerechoBean.lstEmisiones}"
+					styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+					footerClass="tituloTabla" border="0" cellpadding="3px"
+					cellspacing="0px" columnClasses="everyColumn"
+					rowClasses="renglonTablaUno, renglonTablaDos">
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.custodio}" />
+						</f:facet>							
+                           <h:outputText styleClass="texto textoPeque12" value="#{adminEmisionDerechoBean.mapaCustodios[emision.idCuentaNombrada]}" />														
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.tv}" />
+						</f:facet>							
+                           <h:outputText styleClass="texto textoPeque12" value="#{emision.tv}" />														
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.emisoraMinus}" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{emision.emisora}" />
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.serieMinus}" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{emision.serie}" />
+					</h:column>
+                    <h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.isin}" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{emision.isin}" />
+                    </h:column>
+
+                    <h:column>
+						<f:facet name="header">
+							<h:selectBooleanCheckbox onclick="javascript:checkControls();" id="checkPrincipal"/>
+						</f:facet>
+						<h:selectBooleanCheckbox value="#{emision.eliminado}" style="text-align: center"/>
+                    </h:column>
+                    <h:column>
+						<f:facet name="header">
+							<h:outputText value="" />
+						</f:facet>						
+						<h:commandLink styleClass="texto textoPeque12 sinSubrayar" action="#{adminEmisionDerechoBean.actualizarEmision}" rendered="#{not empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN']}">
+							<f:setPropertyActionListener target="#{adminEmisionDerechoBean.selectedEmision}" value="#{emision}"/>
+			            	<h:graphicImage value="/images/edit.png"/>			                                			                                                               
+			            </h:commandLink>
+                    </h:column>                                        
+                   </h:dataTable>
+			</h:panelGroup>
+		</ui:define>						
+	</ui:composition>
+</html>
+

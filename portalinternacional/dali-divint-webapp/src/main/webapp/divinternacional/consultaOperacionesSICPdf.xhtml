@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+<pdf:document documentName="ConsultaOperaciones" documentTitle="Consulta de Operaciones del Sistema Internacional de Cotizaciones"
+              landscape="true" institucion="#{consultaOperacionesExportacionBean.agenteFirmado.id} #{consultaOperacionesExportacionBean.agenteFirmado.folio} #{consultaOperacionesExportacionBean.agenteFirmado.razon}"
+			  fecha="#{consultaOperacionesExportacionBean.fechaActual}" imageResource="/images/indeval.jpg">
+	
+	<pdf:subtitle value="Filtros"/>
+	<pdf:table value="#{consultaOperacionesExportacionBean}"
+			currentBean="filtro" widthPercentage="100">
+			<pdf:row>
+				
+				<pdf:col align="center" collspan="1" header="#{etq.participanteMinus}"
+					value="#{consultaOperacionesExportacionBean.participanteSeleccionado}" />
+				<pdf:col align="center" collspan="1" header="#{etq.cuentaMinus}"
+					value="#{consultaOperacionesExportacionBean.cuentaSeleccionada}" />
+				<pdf:col align="center" collspan="1" header="#{etq.tipoValorMinus}"
+					value="#{consultaOperacionesExportacionBean.tipoValorSeleccionado}" />
+				<pdf:col align="center" collspan="1" header="#{etq.emisoraMinus}"
+					value="#{consultaOperacionesExportacionBean.emisoraSeleccionada}" />
+				<pdf:col align="center" collspan="1" header="#{etq.serieMinus}"
+					value="#{consultaOperacionesExportacionBean.serieSeleccionada}" />
+				<pdf:col align="center" collspan="1" header="#{etq.cuponMinus}"
+					value="#{consultaOperacionesExportacionBean.cuponSeleccionado}" />
+				<pdf:col align="center" collspan="1" header="#{etq.ingresoOperacion}"
+					value="#{consultaOperacionesExportacionBean.origenSeleccionado}" />
+				<pdf:col align="center" collspan="1" header="#{etq.estatus}"
+					value="#{consultaOperacionesExportacionBean.estatusSeleccionado}" />
+				<pdf:col align="center" collspan="1" header="#{etq.divisaMinus}"
+					value="#{consultaOperacionesExportacionBean.divisaSeleccionada}" />
+				<pdf:col align="center" collspan="1" header="#{etq.importe}"
+					value="#{consultaOperacionesExportacionBean.importeSeleccionado}" />
+				<pdf:col align="center" collspan="1" header="#{etq.isin}"
+					value="#{!empty consultaOperacionesExportacionBean.isin?consultaOperacionesExportacionBean.isin:'TODOS'}"/>
+				<pdf:col align="center" collspan="1" header="#{etq.custodio}"
+					value="#{consultaOperacionesExportacionBean.custodio != '-1'?consultaOperacionesExportacionBean.custodio:'TODOS'}" />		
+					
+			</pdf:row>
+	</pdf:table>
+	
+	
+	<pdf:table value="#{consultaOperacionesExportacionBean}"
+			currentBean="filtro" widthPercentage="100">
+			<pdf:row>
+				<pdf:col align="center" collspan="1" header="#{etq.cantidadOperada}"
+					value="#{consultaOperacionesExportacionBean.cantidadSeleccionada}" />
+				<pdf:col align="center" collspan="1" header="#{etq.fechaInicial}"
+					value="#{consultaOperacionesExportacionBean.fechaInicialSeleccionada}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				<pdf:col align="center" collspan="1" header="#{etq.fechaFinal}"
+					value="#{consultaOperacionesExportacionBean.fechaFinalSeleccionada}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>						
+				</pdf:col>
+				<pdf:col align="center" collspan="1" header="#{etq.operacion}"
+					value="#{consultaOperacionesExportacionBean.operacionSeleccionada}" />
+				<pdf:col align="center" collspan="1" header="#{etq.tipoOp}"
+					value="#{consultaOperacionesExportacionBean.tipoOperacionSeleccionada}" />	
+				<pdf:col align="center" collspan="1" header="#{etq.referenciaOperacion}"
+					value="#{consultaOperacionesExportacionBean.referenciaOperacionSeleccionado}" />
+				<pdf:col align="center" collspan="1" header="#{etq.folioControl}"
+					value="#{consultaOperacionesExportacionBean.folioControlSeleccionado}" />
+			</pdf:row>
+		</pdf:table>
+		
+	<pdf:table value="#{consultaOperacionesExportacionBean}" currentBean="filtro" widthPercentage="20" align="left">
+		<pdf:row>	
+			<pdf:col align="center" collspan="1" header="Total de Registros"
+					value="#{consultaOperacionesExportacionBean.resultados.totalRegistros}" />
+		</pdf:row>
+	</pdf:table>
+	
+	<pdf:subtitle value="Datos"/>
+    <pdf:table value="#{consultaOperacionesExportacionBean.resultados.registros}"  currentBean="detalle" widthPercentage="100" maxColums="19">
+        <pdf:row>
+        	<pdf:col header="#{etq.folioControl}" value="#{detalle.folioControl}"	 align="CENTER"/>
+        	<pdf:col header="#{etq.referenciaOperacion}" value="#{detalle.referenciaOperacion}"	 align="CENTER"/>
+      		<pdf:col header="#{etq.fechaAlta}" value="#{detalle.fechaAlta}" align="CENTER">
+    	        <cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss"/>
+        	</pdf:col>
+        	<pdf:col header="#{etq.fechaHoraLiquidacionTlp}" value="#{detalle.fechaLiquidacionTlp}" align="CENTER">
+    	        <cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss"/>
+        	</pdf:col>
+        	<pdf:col  header="#{etq.id}" value="#{detalle.cuentaNombrada.institucion.tipoInstitucion.claveTipoInstitucion}"
+        			 align="CENTER"/>
+        	<pdf:col header="#{etq.folioMinus}" value="#{detalle.cuentaNombrada.institucion.folioInstitucion}"
+        			 align="CENTER"/>
+        	<pdf:col header="#{etq.cuentaMinus}" value="#{detalle.cuentaNombrada.cuenta}"
+        			 align="CENTER"/>
+        	
+            <pdf:col header="#{etq.tipoValorMinus}" value="#{detalle.emision.instrumento.claveTipoValor}" 
+        			 align="CENTER"/>
+            <pdf:col header="#{etq.emisoraMinus}" value="#{detalle.emision.emisora.clavePizarra}" 
+        			 align="CENTER"/>
+            <pdf:col header="#{etq.serieMinus}" value="#{detalle.emision.serie}" 
+        			 align="CENTER"/>
+            <pdf:col header="#{etq.cuponMinus}" value="#{detalle.claveCupon}" 
+        			 align="CENTER"/>
+            <pdf:col header="#{etq.isin}" value="#{detalle.emision.isin}" 
+        			 align="CENTER"/>
+            <pdf:col header="#{etq.cantidadOperada}" value="#{detalle.cantidadTitulos}" 
+        			 align="right">
+        		<f:convertNumber pattern="###,###,###,###,###"/>
+        	</pdf:col>
+            <pdf:col header="#{etq.cantidadOperadaLiqParcial} - #{etq.remanente}" value="#{detalle.cantidadTitulosParcial} - #{detalle.remanente}" 
+        			 align="right">
+        		<!-- <f:convertNumber pattern="###,###,###,###,###"/>-->
+        	</pdf:col>            
+            <pdf:col header="#{etq.operacion}" value="#{detalle.descTipoMensaje}" 
+        			 align="CENTER"/>
+        	
+        	<pdf:col header="#{etq.fechaOperacion}" value="#{detalle.fechaOperacion}" align="CENTER">
+    	        <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+        	</pdf:col>	 
+        	
+        	<pdf:col header="#{etq.fechaLiquidacionMinus}" value="#{detalle.fechaLiquidacion}" align="CENTER">
+    	        <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+        	</pdf:col>
+        	
+        	<pdf:col header="#{etq.fechaNotificacion}" value="#{detalle.fechaActualizacion}" align="CENTER">
+    	        <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+        	</pdf:col>        	
+        	
+        	<pdf:col header="#{etq.divisaMinus}" value="#{detalle.divisa}" align="CENTER"/>
+           	
+  
+        	<pdf:col header="#{etq.importe}" value="#{detalle.importe}"  align="right">
+        		<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+        	</pdf:col>
+        	<pdf:col header="#{etq.efectivoParcial} - #{etq.remanenteEfectivo}" value="$#{detalle.importeParcial} - $#{detalle.remanenteEfectivo}"  align="right">
+        		<!-- <f:convertNumber pattern="$###,###,###,###,###,##0.00" />-->
+        	</pdf:col>
+        	<pdf:col header="#{etq.error}" value="#{detalle.errorSwift.codigoErrorSwift}" 
+        			 align="CENTER"/>
+        	  <pdf:col header="#{etq.fechaHoraHabilitada}" value="#{detalle.fechaHoraHabilitada}" align="CENTER">
+    	        <cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss"/>
+    	     </pdf:col> 
+        	<pdf:col header="#{etq.estatus}" value="#{detalle.estatusOperacion.descEstatusOperacion}" 
+        			 align="CENTER"/>
+        			 
+        	<pdf:col header="#{etq.estatusPfi}" value="#{detalle.stPfi548}" 
+        			 align="CENTER"/>
+        	<pdf:col header="#{etq.descEstatusPFI}" value="#{detalle.refMsjPfi}" 
+        			 align="CENTER"/>
+        			 
+        
+             			 		 
+        	<pdf:col header="#{etq.descripcionCustodia}" value="#{detalle.catBic.detalleCustodio}" 
+        			 align="CENTER"/>
+        	<pdf:col header="#{etq.descripcionCuenta}" value="#{detalle.catBic.bicProd}" 
+        			 align="CENTER"/>
+        			 
+        	
+        			 
+			
+			<pdf:col header="#{etq.cuentaContraparte}" value="#{detalle.cuentaContraparte}"
+        			 align="CENTER"/>        			 	
+			<pdf:col header="#{etq.descContraparte}" value="#{detalle.descContraparte}" 
+        			 align="CENTER"/>
+			<pdf:col header="#{etq.depositante}" value="#{detalle.sicDetalle.depLiq}" 
+        			 align="CENTER"/>
+       			 
+        			 
+            
+           
+      
+      		<pdf:col header="#{etq.instruccEspeciales}" value="#{detalle.instruccEspeciales}" 
+        			 align="CENTER"/>        			 
+			<pdf:col header="#{etq.nomCtaBenef}" value="#{detalle.nomCtaBenef}" 
+        			 align="CENTER"/>
+      		<pdf:col header="#{etq.numCtaBenef}" value="#{detalle.numCtaBenef}" 
+        			 align="CENTER"/>
+      		<pdf:col header="#{etq.fechaAprobacion}" value="#{detalle.fecha530}" 
+        			 align="CENTER">
+        			 <cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss"/>
+        	</pdf:col>
+      	 	<pdf:col header="#{etq.msgEfectivo}" value="#{detalle.mensajeEfectivo}" 
+        			 align="CENTER" collspan="1" />
+            <pdf:col header="#{etq.msgConfirmacion}" value="#{detalle.tipoMensajeConfirmacion}" 
+        			 align="CENTER" collspan="1" />
+        			 
+        	<pdf:col header="#{etq.liquidacionParcialReporte}" value="#{!empty detalle.liquidacionParcial ? detalle.liquidacionParcial : 'NO'}" align="CENTER" collspan="1" /> 
+        	 
+      	</pdf:row>
+  	</pdf:table>
+</pdf:document>
+</html>

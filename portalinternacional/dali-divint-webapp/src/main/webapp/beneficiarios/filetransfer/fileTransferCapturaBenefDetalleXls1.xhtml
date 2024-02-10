@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls">
+
+
+    <xls:document documentName="detalleCargaBeneficiarios" documentTitle="Reporte de Carga" >
+                  
+        <xls:table value="#{fileTransferCapturaBeneBean.detalleCarga}" var="detalle">
+            <xls:row>
+                <xls:col header="#{etq.tipoFormato}" value="#{detalle.tipoFormato}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+				<xls:col header="#{etq.tipoBeneficiario}" value="#{detalle.tipoBeneficiario}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+				<xls:col header="#{etq.custodio}" value="#{detalle.claveCustodio}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+				<xls:col header="#{etq.idInstitucion}" value="#{detalle.claveInstitucion}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+				<xls:col header="#{etq.fechaFormato}" value="#{detalle.fechaFormato}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+				<xls:col header="#{etq.estado}" value="#{detalle.estado}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+				<xls:col header="#{etq.nombre}" value="#{detalle.razonSocial}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+				<xls:col header="#{etq.w9BusinessNameOnly}" value="#{detalle.bussinesName}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+				<xls:col header="#{etq.clasificacion}" value="#{detalle.tipoTaxPayer}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+				<xls:col header="#{etq.w9ExemptPayee}" value="#{detalle.exemptPayeeCode}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+				<xls:col header="#{etq.w9ExemptionFromFatca}" value="#{detalle.fatcaReportingCode}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+				<xls:col header="#{etq.w8benStreet}" value="#{detalle.street}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+				<xls:col header="#{etq.w8benOuterNumber}" value="#{detalle.outerNumber}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+				<xls:col header="#{etq.w8benInteriorNumber}" value="#{detalle.interiorNumber}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+				<xls:col header="#{etq.w8benPostalCode}" value="#{detalle.zipCode}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/> 
+				<xls:col header="#{etq.w8benCityTown}" value="#{detalle.city}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/> 
+				<xls:col header="#{etq.w8benStatePorvince}" value="#{detalle.state}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/> 
+				<xls:col header="#{etq.w9RequesterName}" value="#{detalle.requesterNameAddress}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/> 
+				<xls:col header="#{etq.w9ListAccountNumber}" value="#{detalle.listAccountNumbers}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/> 
+				<xls:col header="#{etq.w9SSNOnly}" value="#{detalle.ssn}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+				<xls:col header="#{etq.employerIdNumber}" value="#{detalle.employerIdNumb}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+				<xls:col header="#{etq.numeroRegistro}" value="#{detalle.numeroRegistro}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>   
+				<xls:col header="#{etq.descripcionError}" value="#{detalle.descripcionError}" align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/> 
+            </xls:row>
+        </xls:table>
+        <xls:br />
+    </xls:document>
+</html>

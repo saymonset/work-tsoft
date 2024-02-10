@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+  
+  <description>
+    AplicationContext de Portal Indeval
+  </description>
+  
+    <bean id="weblogicJndiTemplate"	class="org.springframework.jndi.JndiTemplate">
+		<property name="environment">
+			<props>
+				<prop key="java.naming.factory.initial">weblogic.jndi.WLInitialContextFactory</prop>
+				<prop key="java.naming.provider.url">t3://quality.bursatec.com.mx:6003</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
+	<bean id="temporalService"	class="org.springframework.ejb.access.SimpleRemoteStatelessSessionProxyFactoryBean"	lazy-init="false">
+		<property name="jndiTemplate">
+			<ref bean="weblogicJndiTemplate" />
+		</property>
+		<property name="jndiName">
+			<value>ejb.temporalBeneficiariosService#com.indeval.portalinternacional.middleware.services.divisioninternacional.TemporalBeneficiariosService</value>
+		</property>
+		<property name="businessInterface">
+			<value>
+				com.indeval.portalinternacional.middleware.services.divisioninternacional.TemporalBeneficiariosService
+			</value>
+		</property>
+		<property name="lookupHomeOnStartup">
+			<value>true</value>
+		</property>
+	</bean>  
+  
+
+</beans>

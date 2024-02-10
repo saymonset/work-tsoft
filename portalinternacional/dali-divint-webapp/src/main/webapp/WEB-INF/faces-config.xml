@@ -1,0 +1,232 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+	version="1.2">
+
+	<application>
+		<locale-config>
+			<default-locale>es_MX</default-locale>
+
+			<supported-locale>es_MX</supported-locale>
+
+		</locale-config>
+		<view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
+		<variable-resolver>org.springframework.web.jsf.DelegatingVariableResolver</variable-resolver>
+		<resource-bundle>
+			<base-name>mensajes.etiquetas</base-name>
+			<var>etq</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>mensajes.mensajes</base-name>
+			<var>mensajes</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>mensajes.eventosCorporativos</base-name>
+			<var>etqEventosCorporativos</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>mensajes.w8bene</base-name>
+			<var>etqw8bene</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>mensajes.w8imy</base-name>
+			<var>etqw8imy</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>mensajes.fileTransferW8</base-name>
+			<var>etqfiletransferw8</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>fastwork</base-name>
+			<var>etqfastwork</var>
+		</resource-bundle>
+	</application>
+
+
+	<managed-bean>
+        <managed-bean-name>seleccionarPosicionMercadoDineroController</managed-bean-name>
+        <managed-bean-class>com.indeval.portalinternacional.presentation.controller.common.SeleccionarPosicionController</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+
+        <managed-property>
+            <property-name>consultaCatalogoService</property-name>
+            <value>#{consultaCatalogoService}</value>
+        </managed-property>
+
+      	<managed-property>
+			<property-name>idMercado</property-name>
+			<value>#{identificadorMercadoDinero}</value>
+		</managed-property>
+		
+		
+    </managed-bean>
+
+   <managed-bean>
+        <managed-bean-name>seleccionarPosicionesBean</managed-bean-name>
+        <managed-bean-class>com.indeval.portalinternacional.presentation.controller.common.SeleccionarPosicionController</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+
+        <managed-property>
+            <property-name>consultaCatalogoService</property-name>
+            <value>#{consultaCatalogoService}</value>
+        </managed-property> 
+        <managed-property>
+            <property-name>idMercado</property-name>
+            <value>#{identificadorAmbosMercados}</value>
+        </managed-property>       
+		<managed-property>
+			<property-name>registrosXPag</property-name>
+			<value>20</value>
+		</managed-property>
+		<managed-property>
+            <property-name>dateUtilService</property-name>
+            <value>#{dateUtilService}</value>
+        </managed-property> 
+		
+    </managed-bean>
+    
+    <managed-bean>
+    	<description>Bean para seleccionar posiciones con Emision Extranjera</description>
+        <managed-bean-name>seleccionarPosicionesInvExtBean</managed-bean-name>
+        <managed-bean-class>com.indeval.portalinternacional.presentation.controller.common.SeleccionarPosicionEmisionExtranjeraController</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+
+        <managed-property>
+            <property-name>consultaCatalogoService</property-name>
+            <value>#{consultaCatalogoService}</value>
+        </managed-property> 
+        <managed-property>
+            <property-name>idMercado</property-name>
+            <value>#{identificadorAmbosMercados}</value>
+        </managed-property>       
+		<managed-property>
+			<property-name>registrosXPag</property-name>
+			<value>20</value>
+		</managed-property>
+		<managed-property>
+            <property-name>dateUtilService</property-name>
+            <value>#{dateUtilService}</value>
+        </managed-property> 
+		
+    </managed-bean>
+
+   <managed-bean>
+        <managed-bean-name>opcionesCatalogosBean</managed-bean-name>
+        <managed-bean-class>com.indeval.portalinternacional.presentation.controller.common.OpcionesCatalogosController</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+
+        <managed-property>
+            <property-name>consultaCatalogoService</property-name>
+            <value>#{consultaCatalogoService}</value>
+        </managed-property> 
+		<managed-property>
+            <property-name>divisaDao</property-name>
+            <value>#{divisaDao}</value>
+        </managed-property> 
+        <managed-property>
+            <property-name>bovedaDao</property-name>
+            <value>#{bovedaDao}</value>
+        </managed-property> 
+		<managed-property>
+			<property-name>divisionInternacionalService</property-name>
+			<value>#{divisionInternacionalService}</value>
+		</managed-property>
+		
+    </managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>inicioSesionBean</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portalinternacional.presentation.controller.seguridad.InicioSesionBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>elementoMenuRaiz</property-name>
+			<value>#{menuNavegacion}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>institucionDao</property-name>
+			<value>#{institucionDao}</value>
+		</managed-property>
+		
+		
+		<managed-property>
+			<property-name>indevalCacheService</property-name>
+			<value>#{distCacheServiceEJB}</value>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>mostrarCaptcha</property-name>
+			<value>#{propHabilitaCaptcha}</value>
+		</managed-property>
+		
+		
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>elegirInstitucionBean</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portalinternacional.presentation.controller.seguridad.ElegirInstitucionBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>		
+		<managed-property>
+			<property-name>dateUtilService</property-name>
+			<value>#{dateUtilService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>institucionDao</property-name>
+			<value>#{institucionDao}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>indevalCacheService</property-name>
+			<value>#{distCacheServiceEJB}</value>
+		</managed-property>
+		
+		
+	</managed-bean>
+
+    <managed-bean>
+		<managed-bean-name>mensajeInternacionalBean</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portalinternacional.presentation.controller.seguridad.MensajeInternacionalBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+	      <from-outcome>inicio</from-outcome> 
+	      <to-view-id>/index.faces</to-view-id>
+	    </navigation-case>
+	    <navigation-case>
+	      <from-outcome>header</from-outcome> 
+	      <to-view-id>/header.xhtml</to-view-id>
+	    </navigation-case>
+	    <navigation-case>
+			<from-action>#{inicioSesionBean.determinaLogin}</from-action>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-action>#{inicioSesionBean.determinaLogin}</from-action>
+			<from-outcome>loginOk</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+				
+		<navigation-case>
+			<from-action>#{inicioSesionBean.iniciarSesion}</from-action>
+			<from-outcome>loginOk</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+		</navigation-case>
+    </navigation-rule>
+
+</faces-config>

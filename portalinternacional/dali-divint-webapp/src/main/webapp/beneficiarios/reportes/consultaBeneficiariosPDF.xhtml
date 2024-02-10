@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:pdf="http://indeval.com/jsf/pdf"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="consultaBeneficiarios" documentTitle="Consulta de Beneficiarios"
+                  institucion="#{consultaBeneficiariosBean.agenteFirmado.id} #{consultaBeneficiariosBean.agenteFirmado.folio} #{consultaBeneficiariosBean.agenteFirmado.razon}"
+                  landscape="true" fecha="#{consultaBeneficiariosBean.fechaActual}"
+                  imageResource="/images/indeval.jpg">
+        <pdf:table value="consultaBeneficiariosBean" currentBean="resultado" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{consultaBeneficiariosBean}" currentBean="resultado" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.custodio}" value="#{consultaBeneficiariosBean.mapaCustodios[consultaBeneficiariosBean.param.custodio]}" align="center" />
+                <pdf:col header="#{etq.tipoBeneficiario}" value="#{consultaBeneficiariosBean.mapaTipoBeneficiario[consultaBeneficiariosBean.param.tipoBeneficiario]}" align="center" />
+                <pdf:col header="#{etq.institucionMinus}" value="#{consultaBeneficiariosBean.idFolioInstitucion} - #{consultaBeneficiariosBean.nombreInstitucion}" align="center" />
+                <pdf:col header="#{etq.formato}" value="#{(consultaBeneficiariosBean.param.formato eq '-1') ? 'NINGUNO' : consultaBeneficiariosBean.param.formato }" align="center" />
+                <pdf:col header="#{etq.estatusBeneficiario}" value="#{consultaBeneficiariosBean.mapaStatusBenef[consultaBeneficiariosBean.param.statusBenef]}" align="center" />
+                <pdf:col header="#{etq.uoi}" value="#{consultaBeneficiariosBean.param.uoiNumber}" align="center" />
+                <pdf:col header="#{etq.fechaRegistro} Inicio" value="#{consultaBeneficiariosBean.param.fechaRegistroInicio}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaRegistro} Fin" value="#{consultaBeneficiariosBean.param.fechaRegistroFin}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaFormato} Inicio" value="#{consultaBeneficiariosBean.param.fechaFormatoInicio}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaFormato} Fin" value="#{consultaBeneficiariosBean.param.fechaFormatoFin}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaDeAutorizacion} Inicio" value="#{consultaBeneficiariosBean.param.fechaAutorizacionInicio}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaDeAutorizacion} Fin" value="#{consultaBeneficiariosBean.param.fechaAutorizacionFin}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.nombreBeneficiario} o #{etq.razonSocial}" value="#{consultaBeneficiariosBean.param.nombreRazonSocial}" align="center" />
+                <pdf:col header="#{etq.w8benReferenceNumber}" value="#{consultaBeneficiariosBean.param.referenceNumber}" align="center" />
+                <pdf:col header="#{etq.estado}" value="#{consultaBeneficiariosBean.activo == '1' ? 'Activo' : (consultaBeneficiariosBean.activo == '0') ? 'Inactivo' : 'Ambos'}" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:br />
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{consultaBeneficiariosBean.paginaReportes.totalRegistros}" />
+        
+        <pdf:text value="#{etq.registrosPorLetra} #{consultaBeneficiariosBean.param.letra} : #{consultaBeneficiariosBean.inicioRegistros} - #{consultaBeneficiariosBean.finRegistros}"/>
+        
+        <pdf:subtitle value="Datos"/>
+        <pdf:table value="#{consultaBeneficiariosBean.paginaReportes.registros}" currentBean="detalle" maxColums="12">
+            <pdf:row>
+                <pdf:col header="#{etq.institucionMinus}" value="#{detalle.nombresInstituciones}"
+                         align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.custodio}" value="#{consultaBeneficiariosBean.mapaCustodios[detalle.idCuentaNombrada]}" 
+                         align="CENTER" oddColorDark="true" />
+                
+                <pdf:col header="#{etq.formato}" value="#{detalle.tipoFormatoPantalla}" align="CENTER" oddColorDark="true" />
+                
+                <pdf:col header="#{etq.nombreBeneficiario}" rendered="#{!detalle.personaFisica}" collspan="2" value="#{detalle.razonSocial}" oddColorDark="true" />
+                <pdf:col header="#{etq.nombreBeneficiario}" rendered="#{detalle.personaFisica}" collspan="2" oddColorDark="true"
+                         value="#{detalle.nombres} #{detalle.apellidoPaterno} #{detalle.apellidoMaterno}" />
+                <pdf:col header="#{etq.tipoBeneficiario}" value="#{detalle.tipoBeneficiario.descTipoBeneficiario}"
+                         oddColorDark="true" />
+                <pdf:col header="#{etq.fechaRegistro}" value="#{detalle.fechaRegistro}" align="CENTER" oddColorDark="true">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaFormato}" value="#{detalle.fechaFormato}" align="CENTER" oddColorDark="true" >
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.estatusBeneficiario}" value="#{detalle.statusBenef.descStatusBenef}" align="CENTER" oddColorDark="true"/>
+                 <pdf:col header="#{etq.uoi}" value="#{detalle.uoiNumber}" align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.porcentajeRetencionMinus}" oddColorDark="true" value="#{detalle.statusBenef.descStatusBenef ne 'AUTORIZADO' and detalle.tipoFormato ne 'MILA'  ? '30' : (empty detalle.porcentajeRetencion ? consultaBeneficiariosBean.mapaPorcentajes[detalle.idCuentaNombrada][detalle.tipoBeneficiario.idTipoBeneficiario] : detalle.porcentajeRetencion)} %" align="CENTER" />
+                <pdf:col header="#{etq.w8ben2014fechaNacimientoSP}" value="#{detalle.formatoW8BEN.fechaNacimiento}" align="CENTER" oddColorDark="true" >
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+            </pdf:row>
+            <pdf:row rendered="#{detalle.tipoFormato ne 'W9' and detalle.tipoFormato ne 'MILA'}">                    
+                <pdf:col header="#{etq.W8ben2014SignerSP}" align="CENTER" value="#{detalle.formatoW8BEN.signer}#{detalle.formatoW8BENE.printName}#{detalle.formatoW8IMY2015.printName}"  oddColorDark="true"/>
+                <pdf:col header="#{etq.w8benDireccionResidencialOnly}" align="LEFT" collspan="5" oddColorDark="true"
+                         value="#{detalle.domicilioW8Normal.street} #{detalle.domicilioW8Normal.outerNumber} #{detalle.domicilioW8Normal.interiorNumber},#{detalle.domicilioW8Normal.postalCode},#{detalle.domicilioW8Normal.cityTown},#{detalle.domicilioW8Normal.stateProvince}" />
+                <pdf:col header="#{etq.w8benPaisResidencialOnly}" value="#{detalle.domicilioW8Normal.country}"
+                         align="LEFT" oddColorDark="true" />
+                <pdf:col header="#{etq.w8benDireccionPostalOnly}" align="LEFT" collspan="4" oddColorDark="true"
+                         value="#{detalle.domicilioW8Correo.street} #{detalle.domicilioW8Correo.outerNumber} #{detalle.domicilioW8Correo.interiorNumber},#{detalle.domicilioW8Correo.postalCode},#{detalle.domicilioW8Correo.cityTown},#{detalle.domicilioW8Correo.stateProvince}" />
+                <pdf:col header="#{etq.w8benPaisResidencialOnly}" value="#{detalle.domicilioW8Correo.country}"
+                         align="LEFT" oddColorDark="true" />
+            </pdf:row>
+            <pdf:row rendered="#{detalle.tipoFormato eq 'MILA'}">                    
+                <pdf:col header="#{etq.W8ben2014SignerSP}" align="CENTER" value=""  oddColorDark="true"/>
+                <pdf:col header="#{etq.w8benDireccionResidencialOnly}" align="LEFT" collspan="5" oddColorDark="true"
+                         value="#{detalle.domicilioMILA.street} #{detalle.domicilioMILA.outerNumber} #{detalle.domicilioMILA.interiorNumber},#{detalle.domicilioMILA.postalCode},#{detalle.domicilioMILA.cityTown},#{detalle.domicilioMILA.stateProvince}" />
+                <pdf:col header="#{etq.w8benPaisResidencialOnly}" value="#{detalle.domicilioMILA.country}"
+                         align="LEFT" oddColorDark="true" />
+                <pdf:col header="#{etq.w8benDireccionPostalOnly}" align="LEFT" collspan="4" oddColorDark="true"
+                         value="---" />
+                <pdf:col header="#{etq.w8benPaisResidencialOnly}" value="---" oddColorDark="true"
+                         align="LEFT" />    
+            </pdf:row>
+            <pdf:row rendered="#{detalle.tipoFormato eq 'W9'}">
+                <pdf:col header="#{etq.W8ben2014SignerSP}" align="CENTER" value="#{detalle.formatoW8BEN.signer}"  oddColorDark="true" />
+                <pdf:col header="#{etq.w8benDireccionResidencialOnly}" align="LEFT" collspan="5" oddColorDark="true"
+                         value="#{detalle.domicilioW9.street} #{detalle.domicilioW9.outerNumber} #{detalle.domicilioW9.interiorNumber},#{detalle.domicilioW9.postalCode},#{detalle.domicilioW9.cityTown},#{detalle.domicilioW9.stateProvince}" />
+                <pdf:col header="#{etq.w8benPaisResidencialOnly}" value="USA" oddColorDark="true"
+                         align="LEFT" />
+                <pdf:col header="#{etq.w8benDireccionPostalOnly}" align="LEFT" collspan="4" oddColorDark="true"
+                         value="---" />
+                <pdf:col header="#{etq.w8benPaisResidencialOnly}" value="---" oddColorDark="true"
+                         align="LEFT" />                
+            </pdf:row>
+            <pdf:row>
+            	<pdf:col header="#{etq.w9ExemptPayeeCode}" value="#{detalle.formatoW9.exemptPayeeW9.fatcaCode}" align="center"></pdf:col>
+                <pdf:col header="#{etq.w8benAdp}" oddColorDark="true"
+                         value="#{detalle.adp}" align="CENTER" />
+                
+                <pdf:col header="#{etq.w8benUSIdNumberOnly}" oddColorDark="true" 
+                         value="#{detalle.formatoW8IMY.taxpayerIdNumb} #{consultaBeneficiariosBean.mapaTaxPayerIdNumer[detalle.formatoW8IMY.tipoTaxIdNumb]}#{detalle.formatoW8BENE.usTIN}#{detalle.formatoW8IMY2015.usTIN}"
+                         align="CENTER" />
+                         
+				<pdf:col header="#{etq.reportesFormatosWGIIN}" value="#{detalle.formatoW8BENE.giin}#{detalle.formatoW8IMY2015.giin}" align="center" oddColorDark="true" />
+                         
+                <pdf:col header="#{etq.w8benRFC}" align="CENTER" oddColorDark="true" 
+                         value="#{detalle.formatoW8IMY.foreignTaxIdNumb}#{detalle.formatoW8BEN.foreignTaxIdNumb}#{detalle.formatoMILA.tipoDocumentoIndentidad.idTipoDocumento eq 70 ? detalle.formatoMILA.numeroDocumento : detalle.formatoMILA.rfc}#{detalle.formatoW8BENE.foreingTIN}" />
+                <pdf:col header="#{etq.w8benReferenceNumber}" align="CENTER" oddColorDark="true"
+                         value="#{detalle.formatoW8IMY.referenceNumbers}#{detalle.formatoW8BEN.referenceNumbers}#{detalle.formatoMILA.referencia}#{detalle.formatoW8BENE.referenceNumber}#{detalle.formatoW8IMY2015.referenceNumber}"  />
+                
+                <pdf:col header="#{etq.w8benCapacityActingOnly}" align="CENTER" oddColorDark="true"
+                         value="#{detalle.formatoW8BEN.capacityActing}" />
+
+                <pdf:col header="Estado" align="CENTER" oddColorDark="true"
+                         value="#{detalle.activo == 'true' ? 'Activo' : detalle.activo == 'false' ? 'Inactivo' : ''}" />
+                <pdf:col header="#{etq.w9RequesterName}" align="CENTER" oddColorDark="true"
+                         value="#{detalle.formatoW9.requesterNameAddress}"  />
+                <pdf:col header="#{etq.w9ListAccountNumber}" align="CENTER" oddColorDark="true"
+                         value="#{detalle.formatoW9.listAccountNumbers}" />
+                <pdf:col header="#{etq.w9SSNOnly} or #{etq.w9EINOnly}" align="CENTER" oddColorDark="true"
+                         value="#{detalle.formatoW9.ssn}#{detalle.formatoW9.employerIdNumb}#{detalle.formatoMILA.tipoDocumentoIndentidad.idTipoDocumento eq 71 or detalle.formatoMILA.tipoDocumentoIndentidad.idTipoDocumento eq 73 ? detalle.formatoMILA.numeroDocumento : ''}" />
+                <pdf:col header="#{etq.w9ExemptionFromFatcaReportingCode}" value="#{detalle.formatoW9.exemptionFatcaW9.fatcaCode}" align="center"></pdf:col>
+            </pdf:row>
+        </pdf:table>
+    </pdf:document>
+</html>

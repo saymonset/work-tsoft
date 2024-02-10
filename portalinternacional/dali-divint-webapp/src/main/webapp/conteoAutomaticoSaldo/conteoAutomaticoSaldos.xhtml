@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+
+	<ui:composition template="/layoutConsultas.xhtml">
+		<ui:define name="tituloEncabezado">
+
+		</ui:define>
+			
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/fideicomiso.js"></script>
+		</ui:define>
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.conteoAutomaticoSaldo}" />
+		</ui:define>
+
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.conteoAutomaticoSaldo}"></h:outputText>
+		</ui:define>
+
+		<ui:define name="criterios">
+
+			<a4j:keepAlive beanName="conteoAutomaticoSaldoController" />
+            <h:outputText value="#{conteoAutomaticoSaldoController.init}" />
+			<h:panelGroup id="mensajeUsuario">
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+				
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+				</div>
+			</h:panelGroup>
+			<h:panelGroup id="panelCriterios">
+				<div style='display: "inline"' id="divCriterios">
+					<table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+						align="center">
+						<tr>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr align="center">
+										<td align="right">
+											<h:outputText styleClass="texto"
+												value="#{etq.depRetirosDia}" />
+										</td>
+										<td width="15">
+										</td>
+										<td align="center">
+											<rich:calendar id="fechaConsulta" 
+												value="#{conteoAutomaticoSaldoController.fechaConsulta}"
+												datePattern="dd/MM/yyyy"
+												inputSize="11"
+												inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;"
+												isDayEnabled="isDayEnabled" />
+										</td>
+
+									</tr>
+									<tr align="center">
+										<td align="right">
+											<h:outputText styleClass="texto" 
+												value="#{etq.saldoInicialFidBanamex}"/>
+										</td>
+										<td width="15">
+										</td>
+										<td align="center">
+											<h:inputText autocomplete="off" id="saldoFidBanamex" value="#{conteoAutomaticoSaldoController.saldoInicialFideicomisoBanamex}"
+												styleClass="textoControles campoNumerico" converter="formatoBigIntegerSepararMilesConverter">
+													<a4j:support event="onchange" reRender="saldoFidBanamex" />
+											</h:inputText>
+										</td>
+									</tr>
+									<tr align="center">
+										<td align="right">
+											<h:outputText styleClass="texto" 
+												value="#{etq.saldoInicialFidInbur}"/>
+										</td>
+										<td width="15">
+										</td>
+										<td align="center">
+											<h:inputText autocomplete="off" id="saldoFidInbur" value="#{conteoAutomaticoSaldoController.saldoInicialFideicomisoInbur}"
+												styleClass="textoControles campoNumerico" converter="formatoBigIntegerSepararMilesConverter">
+													<a4j:support event="onchange" reRender="saldoFidInbur" />
+											</h:inputText>
+										</td>
+									</tr>
+									<tr align="center">
+										<td align="right">
+											<h:outputText styleClass="texto" 
+												value="#{etq.saldoInicialFidNafin}"/>
+										</td>
+										<td width="15">
+										</td>
+										<td align="center">
+											<h:inputText autocomplete="off" id="saldoFidNafin" value="#{conteoAutomaticoSaldoController.saldoInicialFideicomisoNafin}"
+												styleClass="textoControles campoNumerico" converter="formatoBigIntegerSepararMilesConverter">
+													<a4j:support event="onchange" reRender="saldoFidNafin" />
+											</h:inputText>
+										</td>
+									</tr>
+									<tr align="center">
+										<td align="right">
+											<h:outputText styleClass="texto" 
+												value="#{etq.saldoInicialFidVitro}"/>
+										</td>
+										<td width="15">
+										</td>
+										<td align="center">
+											<h:inputText autocomplete="off" id="saldoFidVitro" value="#{conteoAutomaticoSaldoController.saldoInicialFideicomisoVitro}"
+												styleClass="textoControles campoNumerico" converter="formatoBigIntegerSepararMilesConverter">
+													<a4j:support event="onchange" reRender="saldoFidVitro" />
+											</h:inputText>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>				
+			</h:panelGroup>
+			
+			<h:panelGroup id="panelResumen">
+				<h:panelGroup rendered="#{conteoAutomaticoSaldoController.consultaEjecutada}">
+            		<div id="divResumen" style="display: #{conteoAutomaticoSaldoController.consultaEjecutada ? 'inline' : 'none'}">
+            			<table class="tablaCriterios texto" border="0" style="text-align: center" >
+            				<tr>
+            					<td class="recuadroTabla">
+            						<table class="tablaCriterios texto" border="0" style="text-align: center">
+            							<tr align="center">
+            								<td align="center" colspan="2">
+            									<h:outputText styleClass="texto" value="#{etq.depRetirosDia}"/>
+            									<h:outputText styleClass="texto" value="#{etq.dosPuntos}"/>
+            									&#160;&#160;&#160;
+            									<h:outputText styleClass="texto" value="#{conteoAutomaticoSaldoController.fechaConsulta}"/>
+            								</td>
+            							</tr>
+            							<tr align="center">
+            								<td align="center">
+            									<h:outputText styleClass="texto" value="#{etq.saldoInicialFidBanamex}"/>
+            									<h:outputText styleClass="texto" value="#{etq.dosPuntos}"/>
+            									&#160;&#160;&#160;
+            									<h:outputText styleClass="texto" value="#{conteoAutomaticoSaldoController.saldoInicialFideicomisoBanamex}"
+            										converter="formatoBigIntegerSepararMilesConverter"/>
+            								</td>
+            								<td align="center">
+            									<h:outputText styleClass="texto" value="#{etq.saldoInicialFidInbur}"/>
+            									<h:outputText styleClass="texto" value="#{etq.dosPuntos}"/>
+            									&#160;&#160;&#160;
+            									<h:outputText styleClass="texto" value="#{conteoAutomaticoSaldoController.saldoInicialFideicomisoInbur}"
+            										converter="formatoBigIntegerSepararMilesConverter"/>
+            								</td>
+            							</tr>
+            							<tr align="center">
+            								<td align="center">
+            									<h:outputText styleClass="texto" value="#{etq.saldoInicialFidNafin}"/>
+            									<h:outputText styleClass="texto" value="#{etq.dosPuntos}"/>
+            									&#160;&#160;&#160;
+            									<h:outputText styleClass="texto" value="#{conteoAutomaticoSaldoController.saldoInicialFideicomisoNafin}"
+            										converter="formatoBigIntegerSepararMilesConverter"/>
+            								</td>
+            								<td align="center">
+            									<h:outputText styleClass="texto" value="#{etq.saldoInicialFidVitro}"/>
+            									<h:outputText styleClass="texto" value="#{etq.dosPuntos}"/>
+            									&#160;&#160;&#160;
+            									<h:outputText styleClass="texto" value="#{conteoAutomaticoSaldoController.saldoInicialFideicomisoVitro}"
+            										converter="formatoBigIntegerSepararMilesConverter"/>
+            								</td>
+            							</tr>
+            						</table>
+            					</td>
+            				</tr>
+            			</table>
+            		</div>
+            	</h:panelGroup>
+            </h:panelGroup>
+		</ui:define>
+		<ui:define name="botones">
+			<h:panelGroup id="botones">
+				<div class="refrescar" style="float: left;">
+	        		 <a4j:status id="commonStatus">
+						<f:facet name="start">
+							<h:panelGroup>
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								<h:outputText value="#{etq.buscando}"></h:outputText>
+							</h:panelGroup>
+						</f:facet>
+					</a4j:status> 	
+	        	</div>
+				<div class="limpiar">
+					<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+						styleClass="submit"
+						actionListener="#{conteoAutomaticoSaldoController.limpiar}" />
+				</div>
+				<div class="buscar">
+					<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+						styleClass="submit"
+						oncomplete='$j("#divCriterios").css("display","none");'
+						actionListener="#{conteoAutomaticoSaldoController.buscar}"
+						reRender="panelFideicomiso, botones, mensajeUsuario, panelResumen" />
+				</div>
+				<div class="editar" style="display:#{conteoAutomaticoSaldoController.consultaEjecutada ? 'inline' : 'none'};float:right;" id="botonEditarCriterios">            
+	            	<input type="image" class="submit"
+						src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+						alt="Editar Criterios" title="Editar Criterios"
+						onclick='javascript:presentarCriterios();return false;' />                      	
+	           	</div>
+           	</h:panelGroup>
+		</ui:define>
+
+		<ui:define name="seccionContenido">
+			<h:panelGroup id="panelFideicomiso">
+				<h:panelGroup rendered="#{conteoAutomaticoSaldoController.consultaEjecutada and empty conteoAutomaticoSaldoController.paginaVO.registros}">
+			        <t:dataTable id="noExistenResultados" value="#{conteoAutomaticoSaldoController.paginaVO.registros}"
+			            styleClass="tablaGeneral" headerClass="tituloTabla" width="100%" footerClass="tituloTabla" border="0"
+			            cellpadding="3px" cellspacing="0px" columnClasses="everyColumn"
+			            rowClasses="renglonTablaUno, renglonTablaDos">
+			
+			            <t:column>
+			                <f:facet name="header">
+			                    <h:outputText value="#{etq.sinResultados}"></h:outputText>
+			                </f:facet>
+						</t:column>
+			        </t:dataTable>
+			    </h:panelGroup>
+			    
+                <h:panelGroup rendered="#{conteoAutomaticoSaldoController.consultaEjecutada and not empty conteoAutomaticoSaldoController.paginaVO.registros}">
+                	<table class="tablaCriterios" width="100%" align="center">
+						<tr>
+							<td align="center" colspan="3">
+											
+			                    <a4j:commandLink id="control_bitacora_atras"
+			                        action="#{conteoAutomaticoSaldoController.retrocederPagina}"
+			                        rendered="#{conteoAutomaticoSaldoController.retroceder}"
+			                        reRender="panelFideicomiso">
+			                        <img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png" border="0" />
+			                    </a4j:commandLink>
+			                    &#160;
+			                    <a4j:commandLink id="control_bitacora_adelante"
+			                        action="#{conteoAutomaticoSaldoController.avanzarPagina}"
+			                        rendered="#{conteoAutomaticoSaldoController.avanzar}"
+			                        reRender="panelFideicomiso">
+			                        <img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png" border="0" />
+			                    </a4j:commandLink>						                   
+							</td>
+						</tr>
+						<tr>
+							<td align="center" colspan="3">
+								<h:outputText value="#{etq.mostrando}"
+										styleClass="textoResumen" />
+								<h:outputText value="#{conteoAutomaticoSaldoController.numeroPagina}"
+										styleClass="textoResumen" />
+								<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+								<h:outputText value="#{conteoAutomaticoSaldoController.totalPaginas}"
+										styleClass="textoResumen" />
+								<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+								&#160;&#160;&#160;
+								<h:outputText
+									value="#{conteoAutomaticoSaldoController.paginaVO.totalRegistros}"
+									styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+								&#160;
+								<h:outputText styleClass="textoResumen"
+									value="#{etq.registrosEncontrados}" />
+							</td>
+						</tr>
+						<tr align="center">
+							<td align="center">
+								<h:outputText styleClass="texto" value="#{etq.participante}"/>
+							</td>
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.nombre}"/>
+							</td>
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.fideicomisoMinus}"/>
+							</td>
+						</tr>
+						<tr align="center">
+							<td class="recuadroTabla">
+							<h:outputText styleClass="texto" value="#{conteoAutomaticoSaldoController.participante} #{conteoAutomaticoSaldoController.fideicomisoActual.cuentaNombrada.cuenta}"/>							
+							</td>							
+							<td align="center" class="recuadroTabla">
+								<h:outputText styleClass="texto" value="#{conteoAutomaticoSaldoController.fideicomisoActual.cuentaNombrada.nombreCuenta}"/>
+							</td>
+							<td align="center" class="recuadroTabla">
+								<h:outputText styleClass="texto" value="#{conteoAutomaticoSaldoController.fideicomisoActual.cuentaNombrada.nombreCuenta}"/>
+							</td>
+						</tr>
+					</table>
+					<table class="tablaCriterios">
+						<tr align="center">
+							<h:dataTable id="emisionesFideicomiso"  rendered="#{conteoAutomaticoSaldoController.consultaEjecutada and not empty conteoAutomaticoSaldoController.paginaVO.registros}"
+									value="#{conteoAutomaticoSaldoController.fideicomisoActual.movimientosFideicomiso}"
+									var="movimiento" styleClass="tablaGeneral"
+					     			headerClass="tituloTabla" width="900px"
+									footerClass="tituloTabla" border="0" cellpadding="3px"
+									cellspacing="0px" columnClasses="everyColumn columnaTexto"
+									rowClasses="renglonTablaUno, renglonTablaDos"  >
+									
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="#{etq.tv}"/>
+										</f:facet>
+										<h:outputText value="#{movimiento.cupon.emision.instrumento.claveTipoValor}"/>
+									</h:column>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="#{etq.emisoraMinus}"/>
+										</f:facet>
+										<h:outputText value="#{movimiento.cupon.emision.emisora.clavePizarra}"/>
+									</h:column>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="#{etq.serieMinus}"/>
+										</f:facet>
+										<h:outputText value="#{movimiento.cupon.emision.serie}"/>
+									</h:column>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="#{etq.cuponMinus}"/>
+										</f:facet>
+										<h:outputText value="#{movimiento.cupon.claveCupon}"/>
+									</h:column>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="#{etq.cantidadOperada}"/>
+										</f:facet>
+										<h:outputText value="#{movimiento.cantidadOperada}" converter="formatoBigIntegerSepararMilesConverter"/>
+									</h:column>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="#{etq.folioConfirma}"/>
+										</f:facet>
+										<h:outputText value="#{movimiento.folioConfirmacion}"/>
+									</h:column>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="#{etq.tm}"/>
+										</f:facet>
+										<h:outputText value="#{movimiento.tipoMovimiento}"/>
+									</h:column>
+									<h:column>
+										<f:facet name="header">
+											<h:outputText value="#{etq.usuarioMinus}"/>
+										</f:facet>
+										<h:outputText value="#{movimiento.usuario}"/>
+									</h:column>
+									
+							</h:dataTable>
+						</tr>
+					</table>
+					<table class="tablaCriterios">
+						<tr align="center">
+							<td>&#160;</td>
+						</tr>
+					</table>
+					<table class="tablaCriterios"  width="600px">
+						<tr align="center">
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.totalMinus}"/>
+							</td>
+							<td class="recuadroTabla">
+								<h:dataTable id="totalNombres"  rendered="#{conteoAutomaticoSaldoController.consultaEjecutada and not empty conteoAutomaticoSaldoController.paginaVO.registros}"
+									value="#{conteoAutomaticoSaldoController.fideicomisoActual.nombreTotal}"
+									var="nombre" >
+									<h:column>
+										<h:outputText value="#{nombre}"/>
+									</h:column>
+								</h:dataTable>
+							</td>
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.numDepRet}"/>
+							</td>
+							<td class="recuadroTabla">
+								<h:dataTable id="depositosRetiros"  rendered="#{conteoAutomaticoSaldoController.consultaEjecutada and not empty conteoAutomaticoSaldoController.paginaVO.registros}"
+									value="#{conteoAutomaticoSaldoController.fideicomisoActual.numeroDepositosRetiros}"
+									var="deposito" >
+									<h:column>
+										<h:outputText value="#{deposito}" styleClass="recuadroTabla" converter="formatoBigIntegerSepararMilesConverter"/>
+									</h:column>
+								</h:dataTable>
+							</td>
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.titulosOp}"/>
+							</td>
+							<td class="recuadroTabla">
+								<h:dataTable id="titulosOperados"  rendered="#{conteoAutomaticoSaldoController.consultaEjecutada and not empty conteoAutomaticoSaldoController.paginaVO.registros}"
+									value="#{conteoAutomaticoSaldoController.fideicomisoActual.numeroTitulosOperados}"
+									var="titulo" >
+									<h:column>
+										<h:outputText value="#{titulo}" converter="formatoBigIntegerSepararMilesConverter" styleClass="recuadroTabla"/>
+									</h:column>
+								</h:dataTable>
+							</td>
+						</tr>
+					</table>
+					<table class="tablaCriterios">
+						<tr align="center">
+							<td>&#160;</td>
+						</tr>
+						<tr align="center">
+							<td>&#160;</td>
+						</tr>
+					</table>
+					<table class="tablaCriterios"  width="600px">
+						<tr align="center">
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.saldoDe}"/>
+							</td>
+							<td class="recuadroTabla">
+								<h:outputText id="nombreSaldo" value="#{conteoAutomaticoSaldoController.fideicomisoActual.nombreSaldo}" 
+										styleClass="textoControles"/>
+							</td>
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.numDepRet}"/>
+							</td>
+							<td class="recuadroTabla">
+								<h:outputText id="totalDepositosRetiros" styleClass="textoControles"
+										value="#{conteoAutomaticoSaldoController.fideicomisoActual.totalDepositosRetiros}" 
+										converter="formatoBigIntegerSepararMilesConverter"/>
+							</td>
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.saldoFinalMinus}"/>
+							</td>
+							<td class="recuadroTabla">
+								<h:outputText id="saldoFinalDepositosRetiros" styleClass="textoControles"
+									value="#{conteoAutomaticoSaldoController.fideicomisoActual.saldoFinalDepositosRetiros}" 
+									converter="formatoBigIntegerSepararMilesConverter"/>
+							</td>	
+						</tr>
+						<tr align="center">
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.posValDe}"/>
+							</td>
+							<td class="recuadroTabla">
+								<h:outputText id="nombrePosicion" styleClass="textoControles"
+									value="#{conteoAutomaticoSaldoController.fideicomisoActual.nombrePosicion}" />
+							</td>
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.numEmisiones}"/>
+							</td>
+							<td class="recuadroTabla">
+								<h:outputText id="totalEmisionesPosicion" styleClass="textoControles" 
+									value="#{conteoAutomaticoSaldoController.fideicomisoActual.totalEmisionesPosicion}" />
+							</td>
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.saldoFinalMinus}"/>
+							</td>
+							<td class="recuadroTabla">
+								<h:outputText id="saldoFinalPosicion" styleClass="textoControles" 
+									value="#{conteoAutomaticoSaldoController.fideicomisoActual.saldoFinalPosicion}"
+									converter="formatoBigIntegerSepararMilesConverter"/>
+							</td>	
+						</tr>
+						<tr align="center">
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.arqueoDe}"/>
+							</td>
+							<td class="recuadroTabla">
+								<h:outputText  id="nombreArqueo" styleClass="textoControles" 
+									value="#{conteoAutomaticoSaldoController.fideicomisoActual.nombreArqueo}"/>
+							</td>
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.numEmisiones}"/>
+							</td>
+							<td class="recuadroTabla">
+								<h:outputText id="totalEmisionesArqueo" styleClass="textoControles"
+									value="#{conteoAutomaticoSaldoController.fideicomisoActual.totalEmisionesArqueo}"/>
+							</td>
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.saldoFinalMinus}"/>
+							</td>
+							<td class="recuadroTabla">
+								<h:outputText id="saldoFinalArqueo" styleClass="textoControles" 
+									value="#{conteoAutomaticoSaldoController.fideicomisoActual.saldoFinalArqueo}"
+									converter="formatoBigIntegerSepararMilesConverter"/>
+							</td>	
+						</tr>
+					</table>
+					<br/>
+					<br/>
+					<table cellpadding="0" cellspacing="0" border="0" align="center"
+						width="900px">
+						<tr align="right">
+							<td align="right">
+								<h:panelGroup id="botonesExportar">
+									<h:panelGroup
+										style="display: #{(conteoAutomaticoSaldoController.consultaEjecutada and not empty conteoAutomaticoSaldoController.paginaVO.registros)? 'inline' : 'none'}">
+
+										<h:outputText value="Exportar los resultados"></h:outputText>
+										<h:commandButton actionListener="#{conteoAutomaticoSaldoController.generarReportes}"
+											action="conteoAutomaticoSaldoPdf"
+											image="/images/pdf.gif"
+											title="Exportar a PDF todos los resultados de la consulta"
+											id="generarPdf"
+											onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);"/>
+                           				&#160;&#160;
+
+                          				<h:commandButton actionListener="#{conteoAutomaticoSaldoController.generarReportes}"
+                          					action="conteoAutomaticoSaldoXls"
+                          					image="/images/excel-file.gif"
+                          					title="Exportar a Excel todos los resultados de la consulta" 
+                            				id="generarExcel"
+                            				onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);">
+                           				</h:commandButton>
+                           				
+                           				<div id="monitorPeticionReporte" style="display: none;">
+											<h:panelGroup id="panelMonitorPeticionReporte">
+												<h:graphicImage value="/images/ajax-loader.gif" />
+												&#160;&#160;
+												<h:outputText value="#{etq.reporteEnProceso}" />
+												<a4j:commandButton id="btnActualizarEstadoPeticion"
+													image="/images/transparent.gif"
+													styleClass="submit"
+													actionListener="#{conteoAutomaticoSaldoController.actualizarEstadoPeticion}"
+													reRender="panelMonitorPeticionReporte"
+													oncomplete="desbloquearBotonesReportes(#{conteoAutomaticoSaldoController.peticionReporteCompleta}, ['generarExcel', 'generarPdf']);"/>
+											</h:panelGroup>
+										</div>
+									</h:panelGroup>
+								</h:panelGroup>
+
+							</td>
+						</tr>
+					</table>
+                </h:panelGroup>
+            </h:panelGroup>
+		</ui:define>
+	
+	</ui:composition>
+</html>
+

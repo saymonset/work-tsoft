@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+  <description>
+    AplicationContext de Portal Indeval
+  </description>
+
+<!--    <bean id="ejbJndiEnvironment" class="java.util.Hashtable" lazy-init="true"> -->
+<!-- 		<constructor-arg index="0"> -->
+<!-- 			<map> -->
+<!-- 				<entry key="java.naming.factory.initial"> -->
+<!-- 					<value>weblogic.jndi.WLInitialContextFactory</value> -->
+<!-- 				</entry>				 -->
+<!-- 			</map> -->
+<!-- 		</constructor-arg> -->
+<!-- 	</bean> -->
+  
+<!--        <bean id="weblogicJndiTemplate"	class="org.springframework.jndi.JndiTemplate"> -->
+<!-- 		<property name="environment"> -->
+<!-- 			<props> -->
+<!-- 				<prop key="java.naming.factory.initial">weblogic.jndi.WLInitialContextFactory</prop> -->
+<!-- 				<prop key="java.naming.provider.url">${portalDali-divint.mavURLProvider}</prop> -->
+<!-- 			</props> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+<!-- 	<bean id="capitalMav"	class="org.springframework.ejb.access.SimpleRemoteStatelessSessionProxyFactoryBean"	lazy-init="false"> -->
+<!-- 		<property name="jndiTemplate"> -->
+<!-- 			<ref bean="weblogicJndiTemplate" /> -->
+<!-- 		</property> -->
+<!-- 		<property name="jndiName"> -->
+<!-- 			<value>/ejb/ejercicios/CapitalServiceHome</value> -->
+<!-- 		</property> -->
+<!-- 		<property name="businessInterface"> -->
+<!-- 			<value> -->
+<!-- 				com.indeval.sidv.ejercicios.derechos.patrimoniales.middleware.ejb.Capital -->
+<!-- 			</value> -->
+<!-- 		</property> -->
+<!-- 		<property name="lookupHomeOnStartup"> -->
+<!-- 			<value>false</value> -->
+<!-- 		</property> -->
+<!-- 	</bean>   -->
+  
+
+
+</beans>

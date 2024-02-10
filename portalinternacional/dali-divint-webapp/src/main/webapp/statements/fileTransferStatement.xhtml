@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich" xml:lang="en" lang="en">
+
+    <ui:decorate template="/layoutCapturaMultiPart.xhtml">
+
+        <ui:define name="tituloEncabezado">
+            <h:outputText value="#{etq.fileTransferStatement}" />
+        </ui:define>
+
+        <ui:define name="seccionForma">
+            <a4j:keepAlive beanName="fileTransferStatementBean" />
+            <h:panelGroup id="init">
+                <h:outputText value="#{fileTransferStatementBean.init}" />
+            </h:panelGroup>
+
+            <h:panelGroup id="general">
+                <h:outputText style="color:red" value="#{fileTransferStatementBean.mensajeError}"/>
+
+                <t:div style="padding-top: 18px; width: 100%"
+                    rendered="#{!fileTransferStatementBean.polling and fileTransferStatementBean.cargaZip != null}">
+                    <table cellpadding="3" cellspacing="0" border="0" width="100%" class="recuadroTabla">
+                        <tr>
+                            <td align="left" colspan="5">
+                                <h:outputText value="#{etq.archivosProcesados}" styleClass="texto textoStatementTitulo" />&#160;
+                                <h:outputText value="#{fileTransferStatementBean.cargaZip.totalArchivos}" styleClass="texto textoStatementTitulo" />
+                            </td>
+                        </tr>
+                        <t:dataList var="res" value="#{fileTransferStatementBean.cargaZip.resultados}"
+                                    rendered="#{not empty fileTransferStatementBean.cargaZip.resultados}">
+                            <tr>
+                                <td align="left" width="25">&#160;</td>
+                                <td align="left">
+                                    <h:outputText value="#{etq.archivo}" styleClass="texto #{(res.noCargados > 0)?'textoStatementsResumen':''}" />&#160;
+                                    <h:outputText value="#{res.nombreArchivo}" styleClass="texto textoNegritas #{(res.noCargados > 0)?'textoStatementsResumen':''}" />
+                                </td>
+                                <td align="left">
+                                    <h:outputText value="#{etq.totalRegistros}" styleClass="texto #{(res.noCargados > 0)?'textoStatementsResumen':''}" />&#160;
+                                    <h:outputText value="#{res.total}" styleClass="texto #{(res.noCargados > 0)?'textoStatementsResumen':''}" />
+                                </td>
+                                <td align="left">
+                                    <h:outputText value="#{etq.totalCargados}" styleClass="texto #{(res.noCargados > 0)?'textoStatementsResumen':''}" />&#160;
+                                    <h:outputText value="#{res.cargados}" styleClass="texto #{(res.noCargados > 0)?'textoStatementsResumen':''}" />
+                                </td>
+                                <td align="left">
+                                    <h:outputText value="#{etq.totalNoCargados}" styleClass="texto #{(res.noCargados > 0)?'textoStatementsResumen':''}" />&#160;
+                                    <h:outputText value="#{res.noCargados}" styleClass="texto #{(res.noCargados > 0)?'textoStatementsResumen':''}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left"></td>
+                                <td align="left" colspan="4" style="padding-left: 50px;">
+                                    <h:outputText value="Errores" styleClass="textoStatementsResumen textoNegritas" rendered="#{not empty res.errores}" />
+                                </td>
+                            </tr>
+                            <t:dataList var="entry" value="#{res.mapKeys}" rendered="#{not empty res.errores}">
+                                <tr>
+                                    <td align="left">&#160;</td>
+                                    <td align="left" colspan="4" style="padding-left: 80px;">
+                                        <h:outputText value="#{etq.fila}" styleClass="textoStatementsResumen" />&#160;
+                                        <h:outputText value="#{entry}:" styleClass="textoStatementsResumen" />&#160;
+                                        <h:outputText value="#{res.errores[entry]}" styleClass="textoStatementsResumen" />
+                                    </td>
+                                </tr>
+                            </t:dataList>
+                        </t:dataList>
+                        <t:dataList var="error" value="#{fileTransferStatementBean.cargaZip.mapErroresKeys}"
+                                    rendered="#{not empty fileTransferStatementBean.cargaZip.errores}">
+                            <tr>
+                                <td align="left"></td>
+                                <td align="left" colspan="4">
+                                    <h:outputText value="#{etq.archivo}" styleClass="textoStatementsResumen" />&#160;
+                                    <h:outputText value="#{error}:" styleClass="textoStatementsResumen textoNegritas" />&#160;
+                                    <h:outputText value="#{fileTransferStatementBean.cargaZip.errores[error]}" styleClass="textoStatementsResumen" />
+                                </td>
+                            </tr>
+                        </t:dataList>
+                    </table>
+                    <h:outputText value="#{fileTransferStatementBean.detenerPoll}" />
+                </t:div>
+
+                <h:panelGroup id="pollGrid">
+                    <h:panelGroup
+                        rendered="#{fileTransferStatementBean.polling}">
+
+                        <div align="center">
+                            <h:outputText style="color:red" value="#{fileTransferStatementBean.mensajeError}"/>
+
+                            <b><h:outputText value="#{etq.archivo_usuario}" styleClass="texto" /></b><h:outputText value="#{fileTransferStatementBean.institucionActual.clave}#{fileTransferStatementBean.institucionActual.folio}" styleClass="texto" />
+                            <br/>
+                            <br/>
+                            <h:outputText value="#{etq.estatus}: " styleClass="texto"/> <h:outputText value="#{fileTransferStatementBean.processInfo.status}" styleClass="texto"></h:outputText>
+                            <br/>
+                            <br/>
+                            <h:outputText
+                                value="#{fileTransferStatementBean.processInfo.porcentajeTerminado}">
+                                <f:convertNumber maxFractionDigits="2" pattern="###.##"/>
+                            </h:outputText>
+                            <br/>
+                            <a4j:commandButton
+                                actionListener="#{fileTransferStatementBean.abortProcess}"
+                                action="MDFileTransfer-Home"
+                                rendered="#{fileTransferStatementBean.mostrarBotonDetenerProceso}"
+                                reRender="init,general,upload,panelPoll"
+                                value="#{etq.detener_proceso}"
+                                onclick="this.disabled=true"
+                                oncomplete="this.disabled=false">
+                            </a4j:commandButton>
+                        </div>
+
+
+
+                    </h:panelGroup>
+
+
+                </h:panelGroup>
+
+            </h:panelGroup>
+        </ui:define>
+
+
+        <ui:define name="botones">
+            <h:panelGroup id="upload">
+                <t:div style="width: 100%; text-align: center; padding-top: 18px;" rendered="#{!fileTransferStatementBean.polling}">
+                    <h:outputText value="#{etq.archivo}" />&#160;&#160;
+                    <t:inputFileUpload id="archivoOperaciones" storage="memory"
+                                       value="#{fileTransferStatementBean.archivo}" size="50"
+                                       required="false" /> &#160;&#160;
+                    <h:selectBooleanCheckbox id="chbSimularStatement" value="#{fileTransferStatementBean.simular}" />&#160;&#160;
+                     <h:outputText value="#{etq.simular}" />&#160;&#160;
+                    <br />
+                    <br />
+                    <h:commandButton id="iniciarProceso" value="Iniciar Proceso" 
+                                     onclick="if(! confirmarGuardarStatements() ) { return false; }"
+                                     actionListener="#{fileTransferStatementBean.uploadFile}">
+                        <f:setPropertyActionListener target="#{fileTransferStatementBean.banderaInicio}" value="true"/>
+                    </h:commandButton>&#160;&#160;
+                    
+                    
+                </t:div>
+            </h:panelGroup>
+        </ui:define>
+
+
+    </ui:decorate>
+
+    <a4j:region>
+        <h:form>
+            <h:panelGroup id="panelPoll">
+                <a4j:poll id="poll" interval="2500"
+                          enabled="#{fileTransferStatementBean.pollHabilitado}"
+                          actionListener="#{fileTransferStatementBean.pollEstado}"
+                          reRender="general,upload,panelPoll" />
+            </h:panelGroup>
+        </h:form>
+    </a4j:region>
+</html>

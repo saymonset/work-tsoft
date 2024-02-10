@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="CuentasEfectivo" documentTitle="Cuentas de Efectivo"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        landscape="true" fecha="#{consultaBitacoraEnvOpBean.fechaActual}"
+        imageResource="/images/indeval.jpg">
+        <pdf:table value="admonCuentaEfectivoIntBean" currentBean="emision" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{admonCuentaEfectivoIntBean}" currentBean="emision" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.bicCode}" value="#{admonCuentaEfectivoIntBean.bicCodeSelected}" align="center" />
+                <pdf:col header="#{etq.divisaMinus}" value="#{admonCuentaEfectivoIntBean.divisaSelected}" align="center" />
+				<pdf:col header="#{etq.cuentas}" value="#{admonCuentaEfectivoIntBean.cuentaSelected}" align="center"/>
+				
+                <pdf:col header="#{etq.tipoCuentaMinus}" value="#{admonCuentaEfectivoIntBean.selectTipoCuenta == -1 ? 'TODAS' : admonCuentaEfectivoIntBean.selectTipoCuenta == 1 ? 'Comercial' : 'Custodia'}" align="center"/>
+
+				<pdf:col header="#{etq.cuentaNegocio}" value="#{admonCuentaEfectivoIntBean.selectCuentaNegocio}" align="center"/>
+            </pdf:row>
+        </pdf:table>
+        
+        <pdf:br/>
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{admonCuentaEfectivoIntBean.totalRegistros}"/>
+        <pdf:br/>
+
+        <pdf:table value="#{admonCuentaEfectivoIntBean.paginaReportes.registros}" currentBean="con">
+            <pdf:row>
+				<pdf:col header="#{etq.bicCode}" value="#{con.bicCode}" align="center" />
+				
+				<pdf:col header="#{etq.divisaMinus}" value="#{con.divisa.claveAlfabetica}" align="center"/>
+				
+				<pdf:col header="#{etq.cuentaMinus}" value="#{con.cuenta}" align="center"/>
+				
+				<pdf:col header="#{etq.cuenta950}" value="#{con.cuenta950}" align="center"/>
+				
+				<pdf:col header="#{etq.tipoCuentaMinus}" value="#{(con.tipoCuenta == 1) ? 'Comercial' : 'Custodia'}" align="center"/>
+				
+				<pdf:col header="#{etq.pais}" value="#{con.pais.nombrePais}" align="center"/>
+				
+				<pdf:col header="#{etq.activoEnvio}" value="#{(con.activo == true) ? 'Si' : 'No'}/#{(con.envioTesoreria == true) ? 'Si' : 'No'}" align="center"/>
+				
+				<pdf:col header="#{etq.cuentaNegocio}" value="#{con.cuentaNegocio}" align="center"/>
+				
+				<pdf:col header="#{etq.horarioMexico}" value="#{con.horarioInicio} - #{con.horarioFin}"  align="center"/>
+				
+				<pdf:col header="#{etq.bovedaMinus}" value="#{con.boveda.descripcion}" align="center"/>
+			</pdf:row>
+        </pdf:table>
+
+    </pdf:document>
+</html>

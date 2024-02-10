@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:composition template="/layoutPopUp.xhtml">
+		<ui:define name="head">						
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/calendarioEmisionesDeudaExt.js">
+			</script>			
+		</ui:define>
+		<ui:define name="titulo">
+		Bitacora Mensajes SWIFT
+		</ui:define>
+		<ui:define name="subtitulo">
+		</ui:define>
+		<ui:define name="body">
+			<h:form id="formaBitacoraCalendario">
+				<h:outputText value="#{bitacoraCalendarioEmisionesDeudaExtBean.init}" />
+				<h:panelGroup id="panelResultados">
+
+					<a4j:keepAlive beanName="bitacoraCalendarioEmisionesDeudaExtBean" />
+					<table>
+					<tr>					
+					<td valign="top">
+					<h:dataTable styleClass="tablaGeneral" headerClass="tituloTabla"
+						width="100%" footerClass="tituloTabla" border="0"
+						cellpadding="3px" cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos" 
+						value="#{bitacoraCalendarioEmisionesDeudaExtBean.resultados}"
+						var="mensaje">
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.id}" />
+							</f:facet>
+							<h:outputText value="#{mensaje.idCalendario}" styleClass="css_swift_#{mensaje.id}"/>
+							
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.fecha}"  />
+							</f:facet>
+							<h:outputText value="#{mensaje.fecha}" >
+							 <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="America/Mexico_City" />
+							 </h:outputText>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.origen}" />
+							</f:facet>
+							<h:outputText value="#{mensaje.origen}"/>					
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.tipoMensaje}" />
+							</f:facet>
+							<h:outputText value="#{mensaje.tipoMensaje}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.mensajeMinus}" />
+							</f:facet>
+							<input type="hidden" id="swift_#{mensaje.id}"  class="swift_#{mensaje.id}" value="#{mensaje.mensaje}"/>
+							
+							 <a href="javascript:void(0);" 
+								onclick="actualizaMensaje('swift_#{mensaje.id}');marcar('css_swift_#{mensaje.id}');">
+								<h:graphicImage value="/images/TXT.gif" /> 
+							</a> 
+						</h:column>
+					</h:dataTable>
+					</td>
+					<td valign="top">
+					<h:inputTextarea id="swiftMensaje" readonly="true" cols="60" rows="15" class="printable" ></h:inputTextarea>
+					</td>
+					</tr>
+					<tr>
+						<td>
+							<h:panelGroup>
+										<h:outputText value="Exportar los resultados"></h:outputText>
+										
+										<h:commandButton actionListener="#{bitacoraCalendarioEmisionesDeudaExtBean.generarReportes}"											
+											image="/images/pdf.gif"
+											title="Exportar a PDF todos los resultados de la consulta"
+											id="generarPdf"/>
+                           				&#160;&#160;                          				
+									</h:panelGroup>
+						</td>
+					</tr>
+					</table>
+				</h:panelGroup>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</html>

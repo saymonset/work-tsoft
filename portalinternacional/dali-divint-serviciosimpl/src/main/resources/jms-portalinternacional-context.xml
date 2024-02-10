@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns:util="http://www.springframework.org/schema/util" xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd" >
+
+  <description>
+    AplicationContext de Portal Indeval
+  </description>
+
+   
+	<bean id="jmsConnectionFactoryDivInt" class="org.springframework.jndi.JndiObjectFactoryBean"
+		lazy-init="true">
+		<property name="jndiName" value="java:/jms/QCFXA" />
+	</bean> 
+	
+	<bean id="jmsTransactionManager" class="org.springframework.jms.connection.JmsTransactionManager">
+		<property name="connectionFactory" ref="jmsConnectionFactoryDivInt"/>
+	</bean>
+
+	<!-- Configuracion de Queue para maker-checker-->
+	
+	<bean id="queueSettlementDisciplineRegimeInAutoriza" class="org.springframework.jndi.JndiObjectFactoryBean" lazy-init="true">
+        <property name="jndiName" value="java:/jms/queue/sic/csdr/in/autorizacionResponse" />
+        <property name="proxyInterface" value="javax.jms.Queue"/>
+        <property name="lookupOnStartup" value="true" />
+    </bean>
+    
+	<bean id="taskExecutor"	class="org.springframework.core.task.SimpleAsyncTaskExecutor" />
+	
+	<bean id="settlementDisciplineRegimeMessageListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="jmsConnectionFactoryDivInt" />
+		<property name="destination" ref="queueSettlementDisciplineRegimeInAutoriza" />
+		<property name="taskExecutor" ref="taskExecutor"/>
+		<property name="messageListener" ref="settlementDisciplineRegimeMessageListener" />
+		<property name="sessionTransacted" value="true" />
+	</bean>
+	
+	<bean id="settlementDisciplineRegimeMessageListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+		<constructor-arg ref="settlementDisciplineRegimeAutorizaMessageDelegate"></constructor-arg>
+		<property name="defaultListenerMethod" value="receive" ></property>
+		<property name="messageConverter" ref="autorizacionMessageConverter"></property>
+	</bean>
+	
+	<bean id="autorizacionMessageConverter" class="com.indeval.portalinternacional.middleware.jms.AuthorizationMessageConverter">
+		<property name="xmlHelper"><bean class="com.indeval.workflow.helper.XmlHelper"/></property>
+	</bean>
+	
+	<bean  id="settlementDisciplineRegimeAutorizaMessageDelegate" class="com.indeval.portalinternacional.middleware.services.makerchecker.SolicitudAutorizacionCsdrDelegate">
+		<property name="settlementDisciplineRegimeService" ref="settlementDisciplineRegimeService"></property>
+		<property name="solicitudAutorizacionDao" ref="solicitudAutorizacionDao"></property>
+	</bean>
+
+
+</beans>

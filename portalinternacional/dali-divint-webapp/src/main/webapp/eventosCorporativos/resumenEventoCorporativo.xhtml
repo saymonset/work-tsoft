@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <ui:composition template="/layoutPopUp.xhtml"> 
+        <ui:define name="head">	
+            <script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/eventosCorporativos.js">				
+			</script>
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/FileSaver.js">				
+			</script>
+		 	<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/jquery.wordexport.js">				
+			</script>
+
+			<style type="text/css">
+			.my-floated-elements {
+					float: none
+					}
+				@media screen
+				  {
+				.forscreen { display:block; }
+				.forprinting { display:none; }
+				  }
+				@media print
+				  {
+				.forscreen { display:none; }
+				.forprinting { display:block; 
+						overflow: visible;
+						float: none; }
+				  }
+		    	p {
+	  				margin: 0;
+					padding: 0;
+					color: #000000;
+				}
+				body {
+				  font-family: Arial, Helvetica, Verdana, sans-serif;
+				}
+				
+				.texto {
+				  font-family: Arial, Helvetica, Verdana, sans-serif;
+				}
+			</style>	
+        </ui:define>
+        <ui:define name="subtitulo">
+        </ui:define>
+        <ui:define name="body">
+           <h:form id="resumenForm">
+           <a4j:keepAlive beanName="resumenEventoCorporativoBean" />
+            <h:outputText value="#{resumenEventoCorporativoBean.init}" />
+            <h:outputText value="El resumen del Evento Corporativo a sido deshabilitado" rendered="#{resumenEventoCorporativoBean.evcoResumen.idEventoCorporativo == null}" />
+			<h:outputText value="" rendered="#{resumenEventoCorporativoBean.evcoResumen.idEventoCorporativo != null}" >
+                  						<div id="printing_div_id" class="forprinting" style="white-space:pre-line; align:left"></div>
+            
+              					<!-- CONTENEDOR REAL:::::: -->	
+			<div id="contenedorGeneralBitacoraEvco2">
+			 <div style="padding-bottom: 30px; text-align: center; font-weight: bold; font-size: 15px;">
+		        <h:outputText value="Resumen de evento corporativo" />   
+			</div> 
+			<br/>               
+               <table style="width: 100%;  font-size: 11px; text-align:left;">
+	               <tr style="font-size: 11px; font-weight: normal; text-align:left;">
+	                        <td style="float: left; width: 17%;"><h:outputText style="text-align:left; font-weight: bold;" value="#{etq.folioEvento}: " /> 
+	               					<h:outputText  value="#{resumenEventoCorporativoBean.evcoResumen.idEventoCorporativo}" style="text-align:left;" />
+	               			</td> 
+	               			<td style="float: left; width: 28%;"><h:outputText style="text-align:left; font-weight: bold;" value="#{etq.tipoEvento}: "/>
+	               			        <h:outputText value="#{resumenEventoCorporativoBean.evcoResumen.tipoEvento}" style="text-align:left;" />
+	               			 </td> 
+	               			 <td style="float: left; width: 28%;"><h:outputText style="text-align:left; font-weight: bold;" value="Fecha Creación: "/> 
+	               			        <h:outputText value="#{resumenEventoCorporativoBean.evcoResumen.fechaCreacion}" style="text-align:left;">
+		               							<f:convertDateTime pattern="#{ (empty sessionScope.roles['INT_EVCO_OP'] and empty sessionScope.roles['INT_EVCO_AUT'] and empty sessionScope.roles['INT_EVCO_SU'] ) ? 'dd/MM/yyyy' : 'dd/MM/yyyy HH:mm'}" timeZone="Mexico/General" />
+	               			        </h:outputText>
+	               			</td> 
+	               			<td  style="float: left; width: 24%;"><h:outputText style="text-align: left; font-weight: bold;" value="Fecha Registro: "/> 
+	               			        <h:outputText value="#{resumenEventoCorporativoBean.evcoResumen.fechaRegistro}" style="text-align:left;">
+	               			        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Mexico/General" />
+	               			        </h:outputText>
+	               			</td>       
+	               </tr>           
+              
+               		<tr style="font-size: 11px; font-weight: normal; text-align:left;">
+               			<td style="float: left; width: 17%;"><h:outputText style="text-align: left;  font-weight: bold;" value="#{etq.tv}: "/>
+               			        <h:outputText value="#{resumenEventoCorporativoBean.evcoResumen.tipoValor}" style="text-align: left;" />
+               			</td> 
+               			<td style="float: left; width: 28%;"><h:outputText style="text-align: left;  font-weight: bold;" value="#{etq.emisoraMinus}: "/>
+                        		<h:outputText value="#{resumenEventoCorporativoBean.evcoResumen.emisora}" style="text-align: left;"/>      	
+               			</td> 
+               			<td style="float: left; width: 28%;"><h:outputText style="text-align: left;  font-weight: bold;" value="#{etq.serieMinus}: "/>
+               			        <h:outputText value="#{resumenEventoCorporativoBean.evcoResumen.serie}" style="text-align: left;"/>
+               			</td> 
+               			<td style="float: left; width: 24%;"><h:outputText style="text-align: left;  font-weight: bold;" value="#{etq.isin}: "/> 
+               			        <h:outputText value="#{resumenEventoCorporativoBean.evcoResumen.isin}" style="text-align: left;"/>
+               			</td>               			 
+               			 
+               		</tr>           
+              
+                	<tr style="font-size: 11px; font-weight: normal; text-align:left;">
+                		<td style="float: left; width: 17%;"><h:outputText style="text-align: left;  font-weight: bold;" value="#{etq.mercadoMinus}: "/> 
+               			        <h:outputText value="#{resumenEventoCorporativoBean.evcoResumen.tipoMercado}" style="text-align: left;"/>
+               			</td>               			 
+               			<td style="float: left; width: 28%;"><h:outputText style=" font-weight: bold;" value="Tipo derecho Mercado Local: "/> 
+               					<h:outputText value="#{resumenEventoCorporativoBean.evcoResumen.tipoDerechoML}" />
+               			</td> 
+               			<td style="float: left; width: 28%;"><h:outputText style=" font-weight: bold;" value="Tipo derecho Mercado Origen: "/> 
+               			        <h:outputText value="#{resumenEventoCorporativoBean.evcoResumen.tipoDerechoMO}" />
+               			</td>   
+               			<td style="float: left; width: 24%;"><h:outputText style=" font-weight: bold;" value="#{etq.custodio}: "/> 
+               			        <h:outputText value="#{resumenEventoCorporativoBean.evcoResumen.custodio}" />
+               			</td>
+               		</tr>          
+               </table>
+               <br/> 
+               <h:panelGroup rendered="#{!empty resumenEventoCorporativoBean.evcoResumen.fechaCliente or (!empty resumenEventoCorporativoBean.evcoResumen.fechaIndeval and resumenEventoCorporativoBean.consultaIndeval) or !empty resumenEventoCorporativoBean.evcoResumen.fechaPago}">
+               <div id="fechasdiv" style="width: 100%;">
+               
+               <table id="tablaContainerFechas" align="left" style="width: 50%;height: 50px;" border="0"  >
+							<tr style="   font-size: 11px; font-weight: bold;">
+								<h:outputText value="" rendered="#{!empty resumenEventoCorporativoBean.evcoResumen.fechaCliente}">
+										<td style="width: 33%">
+											<h:outputText value="#{etq.fechaLimiteCliente}"/>
+										</td>
+								</h:outputText>								
+									<h:outputText value="" rendered="#{resumenEventoCorporativoBean.consultaIndeval and !empty resumenEventoCorporativoBean.evcoResumen.fechaIndeval}">
+											<td style="width: 33%">
+												<h:outputText  value="#{etq.fechaLimiteIndeval}"/>
+											</td>
+									</h:outputText>
+								
+								<h:outputText value="" rendered="#{!empty resumenEventoCorporativoBean.evcoResumen.fechaPago}">
+											<td style="width: 33%">
+												<h:outputText  value="#{etq.fechaLimitePago}"/>
+											</td>
+								</h:outputText>
+		  					</tr>
+               				<tr style=" border:  0px ; font-size: 11px; font-weight: normal;">
+               					<h:outputText value="" rendered="#{resumenEventoCorporativoBean.evcoResumen.fechaCliente != null}">
+		               						<td><h:outputText value="#{resumenEventoCorporativoBean.evcoResumen.fechaCliente}" >
+		               							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Mexico/General" />
+									 			</h:outputText>
+		               						</td>
+               					</h:outputText>
+               					<h:outputText value="" rendered="#{resumenEventoCorporativoBean.consultaIndeval and !empty resumenEventoCorporativoBean.evcoResumen.fechaIndeval}">	               					
+			               						<td><h:outputText value="#{resumenEventoCorporativoBean.evcoResumen.fechaIndeval}" >
+			               							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Mexico/General" />
+									 				</h:outputText>
+			               						</td>	               					
+               					</h:outputText>
+               					<h:outputText value="" rendered="#{!empty resumenEventoCorporativoBean.evcoResumen.fechaPago}">
+		               						<td><h:outputText value="#{resumenEventoCorporativoBean.evcoResumen.fechaPago}" >
+			               						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Mexico/General" />
+										 		</h:outputText></td>
+               					</h:outputText>
+               				</tr>          				               				         					
+               	</table>
+               	<table  style="width: 50%;height: 60px;">
+               	<tr><td> </td></tr>
+               		<tr><td> </td></tr>
+               	</table>
+               	
+ 				</div>
+ 				
+ 				<br/>
+ 				</h:panelGroup>
+ 				<br/>
+								
+					
+ 					<h:dataTable id="table1"  style="width: 100%;padding-top: 20px;" value="#{resumenEventoCorporativoBean.evcoResumen.cuerpoEnVistaLista}" var="item" border="0"> 
+						   				
+					  <h:column>						
+						<table style="width: 100%; font-size: 11px;" >
+							<tr style="font-size: 11px; font-weight: normal;">
+						   		<td align="left">
+					       			<h:outputText escape="false" value="#{item.cuerpoEventoHtml}" />
+					       		</td>
+					       	</tr>
+					    </table>
+						<br/> 
+							  
+						<a4j:repeat id="repeatOpciones" var="opciones" value="#{item.opcionesList}"  rowKeyVar="index" >
+						 	  <table style="width: 100%; padding-top: 20px; font-size: 11px;"  >										 	 
+							 	  <tr style="font-size: 11px; font-weight: normal;">
+								  	<td align="left">
+								 	  <h:outputText style="font-weight: bold;" escape="false" value=" Opción #{index +1} : " />
+								 	  <h:outputText style="font-weight: bold;" value="Default *" rendered="#{opciones.opcDefault == 1}" />
+								 	  <h:outputText style=" padding-left: 15px;" escape="false" value=" #{opciones.cuerpo}" />
+								 	</td>
+							 	  </tr>
+						 	  </table>
+						 	  <br/>
+						 	  <br/>	
+						 	<h:panelGroup rendered="#{!(empty opciones.fechaCliente and empty opciones.fechaIndeval and empty opciones.fechaPago)}">
+				 	  		<div style="width: 100%; padding-left: 0px;"> 
+							  <table id="tablaContainerFechasInt" align="left" style="width: 50%;height: 50px;" border="0"  >
+								 	<tr style=" border:0px; font-size: 11px; font-weight: bold; ">
+								  		<h:outputText value="" rendered="#{opciones.fechaCliente != null}">
+								  			<td style="width: 33%;">
+								  				<h:outputText value="#{etq.fechaLimiteCliente}"/>
+								  			</td>
+								    	</h:outputText>
+								  		
+									    <h:outputText value="" rendered="#{opciones.fechaIndeval != null and resumenEventoCorporativoBean.consultaIndeval}">
+									       		<td style="width: 33%;">
+													<h:outputText  value="#{etq.fechaLimiteIndeval}"/>
+												</td>
+									       
+								       	</h:outputText>
+								       	<h:outputText value="" rendered="#{opciones.fechaPago != null}">
+								             <td style="width: 33%;">
+												<h:outputText  value="#{etq.fechaLimitePago}"/>
+										     </td>
+								        </h:outputText>
+								   </tr>
+							  
+								   <tr style=" border:0px;  font-size: 11px; font-weight: normal;">
+								       	<h:outputText value="" rendered="#{opciones.fechaCliente != null}">
+								        	<td><h:outputText value="#{opciones.fechaCliente}">
+										   	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Mexico/General" />
+											</h:outputText></td>
+										</h:outputText>
+										
+										<h:outputText value="" rendered="#{opciones.fechaIndeval != null and resumenEventoCorporativoBean.consultaIndeval}">
+												<td><h:outputText value="#{opciones.fechaIndeval}" >
+										   	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Mexico/General" />
+											</h:outputText></td>
+										</h:outputText>
+										
+										<h:outputText value="" rendered="#{opciones.fechaPago != null}">
+										   	<td><h:outputText value="#{opciones.fechaPago}" >
+										   	<f:convertDateTime pattern="dd/MM/yyyy" timeZone="Mexico/General" />
+											</h:outputText></td>
+										</h:outputText>
+									</tr>          					
+								</table> 
+								<table  style="width: 50%;height: 50px;">
+					              	<tr><td> </td></tr>
+					              		<tr><td> </td></tr>
+					            </table>              
+						 	</div>	
+						 	</h:panelGroup>						 	
+						</a4j:repeat>  		
+							<br /> 			          
+					   <div style="width: 100%; "></div>
+						<br /> 
+							  	<table style="width: 100%; padding-left: 0%; color: black;" >
+								  	<a4j:repeat var="notas" value="#{item.notasList}" rowKeyVar="cont">
+							  		<h:outputLabel  rendered="#{cont == 0}"> 
+										<tr>
+											<td align="left" style="font-size: 11px; font-weight: bold;">
+												<h:outputText  value="Notas:" />	
+											</td>
+										</tr>
+									</h:outputLabel>     		
+
+								   		<tr>
+								   		 	<td align="left" style="font-size: 11px; font-weight: normal;">
+													<h:outputText escape="false" value=" #{notas}" />
+											</td>
+										</tr>
+								</a4j:repeat>					 					             	
+										      	
+							   </table>
+								<br/> 
+				        	<h:panelGroup id="containerArchivos" >
+								<table style="width: 100%; padding-left: 0%; color: black; font-weight: bold;" >
+								 		<a4j:repeat var="adjuntos" value="#{item.archivosAdjuntos}" rowKeyVar="cont">
+								   			<h:outputLabel  rendered="#{cont == 0}"> 
+									    		<tr>
+										    		<td align="left" style="font-size: 11px; font-weight: bold;">
+									    				<h:outputText  value="Archivos disponibles:" />												    			
+										    		</td>
+									    		</tr>										    		
+								    		</h:outputLabel> 
+									    		<tr>
+									    		 	<td align="left" style="font-size: 11px; font-weight: normal;">	
+									    				<h:outputText value="" rendered="#{adjuntos.archivoAdjunto != null}" >											 		  
+			      											<h:commandLink action="#{resumenEventoCorporativoBean.obtenerArchivos}"   value="#{adjuntos.descripcion}" >
+			      												<f:setPropertyActionListener value="#{adjuntos.idAdjuntos}"   target="#{resumenEventoCorporativoBean.idArchivo}" />
+			      											</h:commandLink>
+		      											</h:outputText>	
+		      											<h:outputText value=" " rendered="#{adjuntos.archivoAdjunto == null}" >
+		      												#{adjuntos.descripcion} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
+		      											</h:outputText>
+													</td>
+												</tr>
+										</a4j:repeat>						 					             		      	
+								</table>
+							</h:panelGroup>
+								<br/> 
+															      	
+							<div style="width: 100%; "></div>
+								<table style="width: 100%; color: black;" >
+								   	<tr style="font-size: 11px; font-weight: normal;">
+								   		<td align="left">
+								   			<h:outputText escape="false" value="#{item.piePaginaHtml}" />
+								   		</td>
+								   	</tr>
+
+							    </table>
+							    
+							    <h:outputText value="" rendered="#{resumenEventoCorporativoBean.consultaIndeval}" >
+							    <div style="width:100%; text-align:center">
+							    <h:panelGroup id="containerNotificaciones" rendered="#{!empty item.notificacionesList}">
+								   	
+								 	<table  style="width: 80%;height: 50px;" border="1" rules="all" >
+										<a4j:repeat var="notificaciones" value="#{item.notificacionesList}" rowKeyVar="cont">
+											<h:outputLabel  rendered="#{cont == 0}"> 
+											<div align="left">
+												<h:outputText  value="Notificaciones:" style="font-size: 11px; font-weight: bold;"/>
+										 	</div>
+										 	<tr style=" border: black 1px solid; background-color:#A4A4A4; font-size: 11px; font-weight: bold;" >
+												<td align="left" style="font-size: 11px; font-weight: bold;">
+													<h:outputText value="Generación de Notificación"/>
+											    </td>  
+											    <td align="left" style="font-size: 11px; font-weight: bold;">
+												    <h:outputText value="Destinatario"/>
+												</td>
+												<td align="left" style="font-size: 11px; font-weight: bold;">
+											        <h:outputText value="Mensaje"/>
+												</td>
+												<td align="left" style="font-size: 11px; font-weight: bold;">
+												     <h:outputText value="Desde"/>
+										     	</td>
+										     	<td align="left" style="font-size: 11px; font-weight: bold;">
+											         <h:outputText value="Hasta"/>
+											    </td>
+												<td align="left" style="font-size: 11px; font-weight: bold;">
+											        <h:outputText value="Hora"/>											      
+											    </td>											    			
+												
+											</tr>																		    		
+											</h:outputLabel> 	
+											
+											<tr>										 							     
+										        <td align="left" style="font-size: 11px; font-weight: normal;">
+													<h:outputLabel value="#{notificaciones.tipoNotificacion}"/>
+											    </td>  
+											    <td align="left" style="font-size: 11px; font-weight: normal;">
+												     <h:outputLabel value="#{notificaciones.destinatario}"/>
+												</td>
+												<td align="left" style="font-size: 11px; font-weight: normal;">
+											        <h:outputLabel value="#{notificaciones.textAdicional}"/>
+												</td>
+												<td align="left" style="font-size: 11px; font-weight: normal;">
+												     <h:outputLabel value="#{notificaciones.desde}">
+													   	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Mexico/General" />
+													</h:outputLabel>
+										     	</td>
+										     	<td align="left" style="font-size: 11px; font-weight: normal;">
+											         <h:outputLabel value="#{notificaciones.hasta}">
+													   	<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="Mexico/General" />
+													</h:outputLabel>
+											    </td>
+												<td align="left" style="font-size: 11px; font-weight: normal;">
+											        <h:outputLabel value="#{notificaciones.hora}"/>											      
+											    </td>
+										   </tr>
+									</a4j:repeat>
+							      </table>						
+							</h:panelGroup>
+							</div>
+							<br/> 
+							<div style="width:100%; text-align:center">
+							<h:panelGroup id="grupoValidaciones" rendered="#{not empty item.validacionesList}">
+								   													
+								<table  style="width: 80%;height: 50px;" border="1" rules="all" >
+										<a4j:repeat var="validaciones" value="#{item.validacionesList}" rowKeyVar="cont">
+								  			<h:outputLabel  rendered="#{cont == 0}"> 
+								  			<div align="left">
+								  				<h:outputText  value="Validaciones:" style="font-size: 11px; font-weight: bold;"/>	
+											</div>
+											 	<tr style=" border: black 1px solid; background-color:#A4A4A4; font-size: 11px; font-weight: bold;" >
+													<td align="left" style="font-size: 11px; font-weight: bold;">
+														<h:outputText value="Tipo Validación"/>
+												    </td>  
+												    <td align="left" style="font-size: 11px; font-weight: bold;">
+													    <h:outputText value="Operación"/>
+													</td>
+													<td align="left" style="font-size: 11px; font-weight: bold;">
+												        <h:outputText value="Valor"/>
+													</td>
+												</tr>																		    		
+											</h:outputLabel> 	
+												
+												<tr>										 							     
+											        <td align="left" style="font-size: 11px; font-weight: normal;">
+														<h:outputLabel value="#{validaciones.operador}"/>
+												    </td>  
+												    <td align="left" style="font-size: 11px; font-weight: normal;">
+													     <h:outputLabel value="#{validaciones.tipoValidacion}"/>
+													</td>
+													<td align="left" style="font-size: 11px; font-weight: normal;">
+												        <h:outputLabel value="#{validaciones.valor}"/>
+													</td>
+											   </tr>
+							  			</a4j:repeat>
+							  	</table>	
+							</h:panelGroup>	
+							</div>
+							</h:outputText>
+												        
+						</h:column>										              
+					</h:dataTable> 
+ 
+ 
+              </div>
+              			
+              			<div>			
+                            <a href="javascript:printBitacoraContent('contenedorGeneralBitacoraEvco2','printing_div_id')">
+								<h:outputText value="#{etq.imprimirResultados}:"/>	
+							</a>              				
+						</div>
+						<div>			
+                            <a href="javascript:exportarAWord()" class="word-export">
+								<h:outputText value="Exporta"/>	
+							</a>   
+							<br/>
+							<h:outputText style="font-size:9px; color:#498FED; font-weight: bold"  value=" Exportación compatible con Firefox, Chrome e Internet Explorer 11 Edge"/>           				
+						</div> 
+			</h:outputText>
+           </h:form>
+        </ui:define>
+    </ui:composition>      
+</html>
+      

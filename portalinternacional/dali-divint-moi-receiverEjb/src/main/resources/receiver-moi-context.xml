@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<description>
+		AplicationContext de configuracion de objetos de acceso a los
+		servicios del Dispatcher
+	</description>
+
+	<bean id="errorDispatcherResolver"
+		class="com.bursatec.util.message.impl.MessageResolverImpl">
+		<description>Bean de Acceso al Message Error</description>
+
+		<property name="messageSource">
+			<bean
+				class="org.springframework.context.support.ResourceBundleMessageSource">
+				<property name="basenames">
+					<list>
+						<value>classpath:errores.properties</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="receiverOperacionesMoiService"
+		class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ReceiverOperacionesMoiServiceImpl"
+		lazy-init="true">
+		<property name="bitacoraOperacionesDao">
+			<ref bean="bitacoraOperacionesDao" />
+		</property>
+		<property name="dateUtilService">
+			<ref bean="dateUtilService" />
+		</property>
+		<property name="operacionSicDao">
+			<ref bean="operacionSicDao" />
+		</property>
+		<property name="transformaMensaje">
+			<ref bean="transformaMensaje" />
+		</property>
+	</bean>
+	
+	<bean id="transformaMensaje"
+		class="com.indeval.portalinternacional.middleware.services.util.TransformaMensaje"
+		lazy-init="true">
+		<description>Bean de Transformacion de Mensajes</description>
+	</bean>
+	
+</beans>

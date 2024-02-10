@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd" version="1.2">
+
+	<managed-bean>        
+        <managed-bean-name>fileTransferCapturaBeneBean</managed-bean-name>        																									
+        <managed-bean-class>com.indeval.portalinternacional.presentation.controller.beneficiarios.filetransfer.FileTransferCapturaBeneController</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>navHome</property-name>
+            <property-class>java.lang.String</property-class>
+            <value>BeneFileTransfer-Home</value>
+        </managed-property>
+         <managed-property>
+            <property-name>process</property-name>
+            <property-class>java.lang.String</property-class>
+            <value>BE</value>
+        </managed-property>
+        <managed-property>
+            <property-name>fileUploadService</property-name>
+            <value>#{fileUploadService}</value>
+        </managed-property>
+         <managed-property>
+            <property-name>mapfileTransfersCapturaBenefServices</property-name>
+            <value>#{mapfileTransfersCapturaBenefServices}</value>
+        </managed-property>
+         <managed-property>
+            <property-name>utilDivintBeneficiariosService</property-name>
+            <value>#{utilDivintBeneficiariosService}</value>
+        </managed-property>
+    </managed-bean>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>BeneFileTransfer-Home</from-outcome>   			    
+            <to-view-id>/beneficiarios/filetransfer/fileTransferCapturaBene.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>filetransferXls1</from-outcome>   			    
+            <to-view-id>/beneficiarios/filetransfer/fileTransferCapturaBenefDetalleXls1.xhtml</to-view-id>
+        </navigation-case>
+		<navigation-case>
+            <from-outcome>filetransferXls2</from-outcome>   			    
+            <to-view-id>/beneficiarios/filetransfer/fileTransferCapturaBenefDetalleXls2.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>resumenFileTransferW8BENE</from-outcome>   			    
+            <to-view-id>/beneficiarios/filetransfer/resumenFileTransferW8BENE.xhtml</to-view-id>
+        </navigation-case>
+		<navigation-case>
+            <from-outcome>resumenFileTransferW8IMY</from-outcome>   			    
+            <to-view-id>/beneficiarios/filetransfer/resumenFileTransferW8IMY.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+</faces-config>
+

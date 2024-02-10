@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+
+	<ui:composition template="/layoutConsultas.xhtml">
+	
+		<ui:define name="tituloEncabezado">
+		</ui:define>
+		
+		<ui:define name="head">			
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/conciliacionesEfectivoInt.js">
+			</script>
+		</ui:define>
+		<ui:define name="tituloSeccion">
+			<h:outputText value="Consulta Conciliación Efectivo" />
+		</ui:define>
+
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="Conciliación Efectivo"></h:outputText>
+		</ui:define>
+
+		<ui:define name="criterios">
+			<h:outputText value="#{conciliacionesEfectivoIntBean.init}" />
+			<a4j:keepAlive beanName="conciliacionesEfectivoIntBean" />
+			<h:panelGroup id="mensajeUsuario">
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+				
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+				</div>
+			</h:panelGroup>
+			<h:panelGroup id="panelCriterios">				
+				<div style='display: "inline"' id="divCriterios">
+					<table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+						align="center">
+						<tr>							
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center" border="0">
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.bicCode}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.divisaMinus}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.cuentas}" />
+										</td>
+										<td align="center" rowspan="3">
+											<table>
+												<tr>
+													<td align="center"><h:outputText styleClass="texto" value="#{etq.fechaBalance}" /></td>
+												</tr>
+												<tr>
+													<td>
+														<table>
+															<tr>
+																<td>
+																	<rich:calendar value="#{conciliacionesEfectivoIntBean.fechaBalanceInicio}"
+												       					inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+												       					datePattern="dd/MM/yyyy" />
+																</td>
+																<td>
+																	<rich:calendar value="#{conciliacionesEfectivoIntBean.fechaBalanceFin}"
+																		inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+												       					datePattern="dd/MM/yyyy" />
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+												<tr>
+													<td align="center"><h:outputText styleClass="texto" value="#{etq.fechaElaboracion}" /></td>
+												</tr>
+												<tr>
+													<td>
+														<table>
+															<tr>
+																<td>
+																	<rich:calendar value="#{conciliacionesEfectivoIntBean.fechaElaboracionInicio}"
+												       					inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="15"
+												       					datePattern="dd/MM/yyyy HH:mm" />
+																</td>
+																<td>
+																	<rich:calendar value="#{conciliacionesEfectivoIntBean.fechaElaboracionFin}"
+												       					inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="15"
+												       					datePattern="dd/MM/yyyy HH:mm" />
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr align="center">
+										<td>
+											<rich:orderingList value="#{conciliacionesEfectivoIntBean.listBicCodes}" selection="#{conciliacionesEfectivoIntBean.bicCodeSelected}"
+												var="list" listHeight="100" listWidth="150" orderControlsVisible="false" fastOrderControlsVisible="false" id="bicCodes">
+										    	<rich:column  width="180">
+										       		<h:outputText value="#{list}"></h:outputText>
+										      	</rich:column>
+										      	<a4j:support event="onclick" ignoreDupResponses="true" action="#{conciliacionesEfectivoIntBean.obtieneDivisas}" reRender="divisas, cuentas"/>
+										      	<a4j:support event="onkeyup" ignoreDupResponses="true" action="#{conciliacionesEfectivoIntBean.obtieneDivisas}" reRender="divisas, cuentas"/>
+										   	</rich:orderingList>
+										</td>
+										<td>
+											<rich:orderingList value="#{conciliacionesEfectivoIntBean.listDivisas}" selection="#{conciliacionesEfectivoIntBean.divisaSelected}" 
+												var="list" listHeight="100" listWidth="150" orderControlsVisible="false" fastOrderControlsVisible="false" id="divisas">
+									            <rich:column  width="180">
+									                <h:outputText value="#{list}"></h:outputText>
+									            </rich:column>
+									            <a4j:support event="onclick" ignoreDupResponses="true" action="#{conciliacionesEfectivoIntBean.obtieneCuentas}" reRender="cuentas"/>
+									            <a4j:support event="onkeyup" ignoreDupResponses="true" action="#{conciliacionesEfectivoIntBean.obtieneCuentas}" reRender="cuentas"/>
+									        </rich:orderingList>
+										</td>
+										<td>
+											<rich:orderingList value="#{conciliacionesEfectivoIntBean.listCuentas}" selection="#{conciliacionesEfectivoIntBean.cuentaSelected}"
+												var="list" listHeight="100" listWidth="180" orderControlsVisible="false" fastOrderControlsVisible="false" id="cuentas">
+									            <rich:column  width="180">
+									                <h:outputText value="#{list}"></h:outputText>
+									            </rich:column>
+									        </rich:orderingList>
+										</td>
+									</tr>
+									<tr align="center">
+										<td align="center">
+											<h:selectBooleanCheckbox id="cuentaCustodia" tabindex="80" value="#{conciliacionesEfectivoIntBean.cuentaCustodia}" />&#160;
+											<h:outputText styleClass="texto" value="#{etq.cuentasCustodia}" />
+										</td>
+										<td align="center">
+											<h:selectBooleanCheckbox id="cuentaComercial" tabindex="90" value="#{conciliacionesEfectivoIntBean.cuentaComercial}" />&#160;
+											<h:outputText styleClass="texto"  value="#{etq.cuentasComercial}" />
+										</td>
+										<td align="center">
+											<h:selectBooleanCheckbox id="diferencia" tabindex="95" value="#{conciliacionesEfectivoIntBean.diferencia}" />&#160;
+											<h:outputText styleClass="texto"  value="#{etq.conDiferencia}" />
+										</td>
+										
+									</tr>
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.folioConciliacion}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.folioMensaje}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.referenciaMT}" />
+										</td>
+									</tr>
+									<tr align="center">
+										<td>
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="folioConciliacion" value="#{conciliacionesEfectivoIntBean.folioConciliacion}" 
+													size="20" maxlength="18" styleClass="textoControles campoNumerico" tabindex="100" />
+											</h:panelGroup>
+										</td>
+										<td>
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="folioMensaje" value="#{conciliacionesEfectivoIntBean.folioMensaje}"
+													size="20" maxlength="5" styleClass="textoControles campoNumerico" tabindex="110" />
+											</h:panelGroup>
+										</td>
+										<td>
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="referenciaMT" value="#{conciliacionesEfectivoIntBean.referenciaMT}"
+													size="20" maxlength="16" styleClass="textoControles" tabindex="120" />
+											</h:panelGroup>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</h:panelGroup>
+			<h:panelGroup id="panelResumen">
+				<h:panelGroup rendered="#{conciliacionesEfectivoIntBean.consultaEjecutada}">
+					<div id="divResumen" style="display: #{conciliacionesEfectivoIntBean.consultaEjecutada ? 'inline':'none'}">
+						<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+							<tr>
+								<td class="recuadroTabla">
+									<table class="tablaCriterios texto" border="0" style="text-align: center">
+										<tr>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.bicCode}" />
+											</td>
+											<td align="center" >
+												<h:outputText styleClass="texto" value="#{etq.divisaMinus}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.cuentas}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.cuentasCustodia}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.cuentasComercial}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.conDiferencia}" />
+											</td>
+										</tr>
+										<tr align="center">
+											<td>
+												<h:outputText styleClass="texto" value="#{conciliacionesEfectivoIntBean.bicCodeSelected}" rendered="#{!empty conciliacionesEfectivoIntBean.bicCodeSelected}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{empty conciliacionesEfectivoIntBean.bicCodeSelected}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{conciliacionesEfectivoIntBean.divisaSelected}" rendered="#{!empty conciliacionesEfectivoIntBean.divisaSelected}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty conciliacionesEfectivoIntBean.divisaSelected}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{conciliacionesEfectivoIntBean.cuentaSelected}" rendered="#{!empty conciliacionesEfectivoIntBean.cuentaSelected}"/>
+	                                           	<h:outputText styleClass="texto" value="TODAS" rendered="#{empty conciliacionesEfectivoIntBean.cuentaSelected}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{conciliacionesEfectivoIntBean.cuentaCustodia ? 'Si':'No'}" />
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{conciliacionesEfectivoIntBean.cuentaComercial ? 'Si':'No'}" />
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{conciliacionesEfectivoIntBean.diferencia ? 'Si':'No'}" />
+											</td>
+										</tr>
+										<tr>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.folioConciliacion}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.folioMensaje}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.referenciaMT}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.fechaBalance}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.fechaElaboracion}" />
+											</td>
+											<td align="center"></td>
+										</tr>
+										<tr>
+											<td>
+												<h:outputText styleClass="texto" value="#{conciliacionesEfectivoIntBean.folioConciliacion}" rendered="#{!empty conciliacionesEfectivoIntBean.folioConciliacion}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{empty conciliacionesEfectivoIntBean.folioConciliacion}"/>
+	                                           
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{conciliacionesEfectivoIntBean.folioMensaje}" rendered="#{!empty conciliacionesEfectivoIntBean.folioMensaje}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{empty conciliacionesEfectivoIntBean.folioMensaje}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{conciliacionesEfectivoIntBean.referenciaMT}" rendered="#{!empty conciliacionesEfectivoIntBean.referenciaMT}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty conciliacionesEfectivoIntBean.referenciaMT}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{conciliacionesEfectivoIntBean.fechaBalanceInicio}" rendered="#{!empty conciliacionesEfectivoIntBean.fechaBalanceInicio}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty  conciliacionesEfectivoIntBean.fechaBalanceInicio }"/>
+	                                            <h:outputText styleClass="texto" value=" - " />
+	                                            <h:outputText styleClass="texto" value="#{conciliacionesEfectivoIntBean.fechaBalanceFin}" rendered="#{!empty conciliacionesEfectivoIntBean.fechaBalanceFin}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty  conciliacionesEfectivoIntBean.fechaBalanceFin }"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{conciliacionesEfectivoIntBean.fechaElaboracionInicio}"
+													rendered="#{!empty conciliacionesEfectivoIntBean.fechaElaboracionInicio}" converter="formatoFechaLargaConverter"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty  conciliacionesEfectivoIntBean.fechaElaboracionInicio }"/>
+	                                            <h:outputText styleClass="texto" value=" - " />
+	                                            <h:outputText styleClass="texto" value="#{conciliacionesEfectivoIntBean.fechaElaboracionFin}"
+	                                            	rendered="#{!empty conciliacionesEfectivoIntBean.fechaElaboracionFin}" converter="formatoFechaLargaConverter"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty  conciliacionesEfectivoIntBean.fechaElaboracionFin}"/>
+											</td>											
+										</tr>										
+									</table>							
+								</td>
+							</tr>								
+						</table>															
+					</div>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+		<ui:define name="botones">
+			<h:panelGroup id="botones">				
+				<div class="refrescar" style="float: left;">
+	        		 <a4j:status id="commonStatus">
+						<f:facet name="start">
+							<h:panelGroup>
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								<h:outputText value="#{etq.buscando}"></h:outputText>
+							</h:panelGroup>
+						</f:facet>
+					</a4j:status> 	
+	        	</div>
+				<div class="limpiar">
+					<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+						styleClass="submit" 
+						onclick="limpiarTodos();"
+						actionListener="#{conciliacionesEfectivoIntBean.limpiar}" 
+						tabindex="6"/>
+				</div>
+				<div class="buscar">
+					<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+						styleClass="submit"
+						oncomplete='javascript:presentarResumen();limpiarTodos()'
+						actionListener="#{conciliacionesEfectivoIntBean.buscarConciliacionesEfectivo}"
+						reRender="containerResultados,totalesConsultas,tablaResultados,botones,mensajeUsuario,panelResumen"
+						tabindex="7">
+					</a4j:commandButton>
+				</div>
+				<div class="editar" style="display:#{conciliacionesEfectivoIntBean.consultaEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios">            
+	            	<input type="image" class="submit"
+						src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+						alt="Editar Criterios" title="Editar Criterios"
+						onclick='javascript:presentarCriterios();return false;' />                      	
+	           	</div>
+           	</h:panelGroup>
+		</ui:define>
+
+		<ui:define name="seccionContenido">
+			<h:panelGroup id="containerResultados">
+				<h:panelGroup rendered="#{conciliacionesEfectivoIntBean.consultaEjecutada}">
+					<t:dataTable id="noExistenResultados"
+						value="#{conciliacionesEfectivoIntBean.paginaVO.registros}"
+						styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+						footerClass="tituloTabla" border="0" cellpadding="3px"
+						cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos"
+						rendered="#{empty conciliacionesEfectivoIntBean.paginaVO.registros}">
+
+						<t:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.sinResultados}"></h:outputText>
+							</f:facet>
+
+						</t:column>
+					</t:dataTable>
+					<br/>
+					<br/>
+					<br/>
+					<h:panelGroup id="tablaResultados">						
+						<h:graphicImage value="/images/blank.gif" width="900px"
+							height="1px"></h:graphicImage>
+						<h:panelGroup
+							rendered="#{not empty conciliacionesEfectivoIntBean.paginaVO.registros}">
+							<table width="100%" border="0">
+								<tr>
+									<td align="left" class="textoEstadoCuenta">
+										<a4j:commandLink id="control_bitacora_primero"
+											action="#{conciliacionesEfectivoIntBean.irPrimeraPagina}"
+											rendered="#{conciliacionesEfectivoIntBean.irAlPrimero}"
+											reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,containerResultados">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_atras_fast"
+											action="#{conciliacionesEfectivoIntBean.retrocederPaginasRapido}"
+											rendered="#{conciliacionesEfectivoIntBean.retrocederRapido}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_atras"
+											action="#{conciliacionesEfectivoIntBean.retrocederPagina}"
+											rendered="#{conciliacionesEfectivoIntBean.retroceder}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+												border="0" />
+										</a4j:commandLink>
+										<a4j:commandLink id="control_bitacora_adelante"
+											action="#{conciliacionesEfectivoIntBean.avanzarPagina}"
+											rendered="#{conciliacionesEfectivoIntBean.avanzar}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_adelante_fast"
+											action="#{conciliacionesEfectivoIntBean.avanzarPaginasRapido}"
+											rendered="#{conciliacionesEfectivoIntBean.avanzarRapido}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+												border="0" />
+
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_ultimo"
+											action="#{conciliacionesEfectivoIntBean.irUltimaPagina}"
+											rendered="#{conciliacionesEfectivoIntBean.irAlUltimo}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<br />
+										<h:outputText value="#{etq.mostrando}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{conciliacionesEfectivoIntBean.numeroPagina}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+										<h:outputText value="#{conciliacionesEfectivoIntBean.totalPaginas}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+										&#160;&#160;&#160;
+										<h:outputText
+											value="#{conciliacionesEfectivoIntBean.paginaVO.totalRegistros}"
+											styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+										&#160;
+										<h:outputText styleClass="textoResumen"
+											value="#{etq.registrosEncontrados}" />
+									</td>
+									<td align="right" class="textoEstadoCuenta">
+										<h:outputText escape="false" value="#{etq.registrosPorPagina}"
+											styleClass="textoResumen" />
+										<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+											value="#{conciliacionesEfectivoIntBean.paginaVO.registrosXPag}">
+											<f:selectItem itemLabel="1" itemValue="1" />
+											<f:selectItem itemLabel="2" itemValue="2" />
+											<f:selectItem itemLabel="5" itemValue="5" />
+											<f:selectItem itemLabel="10" itemValue="10" />
+											<f:selectItem itemLabel="20" itemValue="20" />
+											<f:selectItem itemLabel="50" itemValue="50" />
+											<f:selectItem itemLabel="100" itemValue="100" />
+											<a4j:support event="onchange"
+												reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,mensajeUsuario"
+												action="#{conciliacionesEfectivoIntBean.ejecutarConsulta}" >
+                                            </a4j:support>
+										</h:selectOneMenu>&#160;&#160;&#160;&#160;&#160;
+									</td>
+								</tr>
+							</table>
+						</h:panelGroup>
+						
+						<h:dataTable id="resultados"
+							value="#{conciliacionesEfectivoIntBean.paginaVO.registros}" var="conciliacion"
+							rendered="#{not empty conciliacionesEfectivoIntBean.paginaVO.registros}"
+							styleClass="tablaGeneral centrado" headerClass="tituloTabla" width="100%"
+							footerClass="texto textoPeque12" border="0" cellpadding="3px"
+							cellspacing="0px" columnClasses="everyColumn"
+							rowClasses="renglonTablaUno, renglonTablaDos">
+							
+							<h:column >
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.detalleMensaje}" />
+								</f:facet>
+								<table align="left">
+									<tr>
+										<td>
+											<a href="javascript:detalleResultadoMensaje(#{conciliacion.folioConciliacion});" title="Muestra el mensaje Swift">
+												<img src="#{facesContext.externalContext.requestContextPath}/images/msg.gif"  />
+											</a>
+										</td>
+									</tr>	
+								</table>
+							</h:column>
+							<h:column >
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.folioConciliacion}" />
+								</f:facet>
+								<table align="left">
+									<tr>
+										<td>
+											<h:outputLink value="#{facesContext.externalContext.requestContextPath}/conciliacionInternacional/consultaDetalleConciliacionEfectivo.faces"
+												styleClass="texto textoPeque12">							
+												<f:param name="folioConciliacion" value="#{conciliacion.folioConciliacion}"/>
+												<h:outputText value="#{conciliacion.folioConciliacion}" />
+											</h:outputLink>	
+										</td>
+									</tr>	
+								</table>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.referenciaMT}" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.referencia}" />									
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.folioMensaje}" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.statementNumber}" />									
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaElaboracion}" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.listaBitacoraConciliacionEfectivo[0].fechaEmision}" converter="formatoFechaLargaConverter"/>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaBalance}" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.fechaBalance}" converter="formatoFechaCortaConverter"/>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.custodioBic}" />									
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.bicCode}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="&#160;&#160;&#160;&#160;&#160;#{etq.cuentaMinus}&#160;&#160;&#160;&#160;&#160;" />									
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.cuenta}" />
+								<f:facet name="footer">
+									<h:panelGroup rendered="#{conciliacionesEfectivoIntBean.totales}">
+                                		<h:outputText value="Totales" style="font-weight:bold;" />
+                                	</h:panelGroup>
+                                </f:facet>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.divisaMinus}" />									
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.divisa}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.saldoInicialMT}" />									
+								</f:facet>
+								<div style="text-align:right">
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.balanceInicio}" >
+										<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+									</h:outputText>
+								</div>
+								<f:facet name="footer">
+									<h:panelGroup rendered="#{conciliacionesEfectivoIntBean.totales}">
+										<div style="text-align:right">
+                                			<h:outputText value="#{conciliacionesEfectivoIntBean.totalSaldoInicial}" style="font-weight:bold;">
+                                				<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+                                			</h:outputText>
+                                		</div>
+                                	</h:panelGroup>
+                                </f:facet>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.netoMovimientos}" />									
+								</f:facet>
+								<div style="text-align:right">
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.netoMovimientos}" >
+										<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+									</h:outputText>
+								</div>
+								<f:facet name="footer">
+									<h:panelGroup rendered="#{conciliacionesEfectivoIntBean.totales}">
+										<div style="text-align:right">
+                                			<h:outputText value="#{conciliacionesEfectivoIntBean.totalNetoMovimientos}" style="font-weight:bold;">
+                                				<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+                                			</h:outputText>
+                                		</div>
+                                	</h:panelGroup>
+                                </f:facet>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.saldoFinalMT}" />									
+								</f:facet>
+								<div style="text-align:right">
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.balanceFinal}" >
+										<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+									</h:outputText>
+								</div>
+								<f:facet name="footer">
+									<h:panelGroup rendered="#{conciliacionesEfectivoIntBean.totales}">
+										<div style="text-align:right">
+                                			<h:outputText value="#{conciliacionesEfectivoIntBean.totalSaldoFinal}" style="font-weight:bold;">
+                                				<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+                                			</h:outputText>
+                                		</div>
+                                	</h:panelGroup>
+                                </f:facet>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.saldoBoveda}" />									
+								</f:facet>
+								<div style="text-align:right">
+									<h:panelGroup rendered="#{conciliacion.saldoBoveda != null}">
+										<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.saldoBoveda}" >
+											<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+										</h:outputText>
+									</h:panelGroup>
+									<h:panelGroup rendered="#{conciliacion.saldoBoveda == null}">
+										<h:outputText styleClass="texto textoPeque12" value="N/A" />
+									</h:panelGroup>
+								</div>
+								<f:facet name="footer">
+									<h:panelGroup rendered="#{conciliacionesEfectivoIntBean.totales}">
+										<div style="text-align:right">
+                                			<h:outputText value="#{conciliacionesEfectivoIntBean.totalSaldoBoveda}" style="font-weight:bold;">
+                                				<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+                                			</h:outputText>
+                                		</div>
+                                	</h:panelGroup>
+                                </f:facet>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.diferencia}" />									
+								</f:facet>
+								<div style="text-align:right">
+									<h:panelGroup rendered="#{conciliacion.saldoBoveda != null and conciliacion.balanceFinal != null}">
+										<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.balanceFinal - conciliacion.saldoBoveda}" >
+											<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+										</h:outputText>
+									</h:panelGroup>
+									<h:panelGroup rendered="#{conciliacion.saldoBoveda == null or conciliacion.balanceFinal == null}">
+										<h:outputText styleClass="texto textoPeque12" value="N/A" />
+									</h:panelGroup>
+								</div>
+								<f:facet name="footer">
+									<h:panelGroup rendered="#{conciliacionesEfectivoIntBean.totales}">
+										<div style="text-align:right">
+                                			<h:outputText value="#{conciliacionesEfectivoIntBean.totalDiferencia}" style="font-weight:bold;">
+                                				<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+                                			</h:outputText>
+                                		</div>
+                                	</h:panelGroup>
+                                </f:facet>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.saldoComprobacion}" />									
+								</f:facet>
+								<div style="text-align:right">
+									<h:panelGroup rendered="#{conciliacion.balanceFinal != null and conciliacion.balanceInicio != null and conciliacion.netoMovimientos != null}">
+										<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.balanceFinal - (conciliacion.balanceInicio + conciliacion.netoMovimientos)}" >
+											<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+										</h:outputText>
+									</h:panelGroup>
+									<h:panelGroup rendered="#{conciliacion.balanceFinal == null or conciliacion.balanceInicio == null or conciliacion.netoMovimientos == null}">
+										<h:outputText styleClass="texto textoPeque12" value="N/A" />
+									</h:panelGroup>
+								</div>
+								<f:facet name="footer">
+									<h:panelGroup rendered="#{conciliacionesEfectivoIntBean.totales}">
+										<div style="text-align:right">
+                                			<h:outputText value="#{conciliacionesEfectivoIntBean.totalSaldoComprobacion}" style="font-weight:bold;">
+                                				<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+                                			</h:outputText>
+                                		</div>
+                                	</h:panelGroup>
+                                </f:facet>
+							</h:column>
+						</h:dataTable>
+					</h:panelGroup>
+					<!-- ================================= EXPORTAR ============================================================ -->
+					<h:panelGroup id="totalesConsultas" rendered="#{not empty conciliacionesEfectivoIntBean.paginaVO.registros}">					
+						<table cellpadding="0" cellspacing="0" border="0" align="center" width="900px">
+							<tr align="right">
+								<td align="right">
+									<h:panelGroup id="botonesExportar">
+										<h:panelGroup style="display: #{(conciliacionesEfectivoIntBean.consultaEjecutada and not empty conciliacionesEfectivoIntBean.paginaVO.registros)? 'inline' : 'none'}">
+											<h:outputText value="Exportar los resultados"></h:outputText>
+											<h:commandButton actionListener="#{conciliacionesEfectivoIntBean.generarReportes}"
+												action="conciliacionesEfectivoPDF"
+												image="/images/pdf.gif" 
+												title="Exportar a PDF todos los resultados de la consulta" 
+												id="generarPdf"
+												onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);">
+											</h:commandButton>
+
+                           						&#160;&#160;
+                          					<h:commandButton actionListener="#{conciliacionesEfectivoIntBean.generarReportes}"
+                          						action="conciliacionesEfectivoXLS"
+                          						image="/images/excel-file.gif"
+                          						title="Exportar a Excel todos los resultados de la consulta" 
+                          						id="generarExcel"
+                          						onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);">
+                           					</h:commandButton>
+                           					<div id="monitorPeticionReporte" style="display: none;">
+											<h:panelGroup id="panelMonitorPeticionReporte">
+												<h:graphicImage value="/images/ajax-loader.gif" />
+												&#160;&#160;
+												<h:outputText value="#{etq.reporteEnProceso}" />
+												<a4j:commandButton id="btnActualizarEstadoPeticion"
+													image="/images/transparent.gif"
+													styleClass="submit"
+													actionListener="#{conciliacionesEfectivoIntBean.actualizarEstadoPeticion}"
+													reRender="panelMonitorPeticionReporte"
+													oncomplete="desbloquearBotonesReportes(#{conciliacionesEfectivoIntBean.peticionReporteCompleta}, ['generarExcel', 'generarPdf']);"/>
+											</h:panelGroup>
+										</div>
+										</h:panelGroup>
+									</h:panelGroup>
+								</td>
+							</tr>
+						</table>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</html>

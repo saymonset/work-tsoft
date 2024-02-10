@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"> 
+    <parent>
+        <artifactId>dali-divint</artifactId>
+        <groupId>com.indeval.dali</groupId>
+        <version>5.10.7-SNAPSHOT</version>
+    </parent>
+
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>dali-divint-config</artifactId>
+    <packaging>pom</packaging>
+    <name>dali-divint-config</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.indeval.dali</groupId>
+			<artifactId>dali-divint-webapp</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>com.indeval.dali</groupId>
+			<artifactId>dali-divint-ear</artifactId>
+			<version>${project.version}</version>
+			<type>ear</type>
+		</dependency>
+		<dependency>
+			<groupId>com.indeval.dali</groupId>
+			<artifactId>dali-divint-moi-receiver-ear</artifactId>
+			<version>${project.version}</version>
+			<type>ear</type>
+		</dependency>
+		<dependency>
+			<groupId>com.indeval.dali</groupId>
+			<artifactId>dali-divint-receiver-ear</artifactId>
+			<version>${project.version}</version>
+			<type>ear</type>
+		</dependency>
+		<dependency>
+			<groupId>com.indeval.dali</groupId>
+			<artifactId>dali-divint-ws</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
+		</dependency>
+	</dependencies>
+
+
+
+<profiles>
+   	<profile>
+   		<id>mav_wl</id>
+   		<activation><activeByDefault>true</activeByDefault></activation>
+   		<properties>
+			<DerechosCapitalesWSGrupo>grupo-portal-dali</DerechosCapitalesWSGrupo>
+		</properties>
+   	
+   	</profile>
+   	<profile>
+   		<id>mav_jb</id>
+   		<activation><activeByDefault>true</activeByDefault></activation>
+   		<properties>
+			<DerechosCapitalesWSGrupo>grupo-mav</DerechosCapitalesWSGrupo>
+		</properties>   	
+   	</profile>   
+   </profiles>
+
+
+	<build>
+		<finalName />
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<appendAssemblyId>false</appendAssemblyId>
+					<finalName>dali-divint-EAP-${jboss.version}-${project.version}</finalName>
+					<descriptors>
+						<descriptor>src/main/assembly/src.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id> <!-- this is used for inheritance merges -->
+						<phase>package</phase> <!-- bind to the packaging phase -->
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>create-cli</id>
+						<phase>package</phase>
+						<configuration>
+							<target>
+								<copy file="${project.build.directory}/dali-divint-EAP-${jboss.version}-${project.version}.zip" tofile="${project.build.directory}/dali-divint-EAP-${jboss.version}-${project.version}.cli" verbose="true" />
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+		        <artifactId>maven-resources-plugin</artifactId>
+		        <version>3.0.1</version>
+		        <executions>
+		          <execution>
+		            <id>copy-resources</id>
+		            <!-- here the phase you need -->
+		            <phase>validate</phase>
+		            <goals>
+		              <goal>copy-resources</goal>
+		            </goals>
+		            <configuration>
+		              <outputDirectory>${basedir}/target/</outputDirectory>
+		              <resources>          
+		                <resource>
+		                  <directory>src/main/resources/shells</directory>
+		                  <filtering>true</filtering>
+		                </resource>		               
+		              </resources>              
+		            </configuration>            
+		          </execution>
+		        </executions>
+		      </plugin>
+		</plugins>
+	</build>
+</project>

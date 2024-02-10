@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<ui:composition template="/layoutConsultas.xhtml">
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/fastwork.js">
+			</script>
+		</ui:define>	
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.mensajeriaHistorica}" />
+		</ui:define>
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.mensajeriaHistorica}"></h:outputText>
+		</ui:define>
+		<ui:define name="criterios">
+			<h:panelGroup id="mensajeUsuario">
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+				
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+				</div>
+			</h:panelGroup>
+			<h:panelGroup id="panelCriterios">
+				<a4j:keepAlive beanName="consultaFastworkBean" />
+				<div style='display: "inline"' id="divCriterios">
+					<table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+						align="center">
+						<tr>
+							<td class="recuadroTabla" style="vertical-align:middle;">
+								<table class="tablaCriterios">
+									<tr align="center">
+										<td nowrap="true" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.isin}" /> </b>
+										</td>
+										<td nowrap="true" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.bicCode}" /> </b>
+										</td>
+										<td nowrap="true" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.monto}" /> </b>
+										</td>
+									</tr>
+									<tr align="center">
+										<td>
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="isin" size="30"
+													value="#{consultaFastworkBean.fastworkMessagefo.isin}"
+													maxlength="12" styleClass="textoControles campoAlphaNumerico textoMayusculas" />
+											</h:panelGroup>
+
+										</td>
+										<td>
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="biccode" size="30"
+													value="#{consultaFastworkBean.fastworkMessagefo.biccode}"
+													maxlength="12" styleClass="textoControles campoAlfabeticos textoMayusculas" />
+											</h:panelGroup>
+
+										</td>
+										<td>
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="amount" size="10"
+													value="#{consultaFastworkBean.fastworkMessagefo.monto}"
+													maxlength="21" styleClass="textoControles campoNumericoDecimal textoMayusculas" 
+													onkeydown="validateDecimal(this);" onkeyup="validateDecimal(this);"/>
+											</h:panelGroup>
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td class="recuadroTabla">
+								<table class="tablaCriterios">
+									<tr align="center">
+										<td nowrap="true" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.tipoMensaje}" /> </b>
+										</td>
+										<td nowrap="true" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.moneda}" /> </b>
+										</td>
+									</tr>
+									<tr align="center">
+										<td>	
+									   		<h:selectManyListbox id="selectTipoMensaje" 
+												styleClass="textoControles" size="11"
+									   			value="#{consultaFastworkBean.fastworkMessagefo.tipoMensajesSelect}">
+									   				<f:selectItems value="#{consultaFastworkBean.catTipoMensaje}" />
+									   		</h:selectManyListbox>		
+										</td>
+										<td>		
+									   		<h:selectManyListbox id="selectMoneda" 
+												styleClass="textoControles" size="11"
+									   			value="#{consultaFastworkBean.fastworkMessagefo.monedasSelect}">
+									   				<f:selectItems value="#{consultaFastworkBean.catMoneda}" />
+									   		</h:selectManyListbox>		
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td class="recuadroTabla" rowspan="2">
+								<table class="tablaCriterios">
+									<tr align="center">
+										<td nowrap="true" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.camposSwift}" /> </b>
+										</td>
+									</tr>
+									<tr align="center">
+										<td>
+											<h:panelGroup>
+												<h:inputTextarea autocomplete="off" id="camposSwiftFiltro" 
+												value="#{consultaFastworkBean.fastworkMessagefo.camposSwift}"
+												maxlength="60" size="50" styleClass="textoControles textoMayusculas" rows="10"/>
+											</h:panelGroup>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td class="recuadroTabla">
+								<table class="tablaCriterios">
+									<tr align="center">
+										<td nowrap="true" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.fechaInicial}" /> </b>
+										</td>
+										<td nowrap="true" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.fechaFinal}" /> </b>
+										</td>
+									</tr>
+									<tr align="center">
+										<td>									
+											<rich:calendar id="fechaInicial" showApplyButton="true"
+														value="#{consultaFastworkBean.fastworkMessagefo.fechaInicial}"
+														inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="15"
+												       	datePattern="dd/MM/yyyy HH:mm"  tabindex="190" defaultTime="00:00"/>
+
+										</td>
+										<td>									
+											<rich:calendar id="fechaFinal" showApplyButton="true"
+														value="#{consultaFastworkBean.fastworkMessagefo.fechaFinal}"
+														inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="15"
+												       	datePattern="dd/MM/yyyy HH:mm"  tabindex="190" defaultTime="00:00"/>
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td class="recuadroTabla">
+								<table class="tablaCriterios">
+									<tr align="center">
+										<td width="50px"  nowrap="true" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.buscar}" /> </b>
+										</td>
+									</tr>
+									<tr>
+										<td nowrap="true" align="center" >
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="find" size="60"
+													value="#{consultaFastworkBean.fastworkMessagefo.buscar}"
+													maxlength="50" styleClass="textoControles" />
+											</h:panelGroup>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</h:panelGroup>
+		
+			<h:panelGroup id="panelResumenCriterios">
+				<div id="divResumen" style="display: none;">
+					<table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+						align="center">
+						<tr>
+							<td class="recuadroTabla" style="vertical-align:middle;">
+								<table class="tablaCriterios">
+									<tr align="center">
+										<td nowrap="true" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.isin}" /> </b>
+										</td>
+										<td nowrap="true" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.bicCode}" /> </b>
+										</td>
+										<td nowrap="true" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.monto}" /> </b>
+										</td>
+									</tr>
+									<tr align="center">
+										<td>
+											<h:panelGroup>
+												<h:outputText styleClass="texto" 
+													value="#{consultaFastworkBean.fastworkMessagefo.isin}" />
+											</h:panelGroup>
+
+										</td>
+										<td>
+											<h:panelGroup>
+												<h:outputText styleClass="texto"
+													value="#{consultaFastworkBean.fastworkMessagefo.biccode}"/>
+											</h:panelGroup>
+
+										</td>
+										<td>
+											<h:panelGroup>
+												<h:outputText styleClass="texto" 
+													value="#{consultaFastworkBean.fastworkMessagefo.monto}"/>
+											</h:panelGroup>
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td class="recuadroTabla">
+								<table class="tablaCriterios">
+									<tr align="center">
+										<td nowrap="true" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.tipoMensaje}" /> </b>
+										</td>
+										<td nowrap="true" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.moneda}" /> </b>
+										</td>
+									</tr>
+									<tr align="center">
+										<td>
+											<div style="width: 140px;display: inline-block;overflow: hidden;text-overflow: ellipsis;">
+												<h:outputText styleClass="texto" 
+													value="#{consultaFastworkBean.fastworkMessagefo.tipoMensajesFiltroDesc}"
+														rendered="#{!empty consultaFastworkBean.fastworkMessagefo.tipoMensajesFiltroDesc}"/>	
+		                                        <h:outputText styleClass="texto" value="#{etq.todasMayusculas}"
+		                                        	rendered="#{empty consultaFastworkBean.fastworkMessagefo.tipoMensajesFiltroDesc}"/>
+		                                    </div>	
+										</td>
+										<td>	
+											<div style="width: 140px;display: inline-block;overflow: hidden;text-overflow: ellipsis;">	
+												<h:outputText styleClass="texto" 
+													value="#{consultaFastworkBean.fastworkMessagefo.monedaFiltroDesc}"
+		                                        	rendered="#{!empty consultaFastworkBean.fastworkMessagefo.monedaFiltroDesc}"/>
+		                                        <h:outputText styleClass="texto" value="#{etq.todasMayusculas}"
+		                                        	rendered="#{empty consultaFastworkBean.fastworkMessagefo.monedaFiltroDesc}"/>
+	                                        </div>
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td class="recuadroTabla" rowspan="2">
+								<table class="tablaCriterios">
+									<tr align="center">
+										<td nowrap="true" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.camposSwift}" /> </b>
+										</td>
+									</tr>
+									<tr align="center">
+										<td>
+											<h:panelGroup>
+												<div style="width:140px;display: inline-block;overflow: hidden;text-overflow: ellipsis;">
+													<h:outputText styleClass="texto" 
+													value="#{consultaFastworkBean.fastworkMessagefo.camposSwift}"/>
+												</div>
+											</h:panelGroup>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td class="recuadroTabla">
+								<table class="tablaCriterios">
+									<tr align="center">
+										<td nowrap="true" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.fechaInicial}" /> </b>
+										</td>
+										<td nowrap="true" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.fechaFinal}" /> </b>
+										</td>
+									</tr>
+									<tr align="center">
+										<td>									
+											<h:outputText styleClass="texto"  
+														value="#{consultaFastworkBean.fastworkMessagefo.fechaInicial}">
+											  <f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm"  timeZone="CST"/>
+											</h:outputText>
+
+										</td>
+										<td>									
+											<h:outputText styleClass="texto"
+														value="#{consultaFastworkBean.fastworkMessagefo.fechaFinal}">
+											  <f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm"  timeZone="CST"/>
+											</h:outputText>
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td class="recuadroTabla">
+								<table class="tablaCriterios">
+									<tr align="center">
+										<td width="50px"  nowrap="true" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.buscar}" /> </b>
+										</td>
+									</tr>
+									<tr>
+										<td nowrap="true" align="center" >
+											<h:panelGroup>
+												<h:outputText 
+													value="#{consultaFastworkBean.fastworkMessagefo.buscar}" />
+											</h:panelGroup>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</h:panelGroup>
+		</ui:define>
+		<ui:define name="botones">
+			<h:panelGroup id="botones">				
+				<div class="refrescar" style="float: left;">
+	        		 <a4j:status id="commonStatus">
+						<f:facet name="start">
+							<h:panelGroup>
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								<h:outputText value="#{etq.buscando}"></h:outputText>
+							</h:panelGroup>
+						</f:facet>
+					</a4j:status> 	
+	        	</div>
+				<div class="limpiar">
+					<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+						styleClass="submit"
+						actionListener="#{consultaFastworkBean.limpiar}" />
+				</div>
+				<div class="buscar">
+					<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+						styleClass="submit"
+						actionListener="#{consultaFastworkBean.consultaMensajes}"
+						reRender="panelMensajes, panelResumenCriterios, seccionContenido, containerResultados" 
+						oncomplete="mostrarResumenCriteriosBusqueda();">
+					</a4j:commandButton>
+				</div>
+				<div id="botonEditarCriterios" class="editar" style="display: none; float:right;" >            
+	            	<input type="image" class="submit"
+						src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+						alt="Editar Criterios"
+						title="Editar Criterios"
+						onclick="mostrarCriteriosBusqueda();return false;" />                      	
+	           	</div> 
+			</h:panelGroup>
+		</ui:define>
+		<ui:define name="seccionContenido">		
+			<h:panelGroup id="containerResultados" >
+				<h:panelGroup rendered="#{not empty consultaFastworkBean.results}">
+					<table width="100%" border="0">
+						<tr>
+							<td align="left" class="textoEstadoCuenta">
+								<a4j:commandLink id="control_bitacora_primero"
+									action="#{consultaFastworkBean.irPrimeraPagina}"
+									rendered="#{consultaFastworkBean.irAlPrimero}"
+									reRender="containerResultados,tablaResultados">
+									<img src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png" border="0" />
+								</a4j:commandLink>
+								<a4j:commandLink id="control_bitacora_atras_fast"
+									action="#{consultaFastworkBean.retrocederPaginasRapido}"
+									rendered="#{consultaFastworkBean.retrocederRapido}"
+									reRender="containerResultados,tablaResultados">
+									<img src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png" border="0" />
+								</a4j:commandLink>
+								<a4j:commandLink id="control_bitacora_atras"
+									action="#{consultaFastworkBean.retrocederPagina}"
+									rendered="#{consultaFastworkBean.retroceder}"
+									reRender="containerResultados,tablaResultados">
+									<img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png" border="0" />
+								</a4j:commandLink>
+								<a4j:commandLink id="control_bitacora_adelante"
+									execute="@this"
+									action="#{consultaFastworkBean.avanzarPagina}"
+									rendered="#{consultaFastworkBean.avanzar}"
+									reRender="containerResultados,tablaResultados">
+									<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png" border="0" />
+								</a4j:commandLink>
+								<a4j:commandLink id="control_bitacora_adelante_fast"
+									execute="@this"
+									action="#{consultaFastworkBean.avanzarPaginasRapido}"
+									rendered="#{consultaFastworkBean.avanzarRapido}"
+									reRender="containerResultados,tablaResultados">
+									<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png" border="0" />
+								</a4j:commandLink>
+								<a4j:commandLink id="control_bitacora_ultimo"
+									execute="@this"
+									action="#{consultaFastworkBean.irUltimaPagina}"
+									rendered="#{consultaFastworkBean.irAlUltimo}"
+									reRender="containerResultados,tablaResultados">
+									<img src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png" border="0" />
+								</a4j:commandLink>
+	
+								<br />
+								<h:outputText value="#{etq.mostrando}" styleClass="textoResumen" />
+								<h:outputText value="#{consultaFastworkBean.numeroPagina}" styleClass="textoResumen" />
+								<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+								<h:outputText value="#{consultaFastworkBean.totalPaginas}" styleClass="textoResumen" />
+								<h:outputText value="#{etq.cierre}" styleClass="textoResumen" />
+								&#160;&#160;&#160;
+								<h:outputText value="#{consultaFastworkBean.paginaVO.totalRegistros}" styleClass="textoResumen" converter="formatoEnteroConverter" />
+								&#160;
+								<h:outputText styleClass="textoResumen" value="#{etq.registrosEncontrados}" />
+							</td>
+							<td align="right" class="textoEstadoCuenta">
+								<h:outputText escape="false" value="#{etq.registrosPorPagina}" styleClass="textoResumen" />
+								<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen" value="#{consultaFastworkBean.paginaVO.registrosXPag}">
+									<f:selectItem itemLabel="50" itemValue="50" />											
+									<f:selectItem itemLabel="100" itemValue="100" />											
+									<f:selectItem itemLabel="200" itemValue="200" />																			
+									<a4j:support event="onchange" reRender="containerResultados,tablaResultados" action="#{consultaFastworkBean.ejecutarConsulta}" ajaxSingle="true"/>
+								</h:selectOneMenu>&#160;&#160;&#160;&#160;&#160;
+							</td>
+						</tr>
+					</table>
+					<h:panelGroup id="tablaResultados" >	
+						<div class="tablaConScroll">
+							<table id="camposSwift" border="0" cellpadding="3px"
+									cellspacing="0px" class="ResultadosTable" align="left" >
+									<tr>
+										<th class="tituloTabla">
+											<h:outputText styleClass="texto textoPeque12" value="#{etq.mensajeMinus}" />
+										</th>
+										<th class="tituloTabla">
+											<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaRegistro}" />
+										</th>
+										<th class="tituloTabla">
+											<h:outputText styleClass="texto textoPeque12" value="#{etq.bicCode}" />
+										</th>
+										<th class="tituloTabla">
+											<h:outputText styleClass="texto textoPeque12" value="#{etq.isin}" />
+										</th>
+										<th class="tituloTabla">
+											<h:outputText styleClass="texto textoPeque12" value="#{etq.tipoMensaje}" />
+										</th>
+										<ui:repeat value="#{consultaFastworkBean.camposSwiftHeaders}"
+											var="camposSwiftH">
+												<th class="tituloTabla">
+													<h:outputText styleClass="texto textoPeque12" value="#{camposSwiftH}" />
+												</th>
+										</ui:repeat>
+									</tr>
+								<ui:repeat value="#{consultaFastworkBean.results}"
+									var="result">
+									<tr>
+										<td class="everyColumn">
+											<h:panelGroup>
+												<a href='javascript:detalleResultadoMensaje("#{result.dbkey}");' title="Muestra mensaje ISO">
+													<img src="#{facesContext.externalContext.requestContextPath}/images/msg.gif"  />
+												</a>
+											</h:panelGroup>
+										</td>
+										<td class="everyColumn">
+											<h:outputText styleClass="texto textoPeque12" value="#{result.fechaRegistro}"
+											converter="formatoFechaLargaConverter"/>
+										</td>
+										<td class="everyColumn">
+											<h:outputText styleClass="texto textoPeque12" value="#{result.bicCode}" escape="false"/>
+										</td>
+										<td class="everyColumn">
+											<h:outputText styleClass="texto textoPeque12" value="#{result.isin}" escape="false"/>
+										</td>
+										<td class="everyColumn">
+											<h:outputText styleClass="texto textoPeque12" value="#{result.tipoMensaje}" escape="false"/>
+										</td>
+										<ui:repeat value="#{result.camposSwift}"
+											var="campo">
+												<td class="everyColumn">
+													<h:outputText styleClass="texto textoPeque12" value="#{campo}" escape="false"/>
+												</td>
+										</ui:repeat>
+									</tr>
+								</ui:repeat>
+							</table>
+						</div>
+					</h:panelGroup>	
+					<h:panelGroup>
+						<table cellpadding="0" cellspacing="0" border="0" align="center"
+							width="900px">
+							<tr align="right">
+								<td align="right">
+									<h:panelGroup >
+										<h:panelGroup>
+											<h:outputText value="Exportar los resultados" />
+		                       				<h:commandButton  action="#{consultaFastworkBean.generarReporteXls}"
+		                       					image="/images/excel-file.gif"
+		                       					title="Exportar a Excel" 
+		                         				id="generarExcel"
+												onclick="if(validarTotalRegistros(#{consultaFastworkBean.paginaVO.totalRegistros},'xls')){bloquearBotonesReportesFast(['generarExcel', 'generarTxt']);}else{return false;}"/>
+											&#160;&#160;
+						                    <h:commandButton id="generarTxt" action="#{consultaFastworkBean.generarReporteTxt}"
+						                        image="/images/TXT.gif" 
+						                        title="Exporta reporte RAW"
+						                        immediate="true"
+												onclick="if(validarTotalRegistros(#{consultaFastworkBean.paginaVO.totalRegistros},'txt')){bloquearBotonesReportesFast(['generarExcel', 'generarTxt']);}else{return false;}"/>
+											<div id="monitorPeticionReporte" style="display: none;">
+												<h:panelGroup id="panelMonitorPeticionReporte">
+													<h:graphicImage value="/images/ajax-loader.gif" />
+													&#160;&#160;
+													<h:outputText value="#{etq.reporteEnProceso}" />
+													<a4j:jsFunction name="actualizaEstadoF" action="#{consultaFastworkBean.actualizarEstadoPeticion}" 
+														oncomplete="desbloquearBotonesReportesFast(#{consultaFastworkBean.actualizarReporte}, ['generarExcel', 'generarTxt']);"
+ 														reRender="panelMonitorPeticionReporte"
+														/>
+												</h:panelGroup>
+											</div>
+										</h:panelGroup>
+									</h:panelGroup>
+								</td>
+							</tr>
+						</table>
+					</h:panelGroup>	
+				</h:panelGroup>	
+			</h:panelGroup>	
+		</ui:define>
+		
+	</ui:composition>
+	
+
+</html>

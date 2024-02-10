@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutPopUp.xhtml">			
+		<ui:define name="head">			
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/autorizacionEnvioMoi.js">
+			</script>
+		</ui:define>
+		<ui:define name="titulo">
+			<h:outputText value="#{etq.calTituloPorAutorizar}"/>
+		</ui:define>      
+		<ui:define name="body">
+			<h:form id="formaAutorizaciones">
+			<h:outputText value="#{consultaAutorizacionesCapitalesBean.init}" />
+			<a4j:keepAlive beanName="consultaAutorizacionesCapitalesBean" />
+		     <h:panelGroup id="mensajeUsuario">
+            <div style="min-height: 100%;">
+                <rich:messages warnClass="warning" infoClass="info"
+                    errorClass="error" ajaxRendered="true" showDetail="false"
+                    showSummary="true" layout="list">
+                    <f:facet name="infoMarker">
+                        <h:panelGroup>
+                            <h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+                    </f:facet>
+
+                    <f:facet name="errorMarker">
+                        <h:panelGroup>
+                            <h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+                    </f:facet>
+                </rich:messages>
+
+                <div id="divWarnings" class="warning" style="display: none;" >
+                    <p id="textoWarning"></p>
+                </div>
+            </div>
+        </h:panelGroup>	
+		 <h:panelGroup id="containerResultados">
+            <h:panelGroup rendered="#{consultaAutorizacionesCapitalesBean.consultaEjecutada}">
+                <t:dataTable id="noExistenResultados"
+                    value="#{consultaAutorizacionesCapitalesBean.paginaVO.registros}"
+                    styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+                    footerClass="tituloTabla" border="0" cellpadding="3px"
+                    cellspacing="0px" columnClasses="everyColumn"
+                    rowClasses="renglonTablaUno, renglonTablaDos"
+                    rendered="#{empty consultaAutorizacionesCapitalesBean.paginaVO.registros}">
+
+                    <t:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{etq.sinResultados}"></h:outputText>
+                        </f:facet>
+
+                    </t:column>
+                </t:dataTable>
+
+                <br />
+                <br />
+                <br />
+    <!-- ============================================TABLA DE RESULTADOS ========================================================================================== -->
+				<h:panelGroup id="tablaResultados">
+					 <h:graphicImage value="/images/blank.gif" width="900px"
+                        height="1px">
+                     </h:graphicImage>
+					 <h:panelGroup
+                        rendered="#{not empty consultaAutorizacionesCapitalesBean.paginaVO.registros}">
+                        <table width="100%" border="0">
+                            <tr>
+                                <td align="left" class="textoEstadoCuenta"><a4j:commandLink
+                                        id="control_bitacora_primero"
+                                        action="#{consultaAutorizacionesCapitalesBean.irPrimeraPagina}"
+                                        rendered="#{consultaAutorizacionesCapitalesBean.irAlPrimero}"
+                                        reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+                                            border="0" />
+                                    </a4j:commandLink> <a4j:commandLink id="control_bitacora_atras_fast"
+                                        action="#{consultaAutorizacionesCapitalesBean.retrocederPaginasRapido}"
+                                        rendered="#{consultaAutorizacionesCapitalesBean.retrocederRapido}"
+                                        reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+                                            border="0" />
+                                    </a4j:commandLink> <a4j:commandLink id="control_bitacora_atras"
+                                        action="#{consultaAutorizacionesCapitalesBean.retrocederPagina}"
+                                        rendered="#{consultaAutorizacionesCapitalesBean.retroceder}"
+                                        reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+                                            border="0" />
+                                    </a4j:commandLink> <a4j:commandLink id="control_bitacora_adelante"
+                                        action="#{consultaAutorizacionesCapitalesBean.avanzarPagina}"
+                                        rendered="#{consultaAutorizacionesCapitalesBean.avanzar}"
+                                        reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+                                            border="0" />
+                                    </a4j:commandLink> <a4j:commandLink id="control_bitacora_adelante_fast"
+                                        action="#{consultaAutorizacionesCapitalesBean.avanzarPaginasRapido}"
+                                        rendered="#{consultaAutorizacionesCapitalesBean.avanzarRapido}"
+                                        reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+                                            border="0" />
+
+                                    </a4j:commandLink> <a4j:commandLink id="control_bitacora_ultimo"
+                                        action="#{consultaAutorizacionesCapitalesBean.irUltimaPagina}"
+                                        rendered="#{consultaAutorizacionesCapitalesBean.irAlUltimo}"
+                                        reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+                                            border="0" />
+                                    </a4j:commandLink> <br /> <h:outputText value="#{etq.mostrando}"
+                                        styleClass="textoResumen" /> <h:outputText
+                                        value="#{consultaAutorizacionesCapitalesBean.numeroPagina}"
+                                        styleClass="textoResumen" /> <h:outputText value="#{etq.de}"
+                                        styleClass="textoResumen" /> <h:outputText
+                                        value="#{consultaAutorizacionesCapitalesBean.totalPaginas}"
+                                        styleClass="textoResumen" /> <h:outputText
+                                        value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+                                    &#160;&#160;&#160; <h:outputText
+                                        value="#{consultaAutorizacionesCapitalesBean.paginaVO.totalRegistros}"
+                                        styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+                                    &#160; <h:outputText styleClass="textoResumen"
+                                        value="#{etq.registrosEncontrados}" /></td>
+                                <td align="right" class="textoEstadoCuenta"><h:outputText
+                                        escape="false" value="#{etq.registrosPorPagina}"                                         
+                                        styleClass="textoResumen" /> <h:selectOneMenu
+                                        id="tamanioPagina"                                         
+                                        styleClass="textoResumen"
+                                        value="#{consultaAutorizacionesCapitalesBean.paginaVO.registrosXPag}">
+                                        <f:selectItem itemLabel="1" itemValue="1" />
+                                        <f:selectItem itemLabel="2" itemValue="2" />
+                                        <f:selectItem itemLabel="5" itemValue="5" />
+                                        <f:selectItem itemLabel="10" itemValue="10" />
+                                        <f:selectItem itemLabel="20" itemValue="20" />
+                                        <f:selectItem itemLabel="50" itemValue="50" />
+                                        <f:selectItem itemLabel="100" itemValue="100" />
+                                        <a4j:support event="onchange"
+                                            reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,mensajeUsuario"
+                                            action="#{consultaAutorizacionesCapitalesBean.ejecutarConsulta}">
+                                            <f:setPropertyActionListener value="false"
+                                                target="#{consultaAutorizacionesCapitalesBean.banderaBitacoraConsulta}" />
+                                        </a4j:support>
+                                    </h:selectOneMenu></td>
+                            </tr>
+                        </table>
+                    </h:panelGroup>
+                    	<h:dataTable id="resultados"
+							value="#{consultaAutorizacionesCapitalesBean.paginaVO.registros}"
+							var="autorizacion"
+							rendered="#{not empty consultaAutorizacionesCapitalesBean.paginaVO.registros}"
+							styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+							footerClass="tituloTabla" border="1" cellpadding="3px"
+							cellspacing="0px" columnClasses="everyColumn"
+							rowClasses="renglonTablaUno, renglonTablaDos">                                        	
+                    		 	<h:column>
+									<f:facet name="header">
+										<h:outputText value="#{etq.calUsuarioSolicita}" />
+									</f:facet>
+									<h:outputText value="#{autorizacion.usuarioSolicitante}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="#{etq.calFechaSolicitud}" />
+									</f:facet>
+									<h:outputText value="#{autorizacion.fechaSolicitud}" >
+                                		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City" />
+                                	</h:outputText>
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="#{etq.calEstadoEnvio}" />
+									</f:facet>
+									<h:outputText styleClass="texto" value="#{autorizacion.descEstado}" rendered="#{!empty autorizacion.descEstado}" />
+                                	<h:outputText styleClass="texto" value="-" rendered="#{empty autorizacion.descEstado}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:panelGroup>
+											<table width="100%">
+												<tr class="tituloTabla">
+													<td>
+														<h:outputText value="#{etq.tv}" />
+	                                					<h:outputText value="/" />
+	                                					<h:outputText value="#{etq.emisoraMinus}" />	
+													</td>											
+												</tr>
+												<tr class="tituloTabla">
+													<td>
+														<h:outputText value="#{etq.serieMinus}" />
+														<h:outputText value="/" />
+	                                					<h:outputText value="#{etq.cuponMinus}" />	
+													</td>											
+												</tr>
+												<tr class="tituloTabla">
+													<td>
+														<h:outputText value="#{etq.isin}" />			
+													</td>											
+												</tr>											
+											</table>
+										</h:panelGroup>								                                	
+									</f:facet>
+										<table>
+											<tr>
+												<td>
+													<h:outputText value="#{autorizacion.tipoValor}" rendered="#{!empty autorizacion.tipoValor}"/>
+                                					<h:outputText value="-" rendered="#{empty autorizacion.tipoValor}"/>
+                                					<h:outputText value="/" />
+                                					<h:outputText value="#{autorizacion.emisora}" rendered="#{!empty autorizacion.emisora}"/>
+                                					<h:outputText value="-" rendered="#{empty autorizacion.emisora}"/>   	
+												</td>											
+											</tr>
+											<tr>
+												<td>
+													<h:outputText value="#{autorizacion.serie}" rendered="#{!empty autorizacion.serie}"/>
+                                					<h:outputText value="-" rendered="#{empty autorizacion.serie}"/>
+                                					<h:outputText value="/" />
+                                					<h:outputText value="#{autorizacion.cupon}" rendered="#{!empty autorizacion.cupon}"/>
+                                					<h:outputText value="-" rendered="#{empty autorizacion.cupon}"/> 	
+												</td>											
+											</tr>
+											<tr>
+												<td>
+													<h:outputText value="#{autorizacion.isin}" rendered="#{!empty autorizacion.isin}"/>
+                                					<h:outputText value="-" rendered="#{empty autorizacion.isin}"/>			
+												</td>											
+											</tr>											
+										</table>									         
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="#{etq.folioMensaje}" />
+									</f:facet>
+									<h:outputText value="#{autorizacion.folioMensaje}" rendered="#{!empty autorizacion.folioMensaje}"/>
+                                	<h:outputText value="-" rendered="#{empty autorizacion.folioMensaje}"/>
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="#{etq.folioIndeval}" />
+									</f:facet>
+									<h:outputText value="#{autorizacion.folioIndeval}" rendered="#{!empty autorizacion.folioIndeval}"/>
+                                	<h:outputText value="-" rendered="#{empty autorizacion.folioIndeval}"/>
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="#{etq.calDestinatario}" />
+									</f:facet>
+									<h:outputText value="#{autorizacion.destinatario}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="#{etq.fechaExdate}" />		
+									</f:facet>
+									<h:outputText value="#{autorizacion.fechaExdate}" rendered="#{!empty autorizacion.fechaExdate}">
+                                		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City" />
+                                	</h:outputText>
+                                	<h:outputText value="-" rendered="#{empty autorizacion.fechaExdate}"/>
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:panelGroup>
+											<table width="100%">
+												<tr class="tituloTabla">
+													<td>
+														<h:outputText value="#{etq.fechaDe}" />
+													</td>
+												</tr>
+												<tr class="tituloTabla">
+													<td>
+														<h:outputText value="#{etq.calCorte}" />
+													</td>
+												</tr>
+											</table>
+										</h:panelGroup>			
+										
+                               			
+									</f:facet>
+									<h:outputText value="#{autorizacion.fechaCorte}" rendered="#{!empty autorizacion.fechaCorte}">
+                                		<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City" />
+                                	</h:outputText>
+                                	<h:outputText value="-" rendered="#{empty autorizacion.fechaCorte}"/>
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:panelGroup>
+											<table width="100%">
+												<tr class="tituloTabla">
+													<td>
+														<h:outputText value="#{etq.estado}" />
+													</td>
+												</tr>
+												<tr class="tituloTabla">
+													<td>
+														<h:outputText value="#{etq.calEmision}" /> 
+													</td>
+												</tr>
+											</table>
+										</h:panelGroup>	
+									</f:facet>
+									<h:outputText value="#{autorizacion.listada}" rendered="#{!empty autorizacion.listada}"/>
+                               		<h:outputText value="DESLISTADA" rendered="#{empty autorizacion.listada}" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="#{etq.fuente}" />
+									</f:facet>
+									<h:outputText value="#{autorizacion.fuente}" rendered="#{!empty autorizacion.fuente}"/>
+                               		<h:outputText value="-" rendered="#{empty autorizacion.fuente}"/>  
+								</h:column>
+									<h:column>
+									<f:facet name="header">
+										<h:panelGroup>
+											<table width="100%">
+												<tr class="tituloTabla">
+													<td>
+														<h:outputText value="#{etq.calTipo}" />
+													</td>
+												</tr>
+												<tr class="tituloTabla">
+													<td>
+														<h:outputText value="#{etq.derecho}" /> 
+													</td>
+												</tr>
+												<tr class="tituloTabla">
+													<td>
+														<h:outputText value="#{etq.calCaevCamv}" /> 
+													</td>
+												</tr>
+											</table>
+										</h:panelGroup>	
+									</f:facet>
+									    <h:outputText value="#{autorizacion.tipoDerechoCaev}" title="#{autorizacion.descripcionCaev}" rendered="#{!empty autorizacion.tipoDerechoCaev}" />
+                               			<h:outputText value="-" rendered="#{empty autorizacion.tipoDerechoCaev}"/>                                		
+                               			<h:outputText value=" / " />
+                               			<h:outputText value="#{autorizacion.tipoDerechoCamv}" title="#{autorizacion.descripcionCamv}" rendered="#{!empty autorizacion.tipoDerechoCamv}" />
+                               			<h:outputText value="-" rendered="#{empty autorizacion.tipoDerechoCamv}"/>
+								</h:column>
+								<h:column rendered="#{!empty sessionScope.roles['INT_CAL_CAP_AUT']}">
+									<f:facet name="header">
+										<h:panelGroup>
+											<table>
+												<tr>
+													<td>
+														<a4j:commandButton
+														id="botonAutorizar" 
+														styleClass="submit" 
+														value="#{etq.procesarMinus}" 
+														onclick="this.disabled=true;getCambiosDestinatario();if(!confirmaEjecutar()){this.disabled=false;return false;}"
+														oncomplete="this.disabled=false;limpiarTodos();"																				
+														actionListener="#{consultaAutorizacionesCapitalesBean.ejecutarAutorizacionMensaje}"
+														reRender="containerResultados,tablaResultados">
+														</a4j:commandButton> 
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<h:selectOneMenu styleClass="textoControles" id="procesosCombo" 
+																	 tabindex="140" onchange="cambiarComboAll(this);" >
+															<f:selectItem itemValue="-1" itemLabel="Seleccione" />
+															<f:selectItem itemValue="1" itemLabel="Autorizar" />
+															<f:selectItem itemValue="2" itemLabel="Cancelar" />
+														</h:selectOneMenu>						
+													</td>
+												</tr>
+											</table>
+										</h:panelGroup>
+									</f:facet>
+									     <h:selectOneMenu styleClass="textoControles" id="slc_none_2" 
+                                						 tabindex="140"
+														 onfocus="ponNombreId(this,#{autorizacion.idEnvioLegSic},#{autorizacion.folioMensaje},'#{autorizacion.destinatario}');" 
+														 onchange="ponNombreId(this,#{autorizacion.idEnvioLegSic},#{autorizacion.folioMensaje},'#{autorizacion.destinatario}');">
+											<f:selectItem itemValue="-1" itemLabel="Seleccione" />
+											<f:selectItem itemValue="1" itemLabel="Autorizar" />
+											<f:selectItem itemValue="2" itemLabel="Cancelar" />	
+										</h:selectOneMenu>
+								</h:column>								                                                                                               	                            
+                    	</h:dataTable>                   
+				</h:panelGroup>
+				<h:inputHidden id="autoriza_mensaje_H" value ="#{consultaAutorizacionesCapitalesBean.idsEnviosMoi}"/>
+				   </h:panelGroup>
+            </h:panelGroup>
+
+           </h:form>
+	    </ui:define>
+	</ui:composition>
+</html>

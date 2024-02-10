@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xls="http://indeval.com/jsf/xls"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document documentName="calendarioCapitales" documentTitle="Calendario Capitales Distribución1"
+        institucion="#{calendarioHistCapitalesConsultaBean.agenteFirmado.id} #{calendarioHistCapitalesConsultaBean.agenteFirmado.folio} #{calendarioHistCapitalesConsultaBean.agenteFirmado.razon}" 
+        fecha="#{calendarioHistCapitalesConsultaBean.fechaActual}">
+
+        <xls:table value="#{calendarioHistCapitalesConsultaBean}" var="calendario">
+            <xls:row>		
+                <xls:col header="#{etq.tipoValorMinus}" value="#{!empty calendarioHistCapitalesConsultaBean.calendario.tipoValor ? calendarioHistCapitalesConsultaBean.calendario.tipoValor : 'TODOS'}"  />
+                <xls:col header="#{etq.emisoraMinus}" value="#{!empty calendarioHistCapitalesConsultaBean.calendario.emisora ? calendarioHistCapitalesConsultaBean.calendario.emisora : 'TODAS'}"  />
+                <xls:col header="#{etq.serieMinus}" value="#{!empty calendarioHistCapitalesConsultaBean.calendario.serie ? calendarioHistCapitalesConsultaBean.calendario.serie : 'TODAS'}"  />
+				<xls:col header="#{etq.isin}" value="#{!empty calendarioHistCapitalesConsultaBean.calendario.isin ? calendarioHistCapitalesConsultaBean.calendario.isin : 'TODOS'}"  />
+				<xls:col header="#{etq.bovedaMinus}" value="#{!empty calendarioHistCapitalesConsultaBean.selectedBoveda ? calendarioHistCapitalesConsultaBean.selectedBoveda : 'TODOS'}"  />
+				<xls:col header="#{etq.divisaMinus}" value="#{!empty calendarioHistCapitalesConsultaBean.selectedDivisa ? calendarioHistCapitalesConsultaBean.selectedDivisa : 'TODOS'}"  />
+				<xls:col header="#{etq.fechaXdateInicio}" value="#{!empty calendarioHistCapitalesConsultaBean.calendario.fechaXdateInicio ? calendarioHistCapitalesConsultaBean.calendario.fechaXdateInicio : 'TODAS'}"
+				pattern="dd/MM/yyyy"/>		
+				<xls:col header="#{etq.fechaXdateFin}" value="#{!empty calendarioHistCapitalesConsultaBean.calendario.fechaXdateFin ? calendarioHistCapitalesConsultaBean.calendario.fechaXdateFin : 'TODAS'}" 
+				pattern="dd/MM/yyyy"/>		
+				<xls:col header="#{etq.fechaCorteInicio}" value="#{!empty calendarioHistCapitalesConsultaBean.calendario.fechaCorteInicio ? calendarioHistCapitalesConsultaBean.calendario.fechaCorteInicio : 'TODAS'}"
+				pattern="dd/MM/yyyy"/>	
+				<xls:col header="#{etq.fechaCorteFin}" value="#{!empty calendarioHistCapitalesConsultaBean.calendario.fechaCorteFin ? calendarioHistCapitalesConsultaBean.calendario.fechaCorteFin : 'TODAS'}" 
+				pattern="dd/MM/yyyy"/>		
+				<xls:col header="#{etq.fechaPagoInicio}" value="#{!empty calendarioHistCapitalesConsultaBean.calendario.fechaPagoInicio ? calendarioHistCapitalesConsultaBean.calendario.fechaPagoInicio : 'TODAS'}"
+				pattern="dd/MM/yyyy"/>		
+				<xls:col header="#{etq.fechaPagoFin}" value="#{!empty calendarioHistCapitalesConsultaBean.calendario.fechaPagoFin ? calendarioHistCapitalesConsultaBean.calendario.fechaPagoFin : 'TODAS'}"
+				 pattern="dd/MM/yyyy"/>		
+				<xls:col header="#{etq.dueBillOfDateInicio}" value="#{!empty calendarioHistCapitalesConsultaBean.calendario.dueBillOfDateInicio ? calendarioHistCapitalesConsultaBean.calendario.dueBillOfDateInicio : 'TODAS'}" 
+				pattern="dd/MM/yyyy"/>		
+				<xls:col header="#{etq.dueBillOfDateFin}" value="#{!empty calendarioHistCapitalesConsultaBean.calendario.dueBillOfDateFin ? calendarioHistCapitalesConsultaBean.calendario.dueBillOfDateFin : 'TODAS'}" 
+				pattern="dd/MM/yyyy"/>		
+                <xls:col header="#{etq.calComision}" value="#{!empty calendarioHistCapitalesConsultaBean.selectedFee ? calendarioHistCapitalesConsultaBean.selectedFee : 'TODOS'}"  />
+                <xls:col header="#{etq.fechaEnvioInicio}" value="#{!empty calendarioHistCapitalesConsultaBean.calendario.fechaEnvioConsInicio? calendarioHistCapitalesConsultaBean.calendario.fechaEnvioConsInicio : 'TODAS'}"
+				pattern="dd/MM/yyyy"/>		
+				<xls:col header="#{etq.fechaEnvioFin}" value="#{!empty calendarioHistCapitalesConsultaBean.calendario.fechaEnvioConsFin ? calendarioHistCapitalesConsultaBean.calendario.fechaEnvioConsFin : 'TODAS'}" 
+				pattern="dd/MM/yyyy"/>
+                <xls:col header="#{etq.folioIndeval}" value="#{!empty calendarioHistCapitalesConsultaBean.calendario.folioIndeval ? calendarioHistCapitalesConsultaBean.calendario.folioIndeval : 'TODOS'}"  />
+				<xls:col header="#{etq.caev}" value="#{!empty calendarioHistCapitalesConsultaBean.selectedTipoPagoCAEV ? calendarioHistCapitalesConsultaBean.selectedTipoPagoCAEV :  'TODOS'}"  />
+				<xls:col header="#{etq.camv}" value="#{!empty calendarioHistCapitalesConsultaBean.selectedTipoPagoCAMV ? calendarioHistCapitalesConsultaBean.selectedTipoPagoCAMV : 'TODOS'}"   />
+				<xls:col header="#{etq.subtipoDerecho}" value="#{!empty calendarioHistCapitalesConsultaBean.selectedSubTipoDerecho ? calendarioHistCapitalesConsultaBean.selectedSubTipoDerecho : 'TODOS'}"  />
+				
+				
+            </xls:row>
+        </xls:table>
+
+        <xls:subtitle value="#{etq.registrosEncontrados}: #{calendarioHistCapitalesConsultaBean.totalRegistrosReportes}" />
+
+        <xls:table value="#{calendarioHistCapitalesConsultaBean.paginaReportes.registros}" var="derecho">
+           <xls:row>
+				<xls:col header="#{etq.fechaEnvio}" value="#{derecho.fechaPrimerEnvio}" pattern="dd/MM/yyyy HH:mm" />
+				<xls:col header="#{etq.folioIndeval}" value="#{derecho.idCalendario}" />
+				<xls:col header="#{etq.caev}" value="#{derecho.tipoPagoCAEV}" />
+				<xls:col header="#{etq.camv}" value="#{derecho.tipoPagoCAMV}" />
+				<xls:col header="#{etq.subtipoDerecho}" value="#{derecho.subtipoDerecho}" />
+				<xls:col header="#{etq.estadoDelMensaje}" value="#{!empty derecho.edoFunc ? derecho.edoFunc : '-'} / #{!empty derecho.edoProc ? derecho.edoProc : '-'}"/>
+				<xls:col header="#{etq.tipoValorMinus}" value="#{derecho.tipoValor}" />
+				<xls:col header="#{etq.emisoraMinus}" value="#{derecho.emisora}" />
+				<xls:col header="#{etq.serieMinus}" value="#{derecho.serie}" />
+				<xls:col header="#{etq.isin}" value="#{derecho.isin}"  />
+				<xls:col header="#{etq.calCfi}" value="#{derecho.cfi}" />
+				<xls:col header="#{etq.fechaExdate}" value="#{derecho.fechaXDate}" pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.fechaCorteMinus}" value="#{derecho.fechaCorte}" pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.fechaPago}" value="#{derecho.fechaPago}" pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.fechaEfectiva}" value="#{derecho.fechaEfectiva}" pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.dueBillOfDate}" value="#{derecho.fechaVencimiento}" pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.ratioBruto}" value="#{derecho.importeGRSS}"  pattern="###,###,###,###,###,##0.00" maxFractionDigits="12" minFractionDigits="2" />
+				<xls:col header="#{etq.importeBrutoAdic}" value="#{!empty derecho.ratioAdicionalFormatoReporte ? derecho.ratioAdicionalFormatoReporte : '-'}"  />
+				<xls:col header="#{etq.ratioNeto}" value="#{derecho.importeNETT}" pattern="###,###,###,###,###,##0.00" maxFractionDigits="12" minFractionDigits="2" />
+				<xls:col header="#{etq.calRetencion}" value="#{derecho.importeWITL}"  pattern="###,###,###,###,###,##0.00" maxFractionDigits="12" minFractionDigits="2" />
+				<xls:col header="#{etq.calComision}" value=" #{derecho.importeFEE}"  pattern="###,###,###,###,###,##0.00" maxFractionDigits="12" minFractionDigits="2" />
+				<xls:col header="#{etq.divisaMinus}" value="#{derecho.divisa}"  />
+				<xls:col header="#{etq.bovedaMinus}" value="#{derecho.boveda}"  />
+				<xls:col header="#{etq.narrativa}" value="#{derecho.narrativa}" />
+			</xls:row> 
+        </xls:table>
+    </xls:document>
+</html>

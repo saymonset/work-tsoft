@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xml:lang="en" lang="en"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:composition template="/layoutPopUp.xhtml">
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/catalogos.js" />
+			<style type="text/css">
+				p {
+					margin: 0;
+					padding: 0;
+					color: #000000;
+				}
+			</style>
+		</ui:define>
+		
+		<ui:define name="subtitulo"></ui:define>
+		
+		<ui:define name="body">
+		
+			<a4j:keepAlive beanName="gruposBean" />
+			<h:outputText value="#{gruposBean.initAltaModificacion}" />
+		
+			<h:form id="grupoForm">
+				<table style="width: 100%; font-size: 11px;">
+					<tr>
+						<h:panelGroup id="mensajeUsuario">
+							<div style="min-height: 21px;">
+								<rich:messages warnClass="warning" infoClass="info"
+									errorClass="error" ajaxRendered="true" showDetail="false"
+									showSummary="true" layout="list">
+									<f:facet name="infoMarker">
+										<h:panelGroup>
+											<h:graphicImage url="/images/accept.png" />&#160;
+										</h:panelGroup>
+									</f:facet>
+	
+									<f:facet name="errorMarker">
+										<h:panelGroup>
+											<h:graphicImage url="/images/warning.gif" />&#160;
+										</h:panelGroup>
+									</f:facet>
+								</rich:messages>
+	
+								<div id="divWarnings" class="warning" style="display: none;">
+									<p id="textoWarning"></p>
+								</div>
+							</div>
+						</h:panelGroup>
+					</tr>
+					
+					<tr>
+						<td>
+							<h:panelGroup id="panelCamposCaptura">
+								<table style="width: 100%;" border="0" cellpadding="0" cellspacing="5px" align="center">
+									<tr>
+										<td class="recuadroTabla" align="center">
+											<table class="tablaCriterios" align="center">
+												<tr>
+													<td align="center">
+														<h:outputText style=" font-weight: bold; color:red;" value="*" />
+														<h:outputText styleClass="texto" value="#{etqEventosCorporativos.nombreGrupo}" />
+														:
+													</td>
+													<td align="center">
+														<h:inputText autocomplete="off" id="nombre" value="#{gruposBean.grupo.nombre}"
+															size="30" maxlength="60"
+															styleClass="textoControles textoMayusculas" />
+													</td>
+													<td>
+														<h:outputText styleClass="texto" value="#{etqEventosCorporativos.activo}" />
+														:
+													</td>
+													<td>
+														<h:selectBooleanCheckbox id="checkActivo" value="#{gruposBean.estadoRegistro}" />
+													</td>
+												</tr>
+												<tr>
+													<td align="center">
+														<h:selectOneListbox
+															id="idAgregar"
+															value="#{gruposBean.idAgregar}"
+															size="5"
+															style="width: 300px;"
+															styleClass="inputTextEnable">
+															<f:selectItems value="#{gruposBean.listaPrincipal}" />
+														</h:selectOneListbox>
+													</td>
+													<td align="center" colspan="2"> 
+														<h:panelGrid columns="1">
+															<a4j:commandButton actionListener="#{gruposBean.agregarElemento}"
+																value="#{etqEventosCorporativos.agregar}"
+																styleClass="button"
+																reRender="idAgregar, idEliminar"
+																onfocus="eventOnBlur(this);"/>
+															<a4j:commandButton
+																actionListener="#{gruposBean.eliminarElemento}"
+																value="#{etqEventosCorporativos.eliminar}"
+																styleClass="button"
+																reRender="idAgregar, idEliminar"
+																onfocus="eventOnBlur(this);"/>
+														</h:panelGrid>
+													</td>
+													<td align="center">
+														<h:selectOneListbox
+															id="idEliminar"
+															value="#{gruposBean.idEliminar}"
+															size="5"
+															style="width: 300px;"
+															styleClass="inputTextEnable">
+															<f:selectItems value="#{gruposBean.listaSecundaria}" />
+														</h:selectOneListbox>
+													</td>
+												</tr>
+												
+											</table>
+										</td>	
+									</tr>					
+								</table>
+							</h:panelGroup>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:panelGroup id="panelBotones">
+								<h:panelGroup rendered="#{gruposBean.resultadoRegMod}">
+									<script type="text/javascript">
+										cerrarVentaModal(#{gruposBean.resultadoRegMod});
+									</script>
+								</h:panelGroup>
+						   		<table style="width: 100%;" cellpadding="0px" cellspacing="0px" >
+						            <tr>
+						            	<td width="95%">&#160;</td>
+						            	<td align="center" width="5%">
+											<div class="guardar">
+				                                <h:commandButton id="btnGuardar"
+				                                    action="#{gruposBean.guardar}"
+					                                image="/images/transparent.gif"
+				                                    styleClass="submit"/>
+											</div>
+						            	</td>
+						            </tr>
+						   		</table>
+							</h:panelGroup>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</html>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:t="http://myfaces.apache.org/tomahawk">
+<!-- @author Jacito -->
+
+<ui:composition template="/layoutPopUp.xhtml">
+    <ui:define name="head">
+        <!--    <link rel="stylesheet" type="text/css" media="all" href="#{facesContext.externalContext.requestContextPath}/css/beneficiarioActivo.css" /> -->
+        <script type="text/javascript"
+                src="#{facesContext.externalContext.requestContextPath}/js/consultasMensajesIso.js"/>
+    </ui:define>
+    <ui:define name="titulo">
+        <b>Detalle Cuenta Transitoria de Efectivo</b>
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form id="formaDetalleCuentaTransitoriaEfectivo">
+            <a4j:keepAlive beanName="cuentasTransitoriasEfectivoController"/>
+            <h:outputText id="initDetalleReferencia" value="#{cuentasTransitoriasEfectivoController.initDetalle}"/>
+
+            <table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="center">
+                <tr>
+                    <td style="width:100%;">
+                        <table class="tablaGeneral" width="900px" cellspacing="0px">
+                            <tr>
+                                <th class="tituloTabla" style="text-align: center" width="10%">
+                                    <h:outputText styleClass="texto" value="#{etq.tipoMensaje}"/>
+                                </th>
+                                <th class="tituloTabla" style="text-align: center" width="15%">
+                                    <h:outputText styleClass="texto" value="#{etq.referencia}"/>
+                                </th>
+                                <th class="tituloTabla" style="text-align: center" width="10%">
+                                    <h:outputText styleClass="texto" value="#{etq.divisaMinus}"/>
+                                </th>
+                                <th class="tituloTabla" style="text-align: center" width="15%">
+                                    <h:outputText styleClass="texto" value="#{etq.custodio}"/>
+                                </th>
+                                <th class="tituloTabla" style="text-align: center" width="20%">
+                                    <h:outputText styleClass="texto" value="#{etq.cantidadMinus}"/>
+                                </th>
+                                <th class="tituloTabla" style="text-align: center" width="15%">
+                                    <h:outputText styleClass="texto" value="#{etq.seme}"/>
+                                </th>
+                                <th class="tituloTabla" style="text-align: center" width="20%">
+                                    <h:outputText styleClass="texto" value="#{etq.detalle}"/>
+                                </th>
+                                <th class="tituloTabla" style="text-align: center" width="10%">
+                                    <h:outputText styleClass="texto" value="#{etq.mensajeMinus}"/>
+                                </th>
+                            </tr>
+                            <t:dataList value="#{cuentasTransitoriasEfectivoController.detallesRegistroReferenciados}"
+                                        var="row" id="resultados" rowIndexVar="indice">
+                                <tr>
+                                    <td style="text-align: center;"
+                                        class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                        <h:outputText styleClass="texto textoPeque12" value="#{row.tipoMensaje}"/>
+                                    </td>
+                                    <td style="text-align: center;"
+                                        class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                        <h:outputText styleClass="texto textoPeque12" value="#{row.folioRelacionado}"/>
+                                    </td>
+                                    <td style="text-align: center;"
+                                        class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                        <h:outputText styleClass="texto textoPeque12" value="#{row.divisa}"/>
+                                    </td>
+                                    <td style="text-align: center;"
+                                        class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                        <h:outputText styleClass="texto textoPeque12" value="#{row.custodio}"/>
+                                    </td>
+                                    <td style="text-align: center;"
+                                        class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                        <h:outputText styleClass="texto textoPeque12" value="#{row.total}"
+                                                      converter="formatoMonedaConverter">
+                                            <f:convertNumber pattern="###,###,###,###,###,##0.00"/>
+                                        </h:outputText>
+                                    </td>
+                                    <td style="text-align: center;"
+                                        class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                        <h:outputText styleClass="texto textoPeque12" value="#{row.seme}"/>
+                                    </td>
+                                    <td style="text-align: center;"
+                                        class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                        <h:outputText styleClass="texto textoPeque12"
+                                                      value="#{row.detalleMovimientos}"/>
+                                    </td>
+                                    <td style="text-align: center;"
+                                        class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                        <input type="hidden" id="swift_#{row.idRegistro}"
+                                               class="swift_#{row.idRegistro}" value="#{row.mensajeISO}"/>
+                                        <a href="javascript:void(0);"
+                                           onclick="actualizaMensaje('formaDetalleCuentaTransitoriaEfectivo', 'swift_#{row.idRegistro}');marcar('css_swift_#{row.idRegistro}');">
+                                            <h:graphicImage value="/images/TXT.gif"/>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </t:dataList>
+                            <tr>
+                                <td colspan="5" style="text-align: center;">
+                                    <h:outputText styleClass="texto" value="#{etq.totalMinus}"/>
+                                </td>
+                                <td style="text-align: center;">
+                                    <h:outputText
+                                            value="#{cuentasTransitoriasEfectivoController.totalDetallesRegistroReferenciados}"
+                                            style="font-weight:bold;"
+                                            converter="formatoMonedaConverter">
+                                        <f:convertNumber pattern="###,###,###,###,###,##0.00"/>
+                                    </h:outputText>
+                                </td>
+                                <td colspan="3">
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100%">
+                        <h:inputTextarea id="swiftMensaje" readonly="true" cols="60" rows="15" class="printable"/>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

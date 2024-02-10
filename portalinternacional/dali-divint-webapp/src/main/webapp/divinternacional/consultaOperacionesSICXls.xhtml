@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls" xmlns:a4j="http://richfaces.org/a4j">
+
+<xls:document documentName="ConsultaOperaciones" documentTitle="Consulta de Operaciones del Sistema Internacional de Cotizaciones" landscape="true" >
+
+	<xls:table value="#{consultaOperacionesExportacionBean}" var="filtro">
+		<xls:row>
+			<xls:col align="center"  value="#{etq.institucionMinus}:" oddColorDark="true"/>
+			<xls:col align="center"  value="#{consultaOperacionesExportacionBean.agenteFirmado.id} #{consultaOperacionesExportacionBean.agenteFirmado.folio} #{consultaOperacionesExportacionBean.agenteFirmado.razon }" />
+		</xls:row>
+		<xls:row>
+			<xls:col align="center"  	value="#{etq.fechaMinus}:" />
+			<xls:col align="center"		value="#{consultaOperacionesExportacionBean.fechaActual}" pattern="dd/MM/yyyy" />
+		</xls:row>
+	</xls:table>
+	<xls:subtitle value="Filtros"/>
+	<xls:table value="#{consultaOperacionesExportacionBean}" var="filtro">
+		<xls:row>
+			<xls:col align="center" header="#{etq.participanteMinus}" value="#{consultaOperacionesExportacionBean.participanteSeleccionado}" />
+			<xls:col align="center" header="#{etq.cuentaMinus}" value="#{consultaOperacionesExportacionBean.cuentaSeleccionada}" />
+			<xls:col align="center" header="#{etq.tipoValorMinus}" value="#{consultaOperacionesExportacionBean.tipoValorSeleccionado}" />
+			<xls:col align="center" header="#{etq.emisoraMinus}" value="#{consultaOperacionesExportacionBean.emisoraSeleccionada}" />
+			<xls:col align="center" header="#{etq.serieMinus}" value="#{consultaOperacionesExportacionBean.serieSeleccionada}" />
+			<xls:col align="center" header="#{etq.cuponMinus}" value="#{consultaOperacionesExportacionBean.cuponSeleccionado}" />
+			<xls:col align="center" header="#{etq.ingresoOperacion}" value="#{consultaOperacionesExportacionBean.origenSeleccionado}" />
+			<xls:col align="center" header="#{etq.estatus}" value="#{consultaOperacionesExportacionBean.estatusSeleccionado}" />
+			<xls:col align="center" header="#{etq.divisaMinus}" value="#{consultaOperacionesExportacionBean.divisaSeleccionada}" />
+			<xls:col align="center" header="#{etq.importe}" value="#{consultaOperacionesExportacionBean.importeSeleccionado}" />
+			<xls:col align="center" header="#{etq.isin}" value="#{!empty consultaOperacionesExportacionBean.isin?consultaOperacionesExportacionBean.isin:'TODOS'}"/>
+			<xls:col align="center" header="#{etq.custodio}" value="#{consultaOperacionesExportacionBean.custodio != '-1'?consultaOperacionesExportacionBean.custodio:'TODOS'}" />
+		</xls:row>
+	</xls:table>
+	<xls:table value="#{consultaOperacionesExportacionBean}" var="filtro">
+		<xls:row>
+			<xls:col align="center" header="#{etq.cantidadOperada}" value="#{consultaOperacionesExportacionBean.cantidadSeleccionada}" />
+			<xls:col align="center" header="#{etq.fechaInicial}" value="#{consultaOperacionesExportacionBean.fechaInicialSeleccionada}" pattern="dd/MM/yyyy" />
+			<xls:col align="center" header="#{etq.fechaFinal}" value="#{consultaOperacionesExportacionBean.fechaFinalSeleccionada}" pattern="dd/MM/yyyy" />
+			<xls:col align="center" header="#{etq.operacion}" value="#{consultaOperacionesExportacionBean.operacionSeleccionada}" />
+			<xls:col align="center" header="#{etq.tipoOp}" value="#{consultaOperacionesExportacionBean.tipoOperacionSeleccionada}" />
+			<xls:col align="center" header="#{etq.referenciaOperacion}" value="#{consultaOperacionesExportacionBean.referenciaOperacionSeleccionado}" />
+			<xls:col align="center" header="#{etq.folioControl}" value="#{consultaOperacionesExportacionBean.folioControlSeleccionado}" />				
+		</xls:row>
+	</xls:table>
+	<xls:table value="#{consultaOperacionesExportacionBean}" var="filtro">
+		<xls:row >
+			<xls:col align="center" collspan="2" header="Total de Registros" value="#{consultaOperacionesExportacionBean.resultados	.totalRegistros}" />
+		</xls:row>
+	</xls:table>			
+	<xls:subtitle value="Datos"/>
+    <xls:table value="#{consultaOperacionesExportacionBean.resultados.registros}" var="detalle">
+        <xls:row>
+        	<xls:col header="#{etq.folioControl}" value="#{detalle.folioControl}" align="CENTER"/>
+			<xls:col header="#{etq.referenciaOperacion}" value="#{detalle.referenciaOperacion}" align="CENTER"/>        			 
+    		<xls:col header="#{etq.fechaHoraAlta}" value="#{detalle.fechaAlta}" pattern="dd/MM/yyyy HH:mm:ss"/>
+    		<xls:col header="#{etq.fechaHoraLiquidacionTlp}" value="#{detalle.fechaLiquidacionTlp}" pattern="dd/MM/yyyy HH:mm:ss"/>
+    		<xls:col header="#{etq.fechaHoraHabilitada}" value="#{detalle.fechaHoraHabilitada}" pattern="dd/MM/yyyy HH:mm:ss"/>
+        	<xls:col header="#{etq.id}" value="#{detalle.cuentaNombrada.institucion.tipoInstitucion.claveTipoInstitucion}" align="CENTER"/>
+        	<xls:col header="#{etq.folioMinus}" value="#{detalle.cuentaNombrada.institucion.folioInstitucion}" align="CENTER"/>
+        	<xls:col header="#{etq.cuentaMinus}" value="#{detalle.cuentaNombrada.cuenta}" align="CENTER"/>
+            <xls:col header="#{etq.tipoValorMinus}" value="#{detalle.emision.instrumento.claveTipoValor}" align="CENTER"/>
+            <xls:col header="#{etq.emisoraMinus}" value="#{detalle.emision.emisora.clavePizarra}" align="CENTER"/>
+            <xls:col header="#{etq.serieMinus}" value="#{detalle.emision.serie}" align="CENTER"/>
+            <xls:col header="#{etq.cuponMinus}" value="#{detalle.claveCupon}" align="CENTER"/>
+            <xls:col header="#{etq.isin}" value="#{detalle.emision.isin}" align="CENTER"/>
+            <xls:col header="#{etq.cantidadOperada}" value="#{detalle.cantidadTitulos}" align="CENTER" pattern="###,###,###,###,###"/>
+            <xls:col header="#{etq.cantidadOperadaLiqParcial}" value="#{detalle.cantidadTitulosParcial}" align="CENTER" pattern="###,###,###,###,###"/>
+            <xls:col header="#{etq.remanente}" value="#{detalle.remanente}" align="CENTER" pattern="###,###,###,###,###"/>
+            <xls:col header="#{etq.operacion}" value="#{detalle.descTipoMensaje}" align="CENTER"/>
+        	<xls:col header="#{etq.fechaOperacion}" value="#{detalle.fechaOperacion}" pattern="dd/MM/yyyy"/>
+        	<xls:col header="#{etq.fechaLiquidacionMinus}" value="#{detalle.fechaLiquidacion}" pattern="dd/MM/yyyy"/>
+        	<xls:col header="#{etq.fechaActualizacion}" value="#{detalle.fechaActualizacion}" pattern="dd/MM/yyyy"/>        	
+        	<xls:col header="#{etq.divisaMinus}" value="#{detalle.divisa}"/>
+        	<xls:col header="#{etq.importe}" value="#{detalle.importe}" pattern="$###,###,###,###,###,##0.00" />
+        	<xls:col header="#{etq.efectivoParcial}" value="#{detalle.importeParcial}" pattern="$###,###,###,###,###,##0.00" />
+        	<xls:col header="#{etq.remanenteEfectivo}" value="#{detalle.remanenteEfectivo}" pattern="$###,###,###,###,###,##0.00" />
+            <xls:col header="#{etq.error}" value="#{detalle.errorSwift.codigoErrorSwift}" align="CENTER"/>
+            <xls:col header="#{etq.estatus}" value="#{detalle.estatusOperacion.descEstatusOperacion}" align="CENTER"/>
+        	<xls:col header="#{etq.estatusPfi}" value="#{detalle.stPfi548}" align="CENTER"/>
+        	<xls:col header="#{etq.descEstatusPFI}" value="#{detalle.refMsjPfi}" align="CENTER"/>
+        	<xls:col header="#{etq.descripcionCustodia}" value="#{detalle.catBic.detalleCustodio}" align="CENTER"/>	
+        	<xls:col header="#{etq.descripcionCuenta}" value="#{detalle.catBic.bicProd}" align="CENTER"/>
+        	<xls:col header="#{etq.cuentaContraparte}" value="#{detalle.cuentaContraparte}" align="CENTER"/>		 
+        	<xls:col header="#{etq.descContraparte}" value="#{detalle.descContraparte}" align="CENTER"/>
+        	<xls:col header="#{etq.depositante}" value="#{detalle.sicDetalle.depLiq}" align="CENTER"/>
+        	<xls:col header="#{etq.instruccEspeciales}" value="#{detalle.instruccEspeciales}" align="CENTER"/>	
+			<xls:col header="#{etq.nomCtaBenef}" value="#{detalle.nomCtaBenef}" align="CENTER"/>
+			<xls:col header="#{etq.numCtaBenef}" value="#{detalle.numCtaBenef}" align="CENTER"/>
+            <xls:col header="#{etq.fechaAprobacion}" value="#{detalle.fecha530}" pattern="dd/MM/yyyy HH:mm:ss" align="CENTER"/>
+            <xls:col header="#{etq.msgEfectivo}" value="#{detalle.mensajeEfectivo}" align="CENTER"/>
+            <xls:col header="#{etq.msgConfirmacion}" value="#{detalle.tipoMensajeConfirmacion}" align="CENTER"/>
+            <xls:col header="#{etq.liquidacionParcialReporte}" value="#{!empty detalle.liquidacionParcial ? detalle.liquidacionParcial : 'NO'}" align="CENTER"/>
+        </xls:row>      
+    </xls:table>
+</xls:document>
+</html>

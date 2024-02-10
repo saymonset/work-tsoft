@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+
+    <pdf:document documentName="consultaBitacoraEnvOp" documentTitle="Consulta Bitacora Envio de Operaciones"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        landscape="true" fecha="#{consultaBitacoraEnvOpBean.fechaActual}"
+        imageResource="/images/indeval.jpg">
+        <pdf:table value="consultaBitacoraEnvOpBean" currentBean="resultado" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{consultaBitacoraEnvOpBean}" currentBean="resultado" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.idMinus}" value="#{consultaBitacoraEnvOpBean.params.idTrasp}" align="center" />
+                <pdf:col header="#{etq.folioMinus}" value="#{consultaBitacoraEnvOpBean.params.folioTrasp}" align="center" />
+                <pdf:col header="#{etq.tv}" value="#{consultaBitacoraEnvOpBean.params.tv}" align="center" />
+                <pdf:col header="#{etq.emisoraMinus}" value="#{consultaBitacoraEnvOpBean.params.emisora}" align="center" />
+                <pdf:col header="#{etq.serieMinus}" value="#{consultaBitacoraEnvOpBean.params.serie}" align="center" />
+                <pdf:col header="#{etq.cuponMinus}" value="#{consultaBitacoraEnvOpBean.params.cupon}" align="center" />
+                <pdf:col header="#{etq.estatus}" value="#{consultaBitacoraEnvOpBean.params.estatusRegistro}" align="center" />
+                <pdf:col header="#{etq.fechaConcertacionMinus}" value="#{consultaBitacoraEnvOpBean.params.fechaConcertacion}"
+                    align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaLiquidacionMinus}" value="#{consultaBitacoraEnvOpBean.params.fechaConcertacion}"
+                    align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.folioDescripcionMinus}" value="#{consultaBitacoraEnvOpBean.params.referenciaOperacion}"
+                    align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:br />
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{consultaBitacoraEnvOpBean.resultados.totalRegistros}" />
+        <pdf:br />
+        <pdf:table value="#{consultaBitacoraEnvOpBean.resultados}" currentBean="totales" widthPercentage="100">
+
+            <pdf:row>
+                <pdf:col header="#{etq.totalesMinus} #{etq.nak}" value="#{consultaBitacoraEnvOpBean.resultados.valores['NAK']}"
+                    align="center" />
+                <pdf:col header="#{etq.totalesMinus} #{etq.ack}" value="#{consultaBitacoraEnvOpBean.resultados.valores['ACK']}"
+                    align="center" />
+                <pdf:col header="#{etq.totalesMinus} #{etq.noEnviados}"
+                    value="#{consultaBitacoraEnvOpBean.resultados.valores['NE']}" align="center" />
+                <pdf:col header="#{etq.totalesMinus} #{etq.enviados}"
+                    value="#{consultaBitacoraEnvOpBean.resultados.valores['EN']}" align="center" />
+            </pdf:row>
+
+        </pdf:table>
+
+        <pdf:table value="#{consultaBitacoraEnvOpBean.resultados.registros}" currentBean="bitacora">
+            <pdf:row>
+                <pdf:col header="#{etq.referenciaMensaje}" value="#{bitacora.referenciaMensaje}" align="center" />
+                <pdf:col header="#{etq.folioDescripcionMinus}" value="#{bitacora.referenciaOperacion}" align="center" />
+                <pdf:col header="#{etq.estatusRegistro}" value="#{bitacora.estatusRegistro}" align="center" />
+                <pdf:col header="#{etq.idMinus} #{etq.traspasanteMinus}" value="#{bitacora.idTrasp}" align="center" />
+                <pdf:col header="#{etq.folioMinus} #{etq.traspasanteMinus}" value="#{bitacora.folioTrasp}" align="center" />
+                <pdf:col header="#{etq.cuentaMinus} #{etq.traspasanteMinus}" value="#{bitacora.cuentaTrasp}" align="center" />
+                <pdf:col header="#{etq.idMinus} #{etq.receptorMinus}" value="#{bitacora.idRecep}" align="center" />
+                <pdf:col header="#{etq.folioMinus} #{etq.receptorMinus}" value="#{bitacora.folioRecep}" align="center" />
+                <pdf:col header="#{etq.cuentaMinus} #{etq.receptorMinus}" value="#{bitacora.cuentaRecep}" align="center" />
+                <pdf:col header="#{etq.tv}" value="#{bitacora.tv}" align="center" />
+                <pdf:col header="#{etq.emisoraMinus}" value="#{bitacora.emisora}" align="center" />
+                <pdf:col header="#{etq.serieMinus}" value="#{bitacora.serie}" align="center" />
+                <pdf:col header="#{etq.cuponMinus}" value="#{bitacora.cupon}" align="center" />
+                <pdf:col header="#{etq.cantidadTit}" value="#{bitacora.cantidadTitulos}" footer="#{etq.total}" align="right">
+                    <f:convertNumber pattern="#,##0.00" />
+                </pdf:col>
+
+                <pdf:col header="#{etq.importeSigno}" value="#{bitacora.monto}"
+                    footer="#{consultaBitacoraEnvOpBean.resultados.valores['totalImporte']}" align="right">
+                    <f:convertNumber pattern="$#,##0.00" />
+                </pdf:col>
+
+                <pdf:col header="#{etq.folioControl}" value="#{bitacora.folioControl}" align="center" />
+                <pdf:col header="#{etq.tipoOp}" value="#{bitacora.tipoInstruccion}" align="center" />
+                <pdf:col header="#{etq.fechaConcertacionMinus}" value="#{bitacora.fechaConcertacion}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.origen}" value="#{bitacora.origenRegistro}" align="center" />
+                <pdf:col header="#{etq.mercadoMinus}" value="#{bitacora.mercado}" align="center" />
+                <pdf:col header="#{etq.fechaLiquidacionMinus}" value="#{bitacora.fechaLiquidacion}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.error}" value="#{bitacora.codigoError}" align="center" />
+                <pdf:col header="#{etq.compra}" value="#{bitacora.marcaCompra}" align="center" />
+
+            </pdf:row>
+        </pdf:table>
+
+    </pdf:document>
+</html>

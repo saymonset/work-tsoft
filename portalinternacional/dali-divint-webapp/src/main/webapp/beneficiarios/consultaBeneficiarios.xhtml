@@ -1,0 +1,757 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+    xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+		<ui:define name="head">
+			<link rel="stylesheet" type="text/css" media="all"
+				href="#{facesContext.externalContext.requestContextPath}/css/beneficiarioActivo.css" />
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/beneficiarios.js">
+		    </script>   
+		</ui:define>
+		
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.beneficiarios}" />
+		</ui:define>
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.consultaBeneficiarios}"></h:outputText>
+		</ui:define>
+
+		<ui:define name="criterios">
+			<a4j:keepAlive beanName="consultaBeneficiariosBean" />
+			<a4j:keepAlive beanName="consultaBeneficiariosBean.param" />
+            <h:panelGroup id="init" rendered="#{consultaBeneficiariosBean.banderaInicio}">
+				<h:outputText value="#{consultaBeneficiariosBean.init}" />
+			</h:panelGroup>
+			
+			<br />
+			<br />
+			
+			<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+				<tr>
+                            <td colspan="4">
+                                <div style="min-height: 21px;" colspan="2">
+                                    <rich:messages warnClass="warning" infoClass="info"
+                                                   errorClass="error" ajaxRendered="true" showDetail="false"
+                                                   showSummary="true" layout="list">
+                                        <f:facet name="infoMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/accept.png" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+
+                                        <f:facet name="errorMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/warning.gif" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+                                    </rich:messages>
+
+                                    <div id="divWarnings" class="warning" style="display:none;">
+                                        <p id="textoWarning">
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+				<tr>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.custodio}" />
+					</td>
+					<td style="width: 330px">
+						<h:selectOneMenu id="lstCustodios" value="#{consultaBeneficiariosBean.param.custodio}"
+							styleClass="textoControles">
+							<f:selectItem itemValue="-1" itemLabel="#{etq.seleccioneUnCustodio}" />
+							<f:selectItems value="#{consultaBeneficiariosBean.listaCustodios}"/>
+						</h:selectOneMenu>
+					</td>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.tipoBeneficiario}" />
+					</td>
+					<td style="width: 330px">
+						<h:selectOneMenu id="lstTipoBeneficiario" value="#{consultaBeneficiariosBean.param.tipoBeneficiario}"
+							styleClass="textoControles">
+							<f:selectItem itemValue="-1" itemLabel="#{etq.seleccioneUnTipoBeneficiario}" />
+							<f:selectItems value="#{consultaBeneficiariosBean.tiposBeneficiarios}"/>
+						</h:selectOneMenu>
+					</td>
+				</tr>
+				<tr style="height: 5px">
+					<td colspan="4">
+						&#160;
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="#{etq.institucionMinus}" />
+					</td>
+					<td>
+						<a4j:region>
+                            <table align="left" width="100%">
+                                <tr>
+                                    <td width="70px">
+							<h:inputText autocomplete="off" id="idFolioInstitucion" value="#{consultaBeneficiariosBean.idFolioInstitucion}" 
+                                                     styleClass="textoControles campoNumerico" size="5" maxlength="5"
+                                                     readonly="#{!consultaBeneficiariosBean.institucionIndeval}">
+								<a4j:support event="onchange" actionListener="#{consultaBeneficiariosBean.obtenerDatosParticipante}"
+									reRender="nombreInstitucionTraspasante" ajaxSingle="true"/>
+							</h:inputText>
+                                    </td>
+                                    <td>
+							<h:inputText autocomplete="off" id="nombreInstitucionTraspasante" size="25"
+								readonly="true"
+								value="#{consultaBeneficiariosBean.nombreInstitucion}"
+								styleClass="textoControles" />
+                                    </td>
+                                </tr>
+                            </table>
+						</a4j:region>
+					</td>
+					<td>
+						<h:outputText value="#{etq.formato}" />
+					</td>
+					<td>
+						<h:selectOneMenu id="lstFormato" value="#{consultaBeneficiariosBean.param.formato}"
+							styleClass="textoControles">
+							<f:selectItem itemValue="-1" itemLabel="#{etq.seleccioneUnFormato}" />
+							<f:selectItems value="#{consultaBeneficiariosBean.formatosBeneficiarios}"/>
+							<a4j:support event="onchange" reRender="labelRFCBen, rfcW8Ben" />
+						</h:selectOneMenu>
+					</td>
+				</tr>
+				<tr style="height: 5px">
+					<td colspan="4">
+						&#160;
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="#{etq.estatusBeneficiario}" />
+					</td>
+					<td>
+						<h:selectOneMenu id="estatusBenef" value="#{consultaBeneficiariosBean.param.statusBenef}"
+							styleClass="textoControles">
+							<f:selectItem itemValue="-1" itemLabel="#{etq.seleccioneUnEstado}" />
+							<f:selectItems value="#{consultaBeneficiariosBean.listaEstados}"/>
+						</h:selectOneMenu>
+					</td>
+					<td>
+						<h:outputText value="#{etq.uoi}" />
+					</td>
+					<td>
+						<h:inputText autocomplete="off" id="uoiNumber" value="#{consultaBeneficiariosBean.param.uoiNumber}" 
+							styleClass="textoControles textoMayusculas" size="50" maxlength="50" />
+					</td>
+				</tr>
+				<tr style="height: 5px">
+					<td colspan="4">
+						&#160;
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="#{etq.fechaRegistro}" />
+					</td>
+					<td>
+                        <rich:calendar id="fechaRegistroInicio" inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+                                       value="#{consultaBeneficiariosBean.param.fechaRegistroInicio}"
+                                       datePattern="dd/MM/yyyy" />
+                        <br />
+                        <br />
+                        <rich:calendar id="fechaRegistroFin" inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+                                       value="#{consultaBeneficiariosBean.param.fechaRegistroFin}"
+                                       datePattern="dd/MM/yyyy" />
+					</td>
+					<td>
+						<h:outputText value="#{etq.fechaFormato}" />
+					</td>
+					<td>
+                        <rich:calendar id="fechaFormatoInicio" inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+                                       value="#{consultaBeneficiariosBean.param.fechaFormatoInicio}"
+                                       datePattern="dd/MM/yyyy" />
+                        <br />
+                        <br />
+                        <rich:calendar id="fechaFormatoFin" inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+                                       value="#{consultaBeneficiariosBean.param.fechaFormatoFin}"
+                                       datePattern="dd/MM/yyyy" />
+					</td>
+				</tr>
+				<tr style="height: 5px">
+					<td colspan="4">
+						&#160;
+					</td>
+				</tr>
+                <tr>
+					<td>
+						<h:outputText value="#{etq.fechaDeAutorizacion}" />
+					</td>
+					<td>
+                        <rich:calendar id="fechaAutorizacionInicio" inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+                                       value="#{consultaBeneficiariosBean.param.fechaAutorizacionInicio}"
+                                       datePattern="dd/MM/yyyy" />
+                        <br />
+                        <br />
+                        <rich:calendar id="fechaAutorizacionFin" inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+                                       value="#{consultaBeneficiariosBean.param.fechaAutorizacionFin}"
+                                       datePattern="dd/MM/yyyy" />
+					</td>
+					<td>
+						&#160;
+					</td>
+					<td>
+						&#160;
+					</td>
+				</tr>
+				<tr style="height: 5px">
+					<td colspan="4">
+						&#160;
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="#{etq.nombreBeneficiario} o #{etq.razonSocial}" />
+					</td>
+					<td>
+						<h:inputText autocomplete="off" id="nombreBenef" value="#{consultaBeneficiariosBean.param.nombreRazonSocial}"
+							styleClass="textoControles textoMayusculas" size="50" maxlength="200" />
+					</td>
+					<td>
+						<h:outputText value="#{etq.w8benReferenceNumber}" />
+					</td>
+					<td>
+						<h:inputText autocomplete="off" id="razonSocial" value="#{consultaBeneficiariosBean.param.referenceNumber}"
+							styleClass="textoControles textoMayusculas" size="50" maxlength="100" />
+					</td>
+				</tr>
+                <tr style="height: 5px">
+					<td colspan="4">
+						&#160;
+					</td>
+				</tr>
+                <tr>
+					<td>
+						<h:outputText value="#{etq.w8benAdp}" rendered="#{!empty sessionScope.roles['INT_BEN_INDEVAL']}" />
+					</td>
+					<td>
+						<h:inputText autocomplete="off" id="adp" value="#{consultaBeneficiariosBean.param.adp}"
+							styleClass="textoControles textoMayusculas" size="22" maxlength="20"
+                            rendered="#{!empty sessionScope.roles['INT_BEN_INDEVAL']}" />
+					</td>
+					<td>
+						<h:outputText value="#{etq.estado}"/>
+					</td>
+					<td>
+						<h:selectOneMenu styleClass="textoControles" id="activo" value="#{consultaBeneficiariosBean.activo}">
+						    <f:selectItem itemValue="-1" itemLabel="Ambos"/>
+						    <f:selectItem itemValue="1" itemLabel="Activo"/>
+						    <f:selectItem itemValue="0" itemLabel="Inactivo"/>
+						</h:selectOneMenu>
+					</td>
+				</tr>
+               	<tr>
+					<td>
+						<h:panelGroup id="labelRFCBen">
+							<h:outputText value="#{etq.w8benRFC}"
+										rendered="#{consultaBeneficiariosBean.param.formato eq 'W8BEN'
+													or consultaBeneficiariosBean.param.formato eq 'W8BENE'}" />
+						</h:panelGroup>
+					</td>
+					<td>
+						<h:panelGroup id="rfcW8Ben">
+							<h:inputText id="inputRfcW8Ben" value="#{consultaBeneficiariosBean.param.rfc}"
+								styleClass="textoControles textoMayusculas" size="22" maxlength="20"
+                            	rendered="#{consultaBeneficiariosBean.param.formato eq 'W8BEN' or consultaBeneficiariosBean.param.formato eq 'W8BENE'}" />
+                          </h:panelGroup>
+					</td>
+					<td>
+					</td>
+					<td>
+					</td>
+				</tr>
+			</table>		
+		</ui:define>
+		
+		
+		<ui:define name="botones">
+			<div class="refrescar" style="float: left;">
+        		 <a4j:status id="commonStatus">
+					<f:facet name="start">
+						<h:panelGroup>
+							<h:graphicImage value="/images/ajax-loader.gif" />
+							<h:outputText value="#{etq.buscando}"></h:outputText>
+						</h:panelGroup>
+					</f:facet>
+				</a4j:status> 	
+        	</div>
+        	<div class="limpiar">
+				<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+					styleClass="submit"
+					action="#{consultaBeneficiariosBean.limpiar}" immediate="true"/>
+			</div>
+			<div class="buscar">
+				<h:panelGroup id="botonBuscarPanel">
+					<a4j:commandButton image="/images/transparent.gif" styleClass="submit"
+						actionListener="#{consultaBeneficiariosBean.buscar}"
+						oncomplete="javascript:muestraBusquedaBeneficiarioRFC();"
+						reRender="containerResultados" />
+				</h:panelGroup>
+			</div>
+
+		</ui:define>
+
+		<ui:define name="seccionContenido">
+			<h:panelGroup id="containerResultados">
+				<h:panelGroup rendered="#{consultaBeneficiariosBean.consultaEjecutada}">
+				
+					<t:dataTable id="noExistenResultados"
+						value="#{consultaBeneficiariosBean.paginaVO.registros}"
+						styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+						footerClass="tituloTabla" border="0" cellpadding="3px"
+						cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos"
+						rendered="#{empty consultaBeneficiariosBean.paginaVO.registros}">
+						<t:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.sinResultados}"></h:outputText>
+							</f:facet>
+
+						</t:column>
+					</t:dataTable>
+					
+					<br/>
+					<br/>
+					<br/>
+					
+					<h:panelGroup rendered="#{not empty consultaBeneficiariosBean.paginaVO.registros}">
+
+						<table width="100%" border="0">
+							<tr>
+								<td align="left" class="textoEstadoCuenta">
+									<a4j:commandLink id="control_bitacora_primero"
+										action="#{consultaBeneficiariosBean.irPrimeraPagina}"
+										rendered="#{consultaBeneficiariosBean.irAlPrimero}"
+										reRender="containerResultados, divAbc">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_atras_fast"
+										action="#{consultaBeneficiariosBean.retrocederPaginasRapido}"
+										rendered="#{consultaBeneficiariosBean.retrocederRapido}"
+										reRender="containerResultados, divAbc">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_atras"
+										action="#{consultaBeneficiariosBean.retrocederPagina}"
+										rendered="#{consultaBeneficiariosBean.retroceder}"
+										reRender="containerResultados, divAbc">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+											border="0" />
+									</a4j:commandLink>
+									<a4j:commandLink id="control_bitacora_adelante"
+										action="#{consultaBeneficiariosBean.avanzarPagina}"
+										rendered="#{consultaBeneficiariosBean.avanzar}"
+										reRender="containerResultados, divAbc">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_adelante_fast"
+										action="#{consultaBeneficiariosBean.avanzarPaginasRapido}"
+										rendered="#{consultaBeneficiariosBean.avanzarRapido}"
+										reRender="containerResultados, divAbc">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+											border="0" />
+
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_ultimo"
+										action="#{consultaBeneficiariosBean.irUltimaPagina}"
+										rendered="#{consultaBeneficiariosBean.irAlUltimo}"
+										reRender="containerResultados, divAbc">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+											border="0" />
+									</a4j:commandLink>
+									
+									<a4j:commandButton id="control_bitacora_actual"
+										action="#{consultaBeneficiariosBean.irPaginaActual}"
+										style="visibility: hidden;"																								
+										reRender="containerResultados, divAbc">										
+									</a4j:commandButton>
+								
+
+									<br />
+									<h:outputText value="#{etq.mostrando}"
+										styleClass="textoResumen" />
+									<h:outputText value="#{consultaBeneficiariosBean.numeroPagina}"
+										styleClass="textoResumen" />
+									<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+									<h:outputText value="#{consultaBeneficiariosBean.totalPaginas}"
+										styleClass="textoResumen" />
+									<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+									&#160;&#160;&#160;
+									<h:outputText
+										value="#{consultaBeneficiariosBean.paginaVO.totalRegistros}"
+										styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+									&#160;
+									<h:outputText styleClass="textoResumen"
+										value="#{etq.registrosEncontrados}" />
+								</td>
+								<td style="text-align: right;"  class="textoEstadoCuenta">
+									<h:outputText escape="false" value="#{etq.registrosPorPagina}"
+										styleClass="textoResumen" />
+									<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+										value="#{consultaBeneficiariosBean.paginaVO.registrosXPag}">
+										<f:selectItem itemLabel="1" itemValue="1" />
+										<f:selectItem itemLabel="2" itemValue="2" />
+										<f:selectItem itemLabel="5" itemValue="5" />
+										<f:selectItem itemLabel="10" itemValue="10" />
+										<f:selectItem itemLabel="20" itemValue="20" />
+										<f:selectItem itemLabel="50" itemValue="50" />
+										<a4j:support event="onchange"
+											reRender="containerResultados, divAbc"
+											actionListener="#{consultaBeneficiariosBean.obtenerOperaciones}" />
+									</h:selectOneMenu>
+								</td>
+							</tr>
+							<tr>
+								<td style="text-align: right;" colspan="2">
+									<a4j:commandButton id="botonPreAutorizar" value="#{etq.preAutorizar}"
+										actionListener="#{consultaBeneficiariosBean.preAutorizaBeneficiario}"
+										rendered="#{!empty sessionScope.roles['INT_BEN_INDEVAL']}"
+                                        reRender="containerResultados" />                                        
+                                    &#160;
+ 									<a4j:commandButton id="botonActivar" value="#{etq.activar}"
+										actionListener="#{consultaBeneficiariosBean.activar}"
+										rendered="#{!empty sessionScope.roles['INT_BEN_INDEVAL']}"
+                                        reRender="containerResultados" />
+                                    &#160;
+                                    <a4j:commandButton id="botonCancelar" value="#{etq.cancelarMinus}"
+										actionListener="#{consultaBeneficiariosBean.cancelar}"
+										rendered="#{!empty sessionScope.roles['INT_BEN_INDEVAL']}"
+                                        reRender="containerResultados" />
+                                     &#160;
+                                    <a4j:commandButton id="botonEliminar" value="#{etq.eliminarMinus}"
+										actionListener="#{consultaBeneficiariosBean.eliminar}"
+										rendered="#{!empty sessionScope.roles['INT_BEN_INDEVAL']}"
+                                        reRender="containerResultados" />
+								</td>
+							</tr>
+						</table>
+						
+					</h:panelGroup>
+					
+					<h:dataTable id="resultados"
+						value="#{consultaBeneficiariosBean.paginaVO.registros}"
+						var="beneficiario"
+						rendered="#{not empty consultaBeneficiariosBean.paginaVO.registros}"
+						styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+						footerClass="tituloTabla" border="0" cellpadding="3px"
+						cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos">
+						<h:column>
+							<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.institucionMinus}" />
+							</f:facet>
+							<h:dataTable value="#{beneficiario.institucion}" var="institucion">
+								<h:column>
+                                    <h:panelGroup rendered="#{empty sessionScope.roles['INT_BEN_INDEVAL']}">
+                                        <h:outputText styleClass="texto textoPeque12" value="#{institucion}" />
+                                        <br />
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{!empty sessionScope.roles['INT_BEN_INDEVAL']}">
+                                        <a4j:commandLink styleClass="texto textoPeque12 sinSubrayar"
+                                                         actionListener="#{consultaBeneficiariosBean.eliminaInstitucion}"
+                                                         reRender="containerResultados"
+                                                         onclick="if(!confirm('&#191;Estas seguro que deseas desasignar la institucion #{institucion}&#63;')) { return false; }">
+                                            <h:outputText styleClass="texto textoPeque12" value="#{institucion}" />
+                                            <f:attribute name="idBeneficiario" value="#{beneficiario.idBeneficiario}" />
+                                            <f:attribute name="idFolio" value="#{institucion}" />
+                                        </a4j:commandLink>
+                                        <br />
+                                    </h:panelGroup>
+								</h:column>
+							</h:dataTable>
+						</h:column>
+						
+						<h:column>
+							<h:outputText styleClass="texto textoPeque12 negrita" value="#{etq.custodio}" />
+							<br />
+							<h:outputText styleClass="texto textoPeque12" 
+								value="#{consultaBeneficiariosBean.mapaCustodios[beneficiario.custodio]}" />
+							<br />
+							<br />
+							<h:outputText styleClass="texto textoPeque12 negrita" value="#{etq.formato}" />
+							&#160;&#160;
+							<h:outputText styleClass="texto textoPeque12" value="#{beneficiario.formatoPantalla}" />
+							
+							<br />
+							<br />
+							<h:outputText styleClass="texto textoPeque12 negrita" value="#{etq.beneficialOwnerId}" />
+							&#160;&#160;
+							<h:outputText styleClass="texto textoPeque12" value="#{beneficiario.beneficialOwnerId}" />
+							<br />
+							<br />
+							<h:outputText styleClass="texto textoPeque12 negrita" value="#{etq.uoi}" />
+							&#160;&#160;
+							<h:outputText styleClass="texto textoPeque12" value="#{beneficiario.uoi}" />
+							<br />
+							<br />
+                            <h:outputText styleClass="texto textoPeque12 negrita" value="#{etq.porcentajeRetencionMinus}" />
+							&#160;&#160;
+                            <h:outputText styleClass="texto textoPeque12"
+                            	rendered="#{empty sessionScope.roles['INT_PORCENTAJE_RETENCION'] and beneficiario.descStatusBeneficiario eq 'AUTORIZADO'}"
+                                value="#{empty beneficiario.porcentajeRetencion ? consultaBeneficiariosBean.mapaPorcentajes[beneficiario.custodio][beneficiario.idTipoBeneficiario] : beneficiario.porcentajeRetencion}%" />                            	                            
+                            <a href="javascript:muestraModificaPorcentajeRetencion(
+                            	#{beneficiario.idBeneficiario},
+                            	'#{beneficiario.uoi}',
+                            	'#{beneficiario.nombreCompleto}',
+                            	#{beneficiario.personaFisica},
+                            	'#{beneficiario.razonSocial}',
+                            	'#{beneficiario.formato eq 'W9' ? 'USA' : beneficiario.paisResidencial}',
+                            	'#{empty beneficiario.porcentajeRetencion ? consultaBeneficiariosBean.mapaPorcentajes[beneficiario.custodio][beneficiario.idTipoBeneficiario] : beneficiario.porcentajeRetencion}',
+                            	'#{beneficiario.descTipoBeneficiario}',
+                            	'#{consultaBeneficiariosBean.mapaCustodios[beneficiario.custodio]}',
+                            	'#{beneficiario.formato}');">                             	                       
+								<h:outputText styleClass="texto textoPeque12" rendered="#{!empty sessionScope.roles['INT_PORCENTAJE_RETENCION'] and beneficiario.descStatusBeneficiario eq 'AUTORIZADO'}"
+                                          	value="#{empty beneficiario.porcentajeRetencion ? consultaBeneficiariosBean.mapaPorcentajes[beneficiario.custodio][beneficiario.idTipoBeneficiario] : beneficiario.porcentajeRetencion}%" />
+                            </a>                            	                            	                            
+                            <h:outputText styleClass="texto textoPeque12" rendered="#{beneficiario.descStatusBeneficiario ne 'AUTORIZADO' and beneficiario.formato ne 'MILA'}"
+                                          	value="#{empty beneficiario.porcentajeRetencion ? 30 : beneficiario.porcentajeRetencion}%" />
+                            <h:outputText styleClass="texto textoPeque12" rendered="#{beneficiario.descStatusBeneficiario ne 'AUTORIZADO' and beneficiario.formato eq 'MILA'}"
+                                          	value="#{empty beneficiario.porcentajeRetencion ? consultaBeneficiariosBean.mapaPorcentajes[beneficiario.custodio][beneficiario.idTipoBeneficiario] : beneficiario.porcentajeRetencion}%" />              	
+							<br />
+							<br />
+							<a href="javascript:detalleBeneficiario(#{beneficiario.idBeneficiario},'#{beneficiario.formato}');">
+								<h:outputText styleClass="texto textoPeque12 sinSubrayar" value="#{etq.verDetalle}" />
+							</a>
+							&#160;&#160;&#45;&#160;&#160;
+							<h:panelGroup rendered="#{beneficiario.formato ne 'MILA' and beneficiario.formato ne 'W8IMY2015' and beneficiario.formato ne 'W8IMY2017'}">
+							<a href="#{facesContext.externalContext.requestContextPath}/beneficiarios/ObtieneFormatoW?idBeneficiario=#{beneficiario.idBeneficiario}">
+								<h:outputText styleClass="texto textoPeque12 sinSubrayar" value="PDF" />
+							</a>
+							</h:panelGroup>
+							<h:panelGroup rendered="#{beneficiario.formato eq 'MILA'}">
+							<a href="#{facesContext.externalContext.requestContextPath}/beneficiarios/ObtieneFormatoMILA?funcion=generarFormatoMila&amp;idBeneficiario=#{beneficiario.idBeneficiario}">
+								<h:outputText styleClass="texto textoPeque12 sinSubrayar" value="INT_100" />
+							</a>
+							</h:panelGroup>
+							<br />
+                            <h:panelGroup rendered="#{(!empty sessionScope.roles['INT_BEN_CAPT_CONS'] or !empty sessionScope.roles['INT_BEN_INDEVAL']) and beneficiario.descStatusBeneficiario ne 'AUTORIZADO'}">
+                                <h:commandLink value="Modificar" styleClass="texto textoPeque12 sinSubrayar"
+                                                 action="#{modificaBeneficiarioBean.getIniciaModificacion}" rendered="#{beneficiario.formato ne 'MILA'}">
+                                    <f:setPropertyActionListener target="#{modificaBeneficiarioBean.idBeneficiarioSelected}" 
+                                                                 value="#{beneficiario.idBeneficiario}" />
+                                    <f:setPropertyActionListener target="#{modificaBeneficiarioBean.formato}" 
+                                                                 value="#{beneficiario.formato}" />
+                                </h:commandLink>
+                                <h:commandLink value="Modificar" styleClass="texto textoPeque12 sinSubrayar"
+                                                 action="#{modificaBeneficiarioMILABean.getIniciaModificacion}" rendered="#{beneficiario.formato eq 'MILA'}">
+                                    <f:setPropertyActionListener target="#{modificaBeneficiarioMILABean.idBeneficiarioSelected}" 
+                                                                 value="#{beneficiario.idBeneficiario}" />
+                                    <f:setPropertyActionListener target="#{modificaBeneficiarioMILABean.formato}" 
+                                                                 value="#{beneficiario.formato}" />
+                                </h:commandLink>
+                            </h:panelGroup>
+                            <h:panelGroup rendered="#{!empty sessionScope.roles['INT_BEN_INDEVAL'] and beneficiario.descStatusBeneficiario eq 'AUTORIZADO'}">
+                                <a href="javascript:seleccionarBeneficiario(#{beneficiario.idBeneficiario},'#{beneficiario.formato}')" >
+                                    <h:outputText styleClass="texto textoPeque12 sinSubrayar" value="Asignar Instituci&#243;n" />
+                            </a>
+                            </h:panelGroup>
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.beneficiarios}" />
+							</f:facet>
+							<h:panelGroup rendered="#{beneficiario.formato eq 'W8BEN' or beneficiario.formato eq 'W8BEN2014' or beneficiario.formato eq 'W8BEN2017'}">
+								<div>
+									<ui:decorate template="/beneficiarios/detalles/detalleW8BEN.xhtml" />
+								</div>
+							</h:panelGroup>
+							<h:panelGroup rendered="#{beneficiario.formato eq 'W8IMY2015' or beneficiario.formato eq 'W8IMY2017'}">
+								<ui:decorate template="/beneficiarios/detalles/detalleW8IMY2015.xhtml" />
+							</h:panelGroup>
+							<h:panelGroup rendered="#{beneficiario.formato eq 'W8IMY'}">
+								<ui:decorate template="/beneficiarios/detalles/detalleW8IMY.xhtml" />
+							</h:panelGroup>
+							<h:panelGroup rendered="#{beneficiario.formato eq 'W9'}">
+								<ui:decorate template="/beneficiarios/detalles/detalleW9.xhtml" />
+							</h:panelGroup>
+							<h:panelGroup rendered="#{beneficiario.formato eq 'MILA'}">
+								<ui:decorate template="/beneficiarios/detalles/detalleMILABEN.xhtml" />
+							</h:panelGroup>
+							<h:panelGroup rendered="#{beneficiario.formato eq 'W8BENE' or  beneficiario.formato eq 'W8BENE2016'}">
+								<ui:decorate template="/beneficiarios/detalles/detalleW8BENE.xhtml" />
+							</h:panelGroup>
+						</h:column>
+						
+						<h:column rendered="#{!empty sessionScope.roles['INT_BEN_INDEVAL']}">
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.preAutorizar}" />
+							</f:facet>
+							<h:selectBooleanCheckbox value="#{beneficiario.preAutoriza}" 
+								rendered="#{beneficiario.descStatusBeneficiario eq 'REGISTRADO' or
+											beneficiario.descStatusBeneficiario eq 'ACTUALIZADO' or beneficiario.descStatusBeneficiario eq 'CANCELADO'
+											or beneficiario.descStatusBeneficiario eq 'VENCIDO'}"/>
+						</h:column>
+						
+						<h:column rendered="#{!empty sessionScope.roles['INT_BEN_INDEVAL']}">
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.activar}" />
+							</f:facet>
+							<h:selectBooleanCheckbox value="#{beneficiario.activar}" 
+								rendered="#{beneficiario.descStatusBeneficiario eq 'PRE AUTORIZADO'
+											or beneficiario.descStatusBeneficiario eq 'ACTUALIZADO'}"/>
+						</h:column>
+
+                        <h:column rendered="#{!empty sessionScope.roles['INT_BEN_INDEVAL']}">
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.cancelarMinus}" />
+                            </f:facet>
+                            <h:selectBooleanCheckbox value="#{beneficiario.cancelar}"
+                                                     rendered="#{beneficiario.descStatusBeneficiario eq 'AUTORIZADO'}"/>
+                        </h:column>
+
+                        <h:column rendered="#{!empty sessionScope.roles['INT_BEN_INDEVAL']}">
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.eliminarMinus}" />
+                            </f:facet>
+                            <h:selectBooleanCheckbox value="#{beneficiario.eliminar}" />
+                        </h:column>
+
+                    </h:dataTable>
+                    <br />  
+                    					
+					<table cellpadding="0" cellspacing="0" border="0" align="center" width="900px">
+						<tr>
+							<td width="100%">
+								<div id="divControlesReportes" style="display: inline;">
+									<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%">
+										<tr align="right">
+											<td align="right">
+												<h:panelGroup id="divReportes"  style="float: right; display: #{not consultaBeneficiariosBean.reportesDireccion ? 'inline' : 'none'}; text-align: right;">
+								                    <h:commandButton id="generarPdf"
+								                    	action="consultaBeneficiariosSinDireccionPDF"
+								                    	actionListener="#{consultaBeneficiariosBean.generarReportes}"
+								                        image="/images/pdf.gif"
+								                        title="Exportar a PDF todos los resultados de la consulta"
+								                        immediate="true"
+								                        onclick="bloquearSeccionReportes();"/>
+													&#160;&#160;
+								                    <h:commandButton id="generarXls"
+								                    	action="consultaBeneficiariosSinDireccionXLS"
+								                    	actionListener="#{consultaBeneficiariosBean.generarReportes}"
+								                        image="/images/excel-file.gif"
+								                        title="Exportar a XLS todos los resultados de la consulta"
+								                        immediate="true"
+								                        onclick="bloquearSeccionReportes();"/>
+													&#160;&#160;
+								                    <h:commandButton id="generarTxt"
+								                    	action="consultaBeneficiariosSinDireccionTXT"
+								                    	actionListener="#{consultaBeneficiariosBean.generarReportes}"
+								                        image="/images/TXT.gif" 
+								                        title="Exportar a TXT todos los resultados de la consulta"
+								                        immediate="true"
+								                        onclick="bloquearSeccionReportes();"/>
+								                     <h:outputText value="&#160;&#160;" rendered="#{consultaBeneficiariosBean.exportaMila}"/>                    
+								                     <h:commandButton id="generarMila"
+								                     	action="#{consultaBeneficiariosBean.generarReporteMila}"
+								                        image="/images/mila.gif" 
+								                        title="Generar INT100 beneficiarios MILA"
+								                        immediate="true" 
+								                        rendered="#{consultaBeneficiariosBean.exportaMila}"
+								                        onclick="bloquearSeccionReportes();"/>
+												</h:panelGroup>
+											</td>
+										</tr>
+										<tr align="right">
+											<td>
+												<h:panelGroup  style="float: right; text-align: right;">
+													<h:outputText value="#{etq.exportarDireccion}" />
+													<h:selectBooleanCheckbox id="reportesDireccion"
+														value="#{consultaBeneficiariosBean.reportesDireccion}"  
+														onclick="javascript:habilitaAbc(this.checked)"/>
+												</h:panelGroup>
+											</td>
+										</tr>
+										<tr align="right">
+											<td>
+												<h:panelGroup style="float: right; text-align: right; display: #{consultaBeneficiariosBean.reportesDireccion ? 'inline' : 'none'};" id="divRadios">
+													   	<h:graphicImage value="/images/pdf.gif" />&#160;&#160;
+									                	<h:graphicImage value="/images/excel-file.gif" />&#160;&#160;
+									                	<h:graphicImage value="/images/TXT.gif" />
+									                	<br/>
+									                	<h:selectOneRadio id="tipoReportegenerarTxt" value="#{consultaBeneficiariosBean.tipoReporte}" style="float: right; text-align: right;" >
+									        				<f:selectItem id="idPdf" itemLabel="" itemValue="consultaBeneficiariosPDF" />
+									        				<f:selectItem id="idXls" itemLabel="" itemValue="consultaBeneficiariosXLS"/>
+									        				<f:selectItem id="idTxt" itemLabel="" itemValue="consultaBeneficiariosTXT"/>        
+				    									</h:selectOneRadio>
+												</h:panelGroup>
+											</td>
+										</tr>
+										<tr align="right">
+											<td>
+												<h:panelGroup id="divAbc" style="display: #{consultaBeneficiariosBean.reportesDireccion ? 'inline' : 'none'}">
+								                   <t:dataList id="paginacionBeneficiarios" var="item"  layout="simple"
+								                        value="#{consultaBeneficiariosBean.listaPaginasBenef}">
+								                        &#160;&#160;
+														<h:commandButton
+															action="#{consultaBeneficiariosBean.generarReportesBloque}"
+															onclick="javascript:setParametersReporte('#{item.letra}','#{item.paginas}');bloquearSeccionReportes();"
+															value="#{item.etiquetaMostrar}"
+															styleClass="submitLink"
+															class="submitLink" />
+								                    </t:dataList>
+													<h:inputHidden id="letraHiden" value=""/>
+													<h:inputHidden id="paginaHiden" value=""/>
+												</h:panelGroup>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td width="100%" align="right">
+								<div id="monitorPeticionReporte" style="display: none;">
+									<h:panelGroup id="panelMonitorPeticionReporte">
+										<h:graphicImage value="/images/ajax-loader.gif" />
+										&#160;&#160;
+										<h:outputText value="#{etq.reporteEnProceso}" />
+										<a4j:commandButton id="btnActualizarEstadoPeticion"
+											image="/images/transparent.gif"
+											styleClass="submit"
+											actionListener="#{consultaBeneficiariosBean.actualizarEstadoPeticion}"
+											reRender="panelMonitorPeticionReporte"
+											oncomplete="desbloquearSeccionReportes(#{consultaBeneficiariosBean.peticionReporteCompleta});"/>
+									</h:panelGroup>
+								</div>
+							</td>
+						</tr>
+					</table>
+                </h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</html>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<description>
+		AplicationContext de configuracion de quartz
+	</description>
+	
+	<bean name="jobDetailDepuradorFormatosFiscalesBean" class="org.springframework.scheduling.quartz.JobDetailBean"> 
+		<property name="jobClass" value="com.indeval.portalinternacional.middleware.services.quartz.DepuradorFormatosFiscalesJob" /> 
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="beneficiariosService" value-ref="controlBeneficiariosService"/>
+			</map>
+		</property> 
+	</bean>
+	
+	<bean id="cronTriggerDepuradorW8Ben" class="org.springframework.scheduling.quartz.CronTriggerBean"> 
+		<property name="jobDetail" ref="jobDetailDepuradorFormatosFiscalesBean" />
+		<property name="cronExpression" value="${portalDali-divint.quartzDepuradorW8Ben}" /> 
+	</bean>
+	
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="autoStartup" value="true" />
+		<property name="jobDetails">
+	   		<list>
+	      		<ref bean="jobDetailDepuradorFormatosFiscalesBean" />
+	   		</list>
+		</property> 
+		<property name="triggers">
+	    	<list>
+				<ref bean="cronTriggerDepuradorW8Ben" />
+	    	</list>
+		</property>
+   	</bean>
+</beans>

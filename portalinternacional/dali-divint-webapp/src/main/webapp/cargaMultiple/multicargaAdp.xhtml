@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:decorate  template="/layoutCapturaMultiPart.xhtml">
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/multicarga.js"></script>		
+		</ui:define>	
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.cargaMultipleAdp}"></h:outputText>
+		</ui:define>
+		<ui:define name="seccionForma">
+			<a4j:keepAlive beanName="multicargaAdpBean" />	
+			 <h:panelGroup id="init">
+                <h:outputText value="#{multicargaAdpBean.init}" />
+            </h:panelGroup>					
+			<h:panelGroup id="general">
+				<h:panelGroup id="mensajeUsuario">
+					<div style="min-height: 21px;width: 95%;">
+						<rich:messages warnClass="warning" infoClass="info"
+							errorClass="error" ajaxRendered="true" showDetail="false"
+							showSummary="true" layout="list">
+							<f:facet name="infoMarker">
+								<h:panelGroup>
+									<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+							</f:facet>
+
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+							</f:facet>
+						</rich:messages>
+
+						<div id="divWarnings" class="warning" style="display: none;">
+							<p id="textoWarning">
+							</p>
+						</div>
+					</div>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+		
+		<ui:define name="botones">
+				<h:panelGroup id="botonesCarga">
+					<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="center">				
+						<tr>
+							<td class="recuadroTabla" colspan="2">
+						   		<h:panelGroup id="upload">
+                					<t:div style="width: 100%; text-align: center; padding-top: 18px;">
+                    					<h:outputText value="#{etq.archivo}" />&#160;&#160;
+                    					<t:inputFileUpload id="archivoOperaciones" storage="memory"                     						
+                    						onchange="muestraBoton(this.value);"
+                    						label="#{etq.buscarArchivo}"
+                                       		value="#{multicargaAdpBean.archivo}" size="50"
+                                       		required="false" />                                        		                                       		
+                                       		 &#160;&#160;                                                                               					                    			
+                    					<br />
+                    					<br />                    					
+                    					<div id="botonOculto" style="display:none">                     				                    					
+                    						<h:commandButton id="iniciarProceso" value="#{etq.cargarArchivo}" 
+                    						styleClass="submit"
+                                     		action="#{multicargaAdpBean.uploadFile}"
+                                     		onclick="if(! confirmarCargaAdp() ){ return false; } else {imagenCargaAdp(); }">                                     		                                      		                                   	                        	                                     		                                      		                                   	                        	
+                    					</h:commandButton>&#160;&#160;                    					                    					                   				
+                    					</div>                    				                       				
+               					 	</t:div>
+            					</h:panelGroup>
+							</td>					
+						</tr>
+					</table>
+				</h:panelGroup>	
+				<h:panelGroup>
+					<div id="image_carga" style="display:none;width:900px; position:absolute" align="center">
+                    	<h:graphicImage value="/images/ajax-loader.gif" align="center"/>
+                    </div>  				
+				</h:panelGroup>					
+				<h:panelGroup id="resumenCarga" rendered="#{multicargaAdpBean.consultaEjecutada}">
+					<div id="resumenCargaDiv" style="display:inline">
+					<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="center">				
+						<tr>
+							<td align="center" width="100%" colspan="2" class="tituloTabla">
+								<h:outputText styleClass="texto textoNegritas" value="#{etq.detalleCarga}" />
+							</td>
+						</tr>
+						<tr class="renglonTablaUno">
+							<td width="100%" align="center">
+								<t:div style="width: 100%; text-align: center; padding-top: 18px;" >
+									<h:outputText styleClass="texto textoNegritas" value="#{etq.registrosCargados}" />
+									&#160;&#160;&#160;&#160;&#160;&#160;
+									<h:outputText styleClass="texto" value="#{multicargaAdpBean.multicargaResumenExcelVO.totalRegistrosCargados}" />
+								</t:div>														
+							</td>					
+						</tr>
+						<tr class="renglonTablaDos">
+							<td width="100%" align="center">
+								<t:div style="width: 100%; text-align: center; padding-top: 18px;">
+									<h:outputText styleClass="texto textoNegritas" value="#{etq.registrosError}" />
+									&#160;&#160;&#160;&#160;&#160;&#160;
+									<h:outputText styleClass="texto textoError" value="#{multicargaAdpBean.multicargaResumenExcelVO.totalRegistrosConError}" />
+								</t:div>							
+							</td>										
+						</tr>
+						<tr>
+							<td width="100%" align="right">
+								<h:panelGroup style="display: #{multicargaAdpBean.showLink? 'inline' : 'none'}">
+								<t:div style="width: 100%; text-align: right; padding-top: 18px;">
+									<h:outputText styleClass="texto textoNegritas" value="#{etq.descargar}" />
+									&#160;&#160;
+									<h:commandButton 
+                          					action="detalleErrorAdpXls"
+                          					image="/images/excel-file.gif"
+                          					title="Exportar a Excel todos los Registros con Error" 
+                            				id="generarExcel">
+                           			</h:commandButton>
+                           		</t:div>
+								</h:panelGroup>
+							</td>
+						</tr>	
+				</table>
+				</div>
+			</h:panelGroup>		
+		</ui:define>		
+	</ui:decorate>
+</html>

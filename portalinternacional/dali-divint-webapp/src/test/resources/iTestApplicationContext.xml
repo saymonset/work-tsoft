@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<description>
+		AplicationContext de configuracion de objetos de acceso a datos
+	</description>
+
+	 <bean id="ejbJndiEnvironment" class="java.util.Hashtable"
+		lazy-init="true">
+		<constructor-arg index="0">
+			<map>
+				<entry key="java.naming.factory.initial">
+					<value>weblogic.jndi.WLInitialContextFactory</value>
+				</entry>
+				<entry key="java.naming.provider.url">
+					<!--value>t3://btpcas01:6003</value -->
+                    <value>t3://localhost:9001</value>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>
+     
+    <bean id="controlBeneficiariosServiceEJB" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ejb.controlBeneficiariosService#com.indeval.portalinternacional.middleware.services.divisioninternacional.ControlBeneficiariosService" />
+        <property name="jndiEnvironment" ref="ejbJndiEnvironment"></property>
+        <property name="proxyInterface" value="com.indeval.portalinternacional.middleware.services.divisioninternacional.ControlBeneficiariosService"></property>
+        <property name="lookupOnStartup" value="false"></property>
+    </bean>
+
+    <bean id="temporalBeneficiariosServiceEJB" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ejb.temporalBeneficiariosService#com.indeval.portalinternacional.middleware.services.divisioninternacional.TemporalBeneficiariosService" />
+        <property name="jndiEnvironment" ref="ejbJndiEnvironment"></property>
+        <property name="proxyInterface" value="com.indeval.portalinternacional.middleware.services.divisioninternacional.TemporalBeneficiariosService"></property>
+        <property name="lookupOnStartup" value="false"></property>
+    </bean>
+
+    <bean id="statementsDivintServiceEJB" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ejb.statementsDivintService#com.indeval.portalinternacional.middleware.services.divisioninternacional.StatementsDivintService" />
+        <property name="jndiEnvironment" ref="ejbJndiEnvironment"></property>
+        <property name="proxyInterface" value="com.indeval.portalinternacional.middleware.services.divisioninternacional.StatementsDivintService"></property>
+        <property name="lookupOnStartup" value="false"></property>
+    </bean>
+
+    <bean id="excellStatementUtil" lazy-init="true"
+		class="com.indeval.portalinternacional.presentation.controller.statements.ExcellStatementUtil">
+		<property name="statementsDivintService" ref="statementsDivintServiceEJB" />
+	</bean>
+
+    <bean id="dataSourceInternacional"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+        destroy-method="close">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+        <property name="url">
+            <value>
+                <![CDATA[jdbc:oracle:thin:@10.100.230.42:1521:homology]]>
+            </value>
+        </property>
+        <property name="username" value="ADMINSEGU_7" />
+        <property name="password" value="s3Gw_7H0moGi" />
+    </bean>
+
+    <bean id="dataSourceDali"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		 <property name="url">
+            <value>
+                <![CDATA[jdbc:oracle:thin:@10.100.230.42:1521:homology]]>
+            </value>
+        </property>
+        <property name="username" value="ADMINSEGU_7" />
+        <property name="password" value="s3Gw_7H0moGi" />
+    </bean>
+
+	<bean id="securityDataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		 <property name="url">
+            <value>
+                <![CDATA[jdbc:oracle:thin:@10.100.230.42:1521:homology]]>
+            </value>
+        </property>
+        <property name="username" value="ADMINSEGU_7" />
+        <property name="password" value="s3Gw_7H0moGi" />
+	</bean>
+
+</beans>

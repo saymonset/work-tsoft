@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xls="http://indeval.com/jsf/xls"
+	xmlns:cvt="http://indeval.com/jsf/converters"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document documentName="consultaBitacoraEnvOp" documentTitle="Consulta Bitacora Envio de Operaciones"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        fecha="#{consultaBitacoraEnvOpBean.fechaActual}">
+
+        <xls:table value="#{consultaBitacoraEnvOpBean}" var="dummy">
+            <xls:row>
+                <xls:col header="#{etq.participante}" value="#{empty consultaBitacoraEnvOpBean.idFolioTraspasante ? 'TODOS' : consultaBitacoraEnvOpBean.idFolioTraspasante}" align="center" />
+                <xls:col header="#{etq.tv}" value="#{empty consultaBitacoraEnvOpBean.params.tv ? 'TODOS' : consultaBitacoraEnvOpBean.params.tv}" align="center" />
+                <xls:col header="#{etq.emisoraMinus}" value="#{ empty consultaBitacoraEnvOpBean.params.emisora ? 'TODAS' : consultaBitacoraEnvOpBean.params.emisora}" align="center" />
+                <xls:col header="#{etq.serieMinus}" value="#{empty consultaBitacoraEnvOpBean.params.serie ? 'TODAS' : consultaBitacoraEnvOpBean.params.serie}" align="center" />
+                <xls:col header="#{etq.cuponMinus}" value="#{empty consultaBitacoraEnvOpBean.params.cupon ? 'TODOS' : consultaBitacoraEnvOpBean.params.cupon}" align="center" />
+                <xls:col header="#{etq.estatus}" value="#{empty consultaBitacoraEnvOpBean.params.estatusRegistro ? 'TODOS' : consultaBitacoraEnvOpBean.params.estatusRegistro}" align="center" />
+                <xls:col header="#{etq.fechaConcertacionMinus}" value="#{consultaBitacoraEnvOpBean.params.fechaConcertacion}"
+                    align="center" pattern="dd/MM/yyyy" />
+                <xls:col header="#{etq.fechaLiquidacionMinus}" value="#{consultaBitacoraEnvOpBean.params.fechaLiquidacion}"
+                    align="center" pattern="dd/MM/yyyy" />
+                <xls:col header="#{etq.folioDescripcionMinus}" value="#{empty consultaBitacoraEnvOpBean.params.referenciaOperacion ? 'TODOS' : consultaBitacoraEnvOpBean.params.referenciaOperacion}"
+                    align="center" />
+            </xls:row>
+        </xls:table>
+
+        <xls:subtitle value="#{etq.registrosEncontrados}: #{consultaBitacoraEnvOpBean.bitacoraTotales.paginaVO.totalRegistros}" />
+
+        <xls:table value="#{consultaBitacoraEnvOpBean.resultados}" var="totales">
+            <xls:row>
+                <xls:col header="#{etq.totalesMinus} #{etq.nak}" value="#{consultaBitacoraEnvOpBean.resultados.valores['NAK']}" align="center" />
+                <xls:col header="#{etq.totalesMinus} #{etq.ack}" value="#{consultaBitacoraEnvOpBean.resultados.valores['ACK']}" align="center" />
+                <xls:col header="#{etq.totalesMinus} #{etq.noEnviados}" value="#{consultaBitacoraEnvOpBean.resultados.valores['NE']}" align="center" />
+                <xls:col header="#{etq.totalesMinus} #{etq.enviados}" value="#{consultaBitacoraEnvOpBean.resultados.valores['EN']}" align="center" />
+            </xls:row>
+        </xls:table>
+        <xls:table value="#{consultaBitacoraEnvOpBean.resultados.registros}" var="bitacora">
+            <xls:row>
+                <xls:col header="#{etq.referenciaMensaje}" value="#{bitacora.referenciaMensaje}" align="center" />
+                <xls:col header="#{etq.folioDescripcionMinus}" value="#{bitacora.referenciaOperacion}" align="center" />
+                <xls:col header="#{etq.idMinus} #{etq.traspasanteMinus}" value="#{bitacora.idTrasp}" align="center" />
+                <xls:col header="#{etq.folioMinus} #{etq.traspasanteMinus}" value="#{bitacora.folioTrasp}" align="center" />
+                <xls:col header="#{etq.cuentaMinus} #{etq.traspasanteMinus}" value="#{bitacora.cuentaTrasp}" align="center" />
+                <xls:col header="#{etq.idMinus} #{etq.receptorMinus}" value="#{bitacora.idRecep}" align="center" />
+                <xls:col header="#{etq.folioMinus} #{etq.receptorMinus}" value="#{bitacora.folioRecep}" align="center" />
+                <xls:col header="#{etq.cuentaMinus} #{etq.receptorMinus}" value="#{bitacora.cuentaRecep}" align="center" />
+                <xls:col header="#{etq.estatusRegistro}" value="#{bitacora.estatusRegistro}" align="center" />
+                <xls:col header="#{etq.tv}" value="#{bitacora.tv}" align="center" />
+                <xls:col header="#{etq.emisoraMinus}" value="#{bitacora.emisora}" align="center" />
+                <xls:col header="#{etq.serieMinus}" value="#{bitacora.serie}" align="center" />
+                <xls:col header="#{etq.cuponMinus}" value="#{bitacora.cupon}" align="center" />
+                <xls:col header="#{etq.cantidadTit}" value="#{bitacora.cantidadTitulos}" align="center"
+                    pattern="###,###,###,###,###,##0.00" footer="#{etq.total}" />
+                <xls:col header="#{etq.importeSigno}" value="#{bitacora.monto}" align="center"
+                    pattern="$###,###,###,###,###,##0.00" footer="#{consultaBitacoraEnvOpBean.resultados.valores['totalImporte']}" />
+                <xls:col header="#{etq.folioControl}" value="#{bitacora.folioControl}" align="center" />
+                <xls:col header="#{etq.tipoOp}" value="#{bitacora.tipoInstruccion}" align="center" />
+                <xls:col header="#{etq.origen}" value="#{bitacora.origenRegistro}" align="center" pattern="dd-MM-yyyy" />
+                <xls:col header="#{etq.mercadoMinus}" value="#{bitacora.mercado}" align="center" />
+                <xls:col header="#{etq.fechaConcertacionMinus}" value="#{bitacora.fechaConcertacion}" align="center"
+                	pattern="dd-MM-yyyy" />
+                <xls:col header="#{etq.fechaLiquidacionMinus}" value="#{bitacora.fechaLiquidacion}" align="center"
+                    pattern="dd-MM-yyyy" />
+                <xls:col header="#{etq.error}" value="#{bitacora.codigoError}" align="center" />
+                <xls:col header="#{etq.compra}" value="#{bitacora.marcaCompra}" align="center" />
+            </xls:row>
+        </xls:table>
+    </xls:document>
+</html>

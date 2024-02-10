@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+          <ui:composition template="/layoutPopUp.xhtml"> 
+        <ui:define name="head">	
+    		<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/eventosCorporativos.js">				
+			</script>	
+			<style type="text/css">
+		    	p {
+	  				margin: 0;
+					padding: 0;
+					color: #000000;
+				}
+			</style>
+	</ui:define>
+		
+        <ui:define name="subtitulo">
+        	
+        </ui:define>
+        <ui:define name="body">
+
+        	<h:form id="tipoDerechoForm">
+        	   <h:outputText value="#{creartiposDerechoEvcoBean.init}" />
+               <table style="width: 100%;  font-size: 11px;">
+               <tr>
+                         <h:panelGroup id="mensajeUsuario">
+                            <div style="min-height: 21px;">
+                                <rich:messages warnClass="warning" infoClass="info"
+                                               errorClass="error" ajaxRendered="true" showDetail="false"
+                                               showSummary="true" layout="list">
+                                    <f:facet name="infoMarker">
+                                        <h:panelGroup>
+                                            <h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+                                    </f:facet>
+
+                                    <f:facet name="errorMarker">
+                                        <h:panelGroup>
+                                            <h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+                                    </f:facet>
+                                </rich:messages>
+
+                                <div id="divWarnings" class="warning" style="display:none;">
+                                    <p id="textoWarning">
+                                    </p>
+                                </div>
+                            </div>
+                        </h:panelGroup>
+               
+               </tr>
+	               <tr style="font-size: 11px; font-weight: normal;">
+	                        <td style="float: left; width: 33%;">
+	                        		<h:outputText style=" font-weight: bold; color:red;" value="*" /> 
+	                        		<h:outputText style=" font-weight: bold;" value="Tipo Derecho:" /> 
+	               					<h:inputText autocomplete="off" id="tipoDerecho" value="#{creartiposDerechoEvcoBean.tipoDerecho}" 
+													 styleClass="textoControles "  />
+	               			</td> 
+	               			<td style="float: left; width: 33%;">
+	               					<h:outputText style=" font-weight: bold;" value="Mercado:" />             			
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{creartiposDerechoEvcoBean.tipo}" tabindex="140" >
+												<f:selectItem itemValue="ML" itemLabel="Derecho Mercado Local" />
+												<f:selectItem itemValue="MO" itemLabel="Derecho Mercado Origen" />									
+											</h:selectOneMenu>
+	               			
+	               			</td> 
+	               			<td style="float: left; width: 33%;"><h:outputText style=" font-weight: bold;" value="Activo:" /> 
+	    						<h:selectBooleanCheckbox       id="check#{creartiposDerechoEvcoBean.activo}" value="#{creartiposDerechoEvcoBean.activo}" /> 
+				   			</td> 
+     
+	               </tr> 
+	               <tr> 
+	               	<td>				
+						<a4j:commandButton
+						action="#{creartiposDerechoEvcoBean.actualizarRegistro}"  
+						tabindex="8"
+						reRender="containerResultados,validaDialog"
+						value="Guardar"
+						oncomplete="cierraDialogValidado();"
+						>
+						<f:setPropertyActionListener value="#{creartiposDerechoEvcoBean.idTipoDerecho}"   target="#{creartiposDerechoEvcoBean.idTipoDerecho}"/>
+						</a4j:commandButton>
+				  	</td>
+				  </tr>          
+               </table>
+        						<h:inputText autocomplete="off" id="idTipoDerecho" style="display:none" value="#{creartiposDerechoEvcoBean.idTipoDerecho}" />
+        						<h:inputHidden id="validaDialog" value="#{creartiposDerechoEvcoBean.cierraDialog}" />
+        </h:form>
+        
+        </ui:define>
+        
+    
+    </ui:composition>     
+</html>

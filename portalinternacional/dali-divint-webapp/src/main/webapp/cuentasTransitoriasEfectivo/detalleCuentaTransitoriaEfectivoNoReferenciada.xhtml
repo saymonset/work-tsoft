@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	  xmlns:a4j="http://richfaces.org/a4j"
+	  xmlns:rich="http://richfaces.org/rich"
+	  xmlns:t="http://myfaces.apache.org/tomahawk">
+<!-- @author Jacito -->
+
+<ui:composition template="/layoutPopUp.xhtml">
+	<ui:define name="head">
+		<link rel="stylesheet" type="text/css" media="all" href="#{facesContext.externalContext.requestContextPath}/css/beneficiarioActivo.css" />
+		<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/consultasMensajesIso.js" />
+	</ui:define>
+	<ui:define name="titulo">
+		<b>Detalle Cuenta Transitoria de Efectivo</b>
+	</ui:define>
+
+	<ui:define name="body">
+		<h:form id="formaDetalleCuentaTransitoriaEfectivo">
+			<a4j:keepAlive beanName="cuentasTransitoriasEfectivoController" />
+			<h:outputText id="initDetalleISO" value="#{cuentasTransitoriasEfectivoController.initDetalleIso}" />
+
+			<table>
+				<tr>
+					<td valign="top">
+						<h:panelGroup id="panelTextArea">
+							<h:inputTextarea id="swiftMensaje" readonly="true" cols="60" rows="15" class="printable" value="#{cuentasTransitoriasEfectivoController.mensajeIso}"/>
+						</h:panelGroup>
+					</td>
+				</tr>
+			</table>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

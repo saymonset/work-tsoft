@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls" xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document documentName="DetalleConciliacionesEfectivo" documentTitle="Detalle de Conciliación de Efectivo"
+        institucion="#{detalleConciliacionesEfectivoIntBean.agenteFirmado.id} #{detalleConciliacionesEfectivoIntBean.agenteFirmado.folio} #{detalleConciliacionesEfectivoIntBean.agenteFirmado.razon}" 
+        fecha="#{detalleConciliacionesEfectivoIntBean.fechaActual}">
+       
+        <xls:table value="#{detalleConciliacionesEfectivoIntBean}" var="detalle" >
+            <xls:row>
+            	<xls:col header="#{etq.bicCode}" value="#{detalleConciliacionesEfectivoIntBean.bicCodeSelected}" />
+            	<xls:col header="#{etq.divisaMinus}" value="#{detalleConciliacionesEfectivoIntBean.divisaSelected}" />
+            	<xls:col header="#{etq.cuentas}" value="#{detalleConciliacionesEfectivoIntBean.cuentaSelected}" />
+            	<xls:col header="#{etq.codigoVerificacion}" value="#{detalleConciliacionesEfectivoIntBean.selectedCodigo}" />
+                <xls:col header="#{etq.folioConciliacion}" value="#{!empty detalleConciliacionesEfectivoIntBean.folioConciliacion ? detalleConciliacionesEfectivoIntBean.folioConciliacion : 'TODOS'}" />
+                <xls:col header="#{etq.referenciaMensaje}" value="#{!empty detalleConciliacionesEfectivoIntBean.referenciaMensaje ? detalleConciliacionesEfectivoIntBean.referenciaMensaje : 'TODOS'}" />
+                <xls:col header="#{etq.tipo}" value="#{(detalleConciliacionesEfectivoIntBean.tipo == 'C' or detalleConciliacionesEfectivoIntBean.tipo == 'RD') ? etq.credito : (detalleConciliacionesEfectivoIntBean.tipo == 'D' or detalleConciliacionesEfectivoIntBean.tipo == 'RC')  ? etq.debito : 'AMBOS'}" />
+				<xls:col header="#{etq.credito}/ #{etq.debito}" value="#{detalleConciliacionesEfectivoIntBean.creditoDebito ? 'Si' : 'No'}" />
+                <xls:col header="#{etq.cuentasCustodia}" value="#{detalleConciliacionesEfectivoIntBean.cuentaCustodia ? 'Si' : 'No'}" />
+            	<xls:col header="#{etq.cuentasComercial}" value="#{detalleConciliacionesEfectivoIntBean.cuentaComercial ? 'Si' : 'No'}" />
+            	<xls:col header="#{etq.conComentarios}" value="#{detalleConciliacionesEfectivoIntBean.comentarios ? 'Si' : 'No'}" />
+                <xls:col header="#{etq.fechaBalanceInicio}" value="#{!empty detalleConciliacionesEfectivoIntBean.fechaBalanceInicio ? detalleConciliacionesEfectivoIntBean.fechaBalanceInicio : 'TODAS'}"  pattern="dd/MM/yyyy"/>					
+                <xls:col header="#{etq.fechaBalanceFin}" value="#{!empty detalleConciliacionesEfectivoIntBean.fechaBalanceFin ? detalleConciliacionesEfectivoIntBean.fechaBalanceFin : 'TODAS' }"  pattern="dd/MM/yyyy"/>
+                <xls:col header="#{etq.entryDateInicio}" value="#{!empty detalleConciliacionesEfectivoIntBean.fechaElaboracionInicio ? detalleConciliacionesEfectivoIntBean.fechaElaboracionInicio : 'TODAS'}"  pattern="dd/MM/yyyy"/>					
+                <xls:col header="#{etq.entryDateFin}" value="#{!empty detalleConciliacionesEfectivoIntBean.fechaElaboracionFin ? detalleConciliacionesEfectivoIntBean.fechaElaboracionFin : 'TODAS' }"  pattern="dd/MM/yyyy"/>
+                <xls:col header="#{etq.fechaCreditoDebitoInicio}" value="#{!empty detalleConciliacionesEfectivoIntBean.fechaCreditoDebitoInicio ? detalleConciliacionesEfectivoIntBean.fechaCreditoDebitoInicio : 'TODAS'}"  pattern="dd/MM/yyyy"/>					
+                <xls:col header="#{etq.fechaCreditoDebitoFin}" value="#{!empty detalleConciliacionesEfectivoIntBean.fechaCreditoDebitoFin ? detalleConciliacionesEfectivoIntBean.fechaCreditoDebitoFin : 'TODAS' }"  pattern="dd/MM/yyyy"/>
+            </xls:row>
+        </xls:table>
+        
+         <xls:subtitle value="#{etq.registrosEncontrados}: #{detalleConciliacionesEfectivoIntBean.totalRegistros}" />
+
+        <xls:table value="#{detalleConciliacionesEfectivoIntBean.paginaReportes.registros}" var="detalleConciliacion">
+            <xls:row>            	
+				<xls:col header="#{etq.folioConciliacion}" value="#{detalleConciliacion.conciliacionEfectivo.folioConciliacion}" />
+				<xls:col header="#{etq.referenciaMensaje}" value="#{detalleConciliacion.conciliacionEfectivo.referencia}" />
+				<xls:col header="#{etq.fechaBalance}" value="#{!empty detalleConciliacion.conciliacionEfectivo.fechaBalance ? detalleConciliacion.conciliacionEfectivo.fechaBalance : 'N/A'}" pattern="dd/MM/yyyy"/>
+				<xls:col header="#{etq.fechaCreditoDebito}" value="#{!empty detalleConciliacion.fechaValor ? detalleConciliacion.fechaValor : 'N/A'}" pattern="dd/MM/yyyy"/>
+				<xls:col header="#{etq.entryDate}" value="#{!empty detalleConciliacion.fechaRegistro ? detalleConciliacion.fechaRegistro : 'N/A'}" pattern="dd/MM/yyyy"/>
+				<xls:col header="#{etq.tipoTransaccion}/#{etq.codigoVerificacion}" value="#{detalleConciliacion.tipoTransaccionEfectivo.tipoTransaccion}/#{detalleConciliacion.codigoIdentificacionEfectivo.codigoIdentificacion}" />
+				<xls:col header="#{etq.custodioBic}" value="#{detalleConciliacion.conciliacionEfectivo.bicCode}" />
+				<xls:col header="#{etq.cuentaMinus}" value="#{detalleConciliacion.conciliacionEfectivo.cuenta}" />
+				<xls:col header="#{etq.divisaMinus}" value="#{detalleConciliacion.conciliacionEfectivo.divisa}" />
+				<xls:col header="#{etq.credito}" value="#{(!empty detalleConciliacion.monto and (detalleConciliacion.tipo=='C' or detalleConciliacion.tipo=='RD')) ? detalleConciliacion.monto : ''}" pattern="###,###,###,###,###,##0.##" bgcolor="#{(!empty detalleConciliacion.monto and (detalleConciliacion.tipo=='C' or detalleConciliacion.tipo=='RD') and detalleConciliacion.hash == '1') ? '017eaf' : ''}" />
+				<xls:col header="#{etq.debito}" value="#{(!empty detalleConciliacion.monto and (detalleConciliacion.tipo=='D' or detalleConciliacion.tipo=='RC')) ? detalleConciliacion.monto : ''}" pattern="###,###,###,###,###,##0.##" bgcolor="#{(!empty detalleConciliacion.monto and (detalleConciliacion.tipo=='D' or detalleConciliacion.tipo=='RC') and detalleConciliacion.hash == '1') ? '017eaf' : ''}" />
+				<xls:col header="#{etq.referencia}" value="#{detalleConciliacion.referenciaCuentahabiente}" />
+				<xls:col header="#{etq.detallesSuplementarios}" value="#{detalleConciliacion.detallesSuplementarios}" />
+				<xls:col header="#{etq.comentarios}" value="#{detalleConciliacionesEfectivoIntBean.mapComentarios[detalleConciliacion.idDetalleConciliacion]}" />
+				<xls:col header="#{etq.usuario}" value="#{detalleConciliacion.listaComentarioEfectivo[0].usuario}" />
+			</xls:row>
+        </xls:table>
+        
+        <xls:table value="#{detalleConciliacionesEfectivoIntBean}" var="detalle" rendered="#{detalleConciliacionesEfectivoIntBean.totales}">
+            <xls:row>
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="#{detalleConciliacionesEfectivoIntBean.totalCredito}" pattern="###,###,###,###,###,##0.##" />
+            	<xls:col value="#{detalleConciliacionesEfectivoIntBean.totalDebito}" pattern="###,###,###,###,###,##0.##" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            </xls:row>
+		</xls:table>
+
+    </xls:document>
+</html>

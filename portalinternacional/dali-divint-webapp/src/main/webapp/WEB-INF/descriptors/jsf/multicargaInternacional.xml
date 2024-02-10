@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd" version="1.2">
+	  <managed-bean>
+        <managed-bean-name>multicargaAdpBean</managed-bean-name>
+        <managed-bean-class>
+        	com.indeval.portalinternacional.presentation.controller.multicarga.MulticargaAdpController
+        </managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>           
+         <managed-property>
+        	<property-name>multicargaInternacionalService</property-name>
+        	<value>#{multicargaInternacionalService}</value>
+        </managed-property>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>multicargaMultiempresaBean</managed-bean-name>
+        <managed-bean-class>
+        	com.indeval.portalinternacional.presentation.controller.multicarga.MulticargaMultiempresaController
+        </managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>           
+         <managed-property>
+        	<property-name>multicargaInternacionalService</property-name>
+        	<value>#{multicargaInternacionalService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>consultaCatService</property-name>
+            <value>#{consultaCatalogoService}</value>
+        </managed-property>
+    </managed-bean>
+    
+     <managed-bean>
+        <managed-bean-name>consolaAutorizacionBean</managed-bean-name>
+        <managed-bean-class>
+        	com.indeval.portalinternacional.presentation.controller.multicarga.ConsolaAutorizacionController
+        </managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>           
+         <managed-property>
+        	<property-name>multicargaInternacionalService</property-name>
+        	<value>#{multicargaInternacionalService}</value>
+        </managed-property>
+    </managed-bean>
+    
+     <managed-bean>
+        <managed-bean-name>detalleRegistroMulticargaBean</managed-bean-name>
+        <managed-bean-class>
+        	com.indeval.portalinternacional.presentation.controller.multicarga.DetalleRegistroMulticargaController
+        </managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>           
+         <managed-property>
+        	<property-name>multicargaInternacionalService</property-name>
+        	<value>#{multicargaInternacionalService}</value>
+        </managed-property>
+    </managed-bean>
+    
+     <navigation-rule>
+    	<from-view-id>*</from-view-id>
+    	<navigation-case>
+    		<from-outcome>multicargaAdp</from-outcome>
+    		<to-view-id>/cargaMultiple/multicargaAdp.xhtml</to-view-id>
+    	</navigation-case>      	  
+     </navigation-rule>
+    
+    <navigation-rule>
+    	<from-view-id>*</from-view-id>
+    	<navigation-case>
+    		<from-outcome>multicargaMultiempresa</from-outcome>
+    		<to-view-id>/cargaMultiple/multicargaMultiempresa.xhtml</to-view-id>
+    	</navigation-case>      	  
+    </navigation-rule>
+    
+     <navigation-rule>
+    	<from-view-id>*</from-view-id>
+    	<navigation-case>
+    		<from-outcome>consolaAutorizacion</from-outcome>
+    		<to-view-id>/cargaMultiple/consolaAutorizacion.xhtml</to-view-id>
+    	</navigation-case>      	  
+    </navigation-rule>
+    
+    <navigation-rule>
+    	<from-view-id>*</from-view-id>
+    	<navigation-case>
+    		<from-outcome>detalleArchivoMulticarga</from-outcome>
+    		<to-view-id>/cargaMultiple/detalleArchivoMulticarga.xhtml</to-view-id>
+    	</navigation-case>      	  
+    </navigation-rule>
+    
+</faces-config>

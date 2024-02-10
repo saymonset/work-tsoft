@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:composition template="/layoutPopUp.xhtml">
+		<ui:define name="head">						
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/calendarioEmisionesDeudaExt.js">
+			</script>			
+		</ui:define>
+		<ui:define name="titulo">
+		 Crear Mensajes 103/202 SWIFT
+		</ui:define>
+		<ui:define name="subtitulo">
+		</ui:define>
+		<ui:define name="body">
+			<h:form id="formaBovedaCalendario">
+				<h:outputText value="#{bovedaCalendarioEmisionesDeudaExtBean.init}" />
+				<h:panelGroup id="panelResultados">
+					<h:inputHidden id="radioValue" />
+					<a4j:keepAlive beanName="bovedaCalendarioEmisionesDeudaExtBean" />
+					
+					<table class="tablaCriterios" align="center" width="100%">
+									<tr>
+										<td nowrap="true" align="center">
+											<h:outputText styleClass="texto" value="Desea instruir el Mensaje Retiro Efectivo Internacional " />
+										</td>										
+									</tr>
+									<!--  <tr>
+										<td align="center">
+											<h:selectOneMenu class="selectBoveda" styleClass="textoControles" required="true"
+												value="#{bovedaCalendarioEmisionesDeudaExtBean.boveda}" tabindex="10">
+												<f:selectItem itemValue="-1" itemLabel="Selecciona una boveda" />
+												<f:selectItems value="#{bovedaCalendarioEmisionesDeudaExtBean.bovedas}" />
+											</h:selectOneMenu>
+										</td>														
+									</tr>
+									-->
+									<tr>
+										<td>
+											<h:selectOneRadio id="subscriptions" class="automaticCheck" value="#{bovedaCalendarioEmisionesDeudaExtBean.automatico}" required="true" onclick="document.getElementById('formaBovedaCalendario:radioValue').value = this.value;">
+											  <f:selectItem id="item1" itemLabel="Manual" itemValue="false"  tabindex="20"/>
+											  <f:selectItem id="item2" itemLabel="Automatico" itemValue="true" tabindex="30"/>											  
+											</h:selectOneRadio>
+										</td>
+									</tr>
+					</table>
+					
+							<h:panelGroup>											
+									
+									<a4j:commandButton id="botonInstruirMensaje" title="instruir mensaje 103/202" value="instruir mensaje 103/202" tabindex="40"
+													action="#{bovedaCalendarioEmisionesDeudaExtBean.instruirMensaje}"
+													onclick="validarInstruirMensaje();this.disabled=true;"													
+													oncomplete="this.disabled=false;cerrarVentanaAux()">													
+									</a4j:commandButton>
+                           				&#160;&#160;                          				
+									</h:panelGroup>
+					
+				</h:panelGroup>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</html>

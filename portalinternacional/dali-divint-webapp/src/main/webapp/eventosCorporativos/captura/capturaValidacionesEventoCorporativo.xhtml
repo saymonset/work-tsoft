@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	
+	<ui:composition template="/layoutPopUp.xhtml">
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/eventosCorporativosCreacion.js">
+			</script>
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/ckeditor/ckeditor.js">
+			</script>
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/ckeditor/adapters/jquery.js">
+			</script>
+			<style>
+				.stylePanel{
+					margin-left:0px;
+					margin-rigth:auto;
+				}
+				*{
+					margin: 0 0 0 0;
+				}
+				.textoControles{
+					font-size: 9px;
+					font-family: Tahoma, Arial, Helvetica, sans-serif;
+					color: #606060;
+				}
+				.hide-close .ui-dialog-titlebar-close { 
+					display: none 
+				}
+			</style>
+		</ui:define>
+		<ui:define name="titulo">
+		</ui:define>
+		<ui:define name="subtitulo">
+		</ui:define>
+		<ui:define name="body">
+				<a4j:form id="formValidaciones">
+					<h:outputText value="#{dialogoGeneralEventoCorporativoBean.init}" />
+				<h:panelGroup id="mensajeUsuario">
+				<h:inputHidden id='validacion' value="#{dialogoGeneralEventoCorporativoBean.validacionHecha}"></h:inputHidden>
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+				
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+				</div>
+			</h:panelGroup>	
+					<h:panelGrid columns="7" width="80%">
+								<h:outputText escape="false" value="&nbsp;" />
+								<h:outputText value="Concepto:" />
+						        <h:selectOneMenu styleClass="textoControles"
+												value="#{dialogoGeneralEventoCorporativoBean.validacion}" tabindex="140" id="id-validacion">
+									<f:selectItem itemValue="-1" itemLabel="Ninguno" />
+									<f:selectItems value="#{dialogoGeneralEventoCorporativoBean.tipoValidacionesEvco}" />												
+								</h:selectOneMenu>
+								<h:outputText value="Operador:" />
+								<h:selectOneMenu styleClass="textoControles"
+												value="#{dialogoGeneralEventoCorporativoBean.operador}" tabindex="140" id="id-operador">
+									<f:selectItem itemValue="-1" itemLabel="Ninguno" />
+									<f:selectItems value="#{dialogoGeneralEventoCorporativoBean.tipoOperadoresEvco}" />												
+								</h:selectOneMenu>
+								<h:outputText value="Valor:" />
+								<h:inputText autocomplete="off" value="#{dialogoGeneralEventoCorporativoBean.txtValor}" styleClass="textoControles campoNumerico" style="background-color: #ffffe6;" 
+								size="19"
+								maxlength="19" id="id-valor"/>
+
+					</h:panelGrid>
+								<rich:separator height="15" lineType="none"/>
+								
+					<h:panelGroup style="display:block; text-align:center; padding-right: 130px;">
+								<a4j:commandButton value="Agregar Validación" 
+								action="#{dialogoGeneralEventoCorporativoBean.validarValidaciones}" 
+								oncomplete="sendDataValidacion();"
+								render="input"
+								reRender="mensajeUsuario"/>
+															
+							
+					</h:panelGroup>
+				</a4j:form>
+				<!-- DEFINICION DE HIDDENS QUE CAPTURAN LOS VALORES INGRESADOS -->
+				<h:inputHidden id="validacionSelect" />
+				<h:inputHidden id="operadorSelect" />
+				<h:inputHidden id="valorCantidad" />
+		</ui:define>
+	</ui:composition>
+</html>

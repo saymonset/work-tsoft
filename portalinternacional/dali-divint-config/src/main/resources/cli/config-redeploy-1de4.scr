@@ -1,0 +1,2 @@
+# Despliegue de componentes (1 de 4)
+deploy dali_divint_services.ear --force

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xls="http://indeval.com/jsf/xls"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+<xls:document documentName="DetalleLiqParciales" documentTitle="Consulta Liquidaciones Parciales"
+              landscape="true"  imageResource="/images/indeval.jpg">
+              
+	<xls:table value="#{consultaOperacionesBean}" var="filtro">
+		<xls:row>
+			<xls:col align="center" value="#{etq.institucionMinus}:" />
+			<xls:col align="center" value="#{consultaOperacionesBean.agenteFirmado.id} #{consultaOperacionesBean.agenteFirmado.folio} #{consultaOperacionesBean.agenteFirmado.razon}" />
+		</xls:row>
+		<xls:row>
+			<xls:col align="center" value="#{etq.fechaMinus}:" />
+			<xls:col align="center" value="#{consultaOperacionesBean.fechaActual}" pattern="dd/MM/yyyy" />
+		</xls:row>
+	</xls:table>
+	<xls:table value="#{consultaOperacionesBean.detalleLiquidacionParcial.lstLiquidacionParcial}" var="detalle" rendered="#{consultaOperacionesBean.detalleLiquidacionParcial.tipoOperacionSic eq '540'}">
+		<xls:row>
+       		<xls:col align="center" header="#{etq.folioControl}" value="#{detalle.folioControlLiquidacion}" />
+			<xls:col align="center" header="#{etq.fechaHoraLiquidacionTlp}" value="#{detalle.fechaLiquidacion}" pattern="dd/MM/yyyy HH:mm:ss" footer="#{etq.totalParcialidades}"/>
+			<xls:col align="center" header="#{etq.parcialLiquidado}" value="#{detalle.parcialLiquidado}" footer="#{consultaOperacionesBean.paginaVO.valores['totalMonto']}" pattern="###,###,###,###,###,##0" />
+			<xls:col align="center" header="#{etq.remanente}" value="#{detalle.remanente}" footer="#{consultaOperacionesBean.detalleLiquidacionParcial.remanenteOperacion}" pattern="###,###,###,###,###,##0" />
+			<xls:col align="center" header="#{etq.estatusParcialidad}" value="#{detalle.estatusOperacion.descEstatusOperacion}" />
+		</xls:row>
+	</xls:table>
+	<xls:table value="#{consultaOperacionesBean.detalleLiquidacionParcial.lstLiquidacionParcial}" var="detalle" rendered="#{consultaOperacionesBean.detalleLiquidacionParcial.tipoOperacionSic eq '541'}">
+		<xls:row>
+       		<xls:col align="center" header="#{etq.folioControl}" value="#{detalle.folioControlLiquidacion}" />
+			<xls:col align="center" header="#{etq.fechaHoraLiquidacionTlp}" value="#{detalle.fechaLiquidacion}" pattern="dd/MM/yyyy HH:mm:ss" footer="#{etq.totalParcialidades}"/>
+			<xls:col align="center" header="#{etq.parcialLiquidado}" value="#{detalle.parcialLiquidado}" footer="#{consultaOperacionesBean.paginaVO.valores['totalMonto']}" pattern="###,###,###,###,###,##0" />
+			<xls:col align="center" header="#{etq.remanente}" value="#{detalle.remanente}" footer="#{consultaOperacionesBean.detalleLiquidacionParcial.remanenteOperacion}" pattern="###,###,###,###,###,##0" />
+			<xls:col align="center" header="#{etq.efectivoParcial}" value="#{detalle.parcialLiquidadoEfectivo}" footer="#{consultaOperacionesBean.paginaVO.valores['totalMontoEfectivo']}" pattern="$###,###,###,###,###,##0.00" />
+			<xls:col align="center" header="#{etq.remanenteEfectivo}" value="#{detalle.remanenteEfectivo}" footer="#{consultaOperacionesBean.detalleLiquidacionParcial.remanenteEfectivoOperacion}" pattern="$###,###,###,###,###,##0.00" />
+			<xls:col align="center" header="#{etq.estatusParcialidad}" value="#{detalle.estatusOperacion.descEstatusOperacion}" />
+		</xls:row>
+	</xls:table>
+</xls:document>
+</html>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:pdf="http://indeval.com/jsf/pdf"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+	<pdf:document documentName="fideicomisoNafinsa"
+		documentTitle="Consulta Fideicomiso Nafinsa"
+		institucion="#{fideicomisoNafinsaController.agenteFirmado.id} #{fideicomisoNafinsaController.agenteFirmado.folio} #{fideicomisoNafinsaController.agenteFirmado.razon} "
+		landscape="false" fecha="#{fideicomisoNafinsaController.fechaActual}"
+		imageResource="/images/indeval.jpg">
+
+		<pdf:subtitle value="#{etq.filtros}" />
+
+		<pdf:table value="#{fideicomisoNafinsaController}"
+			currentBean="criterios">
+			<pdf:row>
+				<pdf:col align="center" header="#{etq.participante}"
+					value="#{fideicomisoNafinsaController.agente.id}#{fideicomisoNafinsaController.agente.folio}" />
+				<pdf:col align="center" header="#{etq.cuentasMinus}"
+					value="#{fideicomisoNafinsaController.cuentas}" />
+				<pdf:col align="center" header="#{etq.tipoMinus}"
+					value="#{fideicomisoNafinsaController.tipo1} #{fideicomisoNafinsaController.tipo2}" />
+				<pdf:col align="center" header="#{etq.fechaMinus}"
+					value="#{fideicomisoNafinsaController.fechaConsulta}">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+
+			</pdf:row>
+		</pdf:table>
+		<pdf:subtitle value="#{etq.resultadosMinus}" />
+
+		<pdf:iterator
+			value="#{fideicomisoNafinsaController.listaFideicomisos}"
+			var="emisionActual">
+			<pdf:table value="#{fideicomisoNafinsaController}"
+				currentBean="dummy1">
+				<pdf:row>
+					<pdf:col align="center" header="#{etq.tv}"
+						value="#{emisionActual.emisionVO.tv}" />
+					<pdf:col align="center" header="#{etq.emisoraMinus}"
+						value="#{emisionActual.emisionVO.emisora}" />
+					<pdf:col align="center" header="#{etq.serieMinus}"
+						value="#{emisionActual.emisionVO.serie}" />
+					<pdf:col align="center" header="#{etq.cuponMinus}"
+						value="#{emisionActual.emisionVO.cupon}" />
+					<pdf:col align="center" header="#{etq.altaMinus}"
+						value="#{emisionActual.emisionVO.alta}" />
+					<pdf:col align="center" header="#{etq.ultimoHecho}"
+						value="#{emisionActual.emisionVO.ultimoHecho}" />
+					<pdf:col align="center" header="#{etq.valorNominalMinus}"
+						value="#{emisionActual.emisionVO.valorNominal}" />
+				</pdf:row>
+			</pdf:table>
+			<pdf:table value="#{fideicomisoNafinsaController}"
+				currentBean="datosValor">
+				<pdf:row>
+					<pdf:col align="center" header="#{etq.datosValorMinus}" value="" />
+				</pdf:row>
+			</pdf:table>
+			<pdf:table value="#{emisionActual.agenteFideicomisoVOs}"
+				currentBean="agenteArqueo">
+				<pdf:row>
+					<pdf:col align="center" header="#{etq.idMinus} #{etq.agente}"
+						value="#{agenteArqueo.id}" />
+					<pdf:col align="center" header="#{etq.folioMinus} #{etq.agente}"
+						value="#{agenteArqueo.folio}" />
+					<pdf:col align="center" header="#{etq.cuentaMinus} #{etq.agente}"
+						value="#{agenteArqueo.cuenta}" />
+					<pdf:col align="center" header="#{etq.nombreCorto}"
+						value="#{agenteArqueo.nombreCorto}" />
+					<pdf:col align="right" header="#{etq.posicionActual}"
+						value="#{agenteArqueo.posicionActual}">
+						<f:convertNumber pattern="###,###,###,###,###,##0" />
+					</pdf:col>
+					<pdf:col align="right" header="#{etq.valuacionMercadoMinus}"
+						value="#{agenteArqueo.valuacionMercado}">
+						<f:convertNumber pattern="###,###,###,###,###,##0" />
+					</pdf:col>
+					<pdf:col align="right" header="#{etq.valuacionNominalMinus}"
+						value="#{agenteArqueo.valuacionNominal}"
+						rendered="#{fideicomisoNafinsaController.historico}">
+						<f:convertNumber pattern="###,###,###,###,###,##0" />
+					</pdf:col>
+				</pdf:row>
+			</pdf:table>
+			<pdf:table value="#{fideicomisoNafinsaController}"
+				currentBean="totalListaArqueo">
+				<pdf:row>
+					<pdf:col align="center" header="" value="" collspan="3" />
+					<pdf:col align="center" header="#{etq.totalCveNumAgentes}"
+						value="#{emisionActual.totalAgentes}">
+						<f:convertNumber pattern="###,###,###,###,###,##0" />
+					</pdf:col>
+					<pdf:col align="right" header="#{etq.totalPosicionActual}"
+						value="#{emisionActual.totalPosicionActual}">
+						<f:convertNumber pattern="###,###,###,###,###,##0" />
+					</pdf:col>
+					<pdf:col align="right" header="#{etq.totalValMercado}"
+						value="#{emisionActual.totalValuacionMercadoActual}">
+						<f:convertNumber pattern="###,###,###,###,###,##0" />
+					</pdf:col>
+					<pdf:col align="right" header="#{etq.totalValNominal}"
+						value="#{emisionActual.totalValuacionNominalActual}"
+						rendered="#{fideicomisoNafinsaController.historico}">
+						<f:convertNumber pattern="###,###,###,###,###,##0" />
+					</pdf:col>
+				</pdf:row>
+			</pdf:table>
+
+			<pdf:table value="#{fideicomisoNafinsaController}"
+				currentBean="estadisticaAgente">
+				<pdf:row>
+					<pdf:col align="center" header="#{etq.estadisticasAgente}" value="" />
+				</pdf:row>
+			</pdf:table>
+
+			<pdf:table
+				value="#{emisionActual.estadisticasFideicomisosPorAgenteVO}"
+				currentBean="itemEstAgente">
+				<pdf:row>
+					<pdf:col align="center" header="#{etq.agente}"
+						value="#{itemEstAgente.agenteFideicomisoVO.id} #{itemEstAgente.agenteFideicomisoVO.folio} #{itemEstAgente.agenteFideicomisoVO.cuenta}" />
+					<pdf:col align="center" header="#{etq.porcentajeMinus} (%)"
+						value="#{itemEstAgente.porcentaje}">
+						<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+					</pdf:col>
+				</pdf:row>
+			</pdf:table>
+
+			<pdf:table value="#{fideicomisoNafinsaController}"
+				currentBean="estadisticaCuenta">
+				<pdf:row>
+					<pdf:col align="center" header="#{etq.estadisticasCuenta}" value="" />
+				</pdf:row>
+			</pdf:table>
+
+			<pdf:table
+				value="#{emisionActual.estadisticasFideicomisoPorCuentaVO}"
+				currentBean="itemCuenta">
+				<pdf:row>
+					<pdf:col align="center" header="#{etq.cuentaMinus}"
+						value="#{itemCuenta.cuenta}" />
+					<pdf:col align="center" header="#{etq.porcentajeMinus} (%)"
+						value="#{itemCuenta.porcentaje}">
+						<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+					</pdf:col>
+				</pdf:row>
+			</pdf:table>
+
+			<pdf:newPage />
+		</pdf:iterator>
+
+		<pdf:table value="#{fideicomisoNafinsaController}"
+			currentBean="totalGeneral">
+			<pdf:row>
+				<pdf:col align="center" header="#{etq.totalGralArqueo}" value="" />
+			</pdf:row>
+		</pdf:table>
+		<pdf:table
+			value="#{fideicomisoNafinsaController.listaFideicomisos[0]}"
+			currentBean="totales">
+			<pdf:row>
+				<pdf:col align="center" header="#{etq.numEmisiones}"
+					value="#{totales.totalEmisiones}" />
+				<pdf:col align="right" header="#{etq.saldoMinus}"
+					value="#{totales.saldoTotal}">
+					<f:convertNumber pattern="###,###,###,###,###,##0" />
+				</pdf:col>
+				<pdf:col align="right" header="#{etq.totalValMercado}"
+					value="#{totales.totalValuacionMercado}"
+					rendered="#{fideicomisoNafinsaController.historico}">
+					<f:convertNumber pattern="###,###,###,###,###,##0" />
+				</pdf:col>
+				<pdf:col align="right" header="#{etq.valuacionNominalMinus}"
+					value="#{totales.totalValuacionNominal}"
+					rendered="#{fideicomisoNafinsaController.historico}">
+					<f:convertNumber pattern="###,###,###,###,###,##0" />
+				</pdf:col>
+
+			</pdf:row>
+		</pdf:table>
+	</pdf:document>
+</html>

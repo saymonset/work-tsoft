@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls" xmlns:a4j="http://richfaces.org/a4j" xmlns:h="http://java.sun.com/jsf/html">
+
+<xls:document documentName="DetalleErroresMultiempresa" documentTitle="Detalle Errores Multiempresa"
+              landscape="true" >
+<xls:subtitle value="Datos"/>
+ <xls:table value="#{multicargaMultiempresaBean.multicargaResumenExcelVO.listaRegistrosError}" var="detalle" rendered="#{not empty multicargaMultiempresaBean.multicargaResumenExcelVO.listaRegistrosError}">
+        <xls:row>
+        	<xls:col collspan="1"  header="#{etq.uoi}" value="#{detalle.uoi}"
+        			 align="CENTER"/>
+			<xls:col collspan="1" header="#{etq.institucionOrigen}"  value="#{detalle.institucionOrigen}"
+        			 align="CENTER"/>
+        	<xls:col collspan="1" header="#{etq.institucionDestino}"  value="#{detalle.institucionDestino}"
+        			 align="CENTER"/>
+			<xls:col collspan="1" header="#{etq.estatusBeneficiario}"  value="#{detalle.estadoBeneficiario}"
+        			 align="CENTER"/>
+         	<xls:col collspan="1" header="#{etq.descripcionError}"  value="#{detalle.descripcionError}"
+        			 align="CENTER"/>
+        </xls:row>        
+	</xls:table>
+ <xls:table value="#{consolaAutorizacionBean.listaErrores}" var="detalle" rendered="#{not empty consolaAutorizacionBean.listaErrores}">
+        <xls:row>
+        	<xls:col collspan="1"  header="#{etq.uoi}" value="#{detalle.uoi}"
+        			 align="CENTER"/>
+			<xls:col collspan="1" header="#{etq.institucionOrigen}"  value="#{detalle.institucionOrigen}"
+        			 align="CENTER"/>
+        	<xls:col collspan="1" header="#{etq.institucionDestino}"  value="#{detalle.institucionDestino}"
+        			 align="CENTER"/>
+			<xls:col collspan="1" header="#{etq.estatusBeneficiario}"  value="#{detalle.estadoBeneficiario}"
+        			 align="CENTER"/>
+         	<xls:col collspan="1" header="#{etq.descripcionError}"  value="#{detalle.descripcionError}"
+        			 align="CENTER"/>
+        </xls:row>        
+	</xls:table>
+</xls:document>
+</html>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:xls="http://indeval.com/jsf/xls"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cvt="http://indeval.com/jsf/converters">
+
+
+    <xls:document documentName="tablaRetencionDerecho" documentTitle="Consulta Tabla de Retención del Derecho"
+                  institucion="#{consultaTablaRetencionBean.agenteFirmado.id} #{consultaTablaRetencionBean.agenteFirmado.folio} #{consultaTablaRetencionBean.agenteFirmado.razon}"
+                  fecha="#{consultaTablaRetencionBean.fechaActual}"> 
+        <xls:table value="consultaTablaRetencionBean" var="dummy">
+            <xls:row>
+                <xls:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </xls:row>
+        </xls:table>
+        <xls:table value="#{consultaTablaRetencionBean}" var="resultado">
+            <xls:row>
+                <xls:col header="#{etq.tv}" value="#{consultaTablaRetencionBean.derechoSeleccionado.emision.tv}" align="center" />
+                <xls:col header="#{etq.divisaMinus}" value="#{consultaTablaRetencionBean.derechoSeleccionado.divisa}" align="center" />
+                <xls:col header="#{etq.emisoraMinus}" value="#{consultaTablaRetencionBean.derechoSeleccionado.emision.emisora}" align="center" />
+                <xls:col header="#{etq.bovedaMinus}" value="#{consultaTablaRetencionBean.derechoSeleccionado.bovedaCustodio}" align="center" />
+                <xls:col header="#{etq.serieMinus}" value="#{consultaTablaRetencionBean.derechoSeleccionado.emision.serie}" align="center" />
+                <xls:col header="#{etq.estado}" value="#{consultaTablaRetencionBean.derechoSeleccionado.descEstatusDerecho}" align="center"/>
+                <xls:col header="#{etq.cuponMinus}" value="#{consultaTablaRetencionBean.derechoSeleccionado.emision.cupon}" align="center"/>
+                <xls:col header="#{etq.fechaCorteMinus} Inicio" value="#{consultaTablaRetencionBean.derechoSeleccionado.fechaCorte}" align="center" pattern="dd-MM-yyyy" />
+                <xls:col header="#{etq.isin}" value="#{consultaTablaRetencionBean.derechoSeleccionado.emision.isin}" align="center"/>
+                <xls:col header="#{etq.fechaPago}" value="#{consultaTablaRetencionBean.derechoSeleccionado.fechaPago}" align="center" pattern="dd-MM-yyyy" />
+                <xls:col header="#{etq.proporcionMinus}" value="#{consultaTablaRetencionBean.proporcion}" align="center"/>
+                <xls:col header="#{etq.fee}" value="#{consultaTablaRetencionBean.fee}" align="center" rendered="#{!consultaTablaRetencionBean.requiereBeneficiarios}"/>                
+                <xls:col header="#{etq.porcentajeRetencionMinus}" value="#{consultaTablaRetencionBean.porcentajeRetencion}" align="center" rendered="#{!consultaTablaRetencionBean.requiereBeneficiarios}"/>
+            </xls:row>
+        </xls:table>
+        <xls:br />
+        <xls:subtitle value="#{etq.registrosEncontrados}: #{consultaTablaRetencionBean.paginaReportes.totalRegistros}" />
+        <xls:br />          
+        <xls:subtitle value="Datos"/>
+        <xls:table value="#{consultaTablaRetencionBean.paginaReportes.registros}" var="detalle" borraLista="false">
+            <xls:row>
+                <xls:col header="#{etq.institucionMinus}" value="#{detalle.claveInstitucion} #{detalle.nombreInstitucion}"
+                         align="CENTER" oddColorDark="true" />
+                <xls:col header="#{etq.cuentaMinus}" value="#{detalle.cuenta}" 
+                         align="CENTER" oddColorDark="true" />
+                <xls:col header="#{etq.porcentajeRetencionMinus}" value="#{detalle.porcentajeRetencion}%"
+                         align="CENTER" oddColorDark="true" pattern="#0.##">
+                </xls:col>
+                <xls:col header="#{etq.cantidadDeTitulosMinus}" value="#{detalle.asignacion}" 
+                		 align="CENTER" oddColorDark="true" pattern="#,##0">
+                </xls:col>
+                <xls:col header="#{etq.montoBrutoMinus}" value="#{detalle.monto}" 
+                		 align="CENTER" oddColorDark="true" pattern="$##,##0.00">
+                </xls:col>
+                <xls:col header="#{etq.fee}" value="#{detalle.montoFee}" 
+                		 align="CENTER" oddColorDark="true" pattern="$##,##0.00">
+                </xls:col>                
+                <xls:col header="#{etq.impuestoRetenidoMinus}" value="#{detalle.montoRetenido}"
+                         align="CENTER" oddColorDark="true" pattern="$##,##0.00">
+                </xls:col>                         
+                <xls:col header="#{etq.montoNetoMinus}" value="#{detalle.montoPagado}" 
+                		 align="CENTER" oddColorDark="true" pattern="$##,##0.00">
+                </xls:col>                    
+                <xls:col header="#{etq.estado}" value="#{consultaTablaRetencionBean.derechoSeleccionado.descEstatusDerecho}" 
+                		 align="CENTER" oddColorDark="true" />                                		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		
+            </xls:row>
+        </xls:table>
+        <xls:table value="#{consultaTablaRetencionBean.porcentajeKeys}" var="porcentaje">
+            <xls:row>
+                <xls:col header="" value="Subtotal"
+                         align="CENTER" oddColorDark="true" />
+                <xls:col header="" value="" 
+                         align="CENTER" oddColorDark="true" />
+                <xls:col header="" value="#{porcentaje}%"
+                         align="CENTER" oddColorDark="true" pattern="#0.#">
+                </xls:col>
+                <xls:col header="" value="#{consultaTablaRetencionBean.subtotalesXPorcentaje[porcentaje].asignacion}" 
+                		 align="CENTER" oddColorDark="true" pattern="#,##0">
+                </xls:col>
+                <xls:col header="" value="#{consultaTablaRetencionBean.subtotalesXPorcentaje[porcentaje].monto}" 
+                		 align="CENTER" oddColorDark="true" pattern="$##,##0.00">
+                </xls:col>
+                <xls:col header="" redered="#{!consultaTablaRetencionBean.requiereBeneficiarios}" value="#{consultaTablaRetencionBean.subtotalesXPorcentaje[porcentaje].montoFee}" 
+                		 align="CENTER" oddColorDark="true" pattern="$##,##0.00">
+                </xls:col>                
+                <xls:col header="" value="#{consultaTablaRetencionBean.subtotalesXPorcentaje[porcentaje].montoRetenido}"
+                         align="CENTER" oddColorDark="true" pattern="$##,##0.00">
+                </xls:col>                         
+                <xls:col header="" value="#{consultaTablaRetencionBean.subtotalesXPorcentaje[porcentaje].montoPagado}" 
+                		 align="CENTER" oddColorDark="true" pattern="$##,##0.00">
+                </xls:col>                    
+                <xls:col header="" value="" 
+                		 align="CENTER" oddColorDark="true" />                                		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		
+            </xls:row>
+        </xls:table>
+        <xls:table value="#{consultaTablaRetencionBean}" var="dummy">
+            <xls:row>
+                <xls:col header="" value="#{etq.total}"
+                         align="CENTER" oddColorDark="true" />
+                <xls:col header="" value="" 
+                         align="CENTER" oddColorDark="true" />
+                <xls:col header="" value=""
+                         align="CENTER" oddColorDark="true">
+                </xls:col>
+                <xls:col header="" value="#{consultaTablaRetencionBean.totalTitulos}" 
+                		 align="CENTER" oddColorDark="true" pattern="#,##0">
+                </xls:col>
+                <xls:col header="" value="#{consultaTablaRetencionBean.total.monto}" 
+                		 align="CENTER" oddColorDark="true" pattern="$##,##0.00">
+                </xls:col>
+                <xls:col header="" redered="#{!consultaTablaRetencionBean.requiereBeneficiarios}" value="#{consultaTablaRetencionBean.total.montoFee}" 
+                		 align="CENTER" oddColorDark="true" pattern="$##,##0.00">
+                </xls:col>                
+                <xls:col header="" value="#{consultaTablaRetencionBean.total.montoRetenido}"
+                         align="CENTER" oddColorDark="true" pattern="$##,##0.00">
+                </xls:col>                         
+                <xls:col header="" value="#{consultaTablaRetencionBean.total.montoPagado}" 
+                		 align="CENTER" oddColorDark="true" pattern="$##,##0.00">
+                </xls:col>                    
+                <xls:col header="" value="" 
+                		 align="CENTER" oddColorDark="true" />                                		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		
+            </xls:row>
+        </xls:table>                
+    </xls:document>
+</html>

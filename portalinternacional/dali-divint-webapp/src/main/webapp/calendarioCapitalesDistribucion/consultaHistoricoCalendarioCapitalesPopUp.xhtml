@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutPopUp.xhtml">			
+		<ui:define name="head">			
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/calendarioCapitales.js">
+			</script>
+		</ui:define>
+		<ui:define name="titulo">
+			<h:outputText value="#{etq.detalleHistoricoPopUp}"/>
+		</ui:define>
+		<ui:define name="subtitulo">
+		</ui:define>
+
+		<ui:define name="body">
+	
+			<h:form id="formaDetalleHistorico">
+			<h:outputText value="#{calendarioHistCapitalesBean.initPopUp}" />
+			<a4j:keepAlive beanName="calendarioHistCapitalesBean" />
+			     <h:panelGroup id="mensajeUsuario">
+            <div style="min-height: 100%;">
+                <rich:messages warnClass="warning" infoClass="info"
+                    errorClass="error" ajaxRendered="true" showDetail="false"
+                    showSummary="true" layout="list">
+                    <f:facet name="infoMarker">
+                        <h:panelGroup>
+                            <h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+                    </f:facet>
+
+                    <f:facet name="errorMarker">
+                        <h:panelGroup>
+                            <h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+                    </f:facet>
+                </rich:messages>
+
+                <div id="divWarnings" class="warning" style="display: none;" >
+                    <p id="textoWarning"></p>
+                </div>
+            </div>
+        </h:panelGroup>
+		 <h:panelGroup id="containerResultados">
+            <h:panelGroup rendered="#{calendarioHistCapitalesBean.consultaEjecutada}">
+                <t:dataTable id="noExistenResultados"
+                    value="#{calendarioHistCapitalesBean.paginaVO.registros}"
+                    styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+                    footerClass="tituloTabla" border="0" cellpadding="3px"
+                    cellspacing="0px" columnClasses="everyColumn"
+                    rowClasses="renglonTablaUno, renglonTablaDos"
+                    rendered="#{empty calendarioHistCapitalesBean.paginaVO.registros}">
+
+                    <t:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{etq.sinResultados}"></h:outputText>
+                        </f:facet>
+
+                    </t:column>
+                </t:dataTable>
+
+                <br />
+                <br />
+                <br />
+    <!-- ============================================TABLA DE RESULTADOS ========================================================================================== -->
+				<h:panelGroup id="tablaResultados">
+					 <h:graphicImage value="/images/blank.gif" width="900px"
+                        height="1px">
+                     </h:graphicImage>
+					 <h:panelGroup
+                        rendered="#{not empty calendarioHistCapitalesBean.paginaVO.registros}">
+                        <table width="100%" border="0">
+                            <tr>
+                                <td align="left" class="textoEstadoCuenta"><a4j:commandLink
+                                        id="control_bitacora_primero"
+                                        action="#{calendarioHistCapitalesBean.irPrimeraPagina}"
+                                        rendered="#{calendarioHistCapitalesBean.irAlPrimero}"
+                                        reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+                                            border="0" />
+                                    </a4j:commandLink> <a4j:commandLink id="control_bitacora_atras_fast"
+                                        action="#{calendarioHistCapitalesBean.retrocederPaginasRapido}"
+                                        rendered="#{calendarioHistCapitalesBean.retrocederRapido}"
+                                        reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+                                            border="0" />
+                                    </a4j:commandLink> <a4j:commandLink id="control_bitacora_atras"
+                                        action="#{calendarioHistCapitalesBean.retrocederPagina}"
+                                        rendered="#{calendarioHistCapitalesBean.retroceder}"
+                                        reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+                                            border="0" />
+                                    </a4j:commandLink> <a4j:commandLink id="control_bitacora_adelante"
+                                        action="#{calendarioHistCapitalesBean.avanzarPagina}"
+                                        rendered="#{calendarioHistCapitalesBean.avanzar}"
+                                        reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+                                            border="0" />
+                                    </a4j:commandLink> <a4j:commandLink id="control_bitacora_adelante_fast"
+                                        action="#{calendarioHistCapitalesBean.avanzarPaginasRapido}"
+                                        rendered="#{calendarioHistCapitalesBean.avanzarRapido}"
+                                        reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+                                            border="0" />
+
+                                    </a4j:commandLink> <a4j:commandLink id="control_bitacora_ultimo"
+                                        action="#{calendarioHistCapitalesBean.irUltimaPagina}"
+                                        rendered="#{calendarioHistCapitalesBean.irAlUltimo}"
+                                        reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+                                            border="0" />
+                                    </a4j:commandLink> <br /> <h:outputText value="#{etq.mostrando}"
+                                        styleClass="textoResumen" /> <h:outputText
+                                        value="#{calendarioHistCapitalesBean.numeroPagina}"
+                                        styleClass="textoResumen" /> <h:outputText value="#{etq.de}"
+                                        styleClass="textoResumen" /> <h:outputText
+                                        value="#{calendarioHistCapitalesBean.totalPaginas}"
+                                        styleClass="textoResumen" /> <h:outputText
+                                        value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+                                    &#160;&#160;&#160; <h:outputText
+                                        value="#{calendarioHistCapitalesBean.paginaVO.totalRegistros}"
+                                        styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+                                    &#160; <h:outputText styleClass="textoResumen"
+                                        value="#{etq.registrosEncontrados}" /></td>
+                                <td align="right" class="textoEstadoCuenta"><h:outputText
+                                        escape="false" value="#{etq.registrosPorPagina}"
+                                         rendered="#{calendarioHistCapitalesBean.irAlUltimo}"
+                                        styleClass="textoResumen" /> <h:selectOneMenu
+                                        id="tamanioPagina" 
+                                        rendered="#{calendarioHistCapitalesBean.irAlUltimo}"
+                                        styleClass="textoResumen"
+                                        value="#{calendarioHistCapitalesBean.paginaVO.registrosXPag}">
+                                        <f:selectItem itemLabel="1" itemValue="1" />
+                                        <f:selectItem itemLabel="2" itemValue="2" />
+                                        <f:selectItem itemLabel="5" itemValue="5" />
+                                        <f:selectItem itemLabel="10" itemValue="10" />
+                                        <f:selectItem itemLabel="20" itemValue="20" />
+                                        <f:selectItem itemLabel="50" itemValue="50" />
+                                        <f:selectItem itemLabel="100" itemValue="100" />
+                                        <a4j:support event="onchange"
+                                            reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,mensajeUsuario"
+                                            action="#{calendarioHistCapitalesBean.ejecutarConsulta}">
+                                            <f:setPropertyActionListener value="false"
+                                                target="#{calendarioHistCapitalesBean.banderaBitacoraConsulta}" />
+                                        </a4j:support>
+                                    </h:selectOneMenu></td>
+                            </tr>
+                        </table>
+                    </h:panelGroup>                    
+                   	<table border="0" class="tablaGeneral" width="100%" 
+                           cellspacing="0px"
+                           style="display: #{empty calendarioHistCapitalesBean.paginaVO.registros?'none':'inline-table'}">
+                            <!-- ========================= ENCABEZADOS ===============================================-->
+                   		 <tr>
+							<th class="tituloTabla" rowspan='2'>
+	                          		<h:outputText value="#{etq.hora}" /><br/>
+	                          		<h:outputText value="#{etq.recepcionMinus}" />                            		                            	
+	                        </th>
+							<th class="tituloTabla" rowspan='4'> 
+	                          		<h:outputText value="#{etq.numeroEvento}" />                            		
+	                        </th>
+							<th class="tituloTabla" rowspan='4'>
+	                          		<h:outputText value="#{etq.folioMinus}" /><br/>
+	                          		<h:outputText value="#{etq.calIndeval}" />                            	
+	                        </th>
+	                        <th class="tituloTabla" rowspan='4'> 
+	                          		<h:outputText value="#{etq.folioMinus}" /><br/>
+	                          		<h:outputText value="#{etq.calMensajeIndeval}" />                            		
+	                         </th>        
+	                         <th class="tituloTabla" rowspan='4'>
+	                              	<h:outputText value="#{etq.calTipo}" /><br/>
+	                              	<h:outputText value="#{etq.mensajeMinus}" />
+	                         </th>
+	                              
+	                          <th class="tituloTabla" rowspan='4'>
+	                              	<h:outputText value="#{etq.calTipo}" /><br/>
+	                              	<h:outputText value="#{etq.derecho}" /><br/>
+	                              	<h:outputText value="#{etq.calCaevCamv}" />
+	                          </th>
+	                          <th class="tituloTabla" rowspan='4'> 
+                           		<h:outputText value="#{etq.calSubTipo}" /><br/>  
+                           		<h:outputText value="#{etq.calDe}" /><br/>  
+                           		<h:outputText value="#{etq.calDerecho}" />                            		
+                           	  </th>
+							  <th class="tituloTabla" rowspan='4'>
+	                              	<h:outputText value="#{etq.estado}" /><br/>
+	                          		<h:outputText value="#{etq.calDel}" /><br/>
+	                          		<h:outputText value="#{etq.mensajeMinus}" />
+	                          </th>
+							  <th class="tituloTabla">
+								<h:outputText value="#{etq.tv} / #{etq.emisoraMinus}" />															
+							  </th>
+							  <th class="tituloTabla" rowspan='2'>
+	                              	<h:outputText value="#{etq.fechaMinus}" /><br/>
+	                              	<h:outputText value="#{etq.calExdate}" />
+	                          </th>
+						      <th class="tituloTabla" rowspan='2'>
+	                              	<h:outputText value="#{etq.fechaDe}" /><br/>
+	                              	<h:outputText value="#{etq.pago}" />
+	                          </th>
+							  <th class="tituloTabla" rowspan='4'>
+	                              	<h:outputText value="#{etq.calDueBill}" /><br/>
+	                              	<h:outputText value="#{etq.calOffDate}" />
+	                          </th>
+							  <th class="tituloTabla" rowspan='2'>
+	                              	<h:outputText value="#{etq.calRatio}" /><br/>
+	                              	<h:outputText value="#{etq.brutoMinus}" />
+	                          </th>
+							  <th class="tituloTabla" rowspan='4'>
+	                              	<h:outputText value="#{etq.calPosicion}" /><br/>
+	                              	<h:outputText value="#{etq.calIndeval}" />
+	                          </th>
+							  <th class="tituloTabla" rowspan='4'>
+	                              	<h:outputText value="#{etq.calImporteBruto}" />                                	
+	                          </th>
+							  <th class="tituloTabla" rowspan='4'>
+	                              	<h:outputText value="#{etq.divisaMinus}" />
+	                          </th>
+							  <th class="tituloTabla" rowspan='2'>
+	                              	<h:outputText value="#{etq.calRetencion}" />                                	
+	                          </th>
+							  <th class="tituloTabla" rowspan='4'>
+	                              	<h:outputText value="#{etq.fuente}" />
+	                          </th>
+							  <th class="tituloTabla" rowspan='4'>
+	                              	<h:outputText value="#{etq.bovedaMinus}" />
+	                          </th>
+							  <th class="tituloTabla" rowspan='4'>
+	                              	<h:outputText value="#{etq.fechasMinus}" /><br/>
+	                              	<h:outputText value="#{etq.calAdicionales}" />
+	                          </th>
+							  <th class="tituloTabla" rowspan='4'>
+	                              	<h:outputText value="#{etq.estado}" /><br/>
+	                              	<h:outputText value="#{etq.calIndeval}" />
+	                          </th>
+							  <th class="tituloTabla" rowspan='4'>
+	                            	<h:outputText value="#{etq.estado}" /><br/> 
+                               		<h:outputText value="#{etq.calEmision}" />   
+	                          </th>
+							  <th class="tituloTabla" rowspan='4'>
+	                              	<h:outputText value="#{etq.narrativa}" />
+	                          </th>
+	                          <th class="tituloTabla" rowspan='4'>
+                               	<h:outputText value="#{etq.calInstrucciones}" />
+                              </th>                      
+                             <th class="tituloTabla" rowspan='4'>                                	
+								<table>
+									<tr> 
+									<td>
+										<a4j:commandButton id="botonEjecutar" value="#{etq.enviar}" styleClass="submit"
+												onclick="this.disabled=true;getCambiosDestinatario_popup();if(!confirmaEjecutar_popup()){this.disabled=false;return false;}"	
+												oncomplete="this.disabled=false;presentarCriterios();limpiarTodos_popup();"																				
+												actionListener="#{calendarioHistCapitalesBean.ejecutarEnvioMensaje}"
+												reRender="containerResultados,totalesConsultas,tablaResultados,botones,mensajeUsuario,panelResumen"
+												tabindex="7">											
+										</a4j:commandButton>
+									</td> 
+									</tr>
+									<tr> 
+										<td>
+										  	<h:selectOneMenu styleClass="textoControles" id="destinatarioSeleccionCombo"
+												tabindex="140" onchange="cambiarComboAll_popup(this);" >										 										 
+												<f:selectItem itemValue="-1" itemLabel="Selecciona" />
+												<f:selectItem itemValue="TODOS" itemLabel="TODOS" />												
+												<f:selectItems value="#{calendarioHistCapitalesBean.destinatarios}" />																					
+											</h:selectOneMenu> 
+										</td> 
+									</tr>
+								</table>
+							 </th>							
+                          </tr>
+                          <tr>
+						
+							<th class="tituloTabla">
+								<h:outputText value="#{etq.serieMinus} / #{etq.cuponMinus}" />
+							</th>																		
+						</tr>
+						<tr>
+							<th class="tituloTabla" rowspan='2'>
+                           		<h:outputText value="#{etq.hora}" /><br/>
+                           		<h:outputText value="#{etq.calEnvio}" />                         	
+                           	</th>
+							<th class="tituloTabla" >
+								<h:outputText value="#{etq.isin}" />
+							</th>
+							<th class="tituloTabla" rowspan='2'>
+                               	<h:outputText value="#{etq.fechaDe}" /><br/>
+                               	<h:outputText value="#{etq.calCorte}" />
+                               </th>
+							<th class="tituloTabla" rowspan='2'>
+                               	<h:outputText value="#{etq.fechaMinus}" /><br/>
+                               	<h:outputText value="#{etq.calEfectiva}" />
+                               </th>
+							<th class="tituloTabla" rowspan='2'>
+                               	<h:outputText value="#{etq.calRatio}" /><br/>
+                               	<h:outputText value="#{etq.netoMinus}" />
+                               </th>
+							<th class="tituloTabla" rowspan='2'>                                	
+                               	<h:outputText value="#{etq.calComision}" />
+                               </th>				
+						</tr>
+						<tr>
+							<th class="tituloTabla" >
+								<h:outputText value="#{etq.calCfi}" />
+							</th>
+						</tr>                           
+                           <t:dataList id="resultados"
+                               value="#{calendarioHistCapitalesBean.paginaVO.registros}"
+                               var="derecho" rowIndexVar="indice">
+                               <!-- =============================== DATOS_CONSULTA ========================================= -->
+                               <tr>                               
+                               	<td class = "#{derecho.propiedadesMap['HoraRecep'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '2'>
+                               		<h:outputText value="#{derecho.fechaHoraRecepcion}" >
+                               			<f:convertDateTime pattern="dd/MM/yyyy HH:mm"  timeZone="America/Mexico_City" />
+                               		</h:outputText>                                		                         		
+                               	</td>                               
+                               	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan = '4'>
+                               		<a href="javascript:detalleDerecho_popup(#{derecho.idBitacoraMensaje});" title="Muestra el mensaje Swift">
+                               			<h:outputText value="#{derecho.referencia}" />	
+                               		</a>
+                               	</td>
+                               	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan = '4'>                                		
+                               		<h:outputText value="#{derecho.idCalendario}" />                                
+                               	</td>                                
+                               	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan = '4'>
+                               		<h:outputText value="#{derecho.id}" /> 
+                               	</td>
+                               	<td class = "#{derecho.propiedadesMap['TipoMsj'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '4'>
+                               		<h:outputText value="#{derecho.tipoMensaje}" />
+                               	</td>
+                               	<td class = "#{(derecho.propiedadesMap['CAEV'] != null or derecho.propiedadesMap['CAMV'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '4'>
+                               		<h:outputText value="#{derecho.clavePagoCaev}" rendered="#{!empty derecho.clavePagoCaev}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.clavePagoCaev}"/>                                		
+                               		<h:outputText value=" / " />
+                               		<h:outputText value="#{derecho.clavePagoCamv}" rendered="#{!empty derecho.clavePagoCamv}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.clavePagoCamv}"/>
+                               	</td>
+                               	<td class = "#{derecho.propiedadesMap['SubtipoDer'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '4'>
+                               		<h:outputText value="#{derecho.valor1}" title="#{calendarioHistCapitalesBean.mapaSubtipos[derecho.valor1]}" rendered="#{!empty derecho.valor1}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.valor1}" />
+                               		<h:outputText value=" / " />
+                               		<h:outputText value="#{derecho.valor2}" title="#{calendarioHistCapitalesBean.mapaSubtipos[derecho.valor2]}" rendered="#{!empty derecho.valor2}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.valor2}" />
+                               	</td>  
+                               	<td class = "#{(derecho.propiedadesMap['funcM'] != null or derecho.propiedadesMap['EdoProc'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '4'>                                		
+                               		<h:outputText value="#{derecho.functionM}" rendered="#{!empty derecho.functionM}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.functionM}"/>                                		
+                               		<h:outputText value=" / " />
+                               		<h:outputText value="#{derecho.estadoProceso}" rendered="#{!empty derecho.estadoProceso}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.estadoProceso}"/>
+                               	</td>
+                               	
+                               	<td class = "#{(derecho.propiedadesMap['TV'] != null or derecho.propiedadesMap['Emisora'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado">                                		
+                               		<h:outputText value="#{derecho.tipoValor}" rendered="#{!empty derecho.tipoValor}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.tipoValor}"/>                                		
+                               		<h:outputText value=" / " />
+                               		<h:outputText value="#{derecho.emisora}" rendered="#{!empty derecho.emisora}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.emisora}"/>                                	
+                               	</td>
+                               	
+                               	<td class = "#{derecho.propiedadesMap['FXDate'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '2'>
+                               		<h:outputText value="#{derecho.fechaXDate}" rendered="#{!empty derecho.fechaXDate}" >
+                               			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.fechaXDate}"/> 
+                               	</td>
+                               	
+                               	<td class = "#{derecho.propiedadesMap['FPago'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '2'>
+                               		<h:outputText value="#{derecho.fechaPago}" rendered="#{!empty derecho.fechaPago}" >
+                               			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.fechaPago}"/>
+                               	</td>
+                               	
+                               	<td class = "#{derecho.propiedadesMap['FVenc'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '4'>
+                               		<h:outputText value="#{derecho.fechaVencimiento}" rendered="#{!empty derecho.fechaVencimiento}" >
+                               			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.fechaVencimiento}"/>
+                               	</td>
+                               	
+                                <td class = "#{(derecho.propiedadesMap['GRSS'] != null or derecho.propiedadesMap['RatioAdic'] != null) ?  'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '2' nowrap="true">
+                               		<h:outputText value="#{derecho.importeGRSS}" rendered="#{!empty derecho.importeGRSS}">
+                               			<f:convertNumber pattern="###,###,###,###,###,##0.#" maxFractionDigits="12" minFractionDigits="2"/>
+                               		</h:outputText>                               		
+                               		<h:outputText value="-" rendered="#{empty derecho.importeGRSS}"/><br/>
+									<ui:repeat var="ratio" value="#{derecho.ratioAdicionalLst}" rendered="#{!empty derecho.ratioAdicional}">
+										<h:outputText value="#{ratio}" />
+										<br />
+									</ui:repeat>
+                               	</td>
+                               	
+                               	<td class = "#{derecho.propiedadesMap['PosInd'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '4'>
+                               		<h:outputText value="#{derecho.posicionIndeval}" rendered="#{!empty derecho.posicionIndeval}" >
+                               			<f:convertNumber pattern="###,###,###,###,###,###" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.posicionIndeval}"/>
+                               	</td>
+                               	
+                               	<td class = "#{derecho.propiedadesMap['ImporteBr'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '4'>
+                               		<h:outputText value="#{derecho.importeBruto}" rendered="#{!empty derecho.importeBruto}" >
+                               			<f:convertNumber pattern="###,###,###,###,###,##0.#" maxFractionDigits="12" minFractionDigits="2" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.importeBruto}"/>
+                               	</td>
+                               	
+                               	<td class = "#{derecho.propiedadesMap['Divisa'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '4'>                                		
+                               		<h:outputText value="#{derecho.divisa}" rendered="#{!empty derecho.divisa}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.divisa}"/>
+                               	</td>
+                               	
+                               	<td class = "#{derecho.propiedadesMap['WITL'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '2'>
+                               		<h:outputText value="#{derecho.importeWITL}" rendered="#{!empty derecho.importeWITL}" >
+                               			<f:convertNumber pattern="###,###,###,###,###,##0.#" maxFractionDigits="12" minFractionDigits="2" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.importeWITL}"/>                        
+                               	</td>
+                               	
+                               	<td class = "#{derecho.propiedadesMap['Custodio'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '4'>                                		
+                               		<h:outputText value="#{derecho.nombreCortoCus}" rendered="#{!empty derecho.nombreCortoCus}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.nombreCortoCus}"/>
+                               	</td>
+                               	
+                               	<td class = "#{derecho.propiedadesMap['Boveda'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '4' nowrap="true" >                                		
+                               		<h:outputText value="#{derecho.nombreCortoBov}" rendered="#{!empty derecho.nombreCortoBov}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.nombreCortoBov}"/>
+                               	</td>
+                               	
+                                <td class="#{derecho.propiedadesMap['FAdic'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan='4' nowrap="true" >
+                               		<h:outputText value="-" rendered="#{empty derecho.fechasAdicionales}" /> 
+                               			 <ui:repeat var="fecha" value="#{derecho.listaFechasDTO}">
+                               			 	<h:outputText value="#{fecha.clave}"  title="#{calendarioHistCapitalesBean.mapaDescFechasAd[fecha.clave]}" />
+										<h:outputText value=": " />
+										<h:outputText value="#{fecha.fecha}" /><br/>
+                               			 </ui:repeat>
+								</td>                             	
+                               	
+                                 <td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan = '4'>                               		
+                               		<h:graphicImage value="/images/#{calendarioHistCapitalesBean.mapaImagenesEstadosEnvio[derecho.idEstadoMensajeIntSic]}" 
+										rendered="#{calendarioHistCapitalesBean.mapaImagenesEstadosEnvio[derecho.idEstadoMensajeIntSic] != null}" title="#{derecho.nombreEstado}"/><br/>
+                               		<h:outputText value="#{derecho.nombreEstado} &lt;br/&gt;" rendered="#{!empty derecho.nombreEstado}" escape="false"/>                               		                             		
+                               		<h:outputText value="#{derecho.numeroEnvios}" rendered="#{!empty derecho.numeroEnvios}"/>
+                               		<h:outputText value="0" rendered="#{empty derecho.numeroEnvios}"/>
+                               		<h:outputText value="/" />
+                               		<h:outputText value="#{derecho.numeroConfirmados}" rendered="#{!empty derecho.numeroConfirmados}"/>
+                               		<h:outputText value="0" rendered="#{empty derecho.numeroConfirmados}"/>                               		
+                               	</td>
+                               	
+                               	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan = '4'>
+                               		<h:outputText value="#{derecho.listada}" rendered="#{!empty derecho.listada}"/>
+                               		<h:outputText value="DESLISTADA" rendered="#{empty derecho.listada}"/>
+                               	</td>                                	
+                               	<td class = "#{derecho.propiedadesMap['Narrativa'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '4'>
+                               		<a href="javascript:verNarrativasCapitales_popup(#{derecho.idCalendario},#{derecho.id});">                          	                       
+                            				<h:graphicImage value="/images/search.png"></h:graphicImage>
+                            			</a> 
+                               	</td>
+                               	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan = '4' nowrap="true" >
+                               		<h:outputText value="#{etq.calLiga}" />
+                               		<h:outputText value="#{empty derecho.liga ? 'NO' : 'SI'}" /><br/>                               		         
+                               		
+                               		<h:outputText value="#{etq.calTagsEliminacion}" />
+                               		<h:outputText value="#{empty derecho.tagsEliminacion ? 'NO' : 'SI'}" /><br/>         
+                               		
+                               		<h:outputText value="#{etq.calOpcionesMensaje}"/>
+                               		<h:outputText value="#{empty derecho.instrOpcionesMensaje ? 'NO' : 'SI'}" /><br/>          
+                               	
+                               		<a href="javascript:verInstruccionesPopup(#{derecho.id},#{derecho.idBitacoraMensaje});">                          	                       
+                            				<h:graphicImage value="/images/search.png"></h:graphicImage>
+                            			</a> 
+                               	</td>
+                               	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan = '4'>
+                               		<h:selectOneMenu styleClass="textoControles" id="slc_none" 
+														 tabindex="140"
+														 rendered="#{derecho.permiteEnvio}"
+														 onfocus="ponNombreId_popup(this,#{derecho.id},#{derecho.idCalendario});" 
+														 onchange="ponNombreId_popup(this,#{derecho.id},#{derecho.idCalendario});"
+														 value="#{derecho.destinatario}" disabled="#{!derecho.permiteEnvio}">								 										 
+												<f:selectItem itemValue="-1" itemLabel="Selecciona" />
+												<f:selectItem itemValue="TODOS" itemLabel="TODOS" />													
+												<f:selectItems value="#{calendarioHistCapitalesBean.destinatarios}" />																					
+									</h:selectOneMenu>
+									<h:selectOneMenu styleClass="selectDeshabilitado" id="menuDeshabilitado" 
+														 tabindex="141"
+														 rendered="#{!derecho.permiteEnvio}"														 														 
+														 disabled="true">														 										 		
+												<f:selectItem itemValue="-1" itemLabel="Selecciona" />																																																									
+									</h:selectOneMenu>								
+									<br></br>
+									<a href="javascript:detalleEnviosPopup(#{derecho.id});" title="Envios Calendario">
+										<h:outputText value="Envios" />
+									</a>								 
+                               	</td>                                	
+                             </tr>
+                             <tr>
+                             	<td class = "#{(derecho.propiedadesMap['Serie'] != null or derecho.propiedadesMap['Cupon'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado">                                		
+                               		<h:outputText value="#{derecho.serie}" rendered="#{!empty derecho.serie}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.serie}"/>                                		
+                               		<h:outputText value=" / " />
+                               		<h:outputText value="#{derecho.cupon}" rendered="#{!empty derecho.cupon}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.cupon}"/>                                	
+                               	</td>                             
+                             </tr>
+                             <tr>
+                             	<td class = "#{indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos'} centrado" rowspan = '2'>                                		
+                               		<h:outputText value="#{derecho.fechaPrimerEnvio}" rendered="#{!empty derecho.fechaPrimerEnvio}" >
+                               			<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="America/Mexico_City" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.fechaPrimerEnvio}" />                                		
+                               	</td>
+                           		<td class = "#{derecho.propiedadesMap['Isin'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado">                                		
+                               		<h:outputText value="#{derecho.isin}" rendered="#{!empty derecho.isin}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.isin}"/>                                		                                                    
+                               	</td>
+                               	<td class = "#{derecho.propiedadesMap['FCorte'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '2'>                                		
+                               		<h:outputText value="#{derecho.fechaCorte}" rendered="#{!empty derecho.fechaCorte}" >
+                               			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.fechaCorte}"/>
+                               	</td>
+                               	
+                               	<td class = "#{derecho.propiedadesMap['FEfect'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '2'>                                		
+                               		<h:outputText value="#{derecho.fechaEfectiva}" rendered="#{!empty derecho.fechaEfectiva}" >
+                               			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.fechaEfectiva}"/>
+                               	</td>
+                               	
+                               	<td class = "#{derecho.propiedadesMap['NETT'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '2'>                                		
+                               		<h:outputText value="#{derecho.importeNETT}" rendered="#{!empty derecho.importeNETT}" >
+                               			<f:convertNumber pattern="###,###,###,###,###,##0.#" maxFractionDigits="12" minFractionDigits="2" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.importeNETT}"/> 
+                               	</td>
+                               	
+                               	<td class = "#{derecho.propiedadesMap['FEE'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '2'>                                		
+                               		<h:outputText value="#{derecho.importeFEE}" rendered="#{!empty derecho.importeFEE}" >
+                               			<f:convertNumber pattern="###,###,###,###,###,##0.#" maxFractionDigits="12" minFractionDigits="2" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.importeFEE}"/> 
+                               	</td>        
+                             </tr>
+                             <tr>
+                             	<td class = "#{derecho.propiedadesMap['Cfi'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado">                                		
+                               		<h:outputText value="#{derecho.cfi}" rendered="#{!empty derecho.cfi}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.cfi}"/>                                		                                                    
+                               	</td>                                 
+                             </tr>
+                           </t:dataList>                                                             
+                   	</table>                    
+				</h:panelGroup>
+					<div style="display:none;">							
+						<a4j:commandButton id="botonBuscarInstruccion" 
+							styleClass="submit"											
+							requestDelay="1000"
+							action="#{calendarioHistCapitalesBean.ejecutarConsulta}" reRender="containerResultados,tablaResultados"	/>									
+ 					</div>     
+				<h:inputHidden id="envio_mensaje_H" value ="#{calendarioHistCapitalesBean.idsDestinatarios}"/>
+			</h:panelGroup>
+           </h:panelGroup>
+            	<iframe class="divModal"  id="detallepopup"  frameborder="0" align="top"></iframe>
+           </h:form>
+
+	</ui:define>
+	</ui:composition>
+</html>

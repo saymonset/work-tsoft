@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>dali-divint-receiver-ear</artifactId>
+	<packaging>ear</packaging>
+	<name>dali-divint-receiver-ear</name>
+	<description>EAR - Receiver Dali Internacional</description>
+	<parent>
+		<groupId>com.indeval.dali</groupId>
+		<artifactId>dali-divint</artifactId>
+		<version>5.10.7-SNAPSHOT</version>
+	</parent>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<configuration>
+					<defaultLibBundleDir>lib</defaultLibBundleDir>
+					<finalName>dali-divint-receiver</finalName>
+                    <modules>
+						<ejbModule>
+				            <groupId>com.indeval.dali</groupId>
+							<artifactId>dali-divint-receiverEjb</artifactId>
+							<bundleFileName>dali-divint-receiverEjb.jar</bundleFileName>
+						</ejbModule>
+                    </modules>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>		
+		<dependency>
+			<groupId>com.indeval.dali</groupId>
+			<artifactId>dali-divint-receiverEjb</artifactId>
+			<version>${project.version}</version>
+			<type>ejb</type>
+			<exclusions>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+</project>

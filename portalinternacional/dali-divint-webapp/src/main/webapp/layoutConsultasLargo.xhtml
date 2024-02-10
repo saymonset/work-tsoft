@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	
+	<ui:composition template="/layoutPortalInternacional.xhtml">
+		<ui:define name="seccionEncabezado">
+			<h1><span><ui:insert name="tituloEncabezado">CRITERIOS DE CONSULTA</ui:insert></span></h1>
+			<iframe class="divModal"  id="posiciones"  frameborder="0"   aling="top"></iframe>
+			<iframe class="divModal"  id="retencion"  frameborder="0" scrolling="no"   aling="top"></iframe>
+			<iframe class="divModal"  id="detalleEdoCta"  frameborder="0" aling="top"></iframe>
+			<iframe class="divModal"  id="detalle"  frameborder="0"   aling="top"></iframe>
+			<iframe class="divModal"  id="noScrolling"  frameborder="0" scrolling="no" align="top" height="500px" width="980px" style="overflow:hidden;"></iframe>
+			<table width="100%" cellpadding="0px" cellspacing="0px" align="left">                    	
+			    <tr>
+			    	<td>
+			    		<ui:insert name="initPantalla"/>
+			    	</td>
+			    </tr>
+			    <tr>
+			    	<td>
+			    		<ui:insert name="mensajes"/>
+			    	</td>
+			    </tr>
+			    <tr>
+			    	<td>
+			    		<ui:insert name="criterios"/>
+			        </td>
+			    </tr>
+			    <tr>
+			    	<td >
+			    		<ui:insert name="botones"/>
+			        </td>
+			    </tr>
+			</table>
+		</ui:define>
+	</ui:composition>
+</html>

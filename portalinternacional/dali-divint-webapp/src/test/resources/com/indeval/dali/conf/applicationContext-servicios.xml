@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+    <!--bean id="ejbEnvironment" class="java.util.Properties">
+        <constructor-arg>
+            <map>
+                <entry key="java.naming.factory.initial">
+                    <value>weblogic.jndi.WLInitialContextFactory</value>
+                </entry>
+            	<entry key="java.naming.provider.url">
+					<value>t3://localhost:7001</value>
+				</entry>
+            </map>
+        </constructor-arg>
+
+    </bean>
+
+    <bean id="divisionInternacionalServiceEJB" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ejb.divisionInternacionalService#com.indeval.portalinternacional.middleware.services.divisioninternacional.DivisionInternacionalService" />
+        <property name="jndiEnvironment" ref="ejbEnvironment"></property>
+        <property name="proxyInterface" value="com.indeval.portalinternacional.middleware.services.divisioninternacional.DivisionInternacionalService"></property>
+        <property name="lookupOnStartup" value="true"></property>
+    </bean-->
+    
+    
+    
+     <!--aop:config proxy-target-class="true">
+	    <aop:pointcut id="invocacionesRemotas"
+	      expression="execution(* com.indeval.portalinternacional.middleware.services.*.*Service.*(..))" />
+	    <aop:advisor advice-ref="webAdvice" pointcut-ref="invocacionesRemotas" />
+	 </aop:config-->
+	    
+    
+    <bean id="webAdvice" class="com.indeval.portalinternacional.presentation.advice.AfterThrowingWebAspect"></bean>
+	
+	<aop:aspectj-autoproxy/>
+	
+</beans>

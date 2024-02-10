@@ -1,0 +1,39 @@
+<html xmlns:txt="http://indeval.com/jsf/txt"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cvt="http://indeval.com/jsf/converters">
+    <txt:document documentName="tablaRetencionDerecho"
+    	documentTitle="Consulta Tabla de Retención del Derecho"
+	    institucion="#{consultaTablaRetencionBean.agenteFirmado.id} #{consultaTablaRetencionBean.agenteFirmado.folio} #{consultaTablaRetencionBean.agenteFirmado.razon}"
+	    fecha="#{consultaTablaRetencionBean.fechaActual}"> 
+        <txt:table value="#{consultaTablaRetencionBean.paginaReportes.registros}" var="detalle">
+            <txt:row>
+                <txt:col header="#{etq.institucionMinus}" value="#{detalle.claveInstitucion} #{detalle.nombreInstitucion}"
+                         align="left" size="20"/>
+                <txt:col header="#{etq.cuentaMinus}" value="#{detalle.cuenta}" 
+                         align="left" size="10"/>
+                <txt:col header="#{etq.porcentajeRetencionMinus}" value="#{detalle.porcentajeRetencion}"
+                         align="left" size="5">
+                         <f:convertNumber pattern="#,##0'%'"/>
+                </txt:col>
+                <txt:col header="#{etq.cantidadDeTitulosMinus}" value="#{detalle.asignacion}" 
+                		 align="left" size="22">
+                		 <f:convertNumber pattern="#,##0"/>
+                </txt:col>
+                <txt:col header="#{etq.montoBrutoMinus}" value="#{detalle.monto}" 
+                		 align="left" size="22">
+                		 <f:convertNumber pattern="'$'##,##0.00"/>
+                </txt:col>
+                <txt:col header="#{etq.impuestoRetenidoMinus}" value="#{detalle.montoRetenido}"
+                         align="left" size="22">
+		 				<f:convertNumber pattern="'$'##,##0.00"/>
+                </txt:col>                         
+                <txt:col header="#{etq.montoNetoMinus}" value="#{detalle.montoPagado}" 
+                		 align="left" size="22">
+                		 <f:convertNumber pattern="'$'##,##0.00"/>
+                </txt:col>                    
+                <txt:col header="#{etq.estado}" value="#{consultaTablaRetencionBean.derechoSeleccionado.estado}" 
+                		 align="left" size="7"/>                                		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		
+            </txt:row>
+        </txt:table>
+    </txt:document>
+</html>

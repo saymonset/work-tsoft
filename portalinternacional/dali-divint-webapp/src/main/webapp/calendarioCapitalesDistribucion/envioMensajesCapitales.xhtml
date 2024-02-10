@@ -1,0 +1,775 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+<!-- DECORATE -->
+
+<ui:composition template="/layoutConsultasLargo.xhtml">
+
+	<ui:define name="head">
+		<script language="javascript" type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/js/envioCalendarioCapitales.js">
+		</script>
+	</ui:define>
+	<ui:define name="tituloSeccion">
+		<h:outputText value="#{etq.tituloGeneralModulo}" />
+	</ui:define>
+
+	<ui:define name="tituloEncabezado">
+		<h:outputText value="#{etq.subTituloConsultaEnvioMensajesCapitales}"></h:outputText>
+	</ui:define>
+
+
+	<ui:define name="criterios">
+		<h:outputText value="#{envioMensajesCapitalesBean.init}" />
+		<a4j:keepAlive beanName="envioMensajesCapitalesBean" />
+		<h:panelGroup id="mensajeUsuario">
+			<div style="min-height: 100%;">
+				<rich:messages warnClass="warning" infoClass="info"
+					errorClass="error" ajaxRendered="true" showDetail="false"
+					showSummary="true" layout="list">
+					<f:facet name="infoMarker">
+						<h:panelGroup>
+							<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+					</f:facet>
+					<f:facet name="errorMarker">
+						<h:panelGroup>
+							<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+					</f:facet>
+				</rich:messages>
+				<div id="divWarnings" class="warning" style="display: none;">
+					<p id="textoWarning"></p>
+				</div>
+			</div>
+		</h:panelGroup>
+		<h:panelGroup id="panelCriterios">
+			<h:inputHidden id="isCalIndeval" value="false" />
+			<div style='display: "inline"' id="divCriterios">
+
+				<table width="100%" border="0" cellpadding="0px" cellspacing="5px"
+					align="center">
+					<tr>
+						<!--==============================================BUSQUEDA CLAVE VALOR======================================================================== -->
+						<td class="recuadroTabla" align="center">
+							<table class="tablaCriterios" align="center">
+								<tr>
+								</tr>
+								<tr>
+									<td nowrap="true" align="center"><h:outputText
+											styleClass="texto" value="#{etq.tipoValorMinus}" /></td>
+									<td nowrap="true" align="center"><h:outputText
+											styleClass="texto" value="#{etq.emisoraMinus}" /></td>
+									<td nowrap="true" align="center"><h:outputText
+											styleClass="texto" value="#{etq.serieMinus}" /></td>
+									<td nowrap="true" align="center"><h:outputText
+											styleClass="texto" value="#{etq.isin}" /></td>
+									
+								</tr>
+								
+								<tr align="center">
+
+									<td align="center"><h:inputText autocomplete="off" id="tv"
+											value="#{envioMensajesCapitalesBean.calendarioEnvio.tipoValor}"
+											size="7" maxlength="4"
+											styleClass="textoControles campoAlphaNumerico textoMayusculas"
+											tabindex="100" /></td>
+									<td align="center"><h:inputText autocomplete="off"
+											id="emisora"
+											value="#{envioMensajesCapitalesBean.calendarioEnvio.emisora}"
+											size="7" maxlength="7"
+											styleClass="textoControles campoAlphaNumerico textoMayusculas"
+											tabindex="110" /></td>
+									<td align="center"><h:inputText autocomplete="off"
+											id="serie"
+											value="#{envioMensajesCapitalesBean.calendarioEnvio.serie}"
+											size="7" maxlength="6"
+											styleClass="textoControles campoAlphaNumericoSerie textoMayusculas"
+											tabindex="120" /></td>
+									<td align="center"><h:inputText autocomplete="off"
+											id="isin"
+											value="#{envioMensajesCapitalesBean.calendarioEnvio.isin}"
+											size="12" maxlength="12"
+											styleClass="textoControles campoAlphaNumerico textoMayusculas"
+											tabindex="130" /></td>
+									
+								</tr>
+							</table>
+						</td>
+
+
+						<td class="recuadroTabla" align="center">
+							<table class="tablaCriterios" align="center">
+								<tr align="center">
+									<td nowrap="true" align="center"><h:outputText
+											styleClass="texto" value="#{etq.destinatario}" /></td>
+									<td nowrap="true" align="center"><h:outputText
+											styleClass="texto" value="#{etq.ACKAMH}" /></td>
+									<td nowrap="true" align="center"><h:outputText
+											styleClass="texto" value="#{etq.ACKBolsas}" /></td>
+									<td nowrap="true" align="center"><h:outputText
+											styleClass="texto" value="#{etq.usuarioMinus}" /></td>
+									<td nowrap="true" align="center"><h:outputText
+											styleClass="texto" value="#{etq.consecutivo}" /></td>
+
+								</tr>
+								<tr align="center">
+									<!--==tipo mensaje==-->
+									<td align="center"><h:selectOneMenu
+											styleClass="textoControles"
+											value="#{envioMensajesCapitalesBean.calendarioEnvio.destinatario}"
+											tabindex="140">
+											<f:selectItem itemValue="-1" itemLabel="Todos" />
+											<f:selectItems
+												value="#{envioMensajesCapitalesBean.destinatarios}" />
+										</h:selectOneMenu></td>
+									<td align="center"><h:selectOneMenu
+											styleClass="textoControles"
+											value="#{envioMensajesCapitalesBean.calendarioEnvio.ACKAMH}"
+											tabindex="150">
+											<f:selectItem itemValue="-1" itemLabel="Todos" />
+											<f:selectItems value="#{envioMensajesCapitalesBean.ACKAMHS}" />
+										</h:selectOneMenu></td>
+									<td align="center"><h:selectOneMenu
+											styleClass="textoControles"
+											value="#{envioMensajesCapitalesBean.calendarioEnvio.ACKBolsa}"
+											tabindex="160">
+											<f:selectItem itemValue="-1" itemLabel="Todos" />
+											<f:selectItems
+												value="#{envioMensajesCapitalesBean.ACKBolsas}" />
+										</h:selectOneMenu></td>
+									<td align="center" ><h:panelGroup>
+											<h:inputText autocomplete="off" id="usuario"
+												value="#{envioMensajesCapitalesBean.calendarioEnvio.usuario}"
+												size="10" maxlength="20"
+												styleClass="textoControles textoMayusculas"
+												tabindex="170" />
+										</h:panelGroup></td>
+									<td align="center" ><h:panelGroup>
+											<h:inputText autocomplete="off" id="consecutivo"
+												value="#{envioMensajesCapitalesBean.calendarioEnvio.consecutivoCadena}"
+												size="10" maxlength="20"
+												styleClass="textoControles campoNumerico"
+												tabindex="180" />
+										</h:panelGroup></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+
+					<!--======================================================== FECHASBUSQUEDA ======================================================================-->
+
+
+					<!--============================================-BUSQUEDA FUENTE CAEV CANV REFERENCIA ==========================================================-->
+					<table width="100%" border="0" cellpadding="0px" cellspacing="5px"
+						align="center">
+						<tr>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr align="center">
+										<!--==Boveda==-->
+
+
+										<td align="center"><h:outputText styleClass="texto"
+											value="#{etq.folioIndeval}" /></td>
+									<td align="center"><h:outputText styleClass="texto"
+											value="#{etq.calFolioMensajeIndeval}" /></td>
+									<td align="center"><h:outputText styleClass="texto"
+											value="#{etq.numeroEnvio}" /></td>
+									<td colspan ="2" ><h:outputText styleClass="texto"
+											value="#{etq.fechaEnvio}" /></td>
+									<td colspan="2" ><h:outputText styleClass="texto"
+											value="#{etq.fechaModificacion}" /></td>
+									</tr>
+									<tr align="center">
+
+										<td align="center" ><h:panelGroup>
+												<h:inputText autocomplete="off" id="folioIndeval"
+													value="#{envioMensajesCapitalesBean.calendarioEnvio.folioIndevalCadena}"
+													size="7" maxlength="10"
+													styleClass="textoControles campoNumerico" tabindex="190" />
+											</h:panelGroup></td>
+										<td align="center" ><h:panelGroup>
+												<h:inputText autocomplete="off" id="mensajeIndeval" size="7"
+													maxlength="7"
+													value="#{envioMensajesCapitalesBean.calendarioEnvio.folioMensajeCadena}"
+													required="false"
+													styleClass="textoControles campoNumerico"
+													tabindex="200" />
+											</h:panelGroup></td>
+										<td align="center" ><h:inputText autocomplete="off" id="idEnvios"
+												value="#{envioMensajesCapitalesBean.calendarioEnvio.idEnviosCadena}"
+												size="7" maxlength="6"
+												styleClass="textoControles campoNumerico"
+												tabindex="210" /></td>
+
+										<td align="center" ><rich:calendar inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;" inputSize="11"
+												value="#{envioMensajesCapitalesBean.calendarioEnvio.fechaEnvioInicio}"
+												datePattern="dd/MM/yyyy" tabindex="220"  /></td>
+										<td align="center" ><rich:calendar inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;" inputSize="11"
+												value="#{envioMensajesCapitalesBean.calendarioEnvio.fechaEnvioFin}"
+												datePattern="dd/MM/yyyy" tabindex="230"  /></td>
+										<td align="center" ><rich:calendar inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;" inputSize="11"
+												value="#{envioMensajesCapitalesBean.calendarioEnvio.fechaModificacionInicio}"
+												datePattern="dd/MM/yyyy" tabindex="240"  /></td>
+										<td align="center" ><rich:calendar inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;" inputSize="11"
+												value="#{envioMensajesCapitalesBean.calendarioEnvio.fechaModificacionFin}"
+												datePattern="dd/MM/yyyy" tabindex="250"  /></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</table>
+			</div>
+
+			<!--===================================================== CONSULTA EJECUTADA PANEL SUPERIOR =============================================================== - -->
+
+		</h:panelGroup>
+		<h:panelGroup id="panelResumen">
+			<h:panelGroup
+				rendered="#{envioMensajesCapitalesBean.consultaEjecutada}">
+				<div id="divResumen"
+					style="display: #{envioMensajesCapitalesBean.consultaEjecutada? 'inline': 'none'}">
+					<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+						<tr>
+							<td class="recuadroTabla">
+								<table class="tablaCriterios texto" border="0"
+									style="text-align: center">
+
+									<tr>
+										<td align="center"><h:outputText styleClass="texto"
+												value="#{etq.folioIndeval}" id="folioIndevalEtq" /></td>
+										<td align="center"><h:outputText styleClass="texto"
+												value="#{etq.calFolioMensajeIndeval}" id="folioMensajeIndevalEtq" /></td>
+										<td align="center"><h:outputText styleClass="texto"
+												value="#{etq.numeroEnvio}" id="numeroEnvio" /></td>
+										<td align="center"><h:outputText styleClass="texto"
+												value="#{etq.calFechaEnvioInicio}" /></td>
+										<td align="center"><h:outputText styleClass="texto"
+												value="#{etq.calFechaEnvioFin}" /></td>
+										<td align="center"><h:outputText styleClass="texto"
+												value="#{etq.fechaModificacionInicio}" id="fechaCorteInicioEtq" /></td>
+										<td align="center"><h:outputText styleClass="texto"
+												value="#{etq.fechaModificacionFin}" id="fechaModificacionFinEtq" /></td>
+										<td align="center"><h:outputText styleClass="texto"
+												value="#{etq.destinatario}" /></td>										
+									</tr>
+									<tr align="center">
+
+										
+										<td>
+										<h:outputText styleClass="texto"
+												value="#{envioMensajesCapitalesBean.calendarioEnvio.folioIndeval}"
+												rendered="#{!empty envioMensajesCapitalesBean.calendarioEnvio.folioIndeval}" />
+											<h:outputText styleClass="texto" value="TODOS"
+												rendered="#{empty envioMensajesCapitalesBean.calendarioEnvio.folioIndeval}" />
+									   </td>
+								
+
+										<td>
+										<h:outputText styleClass="texto"
+													value="#{envioMensajesCapitalesBean.calendarioEnvio.folioMensajeIndeval}"
+													rendered="#{!empty envioMensajesCapitalesBean.calendarioEnvio.folioMensajeIndeval}" />
+												<h:outputText styleClass="texto" value="TODOS"
+													rendered="#{empty envioMensajesCapitalesBean.calendarioEnvio.folioMensajeIndeval}" />
+									    </td>
+											
+										<td>
+										<h:outputText styleClass="texto"
+												value="#{envioMensajesCapitalesBean.calendarioEnvio.idEnvios}"
+												rendered="#{!empty envioMensajesCapitalesBean.calendarioEnvio.idEnvios}" />
+											<h:outputText styleClass="texto" value="TODOS"
+												rendered="#{empty envioMensajesCapitalesBean.calendarioEnvio.idEnvios}" />
+										</td>
+										
+										<td>
+										<h:outputText styleClass="texto"
+												value="#{envioMensajesCapitalesBean.calendarioEnvio.fechaEnvioInicio}"
+												rendered="#{!empty envioMensajesCapitalesBean.calendarioEnvio.fechaEnvioInicio}" />
+											<h:outputText styleClass="texto" value="TODOS"
+												rendered="#{empty envioMensajesCapitalesBean.calendarioEnvio.fechaEnvioInicio}" />
+										</td>
+										
+										<td>
+										<h:outputText styleClass="texto"
+												value="#{envioMensajesCapitalesBean.calendarioEnvio.fechaEnvioFin}"
+												rendered="#{!empty envioMensajesCapitalesBean.calendarioEnvio.fechaEnvioFin}" />
+											<h:outputText styleClass="texto" value="TODOS"
+												rendered="#{empty envioMensajesCapitalesBean.calendarioEnvio.fechaEnvioFin}" />
+										</td>
+										
+										<td>
+										<h:outputText styleClass="texto"
+												value="#{envioMensajesCapitalesBean.calendarioEnvio.fechaModificacionInicio}"
+												rendered="#{!empty envioMensajesCapitalesBean.calendarioEnvio.fechaModificacionInicio}" />
+											<h:outputText styleClass="texto" value="TODOS"
+												rendered="#{empty envioMensajesCapitalesBean.calendarioEnvio.fechaModificacionInicio}" />
+										</td>
+										<td>
+										<h:outputText styleClass="texto"
+												value="#{envioMensajesCapitalesBean.calendarioEnvio.fechaModificacionFin}"
+												rendered="#{!empty envioMensajesCapitalesBean.calendarioEnvio.fechaModificacionFin}" />
+											<h:outputText styleClass="texto" value="TODOS"
+												rendered="#{empty envioMensajesCapitalesBean.calendarioEnvio.fechaModificacionFin}" />
+										</td>
+										<td>
+										<h:outputText styleClass="texto"
+												value="#{envioMensajesCapitalesBean.selectedDestinatario}"
+												rendered="#{!empty envioMensajesCapitalesBean.calendarioEnvio.destinatario and envioMensajesCapitalesBean.calendarioEnvio.destinatario ne '-1'}" />
+											<h:outputText styleClass="texto" value="TODOS"
+												rendered="#{envioMensajesCapitalesBean.calendarioEnvio.destinatario eq '-1'}" />
+										</td>																												   
+									</tr>
+									<tr>
+									</tr>
+									<tr>
+										<td align="center"><h:outputText styleClass="texto"
+												value="#{etq.usuarioMinus}" id="usuarioEtq" /></td>
+										<td align="center"><h:outputText styleClass="texto"
+												value="#{etq.consecutivo}" id="consecutivoEtq" /></td>
+										<td align="center"><h:outputText styleClass="texto"
+												value="#{etq.tv}" id="tvEtq" /></td>
+										<td align="center"><h:outputText styleClass="texto"
+												value="#{etq.emisoraMinus}" id="emisoraEtq" /></td>
+										<td align="center"><h:outputText styleClass="texto"
+												value="#{etq.serieMinus}" id="serieEtq" /></td>
+										<td align="center"><h:outputText styleClass="texto"
+												value="#{etq.isin}" id="isinEtq" /></td>
+										<td align="center"><h:outputText styleClass="texto"
+												value="#{etq.ACKAMH}" /></td>
+										<td align="center"><h:outputText styleClass="texto"
+												value="#{etq.ACKBolsas}" /></td>		
+									</tr>
+
+									<tr>
+									</tr>
+									<tr>
+										<td><h:panelGroup>
+												<h:outputText styleClass="texto"
+													value="#{envioMensajesCapitalesBean.calendarioEnvio.usuario}"
+													rendered="#{!empty envioMensajesCapitalesBean.calendarioEnvio.usuario}"
+													id="usuarioCampo" />
+												<h:outputText styleClass="texto" value="TODOS"
+													rendered="#{empty envioMensajesCapitalesBean.calendarioEnvio.usuario}" />
+											</h:panelGroup></td>
+										<td><h:panelGroup>
+												<h:outputText styleClass="texto"
+													value="#{envioMensajesCapitalesBean.calendarioEnvio.consecutivo}"
+													rendered="#{!empty envioMensajesCapitalesBean.calendarioEnvio.consecutivo}" />
+												<h:outputText styleClass="texto" value="TODOS"
+													rendered="#{empty envioMensajesCapitalesBean.calendarioEnvio.consecutivo}" />
+											</h:panelGroup></td>
+										<td><h:panelGroup>
+												<h:outputText styleClass="texto"
+													value="#{envioMensajesCapitalesBean.calendarioEnvio.tipoValor}"
+													rendered="#{!empty envioMensajesCapitalesBean.calendarioEnvio.tipoValor}"
+													id="tipoValorCampo" />
+												<h:outputText styleClass="texto" value="TODOS"
+													rendered="#{empty envioMensajesCapitalesBean.calendarioEnvio.tipoValor}" />
+											</h:panelGroup></td>
+										<td><h:panelGroup>
+												<h:outputText styleClass="texto"
+													value="#{envioMensajesCapitalesBean.calendarioEnvio.emisora}"
+													rendered="#{!empty envioMensajesCapitalesBean.calendarioEnvio.emisora}" />
+												<h:outputText styleClass="texto" value="TODOS"
+													rendered="#{empty envioMensajesCapitalesBean.calendarioEnvio.emisora}" />
+											</h:panelGroup></td>
+										<td><h:outputText styleClass="texto"
+												value="#{envioMensajesCapitalesBean.calendarioEnvio.serie}"
+												rendered="#{!empty envioMensajesCapitalesBean.calendarioEnvio.serie}" />
+											<h:outputText styleClass="texto" value="TODOS"
+												rendered="#{empty envioMensajesCapitalesBean.calendarioEnvio.serie}" /></td>
+										<td><h:outputText styleClass="texto"
+												value="#{envioMensajesCapitalesBean.calendarioEnvio.isin}"
+												rendered="#{!empty envioMensajesCapitalesBean.calendarioEnvio.isin}" />
+											<h:outputText styleClass="texto" value="TODOS"
+												rendered="#{empty envioMensajesCapitalesBean.calendarioEnvio.isin}" /></td>
+											<td>
+										<h:outputText styleClass="texto"
+												value="#{envioMensajesCapitalesBean.selectedACKAMH}"
+												rendered="#{!empty envioMensajesCapitalesBean.calendarioEnvio.ACKAMH and envioMensajesCapitalesBean.calendarioEnvio.ACKAMH ne '-1'}" />
+											<h:outputText styleClass="texto" value="TODOS"
+												rendered="#{envioMensajesCapitalesBean.calendarioEnvio.ACKAMH eq '-1'}" />
+										</td>
+										
+										<td>
+										<h:outputText styleClass="texto"
+												value="#{envioMensajesCapitalesBean.selectedACKBolsas}"
+												rendered="#{!empty envioMensajesCapitalesBean.calendarioEnvio.ACKBolsa and envioMensajesCapitalesBean.calendarioEnvio.ACKBolsa ne '-1'}" />
+											<h:outputText styleClass="texto" value="TODOS"
+												rendered="#{envioMensajesCapitalesBean.calendarioEnvio.ACKBolsa eq '-1'}" />
+									   </td>		
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</h:panelGroup>
+		</h:panelGroup>
+	</ui:define>
+	<!-- ===================================================   BOTONES =================================================================-->
+	<ui:define name="botones">
+		<h:panelGroup id="botones">
+			<div class="refrescar" style="float: left;">
+				<a4j:status id="commonStatus">
+					<f:facet name="start">
+						<h:panelGroup>
+							<h:graphicImage value="/images/ajax-loader.gif" />
+							<h:outputText value="#{etq.buscando}"></h:outputText>
+						</h:panelGroup>
+					</f:facet>
+				</a4j:status>
+			</div>
+			<div class="limpiar">
+				<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+					styleClass="submit"
+					actionListener="#{envioMensajesCapitalesBean.limpiar}" tabindex="270" />
+			</div>
+			<div class="buscar">
+				<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+					styleClass="submit" oncomplete='javascript:presentarResumen();'
+					actionListener="#{envioMensajesCapitalesBean.buscarDerechos}"
+					reRender="containerResultados,totalesConsultas,tablaResultados,botones,mensajeUsuario,panelResumen"
+					tabindex="260">
+					<f:setPropertyActionListener value="true"
+						target="#{envioMensajesCapitalesBean.banderaBitacoraConsulta}" />
+				</a4j:commandButton>
+			</div>
+			
+			<div class="editar"
+				style="display: #{consultaEmisionesBean.consultaEjecutada? 'inline': 'none'}"
+				id="botonEditarCriterios">
+				<input type="image" class="submit"
+					src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+					alt="Editar Criterios" title="Editar Criterios"
+					onclick='javascript:presentarCriterios();return false;' />
+			</div>
+		</h:panelGroup>
+	</ui:define>
+
+
+	<ui:define name="seccionContenido">
+		<h:panelGroup id="containerResultados">
+			<h:panelGroup rendered="#{envioMensajesCapitalesBean.consultaEjecutada}">
+				<t:dataTable id="noExistenResultados"
+					value="#{envioMensajesCapitalesBean.paginaVO.registros}"
+					styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+					footerClass="tituloTabla" border="0" cellpadding="3px"
+					cellspacing="0px" columnClasses="everyColumn"
+					rowClasses="renglonTablaUno, renglonTablaDos"
+					rendered="#{empty envioMensajesCapitalesBean.paginaVO.registros}">
+
+					<t:column>
+						<f:facet name="header">
+							<h:outputText value="#{etq.sinResultados}"></h:outputText>
+						</f:facet>
+					</t:column>
+				</t:dataTable>
+
+				<br />
+				<br />
+				<br />
+				<!-- ============================================TABLA DE RESULTADOS ========================================================================================== -->
+
+				<h:panelGroup id="tablaResultados">
+					<h:graphicImage value="/images/blank.gif" width="900px"
+						height="1px"></h:graphicImage>
+					<h:panelGroup
+						rendered="#{not empty envioMensajesCapitalesBean.paginaVO.registros}">
+						<table width="100%" border="0">
+							<tr>
+								<td align="left" class="textoEstadoCuenta"><a4j:commandLink
+										id="control_bitacora_primero"
+										action="#{envioMensajesCapitalesBean.irPrimeraPagina}"
+										rendered="#{envioMensajesCapitalesBean.irAlPrimero}"
+										reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+											border="0" />
+									</a4j:commandLink> <a4j:commandLink id="control_bitacora_atras_fast"
+										action="#{envioMensajesCapitalesBean.retrocederPaginasRapido}"
+										rendered="#{envioMensajesCapitalesBean.retrocederRapido}"
+										reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+											border="0" />
+									</a4j:commandLink> <a4j:commandLink id="control_bitacora_atras"
+										action="#{envioMensajesCapitalesBean.retrocederPagina}"
+										rendered="#{envioMensajesCapitalesBean.retroceder}"
+										reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+											border="0" />
+									</a4j:commandLink> <a4j:commandLink id="control_bitacora_adelante"
+										action="#{envioMensajesCapitalesBean.avanzarPagina}"
+										rendered="#{envioMensajesCapitalesBean.avanzar}"
+										reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+											border="0" />
+									</a4j:commandLink> <a4j:commandLink id="control_bitacora_adelante_fast"
+										action="#{envioMensajesCapitalesBean.avanzarPaginasRapido}"
+										rendered="#{envioMensajesCapitalesBean.avanzarRapido}"
+										reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+											border="0" />
+
+									</a4j:commandLink> <a4j:commandLink id="control_bitacora_ultimo"
+										action="#{envioMensajesCapitalesBean.irUltimaPagina}"
+										rendered="#{envioMensajesCapitalesBean.irAlUltimo}"
+										reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+											border="0" />
+									</a4j:commandLink> <br /> <h:outputText value="#{etq.mostrando}"
+										styleClass="textoResumen" /> <h:outputText
+										value="#{envioMensajesCapitalesBean.numeroPagina}"
+										styleClass="textoResumen" /> <h:outputText value="#{etq.de}"
+										styleClass="textoResumen" /> <h:outputText
+										value="#{envioMensajesCapitalesBean.totalPaginas}"
+										styleClass="textoResumen" /> <h:outputText
+										value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+									&#160;&#160;&#160; <h:outputText
+										value="#{envioMensajesCapitalesBean.totalRegistros}"
+										styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+									&#160; <h:outputText styleClass="textoResumen"
+										value="#{etq.registrosEncontrados}" /></td>
+								<td align="right" class="textoEstadoCuenta"><h:outputText
+										escape="false" value="#{etq.registrosPorPagina}"
+										styleClass="textoResumen" /> <h:selectOneMenu
+										id="tamanioPagina" styleClass="textoResumen"
+										value="#{envioMensajesCapitalesBean.paginaVO.registrosXPag}">
+										<f:selectItem itemLabel="1" itemValue="1" />
+										<f:selectItem itemLabel="2" itemValue="2" />
+										<f:selectItem itemLabel="5" itemValue="5" />
+										<f:selectItem itemLabel="10" itemValue="10" />
+										<f:selectItem itemLabel="20" itemValue="20" />
+										<f:selectItem itemLabel="50" itemValue="50" />
+										<f:selectItem itemLabel="100" itemValue="100" />
+										<a4j:support event="onchange"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,mensajeUsuario"
+											action="#{envioMensajesCapitalesBean.ejecutarConsulta}">
+											<f:setPropertyActionListener value="false"
+												target="#{envioMensajesCapitalesBean.banderaBitacoraConsulta}" />
+										</a4j:support>
+									</h:selectOneMenu></td>
+							</tr>
+						</table>
+					</h:panelGroup>
+
+					<div align="center">
+						<table border="0" width="100%"
+							cellspacing="0px"
+							style="display: #{empty envioMensajesCapitalesBean.paginaVO.registros?'none':'inline-table'}">
+
+							<!--====================================== ENCABEZADOS =============================================================-->
+
+
+							<tr>
+								<th class="tituloTabla" rowspan='3'><h:outputText
+										value="#{etq.idBitacora}" /></th>
+
+								<th class="tituloTabla" rowspan='3'><h:outputText
+										value="#{etq.calFolioMensajeIndeval}" /></th>
+
+								<th class="tituloTabla" rowspan='3'><h:outputText
+										value="#{etq.folioIndeval}" /></th>
+										
+							   <th class="tituloTabla" rowspan='3'><h:outputText
+										value="#{etq.tvEmisoraSerieIsinCFI}" /></th>
+
+								<th class="tituloTabla" rowspan='3'><h:outputText
+										value="#{etq.estado}" /></th>
+
+								<th class="tituloTabla" rowspan='3'><h:outputText
+										value="#{etq.destinatario}" /></th>
+
+								<th class="tituloTabla" rowspan='3'><h:outputText
+										value="#{etq.ACKAMHEnviado}" /></th>
+
+								<th class="tituloTabla" rowspan='3'><h:outputText
+										value="#{etq.ACKBolsasEnviado}" /></th>
+								
+								<th class="tituloTabla" rowspan='3'><h:outputText
+										value="#{etq.numeroEnvio}" /></th>
+
+								<th class="tituloTabla" rowspan='3'><h:outputText
+										value="#{etq.fechaEnvio}" /></th>
+
+								<th class="tituloTabla" rowspan='3'><h:outputText
+										value="#{etq.fechaModificacion}" /></th>
+
+								<th class="tituloTabla" rowspan='3'><h:outputText
+										value="#{etq.usuarioMinus}" /></th>
+
+								<th class="tituloTabla" rowspan='3'><h:outputText
+										value="#{etq.consecutivo}" /></th>
+							</tr>
+
+							<t:dataList id="resultados"
+								value="#{envioMensajesCapitalesBean.paginaVO.registros}"
+								var="envioIntSic" rowIndexVar="indice">
+								<tr>
+									<tr></tr>
+
+									<td
+										class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado"
+										rowspan='3'><h:outputText
+											value="#{envioIntSic.idEnvioIntSic}" />
+									</td>
+
+									<td
+										class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado"
+										rowspan='3'>
+									<a
+										href="javascript:detalleDerecho(#{envioIntSic.idBitacora});"
+										title="Muestra el mensaje Swift"> <h:outputText
+												value="#{envioIntSic.idHistorico}" />
+									</a>
+									</td>
+
+									<td
+										class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado"
+										rowspan='3'>
+									<a
+										href="javascript:detalleHistorico(#{envioIntSic.idCalendario});"
+										title="Muestra el Historico"> <h:outputText
+												value="#{envioIntSic.idCalendario}" />
+									</a>
+									</td>
+									<td
+										class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado"
+										rowspan='3'><h:outputText
+											value="#{envioIntSic.tipoValor} / #{envioIntSic.emisora} / #{envioIntSic.serie} / #{envioIntSic.isin} / #{envioIntSic.cfi}"
+											id="tvEmisoraSeriIsinCFI" />
+									</td>
+
+									<td
+										class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado"
+										rowspan='3'><h:graphicImage
+											value="/images/#{envioMensajesCapitalesBean.mapaImagenesEstadosEnvio[envioIntSic.idEstadoMensaje]}"
+											rendered="#{!empty envioIntSic.idEstadoMensaje}"
+											title="#{envioIntSic.nombreEstado}" />
+									</td>
+									<td
+										class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado"
+										rowspan='3'><h:outputText
+											value="#{envioIntSic.nombreDestinatario}" />
+								   </td>
+
+									<td
+										class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado"
+										rowspan='3'><h:graphicImage
+											value="/images/#{envioMensajesCapitalesBean.mapaImagenesEnvioMensajes[envioIntSic.ackAmh]}"
+											rendered="#{!empty envioIntSic.ackAmh}"
+											title="#{envioIntSic.ackAmh eq '0' ? 'Enviado' : envioIntSic.ackAmh eq '1' ? 'Confirmado' : envioIntSic.ackAmh eq '2' ? 'Error NACK' : ''}" />
+									</td>
+
+									<td
+										class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado"
+										rowspan='3'><h:graphicImage
+											value="/images/#{envioMensajesCapitalesBean.mapaImagenesEnvioMensajes[envioIntSic.ackSwift]}"
+											rendered="#{!empty envioIntSic.ackSwift}"
+											title="#{envioIntSic.ackSwift eq '0' ? 'Enviado' : envioIntSic.ackSwift eq '1' ? 'Confirmado' : envioIntSic.ackSwift eq '2' ? 'Error NACK' : ''}" />
+									</td>
+
+									<td
+										class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado"
+										rowspan='3'><h:outputText
+											value="#{envioIntSic.numeroEnvio}" id="numeroEnvio"/>
+									</td>
+									<td
+										class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado"
+										rowspan='3'><h:outputText
+											value="#{envioIntSic.fechaEnvio}" id="fechaEnvio">
+											<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Mexico_City" />
+										</h:outputText></td>
+									<td
+										class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado"
+										rowspan='3'><h:outputText
+											value="#{envioIntSic.fechaActualizacion}"
+											id="fechaActualizacion">
+											<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Mexico_City" />
+										</h:outputText></td>
+									<td
+										class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado"
+										rowspan='3'><h:outputText
+											value="#{envioIntSic.usuario}" />
+								    </td>
+									<td
+										class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado"
+										rowspan='3'><h:outputText
+											value="#{envioIntSic.consecutivo}" />
+									</td>
+								</tr>
+							</t:dataList>
+						</table>
+					</div>
+				</h:panelGroup>
+				<!-- ======================================= EXPORTAR ============================================================ -->
+				<h:panelGroup id="totalesConsultas"
+						rendered="#{not empty envioMensajesCapitalesBean.paginaVO.registros}">					
+					<table cellpadding="0" cellspacing="0" border="0" align="center"
+						width="900px">
+						<tr align="right">
+							<td align="right">
+								<h:panelGroup id="botonesExportar">
+									<h:panelGroup
+										style="display: #{(envioMensajesCapitalesBean.consultaEjecutada and not empty envioMensajesCapitalesBean.paginaVO.registros)? 'inline' : 'none'}">
+
+										<h:outputText value="Exportar los resultados"></h:outputText>
+										
+										<h:commandButton actionListener="#{envioMensajesCapitalesBean.generarReportes}"
+											action="envioCalendarioCapitalesPDF"
+											image="/images/pdf.gif"
+											title="Exportar a PDF todos los resultados de la consulta"
+											id="generarPdf"
+											onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);"/>
+                           				&#160;&#160;
+
+                          				<h:commandButton actionListener="#{envioMensajesCapitalesBean.generarReportes}"
+                          					action="envioCalendarioCapitalesXLS"
+                          					image="/images/excel-file.gif"
+                          					title="Exportar a Excel todos los resultados de la consulta" 
+                            				id="generarExcel"
+                            				onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);">
+                           				</h:commandButton>
+                           				<div id="monitorPeticionReporte" style="display: none;">
+											<h:panelGroup id="panelMonitorPeticionReporte">
+												<h:graphicImage value="/images/ajax-loader.gif" />
+												&#160;&#160;
+												<h:outputText value="#{etq.reporteEnProceso}" />  
+												<a4j:commandButton id="btnActualizarEstadoPeticion"
+													image="/images/transparent.gif"
+													styleClass="submit"
+													actionListener="#{envioMensajesCapitalesBean.actualizarEstadoPeticion}"
+													reRender="panelMonitorPeticionReporte"												
+												oncomplete="javascript:desbloquearBotonesReportes(#{envioMensajesCapitalesBean.peticionReporteCompleta}, ['generarExcel', 'generarPdf']);"/>									
+											</h:panelGroup>
+										</div>
+									</h:panelGroup>
+								</h:panelGroup>
+							</td>
+						</tr>
+					</table>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+
+
+	<!-- FIN DEL DECORATE -->
+</html>

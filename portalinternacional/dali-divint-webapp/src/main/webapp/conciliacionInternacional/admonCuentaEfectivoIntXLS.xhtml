@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls" xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document documentName="CuentasEfectivo" documentTitle="Cuentas de Efectivo"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        fecha="#{consultaBitacoraEnvOpBean.fechaActual}">
+       
+        <xls:table value="#{admonCuentaEfectivoIntBean}" var="con" >
+        
+            <xls:row>
+                <xls:col header="#{etq.bicCode}" value="#{admonCuentaEfectivoIntBean.bicCodeSelected}" align="center" />
+                <xls:col header="#{etq.divisaMinus}" value="#{admonCuentaEfectivoIntBean.divisaSelected}" align="center" />
+				<xls:col header="#{etq.cuentas}" value="#{admonCuentaEfectivoIntBean.cuentaSelected}" align="center"/>
+				
+                <xls:col header="#{etq.tipoCuentaMinus}" value="#{admonCuentaEfectivoIntBean.selectTipoCuenta == -1 ? 'TODAS' : admonCuentaEfectivoIntBean.selectTipoCuenta == 1 ? 'Comercial' : 'Custodia'}"/>
+
+				<xls:col header="#{etq.cuentaNegocio}" value="#{admonCuentaEfectivoIntBean.selectCuentaNegocio}"/>		
+            </xls:row>
+        </xls:table>
+        
+         <xls:subtitle value="#{etq.registrosEncontrados}: #{admonCuentaEfectivoIntBean.totalRegistros}" />
+
+        <xls:table value="#{admonCuentaEfectivoIntBean.paginaReportes.registros}" var="con">
+            <xls:row>            	
+				<xls:col header="#{etq.bicCode}" value="#{con.bicCode}" align="center" />
+				
+				<xls:col header="#{etq.divisaMinus}" value="#{con.divisa.claveAlfabetica}" align="center"/>
+				
+				<xls:col header="#{etq.cuentaMinus}" value="#{con.cuenta}" align="center"/>
+				
+				<xls:col header="#{etq.cuenta950}" value="#{con.cuenta950}" align="center"/>
+				
+				<xls:col header="#{etq.tipoCuentaMinus}" value="#{(con.tipoCuenta == 1) ? 'Comercial' : 'Custodia'}" align="center"/>
+				
+				<xls:col header="#{etq.pais}" value="#{con.pais.nombrePais}" align="center"/>
+				
+				<xls:col header="#{etq.activoEnvio}" value="#{(con.activo == true) ? 'Si' : 'No'}/#{(con.envioTesoreria == true) ? 'Si' : 'No'}" align="center"/>
+				
+				<xls:col header="#{etq.cuentaNegocio}" value="#{con.cuentaNegocio}" align="center"/>
+				
+				<xls:col header="#{etq.horarioMexico}" value="#{con.horarioInicio} - #{con.horarioFin}"  align="center"/>
+				
+				<xls:col header="#{etq.bovedaMinus}" value="#{con.boveda.descripcion}" align="center"/>
+			</xls:row>
+        </xls:table>
+
+    </xls:document>
+</html>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+        http://www.springframework.org/schema/context  
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd  
+        http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.0.xsd">
+
+    <!-- LLAMADA REMOTA A EJB DE EJERCICIOS -->
+    <jee:remote-slsb id="capitalRemoteEjb" jndi-name="ejb.ejercicios.CapitalServiceHome" 
+        business-interface="com.indeval.sidv.ejercicios.derechos.patrimoniales.middleware.ejb.Capital"
+        lookup-home-on-startup="false" refresh-home-on-connect-failure="true" cache-home="true">
+        <jee:environment>
+            java.naming.factory.initial=weblogic.jndi.WLInitialContextFactory
+            java.naming.provider.url=${ejercicios.derechos.capitales.ejb.url}
+            jboss.naming.client.ejb.context=true
+        </jee:environment>
+    </jee:remote-slsb>
+
+    
+</beans>

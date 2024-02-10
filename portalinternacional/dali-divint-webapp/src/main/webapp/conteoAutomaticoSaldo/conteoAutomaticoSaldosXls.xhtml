@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xls="http://indeval.com/jsf/xls"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+
+	<xls:document documentName="conteoAutomaticoSaldos"
+		documentTitle="Consulta Conteo Autom&#225;tico de Saldos"
+		landscape="false"
+		institucion="#{conteoAutomaticoSaldoController.agenteFirmado.id} #{conteoAutomaticoSaldoController.agenteFirmado.folio} #{conteoAutomaticoSaldoController.agenteFirmado.razon}"
+		fecha="#{conteoAutomaticoSaldoController.fechaActual}"
+		imageResource="/images/indeval.jpg">
+
+		<xls:subtitle value="#{etq.filtros}" />
+
+		<!-- resumen criterio -->
+
+		<xls:table value="#{conteoAutomaticoSaldoController}"
+			var="resumen">
+			<xls:row>
+				<xls:col header="#{etq.depRetirosDia}"
+					value="#{conteoAutomaticoSaldoController.fechaConsulta}"
+					pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.saldoInicialFidBanamex}"
+					value="#{resumen.saldoInicialFideicomisoBanamex}" pattern="###,###,###,###,###,##0"/>
+				<xls:col header="#{etq.saldoInicialFidInbur}"
+					value="#{resumen.saldoInicialFideicomisoInbur}" pattern="###,###,###,###,###,##0"/>
+				<xls:col header="#{etq.saldoInicialFidNafin}"
+					value="#{resumen.saldoInicialFideicomisoNafin}" pattern="###,###,###,###,###,##0"/>
+				<xls:col header="#{etq.saldoInicialFidVitro}"
+					value="#{resumen.saldoInicialFideicomisoVitro}" pattern="###,###,###,###,###,##0"/>
+			</xls:row>
+		</xls:table>
+		<xls:br />
+		<xls:br />
+		<xls:br />
+		<xls:br />
+		<xls:br />
+		<!-- iterator general -->
+		<xls:iterator
+			value="#{conteoAutomaticoSaldoController.paginaVO.registros}"
+			var="conteo">
+
+			<xls:table value="#{conteoAutomaticoSaldoController}"
+				var="participante">
+				<xls:row>
+					<xls:col header="#{etq.participante}"
+						value="#{conteo.cuentaNombrada.institucion.tipoInstitucion.claveTipoInstitucion}#{conteo.cuentaNombrada.institucion.folioInstitucion} #{conteo.cuentaNombrada.cuenta}" />
+					<xls:col header="#{etq.nombre}"
+						value="#{conteo.cuentaNombrada.nombreCuenta}" />
+					<xls:col header="#{etq.fideicomisoMinus}"
+						value="#{conteo.cuentaNombrada.nombreCuenta}" />
+				</xls:row>
+
+			</xls:table>		
+
+			<xls:table value="#{conteo.movimientosFideicomiso}"
+				var="movimiento">
+				<xls:row>
+					<xls:col header="#{etq.tv}"
+						value="#{movimiento.cupon.emision.instrumento.claveTipoValor}" />
+					<xls:col header="#{etq.emisoraMinus}"
+						value="#{movimiento.cupon.emision.emisora.clavePizarra}" />
+					<xls:col header="#{etq.serieMinus}"
+						value="#{movimiento.cupon.emision.serie}" />
+					<xls:col header="#{etq.cuponMinus}"
+						value="#{movimiento.cupon.claveCupon}" />
+					<xls:col header="#{etq.cantidadOperada}"
+						value="#{movimiento.cantidadOperada}" pattern="###,###,###,###,###,##0"/>
+					<xls:col header="#{etq.folioConfirma}"
+						value="#{movimiento.folioConfirmacion}" />
+					<xls:col header="#{etq.tm}" value="#{movimiento.tipoMovimiento}" />
+					<xls:col header="#{etq.usuarioMinus}" value="#{movimiento.usuario}" />
+				</xls:row>
+
+			</xls:table>			
+			<xls:table value="#{conteo.nombreTotal}" var="nomTotal">
+				<xls:row>
+					<xls:col header="#{etq.totalMinus}" value="#{nomTotal}" />
+				</xls:row>
+			</xls:table>
+			
+			<xls:table value="#{conteo.numeroDepositosRetiros}"
+				var="depRet">
+				<xls:row>
+					<xls:col header="#{etq.numDepRet}" value="#{depRet}" pattern="###,###,###,###,###,##0"/>
+				</xls:row>
+			</xls:table>
+	
+			<xls:table value="#{conteo.numeroTitulosOperados}"
+				var="titulosOp">
+				<xls:row>
+					<xls:col header="#{etq.titulosOp}" value="#{titulosOp}" pattern="###,###,###,###,###,##0"/>
+				</xls:row>
+			</xls:table>
+
+			<xls:table value="#{conteoAutomaticoSaldoController}"
+				var="saldoUnoFooter">
+				<xls:row>
+					<xls:col header="#{etq.saldoDe}" value="#{conteo.nombreSaldo}" />
+					<xls:col header="#{etq.numDepRet}"
+						value="#{conteo.totalDepositosRetiros}"
+						pattern="###,###,###,###,###,##0" />
+					<xls:col header="#{etq.saldoFinalMinus}"
+						value="#{conteo.saldoFinalDepositosRetiros}"
+						pattern="###,###,###,###,###,##0">
+					</xls:col>
+				</xls:row>
+			</xls:table>
+
+			<xls:table value="#{conteoAutomaticoSaldoController}"
+				var="saldoDosFooter">
+				<xls:row>
+					<xls:col header="#{etq.posValDe}" value="#{conteo.nombrePosicion}" />
+					<xls:col header="#{etq.numEmisiones}"
+						value="#{conteo.totalEmisionesPosicion}"
+						pattern="###,###,###,###,###,##0" />
+					<xls:col header="#{etq.saldoFinalMinus}"
+						value="#{conteo.saldoFinalPosicion}"
+						pattern="###,###,###,###,###,##0" />
+				</xls:row>
+			</xls:table>
+
+			<xls:table value="#{conteoAutomaticoSaldoController}"
+				var="saldoTresFooter">
+				<xls:row>
+					<xls:col header="#{etq.arqueoDe}" value="#{conteo.nombreArqueo}" />
+					<xls:col header="#{etq.numEmisiones}"
+						value="#{conteo.totalEmisionesArqueo}"
+						pattern="###,###,###,###,###,##0" />
+					<xls:col header="#{etq.saldoFinalMinus}"
+						value="#{conteo.saldoFinalArqueo}"
+						pattern="###,###,###,###,###,##0" />
+				</xls:row>
+			</xls:table>
+
+		</xls:iterator>
+
+	</xls:document>
+</html>

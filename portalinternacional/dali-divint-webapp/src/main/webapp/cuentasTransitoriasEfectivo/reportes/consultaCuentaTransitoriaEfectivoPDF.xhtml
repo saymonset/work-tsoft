@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:pdf="http://indeval.com/jsf/pdf"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cvt="http://indeval.com/jsf/converters">
+
+<pdf:document documentName="cuentasTesoreriaEfectivo"
+              documentTitle="Consulta de Cuentas Transitorias"
+              fecha="#{cuentasTransitoriasEfectivoController.fechaActual}"
+              institucion=""
+              landscape="false"
+              imageResource="/images/indeval.jpg">
+
+    <pdf:subtitle value="#{etq.filtros}"/>
+
+    <pdf:table value="#{cuentasTransitoriasEfectivoController}" currentBean="filtros">
+        <pdf:row>
+            <pdf:col align="center" header="#{etq.custodio}" value="#{filtros.custodioConsulta}"/>
+            <pdf:col align="center" header="#{etq.divisaMinus}" value="#{filtros.divisaCustodia}"/>
+            <pdf:col align="center" header="#{etq.fechaInicioCT}" value="#{filtros.fechaInicioFormateada}"/>
+            <pdf:col align="center" header="#{etq.fechaFinCT}" value="#{filtros.fechaFinFormateada}"/>
+            <pdf:col align="center" header="#{etq.folioRelacionado}" value="#{filtros.referenciaBuscar_2}"/>
+        </pdf:row>
+    </pdf:table>
+
+    <pdf:subtitle value="#{etq.negativos}"/>
+    <pdf:table value="#{cuentasTransitoriasEfectivoController.negativos}" currentBean="row">
+        <pdf:row>
+            <pdf:col header="#{etq.custodio}" value="#{row.custodio}" bgcolor="#F5B7B1"/>
+            <pdf:col header="#{etq.divisaMinus}" value="#{row.divisa}" bgcolor="#F5B7B1"/>
+            <pdf:col header="#{etq.monto}" value="#{row.total}" bgcolor="#F5B7B1"/>
+        </pdf:row>
+    </pdf:table>
+
+    <pdf:subtitle value="#{etq.foliosAgrupado}"/>
+    <pdf:iterator id="DivisasEncontradas"
+                  value="#{cuentasTransitoriasEfectivoController.foliosAgrupadosDtos}"
+                  var="divisas">
+        <pdf:table value="#{cuentasTransitoriasEfectivoController}" currentBean="nombreDivisas">
+            <pdf:row>
+                <pdf:col align="center" header="#{divisas.divisa}" value="" collspan="5"/>
+            </pdf:row>
+        </pdf:table>
+
+        <pdf:table align="center" value="#{divisas.referencias}" currentBean="folio">
+            <pdf:row>
+                <pdf:col header="#{etq.referencia}" value="#{folio.folioRelacionado}" collspan="2"/>
+                <pdf:col header="#{etq.divisaMinus}" value="#{folio.divisa}"/>
+                <pdf:col header="#{etq.custodio}" value="#{folio.custodio}"/>
+                <pdf:col header="#{etq.monto}" value="#{folio.total}"/>
+            </pdf:row>
+        </pdf:table>
+
+        <pdf:table value="#{cuentasTransitoriasEfectivoController}" currentBean="montosDivisas">
+            <pdf:row>
+                <pdf:col align="center" header="" value="" collspan="3"/>
+                <pdf:col align="center" header="" value="#{etq.totalMinus}"/>
+                <pdf:col align="center" header="" value="#{divisas.monto}"/>
+            </pdf:row>
+        </pdf:table>
+    </pdf:iterator>
+
+
+    <pdf:subtitle value="#{etq.registrosNoReferenciados}"/>
+    <pdf:table value="#{cuentasTransitoriasEfectivoController.registrosNoReferenciados}"
+               currentBean="row">
+        <pdf:row>
+            <pdf:col header="#{etq.referencia}" value="#{row.referenciaOperacion}"/>
+            <pdf:col header="#{etq.tipoMensaje}" value="#{row.tipoMensaje}"/>
+            <pdf:col header="#{etq.divisaMinus}" value="#{row.divisa}"/>
+            <pdf:col header="#{etq.custodio}" value="#{row.custodio}"/>
+            <pdf:col header="#{etq.monto}" value="#{row.total}"/>
+        </pdf:row>
+    </pdf:table>
+</pdf:document>
+</html>

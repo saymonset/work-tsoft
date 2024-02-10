@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+  <description>
+    AplicationContext de configuracion de transaccionalidad.
+  </description>
+
+  <bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
+    <property name="transactionManagerName" value="java:jboss/TransactionManager"/>
+    <property name="userTransactionName" value="java:jboss/UserTransaction" />
+  </bean>
+ 
+  <tx:advice id="txAdviceWSInternacional" transaction-manager="transactionManager">
+  	<tx:attributes>
+      <tx:method name="doCalculaSimulacionDerechoCapitalInter" read-only="false" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+  	</tx:attributes>
+  </tx:advice>
+
+  <aop:config proxy-target-class="true">
+    <aop:pointcut id="serviceMethodsWSInternacional"
+      expression="execution(* com.indeval.portalinternacional.middleware.ws.*.*ServiceImpl.*(..))" />
+    <aop:advisor advice-ref="txAdviceWSInternacional" pointcut-ref="serviceMethodsWSInternacional" />
+  </aop:config>
+
+</beans>

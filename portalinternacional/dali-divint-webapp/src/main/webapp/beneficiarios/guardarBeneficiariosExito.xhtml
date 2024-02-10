@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <ui:composition template="/layoutPopUp.xhtml">
+        <ui:define name="head">
+            <link rel="stylesheet" type="text/css" media="all"
+                  href="#{facesContext.externalContext.requestContextPath}/css/beneficiarioActivo.css" />
+            <script language="javascript" type="text/javascript"
+                    src="#{facesContext.externalContext.requestContextPath}/js/beneficiarios.js">
+            </script>
+        </ui:define>
+        <ui:define name="titulo">
+		Beneficiario Existente
+        </ui:define>
+        <ui:define name="subtitulo">
+        </ui:define>
+        <ui:define name="body">
+            <h:form id="formaBenefActivo">
+                <h:panelGroup id="general">
+                    <a4j:keepAlive beanName="mostrarBeneficiarioActivoBean" />
+
+                    <br />
+                    <br />
+                    <br />
+
+                    <table>
+                        <tr>
+                            <td>
+                                <table width="550px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+                                    <tr>
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/accept.png" />&#160;
+                                                <h:outputText value="#{etq.beneficiarioGuardadoConExito}" />
+                                            </h:panelGroup>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div style="width: 100%; text-align: center; text-decoration: none">
+                                                <a href="javascript:window.parent.closeMuestraBeneficiario()" >
+													Cerrar
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

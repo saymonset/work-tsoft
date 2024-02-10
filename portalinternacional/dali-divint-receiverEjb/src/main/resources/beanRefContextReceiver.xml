@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+  <bean id="baseApplicationContext"
+    class="org.springframework.context.support.ClassPathXmlApplicationContext">
+    <constructor-arg>
+    	<list>
+	    	<value>receiver-divint-context.xml</value>
+	      	<value>datasource-receiver-context.xml</value>
+	      	<value>jms-portalinternacional-context.xml</value>
+	      	<value>moiJmsContext.xml</value>	
+	      	<value>sicJmsContext.xml</value>	      	
+	        <value>persistence-portalinternacional-context.xml</value>
+	        <value>middleware-portalinternacional-services-context.xml</value>
+	        <value>middleware-receiver-transactions-context.xml</value>
+	        <value>middleware-core-services-context.xml</value>
+	        <value>persistence-core-dao-context.xml</value>
+	        <value>classpath*:/applicationContext-sign.xml</value>
+        </list>
+    </constructor-arg>
+  </bean>
+    
+</beans>

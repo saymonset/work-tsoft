@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <ui:composition template="/layoutCaptura.xhtml">
+        <ui:define name="head">
+            <script language="javascript" type="text/javascript"
+                    src="#{facesContext.externalContext.requestContextPath}/js/beneficiarios.js">
+            </script>
+        </ui:define>
+
+        <ui:define name="tituloSeccion">
+            <h:outputText value="#{etq.divisionInternacional}" />
+        </ui:define>
+        <ui:define name="subtituloSeccion">
+            <h:outputText value="#{etq.beneficiarios}" />
+        </ui:define>
+        <ui:define name="tituloEncabezado">
+            <h:outputText value="#{etq.capturaBeneficiarios}"></h:outputText>
+        </ui:define>
+
+
+        <ui:define name="seccionForma">
+            <a4j:keepAlive beanName="capturaBeneficiariosBean" />
+            <table>
+                <tr>
+                    <td>
+                       <h:panelGroup id="criterios">
+                            <table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+                                   align="left">
+                                <tr>
+                                    <td style="width: 110px">
+                                        <h:outputText value="#{etq.custodio}" styleClass="textoNegritas" />
+                                    </td>
+                                    <td style="width: 780px">
+                                        <h:outputText id="lstCustodios"
+                                                      value="#{capturaBeneficiariosBean.mapaCustodios[capturaBeneficiariosBean.custodio]}" />
+                                        <h:inputHidden id="idCustodio" value="#{capturaBeneficiariosBean.custodio}" />
+                                    </td>
+                                </tr>
+                                <tr style="height: 10px">
+                                    <td colspan="2">
+                                        &#160;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:outputText value="#{etq.tipoBeneficiario}" styleClass="textoNegritas" />
+                                    </td>
+                                    <td>
+                                        <h:outputText id="lstTipoBenef"
+                                                      value="#{capturaBeneficiariosBean.mapaTipoBeneficiario[capturaBeneficiariosBean.tipoBeneficiario]}" />
+                                        <h:inputHidden id="idTipoBenef" value="#{capturaBeneficiariosBean.tipoBeneficiario}" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </h:panelGroup>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:panelGroup id="mensajeUsuario">
+                            <div style="min-height: 21px;">
+                                <rich:messages warnClass="warning" infoClass="info"
+                                               errorClass="error" ajaxRendered="true" showDetail="false"
+                                               showSummary="true" layout="list">
+                                    <f:facet name="infoMarker">
+                                        <h:panelGroup>
+                                            <h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+                                    </f:facet>
+
+                                    <f:facet name="errorMarker">
+                                        <h:panelGroup>
+                                            <h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+                                    </f:facet>
+                                </rich:messages>
+
+                                <div id="divWarnings" class="warning" style="display:none;">
+                                    <p id="textoWarning">
+                                    </p>
+                                </div>
+                            </div>
+                        </h:panelGroup>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:panelGroup id="encabezado">
+                            <table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+                                <tr>
+                                    <td width="440px">
+                                        <h:outputText value="#{etq.institucionMinus}" />
+                                    </td>
+                                    <td width="440px">
+                                        <h:outputText value="#{etq.fechaFormato}" styleClass="texto" />
+                                    </td>
+                                    <td width="440px">
+                                        <h:outputText value="#{etq.estado}" styleClass="texto" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a4j:region>
+                                            <table align="left" width="100%">
+                                                <tr>
+                                                    <td width="70px">
+                                                        <h:inputText autocomplete="off" id="idFolioInstitucion" value="#{capturaBeneficiariosBean.idFolioInstitucion}"
+                                                                     styleClass="textoControles campoNumerico"
+                                                                     size="5" maxlength="5" readonly="#{!capturaOperacionesDIBean.institucionIndeval}">
+                                                            <a4j:support event="onchange" actionListener="#{capturaBeneficiariosBean.obtenerDatosParticipante}"
+                                                                         reRender="nombreInstitucionTraspasante" ajaxSingle="true"/>
+                                                        </h:inputText>
+                                                    </td>
+                                                    <td>
+                                                        <h:inputText autocomplete="off" id="nombreInstitucionTraspasante" size="25"
+                                                                     readonly="true"
+                                                                     value="#{capturaBeneficiariosBean.nombreInstitucion}"
+                                                                     styleClass="textoControles" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </a4j:region>
+                                    </td>
+                                    <td>
+                                        <rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+                                                       value="#{capturaBeneficiariosBean.forma.fechaFormato}"
+                                                       datePattern="dd/MM/yyyy" />
+                                    </td>
+                                    <td>
+	                                    <h:selectOneMenu styleClass="textoControles" id="activo" value="#{capturaBeneficiariosBean.forma.activo}">
+										    <f:selectItem itemValue="-1" itemLabel="Selecciona"/>
+										    <f:selectItem itemValue="1" itemLabel="Activo"/>
+										    <f:selectItem itemValue="0" itemLabel="Inactivo"/>
+										</h:selectOneMenu>
+                                    </td>
+                                </tr>
+                            </table>
+                        </h:panelGroup>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:panelGroup id="general" style="width: 100%">
+                            <table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+                                <tr>
+                                    <td colspan="2">
+                                        <u><b><h:outputText value="#{etq.formaW8IMY}" styleClass="textoNegritas" /></b></u>
+                                    </td>
+                                </tr>
+                                <tr style="height: 5px">
+                                    <td colspan="2">
+                                        &#160;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="PART I" styleClass="textoBenefPartes"/>&#160;&#160;
+                                        <h:outputText value="#{etq.w8imyPart1Title}" /></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 440px">
+                                        <b><h:outputText value="1" /></b>&#160;&#160;
+                                        <h:outputText value="#{etq.w8imyNombre}" />
+                                    </td>
+                                    <td style="width: 440px">
+                                        <b><h:outputText value="2" /></b>&#160;&#160;
+                                        <h:outputText value="#{etq.w8imyPais}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:inputText autocomplete="off" id="razonSocial" value="#{capturaBeneficiariosBean.forma.razonSocial}"
+                                                     styleClass="textoControles" size="50" maxlength="200"
+                                                     style="text-transform: uppercase;" />
+                                        
+                                    </td>
+                                    <td>
+                                        <h:inputText autocomplete="off" id="pais" value="#{capturaBeneficiariosBean.forma.pais}"
+                                                     styleClass="textoControles" size="50" maxlength="50"
+                                                     style="text-transform: uppercase;" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="3" /></b>&#160;&#160;
+                                        <h:outputText value="#{etq.w8imyTipoBeneficiario}" />
+                                        &#160;&#160;&#160;
+                                        <h:panelGroup>
+                                            <t:selectOneRadio id="tipoPropietario" styleClass="textoControles"
+                                                              value="#{capturaBeneficiariosBean.forma.tipoEntidad}"
+                                                              layout="spread" forceId="true" forceIdIndex="false">
+                                                <f:selectItems value="#{capturaBeneficiariosBean.forma.lstTipoEntidad}"/>
+                                            </t:selectOneRadio>
+                                            <h:panelGrid columns="4" style="width: 100%">
+                                                <t:radio for="daliForm:tipoPropietario" index="0" />
+                                                <t:radio for="daliForm:tipoPropietario" index="1" />
+                                                <t:radio for="daliForm:tipoPropietario" index="2" />
+                                                <t:radio for="daliForm:tipoPropietario" index="3" />
+                                                <t:radio for="daliForm:tipoPropietario" index="4" />
+                                                <t:radio for="daliForm:tipoPropietario" index="5" />
+                                                <t:radio for="daliForm:tipoPropietario" index="6" />
+                                                <t:radio for="daliForm:tipoPropietario" index="7" />
+                                            </h:panelGrid>
+                                        </h:panelGroup>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="4" /></b>&#160;&#160;
+                                        <b><h:outputText value="#{etq.w8imyDireccionResidencial}" /></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:panelGrid style="width: 100%" columns="3">
+                                            <h:outputText value="#{etq.w8imyStreet}" />
+                                            <h:outputText value="#{etq.w8imyOuterNumber}" />
+                                            <h:outputText value="#{etq.w8imyInteriorNumber}" />
+                                            <h:inputText autocomplete="off" id="calleResidencial" value="#{capturaBeneficiariosBean.forma.calleResidencial}"
+                                                         styleClass="textoControles" size="100" maxlength="100" style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="numeroExteriorResidencial" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{capturaBeneficiariosBean.forma.numeroExteriorResidencial}" style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="numeroInteriorResidencial" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{capturaBeneficiariosBean.forma.numeroInteriorResidencial}" style="text-transform: uppercase;" />
+                                        </h:panelGrid>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:panelGrid style="width: 100%" columns="3">
+                                            <h:outputText value="#{etq.w8imyPostalCode}" />
+                                            <h:outputText value="#{etq.w8imyCityTown}" />
+                                            <h:outputText value="#{etq.w8imyStatePorvince}" />
+                                            <h:inputText autocomplete="off" id="codigoPostalResidencial" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{capturaBeneficiariosBean.forma.codigoPostalResidencial}" style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="cityTownResidencial" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{capturaBeneficiariosBean.forma.cityTownResidencial}" style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="stateProvinceResidencial" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{capturaBeneficiariosBean.forma.stateProvinceResidencial}" style="text-transform: uppercase;" />
+                                        </h:panelGrid>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:outputText value="#{etq.w8imyPaisResidencial}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:inputText autocomplete="off" id="paisResidencial" value="#{capturaBeneficiariosBean.forma.paisResidencial}"
+                                                     styleClass="textoControles" size="50" maxlength="50" style="text-transform: uppercase;" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="5" /></b>&#160;&#160;
+                                        <b><h:outputText value="#{etq.w8imyDireccionPostal}" /></b>
+                                        &#160;&#160;&#160;
+                                        <h:selectBooleanCheckbox id="direccionPostalDeshabilitada"
+                                                                 value="#{capturaBeneficiariosBean.forma.disabledDireccionPostal}"
+                                                                 onclick="javascript:bloqueaDireccionPostalW8(this.checked)" />
+                                        &#160;
+                                        <h:outputText value="#{etq.w8imyDisableMalingAddress}"
+                                                      for="direccionPostalDeshabilitada" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:panelGrid style="width: 100%" columns="3">
+                                            <h:outputText value="#{etq.w8imyStreet}" />
+                                            <h:outputText value="#{etq.w8imyOuterNumber}" />
+                                            <h:outputText value="#{etq.w8imyInteriorNumber}" />
+                                            <h:inputText autocomplete="off" id="callePostal" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{capturaBeneficiariosBean.forma.callePostal}" style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="numeroExteriorPostal" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{capturaBeneficiariosBean.forma.numeroExteriorPostal}" style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="numeroInteriorPostal" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{capturaBeneficiariosBean.forma.numeroInteriorPostal}" style="text-transform: uppercase;" />
+                                        </h:panelGrid>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:panelGrid style="width: 100%" columns="3">
+                                            <h:outputText value="#{etq.w8imyPostalCode}" />
+                                            <h:outputText value="#{etq.w8imyCityTown}" />
+                                            <h:outputText value="#{etq.w8imyStatePorvince}" />
+                                            <h:inputText autocomplete="off" id="codigoPostalPostal" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{capturaBeneficiariosBean.forma.codigoPostalPostal}" style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="cityTownPostal" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{capturaBeneficiariosBean.forma.cityTownPostal}" style="text-transform: uppercase;" />
+                                            <h:inputText autocomplete="off" id="stateProvincePostal" styleClass="textoControles" size="50" maxlength="50"
+                                                         value="#{capturaBeneficiariosBean.forma.stateProvincePostal}" style="text-transform: uppercase;" />
+                                        </h:panelGrid>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:outputText value="#{etq.w8imyPaisPostal}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:inputText autocomplete="off" id="paisPostal" value="#{capturaBeneficiariosBean.forma.paisPostal}"
+                                                     styleClass="textoControles" size="50" maxlength="50" style="text-transform: uppercase;" />
+                                    </td>
+                                </tr>
+                                <tr style="height: 5px">
+                                    <td colspan="2">
+                                        &#160;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b><h:outputText value="6" /></b>&#160;&#160;
+                                        <h:outputText value="#{etq.w8imyUSIdNumber}" />
+                                        &#160;&#160;&#160;
+                                    </td>
+                                    <td>
+                                        <b><h:outputText value="7" /></b>&#160;&#160;
+                                        <h:outputText value="#{etq.w8imyRFCOnly}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h:inputText autocomplete="off" id="usIdNumber" value="#{capturaBeneficiariosBean.forma.taxPayerIdNumber}"
+                                                     styleClass="textoControles" size="30" maxlength="30"
+                                                     readonly="#{capturaBeneficiariosBean.forma.campos.usTaxpayerIdentificationNumber}" />
+                                        &#160;&#160;
+                                        <h:panelGroup>
+                                            <t:selectOneRadio id="tipoTaxPayerIdNumber" styleClass="textoControles"
+                                                              value="#{capturaBeneficiariosBean.forma.typeTaxPayerIdNumber}"
+                                                              layout="spread" forceId="true" forceIdIndex="false">
+                                                <f:selectItems value="#{capturaBeneficiariosBean.forma.lstTaxPayerIdNumber}"/>
+                                            </t:selectOneRadio>
+                                            <h:panelGrid columns="3">
+                                                <t:radio for="daliForm:tipoTaxPayerIdNumber" index="0" />
+                                                <t:radio for="daliForm:tipoTaxPayerIdNumber" index="1" />
+                                                <t:radio for="daliForm:tipoTaxPayerIdNumber" index="2" />
+                                            </h:panelGrid>
+                                        </h:panelGroup>
+                                    </td>
+                                    <td>
+                                        <h:inputText autocomplete="off" id="RFC" value="#{capturaBeneficiariosBean.forma.rfc}"
+                                                     styleClass="textoControles" size="13" maxlength="13" style="text-transform: uppercase;" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="8" /></b>&#160;&#160;
+                                        <h:outputText value="#{etq.w8imyReferenceNumber}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <h:inputText autocomplete="off" id="numeroReferencia" value="#{capturaBeneficiariosBean.forma.numeroReferencia}"
+                                                     styleClass="textoControles" size="100" maxlength="100"
+                                                     readonly="#{capturaBeneficiariosBean.forma.campos.referenceNumbers}" />
+                                    </td>
+                                </tr>
+                                <tr style="height: 5px">
+                                    <td colspan="2">
+                                        &#160;
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="PART II" styleClass="textoBenefPartes"/>&#160;&#160;
+                                        <h:outputText value="#{etq.w8imyPart2Title}" /></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="9a" /></b>&#160;&#160;
+                                        <h:selectBooleanCheckbox id="cbLine9a"
+                                                                 value="#{capturaBeneficiariosBean.forma.line9a}"
+                                                                 disabled="#{capturaBeneficiariosBean.forma.campos.field9a}" /> &#160;&#160;
+                                        <h:outputText value="#{etq.w8imyLine9a1}" />
+                                        <br />
+                                        <ul>
+                                            <li><h:outputText value="#{etq.w8imyLine9a2}" /></li>
+                                            <li><h:outputText value="#{etq.w8imyLine9a3}" /></li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="9b" /></b>&#160;&#160;
+                                        <h:selectBooleanCheckbox id="cbLine9b1"
+                                                                 value="#{capturaBeneficiariosBean.forma.line9b1}"
+                                                                 disabled="#{capturaBeneficiariosBean.forma.campos.field9b}" />
+                                        &#160;&#160;
+                                        <h:outputText value="#{etq.w8imyLine9b}" />
+                                        &#160;
+                                        <h:inputText autocomplete="off" id="txtLine9b2" value="#{capturaBeneficiariosBean.forma.line9b2}"
+                                                     styleClass="textoControles" size="50" maxlength="100"
+                                                     readonly="#{capturaBeneficiariosBean.forma.campos.field9bLine}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="9c" /></b>&#160;&#160;
+                                        <h:selectBooleanCheckbox id="cbLine9c1"
+                                                                 value="#{capturaBeneficiariosBean.forma.line9c1}"
+                                                                 disabled="#{capturaBeneficiariosBean.forma.campos.field9c}" />
+                                        &#160;&#160;
+                                        <h:outputText value="#{etq.w8imyLine9c}" />
+                                        &#160;
+                                        <h:inputText autocomplete="off" id="txtLine9c2" value="#{capturaBeneficiariosBean.forma.line9c2}"
+                                                     styleClass="textoControles" size="50" maxlength="100"
+                                                     readonly="#{capturaBeneficiariosBean.forma.campos.field9cLine}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="PART III" styleClass="textoBenefPartes"/>&#160;&#160;
+                                        <h:outputText value="#{etq.w8imyPart3Title}" /></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="10a" /></b>&#160;&#160;
+                                        <h:selectBooleanCheckbox id="cbLine10a"
+                                                                 value="#{capturaBeneficiariosBean.forma.line10a}"
+                                                                 disabled="#{capturaBeneficiariosBean.forma.campos.field10a}" /> &#160;&#160;
+                                        <h:outputText value="#{etq.w8imyLine10a}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="10b" /></b>&#160;&#160;
+                                        <h:selectBooleanCheckbox id="cbLine10b"
+                                                                 value="#{capturaBeneficiariosBean.forma.line10b}"
+                                                                 disabled="#{capturaBeneficiariosBean.forma.campos.field10b}" /> &#160;&#160;
+                                        <h:outputText value="#{etq.w8imyLine10b}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="PART IV" styleClass="textoBenefPartes"/>&#160;&#160;
+                                        <h:outputText value="#{etq.w8imyPart4Title}" /></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="Note:" /></b>
+                                        &#160;
+                                        <h:outputText value="#{etq.w8imyPart4Note1}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="11" /></b>&#160;&#160;
+                                        <h:selectBooleanCheckbox id="cbLine11"
+                                                                 value="#{capturaBeneficiariosBean.forma.line11}"
+                                                                 disabled="#{capturaBeneficiariosBean.forma.campos.field11}" /> &#160;&#160;
+                                        <h:outputText value="#{etq.w8imyLine11}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="#{etq.w8imyPart4Note2}" /></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="12" /></b>&#160;&#160;
+                                        <h:selectBooleanCheckbox id="cbLine12"
+                                                                 value="#{capturaBeneficiariosBean.forma.line12}"
+                                                                 disabled="#{capturaBeneficiariosBean.forma.campos.field12}" /> &#160;&#160;
+                                        <h:outputText value="#{etq.w8imyLine12}" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="13" /></b>&#160;&#160;
+                                        <h:selectBooleanCheckbox id="cbLine13"
+                                                                 value="#{capturaBeneficiariosBean.forma.line13}"
+                                                                 disabled="#{capturaBeneficiariosBean.forma.campos.field13}" /> &#160;&#160;
+                                        <h:outputText value="#{etq.w8imyLine13p1}" />
+                                        <br />
+                                        <ul>
+                                            <li><h:outputText value="#{etq.w8imyLine13p2}" /></li>
+                                            <li><h:outputText value="#{etq.w8imyLine13p3}" /></li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="PART V" styleClass="textoBenefPartes"/>&#160;&#160;
+                                        <h:outputText value="#{etq.w8imyPart5Title}" /></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="14" /></b>&#160;&#160;
+                                        <h:selectBooleanCheckbox id="cbLine14"
+                                                                 value="#{capturaBeneficiariosBean.forma.line14}"
+                                                                 disabled="#{capturaBeneficiariosBean.forma.campos.field14}" /> &#160;&#160;
+                                        <h:outputText value="#{etq.w8imyLine14p1}" />
+                                        <br />
+                                        <ul>
+                                            <li><h:outputText value="#{etq.w8imyLine14p2}" /></li>
+                                            <li><h:outputText value="#{etq.w8imyLine14p3}" /></li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="PART VI" styleClass="textoBenefPartes"/>&#160;&#160;
+                                        <h:outputText value="#{etq.w8imyPart6Title}" /></b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <b><h:outputText value="15" /></b>&#160;&#160;
+                                        <h:selectBooleanCheckbox id="cbLine15"
+                                                                 value="#{capturaBeneficiariosBean.forma.line15}"
+                                                                 disabled="#{capturaBeneficiariosBean.forma.campos.field15}" /> &#160;&#160;
+                                        <h:outputText value="#{etq.w8imyLine15p1}" />
+                                        <br />
+                                        <ul>
+                                            <li><h:outputText value="#{etq.w8imyLine15p2}" /></li>
+                                            <li><h:outputText value="#{etq.w8imyLine15p3}" /></li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </table>
+                            <a4j:outputPanel ajaxRendered="true">
+                                <script languaje="javascript">
+                                    verificaBloqueoDireccionPostal();
+                                </script>
+                            </a4j:outputPanel>
+                        </h:panelGroup>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h:panelGroup id="botones">
+                            <h:inputHidden id="flagBuscarBeneficiarios" value="#{capturaBeneficiariosBean.flagBuscarBeneficiariosExistentes}" />
+                            <div class="guardar">
+                                <a4j:commandButton id="botonGuardar" image="/images/transparent.gif"
+                                                   styleClass="submit"
+                                                   action="#{capturaBeneficiariosBean.guardar}"
+                                                   oncomplete="window.scrollTo(0,0);"
+                                                   reRender="general,flagBuscarBeneficiarios,mensajeUsuario,criterios"
+                                                   limitToList="true" tabindex="230" />
+                            </div>
+                            <div class="cancelar">
+                                <a4j:commandButton id="botonCancelar" image="/images/transparent.gif"
+                                                   styleClass="submit" ajaxSingle="true"
+                                                   action="regresaCapturaBeneficiarios" />
+                            </div>
+                        </h:panelGroup>
+                    </td>
+                </tr>
+            </table>
+        </ui:define>
+
+    </ui:composition>
+</html>

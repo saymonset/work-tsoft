@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="MensajesAutorizadosDistribucion" documentTitle="Mensajes Autorizados Capitales Distribución"
+        institucion="#{consultaMensajesAutorizadosLegislacionBean.agenteFirmado.id} #{consultaMensajesAutorizadosLegislacionBean.agenteFirmado.folio} #{consultaMensajesAutorizadosLegislacionBean.agenteFirmado.razon}" 
+        landscape="true" fecha="#{consultaMensajesAutorizadosLegislacionBean.fechaActual}"
+        imageResource="/images/indeval.jpg">
+        <pdf:table value="consultaMensajesAutorizadosLegislacionBean" currentBean="consultaMensajes" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{consultaMensajesAutorizadosLegislacionBean}" currentBean="consultaMensajes" widthPercentage="100" maxColums="11">
+            <pdf:row>
+            	<pdf:col header="#{etq.tv}" value="#{!empty consultaMensajes.filtroConsulta.tipoValor ? consultaMensajes.filtroConsulta.tipoValor : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.emisoraMinus}" value="#{!empty consultaMensajes.filtroConsulta.emisora ? consultaMensajes.filtroConsulta.emisora : 'TODAS'}" align="center" />
+                <pdf:col header="#{etq.serieMinus}" value="#{!empty consultaMensajes.filtroConsulta.serie ? consultaMensajes.filtroConsulta.serie : 'TODAS'}" align="center" />
+				<pdf:col header="#{etq.isin}" value="#{!empty consultaMensajes.filtroConsulta.isin ? consultaMensajes.filtroConsulta.isin : 'TODOS'}" align="center" />				
+				<pdf:col header="#{etq.calEstadoEnvio}" value="#{!empty consultaMensajes.selectedEstadoEnvio ? consultaMensajes.selectedEstadoEnvio : 'TODOS'}" align="center" />
+				<pdf:col header="#{etq.calDestinatario}" value="#{!empty consultaMensajes.selectedDestinatario ? consultaMensajes.selectedDestinatario : 'CUALQUIER'}" align="center" />
+				<pdf:col header="#{etq.folioMensaje}" value="#{!empty consultaMensajes.filtroConsulta.folioMensaje ? consultaMensajes.filtroConsulta.folioMensaje : 'TODOS'}" align="center" />
+				<pdf:col header="#{etq.folioIndeval}" value="#{!empty consultaMensajes.filtroConsulta.folioIndeval ? consultaMensajes.filtroConsulta.folioIndeval : 'TODOS'}" align="center" />				
+				<pdf:col header="#{etq.fechaXdateInicio}" value="#{!empty consultaMensajes.filtroConsulta.fechaExdateInicio ? consultaMensajes.filtroConsulta.fechaExdateInicio : 'TODAS'}" align="center" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				<pdf:col header="#{etq.fechaXdateFin}" value="#{!empty consultaMensajes.filtroConsulta.fechaExdateFin ? consultaMensajes.filtroConsulta.fechaExdateFin : 'TODAS'}" align="center" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				
+				
+				
+				<pdf:col header="#{etq.fechaCorteInicio}" value="#{!empty consultaMensajes.filtroConsulta.fechaCorteInicio ? consultaMensajes.filtroConsulta.fechaCorteInicio : 'TODAS'}" align="center" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				<pdf:col header="#{etq.fechaCorteFin}" value="#{!empty consultaMensajes.filtroConsulta.fechaCorteFin ? consultaMensajes.filtroConsulta.fechaCorteFin : 'TODAS'}" align="center" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				<pdf:col header="#{etq.calUsuarioSolicita}" value="#{!empty consultaMensajes.filtroConsulta.usuario ? consultaMensajes.filtroConsulta.usuario : 'TODOS'}" align="center" />
+				<pdf:col header="#{etq.calFechaSolicitudInicial}" value="#{!empty consultaMensajes.filtroConsulta.fechaSolicitudInicio ? consultaMensajes.filtroConsulta.fechaSolicitudInicio : 'TODAS'}" align="center" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				<pdf:col header="#{etq.calFechaSolicitudFinal}" value="#{!empty consultaMensajes.filtroConsulta.fechaSolicitudFin ? consultaMensajes.filtroConsulta.fechaSolicitudFin : 'TODAS'}" align="center" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				<pdf:col header="#{etq.calUsuarioAutoriza}" value="#{!empty consultaMensajes.filtroConsulta.usuarioAutoriza ? consultaMensajes.filtroConsulta.usuarioAutoriza : 'TODOS'}" align="center" />
+				<pdf:col header="#{etq.calFechaAutorizacionIncial}" value="#{!empty consultaMensajes.filtroConsulta.fechaAutorizacionInicio ? consultaMensajes.filtroConsulta.fechaAutorizacionInicio : 'TODAS'}" align="center" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				<pdf:col header="#{etq.calFechaAutorizacionFinal}" value="#{!empty consultaMensajes.filtroConsulta.fechaAutorizacionFin ? consultaMensajes.filtroConsulta.fechaAutorizacionFin : 'TODAS'}" align="center" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				<pdf:col header="#{etq.estadoEmision}" value="#{!empty consultaMensajes.selectedEstadoEmision ? consultaMensajes.selectedEstadoEmision : 'TODOS'}" align="center" />
+				<pdf:col header="#{etq.fuente}" value="#{!empty consultaMensajes.selectedCustodio ? consultaMensajes.selectedCustodio : 'TODOS'}" align="center" />
+				<pdf:col header="#{etq.caev}" value="#{!empty consultaMensajes.selectedTipoPagoCAEV ? consultaMensajes.selectedTipoPagoCAEV : 'TODOS'}" align="center" />
+				<pdf:col header="#{etq.camv}" value="#{!empty consultaMensajes.selectedTipoPagoCAMV ? consultaMensajes.selectedTipoPagoCAMV : 'TODOS'}" align="center" />
+																				
+            </pdf:row>
+        </pdf:table>
+        
+        <pdf:br/>
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{consultaMensajesAutorizadosLegislacionBean.totalRegistrosReporte}"/>
+        <pdf:br/>
+
+        <pdf:table value="#{consultaMensajesAutorizadosLegislacionBean.paginaReportes.registros}" currentBean="envio" widthPercentage="100" maxColums="7">
+            <pdf:row>
+				
+				<pdf:col header="#{etq.calUsuarioSolicita}" value="#{envio.usuarioSolicitante}" align="center" />
+				<pdf:col header="#{etq.calFechaSolicitud}" value="#{envio.fechaSolicitud}" align="center" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.calUsuarioAutoriza}" value="#{!empty envio.usuarioAutoriza ? envio.usuarioAutoriza : '-'}" align="center" />
+				<pdf:col header="#{etq.calFechaAutorizacion}" value="#{!empty envio.fechaActualizacion ? envio.fechaActualizacion : '-'}" align="center" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.calTvEmisoraSerieCuponIsin}" value="#{!empty envio.tipoValor ? envio.tipoValor : '-'} / #{!empty envio.emisora ? envio.emisora : '-'} / #{!empty envio.serie ? envio.serie : '-'} / #{!empty envio.cupon ? envio.cupon : '-'} / #{!empty envio.isin ? envio.isin : '-'}" align="center" />
+				<pdf:col header="#{etq.fechaExdate}" value="#{!empty envio.fechaExdate ? envio.fechaExdate : '-'}" align="center" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaCorteMinus}" value="#{!empty envio.fechaCorte ? envio.fechaCorte : '-'}" align="center" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.folioMensaje}" value="#{!empty envio.folioMensaje ? envio.folioMensaje : '-'}" align="center" />
+				<pdf:col header="#{etq.folioIndeval}" value="#{!empty envio.folioIndeval ? envio.folioIndeval : '-'}" align="center" />
+				<pdf:col header="#{etq.calDestinatario}" value="#{!empty envio.destinatario ? envio.destinatario : '-'}" align="center" />
+				<pdf:col header="#{etq.calEstadoEnvio}" value="#{!empty envio.descEstado ? envio.descEstado : '-'}" align="center" />
+				<pdf:col header="#{etq.estadoEmision}" value="#{!empty envio.listada ? envio.listada : 'DESLISTADA'}" align="center" />
+				<pdf:col header="#{etq.fuente}" value="#{!empty envio.fuente ? envio.fuente : '-'}" align="center" />
+				<pdf:col header="#{etq.tipoDerechoMV}" value="#{!empty envio.tipoDerechoCaev ? envio.tipoDerechoCaev : '-'} / #{!empty envio.tipoDerechoCamv ? envio.tipoDerechoCamv : '-'}" align="center" />																			
+			</pdf:row>
+        </pdf:table>
+    </pdf:document>
+</html>

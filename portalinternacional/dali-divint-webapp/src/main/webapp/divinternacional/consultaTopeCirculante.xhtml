@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+		
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js"></script>
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/consultaTopeCirculante.js"></script>
+		</ui:define>
+		
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.sistemaIntCot}" />
+		</ui:define>
+
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.consultaTopeCirculanteFid}"/>
+		</ui:define>
+		<ui:define name="criterios">
+			<a4j:keepAlive beanName="topeCirculanteController"/>
+			<h:outputText id="init" value="#{topeCirculanteController.init}"/>
+			
+			<h:panelGroup id="mensajeUsuario">
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+				
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+				</div>
+			</h:panelGroup>
+			
+			<h:panelGroup id="panelCriterios">
+				<div style="display: inline" id="divCriterios">
+					<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="center">
+						<tr>
+							<td class="recuadroTabla">
+								<table class="tablaCriterios">
+									<tr>
+										<td nowrap="true" colspan="2" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.agente}" /> </b>
+										</td>
+									</tr>
+									<tr align="center">
+										<td>
+											<h:outputText styleClass="texto"
+												value="#{etq.participanteMinus}" />
+										</td>
+									</tr><tr align="center">
+										<td>
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="idFolioTraspasante"
+													value="#{topeCirculanteController.idFolioTraspasante}" size="5"
+													maxlength="5" styleClass="#{(topeCirculanteController.institucionIndeval) ? 'campoNumerico textoControles' : 'readonly textoControles'}" />
+											</h:panelGroup>
+
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr>
+										<td colspan="4" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.claveValor}" /> </b>
+										</td>
+									</tr>
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.tv}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.emisoraMinus}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.serieMinus}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.cuponMinus}" />
+										</td>
+									</tr>
+									<tr align="center">
+										<td>
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="tipoValor"
+													value="#{topeCirculanteController.emision.tv}" size="7"
+													maxlength="7" styleClass="textoControles textoMayusculas" tabindex="10" />
+											</h:panelGroup>
+										</td>
+										<td>
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="emisora" size="7" maxlength="7"
+													value="#{topeCirculanteController.emision.emisora}"
+													required="false" styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="20" />
+											</h:panelGroup>
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="serie"
+												value="#{topeCirculanteController.emision.serie}" size="7"
+												maxlength="6" styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="30" />
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="cupon"
+												value="#{topeCirculanteController.emision.cupon}" size="7"
+												maxlength="4" styleClass="textoControles campoNumerico" tabindex="40" />
+										</td>
+									</tr>
+									<tr>
+										<td colspan="4">
+											<h:panelGroup>
+												<a href="javascript: mostrarEmisionesInvExt();" tabindex="50">
+													<h:graphicImage value="/images/search.png"></h:graphicImage>
+													<h:outputText value="#{etq.buscarPosicionMinus}"
+														styleClass="texto" /> </a>&#160;&#160;&#160;
+                                    			<a
+													href="javascript:limpiarDatosPosicion();" tabindex="60">
+													<h:graphicImage value="/images/page_refresh.png"></h:graphicImage>
+													<h:outputText value="#{etq.limpiarPosicionMinus}"
+														styleClass="texto" /> </a>
+
+											</h:panelGroup>
+										</td>
+									</tr>
+
+								</table>
+							</td>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr align="center">
+										<td>
+											<h:outputText value="#{etq.altaMinus}"/>
+										</td>
+										<td>
+											<h:outputText value="#{etq.isin}"/>
+										</td>
+									</tr>										
+									<tr align="center">
+										<td>
+											<h:selectOneMenu id="altaConsulta" value="#{topeCirculanteController.altaCombo}"
+												styleClass="textoControles" tabindex="70">
+												<f:selectItems value="#{opcionesCatalogosBean.listaAltas}"/>
+											</h:selectOneMenu>
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="isin"
+												value="#{topeCirculanteController.emision.isin}" size="20" maxlength="20"
+												styleClass="textoControles textoMayusculas" tabindex="80" />
+										</td>
+									</tr>
+								</table>
+							</td>															
+						</tr>
+					</table>
+				</div>
+			</h:panelGroup>
+			<h:panelGroup id="panelResumen">
+				<h:panelGroup rendered="#{topeCirculanteController.consultaEjecutada}">
+					<div id="divResumen">
+						<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="center">
+						<tr>
+							<td class="recuadroTabla">
+								<table class="tablaCriterios">
+									<tr>
+										<td nowrap="true" colspan="2" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.agente}" /> </b>
+										</td>
+									</tr>
+									<tr align="center">
+										<td>
+											<h:outputText styleClass="texto"
+												value="#{etq.participanteMinus}" />
+										</td>
+									</tr><tr align="center">
+										<td>
+											<h:panelGroup>
+												<h:outputText value="#{topeCirculanteController.idFolioTraspasante}"/>
+											</h:panelGroup>
+
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr>
+										<td colspan="4" align="center">
+											<b> <h:outputText styleClass="texto"
+													value="#{etq.claveValor}" /> </b>
+										</td>
+									</tr>
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.tv}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.emisoraMinus}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.serieMinus}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.cuponMinus}" />
+										</td>
+									</tr>
+									<tr align="center">
+										<td>										
+											<h:outputText value="#{topeCirculanteController.tipoValorSeleccionado}"/>											
+										</td>
+										<td>										
+											<h:outputText value="#{topeCirculanteController.emisoraSeleccionada}"/>											
+										</td>
+										<td>
+											<h:outputText value="#{topeCirculanteController.serieSeleccionada}"/>
+										</td>
+										<td>
+											<h:outputText value="#{topeCirculanteController.cuponSeleccionado}"/>
+										</td>
+									</tr>									
+								</table>
+							</td>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr align="center">
+										<td>
+											<h:outputText value="#{etq.altaMinus}"/>
+										</td>
+										<td>
+											<h:outputText value="#{etq.isin}"/>
+										</td>
+									</tr>										
+									<tr align="center">
+										<td>
+											<h:outputText value="#{topeCirculanteController.altaCombo}"/>
+										</td>
+										<td>
+											<h:outputText value="#{topeCirculanteController.isinSeleccionado}"/>
+										</td>
+									</tr>
+								</table>
+							</td>															
+						</tr>
+					</table>
+					</div>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+		
+		<ui:define name="seccionContenido">
+			<h:panelGroup id="containerResultados">
+				<h:panelGroup rendered="#{topeCirculanteController.consultaEjecutada}">
+				<t:dataTable id="noExistenResultados"
+					value="#{topeCirculanteController.paginaVO.registros}"
+					styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+					footerClass="tituloTabla" border="0" cellpadding="3px"
+					cellspacing="0px" columnClasses="everyColumn"
+					rowClasses="renglonTablaUno, renglonTablaDos"
+					rendered="#{empty topeCirculanteController.paginaVO.registros}">
+
+					<t:column>
+						<f:facet name="header">
+							<h:outputText value="#{etq.sinResultados}"></h:outputText>
+						</f:facet>
+
+					</t:column>
+				</t:dataTable>
+				<h:panelGroup id="containerInfoPaginacionTope">								
+					<h:panelGroup rendered="#{not empty topeCirculanteController.paginaVO.registros}">
+						<table width="100%" border="0">
+							<tr>
+								<td align="left" class="textoEstadoCuenta">
+									<a4j:commandLink id="control_bitacora_primero"
+										action="#{topeCirculanteController.irPrimeraPagina}"
+										rendered="#{topeCirculanteController.irAlPrimero}"
+										reRender="containerResultados,containerInfoPaginacionTope,botonesExportar,mensajeUsuario">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+											border="0" />
+									</a4j:commandLink>
+	
+									<a4j:commandLink id="control_bitacora_atras_fast"
+										action="#{topeCirculanteController.retrocederPaginasRapido}"
+										rendered="#{topeCirculanteController.retrocederRapido}"
+										reRender="containerResultados,containerInfoPaginacionTope,botonesExportar,mensajeUsuario">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+											border="0" />
+									</a4j:commandLink>
+	
+									<a4j:commandLink id="control_bitacora_atras"
+										action="#{topeCirculanteController.retrocederPagina}"
+										rendered="#{topeCirculanteController.retroceder}"
+										reRender="containerResultados,containerInfoPaginacionTope,botonesExportar,mensajeUsuario">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+											border="0" />
+									</a4j:commandLink>
+									<a4j:commandLink id="control_bitacora_adelante"
+										action="#{topeCirculanteController.avanzarPagina}"
+										rendered="#{topeCirculanteController.avanzar}"
+										reRender="containerResultados,containerInfoPaginacionTope,botonesExportar,mensajeUsuario">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+											border="0" />
+									</a4j:commandLink>
+	
+									<a4j:commandLink id="control_bitacora_adelante_fast"
+										action="#{topeCirculanteController.avanzarPaginasRapido}"
+										rendered="#{topeCirculanteController.avanzarRapido}"
+										reRender="containerResultados,containerInfoPaginacionTope,botonesExportar,mensajeUsuario">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+											border="0" />
+	
+									</a4j:commandLink>
+	
+									<a4j:commandLink id="control_bitacora_ultimo"
+										action="#{topeCirculanteController.irUltimaPagina}"
+										rendered="#{topeCirculanteController.irAlUltimo}"
+										reRender="containerResultados,containerInfoPaginacionTope,botonesExportar">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+											border="0" />
+									</a4j:commandLink>
+	
+	
+									<br />
+									<h:outputText value="#{etq.mostrando}"
+										styleClass="textoResumen" />
+									<h:outputText value="#{topeCirculanteController.numeroPagina}"
+										styleClass="textoResumen" />
+									<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+									<h:outputText value="#{topeCirculanteController.totalPaginas}"
+										styleClass="textoResumen" />
+									<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+									&#160;&#160;&#160;
+									<h:outputText
+										value="#{topeCirculanteController.paginaVO.totalRegistros}"
+										styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+									&#160;
+									<h:outputText styleClass="textoResumen"
+										value="#{etq.registrosEncontrados}" />
+								</td>
+								<td align="right" class="textoEstadoCuenta">
+									<h:outputText escape="false" value="#{etq.registrosPorPagina}"
+										styleClass="textoResumen" />
+									<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+										value="#{topeCirculanteController.paginaVO.registrosXPag}">
+										<f:selectItem itemLabel="1" itemValue="1" />
+										<f:selectItem itemLabel="2" itemValue="2" />
+										<f:selectItem itemLabel="5" itemValue="5" />
+										<f:selectItem itemLabel="10" itemValue="10" />
+										<f:selectItem itemLabel="20" itemValue="20" />
+										<f:selectItem itemLabel="50" itemValue="50" />
+										<a4j:support event="onchange"
+											reRender="containerResultados,containerInfoPaginacionTope,botonesExportar,mensajeUsuario"
+											actionListener="#{topeCirculanteController.buscarTopesCirculantes}" />
+									</h:selectOneMenu>
+								</td>
+							</tr>
+						</table>
+					</h:panelGroup>
+				</h:panelGroup>	
+				
+				<h:panelGroup id="tablaResultados">
+					<h:panelGroup rendered="#{topeCirculanteController.consultaEjecutada and not empty topeCirculanteController.paginaVO.registros}">
+						<h:dataTable value="#{topeCirculanteController.paginaVO.registros}" 
+						var="topeCirculante"
+						rendered="#{not empty topeCirculanteController.paginaVO.registros}"
+						styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+						footerClass="tituloTabla" border="0" cellpadding="3px"
+						cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos">
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#{etq.tv}"/>
+								</f:facet>
+								<h:panelGroup>
+									<div class="columnaTexto">
+										<h:outputText value="#{topeCirculante.emisionVO.tv}"/>
+									</div>
+								</h:panelGroup>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#{etq.emisoraMinus}"/>
+								</f:facet>
+								<h:panelGroup>
+									<div class="columnaTexto">
+										<h:outputText value="#{topeCirculante.emisionVO.emisora}" />
+									</div>
+								</h:panelGroup>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText  value="#{etq.serieMinus}"/>
+								</f:facet>
+								<h:panelGroup>
+									<div class="columnaTexto">
+										<h:outputText value="#{topeCirculante.emisionVO.serie}" />
+									</div>
+								</h:panelGroup>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#{etq.cuponMinus}"/>
+								</f:facet>
+								<h:panelGroup>
+									<div class="columnaTexto">
+										<h:outputText value="#{topeCirculante.emisionVO.cupon}" />
+									</div>
+								</h:panelGroup>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#{etq.altaMinus}"/>
+								</f:facet>
+								<h:panelGroup>
+									<div class="columnaTexto">
+										<h:outputText value="#{topeCirculante.emisionVO.emisionExtra}" />
+									</div>
+								</h:panelGroup>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#{etq.isin}"/>
+								</f:facet>
+								<h:panelGroup>
+									<div class="columnaTexto">
+										<h:outputText value="#{topeCirculante.emisionVO.isin}" />
+									</div>
+								</h:panelGroup>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#{etq.topeFideicomisoMinus}"/>
+								</f:facet>
+								<h:panelGroup>
+									<div class="columnaMoneda">
+										<h:outputText value="#{topeCirculante.topeFideicomiso}" converter="formatoEnteroConverter" />
+									</div>
+								</h:panelGroup>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#{etq.titulosEnCirculacion}"/>
+								</f:facet>
+								<h:panelGroup>
+									<div class="columnaMoneda">
+										<h:outputText value="#{topeCirculante.titulosCirculacion}" converter="formatoEnteroConverter"/>
+									</div>
+								</h:panelGroup>
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="#{etq.titulosDisponibles}"/>
+								</f:facet>
+								<h:panelGroup>
+									<div class="columnaMoneda">
+										<h:outputText value="#{topeCirculante.titulosDisponibles}" converter="formatoEnteroConverter"/>
+									</div>
+								</h:panelGroup>
+							</h:column>
+						</h:dataTable>
+					</h:panelGroup>					
+				</h:panelGroup>
+				
+				<h:panelGroup id="botonesExportar">
+				
+				</h:panelGroup>
+			</h:panelGroup>					
+			</h:panelGroup>
+		</ui:define>
+		
+		<ui:define name="botones">
+			<h:panelGroup id="botones">
+         		<div class="refrescar" style="float: left;">
+	        		 <a4j:status id="commonStatus">
+						<f:facet name="start">
+							<h:panelGroup>
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								<h:outputText value="#{etq.buscando}"></h:outputText>
+							</h:panelGroup>
+						</f:facet>
+					</a4j:status> 	
+	        	</div>
+	            <div class="limpiar">
+	            	<a4j:commandButton id="botonLimpiar" image="/images/transparent.gif" styleClass="submit"
+	                   actionListener="#{topeCirculanteController.limpiar}" 
+	                   reRender="panelCriterios,panelResumen,containerResultados,botones,mensajeUsuario" 
+	                   onclick="deshabilitarBoton('botonLimpiar');" 
+	                   oncomplete="habilitarBoton('botonLimpiar')"
+	                   tabindex="100"/>	                
+	            </div>
+	            <div class="buscar">
+	                <a4j:commandButton id="botonBuscar" image="/images/transparent.gif" styleClass="submit" tabindex="90"	                	
+	                	oncomplete='$j("#divCriterios").css("display","none");'
+	                    actionListener="#{topeCirculanteController.buscarTopesCirculantes}"
+	                    reRender="botones,panelResumen,containerResultados,tablaResultados,mensajeUsuario">	 
+	                	<f:attribute name="totalArqueo" value="totalArqueo"/>    	                   	
+                    </a4j:commandButton>
+	            </div>
+	            <div class="editar" style="display:#{topeCirculanteController.consultaEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios">            
+			            	<input type="image" class="submit"
+								src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+								alt="Editar Criterios" title="Editar Criterios"
+								onclick='javascript:presentarCriterios();return false;' />                      	
+	           	</div>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</html>

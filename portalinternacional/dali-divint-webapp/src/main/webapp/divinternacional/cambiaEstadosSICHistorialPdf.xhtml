@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+<pdf:document documentName="HistorialBitacora" documentTitle="Historial de cambios"
+              landscape="true" institucion="#{cambiaEstadoOperacionesBean.agenteFirmado.id} #{cambiaEstadoOperacionesBean.agenteFirmado.folio} #{cambiaEstadoOperacionesBean.agenteFirmado.razon}"
+			  fecha="#{cambiaEstadoOperacionesBean.fechaActual}" imageResource="/images/indeval.jpg">
+	
+	<pdf:subtitle value="Filtros"/>
+	<pdf:table value="#{cambiaEstadoOperacionesBean}"
+			currentBean="filtro" widthPercentage="100">
+			<pdf:row>				
+				<pdf:col align="center" collspan="1" header="#{etq.folioControl}"
+					value="#{(cambiaEstadoOperacionesBean.folioControlParam == '')?'TODOS':(cambiaEstadoOperacionesBean.folioControlParam)}" />
+				<pdf:col align="center" collspan="1" header="#{etq.fechaInicial} Autorizador"
+					value="#{(cambiaEstadoOperacionesBean.fechaInicialAut == null)?'TODOS':(cambiaEstadoOperacionesBean.fechaInicialAut)}">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+					
+				</pdf:col>	
+				<pdf:col align="center" collspan="1" header="#{etq.fechaFinal} Autorizador"
+					value="#{(cambiaEstadoOperacionesBean.fechaFinalAut == null)?'TODOS':(cambiaEstadoOperacionesBean.fechaFinalAut)}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>		
+				<pdf:col align="center" collspan="1" header="#{etq.fechaInicial} Solicitud"
+					value="#{(cambiaEstadoOperacionesBean.fechaInicialOp == null)?'TODOS':(cambiaEstadoOperacionesBean.fechaInicialOp)}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>	
+				<pdf:col align="center" collspan="1" header="#{etq.fechaFinal} Solicitud"
+					value="#{(cambiaEstadoOperacionesBean.fechaFinalOp == null)?'TODOS':(cambiaEstadoOperacionesBean.fechaFinalOp)}">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>	
+				<pdf:col align="center" collspan="1" header="#{etq.custodio}"
+					value="#{(cambiaEstadoOperacionesBean.custodio=='-1')?'TODOS':(cambiaEstadoOperacionesBean.custodio)}" />
+				<pdf:col align="center" collspan="1" header="#{etq.operacion}"
+					value="#{(cambiaEstadoOperacionesBean.operacion=='-1')?'TODOS':(cambiaEstadoOperacionesBean.operacionSeleccionada)}" />
+				<pdf:col align="center" collspan="1" header="#{etq.tipoOp}"
+					value="#{(cambiaEstadoOperacionesBean.tipoOperacion=='-1')?'TODOS':(cambiaEstadoOperacionesBean.tipoOperacionSeleccionada)}" />									
+				<pdf:col align="center" collspan="1" header="#{etq.estatusPrevio}"
+					value="#{(cambiaEstadoOperacionesBean.estatusAnterior=='-1')?'TODOS':(cambiaEstadoOperacionesBean.estatusSeleccionadoAnterior)}" />					
+				<pdf:col align="center" collspan="1" header="#{etq.estatusSolicitado}"
+					value="#{(cambiaEstadoOperacionesBean.estatusNuevo=='-1')?'TODOS':(cambiaEstadoOperacionesBean.estatusSeleccionadoNuevo)}" />
+			</pdf:row>
+			
+	</pdf:table>
+	
+	<pdf:table value="#{cambiaEstadoOperacionesBean}" currentBean="filtro" widthPercentage="20" align="left">
+		<pdf:row>	
+			<pdf:col align="center" collspan="1" header="Total de Registros"
+					value="#{cambiaEstadoOperacionesBean.resultados.totalRegistros}" />
+		</pdf:row>
+	</pdf:table>	
+	
+	<pdf:subtitle value="Datos"/>
+    <pdf:table value="#{cambiaEstadoOperacionesBean.resultados.registros}"  currentBean="bitacora" 
+    	widthPercentage="100" borraLista="false">
+        <pdf:row>        						
+        	<pdf:col header="#{etq.folioControl}" value="#{bitacora.folioControl}"	 align="LEFT" />
+        	<pdf:col header="#{etq.id}" value="#{bitacora.claveTipoInstitucion}"	 align="LEFT"/>      		
+        	<pdf:col header="#{etq.folioMinus}" value="#{bitacora.folioInstitucion}" align="LEFT"/>    
+        	<pdf:col  header="#{etq.custodio}" value="#{bitacora.detalleCustodio}" align="LEFT"/>
+        	<pdf:col header="#{etq.tv} #{etq.emisoraMinus} #{etq.serieMinus} #{etq.isin}"
+        	 value="#{bitacora.claveTipoValor}  #{bitacora.clavePizarra} #{bitacora.serie} 
+					#{bitacora.isin}" 
+        			 align="LEFT"/> 
+        	<pdf:col header="#{etq.cantidadOperada}" value="#{bitacora.cantidadTitulos}"
+        			 align="LEFT"/>        	
+            <pdf:col header="#{etq.operacion}" value="#{bitacora.operacion}" 
+        			 align="LEFT"/> 
+        	<pdf:col header="#{etq.estatusPrevio}" value="#{bitacora.estatusOperacionAnterior}"
+        			 align="LEFT"/>   
+        	<pdf:col header="#{etq.estatusSolicitado}" value="#{bitacora.estatusOperacionNueva}"
+        			 align="LEFT"/>      
+        	<pdf:col header="#{etq.usuarioSolicito}" value="#{bitacora.cveUsuarioOperador}"
+        			 align="LEFT"/> 
+            <pdf:col header="#{etq.fechaBitacora}" value="#{bitacora.fechaSolicitudOperador}" 
+        			 align="LEFT"> 
+        			   <cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss"/>
+	        </pdf:col>
+           	<pdf:col header="#{etq.usuarioAutorizo}" value="#{bitacora.cveUsuarioAutorizo}"
+        			 align="LEFT"/>
+   			<pdf:col header="#{etq.fechaAutorizo}" value="#{bitacora.fechaSolicitudAutorizador}"
+        			 align="LEFT"/>  	 
+            <pdf:col header="#{etq.estatusBitacora}" value="#{bitacora.descEstatusBitacora}" 
+        			 align="LEFT"/>   			
+      	</pdf:row>
+      	<pdf:row>
+      		<pdf:col value="#{bitacora.motivoCambio}"  collspan="14"
+        			 align="LEFT"/>	
+      	</pdf:row>
+  	</pdf:table>
+</pdf:document>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

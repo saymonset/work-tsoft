@@ -1,0 +1,2 @@
+# Re-despliegue del componente WS
+deploy DerechosCapitalesWS.war --force

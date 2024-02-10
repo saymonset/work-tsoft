@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:pdf="http://indeval.com/jsf/pdf"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cvt="http://indeval.com/jsf/converters">
+
+
+    <pdf:document documentName="consultaStatements" documentTitle="Consulta de Statements"
+                  institucion="#{consultaStatementsController.agenteFirmado.id} #{consultaStatementsController.agenteFirmado.folio} #{consultaStatementsController.agenteFirmado.razon}"
+                  landscape="true" fecha="#{consultaStatementsController.fechaActual}"
+                  imageResource="/images/indeval.jpg">
+        <pdf:table value="consultaStatementsController" currentBean="resultado" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{consultaStatementsController}" currentBean="resultado" widthPercentage="100" >
+            <pdf:row>
+                <pdf:col header="#{etq.institucionMinus}" value="#{consultaStatementsController.idFolioInstitucion} - #{consultaStatementsController.nombreInstitucion}" align="center" />
+                <pdf:col header="#{etq.formato}" value="#{(consultaStatementsController.param.formato eq '-1') ? 'NINGUNO' : consultaStatementsController.param.formato }" align="center" />
+                <pdf:col header="#{etq.nombreBeneficiario} o #{etq.razonSocial}" value="#{consultaStatementsController.param.nombre}" align="center" />
+                <pdf:col header="#{etq.custodio}" value="#{(consultaStatementsController.param.custodio eq '-1') ? ' ' : consultaStatementsController.param.custodio }" align="center" />
+                <pdf:col header="#{etq.tipoBeneficiario}" value="#{consultaStatementsController.mapaTipoBeneficiario[consultaStatementsController.param.idTipoBeneficiario]}" align="center" />
+                <pdf:col header="#{etq.tv}" value="#{consultaStatementsController.param.tv}" align="center" />
+                <pdf:col header="#{etq.emisoraMinus}" value="#{consultaStatementsController.param.emisora}" align="center" />
+                <pdf:col header="#{etq.serieMinus}" value="#{consultaStatementsController.param.serie}" align="center" />
+                <pdf:col header="#{etq.isin}" value="#{consultaStatementsController.param.isin}" align="center" />
+                <pdf:col header="#{etq.fechaRegistro} Inicio" value="#{consultaStatementsController.param.fechaRegistroInicio}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaRegistro} Fin" value="#{consultaStatementsController.param.fechaRegistroFin}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaPago} Inicio" value="#{consultaStatementsController.param.fechaPagoInicio}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaPago} Fin" value="#{consultaStatementsController.param.fechaPagoFin}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.archivo}" value="#{consultaStatementsController.param.archivo}" align="center" />
+                <pdf:col header="#{etq.w8benAdp}" value="#{consultaStatementsController.param.adp}" align="center" />
+                <pdf:col header="#{etq.porcentajeRetencionMinus}" value="#{consultaStatementsController.param.porcentaje}" align="center" />
+                
+            </pdf:row>
+        </pdf:table>
+        <pdf:br />
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{consultaStatementsController.paginaReportes.totalRegistros}"/>
+        <pdf:subtitle value="Datos"/>
+        <pdf:table value="#{consultaStatementsController.paginaReportes.registros}" currentBean="statement" maxColums="9">
+            <pdf:row>
+                <pdf:col header="#{etq.emisionMinus}"
+                         value="#{statement.tv} | #{statement.emisora} | #{statement.serie}" align="CENTER" oddColorDark="true" />
+
+                <pdf:col header="#{etq.fechaRegistro}" value="#{statement.fechaRegistro}" align="LEFT" oddColorDark="true" >
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.nombre}" align="LEFT" oddColorDark="true" 
+                         value="#{statement.nombre}" collspan="3" />
+                <pdf:col header="#{etq.custodio}" align="LEFT" oddColorDark="true" 
+                         value="#{statement.custodio}"  />
+                         
+                <pdf:col header="#{etq.rfc}" align="LEFT" oddColorDark="true" value="#{statement.rfc}" footer="TOTALES" />
+                <pdf:col header="#{etq.porcentajeRetencionMinus}" align="RIGHT" oddColorDark="true"
+                         value="#{statement.porcentajeRetencion}" footer="-" >
+                    <f:convertNumber pattern="#,##0'%'"/>
+                </pdf:col>
+                <pdf:col header="#{etq.cantidadTit}" align="RIGHT" oddColorDark="true"
+                         value="#{statement.numeroTitulos}" footer="#{consultaStatementsController.paginaReportes.valores['totalPosicion']}" >
+                    <f:convertNumber pattern="#,##0"/>
+                </pdf:col>
+            </pdf:row>
+            <pdf:row>
+                <pdf:col header="#{etq.isin}" value="#{statement.isin}" align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.fechaPago}" value="#{statement.fechaPago}" align="LEFT" oddColorDark="true" >
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.direccionMinus}" align="LEFT" oddColorDark="true" 
+                         value="#{not statement.cargoInstitucion ? statement.direccion : consultaStatementsController.domiciliosFiscales[statement.idInstitucion].domicilioCompleto}" collspan="4" >
+                    <f:converter converterId="upperCaseConverter" />
+                </pdf:col>
+                <pdf:col header="#{etq.proporcionMinus}" align="RIGHT" oddColorDark="true"
+                         value="#{statement.proporcion}" footer="-" >
+                    <f:convertNumber pattern="#,##0.000000"/>
+                </pdf:col>
+                <pdf:col header="#{etq.dividendoMinus}" align="RIGHT" oddColorDark="true"
+                         value="#{statement.dividendo}" footer="#{consultaStatementsController.paginaReportes.valores['totalDividendo']}" >
+                    <f:convertNumber pattern="'$'##,##0.00"/>
+                </pdf:col>
+                <pdf:col header="#{etq.institucionMinus}" align="CENTER" oddColorDark="true"
+                         value="#{statement.idFolio}-#{statement.nombreInstitucion}" />
+            </pdf:row>
+            <pdf:row>
+                <pdf:col header="#{etq.institucionMinus}" align="CENTER" oddColorDark="true"
+                         value="#{statement.idFolio}-#{statement.nombreInstitucion}" />
+                <pdf:col header="#{etq.formato}" value="#{statement.formato}" align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.pais}" align="LEFT" oddColorDark="true" value="#{not statement.cargoInstitucion ?  statement.pais : consultaStatementsController.domiciliosFiscales[statement.idInstitucion].pais.descripcionPais}" >
+                    <f:converter converterId="upperCaseConverter" />
+                </pdf:col>
+                <pdf:col header="#{etq.w8benAdp}" align="LEFT" oddColorDark="true" value="#{not empty statement.adp ? statement.adp : '.'}" />
+                <pdf:col header="#{etq.tipoBeneficiario}" align="LEFT" oddColorDark="true" value="#{statement.tipoBeneficiario}" />
+                <pdf:col header="#{etq.estatus}" align="LEFT" oddColorDark="true" value="#{statement.statusOwner}" />
+
+                <pdf:col header="#{etq.impuestoMinus}" align="RIGHT" oddColorDark="true"
+                         value="#{statement.impuesto}" footer="#{consultaStatementsController.paginaReportes.valores['totalImpuestos']}" >
+                    <f:convertNumber pattern="'$'##,##0.00"/>
+                </pdf:col>
+                <pdf:col header="#{etq.dividendoNetoMinus}" align="RIGHT" oddColorDark="true"
+                         value="#{statement.dividendoNeto}" footer="#{consultaStatementsController.paginaReportes.valores['totalDividendoNeto']}" >
+                    <f:convertNumber pattern="'$'##,##0.00" />
+                </pdf:col>
+                 <pdf:col header="" align="RIGHT" oddColorDark="true" value="" >                    
+                </pdf:col>
+            </pdf:row>
+        </pdf:table>
+    </pdf:document>
+</html>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd" version="1.2">
+
+	<managed-bean>
+		<managed-bean-name>capturaTraspasosBean</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portalinternacional.presentation.controller.CapturaTraspasosController
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		
+		<managed-property>
+			<property-name>divisionInternacionalService</property-name>
+			<value>#{divisionInternacionalServiceEJB}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>utilService</property-name>
+			<value>#{utilService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>dateUtilService</property-name>
+			<value>#{dateUtilService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>emisionDao</property-name>
+			<value>#{emisionDao}</value>
+		</managed-property>		
+		<managed-property>
+			<property-name>isoHelper</property-name>
+			<value>#{isoHelper}</value>
+		</managed-property>
+		
+		
+		<managed-property>
+            <property-name>consultaCatalogoService</property-name>
+            <value>#{consultaCatalogoService}</value>
+        </managed-property>
+        
+        <managed-property>
+            <property-name>cuentaNombradaDao</property-name>
+            <value>#{cuentaNombradaDao}</value>
+        </managed-property>
+        
+		
+	</managed-bean>
+
+</faces-config>

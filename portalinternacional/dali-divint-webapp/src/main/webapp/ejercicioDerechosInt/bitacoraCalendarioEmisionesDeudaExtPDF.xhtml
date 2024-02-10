@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="BitacoraCalendarioEmisionesDeudaExt" documentTitle="Bitacora Calendario de Emisiones de deuda extranjeras"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        landscape="false" fecha="#{consultaBitacoraEnvOpBean.fechaActual}"
+        imageResource="/images/indeval.jpg">
+        <pdf:table value="bitacoraCalendarioEmisionesDeudaExtBean" currentBean="emision" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="Mensajes Swift" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{bitacoraCalendarioEmisionesDeudaExtBean.derecho}" currentBean="derecho" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.folio}" value="#{derecho.folio}" align="center" />
+				<pdf:col header="#{etq.referencia}" value="#{derecho.referencia}" align="center" />
+				<pdf:col header="#{etq.tv}" value="#{derecho.tipoValor}" align="center" />
+				<pdf:col header="#{etq.emisoraMinus}" value="#{derecho.emisora}" align="center" />
+				<pdf:col header="#{etq.serieMinus}" value="#{derecho.serie}" align="center" />
+				<pdf:col header="#{etq.cupon}" value="#{derecho.cupon}" align="center" />
+				<pdf:col header="#{etq.isin}" value="#{derecho.isin}" align="center" />
+				<pdf:col header="#{etq.custodio}" value="#{derecho.custodio.nombreCorto}" align="center" />
+				<pdf:col header="#{etq.fechaCorte}" value="#{derecho.fechaCorte}" align="center" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaPago}" value="#{derecho.fechaPago}" align="center"  >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaValor}" value="#{derecho.fechaValor}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaPost}" value="#{derecho.fechaPost}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>				
+				<pdf:col header="#{etq.valorNominalMinus}" value="#{derecho.valorNominal}" align="center" >
+					<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+				</pdf:col>				
+				<pdf:col header="#{etq.moneda}" value="#{derecho.divisa}" align="center" />
+				<pdf:col header="#{etq.tipoTasa}" value="#{derecho.tipoTasa}" align="center" />
+				<pdf:col header="#{etq.tasaPorcentaje}" value="#{derecho.tasa}" align="center" />
+				
+				<pdf:col header="#{etq.estado}" value="#{derecho.estado.descripcion}" align="center" />
+				
+            </pdf:row>
+        </pdf:table>
+        
+        <pdf:br/>
+        <pdf:text align="center" value="Mensajes Swift"/>
+        <pdf:br/>
+	<pdf:iterator	value="#{bitacoraCalendarioEmisionesDeudaExtBean.resultados}"	var="mensaje">
+		<pdf:text align="left" value="===========================================| #{mensaje.tipoMensaje} | #{mensaje.origen} | #{mensaje.fecha} |======================================"/>
+		<pdf:br/>
+		<pdf:text align="left" value="#{mensaje.mensaje}"/>
+		<pdf:br/>
+		<pdf:text align="left" value="=================================================================FIN MENSAJE ====================================================================="/>
+		<pdf:br/>
+	</pdf:iterator>        
+
+    </pdf:document>
+</html>

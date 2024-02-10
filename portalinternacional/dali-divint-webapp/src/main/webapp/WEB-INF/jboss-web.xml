@@ -1,0 +1,4 @@
+<jboss-web>
+    <context-root>/dali-divint</context-root>
+    <security-domain>sec-login</security-domain>
+</jboss-web>

@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+		<ui:define name="head">
+			<link rel="stylesheet" type="text/css" media="all"
+				href="#{facesContext.externalContext.requestContextPath}/css/beneficiarioActivo.css" />
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/beneficiarios.js">
+            </script>
+		</ui:define>
+		
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.beneficiarios}" />
+		</ui:define>
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.bitacoraBeneficiarios}" />
+		</ui:define>
+
+		<ui:define name="criterios">
+			<a4j:keepAlive beanName="consultaHistoricaBeneficiariosBean" />
+			<a4j:keepAlive beanName="consultaHistoricaBeneficiariosBean.param" />
+			
+            <h:panelGroup id="init">
+				<h:outputText value="#{consultaHistoricaBeneficiariosBean.init}" />
+			</h:panelGroup>
+			
+			<br />
+			<br />
+			
+			<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+                <tr>
+                    <td colspan="4">
+                        <div style="min-height: 21px;" colspan="2">
+                            <rich:messages warnClass="warning" infoClass="info"
+                                           errorClass="error" ajaxRendered="true" showDetail="false"
+                                           showSummary="true" layout="list">
+                                <f:facet name="infoMarker">
+                                    <h:panelGroup>
+                                        <h:graphicImage url="/images/accept.png" />&#160;
+                                    </h:panelGroup>
+                                </f:facet>
+
+                                <f:facet name="errorMarker">
+                                    <h:panelGroup>
+                                        <h:graphicImage url="/images/warning.gif" />&#160;
+                                    </h:panelGroup>
+                                </f:facet>
+                            </rich:messages>
+
+                            <div id="divWarnings" class="warning" style="display:none;">
+                                <p id="textoWarning">
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.custodio}" />
+					</td>
+					<td style="width: 330px">
+						<h:selectOneMenu id="lstCustodios" value="#{consultaHistoricaBeneficiariosBean.param.custodio}"
+							styleClass="textoControles">
+							<f:selectItem itemValue="-1" itemLabel="#{etq.seleccioneUnCustodio}" />
+							<f:selectItems value="#{consultaHistoricaBeneficiariosBean.listaCustodios}"/>
+						</h:selectOneMenu>
+					</td>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.tipoBeneficiario}" />
+					</td>
+					<td style="width: 330px">
+						<h:selectOneMenu id="lstTipoBeneficiario" value="#{consultaHistoricaBeneficiariosBean.param.tipoBeneficiario}"
+							styleClass="textoControles">
+							<f:selectItem itemValue="-1" itemLabel="#{etq.seleccioneUnTipoBeneficiario}" />
+							<f:selectItems value="#{consultaHistoricaBeneficiariosBean.tiposBeneficiarios}"/>
+						</h:selectOneMenu>
+					</td>
+				</tr>
+				<tr style="height: 5px">
+					<td colspan="4">
+						&#160;
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="#{etq.institucionMinus}" />
+					</td>
+					<td>
+						<a4j:region>
+                            <table align="left" width="100%">
+                                <tr>
+                                    <td width="70px">
+                                        <h:inputText autocomplete="off" id="idFolioInstitucion" value="#{consultaHistoricaBeneficiariosBean.idFolioInstitucion}"
+                                                     styleClass="textoControles campoNumerico"
+                                                     size="5" maxlength="5" readonly="#{!consultaHistoricaBeneficiariosBean.institucionIndeval}">
+                                            <a4j:support event="onchange" actionListener="#{consultaHistoricaBeneficiariosBean.obtenerDatosParticipante}"
+                                                         reRender="nombreInstitucionTraspasante" ajaxSingle="true"/>
+                                        </h:inputText>
+                                    </td>
+                                    <td>
+                                        <h:inputText autocomplete="off" id="nombreInstitucionTraspasante" size="25"
+                                                     readonly="true"
+                                                     value="#{consultaHistoricaBeneficiariosBean.nombreInstitucion}"
+                                                     styleClass="textoControles" />
+                                    </td>
+                                </tr>
+                            </table>
+						</a4j:region>
+					</td>
+					<td>
+						<h:outputText value="#{etq.formato}" />
+					</td>
+					<td>
+						<h:selectOneMenu id="lstFormato" value="#{consultaHistoricaBeneficiariosBean.param.formato}"
+							styleClass="textoControles">
+							<f:selectItem itemValue="-1" itemLabel="#{etq.seleccioneUnFormato}" />
+							<f:selectItems value="#{consultaHistoricaBeneficiariosBean.formatosBeneficiarios}"/>
+						</h:selectOneMenu>
+					</td>
+				</tr>
+				<tr style="height: 5px">
+					<td colspan="4">
+						&#160;
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="#{etq.estatusBeneficiarioAnterior}" />
+					</td>
+					<td>
+						<h:selectOneMenu id="estatusBenefAnterior" value="#{consultaHistoricaBeneficiariosBean.param.statusAnterior}"
+							styleClass="textoControles">
+							<f:selectItem itemValue="-1" itemLabel="#{etq.seleccioneUnEstado}" />
+							<f:selectItems value="#{consultaHistoricaBeneficiariosBean.listaEstados}"/>
+						</h:selectOneMenu>
+					</td>
+					<td>
+						<h:outputText value="#{etq.estatusBeneficiarioNuevo}" />
+					</td>
+					<td>
+						<h:selectOneMenu id="estatusBenefNuevo" value="#{consultaHistoricaBeneficiariosBean.param.statusNuevo}"
+							styleClass="textoControles">
+							<f:selectItem itemValue="-1" itemLabel="#{etq.seleccioneUnEstado}" />
+							<f:selectItems value="#{consultaHistoricaBeneficiariosBean.listaEstados}"/>
+						</h:selectOneMenu>
+					</td>
+				</tr>
+				<tr style="height: 5px">
+					<td colspan="4">
+						&#160;
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="#{etq.fechaRegistro}" />
+					</td>
+                    <td>
+                        <rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+                                       value="#{consultaHistoricaBeneficiariosBean.param.fechaRegistroInicio}"
+                                       datePattern="dd/MM/yyyy" />
+                        <br />
+                        <br />
+                        <rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+                                       value="#{consultaHistoricaBeneficiariosBean.param.fechaRegistroFin}"
+                                       datePattern="dd/MM/yyyy" />
+					</td>
+					<td>
+						<h:outputText value="#{etq.uoi}" />
+					</td>
+					<td>
+						<h:inputText autocomplete="off" id="uoiNumber" value="#{consultaHistoricaBeneficiariosBean.param.uoiNumber}"
+							styleClass="textoControles textoMayusculas" size="50" maxlength="50" />
+					</td>
+				</tr>
+				<tr style="height: 5px">
+					<td colspan="4">
+						&#160;
+					</td>
+				</tr>
+				<tr style="height: 5px">
+					<td colspan="4">
+						&#160;
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="#{etq.nombreBeneficiario} o #{etq.razonSocial}" />
+					</td>
+					<td>
+						<h:inputText autocomplete="off" id="nombreBenef" value="#{consultaHistoricaBeneficiariosBean.param.nombreRazonSocial}"
+							styleClass="textoControles textoMayusculas" size="50" maxlength="200" />
+					</td>
+					<td>
+						&#160;
+					</td>
+					<td>
+						&#160;
+					</td>
+				</tr>
+				
+			</table>
+			
+		</ui:define>
+		
+		
+		<ui:define name="botones">
+			<div class="refrescar" style="float: left;">
+        		 <a4j:status id="commonStatus">
+					<f:facet name="start">
+						<h:panelGroup>
+							<h:graphicImage value="/images/ajax-loader.gif" />
+							<h:outputText value="#{etq.buscando}"></h:outputText>
+						</h:panelGroup>
+					</f:facet>
+				</a4j:status> 	
+        	</div>
+        	<div class="limpiar">
+				<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+					styleClass="submit"
+					actionListener="#{consultaHistoricaBeneficiariosBean.limpiar}"
+					reRender="criterios,containerResultados" />
+			</div>
+			<div class="buscar">
+				<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+					styleClass="submit"
+					actionListener="#{consultaHistoricaBeneficiariosBean.buscar}"
+					reRender="containerResultados" />
+			</div>
+		</ui:define>
+
+		<ui:define name="seccionContenido">
+			<h:panelGroup id="containerResultados">
+				<h:panelGroup rendered="#{consultaHistoricaBeneficiariosBean.consultaEjecutada}">
+
+					<t:dataTable id="noExistenResultados"
+						value="#{consultaHistoricaBeneficiariosBean.paginaVO.registros}"
+						styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+						footerClass="tituloTabla" border="0" cellpadding="3px"
+						cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos"
+						rendered="#{empty consultaHistoricaBeneficiariosBean.paginaVO.registros}">
+						<t:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.sinResultados}"></h:outputText>
+							</f:facet>
+
+						</t:column>
+					</t:dataTable>
+
+					<br/>
+					<br/>
+					<br/>
+
+					<h:panelGroup rendered="#{not empty consultaHistoricaBeneficiariosBean.paginaVO.registros}">
+
+						<table width="100%" border="0">
+							<tr>
+								<td align="left" class="textoEstadoCuenta">
+									<a4j:commandLink id="control_bitacora_primero"
+										action="#{consultaHistoricaBeneficiariosBean.irPrimeraPagina}"
+										rendered="#{consultaHistoricaBeneficiariosBean.irAlPrimero}"
+										reRender="containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_atras_fast"
+										action="#{consultaHistoricaBeneficiariosBean.retrocederPaginasRapido}"
+										rendered="#{consultaHistoricaBeneficiariosBean.retrocederRapido}"
+										reRender="containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_atras"
+										action="#{consultaHistoricaBeneficiariosBean.retrocederPagina}"
+										rendered="#{consultaHistoricaBeneficiariosBean.retroceder}"
+										reRender="containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+											border="0" />
+									</a4j:commandLink>
+									<a4j:commandLink id="control_bitacora_adelante"
+										action="#{consultaHistoricaBeneficiariosBean.avanzarPagina}"
+										rendered="#{consultaHistoricaBeneficiariosBean.avanzar}"
+										reRender="containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_adelante_fast"
+										action="#{consultaHistoricaBeneficiariosBean.avanzarPaginasRapido}"
+										rendered="#{consultaHistoricaBeneficiariosBean.avanzarRapido}"
+										reRender="containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+											border="0" />
+
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_ultimo"
+										action="#{consultaHistoricaBeneficiariosBean.irUltimaPagina}"
+										rendered="#{consultaHistoricaBeneficiariosBean.irAlUltimo}"
+										reRender="containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+											border="0" />
+									</a4j:commandLink>
+
+
+									<br />
+									<h:outputText value="#{etq.mostrando}"
+										styleClass="textoResumen" />
+									<h:outputText value="#{consultaHistoricaBeneficiariosBean.numeroPagina}"
+										styleClass="textoResumen" />
+									<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+									<h:outputText value="#{consultaHistoricaBeneficiariosBean.totalPaginas}"
+										styleClass="textoResumen" />
+									<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+									&#160;&#160;&#160;
+									<h:outputText
+										value="#{consultaHistoricaBeneficiariosBean.paginaVO.totalRegistros}"
+										styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+									&#160;
+									<h:outputText styleClass="textoResumen"
+										value="#{etq.registrosEncontrados}" />
+								</td>
+								<td style="text-align: right;"  class="textoEstadoCuenta">
+									<h:outputText escape="false" value="#{etq.registrosPorPagina}"
+										styleClass="textoResumen" />
+									<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+										value="#{consultaHistoricaBeneficiariosBean.paginaVO.registrosXPag}">
+										<f:selectItem itemLabel="1" itemValue="1" />
+										<f:selectItem itemLabel="2" itemValue="2" />
+										<f:selectItem itemLabel="5" itemValue="5" />
+										<f:selectItem itemLabel="10" itemValue="10" />
+										<f:selectItem itemLabel="20" itemValue="20" />
+										<f:selectItem itemLabel="50" itemValue="50" />
+										<a4j:support event="onchange"
+											reRender="containerResultados"
+											actionListener="#{consultaHistoricaBeneficiariosBean.buscar}" />
+									</h:selectOneMenu>
+								</td>
+							</tr>
+						</table>
+
+					</h:panelGroup>
+
+
+
+					<h:dataTable id="resultados"
+						value="#{consultaHistoricaBeneficiariosBean.paginaVO.registros}"
+						var="registro"
+						rendered="#{not empty consultaHistoricaBeneficiariosBean.paginaVO.registros}"
+						styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+						footerClass="tituloTabla" border="0" cellpadding="3px"
+						cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos">
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.institucionMinus}" />
+							</f:facet>
+                            <t:dataList value="#{registro.beneficiario.institucion}"
+								var="institucion">
+								<h:outputText styleClass="texto textoPeque12" value="#{institucion.tipoInstitucion.claveTipoInstitucion}#{institucion.folioInstitucion} - #{institucion.nombreCorto}" /><br />
+							</t:dataList>
+						</h:column>
+
+						<h:column>
+							<h:outputText styleClass="texto textoPeque12 negrita" value="#{etq.custodio}" />
+							<br />
+							<h:outputText styleClass="texto textoPeque12"
+								value="#{consultaHistoricaBeneficiariosBean.mapaCustodios[registro.beneficiario.idCuentaNombrada]}" />
+							<br />
+							<br />
+							<h:outputText styleClass="texto textoPeque12 negrita" value="#{etq.formato}" />
+							&#160;&#160;
+
+							<h:outputText styleClass="texto textoPeque12" value="#{registro.beneficiario.tipoFormatoPantalla}" />
+
+							<br />
+							<br />
+							<a href="javascript:detalleBeneficiario(#{registro.beneficiario.idBeneficiario},'#{registro.beneficiario.tipoFormato}');">
+								<h:outputText styleClass="texto textoPeque12 sinSubrayar" value="#{etq.verDetalle}" />
+							</a>
+							<br />
+							<h:panelGroup rendered="#{registro.beneficiario.tipoFormato ne 'MILA' and registro.beneficiario.tipoFormato ne 'W8IMY2017'}">
+							<a href="#{facesContext.externalContext.requestContextPath}/beneficiarios/ObtieneFormatoW?idBeneficiario=#{registro.beneficiario.idBeneficiario}">
+								<h:outputText styleClass="texto textoPeque12 sinSubrayar" value="PDF" />
+							</a>
+							</h:panelGroup>
+							<h:panelGroup rendered="#{registro.beneficiario.tipoFormato eq 'MILA'}">
+							<a href="#{facesContext.externalContext.requestContextPath}/beneficiarios/ObtieneFormatoMILA?funcion=generarFormatoMila&amp;idBeneficiario=#{registro.beneficiario.idBeneficiario}">
+								<h:outputText styleClass="texto textoPeque12 sinSubrayar" value="INT_100" />
+							</a>
+							</h:panelGroup>
+						</h:column>
+
+                        <h:column>
+							<h:outputText styleClass="texto textoPeque12 negrita" value="#{etq.nombreBeneficiario} o #{etq.razonSocial}" />
+                            <br />
+							<h:outputText styleClass="texto textoPeque12" value="#{registro.beneficiario.nombreGeneral}" />
+                            <br />
+                            <br />
+                            <h:outputText styleClass="texto textoPeque12 negrita" value="#{etq.tipoBeneficiario}" />
+                            <br />
+							<h:outputText styleClass="texto textoPeque12" value="#{registro.beneficiario.tipoBeneficiario.descTipoBeneficiario}" />
+                            <br />
+                            <br />
+                            <h:outputText styleClass="texto textoPeque12 negrita" value="#{etq.uoi}" />
+                            <br />
+							<h:outputText styleClass="texto textoPeque12" value="#{registro.beneficiario.uoiNumber}" />
+						</h:column>
+
+                        <h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.estatusBeneficiarioAnterior}" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{registro.statusAnterior.descStatusBenef}" />
+						</h:column>
+
+                        <h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.estatusBeneficiarioNuevo}" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{registro.statusNuevo.descStatusBenef}" />
+						</h:column>
+
+                        <h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaCambio}" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{registro.fechaAlta}"
+                                          converter="formatoFechaLargaConverter" />
+						</h:column>
+
+                    </h:dataTable>
+                    <br />
+                    <t:div style="width: 100%; text-align: right;">
+                        <h:commandButton id="generarPdf" actionListener="#{consultaHistoricaBeneficiariosBean.generarReportes}"
+                                         action="consultaHistoricoBeneficiariosPDF"
+                                         image="/images/pdf.gif"
+                                         title="#{etq.exportarResultadosPDF}" 
+                                         onclick="bloquearBotonesReportes(['generarXls', 'generarPdf']);"
+                                         />&#160;&#160;
+                        <h:commandButton id="generarXls" actionListener="#{consultaHistoricaBeneficiariosBean.generarReportes}"
+                                         action="consultaHistoricoBeneficiariosXLS"
+                                         image="/images/excel-file.gif"
+                                         title="Exportar a XLS todos los resultados de la consulta" 
+                                         onclick="bloquearBotonesReportes(['generarXls', 'generarPdf']);"
+                                         />
+                        <div id="monitorPeticionReporte" style="display: none;">
+											<h:panelGroup id="panelMonitorPeticionReporte">
+												<h:graphicImage value="/images/ajax-loader.gif" />
+												&#160;&#160;
+												<h:outputText value="#{etq.reporteEnProceso}" />
+												<a4j:commandButton id="btnActualizarEstadoPeticion"
+													image="/images/transparent.gif"
+													styleClass="submit"
+													actionListener="#{consultaHistoricaBeneficiariosBean.actualizarEstadoPeticion}"
+													reRender="panelMonitorPeticionReporte"
+													oncomplete="desbloquearBotonesReportes(#{consultaHistoricaBeneficiariosBean.peticionReporteCompleta}, ['generarXls', 'generarPdf']);"/>
+											</h:panelGroup>
+										</div>
+                    </t:div>
+                </h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+
+	</ui:composition>
+
+</html>
+

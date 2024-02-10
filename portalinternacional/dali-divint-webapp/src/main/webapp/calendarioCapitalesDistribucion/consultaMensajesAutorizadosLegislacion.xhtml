@@ -1,0 +1,924 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:t="http://myfaces.apache.org/tomahawk">
+<!-- DECORATE -->
+
+<ui:composition template="/layoutConsultasLargo.xhtml">
+
+    <ui:define name="head">
+        <script language="javascript" type="text/javascript"
+            src="#{facesContext.externalContext.requestContextPath}/js/consultaMensajesAutorizadosLegislacion.js">
+            
+        </script>
+    </ui:define>
+    <ui:define name="tituloSeccion">
+        <h:outputText value="#{etq.tituloGeneralModulo}" />
+    </ui:define>
+
+    <ui:define name="tituloEncabezado">
+        <h:outputText value="#{etq.subTituloConsultaAutorizaciones}"></h:outputText>
+    </ui:define>
+    
+    
+    <ui:define name="criterios">
+
+        <h:outputText value="#{consultaMensajesAutorizadosLegislacionBean.init}" />
+        <a4j:keepAlive beanName="consultaMensajesAutorizadosLegislacionBean" />
+        
+        <h:panelGroup id="mensajeUsuario">
+            <div style="min-height: 100%;">
+                <rich:messages warnClass="warning" infoClass="info"
+                    errorClass="error" ajaxRendered="true" showDetail="false"
+                    showSummary="true" layout="list">
+                    <f:facet name="infoMarker">
+                        <h:panelGroup>
+                            <h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+                    </f:facet>
+
+                    <f:facet name="errorMarker">
+                        <h:panelGroup>
+                            <h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+                    </f:facet>
+                </rich:messages>
+
+                <div id="divWarnings" class="warning" style="display: none;" >
+                    <p id="textoWarning"></p>
+                </div>
+            </div>
+        </h:panelGroup>
+        <h:panelGroup id="panelCriterios">
+            <h:inputHidden id="isCalIndeval" value="false" />
+            <div style='display: "inline"' id="divCriterios">
+
+                 <table width="100%" border="0" cellpadding="0px" cellspacing="5px" align="center">                    
+                    <tr>
+<!--==============================================BUSQUEDA CLAVE VALOR======================================================================== -->
+                        <td class="recuadroTabla" align="center" colspan="5">
+                            <table class="tablaCriterios" align="center">
+                                <tr>
+                                    <td colspan="5" align="center">
+                                    	<b> 
+                                    		<h:outputText styleClass="texto" value="#{etq.claveValor}" />
+                                    	</b>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center">
+                                    	<h:outputText styleClass="texto" value="#{etq.tv}" />
+                                    </td>
+                                    <td align="center">
+                                    	<h:outputText styleClass="texto" value="#{etq.emisoraMinus}" />
+                                    </td>
+                                    <td align="center">
+                                    	<h:outputText styleClass="texto" value="#{etq.serieMinus}" />
+                                    </td>
+                                    <td align="center">
+                                    	<h:outputText styleClass="texto" value="#{etq.isin}" />
+                                    </td>                                                                               
+                                </tr>
+                                <tr align="center">
+                                    <td align="center">                                    	
+                                    	<h:inputText autocomplete="off" id="tipoValor"
+                                                value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.tipoValor}" size="7"
+                                                maxlength="4"
+                                                styleClass="textoControles campoAlphaNumerico textoMayusculas"
+                                                tabindex="10" />                                    	
+                                    </td>
+                                    <td align="center">                                    	
+                                    	<h:inputText autocomplete="off" id="emisora" size="7"
+                                                maxlength="7" value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.emisora}"
+                                                required="false"
+                                                styleClass="textoControles campoAlphaNumericoEmisora textoMayusculas"
+                                                tabindex="20" />                                        
+                                    </td>
+                                    <td align="center">
+                                    	<h:inputText autocomplete="off" id="serie"
+                                            value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.serie}" size="7"
+                                            maxlength="6"
+                                            styleClass="textoControles campoAlphaNumericoSerie textoMayusculas"
+                                            tabindex="30" />
+                                    </td>
+                                    <td align="center">
+                                    	<h:inputText autocomplete="off" id="isin"
+                                            value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.isin}" size="12"
+                                            maxlength="12"
+                                            styleClass="textoControles campoAlphaNumerico textoMayusculas"
+                                            tabindex="40" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    	<td class="recuadroTabla" align="center" colspan="10">
+ 							<table class="tablaCriterios" align="center"> 								
+                    			<tr  align="center">                        			
+                                	<td nowrap = "true" align="center">
+                                    	<h:outputText styleClass="texto" value = "#{etq.calEstadoEnvio}" />
+                                    </td> 
+                                    <td nowrap = "true" align="center">
+                                    	<h:outputText styleClass="texto" value="#{etq.destinatario}" />
+                                    </td>
+                                    <td nowrap="true" align="center">
+                                    	<h:outputText styleClass="texto" value="#{etq.folioMensaje}" />
+                                    </td>                                    
+                                    <td nowrap="true" align="center">
+                                    	<h:outputText styleClass="texto" value="#{etq.folioIndeval}" />
+                                    </td>
+                               </tr>     	                                 	                                 	                                
+	                           <tr align="center">
+                                    <td>
+                                    	<h:selectOneMenu styleClass="textoControles"
+                                            value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.estadoCadena}" tabindex="50">
+                                            <f:selectItem itemValue="-1" itemLabel="Todos" />
+                                            <f:selectItems value="#{consultaMensajesAutorizadosLegislacionBean.estadosEnvio}" />
+                                        </h:selectOneMenu>
+                                  	</td>	                                  		
+                                    <td>
+                                    	<h:selectOneMenu styleClass="textoControles"
+                                            value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.destinatario}" tabindex="60">
+                                            <f:selectItem itemValue="-1" itemLabel="Todos" />
+                                            <f:selectItem itemValue="TODOS" itemLabel="TODOS" />
+                                            <f:selectItems value="#{consultaMensajesAutorizadosLegislacionBean.destinatarios}" />
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td align="center">
+                                   	<h:inputText autocomplete="off" id="folioMensaje"
+                                              value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.folioMensaje}" size="20"
+                                              maxlength="20"
+                                              styleClass="textoControles campoNumerico textoMayusculas"
+                                              tabindex="70" />
+                                   </td>
+                                   <td align="center">
+                                   	<h:inputText autocomplete="off" id="folioIndeval"
+                                              value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.folioIndeval}" size="20"
+                                              maxlength="20"
+                                              styleClass="textoControles campoNumerico textoMayusculas"
+                                              tabindex="80" />
+                                  </td>                                                                     	                                    	                                    	                                
+	                            </tr>
+	                            <tr align="center">
+	                            	<td nowrap = "true" colspan="2">
+	                                	<h:outputText styleClass="texto" value = "#{etq.fechaExdate}" />
+	                                </td>
+	                                <td nowrap = "true"  colspan="2"  align="center">
+	                                	<h:outputText styleClass="texto" value = "#{etq.fechaCorteMinus}" />
+	                                </td>     	                            
+	                            </tr>
+	                            <tr align="center">
+	                            	<td>
+                                   		<rich:calendar inputClass="textoControles"
+                                           inputStyle="background-color: #ffffe6;" inputSize="11"
+                                           value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaExdateInicio}"
+                                           datePattern="dd/MM/yyyy" tabindex="90"  />
+                                   </td>                                   
+                                   <td>
+                                   	 <rich:calendar inputClass="textoControles"
+                                           inputStyle="background-color: #ffffe6;" inputSize="11"
+                                           value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaExdateFin}"
+                                           datePattern="dd/MM/yyyy" tabindex="100"  />
+                                   </td>
+                                   <td>
+                                        	<rich:calendar inputClass="textoControles"
+	                                            inputStyle="background-color: #ffffe6;" inputSize="11"
+	                                            value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaCorteInicio}"
+	                                            datePattern="dd/MM/yyyy" tabindex="110"  />
+                                        </td>                                
+                                		<td>
+                                			<rich:calendar inputClass="textoControles"
+	                                            inputStyle="background-color: #ffffe6;" inputSize="11"
+	                                            value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaCorteFin}"
+	                                            datePattern="dd/MM/yyyy" tabindex="120"  />
+                                        </td>
+	                            </tr>	                                                                                                  	                                                                                                       
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="recuadroTabla" align="center" colspan="5">
+                            <table class="tablaCriterios" align="center">
+                                <tr>
+                                    <td colspan="5" align="center">
+                                    	<b> 
+                                    		<h:outputText styleClass="texto" value="#{etq.calInfoSolicita}" />
+                                    	</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" colspan="2">
+                                    	<h:outputText styleClass="texto" value="#{etq.calUsuarioSolicita}" />
+                                    </td>
+                                    <td align="center" colspan="3">
+                                    	<h:outputText styleClass="texto" value="#{etq.calFechaSolicitud}" />
+                                    </td>                                                                                                                  
+                                </tr>
+                                <tr align="center">
+                                    <td>                                    	
+                                    	<h:inputText autocomplete="off" id="usuarioSolicita"
+                                                value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.usuario}" size="10"
+                                                maxlength="20"
+                                                styleClass="textoControles textoMayusculas"
+                                                tabindex="130" />                                    	
+                                    </td>
+                                    <td></td>
+                                    <td>        
+                                    	<rich:calendar inputClass="textoControles"
+	                                            inputStyle="background-color: #ffffe6;" inputSize="11"
+	                                            value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaSolicitudInicio}"
+	                                            datePattern="dd/MM/yyyy" tabindex="140"  />                            	
+                                    	                                       
+                                    </td>                                   
+                                    <td>
+                                    	<rich:calendar inputClass="textoControles"
+	                                            inputStyle="background-color: #ffffe6;" inputSize="11"
+	                                            value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaSolicitudFin}"
+	                                            datePattern="dd/MM/yyyy" tabindex="150"  />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td class="recuadroTabla" align="center" colspan="5">
+                            <table class="tablaCriterios" align="center">
+                                <tr>
+                                    <td colspan="5" align="center">
+                                    	<b> 
+                                    		<h:outputText styleClass="texto" value="#{etq.calInfoAutoriacion}" rowspan="2" />
+                                    	</b>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="center" colspan="2">
+                                    	<h:outputText styleClass="texto" value="#{etq.calUsuarioAutorizo}" />
+                                    </td>
+                                    <td align="center" colspan="3">
+                                    	<h:outputText styleClass="texto" value="#{etq.calFechaAutorizacion}" />
+                                    </td>                                                                                                                  
+                                </tr>
+                                <tr align="center">
+                                    <td colspan="2">                                    	
+                                    	<h:inputText autocomplete="off" id="usuarioAutorizo"
+                                                value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.usuarioAutoriza}" size="10"
+                                                maxlength="20"
+                                                styleClass="textoControles textoMayusculas"
+                                                tabindex="160" />                                    	
+                                    </td>
+                                    <td>        
+                                    	<rich:calendar inputClass="textoControles"
+	                                            inputStyle="background-color: #ffffe6;" inputSize="11"
+	                                            value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaAutorizacionInicio}"
+	                                            datePattern="dd/MM/yyyy" tabindex="170"  />                            	
+                                    	                                       
+                                    </td>
+                                    <td>
+                                    	
+                                    </td>
+                                    <td>
+                                    	<rich:calendar inputClass="textoControles"
+	                                            inputStyle="background-color: #ffffe6;" inputSize="11"
+	                                            value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaAutorizacionFin}"
+	                                            datePattern="dd/MM/yyyy" tabindex="180"  />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td class="recuadroTabla" align="center" colspan="5">
+                            <table class="tablaCriterios" align="center">                         
+                                <tr>
+                                    <td align="center" colspan="2">
+                                    	<h:outputText styleClass="texto" value="#{etq.estadoEmision}" />
+                                    </td>
+                                    <td align="center" colspan="2">
+                                    	<h:outputText styleClass="texto" value="#{etq.fuente}" />
+                                    </td>                                                                                                                  
+                                </tr>
+                                <tr align="center">
+                                   <td align="center" colspan="2">                                    	
+                               			<h:selectOneMenu styleClass="textoControles"
+                                           value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.estadoEmision}"
+                                           tabindex="190">
+                                          <f:selectItem itemValue="-1" itemLabel="Todos" />
+                                          <f:selectItems value="#{consultaMensajesAutorizadosLegislacionBean.estadoEmisionCombo}" />	                                       
+                                         </h:selectOneMenu>                                  	
+                                  	</td>
+                                   	<td align="center" colspan="2">        
+                                 		<h:selectOneMenu styleClass="textoControles"
+                                            	value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fuente}" tabindex="200">
+	                                            <f:selectItem itemValue="-1" itemLabel="Todos" />
+	                                            <f:selectItems value="#{consultaMensajesAutorizadosLegislacionBean.custodios}" />
+                                        </h:selectOneMenu>                         	
+                                    	                                       
+                                    </td>                                                                       
+                                </tr>
+                                <tr>
+                                	 <td align="center" colspan="2">
+                                      		<h:outputText styleClass="texto"
+                                              value="#{etq.caev}" />
+                                        </td>
+                                        <td align="center" colspan="2">
+                                      		<h:outputText styleClass="texto"
+                                              value="#{etq.camv}" />
+                                        </td>                                
+                                </tr>
+                                <tr>
+                               		<td align="center" colspan="2">
+                                        	<h:selectOneMenu styleClass="textoControles"
+		                                            value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.tipoDerechoCaev}"
+		                                            tabindex="210">
+	                                            <f:selectItem itemValue="-1" itemLabel="Todos" />
+	                                            <f:selectItems value="#{consultaMensajesAutorizadosLegislacionBean.tiposPagoCAEV}" />
+                                            </h:selectOneMenu>
+                                        </td>
+                                    	<td align="center" colspan="2">
+                                    		<h:selectOneMenu styleClass="textoControles"
+		                                            value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.tipoDerechoCamv}"
+		                                            tabindex="220">
+                                            	<f:selectItem itemValue="-1" itemLabel="Todos" />
+                                            	<f:selectItems value="#{consultaMensajesAutorizadosLegislacionBean.tiposPagoCAMV}" />
+                                            </h:selectOneMenu>
+                                        </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>                                   	                                                
+                </table>                                             			                    		    		
+			</div>                               
+        </h:panelGroup>
+        <!--===================================================== CONSULTA EJECUTADA PANEL SUPERIOR =============================================================== - -->  
+        <h:panelGroup id="panelResumen">
+            <h:panelGroup rendered="#{consultaMensajesAutorizadosLegislacionBean.consultaEjecutada}">
+                <div id="divResumen" style="display: #{consultaMensajesAutorizadosLegislacionBean.consultaEjecutada ? 'inline' : 'none'}">
+                	<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+                        <tr>
+                        	<td class="recuadroTabla">
+                                <table class="tablaCriterios texto" border="0" style="text-align: center">
+                                	<tr>
+                                		<td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.tv}" />
+                                        </td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.emisoraMinus}" />
+                                        </td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.serieMinus}" />
+                                       	</td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.isin}" />
+                                        </td>
+                                         <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.calEstadoEnvio}" />
+                                        </td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.calDestinatario}" />
+                                        </td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.folioMensaje}" />
+                                        </td>                                        
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.folioIndeval}" />
+                                        </td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.fechaExdate}" />                                      		
+                                        </td>                                          
+                                	</tr>
+                                	<tr align="center">
+                                		<td>
+                                		 	<h:outputText styleClass="texto"
+	                                            value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.tipoValor}"
+	                                            rendered="#{!empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.tipoValor}" />
+	                                        <h:outputText styleClass="texto" value="TODOS"
+	                                            rendered="#{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.tipoValor}" />
+	                                   </td>
+	                                   <td>                                       
+	                                        <h:outputText styleClass="texto"
+	                                            value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.emisora}"
+	                                            rendered="#{!empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.emisora}" />
+	                                        <h:outputText styleClass="texto" value="TODAS"
+	                                            rendered="#{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.emisora}" />                                          
+                                        </td>
+                                        <td>
+                                        	<h:outputText styleClass="texto" value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.serie}"
+                                                rendered="#{!empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.serie}" /> 
+                                            <h:outputText styleClass="texto" value="TODAS"
+                                                rendered="#{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.serie}" />
+                                        </td>
+                                        <td>
+                                        	<h:outputText styleClass="texto"
+                                                value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.isin}"
+                                                rendered="#{!empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.isin}" /> 
+                                            <h:outputText styleClass="texto" value="TODAS"
+                                                rendered="#{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.isin}" />
+                                        </td>
+                                        <td>
+                                        	<h:outputText styleClass="texto"
+                                                value="#{consultaMensajesAutorizadosLegislacionBean.selectedEstadoEnvio}"
+                                                rendered="#{!empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.estadoCadena and consultaMensajesAutorizadosLegislacionBean.filtroConsulta.estadoCadena ne '-1'}" />
+                                            <h:outputText styleClass="texto" value="TODOS"
+                                                rendered="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.estadoCadena eq '-1'}" />
+                                        </td>
+                                        <td>
+                                        	<h:outputText styleClass="texto"
+                                                value="#{consultaMensajesAutorizadosLegislacionBean.selectedDestinatario}"
+                                                rendered="#{!empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.destinatario and consultaMensajesAutorizadosLegislacionBean.filtroConsulta.destinatario ne '-1'}" />
+                                            <h:outputText styleClass="texto" value="CUALQUIER"
+                                                rendered="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.destinatario eq '-1'}" />
+                                        </td>
+                                         <td>                                        	
+	                                        <h:outputText styleClass="texto"
+	                                            value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.folioMensaje}"
+	                                            rendered="#{!empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.folioMensaje}" />
+	                                        <h:outputText styleClass="texto" value="TODOS"
+	                                            rendered="#{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.folioMensaje}" />                                            
+                                        </td>                          
+                                        <td>                                        	
+	                                        <h:outputText styleClass="texto"
+	                                            value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.folioIndeval}"
+	                                            rendered="#{!empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.folioIndeval}" />
+	                                        <h:outputText styleClass="texto" value="TODOS"
+	                                            rendered="#{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.folioIndeval}" />                                            
+                                        </td>
+                                        <td>
+                                       		<h:outputText styleClass="texto" value="#{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaExdateInicio ? 'NA' : 
+                                       			consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaExdateInicioFormato} - #{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaExdateFin ? 'NA' : 
+                                       			consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaExdateFinFormato }" 
+                                       			rendered="#{!empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaExdateInicio or !empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaExdateFin}"/>
+                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaExdateInicio and empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaExdateFin}"/>                                        
+                                        </td>                                                          
+                                	</tr>
+                                	<tr>	                                	
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.fechaCorteMinus}" />
+                                        </td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.calUsuarioSolicita}" />
+                                       	</td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.calFechaSolicitud}" />
+                                        </td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.calUsuarioAutoriza}" />
+                                        </td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.calFechaAutorizacion}" />
+                                        </td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.estadoEmision}" />
+                                        </td>                                        
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.fuente}" />
+                                        </td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.caev}" />
+                                        </td>
+                                        <td align="center">
+                                      		<h:outputText styleClass="texto" value="#{etq.camv}" />
+                                        </td>                                       
+                                	</tr>
+                                	<tr>
+                                	
+                                        <td>
+                                       		<h:outputText styleClass="texto" value="#{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaCorteInicio ? 'NA' : 
+                                       			consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaCorteInicioFormato} - #{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaCorteFin ? 'NA' : 
+                                       			consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaCorteFinFormato }" 
+                                       			rendered="#{!empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaCorteInicio or !empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaCorteFin}"/>
+                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaCorteInicio and empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaCorteFin}"/>                                        
+                                        </td> 
+                                        <td>                                        	
+	                                        <h:outputText styleClass="texto"
+	                                            value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.usuario}"
+	                                            rendered="#{!empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.usuario}" />
+	                                        <h:outputText styleClass="texto" value="TODOS"
+	                                            rendered="#{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.usuario}" />                                            
+                                        </td>
+                                        <td>
+                                       		<h:outputText styleClass="texto" value="#{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaSolicitudInicio ? 'NA' : 
+                                       			consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaSolicitudInicioFormato} - #{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaSolicitudFin ? 'NA' : 
+                                       			consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaSolicitudFinFormato }" 
+                                       			rendered="#{!empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaSolicitudInicio or !empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaSolicitudFin}"/>
+                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaSolicitudInicio and empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaSolicitudFin}"/>                                        
+                                        </td>
+                                        <td>                                        	
+	                                        <h:outputText styleClass="texto"
+	                                            value="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.usuarioAutoriza}"
+	                                            rendered="#{!empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.usuarioAutoriza}" />
+	                                        <h:outputText styleClass="texto" value="TODOS"
+	                                            rendered="#{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.usuarioAutoriza}" />                                            
+                                        </td>
+                                        <td>
+                                       		<h:outputText styleClass="texto" value="#{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaAutorizacionInicio ? 'NA' : 
+                                       			consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaAutorizacionInicioFormato} - #{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaAutorizacionFin ? 'NA' : 
+                                       			consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaAutorizacionFinFormato }" 
+                                       			rendered="#{!empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaAutorizacionInicio or !empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaAutorizacionFin}"/>
+                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaAutorizacionInicio and empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fechaAutorizacionFin}"/>                                        
+                                        </td> 
+                                        <td>
+                                        	<h:outputText styleClass="texto"
+                                                value="#{consultaMensajesAutorizadosLegislacionBean.selectedEstadoEmision}"
+                                                rendered="#{!empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.estadoEmision and consultaMensajesAutorizadosLegislacionBean.filtroConsulta.estadoEmision ne '-1'}" />
+                                            <h:outputText styleClass="texto" value="TODOS"
+                                                rendered="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.estadoEmision eq '-1'}" />
+                                        </td>
+                                        <td>
+                                        	<h:outputText styleClass="texto"
+                                                value="#{consultaMensajesAutorizadosLegislacionBean.selectedCustodio}"
+                                                rendered="#{!empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fuente and consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fuente ne '-1'}" />
+                                            <h:outputText styleClass="texto" value="TODOS"
+                                                rendered="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.fuente eq '-1'}" />
+                                        </td>
+                                        <td>
+                                        	<h:outputText styleClass="texto"
+                                                value="#{consultaMensajesAutorizadosLegislacionBean.selectedTipoPagoCAEV}"
+                                                rendered="#{!empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.tipoDerechoCaev and consultaMensajesAutorizadosLegislacionBean.filtroConsulta.tipoDerechoCaev ne '-1'}" />
+                                            <h:outputText styleClass="texto" value="TODOS"
+                                                rendered="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.tipoDerechoCaev eq '-1'}" />
+                                        </td>    
+                                        <td>
+                                     		<h:outputText styleClass="texto"
+                                      			value="#{consultaMensajesAutorizadosLegislacionBean.selectedTipoPagoCAMV}"
+                                              	rendered="#{!empty consultaMensajesAutorizadosLegislacionBean.filtroConsulta.tipoDerechoCamv and consultaMensajesAutorizadosLegislacionBean.filtroConsulta.tipoDerechoCamv ne '-1'}" />
+                                         	<h:outputText styleClass="texto" value="TODOS"
+                                             	rendered="#{consultaMensajesAutorizadosLegislacionBean.filtroConsulta.tipoDerechoCamv eq '-1'}" />
+                                        </td>
+                                    </tr>						                                                                      
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:define>
+<!-- ===================================================   BOTONES =================================================================-->
+    <ui:define name="botones">
+        <h:panelGroup id="botones">
+            <div class="refrescar" style="float: left;">
+                <a4j:status id="commonStatus">
+                    <f:facet name="start">
+                        <h:panelGroup>
+                            <h:graphicImage value="/images/ajax-loader.gif" />
+                            <h:outputText value="#{etq.buscando}"></h:outputText>
+                        </h:panelGroup>
+                    </f:facet>
+                </a4j:status>
+            </div>
+            <div class="limpiar">
+                <h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+                    styleClass="submit"
+                    actionListener="#{consultaMensajesAutorizadosLegislacionBean.limpiar}" tabindex="230" />
+            </div>
+            <div class="buscar">
+                <a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+	                    styleClass="submit" oncomplete='javascript:presentarResumen();'
+	                    actionListener="#{consultaMensajesAutorizadosLegislacionBean.buscarEnvios}"
+	                    reRender="containerResultados,totalesConsultas,tablaResultados,botones,mensajeUsuario,panelResumen"
+	                    tabindex="240">
+                    <f:setPropertyActionListener value="true" target="#{consultaMensajesAutorizadosLegislacionBean.banderaBitacoraConsulta}" />
+                </a4j:commandButton>
+            </div>
+            <div class="editar" style="display: #{consultaEmisionesBean.consultaEjecutada ? 'inline' : 'none'}" id="botonEditarCriterios">
+            	<input type="image" class="submit"
+                    src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+                    alt="Editar Criterios" title="Editar Criterios"
+                    onclick='javascript:presentarCriterios();return false;' 
+                    tabindex="250"/>
+            </div>
+        </h:panelGroup>
+    </ui:define>
+
+<!--  ============================================= MENSAJE SIN DATOS ENCONTRADOS EN LA CONSULTA ========================================== -->
+    <ui:define name="seccionContenido">
+        <h:panelGroup id="containerResultados">
+            <h:panelGroup rendered="#{consultaMensajesAutorizadosLegislacionBean.consultaEjecutada}">
+                <t:dataTable id="noExistenResultados"
+                    value="#{consultaMensajesAutorizadosLegislacionBean.paginaVO.registros}"
+                    styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+                    footerClass="tituloTabla" border="0" cellpadding="3px"
+                    cellspacing="0px" columnClasses="everyColumn"
+                    rowClasses="renglonTablaUno, renglonTablaDos"
+                    rendered="#{empty consultaMensajesAutorizadosLegislacionBean.paginaVO.registros}">
+
+                    <t:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{etq.sinResultados}"></h:outputText>
+                        </f:facet>
+
+                    </t:column>
+                </t:dataTable>
+
+                <br />
+                <br />
+                <br />
+<!-- ============================================TABLA DE RESULTADOS ========================================================================================== -->
+				<h:panelGroup id="tablaResultados">
+					 <h:graphicImage value="/images/blank.gif" width="900px"
+                        height="1px">
+                     </h:graphicImage>
+					 <h:panelGroup
+                        rendered="#{not empty consultaMensajesAutorizadosLegislacionBean.paginaVO.registros}">
+                        <table width="100%" border="0">
+                            <tr>
+                                <td align="left" class="textoEstadoCuenta"><a4j:commandLink
+                                        id="control_bitacora_primero"
+                                        action="#{consultaMensajesAutorizadosLegislacionBean.irPrimeraPagina}"
+                                        rendered="#{consultaMensajesAutorizadosLegislacionBean.irAlPrimero}"
+                                        reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+                                            border="0" />
+                                    </a4j:commandLink> <a4j:commandLink id="control_bitacora_atras_fast"
+                                        action="#{consultaMensajesAutorizadosLegislacionBean.retrocederPaginasRapido}"
+                                        rendered="#{consultaMensajesAutorizadosLegislacionBean.retrocederRapido}"
+                                        reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+                                            border="0" />
+                                    </a4j:commandLink> <a4j:commandLink id="control_bitacora_atras"
+                                        action="#{consultaMensajesAutorizadosLegislacionBean.retrocederPagina}"
+                                        rendered="#{consultaMensajesAutorizadosLegislacionBean.retroceder}"
+                                        reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+                                            border="0" />
+                                    </a4j:commandLink> <a4j:commandLink id="control_bitacora_adelante"
+                                        action="#{consultaMensajesAutorizadosLegislacionBean.avanzarPagina}"
+                                        rendered="#{consultaMensajesAutorizadosLegislacionBean.avanzar}"
+                                        reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+                                            border="0" />
+                                    </a4j:commandLink> <a4j:commandLink id="control_bitacora_adelante_fast"
+                                        action="#{consultaMensajesAutorizadosLegislacionBean.avanzarPaginasRapido}"
+                                        rendered="#{consultaMensajesAutorizadosLegislacionBean.avanzarRapido}"
+                                        reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+                                            border="0" />
+
+                                    </a4j:commandLink> <a4j:commandLink id="control_bitacora_ultimo"
+                                        action="#{consultaMensajesAutorizadosLegislacionBean.irUltimaPagina}"
+                                        rendered="#{consultaMensajesAutorizadosLegislacionBean.irAlUltimo}"
+                                        reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+                                            border="0" />
+                                    </a4j:commandLink> <br /> <h:outputText value="#{etq.mostrando}"
+                                        styleClass="textoResumen" /> <h:outputText
+                                        value="#{consultaMensajesAutorizadosLegislacionBean.numeroPagina}"
+                                        styleClass="textoResumen" /> <h:outputText value="#{etq.de}"
+                                        styleClass="textoResumen" /> <h:outputText
+                                        value="#{consultaMensajesAutorizadosLegislacionBean.totalPaginas}"
+                                        styleClass="textoResumen" /> <h:outputText
+                                        value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+                                    &#160;&#160;&#160; <h:outputText
+                                        value="#{consultaMensajesAutorizadosLegislacionBean.paginaVO.totalRegistros}"
+                                        styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+                                    &#160; <h:outputText styleClass="textoResumen"
+                                        value="#{etq.registrosEncontrados}" /></td>
+                                <td align="right" class="textoEstadoCuenta"><h:outputText
+                                        escape="false" value="#{etq.registrosPorPagina}"
+                                        styleClass="textoResumen" /> <h:selectOneMenu
+                                        id="tamanioPagina" styleClass="textoResumen"
+                                        value="#{consultaMensajesAutorizadosLegislacionBean.paginaVO.registrosXPag}">
+                                        <f:selectItem itemLabel="1" itemValue="1" />
+                                        <f:selectItem itemLabel="2" itemValue="2" />
+                                        <f:selectItem itemLabel="5" itemValue="5" />
+                                        <f:selectItem itemLabel="10" itemValue="10" />
+                                        <f:selectItem itemLabel="20" itemValue="20" />
+                                        <f:selectItem itemLabel="50" itemValue="50" />
+                                        <f:selectItem itemLabel="100" itemValue="100" />
+                                        <a4j:support event="onchange"
+                                            reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,mensajeUsuario"
+                                            action="#{consultaMensajesAutorizadosLegislacionBean.ejecutarConsulta}">
+                                            <f:setPropertyActionListener value="false"
+                                                target="#{consultaMensajesAutorizadosLegislacionBean.banderaBitacoraConsulta}" />
+                                        </a4j:support>
+                                    </h:selectOneMenu></td>
+                            </tr>
+                        </table>
+                    </h:panelGroup>                    
+                   	<table border="0" class="tablaGeneral" width="100%" 
+                           cellspacing="0px"
+                           style="display: #{empty consultaMensajesAutorizadosLegislacionBean.paginaVO.registros?'none':'inline-table'}">
+                           <!-- ========================= ENCABEZADOS ===============================================-->
+                   		 <tr>
+							<th class="tituloTabla" rowspan='3'>
+                           		<h:outputText value="#{etq.calUsuarioSolicita}" />                           		           		                            	
+                           	</th>
+                           	<th class="tituloTabla" rowspan='3'> 
+                           		<h:outputText value="#{etq.calFechaSolicitud}" />
+                           		             	
+                           	</th>                          							
+							<th class="tituloTabla" rowspan='3'>
+                           		<h:outputText value="#{etq.calUsuarioAutoriza}" />                           		           	
+                           	</th>
+                           	 	<th class="tituloTabla" rowspan='3'> 
+                           		<h:outputText value="#{etq.calFechaAutorizacion}" />                           		             	
+                           	</th>
+                           	<th class="tituloTabla">
+								<h:outputText value="#{etq.tv} / #{etq.emisoraMinus}" />															
+							</th>
+                           	<th class="tituloTabla" rowspan='3'>
+                               	<h:outputText value="#{etq.fechaMinus}" /><br/>
+                               	<h:outputText value="#{etq.calExdate}" />
+                            </th>
+                            <th class="tituloTabla" rowspan='3'>
+                               	<h:outputText value="#{etq.fechaDe}" /><br/>
+                               	<h:outputText value="#{etq.calCorte}" />
+                            </th> 
+                            <th class="tituloTabla" rowspan='3'>
+                               	<h:outputText value="#{etq.folioMensaje}" />                           		               
+                            </th>
+							<th class="tituloTabla" rowspan='3'>
+								<h:outputText value="#{etq.folioIndeval}" /><br/>                               													
+							</th>
+							 <th class="tituloTabla" rowspan='3'>
+                               	<h:outputText value="#{etq.calDestinatario}" />                               	
+                            </th>	                                                           
+                            <th class="tituloTabla" rowspan='3'>
+                               	<h:outputText value="#{etq.calEstadoEnvio}" /><br/>                               	
+                            </th>
+                            	<th class="tituloTabla" rowspan='3'>
+                               	<h:outputText value="#{etq.estado}" /><br/>
+                               	<h:outputText value="#{etq.calEmision}" />                               	
+                           </th>
+                           <th class="tituloTabla" rowspan='3'>
+                               	<h:outputText value="#{etq.fuente}" />
+                           </th>
+                           <th class="tituloTabla" rowspan='3'>
+                               	<h:outputText value="#{etq.calTipo}" /><br/>
+                               	<h:outputText value="#{etq.derecho}" /><br/>
+                               	<h:outputText value="#{etq.calCaevCamv}" />
+                            </th>                               												
+						</tr>
+						<tr>						
+							<th class="tituloTabla">
+								<h:outputText value="#{etq.serieMinus} / #{etq.cuponMinus}" />
+							</th>																		
+						</tr>
+						<tr>							
+                           	<th class="tituloTabla">
+								<h:outputText value="#{etq.isin}" />
+							</th>						
+						</tr>															
+                        <t:dataList id="resultados"
+                               value="#{consultaMensajesAutorizadosLegislacionBean.paginaVO.registros}"
+                               var="envio" rowIndexVar="indice">
+                           	<!-- =============================== DATOS_CONSULTA ========================================= -->
+                           	<tr>
+                           		<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan='3'>                                		
+                               		<h:outputText value="#{envio.usuarioSolicitante}" />                                
+                               	</td> 
+                           		<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan='3'>
+                               		<h:outputText value="#{envio.fechaSolicitud}" rendered="#{!empty envio.fechaSolicitud}">
+                               			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty envio.fechaSolicitud}"/>                                		                         		
+                               	</td>                           
+                               	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan='3'>                                		
+                               		<h:outputText value="#{envio.usuarioAutoriza}" rendered="#{!empty envio.usuarioAutoriza}"/>
+                               		<h:outputText value="-" rendered="#{empty envio.usuarioAutoriza}"/>                                
+                               	</td>
+                               	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan='3'>
+                               		<h:outputText value="#{envio.fechaActualizacion}" rendered="#{!empty envio.fechaActualizacion}">
+                               			<f:convertDateTime pattern="dd/MM/yyyy"  timeZone="America/Mexico_City" />
+                               		</h:outputText>                                		                         	
+                               		<h:outputText value="-" rendered="#{empty envio.fechaActualizacion}"/>	
+                               	</td>
+                               	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">                                		
+                               		<h:outputText value="#{envio.tipoValor}" rendered="#{!empty envio.tipoValor}"/>
+                               		<h:outputText value="-" rendered="#{empty envio.tipoValor}"/>                                		
+                               		<h:outputText value=" / " />
+                               		<h:outputText value="#{envio.emisora}" rendered="#{!empty envio.emisora}"/>
+                               		<h:outputText value="-" rendered="#{empty envio.emisora}"/>                                	
+                               	</td>
+                               	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan='3'>                                		
+                               		<h:outputText value="#{envio.fechaExdate}" rendered="#{!empty envio.fechaExdate}">
+                               			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty envio.fechaExdate}"/>                                
+                               	</td>
+                               	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan = '3'>                                		
+                               		<h:outputText value="#{envio.fechaCorte}" rendered="#{!empty envio.fechaCorte}" >
+                               			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty envio.fechaCorte}"/>
+                               	</td>
+                               	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan='3'>                                		
+                               		<h:outputText value="#{envio.folioMensaje}" rendered="#{!empty envio.folioMensaje}" />
+                               		<h:outputText value="-" rendered="#{empty envio.folioMensaje}" />                                
+                               	</td>
+                               		<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan='3'>                                		
+                               		<h:outputText value="#{envio.folioIndeval}" rendered="#{!empty envio.folioIndeval}"/>
+                               		<h:outputText value="-" rendered="#{empty envio.folioIndeval}"/>                                
+                               	</td>   
+                           		<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan='3'>                                		
+                               		<h:outputText value="#{envio.destinatario}" rendered="#{!empty envio.destinatario}"/>
+                               		<h:outputText value="-" rendered="#{empty envio.destinatario}"/>                                
+                               	</td>
+                               	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan='3'>                                		
+                               		<h:outputText value="#{envio.descEstado}" rendered="#{!empty envio.descEstado}"/>
+                               		<h:outputText value="-" rendered="#{empty envio.descEstado}"/>                                
+                               	</td>
+                               	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan='3'>                                		
+                               		<h:outputText value="#{envio.listada}" rendered="#{!empty envio.listada}"/> 
+                               		<h:outputText value="DESLISTADA" rendered="#{empty envio.listada}"/>                               		                                
+                               	</td>                               	    
+                               	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan='3'>                                		
+                               		<h:outputText value="#{envio.fuente}" rendered="#{!empty envio.fuente}"/>
+                               		<h:outputText value="-" rendered="#{empty envio.fuente}"/>                                		                                                    
+                               	</td>
+                               	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan = '3'>
+                               		<h:outputText value="#{envio.tipoDerechoCaev}" rendered="#{!empty envio.tipoDerechoCaev}" title="#{envio.descripcionCaev}"/>
+                               		<h:outputText value="-" rendered="#{empty envio.tipoDerechoCaev}"/>                                		
+                               		<h:outputText value=" / " />
+                               		<h:outputText value="#{envio.tipoDerechoCamv}" rendered="#{!empty envio.tipoDerechoCamv}" title="#{envio.descripcionCamv}"/>
+                               		<h:outputText value="-" rendered="#{empty envio.tipoDerechoCamv}"/>
+                               	</td>                     	                               	
+                           	</tr>
+                           	<tr>
+                           		<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">                                		
+                               		<h:outputText value="#{envio.serie}" rendered="#{!empty envio.serie}"/>
+                               		<h:outputText value="-" rendered="#{empty envio.serie}"/>                                		
+                               		<h:outputText value=" / " />
+                               		<h:outputText value="#{envio.cupon}" rendered="#{!empty envio.cupon}"/>
+                               		<h:outputText value="-" rendered="#{empty envio.cupon}"/>                                	
+                               	</td>
+                           	</tr>
+                           	<tr>                           		
+                           		<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">                                		
+                               		<h:outputText value="#{envio.isin}" rendered="#{!empty envio.isin}"/>
+                               		<h:outputText value="-" rendered="#{empty envio.isin}"/>                                		                                                    
+                               	</td>                           
+                           	</tr>                           
+                           </t:dataList>                                                                    
+                   	</table>
+				</h:panelGroup>              
+                
+<!-- ======================================= EXPORTAR ============================================================ -->
+                <h:panelGroup id="totalesConsultas"
+                    rendered="#{not empty consultaMensajesAutorizadosLegislacionBean.paginaVO.registros}">
+                    	<table cellpadding="0" cellspacing="0" border="0" align="center" width="900px">
+						<tr>
+							<td width="100%">
+								<div id="divControlesReportes" style="display: inline;">
+									<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%">
+										<tr align="right">
+											<td align="right">
+												<h:panelGroup id="divReportes"  style="float: right; text-align: right;">
+													<h:outputText value="Exportar los resultados"></h:outputText>
+								                    <h:commandButton id="generarPdf"
+								                    	action="mensajesAutorizadosLegislacionPDF"
+								                    	actionListener="#{consultaMensajesAutorizadosLegislacionBean.generarReportes}"
+								                        image="/images/pdf.gif"
+								                        title="Exportar a PDF todos los resultados de la consulta"
+								                        immediate="true"
+								                        onclick="bloquearSeccionReportes();"/>
+													&#160;&#160;
+								                    <h:commandButton id="generarXls"
+								                    	action="mensajesAutorizadosLegislacionXLS"
+								                    	actionListener="#{consultaMensajesAutorizadosLegislacionBean.generarReportes}"
+								                        image="/images/excel-file.gif"
+								                        title="Exportar a XLS todos los resultados de la consulta"
+								                        immediate="true"
+								                        onclick="bloquearSeccionReportes();"/>
+													&#160;&#160;								                  
+												</h:panelGroup>
+											</td>
+										</tr>								
+									</table>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td width="100%" align="right">
+								<div id="monitorPeticionReporte" style="display: none;">
+									<h:panelGroup id="panelMonitorPeticionReporte">
+										<h:graphicImage value="/images/ajax-loader.gif" />
+										&#160;&#160;
+										<h:outputText value="#{etq.reporteEnProceso}" />
+										<a4j:commandButton id="btnActualizarEstadoPeticion"
+											image="/images/transparent.gif"
+											styleClass="submit"
+											actionListener="#{consultaMensajesAutorizadosLegislacionBean.actualizarEstadoPeticion}"
+											reRender="panelMonitorPeticionReporte"
+											oncomplete="desbloquearSeccionReportes(#{consultaMensajesAutorizadosLegislacionBean.peticionReporteCompleta});"/>
+									</h:panelGroup>
+								</div>
+							</td>
+						</tr>
+					</table>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>
+
+
+<!-- FIN DEL DECORATE -->
+</html>

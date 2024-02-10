@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+		xmlns:a4j="http://richfaces.org/a4j"
+		xmlns:rich="http://richfaces.org/rich"
+		xmlns:t="http://myfaces.apache.org/tomahawk">
+
+    <ui:composition template="/layoutPopUp.xhtml">
+        <ui:define name="head">
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/beneficiarios.js">
+		    </script>   
+        </ui:define>
+        <ui:define name="titulo">
+			<h:outputText value="#{etq.beneficiarioExistente}" />
+        </ui:define>
+        <ui:define name="subtitulo">
+        </ui:define>
+        <ui:define name="body">
+        	<a4j:keepAlive beanName="consultaBeneficiariosRFCBean" />
+            <h:panelGroup id="initModal" rendered="#{consultaBeneficiariosRFCBean.banderaInicio}">
+				<h:outputText value="#{consultaBeneficiariosRFCBean.initModal}" />
+			</h:panelGroup>
+            <h:form id="beneficiarioRFC">
+
+                <h:panelGroup id="general">
+					<!-- Mensajes -->
+					<table width="100%" border="0" cellpadding="0" cellspacing="5" align="left">
+						<tr>
+						    <td colspan="2">
+						        <div style="min-height: 21px;">
+						            <rich:messages warnClass="warning" infoClass="info" errorClass="error" ajaxRendered="true" showDetail="false" showSummary="true" layout="list">
+						                <f:facet name="infoMarker">
+						                    <h:panelGroup>
+						                        <h:graphicImage url="/images/accept.png" />&#160;
+						                    </h:panelGroup>
+						                </f:facet>
+						                <f:facet name="errorMarker">
+						                    <h:panelGroup>
+						                        <h:graphicImage url="/images/warning.gif" />&#160;
+						                    </h:panelGroup>
+						                </f:facet>
+						            </rich:messages>
+						        </div>
+						    </td>
+						</tr>
+                        <tr style="height: 10px">
+                            <td>
+                                &#160;
+                            </td>
+                        </tr>
+                        <tr style="height: 10px">
+                            <td>
+								<h:panelGroup id="containerResultadosRFC">
+									<h:panelGroup rendered="#{consultaBeneficiariosRFCBean.consultaEjecutada}">
+									
+										<t:dataTable id="noExistenResultados"
+											value="#{consultaBeneficiariosRFCBean.paginaVO.registros}"
+											styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+											footerClass="tituloTabla" border="0" cellpadding="3px"
+											cellspacing="0px" columnClasses="everyColumn"
+											rowClasses="renglonTablaUno, renglonTablaDos"
+											rendered="#{empty consultaBeneficiariosRFCBean.paginaVO.registros}">
+											<t:column>
+												<f:facet name="header">
+													<h:outputText value="#{etq.sinResultados}"></h:outputText>
+												</f:facet>
+					
+											</t:column>
+										</t:dataTable>
+									</h:panelGroup>
+									
+									<h:panelGroup rendered="#{not empty consultaBeneficiariosRFCBean.paginaVO.registros}">
+				
+										<table width="100%" border="0">
+											<tr>
+												<td align="left" class="textoEstadoCuenta">
+													<a4j:commandLink id="control_bitacora_primero"
+														action="#{consultaBeneficiariosRFCBean.irPrimeraPagina}"
+														rendered="#{consultaBeneficiariosRFCBean.irAlPrimero}"
+														reRender="containerResultadosRFC">
+														<img
+															src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+															border="0" />
+													</a4j:commandLink>
+				
+													<a4j:commandLink id="control_bitacora_atras_fast"
+														action="#{consultaBeneficiariosRFCBean.retrocederPaginasRapido}"
+														rendered="#{consultaBeneficiariosRFCBean.retrocederRapido}"
+														reRender="containerResultadosRFC">
+														<img
+															src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+															border="0" />
+													</a4j:commandLink>
+				
+													<a4j:commandLink id="control_bitacora_atras"
+														action="#{consultaBeneficiariosRFCBean.retrocederPagina}"
+														rendered="#{consultaBeneficiariosRFCBean.retroceder}"
+														reRender="containerResultadosRFC">
+														<img
+															src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+															border="0" />
+													</a4j:commandLink>
+													<a4j:commandLink id="control_bitacora_adelante"
+														action="#{consultaBeneficiariosRFCBean.avanzarPagina}"
+														rendered="#{consultaBeneficiariosRFCBean.avanzar}"
+														reRender="containerResultadosRFC">
+														<img
+															src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+															border="0" />
+													</a4j:commandLink>
+				
+													<a4j:commandLink id="control_bitacora_adelante_fast"
+														action="#{consultaBeneficiariosRFCBean.avanzarPaginasRapido}"
+														rendered="#{consultaBeneficiariosRFCBean.avanzarRapido}"
+														reRender="containerResultadosRFC">
+														<img
+															src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+															border="0" />
+				
+													</a4j:commandLink>
+				
+													<a4j:commandLink id="control_bitacora_ultimo"
+														action="#{consultaBeneficiariosRFCBean.irUltimaPagina}"
+														rendered="#{consultaBeneficiariosRFCBean.irAlUltimo}"
+														reRender="containerResultadosRFC">
+														<img
+															src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+															border="0" />
+													</a4j:commandLink>
+													
+													<a4j:commandButton id="control_bitacora_actual"
+														action="#{consultaBeneficiariosRFCBean.irPaginaActual}"
+														style="visibility: hidden;"																								
+														reRender="containerResultadosRFC">										
+													</a4j:commandButton>
+												
+				
+													<br />
+													<h:outputText value="#{etq.mostrando}"
+														styleClass="textoResumen" />
+													<h:outputText value="#{consultaBeneficiariosRFCBean.numeroPagina}"
+														styleClass="textoResumen" />
+													<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+													<h:outputText value="#{consultaBeneficiariosRFCBean.totalPaginas}"
+														styleClass="textoResumen" />
+													<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+													&#160;&#160;&#160;
+													<h:outputText
+														value="#{consultaBeneficiariosRFCBean.paginaVO.totalRegistros}"
+														styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+													&#160;
+													<h:outputText styleClass="textoResumen"
+														value="#{etq.registrosEncontrados}" />
+												</td>
+												<td style="text-align: right;"  class="textoEstadoCuenta">
+													<h:outputText escape="false" value="#{etq.registrosPorPagina}"
+														styleClass="textoResumen" />
+													<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+														value="#{consultaBeneficiariosRFCBean.paginaVO.registrosXPag}">
+														<f:selectItem itemLabel="1" itemValue="1" />
+														<f:selectItem itemLabel="2" itemValue="2" />
+														<f:selectItem itemLabel="5" itemValue="5" />
+														<f:selectItem itemLabel="10" itemValue="10" />
+														<f:selectItem itemLabel="20" itemValue="20" />
+														<f:selectItem itemLabel="50" itemValue="50" />
+														<a4j:support event="onchange"
+															reRender="containerResultadosRFC"
+															actionListener="#{consultaBeneficiariosRFCBean.obtenerOperaciones}" />
+													</h:selectOneMenu>
+												</td>
+											</tr>
+										</table>
+										
+									</h:panelGroup>
+								
+									<h:dataTable id="resultados"
+										value="#{consultaBeneficiariosRFCBean.paginaVO.registros}"
+										var="beneficiario"
+										rendered="#{not empty consultaBeneficiariosRFCBean.paginaVO.registros}"
+										styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+										footerClass="tituloTabla" border="0" cellpadding="3px"
+										cellspacing="0px" columnClasses="everyColumn"
+										rowClasses="renglonTablaUno, renglonTablaDos">
+										<h:column>
+											<f:facet name="header">
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.nombreBeneficiario}" />
+											</f:facet>
+											<h:panelGroup rendered="#{beneficiario.personaFisica}">
+												<h:outputText styleClass="texto textoPeque12" value="#{beneficiario.nombreCompleto}" />
+											</h:panelGroup>
+											<h:panelGroup  rendered="#{!beneficiario.personaFisica}">
+												<h:outputText styleClass="texto textoPeque12" value="#{beneficiario.razonSocial}" />
+											</h:panelGroup>
+										</h:column>
+										<h:column>
+											<f:facet name="header">
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.custodio}" />
+											</f:facet>
+											<h:panelGroup>
+												<h:outputText styleClass="texto textoPeque12 negrita" value="#{consultaBeneficiariosRFCBean.mapaCustodios[beneficiario.custodio]}" />
+											</h:panelGroup>
+										</h:column>
+										<h:column>
+											<f:facet name="header">
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.rfc}" />
+											</f:facet>
+											<h:panelGroup>
+												<h:outputText styleClass="texto textoPeque12 negrita" value="#{beneficiario.rfcBeneficiario}" />
+											</h:panelGroup>
+										</h:column>
+										<h:column>
+											<f:facet name="header">
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.estatusBeneficiario}" />
+											</f:facet>
+											<h:panelGroup>
+												<h:outputText styleClass="texto textoPeque12 negrita" value="#{beneficiario.descStatusBeneficiario}" 
+													style="color: #{beneficiario.descStatusBeneficiario eq 'AUTORIZADO'? 'green' : 'red' }" />
+											</h:panelGroup>
+										</h:column>
+										<h:column>
+											<f:facet name="header">
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaFormato}" />
+											</f:facet>
+											<h:panelGroup>
+								                <h:outputText styleClass="texto textoPeque12" value="#{beneficiario.fechaFormato}"
+								                              converter="formatoFechaCortaConverter" />
+											</h:panelGroup>
+										</h:column>
+										<h:column>
+											<f:facet name="header">
+													<h:outputText styleClass="texto textoPeque12" value="#{etq.vigencia}" />
+											</f:facet>
+											<h:panelGroup>
+								                <h:outputText styleClass="texto textoPeque12" value="#{beneficiario.fechaVigenciaFormato}"
+								                              converter="formatoFechaCortaConverter" />
+											</h:panelGroup>
+										</h:column>
+										
+				                    </h:dataTable>
+				                    
+									<table cellpadding="0" cellspacing="0" border="0" align="center" width="900px">
+										<tr>
+											<td width="100%">
+												<div id="divControlesReportes" style="display: inline;">
+													<table cellpadding="0" cellspacing="0" border="0" align="center" width="100%">
+														<tr align="right">
+															<td align="right">
+																<h:panelGroup id="divReportes">
+												                    <h:commandButton id="generarPdf"
+												                    	action="consultaBeneficiariosRFCPDF"
+												                    	actionListener="#{consultaBeneficiariosRFCBean.generarReportes}"
+												                        image="/images/pdf.gif"
+												                        title="Exportar a PDF todos los resultados de la consulta"
+												                        immediate="true"
+												                        onclick="bloquearSeccionReportes();"/>
+																</h:panelGroup>
+															</td>
+														</tr>
+													</table>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td width="100%" align="right">
+												<div id="monitorPeticionReporte" style="display: none;">
+													<h:panelGroup id="panelMonitorPeticionReporte">
+														<h:graphicImage value="/images/ajax-loader.gif" />
+														&#160;&#160;
+														<h:outputText value="#{etq.reporteEnProceso}" />
+														<a4j:commandButton id="btnActualizarEstadoPeticion"
+															image="/images/transparent.gif"
+															styleClass="submit"
+															actionListener="#{consultaBeneficiariosRFCBean.actualizarEstadoPeticion}"
+															reRender="panelMonitorPeticionReporte"
+															oncomplete="desbloquearSeccionReportes(#{consultaBeneficiariosRFCBean.peticionReporteCompleta});"/>
+													</h:panelGroup>
+												</div>
+											</td>
+										</tr>
+									</table>
+				                 </h:panelGroup>
+                            </td>
+                        </tr>
+					</table>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

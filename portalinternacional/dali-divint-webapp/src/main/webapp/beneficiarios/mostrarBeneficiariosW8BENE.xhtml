@@ -1,0 +1,838 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <ui:composition template="/layoutPopUp.xhtml">
+        <ui:define name="head">
+            <link rel="stylesheet" type="text/css" media="all" href="#{facesContext.externalContext.requestContextPath}/css/beneficiarioActivo.css" />
+            <link rel="stylesheet" type="text/css" media="all" href="#{facesContext.externalContext.requestContextPath}/css/w8.css" />
+        </ui:define>
+        <ui:define name="titulo">
+			<h:outputText value="#{etq.beneficiarioExistente}" />
+        </ui:define>
+        <ui:define name="subtitulo">
+        </ui:define>
+        <ui:define name="body">
+			<a4j:keepAlive beanName="mostrarBeneficiarioActivoBean" />
+			<a4j:keepAlive beanName="mostrarBeneficiarioActivoBean.forma" />
+            <h:form id="formaBenefActivo">
+                <h:outputText value="#{mostrarBeneficiarioActivoBean.init}" />
+                <h:panelGroup id="general">
+					<!-- Mensajes -->
+					<table width="100%" border="0" cellpadding="0" cellspacing="5" align="left">
+						<tr>
+						    <td colspan="2">
+						        <div style="min-height: 21px;">
+						            <rich:messages warnClass="warning" infoClass="info" errorClass="error" ajaxRendered="true" showDetail="false" showSummary="true" layout="list">
+						                <f:facet name="infoMarker">
+						                    <h:panelGroup>
+						                        <h:graphicImage url="/images/accept.png" />&#160;
+						                    </h:panelGroup>
+						                </f:facet>
+						                <f:facet name="errorMarker">
+						                    <h:panelGroup>
+						                        <h:graphicImage url="/images/warning.gif" />&#160;
+						                    </h:panelGroup>
+						                </f:facet>
+						            </rich:messages>
+						        </div>
+						    </td>
+						</tr>
+					</table>
+
+					<table width="100%" border="0" cellpadding="0px" cellspacing="5px" align="left">
+						<h:panelGroup rendered="#{mostrarBeneficiarioActivoBean.mostrarFormaGuardar}">
+							<tr>
+							    <td colspan="2">
+							        <h:outputText value="#{etq.institucionMinus}" styleClass="textoNegritas" />
+							    </td>
+							</tr>
+							<tr>
+							    <td colspan="2">
+						            <a4j:region>
+						                <table align="left" border="0" style="text-align: left;">
+						                    <tr>
+						                        <td>
+						                            <h:inputText autocomplete="off" id="idFolioInstitucion"
+						                            	value="#{mostrarBeneficiarioActivoBean.idFolioInstitucion}"
+														styleClass="textoControles campoNumerico"
+														size="5" maxlength="5"
+														readonly="#{!capturaOperacionesDIBean.institucionIndeval}">
+						                                <a4j:support actionListener="#{mostrarBeneficiarioActivoBean.obtenerDatosParticipante}"
+						                                	event="onchange" reRender="nombreInstitucionTraspasante" ajaxSingle="true"/>
+						                            </h:inputText>
+						                        </td>
+						                        <td>
+						                            <h:inputText autocomplete="off" id="nombreInstitucionTraspasante"
+						                            	value="#{mostrarBeneficiarioActivoBean.nombreInstitucion}"
+						                            	size="25"
+														readonly="true"
+														styleClass="textoControles" />
+						                        </td>
+						                    </tr>
+						                </table>
+						            </a4j:region>
+							    </td>
+							</tr>
+						</h:panelGroup>
+						<tr>
+						    <td>
+						        <h:outputText value="#{etq.custodio}" styleClass="textoNegritas" />
+						    </td>
+						    <td>
+						        <h:outputText value="#{etq.tipoBeneficiario}" styleClass="textoNegritas" />
+						    </td>
+						</tr>
+						<tr>
+						    <td>
+						        <h:outputText id="lstCustodios" value="#{mostrarBeneficiarioActivoBean.mapaCustodios[mostrarBeneficiarioActivoBean.forma.custodio]}" />
+						    </td>
+						    <td>
+						        <h:outputText id="lstTipoBenef" value="#{mostrarBeneficiarioActivoBean.mapaTipoBeneficiario[mostrarBeneficiarioActivoBean.forma.idTipoBeneficiario]}" />
+						    </td>
+						</tr>
+						<tr style="height: 5px">
+						    <td colspan="2">
+						        &#160;
+						    </td>
+						</tr>
+						<tr>
+						    <td>
+						        <h:outputText value="#{etq.fechaFormato}" styleClass="textoNegritas" />
+						        &#160;&#160;
+						        <h:outputText id="fechaFormato" value="#{mostrarBeneficiarioActivoBean.forma.fechaFormato}" />
+						    </td>
+						    <td>
+						       <h:outputText value="Estado: " styleClass="textoNegritas" />
+						       &#160;&#160;
+						       <h:outputText id="activo" value="#{mostrarBeneficiarioActivoBean.forma.activo == '1' ? 'Activo' : mostrarBeneficiarioActivoBean.forma.activo == '0' ? 'Inactivo' : '---'}" />
+						   </td>
+						</tr>
+						<tr style="height: 5px">
+						    <td colspan="2">&#160;</td>
+						</tr>
+						<tr>
+						    <td colspan="2">
+						        <u><b><h:outputText value="#{etqw8bene.formaW8BENE}" styleClass="textoNegritas" /></b></u>
+						    </td>
+						</tr>
+						<tr style="height: 5px">
+						    <td colspan="2">&#160;</td>
+						</tr>
+						<!-- Parte I -->
+						<tr>
+							<td colspan="2">
+								<table style="width: 100%;" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td colspan="3"><b><h:outputText value="#{etqw8bene.part_I}" styleClass="textoBenefPartes" /></b></td>
+									</tr>
+									<tr>
+										<td><h:outputText value="#{etqw8bene.campo_01}" /></td>
+										<td><h:outputText value="#{etqw8bene.campo_02}" /></td>
+										<td><h:outputText value="#{etqw8bene.campo_03}" /></td>
+									</tr>
+									<tr>
+										<td><h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIcmp1}" styleClass="textoW8Deatalle" /></td>
+										<td><h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIcmp2}" styleClass="textoW8Deatalle" /></td>
+										<td><h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIcmp3}" styleClass="textoW8Deatalle" /></td>
+									</tr>
+									<tr>
+										<td colspan="3">&#160;</td>
+									</tr>
+									<tr>
+										<td colspan="3"><h:outputText value="#{etqw8bene.campo_04}" /></td>
+									</tr>
+									<tr>
+										<td colspan="3">
+											<table width="100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td style="width: 25%">
+														<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp4a}" readonly="true" disabled="true" />
+					                                    &#160;
+					                                    <h:outputText value="#{etqw8bene.campo_04a}" />
+													</td>
+													<td style="width: 25%">
+														<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp4b}" readonly="true" disabled="true" />
+					                                    &#160;
+					                                    <h:outputText value="#{etqw8bene.campo_04b}" />
+													</td>
+													<td style="width: 25%">
+														<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp4c}" readonly="true" disabled="true" />
+					                                    &#160;
+					                                    <h:outputText value="#{etqw8bene.campo_04c}" />
+													</td>
+													<td style="width: 25%">
+														<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp4d}" readonly="true" disabled="true" />
+					                                    &#160;
+					                                    <h:outputText value="#{etqw8bene.campo_04d}" />
+													</td>
+												</tr>
+												<tr>
+													<td style="width: 25%">
+														<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp4e}" readonly="true" disabled="true" />
+					                                    &#160;
+					                                    <h:outputText value="#{etqw8bene.campo_04e}" />
+													</td>
+													<td style="width: 25%">
+														<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp4f}" readonly="true" disabled="true" />
+					                                    &#160;
+					                                    <h:outputText value="#{etqw8bene.campo_04f}" />
+													</td>
+													<td style="width: 25%">
+														<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp4g}" readonly="true" disabled="true" />
+					                                    &#160;
+					                                    <h:outputText value="#{etqw8bene.campo_04g}" />
+													</td>
+													<td style="width: 25%">
+														<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp4h}" readonly="true" disabled="true" />
+					                                    &#160;
+					                                    <h:outputText value="#{etqw8bene.campo_04h}" />
+													</td>
+												</tr>
+												<tr>
+													<td style="width: 25%">
+														<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp4i}" readonly="true" disabled="true" />
+					                                    &#160;
+					                                    <h:outputText value="#{etqw8bene.campo_04i}" />
+													</td>
+													<td style="width: 25%">
+														<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp4j}" readonly="true" disabled="true"/>
+					                                    &#160;
+					                                    <h:outputText value="#{etqw8bene.campo_04j}" />
+													</td>
+													<td style="width: 25%">
+														<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp4k}" readonly="true" disabled="true"/>
+					                                    &#160;
+					                                    <h:outputText value="#{etqw8bene.campo_04k}" />
+													</td>
+													<td style="width: 25%">&#160;</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="3"><h:outputText value="#{etqw8bene.campo_04_leyenda_final}" /></td>
+									</tr>
+									<tr>
+										<td colspan="3" align="left">
+											<h:selectBooleanCheckbox id="disclaimer_cmp4l" value="#{mostrarBeneficiarioActivoBean.forma.partIcmp4l}" readonly="true" disabled="true" />
+					                        &#160;
+					                        <h:outputText value="#{etqw8bene.si}" />
+					                        &#160;
+					                        <h:selectBooleanCheckbox id="disclaimer_cmp4m" value="#{mostrarBeneficiarioActivoBean.forma.partIcmp4m}" readonly="true" disabled="true" />
+					                        &#160;
+					                        <h:outputText value="#{etqw8bene.no}" />
+										</td>
+									</tr>
+									<tr>
+										<td colspan="3">&#160;</td>
+									</tr>
+									<tr>
+										<td colspan="3"><h:outputText value="#{etqw8bene.campo_05}" /></td>
+									</tr>
+									<tr>
+										<td colspan="3">
+											<table style="width: 100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td style="width: 50%;" valign="top">
+														<table style="width: 100%;" border="0" cellpadding="0" cellspacing="0">
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5a}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05a}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5b}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05b}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5c}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05c}" />											
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5d}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05d}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5e}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05e}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5f}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05f}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5g}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05g}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5h}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05h}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5i}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05i}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5j}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05j}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5k}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05k}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5l}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05l}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5m}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05m}" />
+																</td>
+															</tr>
+														</table>
+													</td>
+													<td style="width: 50%;" valign="top">
+														<table width="100%" border="0" cellpadding="0" cellspacing="0">
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5n}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05n}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5o}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05o}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5p}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05p}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5q}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05q}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5r}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05r}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5s}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05s}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox id="partIcmp5t" value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5t}" readonly="true" disabled="true" />								                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05t}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5u}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05u}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5v}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05v}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5w}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05w}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5x}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05x}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5y}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05y}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5z}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05z}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5aa}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05aa}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5ab}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05ab}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5ac}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05ac}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5ad}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05ad}" />
+																</td>
+															</tr>
+															<tr>
+																<td>
+																	<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp5ae}" readonly="true" disabled="true" />
+											                        &#160;
+											                        <h:outputText value="#{etqw8bene.campo_05ae}" />
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="3">&#160;</td>
+									</tr>
+									<tr>
+										<td colspan="3">
+											<table style="width: 100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td colspan="2"><h:outputText value="#{etqw8bene.campo_06}" /></td>		
+												</tr>
+												<tr>
+													<td colspan="2"><h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIcmp6a}" styleClass="textoW8Deatalle" /></td>
+												</tr>
+												<tr>
+													<td style="width: 60%"><h:outputText value="#{etqw8bene.ciudad_estado}" /></td>
+													<td style="width: 40%"><h:outputText value="#{etqw8bene.pais}" /></td>
+												</tr>
+												<tr>
+													<td style="width: 60%"><h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIcmp6b}" styleClass="textoW8Deatalle" /></td>
+													<td style="width: 40%"><h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIcmp6c}" styleClass="textoW8Deatalle" /></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="3">&#160;</td>
+									</tr>
+									<tr>
+										<td colspan="3">
+											<table style="width: 100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td colspan="2">
+														<h:outputText value="#{etqw8bene.campo_07}" />
+													</td>	
+												</tr>
+												<tr>
+													<td colspan="2"><h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIcmp7a}" styleClass="textoW8Deatalle" /></td>
+												</tr>
+												<tr>
+													<td style="width: 60%"><h:outputText value="#{etqw8bene.ciudad_estado}" /></td>
+													<td style="width: 40%"><h:outputText value="#{etqw8bene.pais}" /></td>
+												</tr>
+												<tr>
+													<td style="width: 60%"><h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIcmp7b}" styleClass="textoW8Deatalle" /></td>
+													<td style="width: 40%"><h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIcmp7c}" styleClass="textoW8Deatalle" /></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="3">&#160;</td>
+									</tr>
+									<tr>
+										<td colspan="3">
+											<table style="width: 100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td colspan="2"><h:outputText value="#{etqw8bene.campo_08}" /></td>
+													<td style="width: 25%"><h:outputText value="#{etqw8bene.campo_09a}" /></td>
+													<td style="width: 25%"><h:outputText value="#{etqw8bene.campo_09b}" /></td>
+												</tr>
+												<tr>
+													<td colspan="2">
+														<h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIcmp8}" styleClass="textoW8Deatalle" />
+													</td>
+													<td style="width: 25%">
+														<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp9a1}" readonly="true" disabled="true" />
+														&#160;
+														<h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIcmp9a2}" styleClass="textoW8Deatalle" />
+													</td>
+													<td style="width: 25%">
+														<h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIcmp9b1}" readonly="true" disabled="true" />
+														&#160;
+														<h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIcmp9b2}" styleClass="textoW8Deatalle" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="4">&#160;</td>
+												</tr>
+												<tr>
+													<td colspan="4"><h:outputText value="#{etqw8bene.campo_10}" /></td>
+												</tr>
+												<tr>
+													<td colspan="4">
+														<h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIcmp10}" styleClass="textoW8Deatalle" />
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<!-- Parte II -->
+						<tr>
+							<td colspan="2">
+								<table style="width: 100%" border="0" cellpadding="0" cellspacing="0">
+									<tr>
+										<td><b><h:outputText value="#{etqw8bene.part_II}" styleClass="textoBenefPartes" /></b></td>
+									</tr>
+									<tr>
+										<td>
+											<table style="width: 100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td colspan="3"><h:outputText value="#{etqw8bene.campo_11}" /></td>
+												</tr>
+												<tr>
+													<td>
+														<h:selectBooleanCheckbox id="partIIcmp11a" value="#{mostrarBeneficiarioActivoBean.forma.partIIcmp11a}" readonly="true" disabled="true" />
+								                        &#160;
+								                        <h:outputText value="#{etqw8bene.campo_11a}" />
+													</td>
+													<td>
+														<h:selectBooleanCheckbox id="partIIcmp11b" value="#{mostrarBeneficiarioActivoBean.forma.partIIcmp11b}" readonly="true" disabled="true" />
+								                        &#160;
+								                        <h:outputText value="#{etqw8bene.campo_11b}" />
+													</td>
+													<td>
+														<h:selectBooleanCheckbox id="partIIcmp11c" value="#{mostrarBeneficiarioActivoBean.forma.partIIcmp11c}" readonly="true" disabled="true" />
+								                        &#160;
+								                        <h:outputText value="#{etqw8bene.campo_11c}" />
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<h:selectBooleanCheckbox id="partIIcmp11d" value="#{mostrarBeneficiarioActivoBean.forma.partIIcmp11d}" readonly="true" disabled="true" />
+								                        &#160;
+								                        <h:outputText value="#{etqw8bene.campo_11d}" />
+													</td>
+													<td>
+														<h:selectBooleanCheckbox id="partIIcmp11e" value="#{mostrarBeneficiarioActivoBean.forma.partIIcmp11e}" readonly="true" disabled="true" />
+								                        &#160;
+								                        <h:outputText value="#{etqw8bene.campo_11e}" />
+													</td>
+													<td>&#160;</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td>&#160;</td>
+									</tr>
+									<!-- Campo 12 -->
+									<tr>
+										<td>
+											<table style="width: 100%" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td colspan="2"><h:outputText value="#{etqw8bene.campo_12}" /></td>		
+												</tr>
+												<tr>
+													<td colspan="2"><h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIIcmp12a}" styleClass="textoW8Deatalle" /></td>
+												</tr>
+												<tr>
+													<td style="width: 60%"><h:outputText value="#{etqw8bene.ciudad_estado}" /></td>
+													<td style="width: 40%"><h:outputText value="#{etqw8bene.pais}" /></td>
+												</tr>
+												<tr>
+													<td style="width: 60%">
+														<h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIIcmp12b}" styleClass="textoW8Deatalle" />
+													</td>
+													<td style="width: 40%">
+														<h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIIcmp12c}" styleClass="textoW8Deatalle" />
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td>&#160;</td>
+									</tr>
+									<tr>
+										<td>
+											<h:outputText value="#{etqw8bene.campo_13}" />
+											&#160;
+											<h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIIcmp13}" styleClass="textoW8Deatalle" />
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<!-- Parte III -->
+						<tr>
+							<td colspan="2">
+								<table style="width: 100%; border: 0;" cellpadding="0" cellspacing="0">
+									<tr>
+										<td>
+											<b><h:outputText value="#{etqw8bene.part_III}" styleClass="textoBenefPartes" /></b>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<table style="width: 100%;" border="0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td colspan="3"><h:outputText value="#{etqw8bene.campo_14}" /></td>
+												</tr>
+												<tr>
+													<td style="width: 5%"><h:outputText value="#{etqw8bene.campo_14a1}" /></td>
+													<td style="width: 5%"><h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp14a}" readonly="true" disabled="true" /></td>
+													<td style="width: 90%">
+														<h:outputText value="#{etqw8bene.campo_14a2}" />
+														&#160;
+														<h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp14a1}" />
+														&#160;
+														<h:outputText value="#{etqw8bene.campo_14a3}" />
+													</td>
+												</tr>
+												<tr>
+													<td style="width: 5%"><h:outputText value="#{etqw8bene.campo_14b1}" /></td>
+													<td style="width: 5%"><h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp14b}" readonly="true" disabled="true" /></td>
+													<td style="width: 90%"><h:outputText value="#{etqw8bene.campo_14b2_1}" /></td>
+												</tr>
+												
+												 <!--Actualizacion 2016  -->
+                                                     <tr>
+                                                        <td colspan="3">
+                                                         <table>
+                                                              <tr>
+                                                                  <td>
+                                                                      <h:selectBooleanCheckbox id="partIIIcmp14boa" value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp14ba}"
+                                                                       readonly="true" disabled="true"
+                                                                       />
+                                                                        
+                                                                      &#160;
+                                                                      <h:outputText value="#{etqw8bene.campo_14ba}" />
+                                                                  </td>
+                                                                  <td>
+                                                                      <h:selectBooleanCheckbox id="partIIIcmp14bob" value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp14bb}"  readonly="true" disabled="true"
+                                                                       />
+                                                                      &#160;
+                                                                      <h:outputText value="#{etqw8bene.campo_14bb}" />
+                                                                  </td>
+                                                              </tr>
+                                                               <tr>
+                                                                  <td>
+                                                                        <h:selectBooleanCheckbox id="partIIIcmp14boc" value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp14bc}"  readonly="true" disabled="true"
+                                                                       />
+                                                                        &#160;
+                                                                      <h:outputText value="#{etqw8bene.campo_14bc}" />
+                                                                  </td>
+                                                                  <td>
+                                                                        <h:selectBooleanCheckbox id="partIIIcmp14bod" value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp14bd}"  readonly="true" disabled="true"
+                                                                       />
+                                                                        &#160;
+                                                                      <h:outputText value="#{etqw8bene.campo_14bd}" />
+                                                                  </td>
+                                                              </tr>
+                                                              <tr>
+                                                                  <td>
+                                                                        <h:selectBooleanCheckbox id="partIIIcmp14boe" value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp14be}"  readonly="true" disabled="true"
+                                                                       />
+                                                                        &#160;
+                                                                      <h:outputText value="#{etqw8bene.campo_14be}" />
+                                                                  </td>
+                                                                  <td>
+                                                                        <h:selectBooleanCheckbox id="partIIIcmp14bof" value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp14bf}"  readonly="true" disabled="true"
+                                                                       />
+                                                                        &#160;
+                                                                      <h:outputText value="#{etqw8bene.campo_14bf}" />
+                                                                  </td>
+                                                              </tr>
+                                                              <tr>
+                                                                  <td>
+                                                                        <h:selectBooleanCheckbox id="partIIIcmp14bog" value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp14bg}"  readonly="true" disabled="true"
+                                                                       />
+                                                                        &#160;
+                                                                      <h:outputText value="#{etqw8bene.campo_14bg}" />
+                                                                  </td>
+                                                                  <td>
+                                                                        <h:selectBooleanCheckbox id="partIIIcmp14boh" value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp14bh}"  readonly="true" disabled="true"
+                                                                       />
+                                                                        &#160;
+                                                                      <h:outputText value="#{etqw8bene.campo_14bh}" />
+                                                                  </td>
+                                                              </tr>
+                                                              <tr>
+                                                                  <td>
+                                                                        <h:selectBooleanCheckbox id="partIIIcmp14boi" value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp14bi}"  readonly="true" disabled="true"
+                                                                       />
+                                                                        &#160;
+                                                                      <h:outputText value="#{etqw8bene.campo_14bi}" />
+                                                                  </td>
+                                                                  <td>
+                                                                        <h:selectBooleanCheckbox id="partIIIcmp14boj" value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp14bj}"  readonly="true" disabled="true"
+                                                                       />
+                                                                        &#160;
+                                                                      <h:outputText value="#{etqw8bene.campo_14bj}" />
+                                                                       &#160;
+                                                                       <h:inputText autocomplete="off" id="partIIIcmp14bok" value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp14bk}" styleClass="textoW8" size="30" readonly="true" disabled="true"/>
+                                                                  </td>
+                                                              </tr>
+                                                         </table>
+                                                        </td>
+                                                     </tr>
+												
+												<tr>
+													<td style="width: 5%"><h:outputText value="#{etqw8bene.campo_14c1}" styleClass="textoW8Deatalle" /></td>
+													<td style="width: 5%"><h:selectBooleanCheckbox value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp14c}" readonly="true" disabled="true" /></td>
+													<td style="width: 90%"><h:outputText value="#{etqw8bene.campo_14c2}" styleClass="textoW8Deatalle" /></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td>&#160;</td>
+									</tr>
+									<tr>
+										<td>
+											<table style="width: 100%; border: 0" cellpadding="0" cellspacing="0">
+												<tr>
+													<td>
+														<h:outputText value="#{etqw8bene.campo_15_1_1}" />
+														&#160;
+														<h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp15a}" styleClass="textoW8Deatalle" />
+														&#160;
+														<h:outputText value="#{etqw8bene.campo_15_2}" />
+														&#160;
+														<h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp15b}" styleClass="textoW8Deatalle" />
+														&#160;
+														<h:outputText value="#{etqw8bene.campo_15_3}" />
+														&#160;
+														<h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp15c}" styleClass="textoW8Deatalle" />
+														&#160;
+														<h:outputText value="#{etqw8bene.campo_15_4_1}" />
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp15d1}" styleClass="textoW8Deatalle" />
+														<h:outputText value="#{mostrarBeneficiarioActivoBean.forma.partIIIcmp15d2}" styleClass="textoW8Deatalle" />
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<!-- Print Name -->
+									<tr>
+										<td colspan="2">&#160;</td>
+									</tr>
+									<tr>
+										<td colspan="2">
+											<b><h:outputText value="#{etqw8bene.parte_XXX}" /></b>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2" valign="top">
+											<h:outputText value="#{etqw8bene.printNameSigner}" />					
+											&#160;
+											<h:outputText id="printName" value="#{mostrarBeneficiarioActivoBean.forma.printName}" styleClass="textoW8Deatalle" />
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="guardar">
+                                    <a4j:commandButton id="botonGuardar" image="/images/transparent.gif"
+										styleClass="submit"
+										action="#{mostrarBeneficiarioActivoBean.guardar}"
+										oncomplete="window.scrollTo(0,0);"
+										rendered="#{mostrarBeneficiarioActivoBean.mostrarFormaGuardar}" />
+                                </div>
+                            </td>
+                        </tr>
+					</table>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

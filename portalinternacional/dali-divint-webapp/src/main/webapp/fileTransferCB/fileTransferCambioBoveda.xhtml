@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+
+	<ui:composition template="/layoutFileTransfer.xhtml">
+	
+		<ui:define name="head">
+		</ui:define>
+	
+		<ui:define name="tituloSeccion">
+		</ui:define>
+	
+		<ui:define name="seccionEncabezado">
+			<h:outputText value="File Transfer Cambio de Bóveda" />
+		</ui:define>
+		
+		<ui:define name="seccionInitPantalla">
+			<h:outputText value="#{fileTransferCambioBovedaBean.init}" />
+			<a4j:keepAlive beanName="fileTransferCambioBovedaBean" />
+		</ui:define>
+		
+		<ui:define name="seccionMensajes">
+            <h:panelGroup id="mensajeUsuario">
+                <div style="min-height: 21px;width: 95%;">
+                    <rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+                        <f:facet name="infoMarker">
+                            <h:panelGroup>
+                                <h:graphicImage url="/images/accept.png" />&#160;
+                            </h:panelGroup>
+                        </f:facet>
+                        <f:facet name="errorMarker">
+                            <h:panelGroup>
+                                <h:graphicImage url="/images/warning.gif" />&#160;
+                            </h:panelGroup>
+                        </f:facet>
+                    </rich:messages>
+                    <div id="divWarnings" class="warning" style="display: none;">
+                        <p id="textoWarning" />
+                    </div>
+                </div>
+            </h:panelGroup>
+		
+		</ui:define>
+		
+		<ui:define name="seccionFileUpload" >
+			<h:panelGroup id="panelFileUpload">
+				<h:panelGrid columns="3">
+					<h:panelGroup>
+						<h:outputText value="Archivo en formato Excel a subir" />
+					</h:panelGroup>
+					<t:inputFileUpload id="archivoOperaciones" storage="memory"
+						value="#{fileTransferCambioBovedaBean.archivoASubir}" size="50"
+						required="false" />
+					<h:commandButton id="iniciarProceso" value="Iniciar Proceso"
+						actionListener="#{fileTransferCambioBovedaBean.uploadFile2}"
+						styleClass="submit"							
+						reRender="panelResultados,panelBotones,panelFileUpload"
+						disabled ="#{!fileTransferCambioBovedaBean.habilitarArchivo}" />
+				</h:panelGrid>
+			</h:panelGroup>	
+		</ui:define>
+		
+		
+		<ui:define name="seccionTablaResultados" >
+			<h:panelGroup id="panelResultados">
+				<br/>
+				<ui:repeat value="#{fileTransferCambioBovedaBean.fileTransfer.lineasError}" var="item" 
+					rendered="#{not empty fileTransferCambioBovedaBean.fileTransfer and not empty fileTransferCambioBovedaBean.fileTransfer.lineasError}">
+					<br/>
+    				<h:outputText styleClass="texto textoPeque12" value=" Linea con error : #{item}" />
+				</ui:repeat>
+				<h:dataTable id="resultados"
+					value="#{fileTransferCambioBovedaBean.fileTransfer.operaciones}"
+					var="res"
+					rendered="#{not empty fileTransferCambioBovedaBean.fileTransfer and not empty fileTransferCambioBovedaBean.fileTransfer.operaciones}"
+					styleClass="tablaGeneral centrado" headerClass="tituloTabla" width="100%"
+					footerClass="texto textoPeque12" border="0" cellpadding="3px"
+					cellspacing="0px" columnClasses="everyColumn" style="width:98%;"
+					rowClasses="renglonTablaUno, renglonTablaDos">
+					<!-- Referencia Mensaje  -->
+                    <h:column>
+					    <f:facet name="header">
+					        <h:outputText styleClass="texto textoPeque12" value="Tipo Valor" />
+					    </f:facet>
+					    <h:outputText styleClass="texto textoPeque12" value="#{res.tipoValor}" />                                   
+					</h:column>
+					<h:column>
+					    <f:facet name="header">
+					        <h:outputText styleClass="texto textoPeque12" value="Emisora" />
+					    </f:facet>
+					    <h:outputText styleClass="texto textoPeque12" value="#{res.emisora}" />                                 
+					</h:column>
+					<h:column>
+					    <f:facet name="header">
+					        <h:outputText styleClass="texto textoPeque12" value="Serie" />
+					    </f:facet>
+					    <h:outputText styleClass="texto textoPeque12" value="#{res.serie}" />                                   
+					</h:column>
+					<h:column>
+					    <f:facet name="header">
+					        <h:outputText styleClass="texto textoPeque12" value="ISIN" />
+					    </f:facet>
+					    <h:outputText styleClass="texto textoPeque12" value="#{res.isin}" />                                    
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="Fecha Liquidación" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{res.fechaLiquidacion}" />
+					</h:column>
+                     <h:column>
+                         <f:facet name="header">
+                             <h:outputText styleClass="texto textoPeque12" value="Fecha Operación" />
+                         </f:facet>
+                         <h:outputText styleClass="texto textoPeque12" value="#{res.fechaOperacion}" />
+                     </h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="Custodio" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{res.custodioDestino}" />									
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="Cuenta Indeval" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{res.cuentaIndeval}" />
+					</h:column>
+                    <h:column>
+						<f:facet name="header">
+						    <h:outputText styleClass="texto textoPeque12" value="Cuenta Contraparte" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{res.cuentaContraparte}" />                                 
+                     </h:column>
+                     <h:column>
+						<f:facet name="header">
+						    <h:outputText styleClass="texto textoPeque12" value="Descripción Cuenta Contraparte" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{res.descCuentaContraparte}" />                                 
+                     </h:column>
+                     <h:column>
+                         <f:facet name="header">
+                             <h:outputText styleClass="texto textoPeque12" value="Depositante/Liquidador" />
+                         </f:facet>
+                         <h:outputText styleClass="texto textoPeque12" value="#{res.depositanteLiquidador}" />                                 
+                     </h:column>
+                     <h:column>
+                         <f:facet name="header">
+                             <h:outputText styleClass="texto textoPeque12" value="Nombre Cuenta Beneficiario" />
+                         </f:facet>
+                         <h:outputText styleClass="texto textoPeque12" value="#{res.nomCuentaBeneficiario}" />                                 
+                     </h:column>
+                     <h:column>
+                         <f:facet name="header">
+                             <h:outputText styleClass="texto textoPeque12" value="Numero Cuenta Beneficiario" />
+                         </f:facet>
+                         <h:outputText styleClass="texto textoPeque12" value="#{res.numCuentaBeneficiario}" />                                 
+                     </h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="Tipo Movimiento" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{res.tipoMovimiento}" />									
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="Error" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{res.error}" />									
+					</h:column>
+				</h:dataTable>
+			</h:panelGroup>
+		</ui:define>
+		
+		<ui:define name="seccionBotones" >
+			<h:panelGroup id="panelBotones">
+				<h:commandButton id="botonProcesar" value="Procesar"
+					styleClass="submit"							
+					reRender="panelResultados,panelFileUpload"
+					actionListener="#{fileTransferCambioBovedaBean.procesaFiletransfer}"
+					disabled ="#{!fileTransferCambioBovedaBean.habilitarProcesar}"
+					tabindex="7" />
+				<h:commandButton id="botonCancelar" value="Cancelar"
+					styleClass="submit"							
+					reRender="panelResultados,panelFileUpload"
+					actionListener="#{fileTransferCambioBovedaBean.cancelaFiletransfer}"
+					disabled ="#{!fileTransferCambioBovedaBean.habilitarProcesar}"
+					tabindex="8" />
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</html>

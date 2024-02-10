@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="consultaEmisionesCapitales" documentTitle="Emisiones Capitales Distribución"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        landscape="true" fecha="#{consultaEmisionesCalendarioBean.fechaActual}"
+        imageResource="/images/indeval.jpg">
+        <pdf:table value="consultaEmisionesCalendarioBean" currentBean="emisionesCalendario" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{consultaEmisionesCalendarioBean}" currentBean="emisionesCalendario" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.tv}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.tipoValor ? consultaEmisionesCalendarioBean.calendarioEmisiones.tipoValor : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.emisoraMinus}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.emisora ? consultaEmisionesCalendarioBean.calendarioEmisiones.emisora : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.serieMinus}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.serie ? consultaEmisionesCalendarioBean.calendarioEmisiones.serie : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.isin}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.isin ? consultaEmisionesCalendarioBean.calendarioEmisiones.isin : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.razonSocial}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.razonSocial ? consultaEmisionesCalendarioBean.calendarioEmisiones.razonSocial : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.custodio}" value="#{!empty consultaEmisionesCalendarioBean.selectedCustodio ? consultaEmisionesCalendarioBean.selectedCustodio : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.estatusSistema}" value="#{!empty consultaEmisionesCalendarioBean.selectedEstatusSistema  ? consultaEmisionesCalendarioBean.selectedEstatusSistema : 'TODOS'}" align="center" />
+			    <pdf:col header="#{etq.fechaAltaInicio}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.fechaAltaInicio ? consultaEmisionesCalendarioBean.calendarioEmisiones.fechaAltaInicio : 'TODAS'}" align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			    </pdf:col>
+			   <pdf:col header="#{etq.fechaAltaFin}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.fechaAltaFin ? consultaEmisionesCalendarioBean.calendarioEmisiones.fechaAltaFin : 'TODAS'}" align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			    </pdf:col>
+			    <pdf:col header="#{etq.fechaBajaInicio}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.fechaBajaInicio ? consultaEmisionesCalendarioBean.calendarioEmisiones.fechaBajaInicio : 'TODAS'}" align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			    </pdf:col>
+			    <pdf:col header="#{etq.fechaBajaFin}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.fechaBajaFin ? consultaEmisionesCalendarioBean.calendarioEmisiones.fechaBajaFin : 'TODAS'}" align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			    </pdf:col>
+			    <pdf:col header="#{etq.fechaEliminadaInicio}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.fechaModificacionInicio ? consultaEmisionesCalendarioBean.calendarioEmisiones.fechaModificacionInicio : 'TODAS'}" align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			    </pdf:col>
+			    <pdf:col header="#{etq.fechaEliminadaFin}" value="#{!empty consultaEmisionesCalendarioBean.calendarioEmisiones.fechaModificacionFin ? consultaEmisionesCalendarioBean.calendarioEmisiones.fechaModificacionFin : 'TODAS'}" align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			    </pdf:col>
+                <pdf:col header="#{etq.assetManager}" value="#{consultaEmisionesCalendarioBean.calendarioEmisiones.assetManager == -1 ? 'TODOS' : consultaEmisionesCalendarioBean.calendarioEmisiones.assetManager == 0 ? 'Con Valor' : consultaEmisionesCalendarioBean.calendarioEmisiones.assetManager == 1 ? 'Sin Valor' : ''}" align="center" />
+                <pdf:col header="#{etq.paisOrigen}" value="#{consultaEmisionesCalendarioBean.calendarioEmisiones.paisOrigen == -1 ? 'TODOS' : consultaEmisionesCalendarioBean.calendarioEmisiones.paisOrigen}" align="center" />
+                <pdf:col header="#{etq.estatusRegistro}" value="#{!empty consultaEmisionesCalendarioBean.selectedEstatusRegistro ? consultaEmisionesCalendarioBean.selectedEstatusRegistro  : 'TODOS'}" align="center" />			
+				<pdf:col header="#{etq.estadoEmision}" value="#{!empty consultaEmisionesCalendarioBean.selectedEstadoEmisiones  ? consultaEmisionesCalendarioBean.selectedEstadoEmisiones  : 'TODOS'}" align="center" />
+            </pdf:row>
+        </pdf:table>
+        
+        <pdf:br/>
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{consultaEmisionesCalendarioBean.totalRegistrosReportes}"/>
+        <pdf:br/>
+
+        <pdf:table value="#{consultaEmisionesCalendarioBean.paginaReportes.registros}" currentBean="vEmisionesCalendario">
+            <pdf:row>
+				<pdf:col header="#{etq.tv}" value="#{vEmisionesCalendario.tipoValor}" align="center" />
+				<pdf:col header="#{etq.emisoraMinus}" value="#{vEmisionesCalendario.emisora}" align="center" />
+				<pdf:col header="#{etq.serieMinus}" value="#{vEmisionesCalendario.serie}" align="center" />
+				<pdf:col header="#{etq.isin}" value="#{vEmisionesCalendario.isin}" align="center" />
+				<pdf:col header="#{etq.razonSocial}" value="#{vEmisionesCalendario.razonSocial} " align="center" />
+				<pdf:col header="#{etq.custodio}" value="#{vEmisionesCalendario.detalleCustodio} " align="center" />
+				<pdf:col header="#{etq.estatusSistema}" value="#{!empty vEmisionesCalendario.estatusRegistro ? vEmisionesCalendario.estatusRegistro : 'SIN ESTATUS'}" align="center" />
+				<pdf:col header="#{etq.fechaAlta}" value="#{vEmisionesCalendario.fechaAlta}" align="center" >
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaBaja}" value="#{vEmisionesCalendario.fechaBaja}" align="center" >
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaEliminada}" value="#{vEmisionesCalendario.fechaModificacion}" align="center" >
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.assetManager}" value="#{vEmisionesCalendario.descripcion}" align="center" />
+				<pdf:col header="#{etq.paisOrigen}" value="#{vEmisionesCalendario.paisOrigen}" align="center" />
+				<pdf:col header="#{etq.estatusRegistro}" value="#{vEmisionesCalendario.estatusEmision}" align="center" />
+				<pdf:col header="#{etq.estadoEmision}" value="#{vEmisionesCalendario.listada}" align="center" />
+			</pdf:row>
+        </pdf:table>
+    </pdf:document>
+</html>

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutPopUp.xhtml">			
+		<ui:define name="head">			
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/conciliacionesInt.js">
+			</script>
+		</ui:define>
+		<ui:define name="titulo">
+			Detalle de Conciliaciones
+		</ui:define>
+		<ui:define name="subtitulo">
+		</ui:define>
+
+		<ui:define name="body">
+			<h:form id="formaDetalleConciliacion">
+			<h:outputText value="#{detalleConciliacionesIntBean.initPopUp}" />
+			<a4j:keepAlive beanName="detalleConciliacionesIntBean" />
+		
+			<!--===============================================RESULTADOS=================================================  -->	
+				<h:panelGroup id ="resultPanel">		
+						<h:dataTable id="resultados"
+							value="#{detalleConciliacionesIntBean.resultados.registros}"
+							var="conciliacion"
+							rendered="#{!empty detalleConciliacionesIntBean.resultados and not empty detalleConciliacionesIntBean.resultados.registros}"
+							styleClass="tablaGeneral centrado" headerClass="tituloTabla" width="100%"
+							footerClass="tituloTabla" border="0" cellpadding="3px"
+							cellspacing="0px" columnClasses="everyColumn"
+							rowClasses="renglonTablaUno, renglonTablaDos">
+						<!-- Fecha Mensaje  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaMensaje}" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.fechaMensaje}"  converter="formatoFechaLargaConverter" />									
+							</h:column>
+						<!-- Fecha Conciliacion  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaConciliacionMinus}" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.fechaConciliacion}" rendered="#{not empty conciliacion.fechaConciliacion}" converter="formatoFechaLargaConverter"/>
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.aunNoConciliado}" rendered="#{empty conciliacion.fechaConciliacion}" />									
+							</h:column>	
+						<!-- Folio  -->
+							<h:column >
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.folioMinus}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.conciliacion}" />								
+							</h:column>
+						<!-- Custodio  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.custodio}" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.custodio.codigoBanco}" />									
+							</h:column>
+							
+						<!-- Cuentas  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.cuentasMinus}" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.cuentas}" />									
+							</h:column>
+							
+						<!-- ISIN TV EMISORA SERIE  -->
+							<h:column>
+								<f:facet name="header">
+									<h:panelGroup>
+										<table>
+											<tr>
+												<td colspan="3"><h:outputText styleClass="texto textoPeque12" value="ISIN" /></td>
+											</tr>
+											<tr>
+												<td><h:outputText styleClass="texto textoPeque12" value=" TV " /></td>
+												<td><h:outputText styleClass="texto textoPeque12" value=" Emisora " /></td>
+												<td><h:outputText styleClass="texto textoPeque12" value=" Serie " /></td>
+											</tr>
+										
+										</table>
+									</h:panelGroup>
+								</f:facet>
+								<table >
+									<tr>
+										<td colspan ="3">
+											<h:outputText styleClass="texto textoPeque12 textoNegritas" value="#{conciliacion.isin}" />
+										</td>
+									</tr>
+									<tr>
+										<td >
+											<h:outputText styleClass="texto textoPeque12" value=" #{conciliacion.tv}  " />
+										</td>
+										<td >
+											<h:outputText styleClass="texto textoPeque12" value=" #{conciliacion.emisora} " />
+										</td>
+										<td >
+											<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.serie}" />
+										</td>
+									</tr>
+								</table>																	
+							</h:column>
+						<!-- POS AVAI  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.posAVAI}" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.posAVAI}">
+										<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
+									</h:outputText>									
+							</h:column>
+						<!-- POS AVAI  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.posNAVL}" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.posNAVL}" >
+										<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
+									</h:outputText>									
+							</h:column>
+						<!-- POS BLOK  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.posBLOK}" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.posBLOK}" >
+										<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
+									</h:outputText>									
+							</h:column>
+						<!-- POS BLCA  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.posBLCA}" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.posBLCA}" >
+										<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
+									</h:outputText>									
+							</h:column>
+						<!-- POS PEND  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.posPEND}" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.posPEND}" >
+										<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
+									</h:outputText>									
+							</h:column>
+						<!-- POS PENR  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.posPENR}" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.posPENR}" >
+										<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
+									</h:outputText>									
+							</h:column>
+						<!-- Posicion Mensaje  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.posAGGR}" />									
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.posicionMensaje}" >
+										<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
+									</h:outputText>																	
+							</h:column>	
+							<!-- Posicion Dali  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.posicionDali}" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.posicionDali}" rendered="#{not empty conciliacion.posicionDali}">
+										<f:convertNumber pattern="###,###,###,###,###,##0"/>
+									</h:outputText>
+									<h:outputText styleClass="texto textoPeque12" value="NA" rendered="#{empty conciliacion.posicionDali}" />																
+							</h:column>	
+							<!-- Boveda DALI  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.bovedaDaliMinus}" />
+								</f:facet>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.boveda.nombreCorto}" rendered="#{not empty conciliacion.boveda.nombreCorto}" />
+									<h:outputText styleClass="texto textoPeque12" value="N/A" rendered="#{empty conciliacion.boveda or conciliacion.boveda.nombreCorto}" />																	
+							</h:column>
+							<!--Diferencia -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="Diferencia" />
+								</f:facet>								
+										<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.diferencia}" rendered="#{not empty conciliacion.diferencia and conciliacion.diferencia gt 0}" style="color:red" >
+											<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
+										</h:outputText>
+										<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.diferencia}" rendered="#{not empty conciliacion.diferencia and conciliacion.diferencia lt 0}" style="color:blue" >
+											<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
+										</h:outputText>
+										<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.diferencia}" rendered="#{not empty conciliacion.diferencia and conciliacion.diferencia eq 0}" >
+											<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
+										</h:outputText>
+										<h:outputText styleClass="texto textoPeque12" value="NA" rendered="#{empty conciliacion.diferencia}" />
+																						
+							</h:column>								
+							
+							<!-- EXISTENCIA  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.existencia}"  />
+								</f:facet>									
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.existenciaCompleto}" />																	
+							</h:column>	
+						</h:dataTable>
+					</h:panelGroup>
+					<!-- ================================= EXPORTAR ============================================================ -->
+					<h:panelGroup id="totalesConsultas"
+						rendered="#{not empty detalleConciliacionesIntBean.resultados.registros}">					
+					<table cellpadding="0" cellspacing="0" border="0" align="center"
+						width="900px">
+						<tr align="right">
+							<td align="right">
+								<h:panelGroup id="botonesExportar">
+									<h:panelGroup
+										style="display: #{(not empty detalleConciliacionesIntBean.resultados.registros)? 'inline' : 'none'}">
+
+										<h:outputText value="Exportar los resultados"></h:outputText>
+										
+										<h:commandButton actionListener="#{detalleConciliacionesIntBean.generarReportesPopUp}"
+											action="consultaDetalleConciliacionInternacionalPDF"
+											image="/images/pdf.gif"
+											title="Exportar a PDF todos los resultados de la consulta"
+											id="generarPdf"/>
+                           				&#160;&#160;
+
+                          				<h:commandButton actionListener="#{detalleConciliacionesIntBean.generarReportesPopUp}"
+                          					action="consultaDetalleConciliacionInternacionalXLS"
+                          					image="/images/excel-file.gif"
+                          					title="Exportar a Excel todos los resultados de la consulta" 
+                            				id="generarExcel">
+                           				</h:commandButton>
+									</h:panelGroup>
+								</h:panelGroup>
+
+							</td>
+						</tr>
+					</table>
+				
+			</h:panelGroup>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+
+	<!-- FIN DEL DECORATE -->
+</html>

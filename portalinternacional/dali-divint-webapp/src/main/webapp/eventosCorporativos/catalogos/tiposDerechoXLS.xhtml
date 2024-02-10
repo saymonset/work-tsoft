@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls" xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document documentName="TiposDerecho" documentTitle="Tipos Derecho"
+        institucion="#{tiposDerechoEventoCorporativoBean.agenteFirmado.id} #{tiposDerechoEventoCorporativoBean.agenteFirmado.folio} #{tiposDerechoEventoCorporativoBean.agenteFirmado.razon}" 
+         fecha="#{tiposDerechoEventoCorporativoBean.fechaActual}" >
+        
+        <xls:table value="#{tiposDerechoEventoCorporativoBean}" var="tiposDer" widthPercentage="100" maxColums="11" >
+            <xls:row>
+                <xls:col header="Mercado" value="#{tiposDerechoEventoCorporativoBean.idTipoDerecho eq '-1' ? 'Ambos' : tiposDerechoEventoCorporativoBean.idTipoDerecho }"/>
+                <xls:col header="Tipo Derecho" value="#{!empty tiposDerechoEventoCorporativoBean.nombre ? tiposDerechoEventoCorporativoBean.nombre : 'Todos'}" align="center" />
+                <xls:col header="Estado" value="#{tiposDerechoEventoCorporativoBean.activo eq '-1' ? 'Ambos' : (tiposDerechoEventoCorporativoBean.activo eq  '1' ? 'Inactivo' : 'Activo')}" />	             
+			</xls:row>			
+        </xls:table>
+               
+         <xls:subtitle value="#{etq.registrosEncontrados}: #{tiposDerechoEventoCorporativoBean.totalRegistros}" />
+        
+         <xls:table value="#{tiposDerechoEventoCorporativoBean.paginaReportes.registros}" var="tiposDer" currentBean="tipoDer" widthPercentage="100" maxColums="7">
+            <xls:row >
+				<xls:col header="Id" value="#{tiposDer.idTipoDerecho}"  />
+				<xls:col header="Tipo Derecho" value="#{tiposDer.tipoDerecho}" />										
+				<xls:col header="Mercado" value="#{tiposDer.tipo}"  />
+				<xls:col header="Estado" value="#{tiposDer.inactivo eq '1' ? 'Inactivo' : 'Activo'}" />
+			</xls:row>
+        </xls:table>
+        
+
+    </xls:document>
+</html>

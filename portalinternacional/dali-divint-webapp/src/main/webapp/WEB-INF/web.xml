@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee web-app_3_0.xsd"
+      version="3.0">
+ 
+
+	<context-param>
+		<param-name>com.sun.faces.validateXml</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>server</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.CONFIG_FILES</param-name>
+		<param-value>
+			/WEB-INF/descriptors/jsf/admonCustodiosDepositantes.xml,           
+			/WEB-INF/descriptors/jsf/beneficiarios.xml,
+			/WEB-INF/descriptors/jsf/calendarioCapitales.xml,
+			/WEB-INF/descriptors/jsf/calendarioEmisionesDeudaExt.xml,
+			/WEB-INF/descriptors/jsf/cambiaEstadoOperacionesSIC.xml,
+			/WEB-INF/descriptors/jsf/capturaOperacionesDI.xml,
+			/WEB-INF/descriptors/jsf/capturaTraspasos.xml,
+			/WEB-INF/descriptors/jsf/cargaStatusBeneficiarios.xml,
+			/WEB-INF/descriptors/jsf/conciliacionesInternacional.xml,
+			/WEB-INF/descriptors/jsf/consultaBitacoraEnvOp.xml,
+			/WEB-INF/descriptors/jsf/consultaEmisiones.xml,
+			/WEB-INF/descriptors/jsf/consultaOperacionesSIC.xml,
+			/WEB-INF/descriptors/jsf/consultaFastwork.xml,
+			/WEB-INF/descriptors/jsf/consultaOperacionesSICExportacion.xml,
+			/WEB-INF/descriptors/jsf/conteoAutomaticoSaldo.xml,
+			/WEB-INF/descriptors/jsf/derechos.xml,
+			/WEB-INF/descriptors/jsf/eventosCorporativos.xml,
+			/WEB-INF/descriptors/jsf/fideicomiso.xml,
+			/WEB-INF/descriptors/jsf/fileTransferCambioBoveda.xml,
+			/WEB-INF/descriptors/jsf/fileTransferCapturaBene.xml,
+			/WEB-INF/descriptors/jsf/fileTransferTraspaso.xml,
+			/WEB-INF/descriptors/jsf/mensajePortal.xml,
+			/WEB-INF/descriptors/jsf/multicargaInternacional.xml,
+			/WEB-INF/descriptors/jsf/topeCirculante.xml,
+			/WEB-INF/faces-config-converter.xml,
+			/WEB-INF/faces-config-reportes.xml,
+			/WEB-INF/descriptors/jsf/admonCustodiosBeneficiarios.xml,
+			/WEB-INF/descriptors/jsf/admonCustodiosCSDR.xml,
+			/WEB-INF/descriptors/jsf/consultaCustodiosDepositantes.xml,
+			<!-- @add Jacito -->
+			/WEB-INF/descriptors/jsf/cuentasTransitoriasEfectivo.xml,
+			<!-- @add Genner -->
+			/WEB-INF/descriptors/jsf/movimientosEfectivo.xml,
+			/WEB-INF/descriptors/jsf/bitacoraFileTransfer.xml,
+			/WEB-INF/descriptors/jsf/bitacoraFileTransferExportacion.xml,
+			<!-- @add Edgar -->
+			/WEB-INF/descriptors/jsf/consultaSaldoCustodios.xml
+			
+		</param-value>
+	</context-param>
+
+<!-- Welcome page -->
+    <welcome-file-list>
+        <welcome-file>index.xhtml</welcome-file>
+    </welcome-file-list>
+	<context-param>
+		<param-name>facelets.SKIP_COMMENTS</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<!-- if you want to disable the behaviour completely -->
+	<context-param>
+		<param-name>org.apache.myfaces.ERROR_HANDLING</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<!-- if you are using myfaces + facelets don't forget to do this -->
+	<context-param>
+		<param-name>facelets.DEVELOPMENT</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<context-param>
+	  <param-name>javax.faces.PROJECT_STAGE</param-name>
+	  <param-value>Production</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+		<param-value>.xhtml</param-value>
+	</context-param>
+	<context-param>
+	  <param-name>org.jboss.jbossfaces.WAR_BUNDLES_JSF_IMPL</param-name>
+	  <param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>facelets.LIBRARIES</param-name>
+		<param-value>/WEB-INF/tomahawk.taglib.xml</param-value>
+	</context-param>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+		classpath:/db-propertiesContext.xml,
+		/WEB-INF/classes/conf/applicationContext*.xml,		
+		classpath:/middleware-portalinternacional-services-context.xml,
+		classpath:/middleware-portalinternacional-transactions-context.xml,	
+		classpath:/datasource-portalinternacional-context.xml,        
+		classpath:/persistence-portalinternacional-context.xml,	
+		classpath:/middleware-core-services-context.xml,		
+		classpath:/datasource-core-context.xml,
+		classpath:/jms-portalinternacional-context.xml,
+		classpath:/moiJmsContext.xml,
+		classpath:/sicJmsContext.xml,
+		classpath:/persistence-core-dao-context.xml,
+		classpath:/middleware-portalinternacional-quartz-context.xml,
+        classpath*:/applicationContext-sign.xml
+		</param-value>
+	</context-param>
+    	<context-param>
+		<param-name>org.richfaces.SKIN</param-name>
+		<param-value>blueSky</param-value>
+	</context-param>
+	
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.faces</url-pattern>
+	</servlet-mapping>
+
+     <servlet>
+        <description/>
+        <display-name>ObtieneFormatoW</display-name>
+        <servlet-name>ObtieneFormatoW</servlet-name>
+        <servlet-class>com.indeval.portalinternacional.presentation.controller.beneficiarios.ObtieneFormatoW</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ObtieneFormatoW</servlet-name>
+        <url-pattern>/beneficiarios/ObtieneFormatoW</url-pattern>
+    </servlet-mapping>
+    
+     <servlet>
+        <description/>
+        <display-name>ObtieneFormatoMILA</display-name>
+        <servlet-name>ObtieneFormatoMILA</servlet-name>
+        <servlet-class>com.indeval.portalinternacional.presentation.controller.beneficiarios.ObtieneFormatoMILA</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ObtieneFormatoMILA</servlet-name>
+        <url-pattern>/beneficiarios/ObtieneFormatoMILA</url-pattern>
+    </servlet-mapping>
+	<filter>
+		<display-name>RichFaces Filter</display-name>
+		<filter-name>richfaces</filter-name>
+		<filter-class>org.ajax4jsf.Filter</filter-class>
+		<init-param>  
+			 <param-name>maxRequestSize</param-name>  
+			 <param-value>5242880</param-value>  
+		 </init-param>		
+	</filter>
+ 	<filter>
+  		<filter-name>MyFacesExtensionsFilter</filter-name>
+  		<filter-class>org.apache.myfaces.webapp.filter.ExtensionsFilter</filter-class>
+  		<init-param>
+   			<param-name>maxFileSize</param-name>
+   			<param-value>20m</param-value>
+  		</init-param>
+ 	</filter>
+	<context-param>
+                <param-name>org.ajax4jsf.RESOURCE_URI_PREFIX</param-name>
+                <param-value>a4j/</param-value>
+    </context-param>
+            
+	
+	
+    <filter-mapping>
+		<filter-name>richfaces</filter-name>
+		<servlet-name>Faces Servlet</servlet-name>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>MyFacesExtensionsFilter</filter-name>
+		<filter-class>
+			org.apache.myfaces.webapp.filter.ExtensionsFilter
+		</filter-class>
+		<init-param>
+			<param-name>maxFileSize</param-name>
+			<param-value>20m</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>MyFacesExtensionsFilter</filter-name>
+		<servlet-name>Faces Servlet</servlet-name>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>MyFacesExtensionsFilter</filter-name>
+		<url-pattern>/faces/myFacesExtensionResource/*</url-pattern>
+	</filter-mapping>
+
+ 	<filter>
+		<display-name>Seguridad Filter</display-name>
+		<filter-name>seguridad</filter-name>
+		<filter-class>
+            com.bursatec.seguridad.presentation.filter.SeguridadFilter
+        </filter-class>
+        <init-param>
+			<param-name>TIEMPO_RENOVACION_TICKET</param-name>
+			<param-value>5</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>seguridad</filter-name>
+		<servlet-name>Faces Servlet</servlet-name>
+	</filter-mapping> 
+	
+    <filter>
+        <description>Filtro de los reportes de TXT</description>
+        <filter-name>ReporteTxtFilter</filter-name>
+        <filter-class>com.indeval.portalinternacional.presentation.filter.ReporteTxtFilter</filter-class>
+    </filter>
+<!--    <filter-mapping>
+        <filter-name>ReporteTxtFilter</filter-name>
+        <url-pattern>/beneficiarios/consultaBeneficiarios.faces</url-pattern>
+    </filter-mapping> -->
+
+	<filter-mapping>
+        <filter-name>ReporteTxtFilter</filter-name>
+        <url-pattern>/statements/consultaStatements.faces</url-pattern>
+    </filter-mapping>
+    
+    <!-- Filtro Cross-Site Scripting -->
+	<filter>
+		<filter-name>XSSFilter</filter-name>
+		<filter-class>com.indeval.portalinternacional.presentation.filter.XSSFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>XSSFilter</filter-name>
+		<servlet-name>*</servlet-name>
+	</filter-mapping>
+    
+    <listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+
+   
+
+  <session-config>
+  		<session-timeout>30</session-timeout>
+  		<cookie-config>
+            <http-only>true</http-only>
+            <secure>false</secure>            
+        </cookie-config>
+ </session-config>
+ <error-page>
+  <error-code>500</error-code>
+  <location>/errorGeneral.jsp</location>
+ </error-page> 
+ <security-constraint>
+  <display-name>web</display-name>
+  <web-resource-collection>
+   <web-resource-name>pages</web-resource-name>
+   
+   <url-pattern>/*</url-pattern>
+      
+   <http-method>GET</http-method>
+   <http-method>POST</http-method>
+   <http-method>PUT</http-method>
+   <http-method>DELETE</http-method>
+  </web-resource-collection>
+  <auth-constraint>
+   <role-name>DEFAULT</role-name>
+  </auth-constraint>
+ </security-constraint>
+ <security-constraint>
+  <display-name>public-web</display-name>
+  <web-resource-collection>
+   <web-resource-name>public-pages</web-resource-name>
+   
+   	   <url-pattern>/faces/*</url-pattern>
+	   <url-pattern>/javax.faces.resource/*</url-pattern>
+	   <url-pattern>/resources/*</url-pattern>
+	   <url-pattern>/js/jquery.js</url-pattern>
+	   <url-pattern>/js/login.js</url-pattern>
+	   <url-pattern>/js/common.js</url-pattern>
+	   <url-pattern>/js/mostrarFirmaDigitalLogin.js</url-pattern>
+	   <url-pattern>/js/mostrarFirmaDigital.js</url-pattern>
+	   <url-pattern>/js/jquery.js</url-pattern>
+	   <url-pattern>/js/jsrsasign-all-min.js</url-pattern>
+	   <url-pattern>/js/forge.min.js</url-pattern>
+	   <url-pattern>/js/firma_ticket.js</url-pattern>
+	   <url-pattern>/js/firma.js</url-pattern>
+	   <url-pattern>/js/base64.js</url-pattern>   
+	   <url-pattern>/js/jquery/*</url-pattern>
+	   <url-pattern>/js/jquery/css/*</url-pattern>
+	   <url-pattern>/js/jquery/css/images/*</url-pattern>
+	   <url-pattern>/js/jquery/js/*</url-pattern>   
+	   <url-pattern>/imgs_login/*</url-pattern>
+	   <url-pattern>/images/*</url-pattern>
+	   <url-pattern>/css/login.css</url-pattern>
+	   <url-pattern>/css/dali.css</url-pattern>	   
+	   <url-pattern>/a4j/*</url-pattern>	   	  
+	   <url-pattern>/org.richfaces.resources/*</url-pattern>
+
+   	   <url-pattern>/layoutLogin.xhtml</url-pattern>
+	   <url-pattern>/login.xhtml</url-pattern>   	   
+	   <url-pattern>/login.faces</url-pattern>
+	   
+	   <url-pattern>/changePassword.xhtml</url-pattern>
+	   <url-pattern>/changePassword.faces</url-pattern>
+	   
+	   
+	   <url-pattern>/css/firma.css</url-pattern>
+	   <url-pattern>/css/daliHeadFirma.css</url-pattern>
+	   
+	   <url-pattern>/firmaDigitalLogin.xhtml</url-pattern>
+	   <url-pattern>/firmaDigitalLogin.faces</url-pattern>
+	   
+	   <url-pattern>/firma_ticket.html</url-pattern>
+	   <url-pattern>/firma_ticket.faces</url-pattern>
+	   
+	   
+	   
+	   <url-pattern>/errorGeneral.jsp</url-pattern>
+	   
+   <http-method>GET</http-method>
+   <http-method>POST</http-method>
+  </web-resource-collection>
+ </security-constraint>
+ <login-config>
+  <auth-method>FORM</auth-method>
+  <form-login-config>
+   <form-login-page>/login.faces</form-login-page>
+   <form-error-page>/invalid.faces</form-error-page>
+  </form-login-config>
+ </login-config>
+ <security-role>
+  <role-name>DEFAULT</role-name>
+ </security-role>
+</web-app>

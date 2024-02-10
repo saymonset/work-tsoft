@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:pdf="http://indeval.com/jsf/pdf"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="consultaDerechos" documentTitle="Consulta de Derechos"
+		institucion="#{consultaDerechosExportacionBean.agenteFirmado.id} #{consultaDerechosExportacionBean.agenteFirmado.folio} #{consultaDerechosExportacionBean.agenteFirmado.razon}"
+		landscape="true" fecha="#{consultaDerechosExportacionBean.fechaActual}"
+		imageResource="/images/indeval.jpg">
+
+        <pdf:table value="consultaDerechosExportacionBean" currentBean="resultado" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{consultaDerechosExportacionBean}" currentBean="resultado" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.institucionMinus}" value="#{(empty sessionScope.roles['INT_BEN_INDEVAL'] and empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN']) ? consultaDerechosExportacionBean.claveFolio : consultaDerechosExportacionBean.param.claveInstitucion}" align="center" />
+                <pdf:col header="#{etq.tv}" value="#{consultaDerechosExportacionBean.param.emision.tv}" align="center" />
+                <pdf:col header="#{etq.emisoraMinus}" value="#{consultaDerechosExportacionBean.param.emision.emisora}" align="center" />
+				<pdf:col header="#{etq.serieMinus}" value="#{consultaDerechosExportacionBean.param.emision.serie}" align="center" />
+                <pdf:col header="#{etq.cuponMinus}" value="#{consultaDerechosExportacionBean.param.emision.cupon}" align="center"/>
+                <pdf:col header="#{etq.isin}" value="#{consultaDerechosExportacionBean.param.emision.isin}" align="center"/>                                								                
+                <pdf:col header="#{etq.divisaMinus}" value="#{consultaDerechosExportacionBean.param.divisa}" align="center" />                
+                <pdf:col header="#{etq.bovedaMinus}" value="#{consultaDerechosExportacionBean.param.bovedaCustodio}" align="center" />                
+                <pdf:col header="#{etq.estado}" value="#{consultaDerechosExportacionBean.param.descEstatusDerecho}" align="center"/>                    
+                <pdf:col header="#{etq.fechaCorteMinus}" value="#{consultaDerechosExportacionBean.param.fechaCorte}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaPago}" value="#{consultaDerechosExportacionBean.param.fechaPago}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>                
+            </pdf:row>
+        </pdf:table>
+        <pdf:br />
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{consultaDerechosExportacionBean.paginaReportes.totalRegistros}" />
+       
+        <pdf:subtitle value="Datos"/>
+        <pdf:table value="#{consultaDerechosExportacionBean.paginaReportes.registros}" currentBean="detalle">
+            <pdf:row>
+            	<pdf:col header="#{etq.idTipoDerecho}" value="#{detalle.idTipoDerecho}"
+                         align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.tipoDerecho}" value="#{detalle.descTipoDerecho}"
+                         align="CENTER" oddColorDark="true" />
+            	<pdf:col header="#{etq.idSubTipoDerecho}" value="#{detalle.idSubtipoDerecho}"
+                         align="CENTER" oddColorDark="true" />                         
+                <pdf:col header="#{etq.subtipoDerecho}" value="#{detalle.descSubtipoDerecho}" 
+                         align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.tv}" value="#{detalle.emision.tv}"
+                         align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.emisoraMinus}" value="#{detalle.emision.emisora}" 
+                		 align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.serieMinus}" value="#{detalle.emision.serie}" 
+                		 align="CENTER" oddColorDark="true"/>
+                <pdf:col header="#{etq.cuponMinus}" value="#{detalle.emision.cupon}"
+                         align="CENTER" oddColorDark="true" />
+                <pdf:col header="#{etq.isin}" value="#{detalle.emision.isin}" 
+                		 align="CENTER" oddColorDark="true"/>                    
+                <pdf:col header="#{etq.fechaCorteMinus}" value="#{detalle.fechaCorte}" align="CENTER" oddColorDark="true" >
+               		<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaPago}" value="#{detalle.fechaPago}" align="CENTER" oddColorDark="true">
+             		<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.proporcionMinus}" value="#{detalle.proporcion}" align="CENTER" oddColorDark="true">
+                	<f:convertNumber pattern="0.00##"/>
+                </pdf:col>                		 
+                <pdf:col header="#{etq.divisaMinus}" value="#{detalle.divisa}" 
+                		 align="CENTER" oddColorDark="true"/>                		 
+                <pdf:col header="#{etq.bovedaMinus}" value="#{detalle.bovedaCustodio}" 
+                		 align="CENTER" oddColorDark="true"/>
+                <pdf:col header="#{etq.estado}" value="#{detalle.descEstatusDerecho}" 
+                		 align="CENTER" oddColorDark="true"/>                		                                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		
+            </pdf:row>
+        </pdf:table>
+    </pdf:document>
+</html>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:pdf="http://indeval.com/jsf/pdf"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+	<pdf:document documentName="administracionCustodios"
+		documentTitle="Consulta Administraci&#243;n Custodios/Depositantes"
+		institucion="#{admonCustodiosDepositantesController.agenteFirmado.id} #{admonCustodiosDepositantesController.agenteFirmado.folio} #{admonCustodiosDepositantesController.agenteFirmado.razon}"
+		landscape="false"
+		fecha="#{admonCustodiosDepositantesController.fechaActual}"
+		imageResource="/images/indeval.jpg">
+
+		<pdf:subtitle value="#{etq.custodio}" />
+
+		<pdf:table value="#{admonCustodiosDepositantesController}" currentBean="encabezadoCustodio">
+			<pdf:row>
+				<pdf:col align="center" collspan="3" header="#{etq.custodio}" value="" />
+				<pdf:col align="center" collspan="2" header="#{etq.bics}" value="" />
+				<pdf:col align="center" collspan="5" header="#{etq.generales}" value="" />
+			</pdf:row>
+		</pdf:table>
+
+		<pdf:table value="#{admonCustodiosDepositantesController.custodioActual.catBic}" currentBean="custodioActual">
+			<pdf:row>
+				<pdf:col align="center" header="#{etq.participanteMinus}"
+					value="#{custodioActual.cuentaNombrada.institucion.tipoInstitucion.claveTipoInstitucion}#{custodioActual.cuentaNombrada.institucion.folioInstitucion}" />
+				<pdf:col align="center" header="#{etq.cuentaMinus}" value="#{custodioActual.cuentaNombrada.cuenta}" />
+				<pdf:col align="center" header="#{etq.nombre} #{etq.custodio}" value="#{custodioActual.cuentaNombrada.razonSocialCuenta}" />
+				<pdf:col align="center" header="#{etq.produccionMinus}" value="#{custodioActual.bicProd}" />
+				<pdf:col align="center" header="#{etq.entrenamientoMinus}" value="#{custodioActual.bicPrueba}" />
+				<pdf:col align="center" header="#{etq.cuentaIndevalMinus}" value="#{custodioActual.cuentaIndeval}" />
+				<pdf:col align="center" header="#{etq.pais}" value="#{custodioActual.pais}" />
+				<pdf:col align="center" header="#{etq.mercadoMinus}" value="#{custodioActual.mercado}" />
+				<pdf:col align="center" header="#{etq.estatus}" value="#{custodioActual.status}" />
+				<pdf:col align="center" header="#{etq.moneda}" value="#{custodioActual.moneda}" />
+				<pdf:col align="center" header="#{etq.estatusRegistro}" value="#{custodioActual.estatusRegistro}" />
+			</pdf:row>
+		</pdf:table>
+
+		<pdf:subtitle value="#{etq.depositosLiq}" />
+
+		<pdf:table
+			value="#{admonCustodiosDepositantesController.custodioActual.sicDetalles}"
+			currentBean="sicDetalle" borraLista="false">
+			<pdf:row rendered="#{not empty admonCustodiosDepositantesController.custodioActual.sicDetalles}">
+				<pdf:col align="center" header="#{etq.bicDepositoLiq}" value="#{sicDetalle.bicDepLiq}" />
+				<pdf:col align="center" header="#{etq.depositoLiq}" value="#{sicDetalle.depLiq}" />
+				<pdf:col align="center" header="#{etq.idDepositoLiq}" value="#{sicDetalle.idDepLiq}" />
+				<pdf:col align="center" header="#{etq.estatusRegistro}" value="#{sicDetalle.estatusRegistro}" />
+			</pdf:row>
+			<pdf:row rendered="#{empty admonCustodiosDepositantesController.custodioActual.sicDetalles}">
+				<pdf:col align="center" header="#{etq.bicDepositoLiq}" value="" />
+				<pdf:col align="center" header="#{etq.depositoLiq}" value="" />
+				<pdf:col align="center" header="#{etq.idDepositoLiq}" value="" />
+				<pdf:col align="center" header="#{etq.estatusRegistro}" value="" />
+			</pdf:row>
+		</pdf:table>
+		<pdf:table value="#{admonCustodiosDepositantesController}" currentBean="sicDetalleVacio">
+			<pdf:row rendered="#{empty admonCustodiosDepositantesController.custodioActual.sicDetalles}">
+				<pdf:col align="center" header="#{etq.bicDepositoLiq}" value="" />
+				<pdf:col align="center" header="#{etq.depositoLiq}" value="" />
+				<pdf:col align="center" header="#{etq.idDepositoLiq}" value="" />
+				<pdf:col align="center" header="#{etq.estatusRegistro}" value="" />
+			</pdf:row>
+			<pdf:row>
+				<pdf:col />
+			</pdf:row>
+		</pdf:table>
+
+		<pdf:subtitle value="#{etq.emisiones}" />
+
+		<pdf:table value="#{admonCustodiosDepositantesController.custodioActual.sicEmisiones}" currentBean="sicEmision" borraLista="false">
+			<pdf:row>
+				<pdf:col align="center" header="#{etq.tv}" value="#{sicEmision.emision.instrumento.claveTipoValor}" />
+				<pdf:col align="center" header="#{etq.emisoraMinus}" value="#{sicEmision.emision.emisora.clavePizarra}" />
+				<pdf:col align="center" header="#{etq.serieMinus}" value="#{sicEmision.emision.serie}" />
+				<pdf:col align="center" header="#{etq.formaOperar}" value="#{sicEmision.formaOper}" />
+				<pdf:col align="center" header="#{etq.estatusRegistro}" value="#{sicEmision.estatusRegistro}" />
+			</pdf:row>
+		</pdf:table>
+		<pdf:table value="#{admonCustodiosDepositantesController}" currentBean="sicEmisionVacio">
+			<pdf:row
+				rendered="#{empty admonCustodiosDepositantesController.custodioActual.sicEmisiones}">
+				<pdf:col align="center" header="#{etq.tv}" value="" />
+				<pdf:col align="center" header="#{etq.emisoraMinus}" value="" />
+				<pdf:col align="center" header="#{etq.serieMinus}" value="" />
+				<pdf:col align="center" header="#{etq.formaOperar}" value="" />
+				<pdf:col align="center" header="#{etq.estatusRegistro}" value="" />
+			</pdf:row>
+			<pdf:row>
+				<pdf:col />
+			</pdf:row>
+		</pdf:table>
+	</pdf:document>
+</html>

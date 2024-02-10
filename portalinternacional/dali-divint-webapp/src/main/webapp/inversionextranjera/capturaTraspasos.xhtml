@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich" xmlns:t="http://myfaces.apache.org/tomahawk">
+    
+    <ui:composition template="/layoutCaptura.xhtml">
+    	<ui:define name="head">
+            <script language="javascript" type="text/javascript"
+                src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js"></script>
+        </ui:define>
+        
+        <ui:define name="tituloSeccion">
+            <h:outputText value="#{etq.divisionInternacional}" />
+        </ui:define>
+        <ui:define name="subtituloSeccion">
+            <h:outputText value="#{etq.sistemaIntCot}" />
+        </ui:define>
+
+    	<ui:define name="tituloEncabezado">
+    		<h:outputText value="#{etq.capturaTraspasos}"></h:outputText>
+    	</ui:define>
+    	
+    	<ui:define name="seccionForma">
+			<a4j:keepAlive beanName="capturaTraspasosBean" />
+    		
+    		
+    		<h:panelGroup id="init">		
+    			<h:outputText value="#{capturaTraspasosBean.inicializar}"></h:outputText>
+    		</h:panelGroup>
+    		
+    		<h:panelGroup id="general">
+    			<table width="100%" cellpadding="opx" cellspacing="0px">
+    				<tr>
+    					<td colspan="2">
+    						<h:panelGroup id="mensajeUsuario">
+								<div style="min-height: 21px;">						
+									<rich:messages warnClass="warning" infoClass="info"
+										errorClass="error" ajaxRendered="true" showDetail="false"
+										showSummary="true" layout="list">
+										<f:facet name="infoMarker">
+											<h:panelGroup>
+												<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+										</f:facet>
+				
+										<f:facet name="errorMarker">
+											<h:panelGroup>
+												<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+										</f:facet>
+									</rich:messages>
+								
+									<div id="divWarnings" class="warning" style="display:none;">
+										<p id="textoWarning">										
+										</p>
+									</div>
+								</div>
+							</h:panelGroup>
+    					</td>
+    				</tr>
+    					
+    				<tr>
+    					<td width="50%">
+    						<h:panelGrid columns="3" width="100%" id="seleccionCuentaTraspasante">
+    							<f:facet name="header">
+    								<h:outputText value="#{etq.traspasanteMinus}" styleClass="texto"/>
+    							</f:facet>
+    							<h:outputText value="#{etq.participanteMinus}" styleClass="texto"/>
+    							<h:outputText value="#{etq.cuentaMinus}" styleClass="texto"/>
+    							<!-- h:outputText value="#{etq.tenencia}" styleClass="texto"/-->
+    							<h:outputText value="#{etq.nombreCuenta}" styleClass="texto"/>
+
+								<h:panelGroup>
+									<h:inputText autocomplete="off" id="idTraspasante" size="5" maxlength="5"
+										value="#{capturaTraspasosBean.idTraspasante}"
+										styleClass="textoControles #{capturaTraspasosBean.institucionIndeval ? 'campoNumericoAsterisco' : 'readonly'}" 
+										tabindex="5">
+											<a4j:support event="onchange" reRender="init,nombreInstitucionTraspasante" />																						
+										</h:inputText>									
+								</h:panelGroup>
+								<h:panelGroup>
+    								<h:inputText autocomplete="off" id="cuentaTraspasante" size="4" maxlength="4"
+    									value="#{capturaTraspasosBean.cuentaTraspasante}"
+    									styleClass="textoControles campoNumericoAsterisco" tabindex="10">
+    									<a4j:support event="onchange"													
+													reRender="init,panelEmisora.panelSerie,panelCupon,panelIsin,panelBoveda,saldoDisponible,alta,mensajeUsuario,nombreInstitucionTraspasante"/>    									
+    								</h:inputText>
+    								<input type="hidden" id="nombre_id_folio_traspasante"
+    									name="nombre_id_folio_traspasante" value="daliForm:idTraspasante" />	    								
+                             	</h:panelGroup>
+                               	<h:inputText autocomplete="off" id="nombreInstitucionTraspasante" size="25" 
+                                   	readonly="true"
+                                   	value="#{capturaTraspasosBean.nombreCuenta}"
+                                   	styleClass="textoControles textoMayusculas" />
+    						</h:panelGrid>
+    					</td>
+
+                        <td width="50%">
+                            <h:panelGrid columns="3" width="100%" id="seleccionCuentaReceptor">
+                                <f:facet name="header">
+                                    <h:outputText value="#{etq.receptorMinus}" styleClass="texto" />
+                                </f:facet>
+                                <h:outputText value="#{etq.participanteMinus}" styleClass="texto" />
+                                <h:outputText value="#{etq.cuentaMinus}" styleClass="texto" />
+                                <!--  h:outputText value="#{etq.tenencia}" styleClass="texto" /-->
+                                <h:outputText value="#{etq.nombreCuenta}" styleClass="texto" />
+
+								<h:panelGroup>
+									<h:inputText autocomplete="off" id="idReceptor" size="5" maxlength="5"
+										value="#{capturaTraspasosBean.idReceptor}"
+										styleClass="textoControles" tabindex="90">
+										<a4j:support event="onchange" reRender="init,nombreInstitucionReceptor" />
+									</h:inputText>									
+								</h:panelGroup>
+								<h:panelGroup>
+    								<h:inputText autocomplete="off" id="cuentaReceptor" size="4" maxlength="4"
+    									value="#{capturaTraspasosBean.cuentaReceptor}"
+    									styleClass="textoControles campoNumericoAsterisco" tabindex="100">
+    									<a4j:support event="onchange" reRender="init,nombreInstitucionReceptor" />
+    										
+   									</h:inputText>
+    								<input type="hidden" id="nombre_id_folio_receptor"
+    									name="nombre_id_folio_receptor" value="daliForm:idReceptor" />    								
+                                </h:panelGroup>
+
+                                <h:inputText autocomplete="off" id="nombreInstitucionReceptor" size="25" styleClass="readonly textoControles"
+                                    value="#{capturaTraspasosBean.nombreCuentaRec}" />
+                            </h:panelGrid>
+                        </td>
+    				</tr>
+
+                    <tr>
+                        <td style="vertical-align: top;">
+                            <h:panelGrid columns="2" width="100%" id="datosPosicionTraspasante">
+                                <h:panelGroup>
+                                    <h:outputText value="#{etq.tipoValorMinus}" styleClass="texto" />
+                                    <h:outputText value="#{etq.asterisco}" styleClass="required" />
+                                </h:panelGroup>                                
+	                                <h:panelGroup id="panelTipoValor">
+	                                    <h:inputText autocomplete="off" id="tipoValor" size="7" maxlength="7"
+	                                        value="#{capturaTraspasosBean.tlp.tipoValor}" styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="20">
+	                                        <a4j:support event="onchange"													
+												reRender="init,panelSerie,panelCupon,panelIsin,panelBoveda,saldoDisponible,alta,mensajeUsuario"/>
+	                                    </h:inputText>
+	                                        
+	                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:outputText value="#{etq.emisoraMinus}" styleClass="texto" />
+                                    <h:outputText value="#{etq.asterisco}" styleClass="required" />
+                                </h:panelGroup>
+                               	<h:panelGroup>
+	                                <h:panelGroup id="panelEmisora">
+	                                    <h:inputText autocomplete="off" id="emisora" size="7" maxlength="7"
+	                                        value="#{capturaTraspasosBean.tlp.emisora}"
+	                                        required="false" styleClass="textoControles textoMayusculas" tabindex="30">
+	                                        <a4j:support event="onchange"													
+												reRender="init,panelTipoValor,panelCupon,panelIsin,panelBoveda,saldoDisponible,alta,mensajeUsuario"/>
+	                                   	</h:inputText>
+                                     </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:outputText value="#{etq.serieMinus}" styleClass="texto" />
+                                    <h:outputText value="#{etq.asterisco}" styleClass="required" />
+                                </h:panelGroup>
+                                <h:panelGroup>
+	                                <h:panelGroup id="panelSerie">
+		                                <h:inputText autocomplete="off" id="serie" size="7" maxlength="6"
+		                                    value="#{capturaTraspasosBean.tlp.serie}"
+		                                    styleClass="textoControles textoMayusculas" tabindex="40">
+		                                    <a4j:support event="onchange"													
+												reRender="init,panelTipoValor,panelEmisora,panelCupon,panelIsin,panelBoveda,saldoDisponible,alta,mensajeUsuario"/>
+		                                </h:inputText>
+	                                </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:outputText value="#{etq.cuponMinus}" styleClass="texto" />
+                                    <h:outputText value="#{etq.asterisco}" styleClass="required" />
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                	<h:panelGroup id="panelCupon">
+	                                    <h:inputText autocomplete="off" id="cupon" size="7" maxlength="4"
+	                                        value="#{capturaTraspasosBean.tlp.cupon}"
+	                                        styleClass="textoControles campoNumerico" tabindex="50"/>
+                                    </h:panelGroup>
+                                     <h:panelGroup>
+                                                <a href="javascript: mostrarPosicionesInvExt();" tabindex="60"> <h:graphicImage
+                                                        value="/images/search.png"></h:graphicImage> <h:outputText
+                                                        value="#{etq.buscarPosicionMinus}" styleClass="texto" /> </a>&#160;&#160;&#160;
+                                    			<a href="javascript:limpiarDatosPosicion();" tabindex="70"> <h:graphicImage
+                                                        value="/images/page_refresh.png"></h:graphicImage> <h:outputText
+                                                        value="#{etq.limpiarPosicionMinus}" styleClass="texto" /> </a>
+
+                                      </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup >
+                                    <h:outputText value="#{etq.bovedaMinus}" styleClass="texto" />
+                                    <h:outputText value="#{etq.asterisco}" styleClass="required" />
+                                </h:panelGroup>
+                                <h:panelGroup >
+                                	<h:panelGroup id="panelBoveda">
+                                		<h:inputText autocomplete="off" styleClass="readonly textoControles" id="boveda" 
+													value="#{capturaTraspasosBean.descripcionBoveda}" tabindex="70" size="28" maxlength="25" />
+										<h:inputHidden id="idBoveda" value="#{capturaTraspasosBean.tlp.boveda}" />
+		                                <h:selectOneMenu id="boveda2" value="#{capturaTraspasosBean.tlp.boveda}" styleClass="textoControles readonly"
+		                                     disabled="true" rendered="false" >
+		                                    <f:selectItem itemValue="-1" itemLabel="#{etq.seleccioneUnaBoveda}" />
+		                                    <f:selectItems value="#{seleccionarPosicionesBean.bovedasValor}" />
+		                                     <a4j:support event="onselect" actionListener="#{capturaTraspasosBean.limpiar}" 
+		                                        reRender="general" />
+		                                </h:selectOneMenu>
+	                                </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:outputText value="#{etq.isin}" styleClass="texto" />
+                                </h:panelGroup>
+                                <h:panelGroup>
+	                                <h:panelGroup id="panelIsin">
+		                                <h:inputText autocomplete="off" id="isin" size="30" maxlength="30"
+		                                    value="#{capturaTraspasosBean.tlp.ISIN}"
+		                                    readonly="false" styleClass="textoControles campoNumerico" tabindex="80" >                                                                                           
+		                                    <a4j:support event="onchange"													
+												reRender="init,panelTipoValor,panelEmisora,panelSerie,panelCupon,panelBoveda,saldoDisponible,alta,mensajeUsuario"/>
+		                                </h:inputText>
+	                                </h:panelGroup>
+                                </h:panelGroup>
+	                            </h:panelGrid>
+                        </td>
+                        <td style="vertical-align: top;">
+                            <h:panelGrid columns="2" width="100%" id="datosOperacion">
+                                <h:panelGroup rendered="true">
+                                    <h:outputText value="#{etq.altaMinus}" styleClass="texto" />
+                                </h:panelGroup>
+                                <h:inputText autocomplete="off" id="alta" size="10"
+                                    value="#{capturaTraspasosBean.alta}" styleClass="textoControles readonly"/>
+                                <h:panelGroup rendered="true">
+                                    <h:outputText value="#{etq.cantidadOperada}" styleClass="texto" />
+                                    <h:outputText value="#{etq.asterisco}" styleClass="required" />
+                                </h:panelGroup>
+                                <h:inputText autocomplete="off" id="cantidadOperada" size="30" maxlength="30" 
+                                    value="#{capturaTraspasosBean.tlp.cantidadTitulos}" styleClass="textoControles campoNumerico" converter="formatoEnteroConverter" tabindex="110"
+                                    >
+                                    	<a4j:support event="onchange" 
+                                        reRender="posicionActual,cantidadOperada"
+                                        actionListener="#{capturaTraspasosBean.realizarCalculoSimulado}" />
+                                </h:inputText>
+                                <h:panelGroup rendered="true">
+                                    <h:outputText value="#{etq.saldoDisponibleMinus}" styleClass="texto" />
+                                </h:panelGroup>
+                                <h:inputText autocomplete="off" id="saldoDisponible" size="30" maxlength="30" 
+                                    value="#{capturaTraspasosBean.saldoDisponible}" rendered="true" styleClass="textoControles readonly" converter="formatoEnteroConverter">
+                                </h:inputText>
+                                <h:panelGroup rendered="true">
+                                    <h:outputText value="#{etq.posicionActual}" styleClass="texto" />
+                                </h:panelGroup>
+                                <h:inputText autocomplete="off" id="posicionActual" size="30" maxlength="30"
+                                    value="#{capturaTraspasosBean.saldoActual}" rendered="true"  styleClass="textoControles readonly"  converter="formatoEnteroConverter">
+                                </h:inputText>
+                            </h:panelGrid>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            &#160;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <h:outputText value="#{etq.asterisco}" styleClass="required" />
+                            <h:outputText value="#{etq.requeridos}" styleClass="texto" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                          
+                        <h:panelGroup id="panelFirma">
+                        
+					         	<div style="display:none">
+									  <textarea  id ="isoSinFirmar" name="isoSinFirmar" >#{capturaTraspasosBean.isoSinFirmar}</textarea>
+									  <textarea id="numeroSerie" name="numeroSerie" ></textarea>
+									  <textarea  id="numeroSerieUsuario" name="numeroSerieUsuario">#{sessionScope.usuario.numeroSerieCertificado}</textarea>
+							   		  <textarea id="isoFirmado" name="isoFirmado"></textarea>
+							   		  <textarea  id="hashIso" name="hashIso">#{capturaTraspasosBean.hashIso}</textarea>
+						    	</div>
+						    	
+						    	<h:panelGroup rendered="#{capturaTraspasosBean.isoYaFirmado}">
+						    	
+			                    	<script>
+			                    		
+			                    		function firmarOperacion(){                    			
+	 		                    			$j("input[id$='botonConfirmar2']").attr("disabled",false);
+	 		                    			$j("input[id$='botonLimpiar']").attr("disabled",false);
+	 		                    		    $j("input[id$='botonConfirmar2']").click();                    		    
+			                    		}
+	
+			                    	</script>		 
+							        <ui:decorate template="/firmaDigitalSimple.xhtml"></ui:decorate>
+						        
+							    </h:panelGroup>
+                    	</h:panelGroup>                                                                              
+                           
+                        </td>
+                    </tr>
+                   
+                </table>
+            </h:panelGroup>
+        </ui:define>
+        
+        <ui:define name="botones">
+        	<div class="refrescar" style="float: left;">
+        		 <a4j:status id="commonStatus">
+					<f:facet name="start">
+						<h:panelGroup>
+							<h:graphicImage value="/images/ajax-loader.gif" />
+							<h:outputText value="#{etq.buscando}"></h:outputText>
+						</h:panelGroup>
+					</f:facet>
+				</a4j:status> 	
+        	</div>
+        	<h:panelGrid width="25%">
+	        	<h:panelGroup id="botones">
+		            <div class="limpiar">
+		                <a4j:commandButton id="botonLimpiar" image="/images/transparent.gif" styleClass="submit"
+		                    actionListener="#{capturaTraspasosBean.limpiar}" 
+		                    reRender="init,general,botones" 
+		                    onclick="deshabilitarBoton('botonLimpiar');" 
+		                    oncomplete="habilitarBoton('botonLimpiar')"
+		                    tabindex="130"/>	               
+		            </div>
+		            <div class="guardar">
+		                <a4j:commandButton id="botonBuscar" image="/images/transparent.gif" styleClass="submit"
+		                    actionListener="#{capturaTraspasosBean.guardar}" 
+		                    rendered="#{!capturaTraspasosBean.isoYaFirmado}"
+		                    reRender="general,botones,mensajeUsuario" 
+		                    onclick="if(confirmarGuardar()){removeApplet();deshabilitarBoton('botonBuscar');}else return false;" 
+		                    oncomplete="habilitarBoton('botonBuscar')"
+		                    tabindex="120"/>
+		            </div>
+		            <div class="guardar">
+							<h:commandButton id="botonConfirmar2" image="/images/transparent.gif"
+								styleClass="submit"
+								rendered="#{capturaTraspasosBean.isoYaFirmado}"
+								actionListener="#{capturaTraspasosBean.confirmarTraspaso}"
+								tabindex="120">							
+							</h:commandButton>
+					</div>					
+	            </h:panelGroup>
+            </h:panelGrid>
+                    
+        </ui:define>
+
+    </ui:composition>
+    
+</html>

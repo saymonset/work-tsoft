@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:pdf="http://indeval.com/jsf/pdf"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="DetalleConciliacionesEfectivo" documentTitle="Detalle Conciliación de Efectivo"
+        institucion="#{detalleConciliacionesEfectivoIntBean.agenteFirmado.id} #{detalleConciliacionesEfectivoIntBean.agenteFirmado.folio} #{detalleConciliacionesEfectivoIntBean.agenteFirmado.razon}" 
+        landscape="true" fecha="#{detalleConciliacionesEfectivoIntBean.fechaActual}" imageResource="/images/indeval.jpg">
+        <pdf:table value="detalleConciliacionesEfectivoIntBean" currentBean="detalleConciliacion" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="detalleConciliacionesEfectivoIntBean" currentBean="detalleConciliacion" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.bicCode}" value="#{detalleConciliacionesEfectivoIntBean.bicCodeSelected}" align="center" />
+                <pdf:col header="#{etq.divisaMinus}" value="#{detalleConciliacionesEfectivoIntBean.divisaSelected}" align="center" />
+                <pdf:col header="#{etq.cuentas}" value="#{detalleConciliacionesEfectivoIntBean.cuentaSelected}" align="center" />
+                <pdf:col header="#{etq.codigoVerificacion}" value="#{detalleConciliacionesEfectivoIntBean.selectedCodigo}" align="center" />
+                <pdf:col header="#{etq.folioConciliacion}" value="#{!empty detalleConciliacionesEfectivoIntBean.folioConciliacion ? detalleConciliacionesEfectivoIntBean.folioConciliacion : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.referenciaMensaje}" value="#{!empty detalleConciliacionesEfectivoIntBean.referenciaMensaje ? detalleConciliacionesEfectivoIntBean.referenciaMensaje : 'TODOS'}" align="center" />
+				<pdf:col header="#{etq.tipo}" value="#{(detalleConciliacionesEfectivoIntBean.tipo == 'C' or detalleConciliacionesEfectivoIntBean.tipo == 'RD') ? etq.credito : (detalleConciliacionesEfectivoIntBean.tipo == 'D' or detalleConciliacionesEfectivoIntBean.tipo == 'RC')  ? etq.debito : 'AMBOS'}"  align="center"/>
+				<pdf:col header="#{etq.credito}/ #{etq.debito}" value="#{detalleConciliacionesEfectivoIntBean.creditoDebito ? 'Si' : 'No'}"  align="center"/>
+				<pdf:col header="#{etq.cuentasCustodia}" value="#{detalleConciliacionesEfectivoIntBean.cuentaCustodia ? 'Si' : 'No'}"  align="center"/>
+				<pdf:col header="#{etq.cuentasComercial}" value="#{detalleConciliacionesEfectivoIntBean.cuentaComercial ? 'Si' : 'No'}"  align="center"/>
+				<pdf:col header="#{etq.conComentarios}" value="#{detalleConciliacionesEfectivoIntBean.comentarios ? 'Si' : 'No'}"  align="center"/>       
+                <pdf:col header="#{etq.fechaBalanceInicio}" value="#{detalleConciliacionesEfectivoIntBean.fechaBalanceInicio}" align="center" rendered="#{!empty detalleConciliacionesEfectivoIntBean.fechaBalanceInicio}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaBalanceInicio}" value="TODAS" rendered="#{empty detalleConciliacionesEfectivoIntBean.fechaBalanceInicio}" align="center">
+				    <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+                <pdf:col header="#{etq.fechaBalanceFin}" value="#{detalleConciliacionesEfectivoIntBean.fechaBalanceFin}" align="center" rendered="#{!empty detalleConciliacionesEfectivoIntBean.fechaBalanceFin}">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaBalanceFin}" value="TODAS" rendered="#{empty detalleConciliacionesEfectivoIntBean.fechaBalanceFin}" align="center">
+				    <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				<pdf:col header="#{etq.entryDateInicio}" value="#{detalleConciliacionesEfectivoIntBean.fechaElaboracionInicio}" align="center" rendered="#{!empty detalleConciliacionesEfectivoIntBean.fechaElaboracionInicio}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.entryDateInicio}" value="TODAS" rendered="#{empty detalleConciliacionesEfectivoIntBean.fechaElaboracionInicio}" align="center">
+				    <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+                <pdf:col header="#{etq.entryDateFin}" value="#{detalleConciliacionesEfectivoIntBean.fechaElaboracionFin}" align="center" rendered="#{!empty detalleConciliacionesEfectivoIntBean.fechaElaboracionFin}">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.entryDateFin}" value="TODAS" rendered="#{empty detalleConciliacionesEfectivoIntBean.fechaElaboracionFin}" align="center">
+				    <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				 <pdf:col header="#{etq.fechaCreditoDebitoInicio}" value="#{detalleConciliacionesEfectivoIntBean.fechaCreditoDebitoInicio}" align="center" rendered="#{!empty detalleConciliacionesEfectivoIntBean.fechaCreditoDebitoInicio}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaCreditoDebitoInicio}" value="TODAS" rendered="#{empty detalleConciliacionesEfectivoIntBean.fechaCreditoDebitoInicio}" align="center">
+				     <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+                <pdf:col header="#{etq.fechaCreditoDebitoFin}" value="#{detalleConciliacionesEfectivoIntBean.fechaCreditoDebitoFin}" align="center" rendered="#{!empty detalleConciliacionesEfectivoIntBean.fechaCreditoDebitoFin}">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaCreditoDebitoFin}" value="TODAS" rendered="#{empty detalleConciliacionesEfectivoIntBean.fechaCreditoDebitoFin}" align="center">
+				    <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+            </pdf:row>
+        </pdf:table>
+        
+        <pdf:br/>
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{detalleConciliacionesEfectivoIntBean.totalRegistros}"/>
+        <pdf:br/>
+
+        <pdf:table value="#{detalleConciliacionesEfectivoIntBean.paginaReportes.registros}" currentBean="detalleConciliacion" widthPercentage="100">
+            <pdf:row>
+            	
+				<pdf:col header="#{etq.folioConciliacion}" value="#{detalleConciliacion.conciliacionEfectivo.folioConciliacion}" align="center" />
+				<pdf:col header="#{etq.referenciaMensaje}" value="#{detalleConciliacion.conciliacionEfectivo.referencia}" align="center" />
+				<pdf:col header="#{etq.fechaBalance}" value="#{detalleConciliacion.conciliacionEfectivo.fechaBalance}" align="center" rendered="#{!empty detalleConciliacion.conciliacionEfectivo.fechaBalance}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaBalance}" value="N/A" align="center" rendered="#{empty detalleConciliacion.conciliacionEfectivo.fechaBalance}" /> 
+				<pdf:col header="#{etq.fechaCreditoDebito}" value="#{detalleConciliacion.fechaValor}" align="center" rendered="#{!empty detalleConciliacion.fechaValor}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaCreditoDebito}" value="N/A" align="center" rendered="#{empty detalleConciliacion.fechaValor}" /> 
+				<pdf:col header="#{etq.entryDate}" value="#{detalleConciliacion.fechaRegistro}" align="center" rendered="#{!empty detalleConciliacion.fechaRegistro}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.entryDate}" value="N/A" align="center" rendered="#{empty detalleConciliacion.fechaRegistro}" />
+				<pdf:col header="#{etq.tipoTransaccion}/#{etq.codigoVerificacion}" 
+					value="#{detalleConciliacion.tipoTransaccionEfectivo.tipoTransaccion}/#{detalleConciliacion.codigoIdentificacionEfectivo.codigoIdentificacion}" align="center" />
+				<pdf:col header="#{etq.custodioBic}" value="#{detalleConciliacion.conciliacionEfectivo.bicCode}" align="center" />
+				<pdf:col header="#{etq.cuentaMinus}" value="#{detalleConciliacion.conciliacionEfectivo.cuenta}" align="center" />
+				<pdf:col header="#{etq.divisaMinus}" value="#{detalleConciliacion.conciliacionEfectivo.divisa}" align="center" />				
+				<pdf:col header="#{etq.credito}" value="#{detalleConciliacion.monto}" bgcolor="#{detalleConciliacion.hash == '1' ? '017eaf' : ''}" rendered="#{!empty detalleConciliacion.monto and (detalleConciliacion.tipo=='C' or detalleConciliacion.tipo=='RD')}" align="right">
+					<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+				</pdf:col>
+				<pdf:col header="#{etq.credito}" value="" align="right"  rendered="#{(detalleConciliacion.tipo != 'C' and detalleConciliacion.tipo != 'RD')}" />
+				<pdf:col header="#{etq.debito}" value="#{detalleConciliacion.monto}" bgcolor="#{detalleConciliacion.hash == '1' ? '017eaf' : ''}" rendered="#{!empty detalleConciliacion.monto and (detalleConciliacion.tipo=='D' or detalleConciliacion.tipo=='RC')}" align="right">
+					<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+				</pdf:col>
+				<pdf:col header="#{etq.debito}" value="" align="right"  rendered="#{(detalleConciliacion.tipo != 'D' and detalleConciliacion.tipo != 'RC')}" />
+				<pdf:col header="#{etq.referencia}" value="#{detalleConciliacion.referenciaCuentahabiente}" align="center" />
+				<pdf:col header="#{etq.detallesSuplementarios}" value="#{detalleConciliacion.detallesSuplementarios}" align="center" />
+				<pdf:col header="#{etq.comentarios}" value="#{detalleConciliacionesEfectivoIntBean.mapComentarios[detalleConciliacion.idDetalleConciliacion]}" align="center" />
+				<pdf:col header="#{etq.usuario}" value="#{detalleConciliacion.listaComentarioEfectivo[0].usuario}" align="center" />
+			</pdf:row>
+        </pdf:table>
+        <pdf:table value="detalleConciliacionesEfectivoIntBean" currentBean="detalleConciliacion" widthPercentage="50" rendered="#{detalleConciliacionesEfectivoIntBean.totales}">
+        	<pdf:row>
+        		<pdf:col header="#{etq.totalCreditos}" value="#{detalleConciliacionesEfectivoIntBean.totalCredito}" align="right">
+        			<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+        		</pdf:col>
+        		<pdf:col header="#{etq.totalDebitos}" value="#{detalleConciliacionesEfectivoIntBean.totalDebito}" align="right">
+        			<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+        		</pdf:col>
+        	</pdf:row>
+        </pdf:table>
+
+    </pdf:document>
+</html>

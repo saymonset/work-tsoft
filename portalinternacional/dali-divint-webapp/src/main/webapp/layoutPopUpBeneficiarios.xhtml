@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:indeval="http://indeval.com/indeval"
+	xmlns:menu="http://indeval.com/jsf/menu"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rich="http://richfaces.org/rich" xml:lang="es" lang="es">
+	<head>
+        <title>Popup</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1" />
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" type="text/css" media="all"
+			href="#{facesContext.externalContext.requestContextPath}/css/dali.css" />
+
+
+		<script language="javascript">
+			contextPath = '#{facesContext.externalContext.requestContextPath}';
+			var $j = jQuery.noConflict();
+            function configurarMenu() {
+                
+            };
+		</script>
+
+		<script language="javascript" type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/js/jquery/js/jquery-1.8.0.min.js"></script>
+		<script language="javascript" type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/js/jquery/js/jqueryUi.js"></script>	
+			
+		<script language="javascript" type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/js/interface.js"></script>
+
+		<ui:insert name="head"></ui:insert>
+		<style>
+			html {
+				background-color:#ffffff;
+			}
+		</style>		
+	</head>
+	<body>
+		<div id="contenido_pag" style="min-height:200; width: 900px;">
+			<div id="tituloContenido">
+				<div class='descripcion'>
+					<h1 class="titulo">
+						<ui:insert name="titulo"></ui:insert>
+					</h1>
+					<p>
+						<ui:insert name="subtitulo"></ui:insert>
+					</p>
+				</div>
+			</div>
+
+			<div class="seccion texto" style="min-height:200">
+				<ui:insert name="body"></ui:insert>
+			</div>
+		</div>
+		
+	</body>
+</html>
+
+
+

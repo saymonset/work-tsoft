@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xls="http://indeval.com/jsf/xls"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document documentName="NotificacionesEfectivo" documentTitle="Notificaciones de Efectivo"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        fecha="#{consultaBitacoraEnvOpBean.fechaActual}">
+       
+        <xls:table value="#{confirmacionIntBean}" var="confirmacion" >
+            <xls:row>
+                <xls:col header="#{etq.bicCode}" value="#{confirmacionIntBean.bicSelected}" align="center" />
+                <xls:col header="#{etq.divisaMinus}" value="#{confirmacionIntBean.divisaSelected}" align="center" />
+				<xls:col header="#{etq.cuentas}" value="#{confirmacionIntBean.cuentaSelected}" align="center"/>
+                <xls:col header="#{etq.tipoMensaje}" value="#{confirmacionIntBean.tipoMensajeSelected}" align="center"/>
+                
+				<xls:col header="#{etq.fechaRecepcionMensajeInicio}" value="#{confirmacionIntBean.fechaRecepcionMensajeInicio == '' || confirmacionIntBean.fechaRecepcionMensajeInicio == null ? 'TODAS' : confirmacionIntBean.fechaRecepcionMensajeInicio}" align="center"  pattern="dd/MM/yyyy"/>
+				
+				<xls:col header="#{etq.fechaRecepcionMensajeFin}" value="#{confirmacionIntBean.fechaRecepcionMensajeFin == '' || confirmacionIntBean.fechaRecepcionMensajeFin == null ? 'TODAS' : confirmacionIntBean.fechaRecepcionMensajeFin}" align="center"  pattern="dd/MM/yyyy"/>
+				
+                <xls:col header="#{etq.fechaCreditoDebitoInicio}" value="#{confirmacionIntBean.fechaCreditoDebitoInicio == '' || confirmacionIntBean.fechaCreditoDebitoInicio == null ? 'TODAS' : confirmacionIntBean.fechaCreditoDebitoInicio}"  pattern="dd/MM/yyyy" align="center"/>
+                
+                <xls:col header="#{etq.fechaCreditoDebitoFin}" value="#{confirmacionIntBean.fechaCreditoDebitoFin == '' || confirmacionIntBean.fechaCreditoDebitoFin == null ? 'TODAS' : confirmacionIntBean.fechaCreditoDebitoFin}" pattern="dd/MM/yyyy" align="center"/>
+                
+                <xls:col header="#{etq.fechaRecepcionDaliInicio}" value="#{confirmacionIntBean.fechaRecepcionDaliInicio == '' || confirmacionIntBean.fechaRecepcionDaliInicio == null ? 'TODAS' : confirmacionIntBean.fechaRecepcionDaliInicio}" align="center"  pattern="dd/MM/yyyy"/>
+				
+				<xls:col header="#{etq.fechaRecepcionDaliFin}" value="#{confirmacionIntBean.fechaRecepcionDaliFin == '' || confirmacionIntBean.fechaRecepcionDaliFin == null ? 'TODAS' : confirmacionIntBean.fechaRecepcionDaliFin}" align="center"  pattern="dd/MM/yyyy"/>
+                
+                <xls:col header="#{etq.mtEspecifico}" value="#{empty confirmacionIntBean.mtEspecifico ? 'Niguno': confirmacionIntBean.mtEspecifico}" align="center"/>
+                <xls:col header="#{etq.referenciaMensaje}" value="#{confirmacionIntBean.referencia == '' || confirmacionIntBean.referencia == null ? 'TODAS' : confirmacionIntBean.referencia}" align="center" />
+                <xls:col header="#{etq.relatedReference}" value="#{confirmacionIntBean.relatedReference == '' || confirmacionIntBean.relatedReference == null ? 'TODAS' : confirmacionIntBean.relatedReference}" align="center" />
+                <xls:col header="#{etq.idFolioMinus}" value="#{confirmacionIntBean.folio == '' || confirmacionIntBean.folio == null ? 'TODAS' : confirmacionIntBean.folio}" align="center" />
+                <xls:col header="#{etq.isin}" value="#{confirmacionIntBean.isin == '' || confirmacionIntBean.isin == null ? 'TODAS' : confirmacionIntBean.isin}" align="center" />
+                <xls:col header="#{etq.cuentasCustodia}" value="#{confirmacionIntBean.cuentasCustodia ? 'Si' : 'No'}" align="center"/>
+				
+				<xls:col header="#{etq.cuentasComercial}" value="#{confirmacionIntBean.cuentasComercial ? 'Si' : 'No'}" align="center"/>	
+				
+				<xls:col header="#{etq.tipoNotificacion}" value="#{confirmacionIntBean.tipoNotificacion == 1 ? 'CREDITO' : (confirmacionIntBean.tipoNotificacion == 2) ? 'DEBITO' : 'TODAS'}" align="center"/>		
+            </xls:row>
+        </xls:table>
+        
+         <xls:subtitle value="#{etq.registrosEncontrados}: #{confirmacionIntBean.totalRegistros}" />
+
+        <xls:table value="#{confirmacionIntBean.paginaReportes.registros}" var="con">
+            <xls:row>            	
+				<xls:col header="#{etq.folioConf}" value="#{con.idConfirmacion}" align="center" />
+				<xls:col header="#{etq.referenciaMensaje}" value="#{con.referenciaMensaje}" align="center"/>
+				<xls:col header="#{etq.relatedReference}" value="#{con.relatedReference}" align="center"/>
+				
+				<xls:col header="#{etq.fechaRecepcion}" value="#{con.fechaEmision}" align="right" pattern="dd/MM/yyyy HH:mm:ss"/>
+				
+				<xls:col header="#{etq.fechaRecepcionDali}" value="#{con.fechaRecepcionDali}" align="right" pattern="dd/MM/yyyy HH:mm:ss"/>
+				
+				<xls:col header="#{etq.fechaCreditoDebito}" value="#{con.fechaCreditoDebito}" align="right" pattern="dd/MM/yyyy HH:mm:ss"/>
+				
+				<xls:col header="#{etq.tipoMensaje}" value="#{con.tipoMensaje}" align="center"/>
+				<xls:col header="#{etq.custodioBic}" value="#{con.bicCode}" align="center"/>
+				<xls:col header="#{etq.cuentaMinus}" value="#{con.cuenta}"  align="center"/>
+				<xls:col header="#{etq.divisaMinus}" value="#{con.divisa}" align="center"/>
+				<xls:col header="#{etq.credito}" value="#{con.tipoMensaje == '910' ? con.cantidad : 0}" align="center" pattern="###,###,###,###,###,##0.##" />
+				<xls:col header="#{etq.debito}" value="#{con.tipoMensaje != '910' ? con.cantidad : 0}" align="center" pattern="###,###,###,###,###,##0.##" />
+				<xls:col header="#{etq.isin}" value="#{con.comentariosDali}" align="center" />
+				<xls:col header="#{etq.idFolioMinus}" value="#{con.idFolio}" align="center" />
+				<xls:col header="#{etq.orderingCustomer}" value="#{con.orderingCustomer}" align="center" />
+				<xls:col header="#{etq.orderingInstitution}" value="#{con.orderingInstitution}" align="center" />
+				<xls:col header="#{etq.senderReferenceInfo}" value="#{con.detalle}" align="center" />
+			</xls:row>
+        </xls:table>
+        
+        <xls:table value="#{confirmacionIntBean}" var="confirmacion" rendered="#{confirmacionIntBean.totales}">
+            <xls:row>
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="#{confirmacionIntBean.totalCreditos}" pattern="###,###,###,###,###,##0.##" />
+            	<xls:col value="#{confirmacionIntBean.totalDebitos}" pattern="###,###,###,###,###,##0.##" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            	<xls:col value="" />
+            </xls:row>
+		</xls:table>
+
+    </xls:document>
+</html>

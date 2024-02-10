@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+  <description>
+    AplicationContext de Receiver de Division Internacional
+  </description>
+
+  <bean id="ejbJndiEnvironment" class="java.util.Hashtable"
+    lazy-init="true">
+    <constructor-arg index="0">
+      <map>
+        <entry key="java.naming.factory.initial">
+          <value>weblogic.jndi.WLInitialContextFactory</value>
+        </entry>
+        <entry key="java.naming.provider.url">
+          <!-- deploy= t3://10.100.144.3:7005    |   local= t3://localhost:7001 -->
+          <!-- value>t3://10.100.79.54:7001</value -->
+          <value>t3://localhost:7001</value>
+        </entry>
+      </map>
+    </constructor-arg>
+  </bean>
+  
+</beans>

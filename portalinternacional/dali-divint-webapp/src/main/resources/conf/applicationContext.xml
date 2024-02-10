@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util">
+
+
+    <util:list id="identificadorMercadoCapitales">
+        <bean class="java.lang.Long">
+            <constructor-arg index="0" value="1"></constructor-arg>
+        </bean>
+
+    </util:list>
+
+    <util:list id="identificadorMercadoDinero">
+        <bean class="java.lang.Long">
+            <constructor-arg index="0" value="2"></constructor-arg>
+        </bean>
+        <bean class="java.lang.Long">
+            <constructor-arg index="0" value="3"></constructor-arg>
+        </bean>
+
+    </util:list>
+
+
+    <util:list id="identificadorAmbosMercados">
+        <bean class="java.lang.Long">
+            <constructor-arg index="0" value="1" />
+        </bean>
+        <bean class="java.lang.Long">
+            <constructor-arg index="0" value="2" />
+        </bean>
+        <bean class="java.lang.Long">
+            <constructor-arg index="0" value="3" />
+        </bean>
+    </util:list>
+    <bean id="baseService" class="com.indeval.protocolofinanciero.api.service.impl.BaseServiceImpl" lazy-init="true">
+		<description>Clase base para los servicios del Protocolo Financiero Indeval</description>
+	</bean>
+	
+	<bean id="traspasoLibrePagoSicService" class="com.indeval.protocolofinanciero.api.service.impl.TraspasoLibrePagoInternacionalImpl"
+		parent="baseService" lazy-init="true">
+		<description>Servicio de Traspasos Libres de Pago para el Protocolo Financiero Indeval</description>
+	</bean>
+
+	<bean id="traspasoContraPagoSicService" class="com.indeval.protocolofinanciero.api.service.impl.TraspasoContraPagoInternacionalImpl"
+		parent="baseService" lazy-init="true">
+		<description>Servicio de Traspasos Contra Pago de Mercados para el Protocolo Financiero Indeval</description>
+	</bean>
+	
+	
+	
+    <bean id="traspasoLibrePagoService" class="com.indeval.protocolofinanciero.api.service.impl.TraspasoLibrePagoImpl"
+		parent="baseService" lazy-init="true">
+		<description>Servicio de Traspasos Libres de Pago para el Protocolo Financiero Indeval</description>
+	</bean>
+
+	<bean id="traspasoContraPagoService" class="com.indeval.protocolofinanciero.api.service.impl.TraspasoContraPagoImpl"
+		parent="baseService" lazy-init="true">
+		<description>Servicio de Traspasos Contra Pago de Mercados para el Protocolo Financiero Indeval</description>
+	</bean>
+
+	<bean id="efectivoService" class="com.indeval.protocolofinanciero.api.service.impl.EfectivoImpl"
+		parent="baseService" lazy-init="true">
+		<description>Servicios de Efectivo para el Protocolo Financiero Indeval</description>
+	</bean>
+    <bean id="isoHelper" class="com.indeval.portalinternacional.common.util.IsoHelper">
+    	<property name="dvpSicService" ref="traspasoContraPagoSicService"/>		
+		<property name="tlpSicService" ref="traspasoLibrePagoSicService"/>
+		<property name="dvpService" ref="traspasoContraPagoService"/>		
+		<property name="tlpService" ref="traspasoLibrePagoService"/>		
+		<property name="efectivo" ref="efectivoService"/>
+	</bean>
+	
+	<bean id="fileUploadService" class="com.indeval.portalinternacional.middleware.services.util.FileUploadServiceImpl"> 
+		<property name="fileUploadDao" ref="fileUploadDao" />
+	</bean>
+	
+	<bean id="encoladorDITraspasos" class="com.indeval.portalinternacional.presentation.controller.fileTransfer.encoladores.EncoladorDivIntTraspasos">
+        <property name="emisionDao" ref="emisionDao"></property>
+        <property name="dateUtilService" ref="dateUtilService"></property>
+        <property name="utilService" ref="utilService"></property>
+        <property name="divisionInternacionalService" ref="divisionInternacionalService"></property>
+        <property name="isoHelper" ref="isoHelper"></property>
+        <property name="cuponDao" ref="cuponDao"></property>
+        <property name="utilDivIntService" ref="utilDivIntService"/>
+        <property name="catBicDao" ref="catBicDao"/>
+        <property name="sicDetalleDao" ref="sicDetalleDao"/>
+        <property name="cuentaNombradaDao" ref ="cuentaNombradaDao"/>
+        <property name="consultaCatService" ref="consultaCatalogoService"/>        
+    </bean>
+    
+    <bean id="encoladorDITraspasosInversionInt" class="com.indeval.portalinternacional.presentation.controller.fileTransfer.encoladores.EncoladorDivIntTraspasosInversionExtranjera">
+        <property name="emisionDao" ref="emisionDao"></property>
+        <property name="dateUtilService" ref="dateUtilService"></property>
+        <property name="utilService" ref="utilService"></property>
+        <property name="divisionInternacionalService" ref="divisionInternacionalService"></property>
+        <property name="isoHelper" ref="isoHelper"></property>
+        <property name="cuponDao" ref="cuponDao"></property>
+    </bean>
+    
+    <util:map id="mapeoFormatoW8BEN2014" key-type="java.lang.String" value-type="java.lang.String">
+    	<entry key="nombreGeneral" value="topmostSubform[0].Page1[0].p1-t1[0]" />
+    	<entry key="paisIncorporacion" value="topmostSubform[0].Page1[0].p1-t2[0]" />
+		<entry key="domicilioW8Normal.calleNumeros" value="topmostSubform[0].Page1[0].p1-t3[0]" />
+		<entry key="domicilioW8Normal.ciudadEstadoCodigo" value="topmostSubform[0].Page1[0].p1-t4[0]" />
+		<entry key="domicilioW8Normal.country" value="topmostSubform[0].Page1[0].p1-t5[0]" />
+		<entry key="domicilioW8Correo.calleNumeros" value="topmostSubform[0].Page1[0].p1-t6[0]" />
+		<entry key="domicilioW8Correo.ciudadEstadoCodigo" value="topmostSubform[0].Page1[0].p1-t7[0]" />
+		<entry key="domicilioW8Correo.country" value="topmostSubform[0].Page1[0].p1-t8[0]" />
+		<entry key="formatoW8BEN.taxpayerIdNumb" value="topmostSubform[0].Page1[0].p1-t9[0]" />
+		<entry key="formatoW8BEN.foreignTaxIdNumb" value="topmostSubform[0].Page1[0].p1-t10[0]" />
+		<entry key="formatoW8BEN.referenceNumbers" value="topmostSubform[0].Page1[0].p1-t11[0]" />				
+		<entry key="formatoW8BEN.field9OptionACountry" value="topmostSubform[0].Page1[0].p1-t13[0]" />		
+		<entry key="formatoW8BEN.field10Article" value="topmostSubform[0].Page1[0].p1-t14[0]" />
+		<entry key="formatoW8BEN.field10Rate" value="topmostSubform[0].Page1[0].p1-t15[0]" />
+		<entry key="formatoW8BEN.field10Type" value="topmostSubform[0].Page1[0].p1-t16[0]" />		
+		<entry key="formatoW8BEN.signer" value="topmostSubform[0].Page1[0].p1-t21[0]" />
+		<entry key="formatoW8BEN.capacityActing" value="topmostSubform[0].Page1[0].p1-t22[0]" />
+    </util:map>
+    
+    <util:map id="mapeoFormatoW8BEN2017" key-type="java.lang.String" value-type="java.lang.String">
+        <entry key="nombreGeneral" value="topmostSubform[0].Page1[0].p1-t1[0]" />
+        <entry key="paisIncorporacion" value="topmostSubform[0].Page1[0].p1-t2[0]" />
+        <entry key="domicilioW8Normal.calleNumeros" value="topmostSubform[0].Page1[0].p1-t3[0]" />
+        <entry key="domicilioW8Normal.ciudadEstadoCodigo" value="topmostSubform[0].Page1[0].p1-t4[0]" />
+        <entry key="domicilioW8Normal.country" value="topmostSubform[0].Page1[0].p1-t5[0]" />
+        <entry key="domicilioW8Correo.calleNumeros" value="topmostSubform[0].Page1[0].p1-t6[0]" />
+        <entry key="domicilioW8Correo.ciudadEstadoCodigo" value="topmostSubform[0].Page1[0].p1-t7[0]" />
+        <entry key="domicilioW8Correo.country" value="topmostSubform[0].Page1[0].p1-t8[0]" />
+        <entry key="formatoW8BEN.taxpayerIdNumb" value="topmostSubform[0].Page1[0].p1-t9[0]" />
+        <entry key="formatoW8BEN.foreignTaxIdNumb" value="topmostSubform[0].Page1[0].p1-t10[0]" />
+        <entry key="formatoW8BEN.referenceNumbers" value="topmostSubform[0].Page1[0].p1-t11[0]" />              
+        <entry key="formatoW8BEN.field9OptionACountry" value="topmostSubform[0].Page1[0].p1-t13[0]" />      
+        <entry key="formatoW8BEN.field10Article" value="topmostSubform[0].Page1[0].p1-t16[0]" />
+        <entry key="formatoW8BEN.field10Rate" value="topmostSubform[0].Page1[0].p1-t15[0]" />
+        <entry key="formatoW8BEN.field10Type" value="topmostSubform[0].Page1[0].p1-t17[0]" />       
+        <entry key="formatoW8BEN.signer" value="topmostSubform[0].Page1[0].p1-t21[0]" />
+        <entry key="formatoW8BEN.capacityActing" value="topmostSubform[0].Page1[0].p1-t22[0]" />
+    </util:map>
+    
+    <util:map id="mapeoFormatoW8BEN" key-type="java.lang.String" value-type="java.lang.String">
+    	<entry key="nombreGeneral" value="f1-1" />
+    	<entry key="paisIncorporacion" value="f1-2" />
+		<entry key="domicilioW8Normal.calleNumeros" value="f1-3" />
+		<entry key="domicilioW8Normal.ciudadEstadoCodigo" value="f1-4" />
+		<entry key="domicilioW8Normal.country" value="f1-5" />
+		<entry key="domicilioW8Correo.calleNumeros" value="f1-6" />
+		<entry key="domicilioW8Correo.ciudadEstadoCodigo" value="f1-7" />
+		<entry key="domicilioW8Correo.country" value="f1-7a" />
+		<entry key="formatoW8BEN.taxpayerIdNumb" value="f1-8" />
+		<entry key="formatoW8BEN.foreignTaxIdNumb" value="f1-9" />
+		<entry key="formatoW8BEN.referenceNumbers" value="f1-10" />
+		<entry key="formatoW8BEN.field9OptionA" value="c1-14" />
+		<entry key="formatoW8BEN.field9OptionACountry" value="f1-11" />
+		<entry key="formatoW8BEN.field9OptionB" value="c1-15" />
+		<entry key="formatoW8BEN.field9OptionC" value="c1-16" />
+		<entry key="formatoW8BEN.field9OptionD" value="c1-17" />
+		<entry key="formatoW8BEN.field9OptionE" value="c1-18" />
+		<entry key="formatoW8BEN.field10Article" value="f1-14" />
+		<entry key="formatoW8BEN.field10Rate" value="f1-12" />
+		<entry key="formatoW8BEN.field10Type" value="f1-15" />
+		<entry key="formatoW8BEN.field11" value="c1-19" />
+		<entry key="formatoW8BEN.capacityActing" value="f1-18" />
+    </util:map>
+    
+    <util:map id="mapeoField3W8BEN" key-type="java.lang.Integer" value-type="java.lang.String">
+    	<entry key="1" value="c1-1" />
+		<entry key="2" value="c1-2" />
+		<entry key="3" value="c1-3" />
+		<entry key="4" value="c1-4" />
+		<entry key="5" value="c1-5" />
+		<entry key="6" value="c1-6" />
+		<entry key="7" value="c1-7" />
+		<entry key="8" value="c1-8" />
+		<entry key="9" value="c1-9" />
+		<entry key="10" value="c1-10" />
+		<entry key="11" value="c1-6a" />
+		<entry key="12" value="c1-7a" />
+		<entry key="13" value="c1-8a" />
+    </util:map>
+    
+    <util:map id="mapeoFormatoW8IMY" key-type="java.lang.String" value-type="java.lang.String">
+    	<entry key="nombreGeneral" value="f1-1" />
+    	<entry key="paisIncorporacion" value="f1-2" />
+		<entry key="domicilioW8Normal.calleNumeros" value="f1-3" />
+		<entry key="domicilioW8Normal.ciudadEstadoCodigo" value="f1-4" />
+		<entry key="domicilioW8Normal.country" value="f1-5" />
+		<entry key="domicilioW8Correo.calleNumeros" value="f1-6" />
+		<entry key="domicilioW8Correo.ciudadEstadoCodigo" value="f1-7" />
+		<entry key="domicilioW8Correo.country" value="f1-8" />
+		<entry key="formatoW8IMY.taxpayerIdNumb" value="f1-15" />
+		<entry key="formatoW8IMY.foreignTaxIdNumb" value="f1-9" />
+		<entry key="formatoW8IMY.referenceNumbers" value="f1-10" />
+		<entry key="formatoW8IMY.field9OptionA" value="c1-12" />
+		<entry key="formatoW8IMY.field9OptionB" value="c1-13" />
+		<entry key="formatoW8IMY.field9OptionC" value="c1-14" />
+		<entry key="formatoW8IMY.field10OptionA" value="c1-15" />
+		<entry key="formatoW8IMY.field10OptionB" value="c1-16" />
+		<entry key="formatoW8IMY.field11" value="c1-17" />
+		<entry key="formatoW8IMY.field12" value="c1-18" />
+		<entry key="formatoW8IMY.field13" value="c1-19" />
+		<entry key="formatoW8IMY.field14" value="c1-20" />
+		<entry key="formatoW8IMY.field15" value="c1-21" />
+    </util:map>
+    
+     <util:map id="mapeoField3W8IMY" key-type="java.lang.Integer" value-type="java.lang.String">
+    	<entry key="1" value="c1-1" />
+		<entry key="2" value="c1-2" />
+		<entry key="3" value="c1-3" />
+		<entry key="4" value="c1-4" />
+		<entry key="5" value="c1-5" />
+		<entry key="6" value="c1-6" />
+		<entry key="7" value="c1-7" />
+		<entry key="8" value="c1-8" />
+    </util:map>
+    
+    <util:map id="mapeoUSIdNumberW8IMY" key-type="java.lang.Integer" value-type="java.lang.String">
+    	<entry key="1" value="c1-9" />
+		<entry key="2" value="c1-10" />
+		<entry key="3" value="c1-11" />
+    </util:map>
+    
+    <!--  
+    <util:map id="mapeoFormatoW9" key-type="java.lang.String" value-type="java.lang.String">
+    	<entry key="nombreGeneral" value="topmostSubform[0].Page1[0].f1_01_0_[0]" />
+    	<entry key="formatoW9.businessName" value="topmostSubform[0].Page1[0].f1_02_0_[0]" />
+    	<entry key="formatoW9.otherDescription" value="topmostSubform[0].Page1[0].FedClassification[0].f1_50_0_[0]" />
+		<entry key="formatoW9.taxClassification" value="topmostSubform[0].Page1[0].FedClassification[0].f1_18_0_[0]" />
+		<entry key="formatoW9.exemptPayee" value="topmostSubform[0].Page1[0].c1_01[0]" />
+		<entry key="domicilioW9.calleNumeros" value="topmostSubform[0].Page1[0].Address[0].f1_04_0_[0]" />
+		<entry key="domicilioW9.ciudadEstadoCodigo" value="topmostSubform[0].Page1[0].Address[0].f1_05_0_[0]" />
+		<entry key="formatoW9.requesterNameAddress" value="topmostSubform[0].Page1[0].f1_06_0_[0]" />
+		<entry key="formatoW9.listAccountNumbers" value="topmostSubform[0].Page1[0].f1_07_0_[0]" />
+		<entry key="formatoW9.exemptPayeeW9.fatcaCode" value="topmostSubform[0].Page1[0].f1_100[0]" />
+		<entry key="formatoW9.exemptionFatcaW9.fatcaCode" value="topmostSubform[0].Page1[0].f1_101[0]" />
+    </util:map>
+    
+    <util:map id="mapeoField3W9" key-type="java.lang.Integer" value-type="java.lang.String">
+    	<entry key="1" value="topmostSubform[0].Page1[0].FedClassification[0].c1_01[0]" />
+		<entry key="2" value="topmostSubform[0].Page1[0].FedClassification[0].c1_01[1]" />
+		<entry key="3" value="topmostSubform[0].Page1[0].FedClassification[0].c1_01[3]" />
+		<entry key="4" value="topmostSubform[0].Page1[0].FedClassification[0].c1_01[5]" />
+		<entry key="5" value="topmostSubform[0].Page1[0].FedClassification[0].c1_01[6]" />
+		<entry key="6" value="topmostSubform[0].Page1[0].FedClassification[0].c1_01[2]" />
+		<entry key="7" value="topmostSubform[0].Page1[0].FedClassification[0].c1_01[4]" />
+    </util:map>
+	-->
+
+    <util:map id="mapeoFormatoW9" key-type="java.lang.String" value-type="java.lang.String">
+    	<entry key="nombreGeneral" value="topmostSubform[0].Page1[0].f1_1[0]" />
+    	<entry key="formatoW9.businessName" value="topmostSubform[0].Page1[0].f1_2[0]" />
+    	<entry key="formatoW9.otherDescription" value="topmostSubform[0].Page1[0].FederalClassification[0].f1_4[0]" />
+		<entry key="formatoW9.taxClassification" value="topmostSubform[0].Page1[0].FederalClassification[0].f1_3[0]" />
+		<entry key="formatoW9.exemptPayee" value="topmostSubform[0].Page1[0].FederalClassification[0].c1_1[0]" />
+		<entry key="domicilioW9.calleNumeros" value="topmostSubform[0].Page1[0].Address[0].f1_7[0]" />
+		<entry key="domicilioW9.ciudadEstadoCodigo" value="topmostSubform[0].Page1[0].Address[0].f1_8[0]" />
+		<entry key="formatoW9.requesterNameAddress" value="topmostSubform[0].Page1[0].f1_9[0]" />
+		<entry key="formatoW9.listAccountNumbers" value="topmostSubform[0].Page1[0].f1_10[0]" />
+		<entry key="formatoW9.exemptPayeeW9.fatcaCode" value="topmostSubform[0].Page1[0].Exemptions[0].f1_5[0]" />
+		<entry key="formatoW9.exemptionFatcaW9.fatcaCode" value="topmostSubform[0].Page1[0].Exemptions[0].f1_6[0]" />
+    </util:map>
+
+<!--  
+1	Individual/Sole proprietor
+2	C Corporation
+3	Partnership 
+4	Limited liability company
+5	Other
+6	S Corporation
+7	Trust/estate
+-->
+
+    <util:map id="mapeoField3W9" key-type="java.lang.Integer" value-type="java.lang.String">
+		<entry key="1" value="topmostSubform[0].Page1[0].FederalClassification[0].c1_1[0]" />
+		<entry key="2" value="topmostSubform[0].Page1[0].FederalClassification[0].c1_1[1]" />
+		<entry key="3" value="topmostSubform[0].Page1[0].FederalClassification[0].c1_1[3]" />
+		<entry key="4" value="topmostSubform[0].Page1[0].FederalClassification[0].c1_1[5]" />
+		<entry key="5" value="topmostSubform[0].Page1[0].FederalClassification[0].c1_7[0]" />
+		<entry key="6" value="topmostSubform[0].Page1[0].FederalClassification[0].c1_1[2]" />
+		<entry key="7" value="topmostSubform[0].Page1[0].FederalClassification[0].c1_1[4]" />
+    </util:map>
+
+	<util:map id="correlacionField3W9" key-type="java.lang.Integer" value-type="java.lang.Integer">
+		<entry key="1" value="1" />
+		<entry key="2" value="2" />
+		<entry key="3" value="4" />
+		<entry key="4" value="6" />
+		<entry key="5" value="7" />
+		<entry key="6" value="3" />
+		<entry key="7" value="5" />
+	</util:map>
+
+	<util:map id="mapeoFormatoW8BENE" key-type="java.lang.String" value-type="java.lang.String">
+		<entry key="partIcmp1" value="topmostSubform[0].Page1[0].f1_001[0]" />
+    	<entry key="partIcmp2" value="topmostSubform[0].Page1[0].f2_002[0]" />
+    	<entry key="partIcmp3" value="topmostSubform[0].Page1[0].f2_003[0]" />
+
+    	<entry key="partIcmp6a" value="topmostSubform[0].Page1[0].f1_005[0]" />
+    	<entry key="partIcmp6b" value="topmostSubform[0].Page1[0].f1_006[0]" />
+    	<entry key="partIcmp6c" value="topmostSubform[0].Page1[0].f1_007[0]" />
+    	<entry key="partIcmp7a" value="topmostSubform[0].Page1[0].f1_008[0]" />
+    	<entry key="partIcmp7b" value="topmostSubform[0].Page1[0].f1_009[0]" />
+    	<entry key="partIcmp7c" value="topmostSubform[0].Page1[0].f1_010[0]" />
+    	<entry key="partIcmp8"  value="topmostSubform[0].Page1[0].f1_011[0]" />
+    	<entry key="partIcmp9a2" value="topmostSubform[0].Page1[0].f1_012[0]" />
+    	<entry key="partIcmp9b2" value="topmostSubform[0].Page1[0].f1_012[1]" />
+    	<entry key="partIcmp10"  value="topmostSubform[0].Page1[0].f1_013[0]" />
+    	
+    	<entry key="partIIcmp12a" value="topmostSubform[0].Page2[0].f2_001[0]" />
+    	<entry key="partIIcmp12b" value="topmostSubform[0].Page2[0].f2_002[0]" />
+    	<entry key="partIIcmp12c" value="topmostSubform[0].Page2[0].f2_003[0]" />
+    	<entry key="partIIcmp13"  value="topmostSubform[0].Page2[0].f2_004[0]" />		
+    			
+    	<entry key="partIIIcmp14a"  value="topmostSubform[0].Page2[0].c2_006[0]" />
+    	<entry key="partIIIcmp14a1" value="topmostSubform[0].Page2[0].f2_005[0]" />
+    	<entry key="partIIIcmp14b"  value="topmostSubform[0].Page2[0].c2_007[0]" />
+    	<entry key="partIIIcmp14c"  value="topmostSubform[0].Page2[0].c2_008[0]" />
+    	<entry key="partIIIcmp15a"  value="topmostSubform[0].Page2[0].f2_006[0]" />
+    	<entry key="partIIIcmp15b"  value="topmostSubform[0].Page2[0].f2_007[0]" />
+    	<entry key="partIIIcmp15c"  value="topmostSubform[0].Page2[0].f2_008[0]" />
+    	<entry key="partIIIcmp15d1" value="topmostSubform[0].Page2[0].f2_009[0]" />
+    	<entry key="partIIIcmp15d2" value="topmostSubform[0].Page2[0].f2_010[0]" />
+    	<entry key="partVcmp18"     value="topmostSubform[0].Page2[0].c2_011[0]" />
+    	<entry key="partVIcmp19"    value="topmostSubform[0].Page3[0].c3_001[0]" />
+    	<entry key="partVIIcmp20"   value="topmostSubform[0].Page3[0].f3_001[0]" />
+    	<entry key="partVIIcmp21"   value="topmostSubform[0].Page3[0].c3_002[0]" />
+		<entry key="partVIIIcmp22"  value="topmostSubform[0].Page3[0].c3_003[0]" />
+		<entry key="partIXcmp23"    value="topmostSubform[0].Page3[0].c3_004[0]" />
+		<entry key="partXIIcmp26a"  value="topmostSubform[0].Page4[0].c4_007[0]" />
+		<entry key="partXIIcmp26b"  value="topmostSubform[0].Page4[0].f4_001[0]" />
+		<entry key="partXIIcmp26c"  value="topmostSubform[0].Page4[0].f4_002[0]" />
+		<entry key="partXIIcmp26d"  value="topmostSubform[0].Page4[0].f4_003[0]" />
+		<entry key="partXIIIcmp27"  value="topmostSubform[0].Page5[0].c5_001[0]" />
+		<entry key="partXVIcmp30"   value="topmostSubform[0].Page6[0].c6_001[0]" />
+		<entry key="partXVIIcmp31"  value="topmostSubform[0].Page6[0].c6_002[0]" />
+		<entry key="partXVIIIcmp32" value="topmostSubform[0].Page6[0].c6_003[0]" />
+		<entry key="partXIXcmp33a"  value="topmostSubform[0].Page6[0].c6_007_0_[0]" />
+		<entry key="partXIXcmp33b"  value="topmostSubform[0].Page6[0].f6_001[0]" />
+		<entry key="partXXcmp34a"   value="topmostSubform[0].Page6[0].c6_008[0]" />
+		<entry key="partXXcmp34b"   value="topmostSubform[0].Page6[0].f6_002[0]" />
+		<entry key="partXXIcmp35a"  value="topmostSubform[0].Page6[0].c6_009[0]" />
+		<entry key="partXXIcmp35b"	value="topmostSubform[0].Page6[0].f6_003[0]" />
+		<entry key="partXXIIcmp36"  value="topmostSubform[0].Page7[0].c6_010[0]" />
+		<entry key="partXXIVcmp38"  value="topmostSubform[0].Page7[0].c7_003[0]" />
+		<entry key="partXXVcmp39"   value="topmostSubform[0].Page7[0].c7_004[0]" />
+		<entry key="partXXVIIcmp41" value="topmostSubform[0].Page7[0].c3_008[0]" />
+		<entry key="partXXVIIIcmp42" value="topmostSubform[0].Page8[0].f4_002[0]" />
+		<entry key="partXXVIIIcmp43" value="topmostSubform[0].Page8[0].c3_008[0]" />
+
+	</util:map>
+    <!-- 
+        El llenado del nuevo w8bene2016 se necesitan ciertos valores para activar los checkbox
+        la llave para llevado viene con el siguiente formato
+        key= nombre del campo en FormaW8BENE
+        value= [nombre del campo en pdf]:[valor para activarse o llenarse]
+        si el "Valor para activarse o llenarse" es STR es un campo de texto
+     -->
+    <util:map id="mapeoFormatoW8BENE2016" key-type="java.lang.String" value-type="java.lang.String">           
+         <!-- page 1 -->
+         <entry key="partIcmp1" value="topmostSubform[0].Page1[0].f1_01[0]:str" />
+         <entry key="partIcmp2" value="topmostSubform[0].Page1[0].f1_02[0]:str" />
+         <entry key="partIcmp3" value="topmostSubform[0].Page1[0].f1_03[0]:str" />        
+        
+         <entry key="partIcmp4a" value="topmostSubform[0].Page1[0].c1_01[0]:1" />
+         <entry key="partIcmp4b" value="topmostSubform[0].Page1[0].c1_01[1]:2" />
+         <entry key="partIcmp4c" value="topmostSubform[0].Page1[0].c1_01[2]:3" />
+         <entry key="partIcmp4d" value="topmostSubform[0].Page1[0].c1_01[3]:4" />
+         <entry key="partIcmp4e" value="topmostSubform[0].Page1[0].c1_01[4]:5" />
+         <entry key="partIcmp4f" value="topmostSubform[0].Page1[0].c1_01[5]:6" />
+         <entry key="partIcmp4g" value="topmostSubform[0].Page1[0].c1_01[6]:7" />
+         <entry key="partIcmp4h" value="topmostSubform[0].Page1[0].c1_01[7]:8" />
+         <entry key="partIcmp4i" value="topmostSubform[0].Page1[0].c1_01[8]:9" />
+         <entry key="partIcmp4j" value="topmostSubform[0].Page1[0].c1_01[9]:10" />
+         <entry key="partIcmp4k" value="topmostSubform[0].Page1[0].c1_01[10]:11" />             
+         <entry key="partIcmp4l" value="topmostSubform[0].Page1[0].c1_02[0]:1" />
+         <entry key="partIcmp4m" value="topmostSubform[0].Page1[0].c1_02[1]:2" />
+        <entry key="partIcmp4n" value="topmostSubform[0].Page1[0].c1_01[11]:12" />
+        
+         <entry key="partIcmp5a" value="topmostSubform[0].Page1[0].Col1[0].c1_03[0]:1" />
+         <entry key="partIcmp5b" value="topmostSubform[0].Page1[0].Col1[0].c1_03[1]:2" />
+         <entry key="partIcmp5c" value="topmostSubform[0].Page1[0].Col1[0].c1_03[2]:3" />
+         <entry key="partIcmp5d" value="topmostSubform[0].Page1[0].Col1[0].c1_03[3]:4" />
+         <entry key="partIcmp5e" value="topmostSubform[0].Page1[0].Col1[0].c1_03[4]:5" />
+         <entry key="partIcmp5f" value="topmostSubform[0].Page1[0].Col1[0].c1_03[5]:6" />
+         <entry key="partIcmp5g" value="topmostSubform[0].Page1[0].Col1[0].c1_03[6]:7" />
+         <entry key="partIcmp5h" value="topmostSubform[0].Page1[0].Col1[0].c1_03[7]:8" />
+         <entry key="partIcmp5i" value="topmostSubform[0].Page1[0].Col1[0].c1_03[8]:9" />
+         <entry key="partIcmp5j" value="topmostSubform[0].Page1[0].Col1[0].c1_03[9]:10" />
+         <entry key="partIcmp5k" value="topmostSubform[0].Page1[0].Col1[0].c1_03[10]:11" />
+         <entry key="partIcmp5l" value="topmostSubform[0].Page1[0].Col1[0].c1_03[11]:12" />
+         <entry key="partIcmp5m" value="topmostSubform[0].Page1[0].Col1[0].c1_03[12]:13" />
+        
+         <entry key="partIcmp5n" value="topmostSubform[0].Page1[0].Col2[0].c1_03[0]:14" />
+         <entry key="partIcmp5o" value="topmostSubform[0].Page1[0].Col2[0].c1_03[1]:15" />
+         <entry key="partIcmp5p" value="topmostSubform[0].Page1[0].Col2[0].c1_03[2]:16" />
+         <entry key="partIcmp5q" value="topmostSubform[0].Page1[0].Col2[0].c1_03[3]:17" />
+         <entry key="partIcmp5r" value="topmostSubform[0].Page1[0].Col2[0].c1_03[4]:18" />
+         <entry key="partIcmp5s" value="topmostSubform[0].Page1[0].Col2[0].c1_03[5]:19" />
+         <entry key="partIcmp5t" value="topmostSubform[0].Page1[0].Col2[0].c1_03[6]:20" />
+         <entry key="partIcmp5u" value="topmostSubform[0].Page1[0].Col2[0].c1_03[7]:21" />
+         <entry key="partIcmp5v" value="topmostSubform[0].Page1[0].Col2[0].c1_03[8]:22" />
+         <entry key="partIcmp5w" value="topmostSubform[0].Page1[0].Col2[0].c1_03[9]:23" />
+         <entry key="partIcmp5x" value="topmostSubform[0].Page1[0].Col2[0].c1_03[10]:24" />
+         <entry key="partIcmp5y" value="topmostSubform[0].Page1[0].Col2[0].c1_03[11]:25" />
+         <entry key="partIcmp5z" value="topmostSubform[0].Page1[0].Col2[0].c1_03[12]:26" />
+         <entry key="partIcmp5aa" value="topmostSubform[0].Page1[0].Col2[0].c1_03[13]:27" />
+         <entry key="partIcmp5ab" value="topmostSubform[0].Page1[0].Col2[0].c1_03[14]:28" />
+         <entry key="partIcmp5ac" value="topmostSubform[0].Page1[0].Col2[0].c1_03[15]:29" />
+         <entry key="partIcmp5ad" value="topmostSubform[0].Page1[0].Col2[0].c1_03[16]:30" />
+         <entry key="partIcmp5ae" value="topmostSubform[0].Page1[0].Col2[0].c1_03[17]:31" />
+         <entry key="partIcmp5af" value="topmostSubform[0].Page1[0].Col2[0].c1_03[18]:32" />
+        
+         <entry key="partIcmp6a" value="topmostSubform[0].Page1[0].f1_04[0]:str" />
+         <entry key="partIcmp6b" value="topmostSubform[0].Page1[0].f1_05[0]:str" />
+         <entry key="partIcmp6c" value="topmostSubform[0].Page1[0].f1_06[0]:str" />
+         <entry key="partIcmp7a" value="topmostSubform[0].Page1[0].f1_07[0]:str" />
+         <entry key="partIcmp7b" value="topmostSubform[0].Page1[0].f1_08[0]:str" />
+         <entry key="partIcmp7c" value="topmostSubform[0].Page1[0].f1_09[0]:str" />
+         <entry key="partIcmp8" value="topmostSubform[0].Page1[0].f1_10[0]:str" />
+         <entry key="partIcmp9a2" value="topmostSubform[0].Page1[0].f1_11[0]:str" />
+         <entry key="partIcmp9b2" value="topmostSubform[0].Page1[0].f1_12[0]:str" />
+         <entry key="partIcmp10" value="topmostSubform[0].Page1[0].f1_13[0]:str" />
+        
+        <!-- page 2 -->
+         <entry key="partIIcmp11a" value="topmostSubform[0].Page2[0].c2_01[0]:1" />
+         <entry key="partIIcmp11b" value="topmostSubform[0].Page2[0].c2_01[1]:2" />
+         <entry key="partIIcmp11c" value="topmostSubform[0].Page2[0].c2_01[2]:3" />
+         <entry key="partIIcmp11d" value="topmostSubform[0].Page2[0].c2_01[3]:4" />
+         <entry key="partIIcmp11e" value="topmostSubform[0].Page2[0].c2_01[4]:5" />
+        
+         <entry key="partIIcmp12a" value="topmostSubform[0].Page2[0].f2_01[0]:str" />
+         <entry key="partIIcmp12b" value="topmostSubform[0].Page2[0].f2_02[0]:str" />
+         <entry key="partIIcmp12c" value="topmostSubform[0].Page2[0].f2_03[0]:str" />
+         <entry key="partIIcmp13" value="topmostSubform[0].Page2[0].f2_04[0]:str" />
+        
+         <entry key="partIIIcmp14a" value="topmostSubform[0].Page2[0].c2_06[0]:Yes" />
+         <entry key="partIIIcmp14a1" value="topmostSubform[0].Page2[0].f2_05[0]:str" />
+         <entry key="partIIIcmp14b" value="topmostSubform[0].Page2[0].c2_07[0]:Yes" />
+         <entry key="partIIIcmp14ba" value="topmostSubform[0].Page2[0].c2_08[0]:1" />
+         <entry key="partIIIcmp14bb" value="topmostSubform[0].Page2[0].c2_08[1]:2" />
+         <entry key="partIIIcmp14bc" value="topmostSubform[0].Page2[0].c2_08[2]:3" />
+         <entry key="partIIIcmp14bd" value="topmostSubform[0].Page2[0].c2_08[3]:4" />
+         <entry key="partIIIcmp14be" value="topmostSubform[0].Page2[0].c2_08[4]:5" />
+         <entry key="partIIIcmp14bf" value="topmostSubform[0].Page2[0].c2_08[5]:6" />
+         <entry key="partIIIcmp14bg" value="topmostSubform[0].Page2[0].c2_08[6]:7" />
+         <entry key="partIIIcmp14bh" value="topmostSubform[0].Page2[0].c2_08[7]:8" />
+         <entry key="partIIIcmp14bi" value="topmostSubform[0].Page2[0].c2_08[8]:9" />
+         <entry key="partIIIcmp14bj" value="topmostSubform[0].Page2[0].c2_08[9]:10" />
+         <entry key="partIIIcmp14bk" value="topmostSubform[0].Page2[0].f2_06[0]:str" />
+         <entry key="partIIIcmp14c" value="topmostSubform[0].Page2[0].c2_09[0]:Yes" />
+         <entry key="partIIIcmp15a" value="topmostSubform[0].Page2[0].f2_07[0]:str" />
+         <entry key="partIIIcmp15b" value="topmostSubform[0].Page2[0].f2_08[0]:str" />
+         <entry key="partIIIcmp15c" value="topmostSubform[0].Page2[0].f2_09[0]:str" />
+         <entry key="partIIIcmp15d1" value="topmostSubform[0].Page2[0].f2_10[0]:str" />
+         <entry key="partIIIcmp15d2" value="topmostSubform[0].Page2[0].f2_11[0]:str" />
+         <entry key="partIIIcmp15d3" value="topmostSubform[0].Page2[0].f2_12[0]:str" />
+         <entry key="partIVcmp16" value="topmostSubform[0].Page2[0].f2_13[0]:str" />
+         <entry key="partIVcmp16a" value="topmostSubform[0].Page2[0].f2_14[0]:str" />
+         <entry key="partIVcmp17a" value="topmostSubform[0].Page2[0].c2_10[0]:1" />
+         <entry key="partIVcmp17b" value="topmostSubform[0].Page2[0].c2_10[1]:2" />
+        
+        <!-- page 3 -->
+         <entry key="partVcmp18" value="topmostSubform[0].Page3[0].c3_01[0]:1" />
+         <entry key="partVIcmp19" value="topmostSubform[0].Page3[0].c3_02[0]:1" />
+         <entry key="partVIIcmp20" value="topmostSubform[0].Page3[0].f3_01[0]:str" />
+         <entry key="partVIIcmp21" value="topmostSubform[0].Page3[0].c3_03[0]:1" />
+         <entry key="partVIIIcmp22" value="topmostSubform[0].Page3[0].c3_04[0]:1" />
+         <entry key="partIXcmp23" value="topmostSubform[0].Page3[0].c3_05[0]:1" />
+         <entry key="partXcmp24a" value="topmostSubform[0].Page3[0].c3_06[0]:1" />
+        
+        <!-- page 4 -->
+         <entry key="partXcmp24b" value="topmostSubform[0].Page4[0].c4_01[0]:1" />
+         <entry key="partXcmp24c" value="topmostSubform[0].Page4[0].c4_01[1]:2" />
+         <entry key="partXcmp24d" value="topmostSubform[0].Page4[0].c4_02[0]:1" />
+        
+         <entry key="partXIcmp25a" value="topmostSubform[0].Page4[0].c4_03[0]:Yes" />
+         <entry key="partXIcmp25b" value="topmostSubform[0].Page4[0].c4_04[0]:1" />
+         <entry key="partXIcmp25c" value="topmostSubform[0].Page4[0].c4_04[1]:2" />
+        
+        <!-- page 5 -->
+         <entry key="partXIIcmp26a" value="topmostSubform[0].Page5[0].c5_01[0]:1" />
+         <entry key="partXIIcmp26b" value="topmostSubform[0].Page5[0].f5_01[0]:str" />
+         <entry key="partXIIcmp26ba" value="topmostSubform[0].Page5[0].c5_02[0]:1" />
+         <entry key="partXIIcmp26bb" value="topmostSubform[0].Page5[0].c5_02[1]:2" />
+         <entry key="partXIIcmp26c" value="topmostSubform[0].Page5[0].f5_02[0]:str" />
+         <entry key="partXIIcmp26d" value="topmostSubform[0].Page5[0].f5_03[0]:str" />
+         <entry key="partXIIcmp26e" value="topmostSubform[0].Page5[0].f5_04[0]:str" />
+         <entry key="partXIIIcmp27" value="topmostSubform[0].Page5[0].c5_03[0]:1" />
+         <entry key="partXIVcmp28a" value="topmostSubform[0].Page5[0].c5_04[0]:1" />
+         <entry key="partXIVcmp28b" value="topmostSubform[0].Page5[0].c5_04[1]:2" />
+         <entry key="partXVcmp29a" value="topmostSubform[0].Page5[0].c5_05[0]:1" />
+         <entry key="partXVcmp29b" value="topmostSubform[0].Page5[0].c5_05[1]:2" />
+         <entry key="partXVcmp29c" value="topmostSubform[0].Page5[0].c5_05[2]:3" />
+        
+        <!-- page 6 -->
+         <entry key="partXVcmp29d" value="topmostSubform[0].Page6[0].c5_05[0]:4" />
+         <entry key="partXVcmp29e" value="topmostSubform[0].Page6[0].c5_05[1]:5" />
+         <entry key="partXVcmp29f" value="topmostSubform[0].Page6[0].c5_05[2]:6" />
+         <entry key="partXVIcmp30" value="topmostSubform[0].Page6[0].c6_01[0]:1" />
+         <entry key="partXVIIcmp31" value="topmostSubform[0].Page6[0].c6_02[0]:1" />
+         <entry key="partXVIIIcmp32" value="topmostSubform[0].Page6[0].c6_03[0]:1" />
+         <entry key="partXIXcmp33a" value="topmostSubform[0].Page6[0].c6_04[0]:1" />
+         <entry key="partXIXcmp33b" value="topmostSubform[0].Page6[0].f6_01[0]:str" />
+         <entry key="partXXcmp34a" value="topmostSubform[0].Page6[0].c6_05[0]:1" />
+         <entry key="partXXcmp34b" value="topmostSubform[0].Page6[0].f6_02[0]:str" />
+        
+        <!-- page 7 -->
+         <entry key="partXXIcmp35a" value="topmostSubform[0].Page7[0].c7_01[0]:1" />
+         <entry key="partXXIcmp35b" value="topmostSubform[0].Page7[0].f7_01[0]:str" />
+         <entry key="partXXIIcmp36" value="topmostSubform[0].Page7[0].c7_02[0]:1" />
+         <entry key="partXXIIIcmp37a" value="topmostSubform[0].Page7[0].c7_03[0]:1" />
+         <entry key="partXXIIIcmp37b" value="topmostSubform[0].Page7[0].f7_02[0]:str" />
+         <entry key="partXXIIIcmp37c" value="topmostSubform[0].Page7[0].c7_03[1]:2" />
+         <entry key="partXXIIIcmp37d" value="topmostSubform[0].Page7[0].f7_03[0]:str" />
+         <entry key="partXXIIIcmp37e" value="topmostSubform[0].Page7[0].f7_04[0]:str" />
+         <entry key="partXXIVcmp38" value="topmostSubform[0].Page7[0].c7_04[0]:1" />
+         <entry key="partXXVcmp39" value="topmostSubform[0].Page7[0].c7_05[0]:Yes" />
+         <entry key="partXXVIcmp40a" value="topmostSubform[0].Page7[0].c7_06[0]:1" />
+         <entry key="partXXVIcmp40b" value="topmostSubform[0].Page7[0].c7_07[0]:1" />
+         <entry key="partXXVIcmp40c" value="topmostSubform[0].Page7[0].c7_07[1]:2" />
+        
+        <!-- page 8 -->
+         <entry key="partXXVIIcmp41" value="topmostSubform[0].Page8[0].c8_01[0]:1" />
+         <entry key="partXXVIIIcmp42" value="topmostSubform[0].Page8[0].f8_01[0]:str" />
+         <entry key="partXXVIIIcmp42_2" value="topmostSubform[0].Page8[0].f8_01[0]:str" />
+         <entry key="partXXVIIIcmp43" value="topmostSubform[0].Page8[0].c8_02[0]:1" />
+        <!-- row 1 -->
+         <entry key="partXXIXnoma" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow1[0].f8_03[0]:str" />
+         <entry key="partXXIXadra" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow1[0].f8_04[0]:str" />
+         <entry key="partXXIXtina" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow1[0].f8_05[0]:str" />
+         <!-- row 2 -->
+         <entry key="partXXIXnomb" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow2[0].f8_06[0]:str" />
+         <entry key="partXXIXadrb" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow2[0].f8_07[0]:str" />
+         <entry key="partXXIXtinb" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow2[0].f8_08[0]:str" />
+         <!-- row 3 -->
+         <entry key="partXXIXnomc" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow3[0].f8_09[0]:str" />
+         <entry key="partXXIXadrc" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow3[0].f8_10[0]:str" />
+         <entry key="partXXIXtinc" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow3[0].f8_11[0]:str" />
+         <!-- row 4 -->
+         <entry key="partXXIXnomd" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow4[0].f8_12[0]:str" />
+         <entry key="partXXIXadrd" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow4[0].f8_13[0]:str" />
+         <entry key="partXXIXtind" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow4[0].f8_14[0]:str" />
+         <!-- row 5 -->
+         <entry key="partXXIXnome" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow5[0].f8_15[0]:str" />
+         <entry key="partXXIXadre" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow5[0].f8_16[0]:str" />
+         <entry key="partXXIXtine" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow5[0].f8_17[0]:str" />
+         <!-- row 6 -->
+         <entry key="partXXIXnomf" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow6[0].f8_18[0]:str" />
+         <entry key="partXXIXadrf" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow6[0].f8_19[0]:str" />
+         <entry key="partXXIXtinf" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow6[0].f8_20[0]:str" />
+         <!-- row 7 -->
+         <entry key="partXXIXnomg" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow7[0].f8_21[0]:str" />
+         <entry key="partXXIXadrg" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow7[0].f8_22[0]:str" />
+         <entry key="partXXIXting" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow7[0].f8_23[0]:str" />
+         <!-- row 8 -->
+         <entry key="partXXIXnomh" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow8[0].f8_24[0]:str" />
+         <entry key="partXXIXadrh" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow8[0].f8_25[0]:str" />
+         <entry key="partXXIXtinh" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow8[0].f8_26[0]:str" />
+         <!-- row 9 -->
+         <entry key="partXXIXnomi" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow9[0].f8_27[0]:str" />
+         <entry key="partXXIXadri" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow9[0].f8_28[0]:str" />
+         <entry key="partXXIXtini" value="topmostSubform[0].Page8[0].Table_Part29[0].BodyRow9[0].f8_29[0]:str" />
+        
+         <entry key="partXXX" value="topmostSubform[0].Page8[0].c8_03[0]:1" />
+               
+    </util:map>
+
+	<util:map id="mapeoFormatoW8Imy2015" key-type="java.lang.String" value-type="java.lang.String">
+		<entry key="partIcmp1" value="topmostSubform[0].Page1[0].f1_001[0]" />
+    	<entry key="partIcmp2" value="topmostSubform[0].Page1[0].f1_002[0]" />
+    	<entry key="partIcmp3" value="topmostSubform[0].Page1[0].f1_003[0]" />
+    	<entry key="partIcmp5a" value="topmostSubform[0].Page1[0].c1_010[0]" />
+    	<entry key="partIcmp5e" value="topmostSubform[0].Page1[0].c1_014[0]" />
+    	<entry key="partIcmp5g" value="topmostSubform[0].Page1[0].c1_016[0]" />
+    	<entry key="partIcmp5h" value="topmostSubform[0].Page1[0].c1_017[0]" />
+    	<entry key="partIcmp5j" value="topmostSubform[0].Page1[0].c1_019[0]" />
+    	<entry key="partIcmp5k" value="topmostSubform[0].Page1[0].c1_020[0]" />
+    	<entry key="partIcmp5s" value="topmostSubform[0].Page1[0].c1_028[0]" />
+    	<entry key="partIcmp5t" value="topmostSubform[0].Page1[0].c1_029[0]" />
+    	<entry key="partIcmp6a" value="topmostSubform[0].Page1[0].f1_004[0]" />
+    	<entry key="partIcmp6b" value="topmostSubform[0].Page1[0].f1_005[0]" />
+    	<entry key="partIcmp6c" value="topmostSubform[0].Page1[0].f1_006[0]" />
+    	<entry key="partIcmp7a" value="topmostSubform[0].Page1[0].f1_007[0]" />
+    	<entry key="partIcmp7b" value="topmostSubform[0].Page1[0].f1_008[0]" />
+    	<entry key="partIcmp7c" value="topmostSubform[0].Page1[0].f1_009[0]" />
+    	<entry key="partIcmp8"  value="topmostSubform[0].Page1[0].f1_010[0]" />
+        <entry key="partIcmp9"  value="topmostSubform[0].Page1[0].f1_011[0]" />
+        <entry key="partIcmp10" value="topmostSubform[0].Page1[0].f1_012[0]" />
+        <entry key="partIIcmp12a" value="topmostSubform[0].Page2[0].f2_001[0]" />
+        <entry key="partIIcmp12b" value="topmostSubform[0].Page2[0].f2_002[0]" />
+        <entry key="partIIcmp12c" value="topmostSubform[0].Page2[0].f2_003[0]" />
+        <entry key="partIIcmp13"  value="topmostSubform[0].Page2[0].f2_004[0]" />
+		<entry key="partIIIcmp14c1" value="topmostSubform[0].Page2[0].f2_005[0]" />
+		<entry key="partIIIcmp14d1" value="topmostSubform[0].Page2[0].f2_006[0]" />
+		<entry key="partIIIcmp14e1" value="topmostSubform[0].Page2[0].f2_007[0]" />
+		<entry key="partXcmp21a"   value="topmostSubform[0].Page3[0].f3_001[0]" />
+		<entry key="partXIVcmp25a" value="topmostSubform[0].Page5[0].f5_001[0]" />
+		<entry key="partXVIIIcmp29b" value="topmostSubform[0].Page6[0].f6_001[0]" />
+		<entry key="partXVIIIcmp29c" value="topmostSubform[0].Page6[0].f6_002[0]" />
+		<entry key="partXVIIIcmp29d" value="topmostSubform[0].Page6[0].f2_003[0]" />
+		<entry key="partXXIcmp32b" value="topmostSubform[0].Page7[0].f7_001[0]" />
+		<entry key="partXXIIcmp33b" value="topmostSubform[0].Page7[0].f7_002[0]" />
+		<entry key="partXXIIIcmp34a1" value="topmostSubform[0].Page7[0].f7_003[0]" />
+		<entry key="partXXIIIcmp34b1" value="topmostSubform[0].Page7[0].f7_004[0]" />
+		<entry key="partXXIIIcmp34b2" value="topmostSubform[0].Page7[0].f7_005[0]" />
+		<entry key="partXXVIIcmp38" value="topmostSubform[0].Page8[0].f8_001[0]" />
+		<entry key="partXXVIIcmp39" value="topmostSubform[0].Page8[0].c8_002[0]" />
+	</util:map>
+
+    <bean id="excellStatementUtil" lazy-init="true"
+		class="com.indeval.portalinternacional.presentation.controller.statements.ExcellStatementUtil">
+		<property name="statementsDivintService" ref="statementsDivintServiceEJB" />
+	</bean>
+	
+	<!-- Utileria para obtener los catalogos -->
+	<bean id="catalogosUtil" class="com.indeval.portalinternacional.common.util.CatalogosUtil">
+		<property name="catalogosService" ref="controlCatalogosServiceEJB" />
+		<property name="divisionInternacionalService" ref="divisionInternacionalServiceEJB" />
+	</bean>
+
+    <!--Cambio Multidivisas-->
+    <bean id="catalogosFacade" class="com.indeval.portalinternacional.common.util.ConsultaCatalogosFacade">
+        <property name="consultaDivisaService" ref="consultaDivisaService" />
+        <property name="consultaBovedaService" ref="bovedaService" />
+        <property name="institucionesService" ref="institucionesService" />
+        <property name="consultaCuentaService" ref="consultaCuentasService" />
+        <property name="consultaSaldoEfectivoService" ref="consultaSaldosEfectivoService" />
+        <property name="internacionalService" ref="movimientoEfectivoInternacionalService" />
+        <property name="retiroEfectivoIntPendientesService" ref="retiroEfectivoIntPendientesService" />
+    </bean>
+    <!--Fin Cambio Multidivisas-->
+    <!-- PARCHE PARA PORCENTAJE RETENCION DEFAULT POR FECHA, ESTO DEBE SER TEMPORAL
+    este mapa setea porcentajes de retencion por defaul dependiendo de la fecha de la tabla T_HORARIOS_BENEFICIARIO
+    KEY: debe ser el nombre que tenga el custodio en C_CATBIC (campo: detalle_custodio)
+    VALUE:[fecha a partir de la cual hacia atras validara fecha_corte]|[porcentaje de retencion]
+    si son varias fechas, va delimitado por un ";"
+    Ejemplo:  key="JP MORGAN" value="05/05/2016|32;02/05/2016|25;30/04/2016|28;"
+    *****NOTA IMPORTANTE: PONER FECHAS EN ESTRICTO ORDEN DESCENDENTE es decir, de mayor a menor****
+    -->
+    <util:map id="porcentajesRetencionXFechaCapitales" key-type="java.lang.String" value-type="java.lang.String">
+        <entry key="JP MORGAN" value="29/04/2016|28;" />
+     </util:map>
+     
+     
+     <bean id="propHabilitaCaptcha" class="java.lang.Boolean">
+	   		<constructor-arg value="${portalDali.habilitaCaptcha}"/>
+	</bean>
+   
+</beans>

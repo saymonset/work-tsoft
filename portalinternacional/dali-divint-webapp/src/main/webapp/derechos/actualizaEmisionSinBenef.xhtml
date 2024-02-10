@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+      xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+		<ui:define name="head">
+			<link rel="stylesheet" type="text/css" media="all"
+				href="#{facesContext.externalContext.requestContextPath}/css/derechosText.css" />			
+		</ui:define>
+		
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.derechos}" />
+		</ui:define>
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.actualizacionEmisionesSinBenef}"></h:outputText>
+		</ui:define>
+		
+		
+		<ui:define name="criterios">				
+			
+			<a4j:keepAlive beanName="actualizarEmisionBean" />			
+			<h:outputText value="#{actualizarEmisionBean.init}" />											
+
+			<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+				<tr>
+                            <td colspan="4">
+                                <div style="min-height: 21px;" colspan="2">
+                                    <rich:messages warnClass="warning" infoClass="info"
+                                                   errorClass="error" ajaxRendered="true" showDetail="false"
+                                                   showSummary="true" layout="list">
+                                        <f:facet name="infoMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/accept.png" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+
+                                        <f:facet name="errorMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/warning.gif" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+                                    </rich:messages>
+
+                                    <div id="divWarnings" class="warning" style="display:none;">
+                                        <p id="textoWarning">
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                       
+				<tr>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.tv}" styleClass="textoNegritas"/>
+					</td>
+					<td style="width: 330px">
+						<h:inputText autocomplete="off" id="tv" value="#{actualizarEmisionBean.selectedEmision.tv}" styleClass="campoAlphaNumericoEmisora" size="4" maxlength="4"/>
+					</td>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.emisoraMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td style="width: 330px">
+						<h:inputText autocomplete="off" id="emisora" value="#{actualizarEmisionBean.selectedEmision.emisora}" styleClass="campoAlphaNumericoEmisora" size="7" maxlength="7"/>
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.serieMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td style="width: 330px">
+						<h:inputText autocomplete="off" id="serie" value="#{actualizarEmisionBean.selectedEmision.serie}" styleClass="campoAlphaNumericoEmisora" size="6" maxlength="6"/>
+					</td>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.isin}" styleClass="textoNegritas"/>
+					</td>
+					<td style="width: 330px">
+						<h:inputText autocomplete="off" id="isin" value="#{actualizarEmisionBean.selectedEmision.isin}" styleClass="campoAlphaNumericoEmisora" size="12" maxlength="12"/>
+					</td>
+				</tr>				
+				<tr>
+					<td>
+						<h:outputText value="#{etq.custodio}" styleClass="textoNegritas"/>
+						<h:outputText value="#{etq.asterisco}" styleClass="required" />
+					</td>
+					<td>						
+						<h:selectOneMenu id="idCustodio" value="#{actualizarEmisionBean.selectedEmision.idCuentaNombrada}" styleClass="textoControles" readonly="true">
+							<f:selectItem itemValue="" itemLabel="#{etq.seleccioneUnCustodio}" />
+							<f:selectItems value="#{actualizarEmisionBean.custodios}"/>
+						</h:selectOneMenu>         
+					</td>
+					<td>
+						<h:outputText value="" styleClass="textoNegritas"/>
+					</td>
+					<td>
+						<h:outputText value="" styleClass="textoNegritas"/>
+					</td>
+				</tr>			             
+			</table>
+		</ui:define>
+		<ui:define name="seccionContenido">
+			<table width="100%" border="0">
+				<tr>
+					<td style="text-align: right;" colspan="2">
+						<a4j:commandButton id="botonGuardar" value="#{etq.actualizarEmision}" action="#{actualizarEmisionBean.actualizaEmision}"/>
+						<h:commandButton id="botonRegresar" value="#{etq.regresar}" action="#{actualizarEmisionBean.regresar}"/>                                
+					</td>
+				</tr>
+			</table>				
+		</ui:define>
+												
+	</ui:composition>
+</html>

@@ -1,0 +1,6 @@
+#!/bin/bash
+${JBOSS_HOME}/bin/jboss-cli.sh --connect --controller=${HOST_DEPLOY}:${PORT_DEPLOY} --user=${USER_DEPLOY} --password=${PASSWORD_DEPLOY} --command="deploy dali-divint-config/target/dali-divint-EAP-${jboss.version}-${project.version}.cli --script=deploy-1de4.scr"
+${JBOSS_HOME}/bin/jboss-cli.sh --connect --controller=${HOST_DEPLOY}:${PORT_DEPLOY} --user=${USER_DEPLOY} --password=${PASSWORD_DEPLOY} --command="deploy dali-divint-config/target/dali-divint-EAP-${jboss.version}-${project.version}.cli --script=deploy-2de4.scr"
+${JBOSS_HOME}/bin/jboss-cli.sh --connect --controller=${HOST_DEPLOY}:${PORT_DEPLOY} --user=${USER_DEPLOY} --password=${PASSWORD_DEPLOY} --command="deploy dali-divint-config/target/dali-divint-EAP-${jboss.version}-${project.version}.cli --script=deploy-3de4.scr"
+${JBOSS_HOME}/bin/jboss-cli.sh --connect --controller=${HOST_DEPLOY}:${PORT_DEPLOY} --user=${USER_DEPLOY} --password=${PASSWORD_DEPLOY} --command="deploy dali-divint-config/target/dali-divint-EAP-${jboss.version}-${project.version}.cli --script=deploy-4de4.scr"
+${JBOSS_HOME}/bin/jboss-cli.sh --connect --controller=${HOST_DEPLOY}:${PORT_DEPLOY} --user=${USER_DEPLOY} --password=${PASSWORD_DEPLOY} --command="deploy dali-divint-config/target/dali-divint-EAP-${jboss.version}-${project.version}.cli --script=deploy-ws.scr"

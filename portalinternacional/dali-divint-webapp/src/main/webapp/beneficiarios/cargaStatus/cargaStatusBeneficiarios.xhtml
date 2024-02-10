@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en">
+
+	<ui:decorate template="/layoutCapturaMultiPart.xhtml">
+	
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/fileTransferBeneficiarios.js"></script>		
+		</ui:define>
+		
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.titleCambioEstatus}"></h:outputText>
+		</ui:define>
+
+		<ui:define name="seccionForma">
+			<a4j:keepAlive beanName="fileTransferTraspasoBean" />
+			<h:outputText value="#{cargaStatusBeneficiariosBean.init}" />
+			
+			<!-- Mensajes al usuario -->
+			<rich:messages id="mensajesConsulta" warnClass="warning" infoClass="info"
+				errorClass="error" ajaxRendered="true" showDetail="false"
+				showSummary="true" layout="list">
+				<f:facet name="infoMarker">
+					<h:panelGroup>
+						<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+				</f:facet>
+				<f:facet name="errorMarker">
+					<h:panelGroup>
+						<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+				</f:facet>
+			</rich:messages>
+			
+			<h:panelGroup id="general">
+				<h:outputText style="color:red" value="#{cargaStatusBeneficiariosBean.mensajeError}"/>							
+				<h:panelGroup id="tablaResultados">
+	                <table width="100%" class="tablaGeneral" border="0">
+          				<tr class="tituloTabla">
+          					<td>
+          						<h:outputText value="#{etq.msgUoi}" />
+          					</td>
+          					<td>
+          						<h:outputText value="#{etq.msgEstadoAnterior}" />
+          					</td>
+          					<td>
+          						<h:outputText value="#{etq.msgEstadoActualizado}" />
+          					</td>
+          					<td>
+          						<h:outputText value="#{etq.msgRegistroProcesado}" />
+          					</td>
+          					<td>
+          						<h:outputText value="#{etq.msgErrores}" />
+          					</td>
+          				</tr>
+	                	<t:dataList value="#{cargaStatusBeneficiariosBean.listaCargaEstatus}" var="item" rowIndexVar="indice">
+              				<tr>
+              					<td align="center" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+              						 <h:outputText value="#{item.uoi}" />
+              					</td>
+              					<td align="center" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+              						 <h:outputText value="#{item.estadoActualBeneficiario}" />
+              					</td>
+              					<td align="center" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+              						 <h:outputText value="#{item.estadoActualizadoBeneficiario}" />
+              					</td>
+              					<td align="center" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+              						 <h:outputText value="#{item.registroActualizado}" />
+              					</td>
+              					<td align="center" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+              						 <h:outputText value="#{item.error}" />
+              					</td>
+              				</tr>
+		                </t:dataList>
+	                </table>
+               </h:panelGroup>					                  
+
+			</h:panelGroup>
+		</ui:define>
+
+		<ui:define name="botones">
+			<h:panelGroup id="botones">
+				<h:panelGrid columns="3">
+					<h:panelGroup>
+						<h:outputText value="#{etq.archivo}" />
+					</h:panelGroup>
+					<t:inputFileUpload id="archivoOperaciones" storage="memory"
+						value="#{cargaStatusBeneficiariosBean.archivo}" size="50"
+						required="false" />
+					<h:commandButton id="iniciarProceso" value="Iniciar Proceso"
+						actionListener="#{cargaStatusBeneficiariosBean.uploadFile}"
+						reRender="tablaResultados, panelImage"
+						onclick="imagenCargaBeneTemp();lockBotonIniciarProceso();"							
+						oncomplete="unlockBotonIniciarProceso();"/>
+				</h:panelGrid>
+			</h:panelGroup>
+			
+			<!--************************* Imagen de carga *********************************************************-->
+			<h:panelGroup id="panelImage">
+						<div id="image_carga" style="display:none;width:900px; position:absolute" align="center">
+	                    	<table>
+	                    		<tr>
+	                    			<td>
+	                    				<h:outputText value="#{etq.cargando}"></h:outputText>&#160;&#160;&#160;&#160;
+	                    			<h:graphicImage value="/images/ajax-loader.gif" align="center"/>
+	                    			</td>                    			
+	                    		</tr>                    		                    		
+	                    	</table>                    	                    
+	                    </div>  				
+			</h:panelGroup>	
+		
+		</ui:define>
+
+	</ui:decorate>
+	
+</html>

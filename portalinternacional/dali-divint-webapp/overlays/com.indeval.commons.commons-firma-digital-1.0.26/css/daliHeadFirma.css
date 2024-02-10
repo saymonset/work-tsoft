@@ -1,0 +1,22 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	background: #434363;
+	text-align: center; /* for IE */
+	font-weight: bold;
+	color: #FFFFFF;
+	padding: 0px;
+	margin: 0px;
+}
+
+table.headTable {
+    width: 100%;
+    background: #434363 url(../images/fondo_head.gif) repeat-x top left;    
+    padding: 0px;
+}
+
+table.bodyTable {	
+	text-align: left;
+	padding: 2px;
+	width: 100%;	
+}

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+<pdf:document documentName="DetalleConsultaOperaciones" documentTitle="Detalle Consulta de Operaciones del Sistema Internacional de Cotizaciones"
+              landscape="true" institucion="#{consultaOperacionesBean.agenteFirmado.id} #{consultaOperacionesBean.agenteFirmado.folio} #{consultaOperacionesBean.agenteFirmado.razon}"
+			  fecha="#{consultaOperacionesBean.fechaActual}" imageResource="/images/indeval.jpg">
+	
+	<pdf:table value="#{consultaOperacionesBean}"
+			currentBean="filtro" widthPercentage="100">
+			<pdf:row>
+				<pdf:col align="LEFT" collspan="8" header="Agente"
+					value="" />
+			</pdf:row>
+			<pdf:row>
+				<pdf:col align="CENTER" collspan="1" header="#{etq.folioControl}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.folioControl}" />
+				<pdf:col align="CENTER" collspan="1" header="#{etq.referenciaOperacion}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.referenciaOperacion}" />	
+				<pdf:col align="CENTER" collspan="1" header="#{etq.fechaHoraAlta}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.fechaAlta}">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss"/>
+			    </pdf:col>
+				<pdf:col align="CENTER" collspan="1" header="#{etq.fechaHoraLiquidacionTlp}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.fechaLiquidacionTlp}">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss"/>
+			    </pdf:col>
+				<pdf:col align="CENTER" collspan="1" header="#{etq.fechaHoraHabilitada}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.fechaHoraHabilitada}">
+			        <cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss"/>
+			    </pdf:col> 	
+				<pdf:col align="CENTER" collspan="1" header="#{etq.id}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.cuentaNombrada.institucion.tipoInstitucion.claveTipoInstitucion}" />
+				<pdf:col align="CENTER" collspan="1" header="#{etq.folioMinus}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.cuentaNombrada.institucion.folioInstitucion}" />
+				<pdf:col align="CENTER" collspan="1" header="#{etq.cuentaMinus}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.cuentaNombrada.cuenta}" />	
+			</pdf:row>
+			
+	</pdf:table>
+	<pdf:table value="#{consultaOperacionesBean}"
+			currentBean="filtro" widthPercentage="100">
+			<pdf:row>
+				<pdf:col align="LEFT" collspan="5" header="#{etq.emisionMinus}"
+					value="" />
+			</pdf:row>
+			<pdf:row>
+				<pdf:col align="CENTER" collspan="1" header="#{etq.tv}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.emision.instrumento.claveTipoValor}" />
+				<pdf:col align="CENTER" collspan="1" header="#{etq.emisoraMinus}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.emision.emisora.clavePizarra}" />
+				<pdf:col align="CENTER" collspan="1" header="#{etq.serieMinus}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.emision.serie}" />
+				<pdf:col align="CENTER" collspan="1" header="#{etq.cuponMinus}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.claveCupon}" />
+				<pdf:col align="CENTER" collspan="1" header="#{etq.isin}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.emision.isin}" />
+			</pdf:row>		
+	</pdf:table>
+	
+	<pdf:table value="#{consultaOperacionesBean}"
+			currentBean="filtro" widthPercentage="100">
+			<pdf:row>
+				<pdf:col align="LEFT" collspan="2" header="Custodio"
+					value="" />
+			</pdf:row>
+			<pdf:row>
+				<pdf:col align="CENTER" collspan="1" header="#{etq.descripcionCustodia}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.catBic.detalleCustodio}" />
+				<pdf:col align="CENTER" collspan="1" header="#{etq.descripcionCuenta}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.catBic.bicProd}" />
+			</pdf:row>	
+			
+	</pdf:table>
+	<pdf:table value="#{consultaOperacionesBean}"
+			currentBean="filtro" widthPercentage="100">
+			<pdf:row>
+				<pdf:col align="LEFT" collspan="4" header="Contraparte"
+					value="" />
+			</pdf:row>
+			<pdf:row>
+				<pdf:col align="CENTER" collspan="1" header="#{etq.cuentaContraparte}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.cuentaContraparte}" />
+				<pdf:col align="CENTER" collspan="1" header="#{etq.descContraparte}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.descContraparte}" />
+				<pdf:col align="CENTER" collspan="1" header="#{etq.depositante}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.sicDetalle.depLiq}" />
+				<pdf:col align="CENTER" collspan="1" header="#{etq.instruccEspeciales}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.instruccEspeciales}" />
+			</pdf:row>
+	</pdf:table>
+	<pdf:table value="#{consultaOperacionesBean}"
+			currentBean="filtro" widthPercentage="100">
+			<pdf:row>
+				<pdf:col align="LEFT" collspan="4" header="Beneficiario Final"
+					value="" />
+			</pdf:row>
+			<pdf:row>
+				<pdf:col align="CENTER" collspan="1" header="#{etq.nomCtaBenef}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.nomCtaBenef}" />
+				<pdf:col align="CENTER" collspan="1" header="#{etq.numCtaBenef}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.numCtaBenef}" />
+				<pdf:col align="right" collspan="1" header="#{etq.importe}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.importe}" >
+					<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+				</pdf:col>
+				<pdf:col align="CENTER" collspan="1" header="#{etq.divisaMinus}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.divisa}" />
+			</pdf:row>
+	</pdf:table>
+	
+
+	
+	<pdf:table value="#{consultaOperacionesBean}"
+			currentBean="filtro" widthPercentage="100">
+			<pdf:row>
+				<pdf:col align="LEFT" collspan="7" header="  "
+					value="" />
+			</pdf:row>
+			<pdf:row>
+				<pdf:col align="right" collspan="1" header="#{etq.cantidadOperada}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.cantidadTitulos}">
+					<f:convertNumber pattern="###,###,###,###,###"/>
+				</pdf:col>
+				<pdf:col align="CENTER" collspan="1" header="#{etq.tipoOp}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.descTipoMensaje}" />
+				<pdf:col align="CENTER" collspan="1" header="#{etq.fechaLiquidacionMinus}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.fechaLiquidacion}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+					</pdf:col>
+				<pdf:col align="CENTER" collspan="1" header="#{etq.fechaAprobacion}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.fecha530}" />
+				<pdf:col align="CENTER" collspan="1" header="#{etq.msgConfirmacion}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.tipoMensajeConfirmacion}" />
+				<pdf:col align="CENTER" collspan="1" header="#{etq.msgEfectivo}"
+					value="#{consultaOperacionesBean.detalleOperacionSic.mensajeEfectivo}" />
+				<pdf:col align="CENTER" collspan="1" header="#{etq.liquidacionParcial}"
+					value="#{not empty consultaOperacionesBean.detalleOperacionSic.liquidacionParcial ? consultaOperacionesBean.detalleOperacionSic.liquidacionParcial : 'NO'}" />
+			</pdf:row>
+	</pdf:table>
+</pdf:document>
+</html>

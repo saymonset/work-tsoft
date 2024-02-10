@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xls="http://indeval.com/jsf/xls"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+<xls:document documentName="HistorialBitacoraCambiosBoveda" documentTitle="Historial de cambios a Cambios de Bóveda" landscape="true" >
+
+	<xls:table value="#{cambiaEdoOpsCambioBovedaBean}" var="filtro">
+			<xls:row>
+				<xls:col align="center" value="#{etq.institucionMinus}:" oddColorDark="true"/>
+				<xls:col align="center" value="#{cambiaEdoOpsCambioBovedaBean.agenteFirmado.id} #{cambiaEdoOpsCambioBovedaBean.agenteFirmado.folio} #{cambiaEdoOpsCambioBovedaBean.agenteFirmado.razon }" />
+			</xls:row>
+			<xls:row>
+				<xls:col align="center" value="#{etq.fechaMinus}:" />
+				<xls:col align="center" value="#{cambiaEdoOpsCambioBovedaBean.fechaActual}" pattern="dd/MM/yyyy" />
+			</xls:row>
+	</xls:table>
+
+	<xls:subtitle value="Filtros"/>
+	<xls:table value="#{cambiaEdoOpsCambioBovedaBean}" var="filtro">
+			<xls:row>
+				<xls:col align="center" collspan="1" header="#{etq.folioControl}"
+					value="#{(cambiaEdoOpsCambioBovedaBean.folioControlParam == '')?'TODOS':(cambiaEdoOpsCambioBovedaBean.folioControlParam)}"/>					
+				<xls:col align="center" collspan="1" header="#{etq.fechaInicial} Autorizador"
+					value="#{(cambiaEdoOpsCambioBovedaBean.fechaInicialAut == null)?'TODOS':(cambiaEdoOpsCambioBovedaBean.fechaInicialAut)}" pattern="dd/MM/yyyy"/>
+				<xls:col align="center" collspan="1" header="#{etq.fechaFinal} Autorizador"
+					value="#{(cambiaEdoOpsCambioBovedaBean.fechaFinalAut == null)?'TODOS':(cambiaEdoOpsCambioBovedaBean.fechaFinalAut)}" pattern="dd/MM/yyyy"/>	
+				<xls:col align="center" collspan="1" header="#{etq.fechaInicial} Solicitud"
+					value="#{(cambiaEdoOpsCambioBovedaBean.fechaInicialOp == null)?'TODOS':(cambiaEdoOpsCambioBovedaBean.fechaInicialOp)}" pattern="dd/MM/yyyy"/>
+				<xls:col align="center" collspan="1" header="#{etq.fechaFinal} Solicitud"
+					value="#{(cambiaEdoOpsCambioBovedaBean.fechaFinalOp == null)?'TODOS':(cambiaEdoOpsCambioBovedaBean.fechaFinalOp)}" pattern="dd/MM/yyyy"/>
+				<xls:col align="center" collspan="1" header="#{etq.custodio}"
+					value="#{(cambiaEdoOpsCambioBovedaBean.custodio=='-1')?'TODOS':(cambiaEdoOpsCambioBovedaBean.custodio)}" />	
+				<xls:col align="center" collspan="1" header="#{etq.operacion}"
+					value="#{(cambiaEdoOpsCambioBovedaBean.operacion=='-1')?'TODOS':(cambiaEdoOpsCambioBovedaBean.operacionSeleccionada)}" />	
+				<xls:col align="center" collspan="1" header="#{etq.tipoOp}"
+					value="#{(cambiaEdoOpsCambioBovedaBean.tipoOperacion=='-1')?'TODOS':(cambiaEdoOpsCambioBovedaBean.tipoOperacionSeleccionada)}" />	
+				<xls:col align="center" collspan="1" header="#{etq.estatusPrevio}"
+					value="#{(cambiaEdoOpsCambioBovedaBean.estatusAnterior=='-1')?'TODOS':(cambiaEdoOpsCambioBovedaBean.estatusSeleccionadoAnterior)}" />
+				<xls:col align="center" collspan="1" header="#{etq.estatusSolicitado}"
+					value="#{(cambiaEdoOpsCambioBovedaBean.estatusNuevo=='-1')?'TODOS':(cambiaEdoOpsCambioBovedaBean.estatusSeleccionadoNuevo)}" />
+			</xls:row>			
+	</xls:table>
+	
+	<xls:table value="#{cambiaEdoOpsCambioBovedaBean}" var="filtro">
+			<xls:row >
+			    <xls:col align="center" collspan="2" header="Total de Registros" value="#{cambiaEdoOpsCambioBovedaBean.resultados.totalRegistros}" />
+			</xls:row>
+	</xls:table>
+
+	<xls:subtitle value="Datos"/>
+    <xls:table value="#{cambiaEdoOpsCambioBovedaBean.resultados.registros}" var="bitacora" borraLista="false">
+        <xls:row>       			 
+        	<xls:col collspan="1" header="#{etq.folioControl}" value="#{bitacora.folioControl}" align="CENTER"/>
+			<xls:col collspan="1" header="#{etq.id}" value="#{bitacora.claveTipoInstitucion}" align="CENTER"/>        			 
+    		<xls:col collspan="1" header="#{etq.folioMinus}" value="#{bitacora.folioInstitucion}" align="CENTER"/>
+    		<xls:col collspan="1" header="#{etq.custodio}" value="#{bitacora.detalleCustodio}" align="CENTER"/>
+        	<xls:col collspan="1" header="#{etq.tv} #{etq.emisoraMinus} #{etq.serieMinus}  #{etq.isin}" 
+        		value="#{bitacora.claveTipoValor}  #{bitacora.clavePizarra} #{bitacora.serie} #{bitacora.isin}" align="CENTER"/>
+     	    <xls:col collspan="1" header="#{etq.cantidadOperada}" value="#{bitacora.cantidadTitulos}" align="CENTER"/>
+  			<xls:col collspan="1" header="#{etq.operacion}" value="#{bitacora.operacion}" align="CENTER"/>  
+      		<xls:col collspan="1" header="#{etq.estatusPrevio}" value="#{bitacora.estatusOperacionAnterior}" align="CENTER"/>
+  			<xls:col collspan="1" header="#{etq.estatusSolicitado}" value="#{bitacora.estatusOperacionNueva}" align="CENTER"/>
+        	<xls:col collspan="1" header="#{etq.usuarioSolicito}" value="#{bitacora.cveUsuarioOperador}" align="CENTER"/>
+        	<xls:col collspan="1" header="#{etq.fechaBitacora}" value="#{bitacora.fechaSolicitudOperador}" align="CENTER" pattern="dd/MM/yyyy HH:mm:ss"/>	
+        	<xls:col collspan="1" header="#{etq.usuarioAutorizo}" value="#{bitacora.cveUsuarioAutorizo}" align="CENTER"/>		 
+        	<xls:col collspan="1" header="#{etq.fechaAutorizo}" value="#{bitacora.fechaSolicitudAutorizador}" align="CENTER"  pattern="dd/MM/yyyy HH:mm:ss"/>	
+        	<xls:col collspan="1" header="#{etq.estatusBitacora}" value="#{bitacora.descEstatusBitacora}" align="CENTER"/>	 
+			<xls:col collspan="10" header="Motivo del cambio" value="#{bitacora.motivoCambio}" align="CENTER"/>  					 
+        </xls:row>    
+    </xls:table>
+</xls:document>
+</html>

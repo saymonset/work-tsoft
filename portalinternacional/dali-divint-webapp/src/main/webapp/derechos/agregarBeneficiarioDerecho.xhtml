@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:ui="http://java.sun.com/jsf/facelets"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+		xmlns:a4j="http://richfaces.org/a4j"
+		xmlns:rich="http://richfaces.org/rich">
+
+	<ui:composition template="/layoutPopUp.xhtml">
+		<ui:define name="head">
+			<!--link rel="stylesheet" type="text/css" media="all"
+				href="#{facesContext.externalContext.requestContextPath}/css/beneficiarioActivo.css" /-->
+				<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/derechos.js">
+			</script>
+		</ui:define>
+		<ui:define name="titulo">
+			<h:outputText styleClass="texto textoPeque12" value="#{etq.beneficiariosDelDerecho}" />		
+		</ui:define>
+		<ui:define name="subtitulo">
+		</ui:define>
+		<ui:define name="body">
+			<h:panelGroup id="panelForms">
+			<h:form id="formaAgregarBeneficiarios" rendered="#{!agregarBenefDerechoBean.beficiariosAgregados}">
+				<h:outputText value="#{agregarBenefDerechoBean.init}" />
+				<a4j:keepAlive beanName="agregarBenefDerechoBean" />
+				<table> 
+						<tr>
+							<td>
+								<table width="850px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+									<h:panelGroup>
+										<h:panelGroup>
+									<tr>
+										<td>
+											<div style="min-height: 21px;">						
+												<rich:messages warnClass="warning" infoClass="info"
+													errorClass="error" ajaxRendered="true" showDetail="false"
+													showSummary="true" layout="list">
+													<f:facet name="infoMarker">
+														<h:panelGroup>
+															<h:graphicImage url="/images/accept.png" />&#160;
+														</h:panelGroup>
+													</f:facet>
+							
+													<f:facet name="errorMarker">
+														<h:panelGroup>
+															<h:graphicImage url="/images/warning.gif" />&#160;
+														</h:panelGroup>
+													</f:facet>
+												</rich:messages>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h:outputText value="#{etq.beneficiarios}" styleClass="textoNegritas"/>
+										</td>
+										<td>
+											
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h:outputText value="#{etq.ejemploBeneficiariosEtq}" styleClass="textoResumen"/>&#160;&#160;<h:outputText value="#{etq.ejemploBeneficiarios1}" styleClass="textoResumen"/>
+											<br/>
+											&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<h:outputText value="#{etq.ejemploBeneficiarios2}" styleClass="textoResumen"/>
+										</td>
+										<td>											
+											
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h:panelGroup>
+												<a4j:region>
+                                                    <table align="left" border="0" style="text-align: center;">
+                                                        <tr>
+                                                            <td>                                                            	
+																<h:inputTextarea value="#{agregarBenefDerechoBean.strBeneficiarios}" rows="15" cols="70" styleClass="textoControles textoMayusculas"></h:inputTextarea>
+                                                            </td>
+                                                            <td>													
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+												</a4j:region>
+											</h:panelGroup>
+										</td>
+										<td align="left">											
+                                        </td>										
+									</tr>
+										</h:panelGroup>
+									</h:panelGroup>										
+								</table>
+							</td>
+						</tr>
+					</table>
+				<h:panelGroup id="general">
+					
+					<table width="100%" border="0"> 						
+						<tr align="right">	
+							<td align="right">
+								<div id="monitorPeticionCambioEstado" style="display: none;">
+		                            <h:panelGroup id="panelMonitorPeticionCambioEstado">
+		                                <h:graphicImage value="/images/ajax-loader.gif" />
+		                                &#160;&#160;
+		                                <h:outputText value="#{etq.procesandoSolicitud}" />
+		                            </h:panelGroup>
+		                        </div>
+							</td>						
+							<td align="right">								
+									<a4j:commandButton id="botonProcesar"										
+										actionListener="#{agregarBenefDerechoBean.procesarBeneficiarios}" 
+										oncomplete="window.scrollTo(0,0);" reRender="formaAgregarBeneficiarios,benef,beneficiarios,botonGuardar,panelDetalleCarga" value="#{etq.procesarMinus}"
+										onclick="agregarBeneficiariosInabilitadoBotones();" />
+									<a4j:commandButton id="botonGuardar"
+										actionListener="#{agregarBenefDerechoBean.guardarBenefDerecho}" 
+										oncomplete="window.scrollTo(0,0);" value="#{etq.guardar}" disabled="#{empty agregarBenefDerechoBean.lstBeneficiarios}" reRender="panelForms" 
+										onclick="if(!confirm('&#191;#{agregarBenefDerechoBean.messageConfirm}&#63;')) { return false; } else { agregarBeneficiariosInabilitadoBotones(); }"/>
+								&#160;&#160;
+						  		<h:panelGroup  id="panelDetalleCarga" style="align:left" 
+						  						rendered="#{not empty agregarBenefDerechoBean.lstBeneficiarios}">								
+									<h:outputText styleClass="texto textoNegritas" value="Descargar Detalle Carga" />								
+									&#160;&#160;
+									<h:commandButton 
+	                          					action="resumenAsignacionBeneficiariosDerecho"
+	                          					actionListener="#{agregarBenefDerechoBean.detalleCargaDerechoBeneficiario}"                          					
+	                          					image="/images/excel-file.gif"
+	                          					title="Exportar a Excel el resumen de la Carga" 
+	                            				id="generarExcel">
+	                           		</h:commandButton>
+								</h:panelGroup>
+							</td>
+						</tr>
+					</table>
+				</h:panelGroup>					
+											
+				<h:panelGroup rendered="#{not empty agregarBenefDerechoBean.lstBeneficiarios}" id="benef">
+					<div style="height: 240px; overflow: auto;">
+						<rich:dataTable id="beneficiarios" value="#{agregarBenefDerechoBean.lstBeneficiarios}"
+							var="beneficiario" rendered="#{not empty agregarBenefDerechoBean.lstBeneficiarios}"
+							styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+							footerClass="tituloTabla" border="0" cellpadding="3px" cellspacing="0px"	
+							columnClasses="everyColumn" rowClasses="renglonTablaUno, renglonTablaDos" rowKeyVar="index">
+							
+							<rich:column>
+	                        	<f:facet name="header">
+	                            	<h:outputText styleClass="texto textoPeque12" value="#{etq.uoi}" />
+	                        	</f:facet>
+	                        	<h:outputText value="#{beneficiario.uoi}"/>
+	                        	<f:facet name="footer">
+	                                <rich:spacer />
+	                            </f:facet>                        	
+	                    	</rich:column>
+							<rich:column>
+	                        	<f:facet name="header">
+	                            	<h:outputText styleClass="texto textoPeque12" value="#{etq.asignacion}" />
+	                        	</f:facet>
+	                        	<rich:inplaceInput layout="block" value="#{agregarBenefDerechoBean.asignacion}" id="inplacePosicion"                         
+	                        				changedHoverClass="hover" viewHoverClass="hover"
+	                        				viewClass="inplace" changedClass="inplace"
+	                        				selectOnEdit="true" editEvent="ondblclick" defaultLabel="#{beneficiario.posicion}" styleClass="texto textoPeque12" valueChangeListener="#{agregarBenefDerechoBean.changeAsignacion}">                        				
+	                        		<a4j:support event="onviewactivated" reRender="benef,botonGuardar" actionListener="#{agregarBenefDerechoBean.modificarAsignacionBeneficiario}">
+	                        			<f:attribute value="#{index}" name="index"/>
+	                        		</a4j:support>                        			                      			                        			                        			                          
+		                    	</rich:inplaceInput>                        	                        	 
+	                        	<f:facet name="footer">
+	                                <h:outputText value="#{agregarBenefDerechoBean.totalAsignacion}" styleClass="texto textoPeque12"  converter="formatoEnteroConverter"/>
+	                            </f:facet>                       	
+	                    	</rich:column>
+							<rich:column>
+	                        	<f:facet name="header">
+	                            	<h:outputText styleClass="texto textoPeque12" value="#{etq.porcentajeRetencionMinus}" />
+	                        	</f:facet>
+	                        	<h:outputText value="#{beneficiario.porcentajeRetencion}" converter="formatoPorcentajeConverter"/> 
+	                        	<f:facet name="footer">
+	                                <rich:spacer />
+	                            </f:facet>                      	
+	                    	</rich:column>                    	
+							<rich:column>
+	                        	<f:facet name="header">
+	                            	<h:outputText styleClass="texto textoPeque12" value="#{etq.error}" />
+	                        	</f:facet>
+	                        	<h:outputText value="#{beneficiario.error}"/>
+	                        	<f:facet name="footer">
+	                                <rich:spacer />
+	                            </f:facet>
+	                    	</rich:column>
+							<rich:column>
+								<a4j:commandLink reRender="formaAgregarBeneficiarios,benef,beneficiarios,botonGuardar" actionListener="#{agregarBenefDerechoBean.eliminarBeneficiarioAgregado}">
+									<h:graphicImage value="/images/cancel.png"/>																
+									<f:attribute value="#{index}" name="index"/>
+								</a4j:commandLink>
+								<f:facet name="footer">
+	                                <rich:spacer />
+	                            </f:facet>
+	                    	</rich:column>                      	                    							
+							
+						</rich:dataTable>
+					</div>
+				</h:panelGroup>				
+			</h:form>
+			<h:form id="formaBenefActivo" rendered="#{agregarBenefDerechoBean.beficiariosAgregados}">
+                <h:panelGroup id="general">
+                    <a4j:keepAlive beanName="agregarBenefDerechoBean" />
+
+                    <br />
+                    <br />
+                    <br />
+
+                    <table>
+                        <tr>
+                            <td>
+                                <table width="550px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+                                    <tr>
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/accept.png" />&#160;
+                                                <h:outputText value="#{agregarBenefDerechoBean.message}" />
+                                            </h:panelGroup>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div style="width: 100%; text-align: center; text-decoration: none">
+                                                <a href="javascript:window.parent.closeAgregaBeneficiarioDerecho()" >
+													Cerrar
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </h:panelGroup>
+            </h:form>
+            </h:panelGroup>
+		</ui:define>
+	</ui:composition>
+
+</html>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document 
+    	documentName="Personas" 
+    	documentTitle="Personas"
+        institucion="#{personasBean.agenteFirmado.id} #{personasBean.agenteFirmado.folio} #{personasBean.agenteFirmado.razon}" 
+        landscape="true" 
+        fecha="#{personasBean.fechaActual}"
+        imageResource="/images/indeval.jpg">
+        
+		<pdf:table value="personasBean" currentBean="bean" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{personasBean.criteriosConsulta}" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        
+        <pdf:table value="#{personasBean}" currentBean="bean" widthPercentage="100" maxColums="11">
+            <pdf:row>
+           		<pdf:col header="Institución" value="#{!empty personasBean.claveInstitucion ? personasBean.claveInstitucion : 'Todas'}" align="center" />
+                <pdf:col header="#{etqEventosCorporativos.nombrePersona}" value="#{!empty personasBean.nombrePersona ? personasBean.nombrePersona : 'Todos'}" align="center"  />
+                <pdf:col header="#{etqEventosCorporativos.correoPersona}" value="#{!empty personasBean.correoElectronico ? personasBean.correoElectronico : 'Todos'}" align="center" />
+                <pdf:col header="Descripción" value="#{personasBean.descripcionSummary}" align="center" />
+                <pdf:col header="#{etqEventosCorporativos.estado}" value="#{personasBean.descripcionEstatus}" align="center" />
+                <pdf:col header="Lista Distribución" value="#{personasBean.listaDistribucionDescripcion}" align="center" />  
+			</pdf:row>
+        </pdf:table>
+        
+        <pdf:br/>
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{personasBean.totalRegistrosExportacion}" />
+        <pdf:br/>        
+        
+        <pdf:table value="#{personasBean.personas}" currentBean="detalle" widthPercentage="100" maxColums="11">
+            <pdf:row>
+            	<pdf:col header="Institución" value="#{!empty detalle.institucion ? detalle.institucion.claveInstitucion : '' }" align="center"  />
+				<pdf:col header="#{etqEventosCorporativos.identificador}" value="#{detalle.idPersona}" align="center"  />
+				<pdf:col header="#{etqEventosCorporativos.nombrePersona}" value="#{detalle.nombre}" align="center" />
+				<pdf:col header="#{etqEventosCorporativos.correoPersona}" value="#{detalle.correo}" align="center" />				
+				<pdf:col header="#{etqEventosCorporativos.estado}" value="#{detalle.inactivo == 0 ? 'Activo': 'Inactivo' }" align="center" />				 
+                <pdf:col header="Listas" value="#{detalle.listas}" align="center" />
+                <pdf:col header="#{etqEventosCorporativos.descripcion}" value="#{detalle.descripcion}" align="center" />
+                <pdf:col header="Fecha Actualización" value="#{detalle.fechaActualizacion}" align="center"  >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm" />
+				</pdf:col>
+			</pdf:row>
+        </pdf:table>
+
+    </pdf:document>
+</html>

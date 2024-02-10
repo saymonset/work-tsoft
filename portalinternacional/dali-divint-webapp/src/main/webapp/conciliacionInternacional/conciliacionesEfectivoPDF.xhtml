@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="ConciliacionesEfectivo" documentTitle="Conciliación de Efectivo"
+        institucion="#{conciliacionesEfectivoIntBean.agenteFirmado.id} #{conciliacionesEfectivoIntBean.agenteFirmado.folio} #{conciliacionesEfectivoIntBean.agenteFirmado.razon}" 
+        landscape="true" fecha="#{conciliacionesEfectivoIntBean.fechaActual}" imageResource="/images/indeval.jpg">
+        <pdf:table value="conciliacionesEfectivoIntBean" currentBean="conciliacion" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="conciliacionesEfectivoIntBean" currentBean="conciliacion" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.bicCode}" value="#{conciliacionesEfectivoIntBean.bicCodeSelected}" align="center" />
+                <pdf:col header="#{etq.divisaMinus}" value="#{conciliacionesEfectivoIntBean.divisaSelected}" align="center" />
+                <pdf:col header="#{etq.cuentas}" value="#{conciliacionesEfectivoIntBean.cuentaSelected}" align="center" />
+				<pdf:col header="#{etq.cuentasCustodia}" value="#{conciliacionesEfectivoIntBean.cuentaCustodia ? 'Si' : 'No'}"  align="center"/>
+				<pdf:col header="#{etq.cuentasComercial}" value="#{conciliacionesEfectivoIntBean.cuentaComercial ? 'Si' : 'No'}"  align="center"/>				
+				<pdf:col header="#{etq.conDiferencia}" value="#{conciliacionesEfectivoIntBean.diferencia ? 'Si' : 'No'}"  align="center"/>
+				<pdf:col header="#{etq.folioConciliacion}" value="#{!empty conciliacionesEfectivoIntBean.folioConciliacion ? conciliacionesEfectivoIntBean.folioConciliacion : 'TODOS'}" align="center" />
+				<pdf:col header="#{etq.folioMensaje}" value="#{!empty conciliacionesEfectivoIntBean.folioMensaje ? conciliacionesEfectivoIntBean.folioMensaje : 'TODOS'}" align="center" />
+				<pdf:col header="#{etq.referenciaMT}" value="#{!empty conciliacionesEfectivoIntBean.referenciaMT ? conciliacionesEfectivoIntBean.referenciaMT : 'TODAS'}" align="center" />
+                
+                <pdf:col header="#{etq.fechaBalanceInicio}" value="#{conciliacionesEfectivoIntBean.fechaBalanceInicio}" align="center" rendered="#{!empty conciliacionesEfectivoIntBean.fechaBalanceInicio}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaBalanceInicio}" value="TODAS" rendered="#{empty conciliacionesEfectivoIntBean.fechaBalanceInicio}" align="center">
+				         <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>				         
+                <pdf:col header="#{etq.fechaBalanceFin}" value="#{conciliacionesEfectivoIntBean.fechaBalanceFin}" align="center" rendered="#{!empty conciliacionesEfectivoIntBean.fechaBalanceFin }">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaBalanceFin}" value="TODAS" rendered="#{empty conciliacionesEfectivoIntBean.fechaBalanceFin}" align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>		
+				<pdf:col header="#{etq.fechaElaboracionInicio}" value="#{conciliacionesEfectivoIntBean.fechaElaboracionInicio}" align="center" rendered="#{!empty conciliacionesEfectivoIntBean.fechaElaboracionInicio}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaElaboracionInicio}" value="TODAS" rendered="#{empty conciliacionesEfectivoIntBean.fechaElaboracionInicio}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+			    </pdf:col>
+                <pdf:col header="#{etq.fechaElaboracionFin}" value="#{conciliacionesEfectivoIntBean.fechaElaboracionFin}" align="center" rendered="#{!empty conciliacionesEfectivoIntBean.fechaElaboracionFin }">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaElaboracionFin}" value="TODAS" rendered="#{empty conciliacionesEfectivoIntBean.fechaElaboracionFin}" align="center">
+				         <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+            </pdf:row>
+        </pdf:table>
+        
+        <pdf:br/>
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{conciliacionesEfectivoIntBean.totalRegistros}"/>
+        <pdf:br/>
+
+        <pdf:table value="#{conciliacionesEfectivoIntBean.paginaReportes.registros}" currentBean="conciliacion" widthPercentage="100">
+            <pdf:row>
+            	
+				<pdf:col header="#{etq.folioConciliacion}" value="#{conciliacion.folioConciliacion}" align="center" />
+				<pdf:col header="#{etq.referencia}" value="#{conciliacion.referencia}" align="center" />
+				<pdf:col header="#{etq.folioMensaje}" value="#{conciliacion.statementNumber}" align="center" />
+						
+				<pdf:col header="#{etq.fechaElaboracion}" value="#{conciliacion.listaBitacoraConciliacionEfectivo[0].fechaEmision}" align="center" rendered="#{!empty conciliacion.listaBitacoraConciliacionEfectivo[0].fechaEmision}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaElaboracion}" value="N/A" align="center" rendered="#{empty conciliacion.listaBitacoraConciliacionEfectivo[0].fechaEmision}" />
+				
+				<pdf:col header="#{etq.fechaBalance}" value="#{conciliacion.fechaBalance}" align="center" rendered="#{!empty conciliacion.fechaBalance}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaBalance}" value="N/A" align="center" rendered="#{empty conciliacion.fechaBalance}" />
+				
+				<pdf:col header="#{etq.custodioBic}" value="#{conciliacion.bicCode}" align="center" />
+				<pdf:col header="#{etq.cuentaMinus}" value="#{conciliacion.cuenta}" align="center" />
+				<pdf:col header="#{etq.divisaMinus}" value="#{conciliacion.divisa}" align="center" />
+				
+				<pdf:col header="#{etq.saldoInicialMT}" value="#{conciliacion.balanceInicio}" align="right" rendered="#{!empty conciliacion.balanceInicio}">
+					<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+				</pdf:col>
+				<pdf:col header="#{etq.saldoInicialMT}" value="N/A" align="right" rendered="#{empty conciliacion.balanceInicio}" />
+				
+				<pdf:col header="#{etq.netoMovimientos}" value="#{conciliacion.netoMovimientos}" align="right" rendered="#{!empty conciliacion.netoMovimientos}">
+					<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+				</pdf:col>
+				<pdf:col header="#{etq.netoMovimientos}" value="N/A" align="right"  rendered="#{empty conciliacion.netoMovimientos}" />
+				
+				<pdf:col header="#{etq.saldoFinalMT}" value="#{conciliacion.balanceFinal}" align="right" rendered="#{!empty conciliacion.balanceFinal}">
+					<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+				</pdf:col>
+				<pdf:col header="#{etq.saldoFinalMT}" value="N/A" align="right"  rendered="#{empty conciliacion.balanceFinal}" />
+				
+				<pdf:col header="#{etq.saldoBoveda}" value="#{conciliacion.saldoBoveda}" align="right"  rendered="#{!empty conciliacion.saldoBoveda}" >
+					<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+				</pdf:col>
+				<pdf:col header="#{etq.saldoBoveda}" value="N/A" align="right"  rendered="#{empty conciliacion.saldoBoveda}" />
+				
+				<pdf:col header="#{etq.diferencia}" value="#{conciliacion.balanceFinal - conciliacion.saldoBoveda}" align="right"  rendered="#{conciliacion.saldoBoveda != null and conciliacion.balanceFinal != null}" >
+					<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+				</pdf:col>
+				<pdf:col header="#{etq.diferencia}" value="N/A" align="right"  rendered="#{conciliacion.saldoBoveda == null or conciliacion.balanceFinal == null}" />
+				
+				<pdf:col header="#{etq.saldoComprobacion}" value="#{conciliacion.balanceFinal - (conciliacion.balanceInicio + conciliacion.netoMovimientos)}" align="right"  rendered="#{conciliacion.balanceFinal != null and conciliacion.balanceInicio != null and conciliacion.netoMovimientos != null}" >
+					<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+				</pdf:col>
+				<pdf:col header="#{etq.saldoComprobacion}" value="N/A" align="right"  rendered="#{conciliacion.balanceFinal == null or conciliacion.balanceInicio == null or conciliacion.netoMovimientos == null}" />
+			</pdf:row>
+        </pdf:table>
+        <pdf:table value="detalleConciliacionesEfectivoIntBean" currentBean="conciliacion" widthPercentage="50" rendered="#{conciliacionesEfectivoIntBean.totales}">
+        	<pdf:row>
+        		<pdf:col header="Total #{etq.saldoInicialMT}" value="#{conciliacionesEfectivoIntBean.totalSaldoInicial}" align="right">
+        			<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+        		</pdf:col>
+        		<pdf:col header="Total #{etq.netoMovimientos}" value="#{conciliacionesEfectivoIntBean.totalNetoMovimientos}" align="right">
+        			<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+        		</pdf:col>
+        		<pdf:col header="Total #{etq.saldoFinalMT}l" value="#{conciliacionesEfectivoIntBean.totalSaldoFinal}" align="right">
+        			<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+        		</pdf:col>
+        		<pdf:col header="Total #{etq.saldoBoveda}" value="#{conciliacionesEfectivoIntBean.totalSaldoBoveda}" align="right">
+        			<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+        		</pdf:col>
+        		<pdf:col header="Total #{etq.diferencia}" value="#{conciliacionesEfectivoIntBean.totalDiferencia}" align="right">
+        			<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+        		</pdf:col>
+        		<pdf:col header="Total #{etq.saldoComprobacion}" value="#{conciliacionesEfectivoIntBean.totalSaldoComprobacion}" align="right">
+        			<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+        		</pdf:col>
+        	</pdf:row>
+        </pdf:table>
+
+    </pdf:document>
+</html>

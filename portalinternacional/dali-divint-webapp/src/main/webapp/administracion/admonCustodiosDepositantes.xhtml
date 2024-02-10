@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:composition template="/layoutCaptura.xhtml">
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/admonCustodiosDepositantes.js"></script>
+		</ui:define>
+
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.sistemaIntCot}" />
+		</ui:define>
+
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.admonCustodiosDepositanes}"></h:outputText>
+		</ui:define>
+
+
+		<ui:define name="seccionForma">
+			<a4j:keepAlive beanName="admonCustodiosDepositantesController" />
+			<a4j:keepAlive beanName="admonCustodiosDepositantesDepLiqController" />
+			<a4j:keepAlive beanName="admonCustodiosDepositantesEmiController" />
+			<a4j:keepAlive beanName="admonCustodiosDepositantesConsultaEmiController" />
+			<a4j:keepAlive beanName="admonCustodiosDepositantesConsultaDepLiqController" />
+			<h:panelGroup id="general">
+				<h:panelGroup id="mensajeUsuario">
+					<div style="min-height: 21px;">
+						<rich:messages warnClass="warning" infoClass="info"
+							errorClass="error" ajaxRendered="true" showDetail="false"
+							showSummary="true" layout="list">
+							<f:facet name="infoMarker">
+								<h:panelGroup>
+									<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+							</f:facet>
+
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+							</f:facet>
+						</rich:messages>
+
+						<div id="divWarnings" class="warning" style="display: none;">
+							<p id="textoWarning">
+							</p>
+						</div>
+					</div>
+				</h:panelGroup>
+			</h:panelGroup>
+			<table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+				align="center">
+				<tr>
+					<td class="recuadroTabla" colspan="2">
+						<h:panelGroup id="panelBusqueda">
+						
+							<table class="tablaCriterios">
+								<tr align="center">
+									<td colspan="3" align="center">
+										<b> <h:outputText styleClass="texto" value="#{etq.custodio}" /> </b>
+									</td>
+								</tr>
+								<tr align="center">
+									<td>
+										<h:outputText styleClass="texto" value="#{etq.participanteMinus}" />
+									</td>
+									<td>
+										<h:outputText styleClass="texto" value="#{etq.cuentaMinus}" />
+									</td>
+									<td>
+										<h:outputText styleClass="texto" value="#{etq.nombre} #{etq.custodio}" />
+									</td>
+								</tr>
+								<tr align="center">
+									<td>
+										<h:panelGroup>
+											<h:inputText autocomplete="off" id="idFolioTraspasante" tabindex="10"
+												value="#{admonCustodiosDepositantesController.claveParticipante}" size="5"
+												maxlength="5" styleClass="textoControles" >
+												<a4j:support event="onchange"
+													actionListener="#{admonCustodiosDepositantesController.validaParticipante}"
+													reRender="nombreTraspasante" />
+											</h:inputText>
+										</h:panelGroup>
+									</td>
+									<td>
+										<h:panelGroup>
+											<h:inputText autocomplete="off" id="cuentaTraspasante"
+												value="#{admonCustodiosDepositantesController.cuentaParticipante}" size="4"
+												maxlength="4" styleClass="textoControles" tabindex="20" >
+												<a4j:support event="onchange"
+													actionListener="#{admonCustodiosDepositantesController.validaParticipante}"
+													reRender="nombreTraspasante" />
+													</h:inputText>
+											<input type="hidden" id="nombre_id_folio_traspasante"
+												name="nombre_id_folio_traspasante"
+												value="daliForm:idFolioTraspasante" />
+										</h:panelGroup>
+									</td>
+									<td>
+										<h:inputText autocomplete="off" id="nombreTraspasante" readonly="true"
+											value="#{admonCustodiosDepositantesController.nombreCortoParticipante}" size="40"
+											maxlength="40" styleClass="textoControles" tabindex="30" />
+									</td>
+								</tr>
+								<tr align="center">
+									<td colspan="3" align="center">
+										<h:panelGroup id="botones">
+								            <div class="limpiar">
+								                <h:commandButton id="botonLimpiar" image="/images/transparent.gif" 
+								                	styleClass="submit" tabindex="140"
+								                    actionListener="#{admonCustodiosDepositantesController.limpiar}">
+								                </h:commandButton>
+								            </div>
+								            <div class="buscar">
+								                <a4j:commandButton id="botonBuscar" image="/images/transparent.gif" 
+								                	styleClass="submit" tabindex="130"
+								                    actionListener="#{admonCustodiosDepositantesController.buscarCustodios}"
+								                    reRender="panelCustodio,botonesExportar" />
+								            </div>
+										</h:panelGroup>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3" align="left">
+										<a4j:status id="commonStatus">
+											<f:facet name="start">
+												<h:panelGroup>
+													<h:graphicImage value="/images/ajax-loader.gif" />
+													<h:outputText value="#{etq.buscando}"></h:outputText>
+												</h:panelGroup>
+											</f:facet>
+										</a4j:status>
+									</td>
+								</tr>
+							</table>
+								
+						</h:panelGroup>
+					</td>					
+				</tr>				
+				<tr>
+					<td class="recuadroTabla" colspan="2">
+						<h:panelGroup id="panelCustodio">
+							<h:panelGroup rendered="#{admonCustodiosDepositantesController.consultaEjecutada and empty admonCustodiosDepositantesController.paginaVO.registros}">
+			                    <t:dataTable id="noExistenResultados" value="#{admonCustodiosDepositantesController.paginaVO.registros}"
+			                        styleClass="tablaGeneral" headerClass="tituloTabla" width="100%" footerClass="tituloTabla" border="0"
+			                        cellpadding="3px" cellspacing="0px" columnClasses="everyColumn"
+			                        rowClasses="renglonTablaUno, renglonTablaDos">
+			
+			                        <t:column>
+			                            <f:facet name="header">
+			                                <h:outputText value="#{etq.sinResultados}"></h:outputText>
+			                            </f:facet>
+			
+			                        </t:column>
+			                    </t:dataTable>
+			                    <table>
+			                    	<tr>
+				                    	<td>
+											<div class="nuevoCustodio">
+								                <h:commandButton image="/images/transparent.gif" 
+								                	styleClass="submit" action="nuevoCustodio"
+								                    actionListener="#{admonCustodiosDepositantesController.nuevoCustodio}">
+								                </h:commandButton>
+								            </div>
+					            		</td>
+					            							            		
+				            		</tr>
+				            	</table>
+			                </h:panelGroup>
+			                
+							<h:panelGroup rendered="#{admonCustodiosDepositantesController.consultaEjecutada and not empty admonCustodiosDepositantesController.paginaVO.registros}">
+								<table class="tablaCriterios">
+									<tr align="center">
+										<td colspan="6">
+											
+			                                <a4j:commandLink id="control_bitacora_atras"
+			                                    action="#{admonCustodiosDepositantesController.retrocederPagina}"
+			                                    rendered="#{admonCustodiosDepositantesController.retroceder}"
+			                                    reRender="panelCustodio,botonesExportar">
+			                                    <img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+			                                        border="0" />
+			                                </a4j:commandLink>
+			                                &#160;
+			                                <h:outputText styleClass="texto" value="#{admonCustodiosDepositantesController.custodioActual.catBic.cuentaNombrada.institucion.tipoInstitucion.claveTipoInstitucion}#{admonCustodiosDepositantesController.custodioActual.catBic.cuentaNombrada.institucion.folioInstitucion} - #{admonCustodiosDepositantesController.custodioActual.catBic.cuentaNombrada.cuenta}" />
+			                                
+			                                <a4j:commandLink id="control_bitacora_adelante"
+			                                    action="#{admonCustodiosDepositantesController.avanzarPagina}"
+			                                    rendered="#{admonCustodiosDepositantesController.avanzar}"
+			                                    reRender="panelCustodio,botonesExportar">
+			                                    <img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+			                                        border="0" />
+			                                </a4j:commandLink>
+			
+			                                <br />
+			                                <br />
+											<h:outputText value="#{etq.mostrando}"
+												styleClass="sbutextoResumen" />
+											<h:outputText value="#{admonCustodiosDepositantesController.numeroPagina}"
+												styleClass="textoResumen" />
+											<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+											<h:outputText value="#{admonCustodiosDepositantesController.totalPaginas}"
+												styleClass="textoResumen" />
+											<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+											&#160;&#160;&#160;
+											<h:outputText
+												value="#{admonCustodiosDepositantesController.paginaVO.totalRegistros}"
+												styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+											&#160;
+											<h:outputText styleClass="textoResumen"
+												value="#{etq.registrosEncontrados}" />
+											<br />
+											<br />
+										</td>
+									</tr>
+									<tr align="center">
+										<td colspan="2">
+											<h:outputText styleClass="texto textoNegritas" value="#{etq.custodio}" />
+										</td>
+										<td colspan="2">
+											<h:outputText styleClass="texto textoNegritas" value="#{etq.bics}" />
+										</td>
+										<td colspan="2">
+											<h:outputText styleClass="texto textoNegritas" value="#{etq.generales}" />
+										</td>
+									</tr>
+									<tr align="center">
+										<td>
+											<h:outputText styleClass="texto textoNegritas" value="#{etq.participanteMinus}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto textoNegritas" value="#{etq.cuentaMinus}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto textoNegritas" value="#{etq.produccionMinus}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesController.custodioActual.catBic.bicProd}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto textoNegritas" value="#{etq.cuentaIndevalMinus}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesController.custodioActual.catBic.cuentaIndeval}" />
+										</td>
+									</tr>
+									<tr align="center">
+										<td>
+											<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesController.custodioActual.catBic.cuentaNombrada.institucion.tipoInstitucion.claveTipoInstitucion}#{admonCustodiosDepositantesController.custodioActual.catBic.cuentaNombrada.institucion.folioInstitucion}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesController.custodioActual.catBic.cuentaNombrada.cuenta}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto textoNegritas" value="#{etq.entrenamientoMinus}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesController.custodioActual.catBic.bicPrueba}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto textoNegritas" value="#{etq.pais}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesController.custodioActual.catBic.pais}" />
+										</td>
+									</tr>
+									<tr align="center">
+										<td colspan="2">
+											&#160;
+										</td>
+                                        <td>
+                                            <h:outputText styleClass="texto textoNegritas" value="#{etq.abreviacion}" />
+                                        </td>
+                                        <td>
+                                            <h:outputText styleClass="texto" value="#{admonCustodiosDepositantesController.custodioActual.abreviacionCustodio}" />
+                                        </td>
+										<td>
+											<h:outputText styleClass="texto textoNegritas" value="#{etq.mercadoMinus}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesController.custodioActual.catBic.mercado}" />
+										</td>
+									</tr>
+                                    <tr align="center">
+                                        <td colspan="2">
+                                            &#160;
+                                        </td>
+                                        <td>
+                                            <h:outputText styleClass="texto textoNegritas" value="#{etq.nombreCorto}" />
+                                        </td>
+                                        <td>
+                                            <h:outputText styleClass="texto" value="#{admonCustodiosDepositantesController.custodioActual.nombreCorto}" />
+                                        </td>
+                                        <td>
+                                            <h:outputText styleClass="texto textoNegritas" value="#{etq.factorCal}" />
+                                        </td>
+                                        <td>
+                                            <h:outputText styleClass="texto" value="#{admonCustodiosDepositantesController.custodioActual.factorCalculado}" />
+                                        </td>
+                                    </tr>
+									<tr align="center">
+										<td colspan="2">
+											<h:outputText styleClass="texto textoNegritas" value="#{etq.nombre} #{etq.custodio}" />
+										</td>
+										<!-- Agrego el detalle de Custodio -->
+										<td colspan="2">
+											<h:outputText styleClass="texto textoNegritas" value="#{etq.msgCustodio}" />
+										</td>										
+										<td>
+											<h:outputText styleClass="texto textoNegritas" value="#{etq.estatus}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesController.custodioActual.catBic.status}" />
+										</td>
+									</tr>
+									<tr align="center">
+										<td colspan="2">
+											<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesController.custodioActual.catBic.cuentaNombrada.razonSocialCuenta}" />
+										</td>
+										<!-- Input para detalle de Custodio -->
+										<td colspan="2">
+											<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesController.custodioActual.catBic.detalleCustodio}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto textoNegritas" value="#{etq.moneda}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesController.custodioActual.catBic.moneda}" />
+										</td>
+									</tr>
+									<tr align="center" >
+										<td colspan="2">
+											&#160;
+										</td>
+										<td colspan="2">
+											&#160;
+										</td>
+										<td>
+											<h:outputText styleClass="texto textoNegritas" value="#{etq.estatusRegistro}" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesController.custodioActual.catBic.estatusRegistro}" />
+										</td>
+									</tr>
+									<tr align="center">
+										<td colspan="6" align="center">
+											<table>
+												<tr>
+													<td>
+														<div class="nuevoCustodio">
+											                <h:commandButton image="/images/transparent.gif" 
+											                	styleClass="submit" action="nuevoCustodio"
+											                    actionListener="#{admonCustodiosDepositantesController.nuevoCustodio}">
+											                </h:commandButton>
+											            </div>
+								            		</td>								            		
+								            		<td>
+														<div class="editarCustodio">
+															<h:commandButton image="/images/transparent.gif"
+															styleClass="submit" action="editarCustodio"
+															actionListener="#{admonCustodiosDepositantesController.editarCustodio}"												
+															rendered="#{not empty admonCustodiosDepositantesController.paginaVO.registros}"/>
+														</div>
+													</td>
+													<td>
+														<div class="bajaCustodio">
+															<h:commandButton id="bajaCustodio" image="/images/transparent.gif"
+															styleClass="submit" action="#{admonCustodiosDepositantesController.cancelarCustodio}"																
+															rendered="#{not empty admonCustodiosDepositantesController.paginaVO.registros}"
+															onclick="if(confirmarBorrarCustodio())this.form.submit(); else return false;"/>
+														</div>
+													</td>
+								            	</tr>								            	
+								            </table>
+										</td>
+									</tr>
+									<tr align="center">
+										<td colspan="6">&#160;</td>
+									</tr>
+									<tr align="center">
+										<td colspan="3">
+											<h:panelGroup id="panelDepositante">
+												<h:panelGroup rendered="#{empty admonCustodiosDepositantesDepLiqController.paginaVO.registros}">
+								                    <t:dataTable id="noExistenResultados2" value="#{admonCustodiosDepositantesDepLiqController.paginaVO.registros}"
+								                        styleClass="tablaGeneral" headerClass="tituloTabla" width="100%" footerClass="tituloTabla" border="0"
+								                        cellpadding="3px" cellspacing="0px" columnClasses="everyColumn"
+								                        rowClasses="renglonTablaUno, renglonTablaDos">
+								
+								                        <t:column>
+								                            <f:facet name="header">
+								                                <h:outputText value="#{etq.sinResultados}"></h:outputText>
+								                            </f:facet>
+								                        </t:column>
+								                    </t:dataTable>
+								                </h:panelGroup>
+												<h:panelGroup rendered="#{not empty admonCustodiosDepositantesDepLiqController.paginaVO.registros}">
+													<table>
+														<tr align="center">
+															<td colspan="2">
+								                                <a4j:commandLink id="control_bitacora_atras2"
+								                                    action="#{admonCustodiosDepositantesDepLiqController.retrocederPagina}"
+								                                    rendered="#{admonCustodiosDepositantesDepLiqController.retroceder}"
+								                                    reRender="panelDepositante,botonesExportar">
+								                                    <img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+								                                        border="0" />
+								                                </a4j:commandLink>
+								                                &#160;
+								                                <h:outputText styleClass="texto textoNegritas" value="#{etq.depositosLiq}" />
+								                                <a4j:commandLink id="control_bitacora_adelante2"
+								                                    action="#{admonCustodiosDepositantesDepLiqController.avanzarPagina}"
+								                                    rendered="#{admonCustodiosDepositantesDepLiqController.avanzar}"
+								                                    reRender="panelDepositante,botonesExportar">
+								                                    <img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+								                                        border="0" />
+								                                </a4j:commandLink>
+								
+								                                <br />
+								                                <br />
+																<h:outputText value="#{etq.mostrando}"
+																	styleClass="textoResumen" />
+																<h:outputText value="#{admonCustodiosDepositantesDepLiqController.numeroPagina}"
+																	styleClass="textoResumen" />
+																<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+																<h:outputText value="#{admonCustodiosDepositantesDepLiqController.totalPaginas}"
+																	styleClass="textoResumen" />
+																<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+																&#160;&#160;&#160;
+																<h:outputText
+																	value="#{admonCustodiosDepositantesDepLiqController.paginaVO.totalRegistros}"
+																	styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+																&#160;
+																<h:outputText styleClass="textoResumen"
+																	value="#{etq.registrosEncontrados}" />
+																<br />
+																<br />
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<h:outputText styleClass="texto textoNegritas" value="#{etq.bicDepositoLiq}" />
+															</td>
+															<td>
+																<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesDepLiqController.detalleActual.bicDepLiq}" />
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<h:outputText styleClass="texto textoNegritas" value="#{etq.depositoLiq}" />
+															</td>
+															<td>
+																<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesDepLiqController.detalleActual.depLiq}" />
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<h:outputText styleClass="texto textoNegritas" value="#{etq.idDepositoLiq}" />
+															</td>
+															<td>
+																<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesDepLiqController.detalleActual.idDepLiq}" />
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<h:outputText styleClass="texto textoNegritas" value="#{etq.estatusRegistro}"/>
+															</td>
+															<td>
+																<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesDepLiqController.detalleActual.estatusRegistro}" />
+															</td>
+														</tr>
+														<tr>
+															<td colspan="2">
+																&#160;
+															</td>
+														</tr>
+														<tr>
+															<td colspan="2">
+																&#160;
+															</td>
+														</tr>
+													</table>
+												</h:panelGroup>
+												<table>
+													<tr>
+														<td align="center">
+															<div class="nuevoDeposito">
+												                <h:commandButton image="/images/transparent.gif" 
+												                	styleClass="submit" action="nuevoDepositante"
+												                    actionListener="#{admonCustodiosDepositantesController.nuevoDepositante}">
+												                </h:commandButton>
+												            </div>
+														</td>
+														<td >
+															<div class="buscarDeposito">
+															<h:commandButton image="/images/transparent.gif" 
+												                	styleClass="submit" action="buscarDepositante"
+												                    actionListener="#{admonCustodiosDepositantesController.buscarDepositantes}"
+												                    rendered="#{not empty admonCustodiosDepositantesDepLiqController.paginaVO.registros}">
+												                </h:commandButton>
+															</div>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<div class="editarDeposito">
+																<h:commandButton image="/images/transparent.gif"
+																styleClass="submit" action="editarDepositante"
+																actionListener="#{admonCustodiosDepositantesController.editarDepositante}"
+																rendered="#{not empty admonCustodiosDepositantesDepLiqController.paginaVO.registros}"/>
+															</div>
+														</td>
+														<td>
+															<div class="bajaDeposito">
+																<h:commandButton id="bajaDepositante" image="/images/transparent.gif"
+																styleClass="submit" action="#{admonCustodiosDepositantesController.cancelarDepositante}"																
+																rendered="#{not empty admonCustodiosDepositantesDepLiqController.paginaVO.registros}"
+																onclick="if(confirmarBorrarDeposito())this.form.submit(); else return false;"/>
+															</div>
+														</td>
+													</tr>
+												</table>
+											</h:panelGroup>
+										</td>
+										<td colspan="3">
+											<h:panelGroup id="panelEmision">
+												<h:panelGroup rendered="#{empty admonCustodiosDepositantesEmiController.paginaVO.registros}">
+								                    <t:dataTable id="noExistenResultados3" value="#{admonCustodiosDepositantesEmiController.paginaVO.registros}"
+								                        styleClass="tablaGeneral" headerClass="tituloTabla" width="100%" footerClass="tituloTabla" border="0"
+								                        cellpadding="3px" cellspacing="0px" columnClasses="everyColumn"
+								                        rowClasses="renglonTablaUno, renglonTablaDos">
+								
+								                        <t:column>
+								                            <f:facet name="header">
+								                                <h:outputText value="#{etq.sinResultados}"></h:outputText>
+								                            </f:facet>
+								                        </t:column>
+								                    </t:dataTable>
+								                </h:panelGroup>
+												<h:panelGroup rendered="#{not empty admonCustodiosDepositantesEmiController.paginaVO.registros}">
+													<table>
+														<tr align="center">
+															<td colspan="2">
+								                                <a4j:commandLink id="control_bitacora_atras3"
+								                                    action="#{admonCustodiosDepositantesEmiController.retrocederPagina}"
+								                                    rendered="#{admonCustodiosDepositantesEmiController.retroceder}"
+								                                    reRender="panelEmision,botonesExportar">
+								                                    <img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+								                                        border="0" />
+								                                </a4j:commandLink>
+								                                &#160;
+								                                <h:outputText styleClass="texto textoNegritas" value="#{etq.emisiones}" />
+								                                <a4j:commandLink id="control_bitacora_adelante3"
+								                                    action="#{admonCustodiosDepositantesEmiController.avanzarPagina}"
+								                                    rendered="#{admonCustodiosDepositantesEmiController.avanzar}"
+								                                    reRender="panelEmision,botonesExportar">
+								                                    <img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+								                                        border="0" />
+								                                </a4j:commandLink>
+								
+								                                <br />
+								                                <br />
+																<h:outputText value="#{etq.mostrando}"
+																	styleClass="textoResumen" />
+																<h:outputText value="#{admonCustodiosDepositantesEmiController.numeroPagina}"
+																	styleClass="textoResumen" />
+																<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+																<h:outputText value="#{admonCustodiosDepositantesEmiController.totalPaginas}"
+																	styleClass="textoResumen" />
+																<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+																&#160;&#160;&#160;
+																<h:outputText
+																	value="#{admonCustodiosDepositantesEmiController.paginaVO.totalRegistros}"
+																	styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+																&#160;
+																<h:outputText styleClass="textoResumen"
+																	value="#{etq.registrosEncontrados}" />
+																<br />
+																<br />
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<h:outputText styleClass="texto textoNegritas" value="#{etq.tv}" />
+															</td>
+															<td>
+																<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesEmiController.emisionActual.emision.instrumento.claveTipoValor}" />
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<h:outputText styleClass="texto textoNegritas" value="#{etq.emisoraMinus}" />
+															</td>
+															<td>
+																<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesEmiController.emisionActual.emision.emisora.clavePizarra}" />
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<h:outputText styleClass="texto textoNegritas" value="#{etq.serieMinus}" />
+															</td>
+															<td>
+																<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesEmiController.emisionActual.emision.serie}" />
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<h:outputText styleClass="texto textoNegritas" value="#{etq.formaOperar}" />
+															</td>
+															<td>
+																<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesEmiController.emisionActual.formaOper}" />
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<h:outputText styleClass="texto textoNegritas" value="#{etq.estatusRegistro}"/>
+															</td>
+															<td>
+																<h:outputText styleClass="texto" value="#{admonCustodiosDepositantesEmiController.emisionActual.estatusRegistro}" />
+															</td>
+														</tr>
+														<tr>
+															<td colspan="2">
+																&#160;
+															</td>
+														</tr>
+													</table>
+												</h:panelGroup>
+												<table>
+													<tr>
+														<td align="center">
+															<div class="nuevaEmision">
+												                <h:commandButton image="/images/transparent.gif" 
+												                	styleClass="submit" action="nuevaEmision"
+												                    actionListener="#{admonCustodiosDepositantesController.nuevaEmision}">
+												                </h:commandButton>
+												            </div>
+														</td>
+														<td >
+															<div class="buscarEmision">
+															<h:commandButton image="/images/transparent.gif" 
+												                	styleClass="submit" action="buscarEmision"
+												                    actionListener="#{admonCustodiosDepositantesController.buscarEmision}"
+												                    rendered="#{not empty admonCustodiosDepositantesEmiController.paginaVO.registros}">
+												                </h:commandButton>
+															</div>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<div class="editarEmision">
+																<h:commandButton image="/images/transparent.gif"
+																styleClass="submit" action="editarEmision"
+																actionListener="#{admonCustodiosDepositantesController.editarEmision}"
+																rendered="#{not empty admonCustodiosDepositantesEmiController.paginaVO.registros}"/>
+															</div>
+														</td>
+														<td>
+															<div class="bajaEmision">
+																<h:commandButton id="bajaEmision" image="/images/transparent.gif"
+																styleClass="submit" action="#{admonCustodiosDepositantesController.cancelarEmision}"																
+																rendered="#{not empty admonCustodiosDepositantesEmiController.paginaVO.registros}"
+																onclick="if(confirmarBorrarEmision())this.form.submit(); else return false;"/>
+															</div>
+														</td>
+													</tr>
+													
+												</table>
+											</h:panelGroup>
+										</td>
+									</tr>
+								</table>
+							</h:panelGroup>
+						</h:panelGroup>
+					</td>
+				</tr>
+			</table>
+			<table cellpadding="0" cellspacing="0" border="0" align="center"
+				width="900px">
+				<tr align="right">
+					<td align="right">
+						<h:panelGroup id="botonesExportar">
+							<h:panelGroup
+								style="display: #{(admonCustodiosDepositantesController.consultaEjecutada and not empty admonCustodiosDepositantesController.paginaVO.registros)? 'inline' : 'none'}">
+	
+								<h:outputText value="Exportar los resultados"></h:outputText>
+								<h:commandButton actionListener="#{admonCustodiosDepositantesController.generarReportes}"
+									action="admonCustodiosDepositantesPdf"
+									image="/images/pdf.gif"
+									title="Exportar a PDF todos los resultados de la consulta"
+									id="generarPdf"
+									onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);"/>
+	                        				&#160;&#160;
+	
+	                       		<h:commandButton actionListener="#{admonCustodiosDepositantesController.generarReportes}"
+	                       			action="admonCustodiosDepositantesXls"
+	                       			image="/images/excel-file.gif"
+	                       			title="Exportar a Excel todos los resultados de la consulta" 
+	                         		id="generarExcel"
+	                         		onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);"/>
+	                         	<div id="monitorPeticionReporte" style="display: none;">
+											<h:panelGroup id="panelMonitorPeticionReporte">
+												<h:graphicImage value="/images/ajax-loader.gif" />
+												&#160;&#160;
+												<h:outputText value="#{etq.reporteEnProceso}" />
+												<a4j:commandButton id="btnActualizarEstadoPeticion"
+													image="/images/transparent.gif"
+													styleClass="submit"
+													actionListener="#{admonCustodiosDepositantesController.actualizarEstadoPeticion}"
+													reRender="panelMonitorPeticionReporte"
+													oncomplete="desbloquearBotonesReportes(#{admonCustodiosDepositantesController.peticionReporteCompleta}, ['generarExcel', 'generarPdf']);"/>
+											</h:panelGroup>
+								</div>
+	                        				
+							</h:panelGroup>
+						</h:panelGroup>
+	
+	
+					</td>
+				</tr>											
+			</table>						
+		</ui:define>		
+	</ui:composition>
+
+
+
+
+
+</html>

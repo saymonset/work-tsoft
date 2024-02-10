@@ -1,0 +1,167 @@
+<html xmlns:txt="http://indeval.com/jsf/txt"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:cnvtr="http://indeval.com/jsf/converters">
+
+  
+    <txt:document documentName="consultaStatementsTXT" documentTitle="Consulta de Statements "
+   				  institucion="#{consultaStatementsController.agenteFirmado.id} #{consultaStatementsController.agenteFirmado.folio} #{consultaStatementsController.agenteFirmado.razon}"
+                  fecha="#{consultaStatementsController.fechaActual}" >
+		<txt:table value="consultaStatementsController" var="dummy">
+           <txt:row>
+                <txt:col header="CRITERIOS DE CONSULTA"  value="" align="left" size="35" />
+            </txt:row>
+        </txt:table>
+        
+        <txt:table value="#{consultaStatementsController}" var="resultado">
+            <txt:row>
+               	<txt:col header="#{etq.institucionMinus}" value="#{consultaStatementsController.idFolioInstitucion} - #{consultaStatementsController.nombreInstitucion}"  align="left" size="11"/>
+               	<txt:col align="none" escape="false" value="\t" /> 
+                <txt:col header="#{etq.formato}" value="#{(consultaStatementsController.param.formato eq '-1') ? 'NINGUNO' : consultaStatementsController.param.formato }" align="left" size="15" />
+                
+                <txt:col header="#{etq.nombreBeneficiario} o #{etq.razonSocial}" value="#{consultaStatementsController.param.nombre}" align="left" size="80"/>
+                <txt:col header="#{etq.custodio} " value="#{(consultaStatementsController.param.custodio eq '-1') ? ' ' : consultaStatementsController.param.custodio }" align="center" size="50"/>
+                
+                
+                
+                <txt:col header="#{etq.tipoBeneficiario}" value="#{consultaStatementsController.mapaTipoBeneficiario[consultaStatementsController.param.idTipoBeneficiario]}" align="left" size="15"/>
+                <txt:col header="#{etq.tv}" value="#{consultaStatementsController.param.tv}" align="left" size="15"/>
+                <txt:col header="#{etq.emisoraMinus}" value="#{consultaStatementsController.param.emisora}" align="left" size="15"/>
+                <txt:col header="#{etq.serieMinus}" value="#{consultaStatementsController.param.serie}" align="left" size="15"/>
+                <txt:col header="#{etq.isin}" value="#{consultaStatementsController.param.isin}" align="left" size="10"/>
+                <txt:col header="#{etq.fechaRegistro} Inicio" value="#{consultaStatementsController.param.fechaRegistroInicio}" align="left" size="35" >
+                	<cnvtr:simpleDateConverter pattern="dd/MM/yyyy" />
+                </txt:col>
+                <txt:col header="#{etq.fechaRegistro} Fin" value="#{consultaStatementsController.param.fechaRegistroFin}" align="left" size="35">
+                	<cnvtr:simpleDateConverter pattern="dd/MM/yyyy" />
+                </txt:col>
+                <txt:col header="#{etq.fechaPago} Inicio" value="#{consultaStatementsController.param.fechaPagoInicio}" align="left" size="35">
+                	<cnvtr:simpleDateConverter pattern="dd/MM/yyyy" />
+                </txt:col>
+                <txt:col header="#{etq.fechaPago} Fin" value="#{consultaStatementsController.param.fechaPagoFin}" align="left" size="35">
+                	<cnvtr:simpleDateConverter pattern="dd/MM/yyyy" />
+                </txt:col>
+                <txt:col header="#{etq.archivo}" value="#{consultaStatementsController.param.archivo}" align="left" size="15"/>
+                <txt:col header="#{etq.w8benAdp}" value="#{consultaStatementsController.param.adp}" align="left" size="15"/>
+                <txt:col header="#{etq.porcentajeRetencionMinus}" value="#{consultaStatementsController.param.porcentaje}" align="left" size="15"/>
+                
+                
+                
+                
+                
+			</txt:row>
+		</txt:table>
+
+		
+                          
+        <txt:table value="consultaStatementsController" var="dummy">
+          	<txt:row>
+                <txt:col header="#{etq.registrosEncontrados}: #{consultaStatementsController.paginaReportes.totalRegistros}"  value="" align="left" size="55" />
+            </txt:row>
+            <txt:row>
+                <txt:col header="DATOS"  value="" align="left" size="15" />
+            </txt:row>
+        </txt:table>
+        
+        <txt:table value="#{consultaStatementsController.paginaReportes.registros}" var="statement">
+            <txt:row>
+               	<txt:col header="#{etq.emisionMinus}"  value="#{statement.tv} | #{statement.emisora} | #{statement.serie}"  align="left" size="15" />
+               	
+               	<txt:col header="#{etq.isin}" value="#{statement.isin}"  align="left" size="15"/>
+               	
+               	<txt:col header="#{etq.institucionMinus}" value="#{statement.idFolio}-#{statement.nombreInstitucion}"  align="left"  size="15"/>
+               	 
+               	<txt:col header="#{etq.fechaRegistro}" value="#{statement.fechaRegistro}" align="center" size="20">
+               		<cnvtr:simpleDateConverter pattern="dd/MM/yyyy" />
+               	</txt:col>
+               	 
+               	<txt:col header="#{etq.fechaPago}" value="#{statement.fechaPago}" align="center" size="20">
+               		<cnvtr:simpleDateConverter pattern="dd/MM/yyyy" />
+               	</txt:col>
+               	
+               	<txt:col header="#{etq.nombre}" value="#{statement.nombre}" align="left" size="100"/>
+               	
+               	
+               	<txt:col header="#{etq.direccionMinus}" value="#{not statement.cargoInstitucion ? statement.direccion : consultaStatementsController.domiciliosFiscales[statement.idInstitucion].domicilioCompleto}"  align="left" size="130"/>
+               	
+               	<txt:col header="#{etq.custodio}" value="#{empty statement.custodio ? ' ' : statement.custodio }" align="center" size="75"/>
+               	
+               	<txt:col header="#{etq.pais}" value="#{not statement.cargoInstitucion ?  statement.pais : consultaStatementsController.domiciliosFiscales[statement.idInstitucion].pais.descripcionPais}"  align="center" size="20"/>
+               	
+               	<txt:col header="#{etq.w8benAdp}" value="#{not empty statement.adp ? statement.adp : '.'}"  align="center" size="30"/>
+               	
+               	<txt:col header="#{etq.tipoBeneficiario}" value="#{statement.tipoBeneficiario}" align="left" size="55"/>
+               	
+               	<txt:col header="#{etq.rfc}" value="#{statement.rfc}" align="left" size="13"/>
+               	
+               	<txt:col align="none" escape="false" value="\t" />
+               	
+               	<txt:col header="#{etq.formato}" value="#{statement.formato}" align="left" size="11"/>
+               	
+               	<txt:col header="#{etq.estatus}" value="#{statement.statusOwner}" align="left" size="50"/>
+               	
+               	<txt:col header="#{etq.porcentajeRetencionMinus}" value="#{statement.porcentajeRetencion}" align="left" size="21">
+               		<f:convertNumber pattern="#,##0" />
+               	</txt:col>
+               	
+               	<txt:col header="#{etq.cantidadTit}"
+                         value="#{statement.numeroTitulos}" align="left" size="31">
+                         <f:convertNumber pattern="#,##0"/> 
+               	</txt:col>
+               	
+               	<txt:col  header="#{etq.proporcionMinus}" value="#{statement.proporcion}" align="left" size="18">
+               		<f:convertNumber pattern="#.######"/>
+               	</txt:col>
+              
+               	<txt:col  header="#{etq.dividendoMinus}" value="#{statement.dividendo}" align="left" size="15">
+               		<f:convertNumber pattern="$##,##0.00"/>
+               	</txt:col>
+               		<txt:col align="none" escape="false" value="\t" />
+               	<txt:col header="#{etq.impuestoMinus}" 
+                         value="#{statement.impuesto}"  
+               	 		align="left" size="21">
+               		<f:convertNumber pattern="$##,##0.00"/>
+               	</txt:col>
+               		<txt:col align="none" escape="false" value="\t" />
+               	<txt:col header="#{etq.dividendoNetoMinus}" 
+                         value="#{statement.dividendoNeto}"  
+               			align="left" size="31">
+               		<f:convertNumber pattern="$##,##0.00"/>
+               	</txt:col>
+			</txt:row>
+			</txt:table>
+			
+			
+			<txt:table value="consultaStatementsControllerPie" var="statement">
+            <txt:row>
+            
+               	
+               	<txt:col header="" value="TOTALES" align="right" size="575"/>
+               	
+               	<txt:col align="none" escape="false" value="\t" />
+               	<txt:col header="" value=" " align="right" size="18"/>
+               	<txt:col header=""  value="#{consultaStatementsController.paginaReportes.valores['totalPosicion']}" align="left" size="25">
+                  	<f:convertNumber pattern="##,##0.##"/>
+               	</txt:col>
+               	
+               	<txt:col  header="" value="" align="left" size="24"/>
+               	
+               	<txt:col  header="" value="#{consultaStatementsController.paginaReportes.valores['totalDividendo']}" align="left" size="20">
+               		<f:convertNumber pattern="$##,##0.00"/>
+               	</txt:col>
+               	<txt:col align="none" escape="false" value="\t" /> 
+               	<txt:col header="" 
+                         value="#{consultaStatementsController.paginaReportes.valores['totalImpuestos']}"  
+               	 		align="left" size="15">
+               		<f:convertNumber pattern="$##,##0.00"/>
+               	</txt:col>
+               	<txt:col  header="" value="" align="left" size="9"/>
+               	<txt:col header="" 
+                         value="#{consultaStatementsController.paginaReportes.valores['totalDividendoNeto']}"  
+               			align="left" size="20">
+               		<f:convertNumber pattern="$##,##0.00"/>
+               	</txt:col>
+			</txt:row>
+		</txt:table>               	
+	</txt:document>
+
+</html>

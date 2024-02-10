@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:composition template="/layoutPopUp.xhtml">
+		<ui:define name="head">						
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/admonCuentaEfectivoInt.js">
+			</script>	
+			<style type="text/css">
+			.my-floated-elements {
+					float: none
+					}
+				@media screen
+				  {
+				.forscreen { display:block; }
+				.forprinting { display:none; }
+				  }
+				@media print
+				  {
+				.forscreen { display:none; }
+				.forprinting { display:block; 
+						overflow: visible;
+						float: none; }
+				  }
+			</style>		
+		</ui:define>
+		<ui:define name="titulo">
+			Cuenta Efectivo
+		</ui:define>
+		<ui:define name="subtitulo">
+		</ui:define>
+		<ui:define name="body">
+			<div id="forma" class="forscreen my-floated-elements" >
+			<h:form id="formaCuenta">
+				<h:outputText value="#{admonCuentaEfectivoIntBean.initNuevaEditaCuenta}"/>
+				<a4j:keepAlive beanName="admonCuentaEfectivoIntBean" />
+				<h:panelGroup id="panelResultados">
+					<table>
+						<tr>
+							<td colspan="4">
+								<h:panelGroup id="mensajeUsuario">
+									<div style="min-height: 21px;">						
+										<rich:messages warnClass="warning" infoClass="info"
+											errorClass="error" ajaxRendered="true" showDetail="false"
+											showSummary="true" layout="list">
+											<f:facet name="infoMarker">
+												<h:panelGroup>
+													<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+											</f:facet>
+					
+											<f:facet name="errorMarker">
+												<h:panelGroup>
+													<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+											</f:facet>
+										</rich:messages>
+									
+										<div id="divWarnings" class="warning" style="display:none;">
+											<p id="textoWarning">						
+											</p>
+										</div>
+									</div>
+								</h:panelGroup>
+							</td>
+						</tr>
+						<tr>
+							<td align="left"><br/>
+								<table>
+									<tr>
+										<td>
+											<h:outputText styleClass="texto textoPeque12" value="#{etq.bicCode}" />
+							    			<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />&#160;
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="bicCode" value="#{admonCuentaEfectivoIntBean.bicCode}" size="20"
+										 		maxlength="20" styleClass="textoControles" tabindex="20" style="text-transform: uppercase;" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h:outputText styleClass="texto textoPeque12" value="#{etq.nombre}" />
+											<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />&#160;
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="nombre" value="#{admonCuentaEfectivoIntBean.nombre}" size="30"
+													 maxlength="60" styleClass="textoControles" tabindex="20" style="text-transform: uppercase;" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h:outputText styleClass="texto textoPeque12" value="#{etq.cuentaMinus}" />
+											<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />&#160;
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="cuenta" value="#{admonCuentaEfectivoIntBean.cuenta}" size="30"
+													 maxlength="50" styleClass="textoControles" tabindex="20" style="text-transform: uppercase;" />	
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h:outputText styleClass="texto textoPeque12" value="#{etq.cuenta950}" />
+											<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />&#160;
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="cuenta950" value="#{admonCuentaEfectivoIntBean.cuenta950}" size="30"
+													 maxlength="50" styleClass="textoControles" tabindex="20" style="text-transform: uppercase;" />	
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td align="left"><br/>
+								<table>
+									<tr>
+										<td>
+											<h:outputText styleClass="texto textoPeque12" value="#{etq.divisaMinus}" />
+										    <h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />&#160;
+										</td>
+										<td>
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{admonCuentaEfectivoIntBean.divisa}" tabindex="60">
+												<f:selectItem itemValue="-1" itemLabel="Seleccione la Divisa" />
+												<f:selectItems value="#{admonCuentaEfectivoIntBean.divisas}" />
+											</h:selectOneMenu>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h:outputText styleClass="texto textoPeque12" value="#{etq.pais}" />
+											<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />&#160;
+										</td>
+										<td>
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{admonCuentaEfectivoIntBean.pais}" tabindex="60">
+												<f:selectItem itemValue="-1" itemLabel="Ninguna" />
+												<f:selectItems value="#{admonCuentaEfectivoIntBean.paises}" />
+											</h:selectOneMenu>
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td>
+								&#160;
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.horarioMexico}"/>
+								<br/>
+								<table align="center">
+									<tr>
+										<td>
+											<h:inputText autocomplete="off" id="horaInicio" value="#{admonCuentaEfectivoIntBean.horaInicio}" size="2"
+										 		maxlength="2" styleClass="textoControles campoNumerico" tabindex="20" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto textoPeque12" value=":"/>
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="minInicio" value="#{admonCuentaEfectivoIntBean.minInicio}" size="2"
+										 		maxlength="2" styleClass="textoControles campoNumerico" tabindex="20" />
+										</td>
+										
+										<td>
+											<h:outputText styleClass="texto textoPeque12" value="-"/>
+										</td>
+										
+										<td>
+											<h:inputText autocomplete="off" id="horaFin" value="#{admonCuentaEfectivoIntBean.horaFin}" size="2"
+										 		maxlength="2" styleClass="textoControles campoNumerico" tabindex="20" />
+										</td>
+										<td>
+											<h:outputText styleClass="texto textoPeque12" value=":"/>
+										</td>
+										<td>
+											<h:inputText autocomplete="off" id="minFin" value="#{admonCuentaEfectivoIntBean.minFin}" size="2"
+										 		maxlength="2" styleClass="textoControles campoNumerico" tabindex="20" />
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								&#160;
+							</td>
+						
+							<td align="left">
+								&#160;
+							</td>
+							<td>
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.bovedaMinus}" />&#160;
+								<h:selectOneMenu styleClass="textoControles"
+									value="#{admonCuentaEfectivoIntBean.bovedaDali}" tabindex="60">
+									<f:selectItem itemValue="-1" itemLabel="Ninguna" />
+									<f:selectItems value="#{admonCuentaEfectivoIntBean.bovedas}" />
+								</h:selectOneMenu>
+							</td>
+						</tr>
+						<tr>
+							<td>&#160;</td>
+							<td>
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.tipoCuentaMinus}" />&#160;
+								<h:selectOneRadio id="tipoCuenta" value="#{admonCuentaEfectivoIntBean.tipoCuenta}">
+								    <f:selectItem itemValue="2" itemLabel="Cuenta Custodia"/>
+								    <f:selectItem itemValue="1" itemLabel="Cuenta Comercial"/>
+								</h:selectOneRadio>
+							</td>
+							
+							<td>
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.cuentaNegocio}" />&#160;
+								<h:selectOneRadio id="cuentaNegocio" value="#{admonCuentaEfectivoIntBean.cuentaNegocio}">
+								    <f:selectItem itemValue="NAC" itemLabel="Nacional"/>
+								    <f:selectItem itemValue="INT" itemLabel="Internacional"/>
+								</h:selectOneRadio>
+							</td>
+						</tr>
+						<tr>
+							<td align="right">
+								<table>
+									<tr>
+										<td align="left">
+											<h:outputText styleClass="texto textoPeque12" value="#{etq.saldoInicialMinus}" />
+											<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />&#160;
+										</td>
+										<td align="left">
+											<h:inputText autocomplete="off" id="saldoInicial" value="#{admonCuentaEfectivoIntBean.saldoInicial}" size="20"
+										 		maxlength="20" styleClass="textoControles campoNumericoDecimalDosDecimales" tabindex="20" />
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td align="center">
+								&#160;&#160;&#160;
+								<h:selectBooleanCheckbox id="activo" tabindex="110" value="#{admonCuentaEfectivoIntBean.activo}" />&#160;&#160;&#160;
+								<h:outputText styleClass="texto"  value="#{etq.activo}" />&#160;&#160;&#160;&#160;&#160;&#160;
+								<h:selectBooleanCheckbox id="envioTesoreria" tabindex="120" value="#{admonCuentaEfectivoIntBean.envioTesoreria}" />&#160;&#160;&#160;
+								<h:outputText styleClass="texto"  value="#{etq.envioTesoreria}" />
+							</td>
+						</tr>
+						<tr>
+							<td colspan="3" align="left">
+								<h:outputText value="#{etq.asterisco}" styleClass="required" />
+								<h:outputText value="#{etq.requeridos}" styleClass="texto" />
+							</td>
+						</tr>
+						<tr>
+							<td align="center" colspan="4"><br/>
+								<div class="cancelar">
+									<h:commandButton id="botonCancelar" image="/images/transparent.gif"
+										styleClass="submit"
+										onclick="cierraDialog();" 
+										tabindex="6"/>
+								</div>
+								<div class="guardar">
+									<a4j:commandButton id="botonGuardar" image="/images/transparent.gif"
+										styleClass="submit"
+										
+										actionListener="#{admonCuentaEfectivoIntBean.guardarCuenta}"
+										reRender="mensajeUsuario"
+										tabindex="7">
+									</a4j:commandButton>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</h:panelGroup>
+			</h:form>
+			</div>
+			<div id="printing_div_id" class="forprinting" style="white-space:pre-line; align:left"></div>
+		</ui:define>
+	</ui:composition>
+</html>

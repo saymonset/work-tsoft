@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+      xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+		<ui:define name="head">
+			<link rel="stylesheet" type="text/css" media="all"
+				href="#{facesContext.externalContext.requestContextPath}/css/derechosText.css" />
+		</ui:define>
+        <ui:define name="head">
+            <script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/derechos.js">
+            </script>
+        </ui:define>
+
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.tablaRetencion}" />
+		</ui:define>
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.derecho}"/>
+		</ui:define>
+				
+		<ui:define name="criterios">				
+			
+			<a4j:keepAlive beanName="consultaTablaRetencionBean" />
+			
+            <h:panelGroup id="init" rendered="#{consultaTablaRetencionBean.banderaInicio}">
+				<h:outputText value="#{consultaTablaRetencionBean.init}" />								
+			</h:panelGroup>
+			
+			<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+				<tr>
+                            <td colspan="4">
+                                <div style="min-height: 21px;" colspan="2">
+                                    <rich:messages warnClass="warning" infoClass="info"
+                                                   errorClass="error" ajaxRendered="true" showDetail="false"
+                                                   showSummary="true" layout="list">
+                                        <f:facet name="infoMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/accept.png" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+
+                                        <f:facet name="errorMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/warning.gif" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+                                    </rich:messages>
+
+                                    <div id="divWarnings" class="warning" style="display:none;">
+                                        <p id="textoWarning">
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                       </tr>
+				<tr>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.tv}" styleClass="textoNegritas"/>
+					</td>
+					<td style="width: 330px">
+						<h:outputText value="#{consultaTablaRetencionBean.derechoSeleccionado.emision.tv}" />
+					</td>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.divisaMinus}" styleClass="textoNegritas" />
+					</td>
+					<td style="width: 330px">
+						<h:outputText value="#{consultaTablaRetencionBean.derechoSeleccionado.divisa}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="#{etq.emisoraMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td>						
+						<h:outputText value="#{consultaTablaRetencionBean.derechoSeleccionado.emision.emisora}" />         
+					</td>
+					<td>
+						<h:outputText value="#{etq.bovedaMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+						<h:outputText value="#{consultaTablaRetencionBean.derechoSeleccionado.bovedaCustodio}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="#{etq.serieMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+						<h:outputText value="#{consultaTablaRetencionBean.derechoSeleccionado.emision.serie}" /> 
+					</td>
+					<td>
+						<h:outputText value="#{etq.estado}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+						<h:outputText value="#{consultaTablaRetencionBean.derechoSeleccionado.descEstatusDerecho}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="#{etq.cuponMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+                        <h:outputText value="#{consultaTablaRetencionBean.derechoSeleccionado.emision.cupon}" /> 
+					</td>
+					<td>
+						<h:outputText value="#{etq.fechaCorteMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+                       <h:outputText value="#{consultaTablaRetencionBean.derechoSeleccionado.fechaCorte}" />
+					</td>
+				</tr>
+                <tr>					
+					<td>
+						<h:outputText value="#{etq.isin}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+                       <h:outputText value="#{consultaTablaRetencionBean.derechoSeleccionado.emision.isin}" />
+					</td>
+					<td>
+						<h:outputText value="#{etq.fechaPago}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+                        <h:outputText value="#{consultaTablaRetencionBean.derechoSeleccionado.fechaPago}" />
+					</td>
+				</tr>
+                <tr>					
+					<td>
+						<h:outputText value="#{etq.proporcionMinus}" styleClass="textoNegritas"/>
+						<h:outputText value="#{etq.asterisco}" styleClass="required" />
+					</td>
+					<td>
+						<h:inputText autocomplete="off" id="proporcion" value="#{consultaTablaRetencionBean.proporcion}" styleClass="" size="15" maxlength="15" readonly="#{consultaTablaRetencionBean.derechoSeleccionado.idEstatusDerecho &gt; 2 or (empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN'] and empty sessionScope.roles['INT_BEN_INDEVAL'])}"/>                       
+					</td>
+					<td>
+						<h:outputText value="" styleClass="textoNegritas"/>
+					</td>
+					<td>                        
+					</td>
+				</tr>
+                <tr>					
+					<td>
+						<h:outputText value="#{etq.fee}" styleClass="textoNegritas" rendered="#{!consultaTablaRetencionBean.requiereBeneficiarios}"/>
+					</td>
+					<td>
+						<h:inputText autocomplete="off" id="fee" value="#{consultaTablaRetencionBean.fee}" styleClass="" size="10" maxlength="10" readonly="#{consultaTablaRetencionBean.derechoSeleccionado.idEstatusDerecho &gt; 2 or (empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN'] and empty sessionScope.roles['INT_BEN_INDEVAL'])}" rendered="#{!consultaTablaRetencionBean.requiereBeneficiarios}"/>                       
+					</td>
+					<td>
+						<h:outputText value="" styleClass="textoNegritas"/>
+					</td>
+					<td>                        
+					</td>
+				</tr>
+                <tr>					
+					<td>
+						<h:outputText value="#{etq.porcentajeRetencionMinus}" styleClass="textoNegritas" rendered="#{!consultaTablaRetencionBean.requiereBeneficiarios}"/>
+						<h:outputText value="#{etq.asterisco}" styleClass="required" rendered="#{!consultaTablaRetencionBean.requiereBeneficiarios}"/>
+					</td>
+					<td>
+						<h:inputText autocomplete="off" id="porcentajeRet" value="#{consultaTablaRetencionBean.porcentajeRetencion}" styleClass="" size="5" maxlength="9" readonly="#{consultaTablaRetencionBean.derechoSeleccionado.idEstatusDerecho &gt; 2 or (empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN'] and empty sessionScope.roles['INT_BEN_INDEVAL'])}" rendered="#{!consultaTablaRetencionBean.requiereBeneficiarios}"/>                       
+					</td>
+					<td>
+						<h:outputText value="" styleClass="textoNegritas"/>
+					</td>
+					<td>                        
+					</td>
+				</tr>	
+			</table>					
+		</ui:define>
+		<ui:define name="seccionContenido">		
+			<h:panelGroup id="containerResultados">
+				<h:panelGroup>
+					
+
+					
+					<rich:dataTable 
+					id="resultadosRich"                    
+                    styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+                    footerClass="tituloTabla" rowClasses="renglonTablaUno, renglonTablaDos"
+                    rendered="#{not empty consultaTablaRetencionBean.totaleXInstitucion}" 
+                    border="0" var="institucion" value="#{consultaTablaRetencionBean.itemKeys}">
+                
+                    <f:facet name="header">
+                        <rich:columnGroup>
+                            <rich:column>
+                             	<h:outputText value="#{etq.institucionMinus}" />                                
+                            </rich:column>
+                            <rich:column>
+                                <h:outputText value="#{etq.cuentaMinus}" />
+                            </rich:column>
+                            <rich:column>
+                                <h:outputText value="#{etq.porcentajeRetencionMinus}" />
+                            </rich:column>
+                            <rich:column>
+                                <h:outputText value="#{etq.cantidadDeTitulosMinus}" />
+                            </rich:column>                                                        
+                            <rich:column>
+                            	<h:outputText value="#{etq.montoBrutoMinus}" />                            	
+                            </rich:column>
+                            <rich:column rendered="#{!consultaTablaRetencionBean.requiereBeneficiarios}">
+                                <h:outputText value="#{etq.fee}" />
+                            </rich:column>
+                            <rich:column>
+                                <h:outputText value="#{etq.impuestoRetenidoMinus}" />
+                            </rich:column>
+                            <rich:column>
+                                <h:outputText value="#{etq.montoNetoMinus}" />
+                            </rich:column>                              
+                            <rich:column>
+                                <h:outputText value="#{etq.estado}" />
+                            </rich:column>                                                		                                      
+                        </rich:columnGroup>
+                    </f:facet>
+
+					<rich:subTable                          
+                        var="retencion" value="#{consultaTablaRetencionBean.totaleXInstitucion[institucion]}" footerClass="derechoSubtotales">
+                        <rich:column>                        
+                    		<h:outputText styleClass="texto textoPeque12" value="#{retencion.claveInstitucion}" />&#160;
+							<h:outputText styleClass="texto textoPeque12" value="#{retencion.nombreInstitucion}" />
+                    		<f:facet name="footer">
+                                <h:outputText value="Subtotal" />
+                            </f:facet>
+                    	</rich:column>
+                        <rich:column>
+                            <h:outputText styleClass="texto textoPeque12" value="#{retencion.cuenta}" />
+                            <f:facet name="footer">
+                                <rich:spacer />
+                            </f:facet>							
+                        </rich:column>
+                        <rich:column>
+                        	<div class="textOnRight">
+                            	<h:outputText value="#{retencion.porcentajeRetencion}" converter="formatoPorcentajeConverter"/><h:outputText value=" %"/>
+                            </div>
+                            <f:facet name="footer">
+                                <rich:spacer />
+                            </f:facet>                       
+                        </rich:column>
+                        <rich:column>
+                        	<div class="textOnRight">
+                            	<h:outputText styleClass="texto textoPeque12" value="#{retencion.asignacion}" converter="formatoEnteroConverter"/>
+                            </div>
+                            <f:facet name="footer">
+                                <h:outputText styleClass="textOnRight" value="#{consultaTablaRetencionBean.subtotaleXInstitucion[institucion].asignacion}" converter="formatoEnteroConverter"/>
+                            </f:facet>
+                        </rich:column>
+                        <rich:column>
+                        	<div class="textOnRight">
+                            	<h:outputText value="#{retencion.monto}" converter="formatoMonedaConverter"/>
+                            </div>
+                            <f:facet name="footer">
+                                <h:outputText styleClass="textOnRight" value="#{consultaTablaRetencionBean.subtotaleXInstitucion[institucion].monto}" converter="formatoMonedaConverter"/>
+                            </f:facet>
+                        </rich:column>                        
+                        <rich:column rendered="#{!consultaTablaRetencionBean.requiereBeneficiarios}">
+                        	<div class="textOnRight">
+                           		<h:outputText styleClass="texto textoPeque12" value="#{retencion.montoFee}" converter="formatoMonedaConverter"/>
+                           	</div>
+                           <f:facet name="footer">
+                                <h:outputText styleClass="textOnRight" value="#{consultaTablaRetencionBean.subtotaleXInstitucion[institucion].montoFee}" converter="formatoMonedaConverter"/>
+                            </f:facet>
+                        </rich:column>
+                        <rich:column>
+                        	<div class="textOnRight">
+                            	<h:outputText styleClass="texto textoPeque12" value="#{retencion.montoRetenido}" converter="formatoMonedaConverter"/>
+                            </div>
+                            <f:facet name="footer">
+                                <h:outputText styleClass="textOnRight" value="#{consultaTablaRetencionBean.subtotaleXInstitucion[institucion].montoRetenido}" converter="formatoMonedaConverter"/>
+                            </f:facet>
+                        </rich:column>                  
+                        <rich:column>
+                        	<div class="textOnRight">
+                        		<h:outputText styleClass="texto textoPeque12" value="#{retencion.montoPagado}" converter="formatoMonedaConverter"/>
+                        	</div>                    		                    		
+                            <f:facet name="footer">
+                                <h:outputText styleClass="textOnRight" value="#{consultaTablaRetencionBean.subtotaleXInstitucion[institucion].montoPagado}" converter="formatoMonedaConverter"/>
+                            </f:facet>
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText styleClass="texto textoPeque12" value="#{consultaTablaRetencionBean.derechoSeleccionado.descEstatusDerecho}"/>                            
+                            <f:facet name="footer">
+                                <rich:spacer />                                
+                            </f:facet>                       
+                        </rich:column>                                                                       
+                    </rich:subTable>   
+				</rich:dataTable>
+					
+				<rich:dataTable 
+					id="resultadosTotales"                    
+                    styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+                    footerClass="tituloTabla" rowClasses="renglonTablaUno, renglonTablaDos"
+                    rendered="#{not empty consultaTablaRetencionBean.subtotalesXPorcentaje}" 
+                    border="0" var="porcentaje" value="#{consultaTablaRetencionBean.porcentajeKeys}">
+                
+
+                        <rich:column>
+                    		<h:outputText value="Subtotal" />&#160;
+							<h:outputText styleClass="texto textoPeque12"  value="#{porcentaje}" converter="formatoPorcentajeConverter"/><h:outputText value=" %"/>&#160;&#160;&#160;                    		
+                    	</rich:column>
+                        <rich:column>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                        </rich:column>
+                        <rich:column>
+                        	&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                        </rich:column>                            
+                        <rich:column>
+                        	<div class="textOnRight">
+                            	&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<h:outputText value="#{consultaTablaRetencionBean.subtotalesXPorcentaje[porcentaje].asignacion}" converter="formatoEnteroConverter"/>
+                            </div>
+                        </rich:column>
+                        <rich:column>
+                        	<div class="textOnRight">
+                            	<h:outputText value="#{consultaTablaRetencionBean.subtotalesXPorcentaje[porcentaje].monto}" converter="formatoMonedaConverter"/>
+                            </div>
+                        </rich:column>                        
+                        <rich:column rendered="#{!consultaTablaRetencionBean.requiereBeneficiarios}">
+                        	<div class="textOnRight">
+                           		<h:outputText value="#{consultaTablaRetencionBean.subtotalesXPorcentaje[porcentaje].montoFee}" converter="formatoMonedaConverter"/>
+                           	</div>
+                        </rich:column>
+                        <rich:column>
+                        	<div class="textOnRight">
+                            	&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<h:outputText value="#{consultaTablaRetencionBean.subtotalesXPorcentaje[porcentaje].montoRetenido}" converter="formatoMonedaConverter"/>
+                            </div>
+                        </rich:column>                  
+                        <rich:column>
+                        	<div class="textOnRight">
+                        		<h:outputText  value="#{consultaTablaRetencionBean.subtotalesXPorcentaje[porcentaje].montoPagado}" converter="formatoMonedaConverter"/>
+                        	</div>                    		                    		
+                        </rich:column>
+                        <rich:column>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;                                                               
+                        </rich:column>  
+                    <f:facet name="footer">                
+                        <rich:columnGroup>
+                            <rich:column>
+                            	<h:outputText styleClass="texto textoPeque12" value="#{etq.total}" />
+                            </rich:column>
+                            <rich:column colspan="2">
+                                <rich:spacer />
+                            </rich:column>
+                            <rich:column>
+                            	<div class="textOnRight">
+                                	<h:outputText styleClass="texto textoPeque12" value="#{consultaTablaRetencionBean.totalTitulos}" converter="formatoEnteroConverter"/>
+                                </div>
+                            </rich:column>
+                            <rich:column>
+                            	<div class="textOnRight">
+                                 	<h:outputText styleClass="texto textoPeque12" value="#{consultaTablaRetencionBean.total.monto}" converter="formatoMonedaConverter"/>
+                                 </div>
+                            </rich:column>
+                            <rich:column rendered="#{!consultaTablaRetencionBean.requiereBeneficiarios}">
+                            	<div class="textOnRight">
+                                 	<h:outputText styleClass="texto textoPeque12" value="#{consultaTablaRetencionBean.total.montoFee}" converter="formatoMonedaConverter"/>
+                                 </div>
+                            </rich:column>
+                            <rich:column>
+                            	<div class="textOnRight">
+                                	<h:outputText styleClass="texto textoPeque12" value="#{consultaTablaRetencionBean.total.montoRetenido}" converter="formatoMonedaConverter"/>
+                                </div>
+                            </rich:column>
+                            <rich:column>
+                            	<div class="textOnRight">
+                                 	<h:outputText styleClass="texto textoPeque12" value="#{consultaTablaRetencionBean.total.montoPagado}" converter="formatoMonedaConverter"/>
+                                </div>
+                            </rich:column> 
+                            <rich:column colspan="1">   
+                            	<rich:spacer />                              
+                            </rich:column>                                                                                                               
+                        </rich:columnGroup>
+                    </f:facet>                                                                                                  
+				</rich:dataTable>					
+                    <br />
+                    <t:div id="divBotonesCambioEstado" style="width: 100%; text-align: right;">
+                        <h:commandButton action="#{consultaTablaRetencionBean.simulacionMav}" 
+                            onclick="if(!confirmacionEInabilitadoBotones('&#191;Estas seguro que deseas cambiar a previo el derecho&#63;', #{consultaTablaRetencionBean.derechoSeleccionado.idEstatusDerecho})) return false;" 
+                            value="#{etq.simulacionMav}"  id="botonSimular" 
+                            rendered="#{(consultaTablaRetencionBean.derechoSeleccionado.idEstatusDerecho == 1 or consultaTablaRetencionBean.derechoSeleccionado.idEstatusDerecho == 2) and (not empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN'] or not empty sessionScope.roles['INT_BEN_INDEVAL'])}"/>
+                    	<h:commandButton action="#{consultaTablaRetencionBean.cambiarAPrevio}" 
+                    	    onclick="if(!confirmacionEInabilitadoBotones('&#191;Estas seguro que deseas regresar a previo el derecho&#63;', #{consultaTablaRetencionBean.derechoSeleccionado.idEstatusDerecho})) return false;" 
+                    	    value="Cambiar Previo"  id="botonCambiarPrevio" 
+                    	    rendered="#{consultaTablaRetencionBean.derechoSeleccionado.idEstatusDerecho == 3 and not empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN']}"/>
+						<h:commandButton action="#{consultaTablaRetencionBean.autorizarDerecho}" 
+						    onclick="if(!confirmacionEInabilitadoBotones('&#191;Estas seguro que deseas autorizar el derecho&#63;', #{consultaTablaRetencionBean.derechoSeleccionado.idEstatusDerecho})) return false;" 
+						    value="#{etq.autorizar}"  id="botonAutorizar" 
+						    rendered="#{consultaTablaRetencionBean.derechoSeleccionado.idEstatusDerecho == 2 and (not empty sessionScope.roles['INT_BEN_INDEVAL'] or not empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN'])}"/>												
+						<h:commandButton action="#{consultaTablaRetencionBean.confirmarDerecho}" 
+						    onclick="if(!confirmacionEInabilitadoBotones('&#191;Estas seguro que deseas confirmar el derecho&#63;', #{consultaTablaRetencionBean.derechoSeleccionado.idEstatusDerecho})) return false;" 
+						    value="#{etq.confirmarMinus}"  id="botonConfirmar" 
+						    rendered="#{consultaTablaRetencionBean.derechoSeleccionado.idEstatusDerecho == 3 and (not empty sessionScope.roles['INT_BEN_INDEVAL'] or not empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN'])}"/>
+						<h:commandButton action="#{consultaTablaRetencionBean.cambiarAAutorizado}" 
+						    onclick="if(!confirmacionEInabilitadoBotones('&#191;Estas seguro que deseas regresar a autorizado el derecho&#63;', #{consultaTablaRetencionBean.derechoSeleccionado.idEstatusDerecho})) return false;" 
+						    value="Cambiar Autorizado"  id="botonCambiarAutorizado" 
+						    rendered="#{consultaTablaRetencionBean.derechoSeleccionado.idEstatusDerecho == 4 and not empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN']}"/>
+						<h:commandButton action="#{consultaTablaRetencionBean.pagarDerecho}" 
+						    onclick="if(!confirmacionEInabilitadoBotones('&#191;Estas seguro que deseas pagar el derecho&#63;', #{consultaTablaRetencionBean.derechoSeleccionado.idEstatusDerecho})) return false;" 
+						    value="#{etq.botonPagar}"  id="botonPagar" 
+						    rendered="#{consultaTablaRetencionBean.derechoSeleccionado.idEstatusDerecho == 4 and (not empty sessionScope.roles['INT_BEN_INDEVAL'] or not empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN'])}"/>
+						<h:commandButton action="#{consultaTablaRetencionBean.regresar}" value="#{etq.regresar}"  id="botonRegresar" />
+						<div id="monitorPeticionCambioEstado" style="display: none;">
+                            <h:panelGroup id="panelMonitorPeticionCambioEstado">
+                                <h:graphicImage value="/images/ajax-loader.gif" />
+                                &#160;&#160;
+                                <h:outputText value="#{etq.cambioEstadoEnProceso}" />
+                            </h:panelGroup>
+                        </div>
+                    </t:div>
+                    <br />
+                    <br />
+                    <t:div style="width: 100%; text-align: right;">
+	                    <h:commandButton actionListener="#{consultaTablaRetencionBean.generarReportes}"
+	                                     action="tablaRetencionPDF"
+	                                     image="/images/pdf.gif"
+	                                     title="Exportar a PDF todos los resultados de la consulta"
+	                                     id="generarPdf" />&#160;&#160;
+	                    <h:commandButton actionListener="#{consultaTablaRetencionBean.generarReportes}"
+	                                     action="tablaRetencionXLS"
+	                                     image="/images/excel-file.gif"
+	                                     title="Exportar a XLS todos los resultados de la consulta"
+	                                         id="generarXls" />&#160;&#160;
+                    </t:div>
+                    
+                </h:panelGroup>
+			</h:panelGroup>
+		</ui:define>									
+			
+								
+	</ui:composition>
+</html>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="calendarioCapitales" documentTitle="Calendario Capitales Distribución"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        landscape="true" fecha="#{calendarioCapitalesBean.fechaActual}"
+        imageResource="/images/indeval.jpg">
+        <pdf:table value="calendarioCapitalesBean" currentBean="calendarioCap" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+	<pdf:table value="#{calendarioCapitalesBean}"
+		currentBean="calendarioCap" widthPercentage="100">
+		<pdf:row>
+			<pdf:col header="#{etq.tv}"
+				value="#{!empty calendarioCapitalesBean.calendario.tipoValor ? calendarioCapitalesBean.calendario.tipoValor : 'TODOS'}"
+				align="center" />
+			<pdf:col header="#{etq.emisoraMinus}"
+				value="#{!empty calendarioCapitalesBean.calendario.emisora ? calendarioCapitalesBean.calendario.emisora : 'TODAS'}"
+				align="center" />
+			<pdf:col header="#{etq.serieMinus}"
+				value="#{!empty calendarioCapitalesBean.calendario.serie ? calendarioCapitalesBean.calendario.serie : 'TODAS'}"
+				align="center" />
+			<pdf:col header="#{etq.isin}"
+				value="#{!empty calendarioCapitalesBean.calendario.isin ? calendarioCapitalesBean.calendario.isin : 'TODOS'}"
+				align="center" />
+			<pdf:col header="#{etq.calTipoMensaje}"
+				value="#{!empty calendarioCapitalesBean.selectedTipoMensaje ? calendarioCapitalesBean.selectedTipoMensaje : 'TODOS'}"
+				align="center" />
+			<pdf:col header="#{etq.estadoIndeval}"
+				value="#{!empty calendarioCapitalesBean.selectedEstado ? calendarioCapitalesBean.selectedEstado : 'TODOS'}"
+				align="center" />
+			<pdf:col header="#{etq.bovedaMinus}"
+				value="#{!empty calendarioCapitalesBean.selectedBoveda ? calendarioCapitalesBean.selectedBoveda : 'TODOS'}"
+				align="center" />
+			<pdf:col header="#{etq.divisaMinus}"
+				value="#{!empty calendarioCapitalesBean.selectedDivisa ? calendarioCapitalesBean.selectedDivisa : 'TODOS'}"
+				align="center" />
+
+			<pdf:col header="#{etq.fechaXdateInicio}"
+				value="#{!empty calendarioCapitalesBean.calendario.fechaXdateInicio ? calendarioCapitalesBean.calendario.fechaXdateInicio : 'TODAS'}"
+				align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			</pdf:col>
+
+			<pdf:col header="#{etq.fechaXdateFin}"
+				value="#{!empty calendarioCapitalesBean.calendario.fechaXdateFin ? calendarioCapitalesBean.calendario.fechaXdateFin : 'TODAS'}"
+				align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			</pdf:col>
+			<pdf:col header="#{etq.fechaCorteInicio}"
+				value="#{!empty calendarioCapitalesBean.calendario.fechaCorteInicio ? calendarioCapitalesBean.calendario.fechaCorteInicio : 'TODAS'}"
+				align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			</pdf:col>
+			<pdf:col header="#{etq.fechaCorteFin}"
+				value="#{!empty calendarioCapitalesBean.calendario.fechaCorteFin ? calendarioCapitalesBean.calendario.fechaCorteFin: 'TODAS'}"
+				align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			</pdf:col>
+			<pdf:col header="#{etq.fechaPagoInicio}"
+				value="#{!empty calendarioCapitalesBean.calendario.fechaPagoInicio ? calendarioCapitalesBean.calendario.fechaPagoInicio : 'TODAS'}"
+				align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			</pdf:col>
+			<pdf:col header="#{etq.fechaPagoFin}"
+				value="#{!empty calendarioCapitalesBean.calendario.fechaPagoFin ? calendarioCapitalesBean.calendario.fechaPagoFin: 'TODAS'}"
+				align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			</pdf:col>
+			<pdf:col header="#{etq.calFechaEfectivaInicio}"
+				value="#{!empty calendarioCapitalesBean.calendario.fechaEffdInicio ? calendarioCapitalesBean.calendario.fechaEffdInicio :  'TODAS'}"
+				align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			</pdf:col>
+			<pdf:col header="#{etq.calFechaEfectivaFin}"
+				value="#{!empty calendarioCapitalesBean.calendario.fechaEffdFin ? calendarioCapitalesBean.calendario.fechaEffdFin : 'TODAS'}"
+				align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			</pdf:col>
+			<pdf:col header="#{etq.calFechaEnvioInicio}"
+				value="#{!empty calendarioCapitalesBean.calendario.fechaPrimerEnvioInicio ? calendarioCapitalesBean.calendario.fechaPrimerEnvioInicio : 'TODAS'}"
+				align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			</pdf:col>
+			<pdf:col header="#{etq.calFechaEnvioFin}"
+				value="#{!empty calendarioCapitalesBean.calendario.fechaPrimerEnvioFin ? calendarioCapitalesBean.calendario.fechaPrimerEnvioFin : 'TODAS'}"
+				align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			</pdf:col>
+			<pdf:col header="#{etq.calFechaRecepcionInicio}"
+				value="#{!empty calendarioCapitalesBean.calendario.fechaRecepcionInicio ? calendarioCapitalesBean.calendario.fechaRecepcionInicio : 'TODAS'}"
+				align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm" />
+			</pdf:col>
+			<pdf:col header="#{etq.calFechaRecepcionFin}"
+				value="#{!empty calendarioCapitalesBean.calendario.fechaRecepcionFin ? calendarioCapitalesBean.calendario.fechaRecepcionFin : 'TODAS'}"
+				align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm" />
+			</pdf:col>
+			<pdf:col header="#{etq.fechasAdicionales}"
+				value="#{!empty calendarioCapitalesBean.selectedFechasAdicionales ? calendarioCapitalesBean.selectedFechasAdicionales : 'TODOS'}"
+				align="center" />
+			<pdf:col header="#{etq.calNett}"
+				value="#{!empty calendarioCapitalesBean.selectedNett ? calendarioCapitalesBean.selectedNett : 'TODOS' }"
+				align="center" />
+			<pdf:col header="#{etq.dueBillOfDateInicio}"
+				value="#{!empty calendarioCapitalesBean.calendario.dueBillOfDateInicio ? calendarioCapitalesBean.calendario.dueBillOfDateInicio : 'TODAS'}"
+				align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			</pdf:col>
+			<pdf:col header="#{etq.dueBillOfDateFin}"
+				value="#{!empty calendarioCapitalesBean.calendario.dueBillOfDateFin ? calendarioCapitalesBean.calendario.dueBillOfDateFin : 'TODAS'}"
+				align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			</pdf:col>
+
+
+
+			<pdf:col header="#{etq.folioIndeval}"
+				value="#{!empty calendarioCapitalesBean.calendario.folioIndeval ? calendarioCapitalesBean.calendario.folioIndeval : 'TODOS'}"
+				align="center" />
+			<pdf:col header="#{etq.corp}"
+				value="#{!empty calendarioCapitalesBean.calendario.referencia ? calendarioCapitalesBean.calendario.referencia : 'TODOS'}"
+				align="center" />
+			<pdf:col header="#{etq.fuente}"
+				value="#{!empty calendarioCapitalesBean.selectedCustodio ? calendarioCapitalesBean.selectedCustodio : 'TODOS'}"
+				align="center" />
+			<pdf:col header="#{etq.estadoEmision}"
+				value="#{!empty calendarioCapitalesBean.selectedEstadoEmision ? calendarioCapitalesBean.selectedEstadoEmision : 'TODOS'}"
+				align="center" />
+			<pdf:col header="#{etq.caev}" value="#{!empty calendarioCapitalesBean.caevsSelected ? calendarioCapitalesBean.caevsSelected :  'TODOS'}" align="center" />
+            <pdf:col header="#{etq.camv}"
+				value="#{!empty calendarioCapitalesBean.selectedTipoPagoCAMV ? calendarioCapitalesBean.selectedTipoPagoCAMV : 'TODOS'}"
+				align="center" />
+			<pdf:col header="#{etq.subtipoDerecho}"
+				value="#{!empty calendarioCapitalesBean.selectedSubTipoDerecho ? calendarioCapitalesBean.selectedSubTipoDerecho : 'TODOS'}"
+				align="center" />
+
+		</pdf:row>
+	</pdf:table>
+
+	<pdf:br/>
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{calendarioCapitalesBean.totalRegistrosReportes}"/>
+        <pdf:br/>
+
+        <pdf:table value="#{calendarioCapitalesBean.paginaReportes.registros}" currentBean="derecho">
+            <pdf:row>
+				<pdf:col header="#{etq.calHoraRecepcion}" value="#{derecho.fechaHoraRecepcion}" bgcolor="#{derecho.mapaPropiedades['HoraRecep'] ne null ? 'ffff50' : ''}" align="center" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm" />
+				</pdf:col>
+				<pdf:col header="#{etq.calHoraEnvio}" value="#{!empty derecho.fechaPrimerEnvio ? derecho.fechaPrimerEnvio : '-'}" align="center" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm" />
+				</pdf:col>				
+				<pdf:col header="#{etq.numeroEvento}" value="#{derecho.referencia}" align="center" />
+				<pdf:col header="#{etq.folioIndeval}" value="#{derecho.idCalendario}" align="center" />
+				<pdf:col header="#{etq.tipoMensaje}" value="#{derecho.tipoMensaje}" bgcolor="#{derecho.mapaPropiedades['TipoMsj'] ne null ? 'ffff50' : ''}" align="center" />
+				<pdf:col header="#{etq.tipoDerechoMV}" value="#{derecho.tipoPagoCAEV} / #{derecho.tipoPagoCAMV}" bgcolor="#{derecho.mapaPropiedades['CAEV'] ne null or derecho.mapaPropiedades['CAMV'] ne null ? 'ffff50' : ''}" align="center" />
+				<pdf:col header="#{etq.subtipoDerecho}" value="#{derecho.subtipoDerecho}" align="center" bgcolor="#{derecho.mapaPropiedades['SubtipoDer'] ne null ? 'ffff50' : ''}" />
+				<pdf:col header="#{etq.estadoDelMensaje}" value="#{derecho.edoFunc} / #{derecho.edoProc}" bgcolor="#{derecho.mapaPropiedades['funcM'] ne null or derecho.mapaPropiedades['EdoProc'] ne null ? 'ffff50' : ''}" align="center" />
+				<pdf:col header="#{etq.tvEmisoraSerieIsinCFI}" value="#{derecho.tipoValor} / #{derecho.emisora} / #{derecho.serie} / #{derecho.cupon} / #{derecho.isin} / #{derecho.cfi}" bgcolor="#{derecho.mapaPropiedades['Isin'] ne null ? 'ffff50' : ''}" align="center" />
+				<pdf:col header="#{etq.fechaExdate}" value="#{derecho.fechaXDate}" bgcolor="#{derecho.mapaPropiedades['FXDate'] ne null ? 'ffff50' : ''}" align="center" >
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaCorteMinus}" value="#{derecho.fechaCorte}" bgcolor="#{derecho.mapaPropiedades['FCorte'] ne null ? 'ffff50' : ''}" align="center" >
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaPago}" value="#{derecho.fechaPago}" bgcolor="#{derecho.mapaPropiedades['FPago'] ne null ? 'ffff50' : ''}" align="center" >
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaEfectiva}" value="#{derecho.fechaEfectiva}" bgcolor="#{derecho.mapaPropiedades['FEfect'] ne null ? 'ffff50' : ''}" align="center" >
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.dueBillOfDate}" value="#{derecho.fechaVencimiento}" bgcolor="#{derecho.mapaPropiedades['FVenc'] ne null ? 'ffff50' : ''}" align="center" >
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>			
+				<pdf:col header="#{etq.ratioBruto}" value="#{derecho.importeGRSS}" bgcolor="#{derecho.mapaPropiedades['GRSS'] ne null ? 'ffff50' : ''}" align="center" >
+				<f:convertNumber pattern="###,###,###,###,###,##0.00" maxFractionDigits="12" minFractionDigits="2" />
+				</pdf:col>				
+				<pdf:col header="#{etq.importeBrutoAdic}" value="#{!empty derecho.ratioAdicionalFormatoReporte ? derecho.ratioAdicionalFormatoReporte : '-'}" bgcolor="#{derecho.mapaPropiedades['RatioAdic'] ne null ? 'ffff50' : ''}" align="center" />			
+				<pdf:col header="#{etq.ratioNeto}" value="#{derecho.importeNETT}" bgcolor="#{derecho.mapaPropiedades['NETT'] ne null ? 'ffff50' : ''}" align="center" >   
+				<f:convertNumber pattern="###,###,###,###,###,##0.00" maxFractionDigits="2" minFractionDigits="2" />
+				</pdf:col>
+				<pdf:col header="#{etq.posicionIndeval}" value="#{derecho.posicionIndeval}" bgcolor="#{derecho.mapaPropiedades['PosInd'] ne null ? 'ffff50' : ''}" align="center" >
+				<f:convertNumber pattern="###,###,###,###,###,###" />
+				</pdf:col>
+				<pdf:col header="#{etq.calImporteBruto}" value="#{derecho.importeBruto}" bgcolor="#{derecho.mapaPropiedades['ImporteBr'] ne null ? 'ffff50' : ''}" align="center" >
+				<f:convertNumber pattern="###,###,###,###,###,##0.00" maxFractionDigits="2" minFractionDigits="2" />
+				</pdf:col>
+				<pdf:col header="#{etq.divisaMinus}" value="#{derecho.divisa}" align="center"/>
+				<pdf:col header="#{etq.calRetencion}" value="#{!empty derecho.importeWITL ? derecho.importeWITL : '-'}" bgcolor="#{derecho.mapaPropiedades['WITL'] ne null ? 'ffff50' : ''}" align="center" >
+				<f:convertNumber pattern="###,###,###,###,###,##0.#" maxFractionDigits="12" minFractionDigits="2" />
+				</pdf:col>
+				<pdf:col header="#{etq.calNett}" value="#{!empty derecho.importeFEE ? derecho.importeFEE : '-'}" bgcolor="#{derecho.mapaPropiedades['FEE'] ne null ? 'ffff50' : ''}" align="center" >
+				<f:convertNumber pattern="###,###,###,###,###,##0.#" maxFractionDigits="12" minFractionDigits="2" />
+				</pdf:col>	
+				
+				<pdf:col header="#{etq.fuente}" value="#{derecho.custodio}" align="center" bgcolor="#{derecho.mapaPropiedades['Custodio'] ne null ? 'ffff50' : ''}" />
+				
+				<pdf:col header="#{etq.bovedaMinus}" value="#{derecho.boveda}" align="center" />
+				<pdf:col header="#{etq.fechasAdicionales}" value="#{!empty derecho.fechasAdicionlesFormatoReporte ? derecho.fechasAdicionlesFormatoReporte : '-'}" bgcolor="#{derecho.mapaPropiedades['FAdic'] ne null ? 'ffff50' : ''}" align="center" escape="false" />
+				<pdf:col header="#{etq.estadoIndeval}" value="#{derecho.estadoMensaje}" align="center" />
+				<pdf:col header="#{etq.listadaDeslistadaMILA}" value="#{!empty derecho.vEmisionesCalendario ? derecho.vEmisionesCalendario : 'DESLISTADA'}" align="center" />
+			</pdf:row>
+        </pdf:table>
+    </pdf:document>
+</html>

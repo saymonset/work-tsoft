@@ -1,0 +1,1273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+<!-- DECORATE -->
+
+<ui:composition template="/layoutConsultasLargo.xhtml">
+
+	<ui:define name="head">
+		<script language="javascript" type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/js/calendarioCapitales.js">
+		</script>
+	</ui:define>
+	<ui:define name="tituloSeccion">
+		<h:outputText value="#{etq.tituloGeneralModulo}" />
+	</ui:define>
+
+	<ui:define name="tituloEncabezado">
+		<h:outputText value="#{etq.subTituloConsultaCalendarioIndeval}"></h:outputText>
+	</ui:define>
+
+
+	<ui:define name="criterios">
+		<h:outputText value="#{calendarioCapitalesBean.init}" />
+		<a4j:keepAlive beanName="calendarioCapitalesBean" />
+		<h:panelGroup id="mensajeUsuario">
+			<div style="min-height: 100%;">
+				<rich:messages warnClass="warning" infoClass="info"
+					errorClass="error" ajaxRendered="true" showDetail="false"
+					showSummary="true" layout="list">
+					<f:facet name="infoMarker">
+						<h:panelGroup>
+							<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+					</f:facet>
+					<f:facet name="errorMarker">
+						<h:panelGroup>
+							<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+					</f:facet>
+				</rich:messages>
+				<div id="divWarnings" class="warning" style="display: none;">
+					<p id="textoWarning"></p>
+				</div>
+			</div>
+		</h:panelGroup>
+		<h:panelGroup id="panelCriterios">
+			<h:inputHidden id="isCalIndeval" value="false" />
+			<div style='display: "inline"' id="divCriterios">
+
+				<table width="100%" border="0" cellpadding="0px" cellspacing="5px"
+					align="center">
+					<tr>
+						<!--==============================================BUSQUEDA CLAVE VALOR======================================================================== -->
+						<td class="recuadroTabla" align="center">
+							<table class="tablaCriterios" align="center">
+								<tr>
+								</tr>
+								<tr>
+									<td align="center"><h:outputText styleClass="texto"
+											value="#{etq.tv}" /></td>
+									<td align="center"><h:outputText styleClass="texto"
+											value="#{etq.emisoraMinus}" /></td>
+									<td align="center"><h:outputText styleClass="texto"
+											value="#{etq.serieMinus}" /></td>
+                                    <td align="center"><h:outputText styleClass="texto"
+											value="#{etq.isin}" /></td>
+								</tr>
+								<tr align="center">
+									<td><h:panelGroup>
+											<h:inputText autocomplete="off" id="tipoValor"
+												value="#{calendarioCapitalesBean.calendario.tipoValor}"
+												size="7" maxlength="4"
+												styleClass="textoControles campoAlphaNumerico textoMayusculas"
+												tabindex="20" />
+										</h:panelGroup></td>
+									<td><h:panelGroup>
+											<h:inputText autocomplete="off" id="emisora" size="7"
+												maxlength="7"
+												value="#{calendarioCapitalesBean.calendario.emisora}"
+												required="false"
+												styleClass="textoControles campoAlphaNumericoEmisora textoMayusculas"
+												tabindex="30" />
+										</h:panelGroup></td>
+									<td><h:inputText autocomplete="off" id="serie"
+											value="#{calendarioCapitalesBean.calendario.serie}" size="7"
+											maxlength="6"
+											styleClass="textoControles campoAlphaNumericoSerie textoMayusculas"
+											tabindex="40" /></td>
+
+									<td><h:inputText autocomplete="off" id="isin"
+											value="#{calendarioCapitalesBean.calendario.isin}" size="12"
+											maxlength="12"
+											styleClass="textoControles campoAlphaNumerico textoMayusculas"
+											tabindex="60" /></td>
+								</tr>
+							</table>
+						</td>
+
+
+						<td class="recuadroTabla" align="center">
+							<table class="tablaCriterios" align="center">
+								<tr>
+									<td nowrap="true" align="center"><h:outputText 
+											styleClass="texto" value="#{etq.calTipoMensaje}" /></td>
+									<td nowrap="true" align="center"><h:outputText
+											styleClass="texto" value="#{etq.estadoIndeval}" /></td>
+									<td nowrap="true" align="center"><h:outputText
+												styleClass="texto" value="#{etq.bovedaMinus}" /></td>	
+									<td nowrap="true" align="center"><h:outputText
+											styleClass="texto" value="#{etq.divisaMinus}" /></td>
+
+								</tr>
+								<tr>
+									<!--==tipo mensaje==-->
+									<td align="center"><h:selectOneMenu
+											styleClass="textoControles"
+											value="#{calendarioCapitalesBean.calendario.tipoMensaje}"
+											tabindex="80">
+											<f:selectItem itemValue="-1" itemLabel="Todos" />
+											<f:selectItems value="#{calendarioCapitalesBean.tipoMensajeCombo}" />
+										</h:selectOneMenu></td>
+									<td align="center"><h:selectOneMenu
+											styleClass="textoControles"
+											value="#{calendarioCapitalesBean.calendario.estado}"
+											tabindex="80">
+											<f:selectItem itemValue="-1" itemLabel="Todos" />
+											<f:selectItems value="#{calendarioCapitalesBean.estados}" />
+										</h:selectOneMenu></td>
+										<td align="center"><h:selectOneMenu
+												styleClass="textoControles"
+												value="#{calendarioCapitalesBean.calendario.boveda}"
+												tabindex="140">
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+												<f:selectItems value="#{calendarioCapitalesBean.bovedas}" />
+											</h:selectOneMenu></td>
+									<td align="center"><h:selectOneMenu
+											styleClass="textoControles"
+											value="#{calendarioCapitalesBean.calendario.divisa}"
+											tabindex="90">
+											<f:selectItem itemValue="-1" itemLabel="Todas" />
+											<f:selectItems value="#{calendarioCapitalesBean.divisas}" />
+										</h:selectOneMenu></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+
+					<!--======================================================== FECHASBUSQUEDA ======================================================================-->
+					<table width="100%" border="0" cellpadding="0px" cellspacing="5px"
+						align="center">
+						<tr>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr align="center">
+									
+									<td nowrap="true" colspan="2"><h:outputText
+												styleClass="texto" value="Fecha Exdate" /></td>
+										<td nowrap="true" colspan="2"><h:outputText
+												styleClass="texto" value="Fecha de Corte" /></td>
+										<td nowrap="true" colspan="2"><h:outputText
+												styleClass="texto" value="Fecha de Pago" /></td>
+										
+									</tr>
+									<tr align="center">
+									<td><rich:calendar inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;" inputSize="11"
+												value="#{calendarioCapitalesBean.calendario.fechaXdateInicio}"
+												datePattern="dd/MM/yyyy" tabindex="130"  /></td>
+										<td><rich:calendar inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;" inputSize="11"
+												value="#{calendarioCapitalesBean.calendario.fechaXdateFin}"
+												datePattern="dd/MM/yyyy" tabindex="130"  /></td>
+										<td><rich:calendar inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;" inputSize="11"
+												value="#{calendarioCapitalesBean.calendario.fechaCorteInicio}"
+												datePattern="dd/MM/yyyy" tabindex="120"  />
+										</td>
+										<td><rich:calendar inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;" inputSize="11"
+												value="#{calendarioCapitalesBean.calendario.fechaCorteFin}"
+												datePattern="dd/MM/yyyy" tabindex="120"  /></td>
+										<td><rich:calendar inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;" inputSize="11"
+												value="#{calendarioCapitalesBean.calendario.fechaPagoInicio}"
+												datePattern="dd/MM/yyyy" tabindex="130"  /></td>
+										<td><rich:calendar inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;" inputSize="11"
+												value="#{calendarioCapitalesBean.calendario.fechaPagoFin}"
+												datePattern="dd/MM/yyyy" tabindex="130"  /></td>
+										
+									</tr>
+								<tr>
+	                                    <td nowrap = "true" colspan="2" align="center">
+	                                    	<h:outputText styleClass="texto" value = "#{etq.fechaEfectiva}" />
+	                                    </td>
+	                                    <td nowrap = "true" colspan="2"  align="center">
+	                                    	<h:outputText styleClass="texto" value = "#{etq.calFechaEnvio}" />
+	                                    </td>
+	                                    <td nowrap = "true"  colspan="2"  align="center">
+	                                    	<h:outputText styleClass="texto" value = "#{etq.fechaRecepcion}" />
+	                                    </td>	                                   
+                                	</tr>
+									<tr align="center">
+
+										<!--==fecha EFFD inicio==-->
+										<td>
+                                 			<rich:calendar inputClass="textoControles"
+	                                            inputStyle="background-color: #ffffe6;" inputSize="11"
+	                                            value="#{calendarioCapitalesBean.calendario.fechaEffdInicio}"
+	                                            datePattern="dd/MM/yyyy" tabindex="150"  />
+                                        </td>
+                        
+                                <!--==fecha EFFD fin==-->
+                                		<td>
+                                			<rich:calendar inputClass="textoControles"
+	                                            inputStyle="background-color: #ffffe6;" inputSize="11"
+	                                            value="#{calendarioCapitalesBean.calendario.fechaEffdFin}"
+	                                            datePattern="dd/MM/yyyy" tabindex="160"  />
+                                        </td>
+                                <!--==fecha envio==-->
+                                        <td>
+                                        	<rich:calendar inputClass="textoControles"
+	                                            inputStyle="background-color: #ffffe6;" inputSize="11"
+	                                            value="#{calendarioCapitalesBean.calendario.fechaPrimerEnvioInicio}"
+	                                            datePattern="dd/MM/yyyy" tabindex="170"  />
+                                        </td>                               
+                                		<td>
+                                			<rich:calendar inputClass="textoControles"
+	                                            inputStyle="background-color: #ffffe6;" inputSize="11"
+	                                            value="#{calendarioCapitalesBean.calendario.fechaPrimerEnvioFin}"
+	                                            datePattern="dd/MM/yyyy" tabindex="180"  />
+                                        </td>
+                                         <!--==fecha recepcion==-->
+                                        <td>
+                                        	<rich:calendar inputClass="textoControles" enableManualInput="true" showApplyButton="true"
+	                                            inputStyle="background-color: #ffffe6;" inputSize="15"
+	                                            value="#{calendarioCapitalesBean.calendario.fechaRecepcionInicio}"
+	                                            datePattern="dd/MM/yyyy HH:mm" defaultTime="00:00" tabindex="190"  />
+                                        </td>                                
+                                		<td>
+                                			<rich:calendar inputClass="textoControles" enableManualInput="true" showApplyButton="true"
+	                                            inputStyle="background-color: #ffffe6;" inputSize="15"
+	                                            value="#{calendarioCapitalesBean.calendario.fechaRecepcionFin}"
+	                                            datePattern="dd/MM/yyyy HH:mm" defaultTime="23:59" tabindex="200"  />
+                                        </td>
+                                        <td colspan="2">&nbsp; </td>                 
+
+									</tr>
+								</table>
+							</td>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									    <tr>                                
+                                        <td nowrap="true" align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.fechasAdicionales}" />
+                                        </td>
+                                        <td/>
+                                        <td nowrap="true" align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.calNett}" />
+                                        </td>
+                                    </tr>
+                                    <tr>                                    	                                   
+	                                   <td align="center">
+	                                    	<h:selectOneMenu styleClass="textoControles"
+	                                            value="#{calendarioCapitalesBean.calendario.fechasAdicionales}" tabindex="210">
+	                                            <f:selectItem itemValue="-1" itemLabel="Todos" />
+	                                            <f:selectItems value="#{calendarioCapitalesBean.interimFechasFEE}" />
+	                                        </h:selectOneMenu>
+	                                   </td>
+	                                   <td align="center"/>
+	                                    <td align="center">
+	                                    	<h:selectOneMenu styleClass="textoControles"
+	                                            value="#{calendarioCapitalesBean.calendario.nett}" tabindex="220">
+	                                            <f:selectItem itemValue="-1" itemLabel="Todos" />
+	                                            <f:selectItems value="#{calendarioCapitalesBean.interimFechasFEE}" />
+	                                        </h:selectOneMenu>
+	                                    </td>
+                                	</tr>
+                                	<tr>
+                                		<td colspan="3" align="center" nowrap="true">
+                                			<h:outputText styleClass="texto" value="#{etq.dueBillOfDate}" />                                		
+                                		</td>
+                                	</tr>
+                                	<tr>                                		                              		                                		
+                                		<td  align="center">
+                                        	<rich:calendar inputClass="textoControles"
+	                                            inputStyle="background-color: #ffffe6;" inputSize="11"
+	                                            value="#{calendarioCapitalesBean.calendario.dueBillOfDateInicio}"
+	                                            datePattern="dd/MM/yyyy" tabindex="230"  />
+                                        </td>
+                                        <td align="center"/>                                
+                                		<td  align="center">
+                                			<rich:calendar inputClass="textoControles"
+	                                            inputStyle="background-color: #ffffe6;" inputSize="11"
+	                                            value="#{calendarioCapitalesBean.calendario.dueBillOfDateFin}"
+	                                            datePattern="dd/MM/yyyy" tabindex="240"  />
+                                        </td>
+                                	</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+
+					<!--============================================-BUSQUEDA FUENTE CAEV CANV REFERENCIA ==========================================================-->
+					<table width="100%" border="0" cellpadding="0px" cellspacing="5px"
+						align="center">
+						<tr>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr>
+										<!--==Boveda==-->
+										<td nowrap="true" align="center"><h:outputText
+												styleClass="texto" value="#{etq.folioIndeval}" /></td>
+										<td nowrap="true" align="center"><h:outputText
+												styleClass="texto" value="#{etq.corp}" /></td>
+										<td nowrap="true" align="center"><h:outputText
+												styleClass="texto" value="#{etq.fuente}" /></td>
+												<td nowrap="true" align="center"><h:outputText
+												styleClass="texto" value="#{etq.estadoEmision}" /></td>		
+										<td nowrap="true" align="center"><h:outputText 
+												styleClass="texto" value="#{etq.caev}" /></td>
+										<td nowrap="true" align="center"><h:outputText
+												styleClass="texto" value="#{etq.camv}" /></td>
+										<td nowrap="true" align="center"><h:outputText
+												styleClass="texto" value="#{etq.subtipoDerecho}" /></td>
+										
+									</tr>
+
+									<tr>
+										<!--===Folio Indeval===-->
+
+										<td align="center"><h:inputText autocomplete="off"
+												id="folioIndeval"
+												value="#{calendarioCapitalesBean.calendario.folioIndevalCadena}"
+												size="20" maxlength="16"
+												styleClass="textoControles campoNumerico"
+												tabindex="131" /></td>
+                                           <td align="center"><h:inputText autocomplete="off"
+												id="corpBusqueda" value="#{calendarioCapitalesBean.calendario.referencia}"
+												size="20" maxlength="16"
+												styleClass="textoControles campoAlphaNumerico textoMayusculas"
+												tabindex="131" /></td>
+										<td align="center"><h:selectOneMenu
+												styleClass="textoControles"
+												value="#{calendarioCapitalesBean.calendario.custodio}"
+												tabindex="140">
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+												<f:selectItems value="#{calendarioCapitalesBean.custodios}" />
+											</h:selectOneMenu></td>
+											<td align="center"><h:selectOneMenu
+												styleClass="textoControles"
+												value="#{calendarioCapitalesBean.calendario.estadoEmision}"
+												tabindex="140">
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+												<f:selectItems value="#{calendarioCapitalesBean.estadoEmisionCombo}" />
+												
+											</h:selectOneMenu></td>
+						
+										<td align="center">
+										<rich:orderingList value="#{calendarioCapitalesBean.caevs}" selection="#{calendarioCapitalesBean.caevsSelected}" 
+												var="list" listHeight="50" listWidth="100" orderControlsVisible="false" fastOrderControlsVisible="false" id="listaCaevs">
+									            <rich:column  width="180">
+									                <h:outputText value="#{list}"></h:outputText>
+									            </rich:column>
+									        </rich:orderingList>
+										</td>
+										<td align="center"><h:selectOneMenu
+												styleClass="textoControles"
+												value="#{calendarioCapitalesBean.calendario.tipoPagoCAMV}"
+												tabindex="151">
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+												<f:selectItems
+													value="#{calendarioCapitalesBean.tiposPagoCAMV}" />
+											</h:selectOneMenu></td>
+										<td align="center"><h:selectOneMenu
+												styleClass="textoControles"
+												value="#{calendarioCapitalesBean.calendario.subTipoDerecho}"
+												tabindex="151">
+												<f:selectItem itemValue="-1" itemLabel="Todos" />
+												<f:selectItems
+													value="#{calendarioCapitalesBean.subTipoDerechos}" />
+											</h:selectOneMenu></td>
+										
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</table>
+			</div>
+
+			<!--===================================================== CONSULTA EJECUTADA PANEL SUPERIOR =============================================================== - -->
+
+		</h:panelGroup>
+		<h:panelGroup id="panelResumen">
+            <h:panelGroup rendered="#{calendarioCapitalesBean.consultaEjecutada}">
+                <div id="divResumen" style="display: #{calendarioCapitalesBean.consultaEjecutada ? 'inline' : 'none'}">
+                	<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+                        <tr>
+                        	<td class="recuadroTabla">
+                                <table class="tablaCriterios texto" border="0" style="text-align: center">
+                                	<tr>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.tv}" />
+                                        </td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.emisoraMinus}" />
+                                        </td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.serieMinus}" />
+                                       	</td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.isin}" />
+                                        </td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.tipoMensaje}" />
+                                        </td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.estadoIndeval}" />
+                                        </td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.bovedaMinus}" />
+                                        </td>                                        
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.divisaMinus}" />
+                                        </td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.fechaExdate}" />
+                                        </td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.fechaCorteMinus}" />
+                                        </td>
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.fechaPago}" />
+                                        </td>
+                                       
+                                        <td align="center">
+                                        	<h:outputText styleClass="texto" value="#{etq.fechaEfectiva}" />
+                                        </td>
+                                        <td align="center">
+                                    		<h:outputText styleClass="texto"
+                                              value="#{etq.calFechaEnvio}" />
+                                        </td>
+                                    </tr>
+									<tr align="center">
+                                        <td>                                        	
+	                                        <h:outputText styleClass="texto"
+	                                            value="#{calendarioCapitalesBean.calendario.tipoValor}"
+	                                            rendered="#{!empty calendarioCapitalesBean.calendario.tipoValor}" />
+	                                        <h:outputText styleClass="texto" value="TODOS"
+	                                            rendered="#{empty calendarioCapitalesBean.calendario.tipoValor}" />                                            
+                                        </td>
+                                        <td>                                       
+	                                        <h:outputText styleClass="texto"
+	                                            value="#{calendarioCapitalesBean.calendario.emisora}"
+	                                            rendered="#{!empty calendarioCapitalesBean.calendario.emisora}" />
+	                                        <h:outputText styleClass="texto" value="TODAS"
+	                                            rendered="#{empty calendarioCapitalesBean.calendario.emisora}" />                                          
+                                        </td>
+                                        <td>
+                                        	<h:outputText styleClass="texto" value="#{calendarioCapitalesBean.calendario.serie}"
+                                                rendered="#{!empty calendarioCapitalesBean.calendario.serie}" /> 
+                                            <h:outputText styleClass="texto" value="TODAS"
+                                                rendered="#{empty calendarioCapitalesBean.calendario.serie}" />
+                                        </td>
+                                        <td>
+                                        	<h:outputText styleClass="texto"
+                                                value="#{calendarioCapitalesBean.calendario.isin}"
+                                                rendered="#{!empty calendarioCapitalesBean.calendario.isin}" /> 
+                                            <h:outputText styleClass="texto" value="TODAS"
+                                                rendered="#{empty calendarioCapitalesBean.calendario.isin}" />
+                                        </td>
+                                        <td>
+                                        	<h:outputText styleClass="texto"
+                                                value="#{calendarioCapitalesBean.selectedTipoMensaje}"
+                                                rendered="#{!empty calendarioCapitalesBean.calendario.tipoMensaje and calendarioCapitalesBean.calendario.tipoMensaje ne '-1'}" />
+                                            <h:outputText styleClass="texto" value="TODAS"
+                                                rendered="#{calendarioCapitalesBean.calendario.tipoMensaje eq '-1'}" />
+                                        </td>
+                              			<td>
+                                        	<h:outputText styleClass="texto"
+                                                value="#{calendarioCapitalesBean.selectedEstado}"
+                                                rendered="#{!empty calendarioCapitalesBean.calendario.estado and calendarioCapitalesBean.calendario.estado ne '-1'}" />
+                                            <h:outputText styleClass="texto" value="TODOS"
+                                                rendered="#{calendarioCapitalesBean.calendario.estado eq '-1'}" />
+                                        </td>
+                                        <td>
+                                        	<h:outputText styleClass="texto"
+                                                value="#{calendarioCapitalesBean.selectedBoveda}"
+                                                rendered="#{!empty calendarioCapitalesBean.calendario.boveda and calendarioCapitalesBean.calendario.boveda ne '-1'}" />
+                                            <h:outputText styleClass="texto" value="TODAS"
+                                                rendered="#{calendarioCapitalesBean.calendario.boveda eq '-1'}" />
+                                        </td>                                
+                                        <td>
+                                        	<h:outputText styleClass="texto"
+                                                value="#{calendarioCapitalesBean.selectedDivisa}"
+                                                rendered="#{!empty calendarioCapitalesBean.calendario.divisa and calendarioCapitalesBean.calendario.divisa ne '-1'}" />
+                                            <h:outputText styleClass="texto" value="TODOS"
+                                                rendered="#{calendarioCapitalesBean.calendario.divisa eq '-1'}" />
+                                        </td>
+                                        <td>
+                                       		<h:outputText styleClass="texto" value="#{empty calendarioCapitalesBean.calendario.fechaXdateInicio ? 'NA' : 
+                                       			calendarioCapitalesBean.calendario.fechaXdateInicioFormato} - #{empty calendarioCapitalesBean.calendario.fechaXdateFin ? 'NA' : 
+                                       			calendarioCapitalesBean.calendario.fechaXdateFinFormato }" 
+                                       			rendered="#{!empty calendarioCapitalesBean.calendario.fechaXdateInicio or !empty calendarioCapitalesBean.calendario.fechaXdateFin}"/>
+                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty calendarioCapitalesBean.calendario.fechaXdateInicio and empty calendarioCapitalesBean.calendario.fechaXdateFin}"/>                                        
+                                        </td>
+                                        <td>
+                                       		<h:outputText styleClass="texto" value="#{empty calendarioCapitalesBean.calendario.fechaCorteInicio ? 'NA' : 
+                                       			calendarioCapitalesBean.calendario.fechaCorteInicioFormato} - #{empty calendarioCapitalesBean.calendario.fechaCorteFin ? 'NA' : 
+                                       			calendarioCapitalesBean.calendario.fechaCorteFinFormato }" 
+                                       			rendered="#{!empty calendarioCapitalesBean.calendario.fechaCorteInicio or !empty calendarioCapitalesBean.calendario.fechaCorteFin}"/>
+                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty calendarioCapitalesBean.calendario.fechaCorteInicio and empty calendarioCapitalesBean.calendario.fechaCorteFin}"/>                                        
+                                        </td>                                        
+                                        <td>
+                                       		<h:outputText styleClass="texto" value="#{empty calendarioCapitalesBean.calendario.fechaPagoInicio ? 'NA' : 
+                                       			calendarioCapitalesBean.calendario.fechaPagoInicioFormato} - #{empty calendarioCapitalesBean.calendario.fechaPagoFin ? 'NA' : 
+                                       			calendarioCapitalesBean.calendario.fechaPagoFinFormato }" 
+                                       			rendered="#{!empty calendarioCapitalesBean.calendario.fechaPagoInicio or !empty calendarioCapitalesBean.calendario.fechaPagoFin}"/>
+                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty calendarioCapitalesBean.calendario.fechaPagoInicio and empty calendarioCapitalesBean.calendario.fechaPagoFin}"/>                                        
+                                        </td>                                        
+                                         <td>
+                                       		<h:outputText styleClass="texto" value="#{empty calendarioCapitalesBean.calendario.fechaEffdInicio ? 'NA' : 
+                                       			calendarioCapitalesBean.calendario.fechaEffdInicioFormato} - #{empty calendarioCapitalesBean.calendario.fechaEffdFin ? 'NA' : 
+                                       			calendarioCapitalesBean.calendario.fechaEffdFinFormato }" 
+                                       			rendered="#{!empty calendarioCapitalesBean.calendario.fechaEffdInicio or !empty calendarioCapitalesBean.calendario.fechaEffdFin}"/>
+                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty calendarioCapitalesBean.calendario.fechaEffdInicio and empty calendarioCapitalesBean.calendario.fechaEffdFin}"/>                                        
+                                        </td>
+                                        <td>
+                      						<h:outputText styleClass="texto" value="#{empty calendarioCapitalesBean.calendario.fechaPrimerEnvioInicio ? 'NA' : 
+	                                       		calendarioCapitalesBean.calendario.fechaPrimerEnvioInicioFormato} - #{empty calendarioCapitalesBean.calendario.fechaPrimerEnvioFin ? 'NA' : 
+	                                       		calendarioCapitalesBean.calendario.fechaPrimerEnvioFinFormato }" 
+	                                       		rendered="#{!empty calendarioCapitalesBean.calendario.fechaPrimerEnvioInicio or !empty calendarioCapitalesBean.calendario.fechaPrimerEnvioFin}"/>
+                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty calendarioCapitalesBean.calendario.fechaPrimerEnvioInicio and empty calendarioCapitalesBean.calendario.fechaPrimerEnvioFin}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>                                    
+                                      	<td align="center">
+                                      		<h:outputText styleClass="texto"
+                                              value="#{etq.fechaRecepcion}" />
+                                        </td>
+                                       	<td align="center">
+                                     		<h:outputText styleClass="texto"
+                                              value="#{etq.fechasAdicionales}" />
+                                        </td>
+                                        <td align="center">
+                                      		<h:outputText styleClass="texto"
+                                              value="#{etq.calNett}" />
+                                        </td>
+                                      	<td align="center">
+                                      		<h:outputText styleClass="texto"
+                                              value="#{etq.dueBillOfDate}" />
+                                        </td>                                                                          
+                                      	<td align="center">
+                                      		<h:outputText styleClass="texto"
+                                              value="#{etq.folioIndeval}" />
+                                        </td>
+                                      	<td align="center">
+                                      		<h:outputText styleClass="texto"
+                                              value="#{etq.numeroEvento}" />
+                                        </td>
+                                      	<td align="center">
+                                      		<h:outputText styleClass="texto"
+                                              value="#{etq.fuente}" />
+                                        </td>
+                                        <td align="center">
+                                      		<h:outputText styleClass="texto"
+                                              value="#{etq.estadoEmision}" />
+                                        </td>
+                                        <td align="center">
+                                      		<h:outputText styleClass="texto"
+                                              value="#{etq.caev}" />
+                                        </td>
+                                        <td align="center">
+                                      		<h:outputText styleClass="texto"
+                                              value="#{etq.camv}" />
+                                        </td>
+                                        <td align="center"><h:outputText styleClass="texto"
+												value="#{etq.subtipoDerecho}" />
+										</td>
+                                  	</tr>
+                                    <tr>                                   
+                                        <td>
+                                      		<h:outputText styleClass="texto" value="#{empty calendarioCapitalesBean.calendario.fechaRecepcionInicio ? 'NA' : 
+	                                       		calendarioCapitalesBean.calendario.fechaRecepcionInicioFormato} - #{empty calendarioCapitalesBean.calendario.fechaRecepcionFin ? 'NA' : 
+	                                       		calendarioCapitalesBean.calendario.fechaRecepcionFinFormato }" 
+	                                       		rendered="#{!empty calendarioCapitalesBean.calendario.fechaRecepcionInicio or !empty calendarioCapitalesBean.calendario.fechaRecepcionFin}"/>
+                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty calendarioCapitalesBean.calendario.fechaRecepcionInicio and empty calendarioCapitalesBean.calendario.fechaRecepcionFin}"/>
+                                        </td>
+                                        <td>
+                                        	<h:outputText styleClass="texto"
+                                                value="#{calendarioCapitalesBean.selectedFechasAdicionales}"                                                
+                                                rendered="#{!empty calendarioCapitalesBean.calendario.fechasAdicionales and calendarioCapitalesBean.calendario.fechasAdicionales ne '-1'}" />
+                                            <h:outputText styleClass="texto" value="TODOS"                                                
+                                                rendered="#{ calendarioCapitalesBean.calendario.fechasAdicionales eq '-1'}" />
+                                                                         	
+                                        </td>
+                                        <td>
+                                        	<h:outputText styleClass="texto"
+                                                value="#{calendarioCapitalesBean.selectedNett}"                                                
+                                                rendered="#{!empty calendarioCapitalesBean.calendario.nett and calendarioCapitalesBean.calendario.nett ne '-1'}" />
+                                            <h:outputText styleClass="texto" value="TODOS"                                                
+                                                rendered="#{ calendarioCapitalesBean.calendario.nett eq '-1'}" />                                                                  
+                                        </td>                                            
+                                        <td>
+                                       		<h:outputText styleClass="texto" value="#{empty calendarioCapitalesBean.calendario.dueBillOfDateInicio ? 'NA' : 
+	                                       		calendarioCapitalesBean.calendario.dueBillOfDateInicioFormato} - #{empty calendarioCapitalesBean.calendario.dueBillOfDateFin ? 'NA' : 
+	                                       		calendarioCapitalesBean.calendario.dueBillOfDateFinFormato }" 
+	                                       		rendered="#{!empty calendarioCapitalesBean.calendario.dueBillOfDateInicio or !empty calendarioCapitalesBean.calendario.dueBillOfDateFin}"/>
+                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty calendarioCapitalesBean.calendario.dueBillOfDateInicio and empty calendarioCapitalesBean.calendario.dueBillOfDateFin}"/>
+                                        </td>         
+                                       	<td>
+                                        	<h:outputText styleClass="texto"
+                                                value="#{calendarioCapitalesBean.calendario.folioIndeval}"
+                                                rendered="#{!empty calendarioCapitalesBean.calendario.folioIndeval}" /> 
+                                            <h:outputText styleClass="texto" value="TODOS"
+                                                rendered="#{empty calendarioCapitalesBean.calendario.folioIndeval}" />
+                                        </td>
+                                        <td>
+                                        	<h:outputText styleClass="texto"
+                                                value="#{calendarioCapitalesBean.calendario.referencia}"
+                                                rendered="#{!empty calendarioCapitalesBean.calendario.referencia}" /> 
+                                            <h:outputText styleClass="texto" value="TODAS"
+                                                rendered="#{empty calendarioCapitalesBean.calendario.referencia}" />
+                                        </td>
+                                        <td>
+                                        	<h:outputText styleClass="texto"
+                                                value="#{calendarioCapitalesBean.selectedCustodio}"
+                                                rendered="#{!empty calendarioCapitalesBean.calendario.custodio and calendarioCapitalesBean.calendario.custodio ne '-1'}" />
+                                            <h:outputText styleClass="texto" value="TODOS"
+                                                rendered="#{ calendarioCapitalesBean.calendario.custodio eq '-1'}" />
+                                        </td>
+                                        <td>
+                                        	<h:outputText styleClass="texto"
+                                                value="#{calendarioCapitalesBean.selectedEstadoEmision}"
+                                                rendered="#{!empty calendarioCapitalesBean.calendario.estadoEmision and calendarioCapitalesBean.calendario.estadoEmision ne '-1'}" />
+                                            <h:outputText styleClass="texto" value="TODOS"
+                                                rendered="#{ calendarioCapitalesBean.calendario.estadoEmision eq '-1'}" />
+                                        </td>
+                                        <td>
+                                        	<h:outputText styleClass="texto" value="#{calendarioCapitalesBean.caevsSelected}" rendered="#{!empty calendarioCapitalesBean.caevsSelected}"/>
+	                                        <h:outputText styleClass="texto" value="TODOS" rendered="#{empty calendarioCapitalesBean.caevsSelected}"/>
+                                        </td>
+                                        <td>
+                                     		<h:outputText styleClass="texto"
+                                      			value="#{calendarioCapitalesBean.selectedTipoPagoCAMV}"
+                                              	rendered="#{!empty calendarioCapitalesBean.calendario.tipoPagoCAMV and calendarioCapitalesBean.calendario.tipoPagoCAMV ne '-1'}" />
+                                         	<h:outputText styleClass="texto" value="TODOS"
+                                             	rendered="#{calendarioCapitalesBean.calendario.tipoPagoCAMV eq '-1'}" />
+                                        </td>
+                                        <td>
+                                        	<h:outputText styleClass="texto" value="#{calendarioCapitalesBean.selectedSubTipoDerecho}"
+												rendered="#{!empty calendarioCapitalesBean.calendario.subTipoDerecho and calendarioCapitalesBean.calendario.subTipoDerecho ne '-1'}" />
+											<h:outputText styleClass="texto" value="TODOS" rendered="#{calendarioCapitalesBean.calendario.subTipoDerecho eq '-1'}" />
+										</td>	
+                                    </tr>                                    
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </h:panelGroup>
+        </h:panelGroup>
+	</ui:define>
+	<!-- ===================================================   BOTONES =================================================================-->
+	<ui:define name="botones">
+		<h:panelGroup id="botones">
+			<div class="refrescar" style="float: left;">
+				<a4j:status id="commonStatus">
+					<f:facet name="start">
+						<h:panelGroup>
+							<h:graphicImage value="/images/ajax-loader.gif" />
+							<h:outputText value="#{etq.buscando}"></h:outputText>
+						</h:panelGroup>
+					</f:facet>
+				</a4j:status>
+			</div>
+			<div class="limpiar">
+				<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+					styleClass="submit"
+					actionListener="#{calendarioCapitalesBean.limpiar}" tabindex="8" />
+			</div>
+			<div class="buscar">
+				<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+					styleClass="submit" oncomplete='javascript:presentarResumen();'
+					actionListener="#{calendarioCapitalesBean.buscarDerechos}"
+					reRender="containerResultados,totalesConsultas,tablaResultados,botones,mensajeUsuario,panelResumen"
+					tabindex="7">
+					<f:setPropertyActionListener value="true"
+						target="#{calendarioCapitalesBean.banderaBitacoraConsulta}" />
+				</a4j:commandButton>
+			</div>			
+			<div class="editar"
+				style="display: #{consultaEmisionesBean.consultaEjecutada? 'inline': 'none'}"
+				id="botonEditarCriterios">
+				<input type="image" class="submit"
+					src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+					alt="Editar Criterios" title="Editar Criterios"
+					onclick='javascript:presentarCriterios();return false;' />
+			</div>
+			<a4j:commandButton id="btnAutorizaciones" value="Autorizaciones"
+				tabindex="150"				
+				onclick="javascript:autorizacion();">
+			</a4j:commandButton>
+		</h:panelGroup>
+	</ui:define>
+
+
+	<ui:define name="seccionContenido">
+		<h:panelGroup id="containerResultados">
+			<h:panelGroup rendered="#{calendarioCapitalesBean.consultaEjecutada}">
+				<t:dataTable id="noExistenResultados"
+					value="#{calendarioCapitalesBean.paginaVO.registros}"
+					styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+					footerClass="tituloTabla" border="0" cellpadding="3px"
+					cellspacing="0px" columnClasses="everyColumn"
+					rowClasses="renglonTablaUno, renglonTablaDos"
+					rendered="#{empty calendarioCapitalesBean.paginaVO.registros}">
+
+					<t:column>
+						<f:facet name="header">
+							<h:outputText value="#{etq.sinResultados}"></h:outputText>
+						</f:facet>
+					</t:column>
+				</t:dataTable>
+
+				<br />
+				<br />
+				<br />
+				<!-- ============================================TABLA DE RESULTADOS ========================================================================================== -->
+
+				<h:panelGroup id="tablaResultados">
+					<h:graphicImage value="/images/blank.gif" width="900px"
+						height="1px"></h:graphicImage>
+					<h:panelGroup
+						rendered="#{not empty calendarioCapitalesBean.paginaVO.registros}">
+						<table width="100%" border="0">
+							<tr>
+								<td align="left" class="textoEstadoCuenta"><a4j:commandLink
+										id="control_bitacora_primero"
+										action="#{calendarioCapitalesBean.irPrimeraPagina}"
+										rendered="#{calendarioCapitalesBean.irAlPrimero}"
+										reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+											border="0" />
+									</a4j:commandLink> <a4j:commandLink id="control_bitacora_atras_fast"
+										action="#{calendarioCapitalesBean.retrocederPaginasRapido}"
+										rendered="#{calendarioCapitalesBean.retrocederRapido}"
+										reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+											border="0" />
+									</a4j:commandLink> <a4j:commandLink id="control_bitacora_atras"
+										action="#{calendarioCapitalesBean.retrocederPagina}"
+										rendered="#{calendarioCapitalesBean.retroceder}"
+										reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+											border="0" />
+									</a4j:commandLink> <a4j:commandLink id="control_bitacora_adelante"
+										action="#{calendarioCapitalesBean.avanzarPagina}"
+										rendered="#{calendarioCapitalesBean.avanzar}"
+										reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+											border="0" />
+									</a4j:commandLink> <a4j:commandLink id="control_bitacora_adelante_fast"
+										action="#{calendarioCapitalesBean.avanzarPaginasRapido}"
+										rendered="#{calendarioCapitalesBean.avanzarRapido}"
+										reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+											border="0" />
+
+									</a4j:commandLink> <a4j:commandLink id="control_bitacora_ultimo"
+										action="#{calendarioCapitalesBean.irUltimaPagina}"
+										rendered="#{calendarioCapitalesBean.irAlUltimo}"
+										reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+											border="0" />
+									</a4j:commandLink> <br /> <h:outputText value="#{etq.mostrando}"
+										styleClass="textoResumen" /> <h:outputText
+										value="#{calendarioCapitalesBean.numeroPagina}"
+										styleClass="textoResumen" /> <h:outputText value="#{etq.de}"
+										styleClass="textoResumen" /> <h:outputText
+										value="#{calendarioCapitalesBean.totalPaginas}"
+										styleClass="textoResumen" /> <h:outputText
+										value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+									&#160;&#160;&#160; <h:outputText
+										value="#{calendarioCapitalesBean.totalRegistros}"
+										styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+									&#160; <h:outputText styleClass="textoResumen"
+										value="#{etq.registrosEncontrados}" /></td>
+								<td align="right" class="textoEstadoCuenta"><h:outputText
+										escape="false" value="#{etq.registrosPorPagina}"
+										styleClass="textoResumen" /> <h:selectOneMenu
+										id="tamanioPagina" styleClass="textoResumen"
+										value="#{calendarioCapitalesBean.paginaVO.registrosXPag}">
+										<f:selectItem itemLabel="1" itemValue="1" />
+										<f:selectItem itemLabel="2" itemValue="2" />
+										<f:selectItem itemLabel="5" itemValue="5" />
+										<f:selectItem itemLabel="10" itemValue="10" />
+										<f:selectItem itemLabel="20" itemValue="20" />
+										<f:selectItem itemLabel="50" itemValue="50" />
+										<f:selectItem itemLabel="100" itemValue="100" />
+										<a4j:support event="onchange"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,mensajeUsuario"
+											action="#{calendarioCapitalesBean.ejecutarConsulta}">
+											<f:setPropertyActionListener value="false"
+												target="#{calendarioCapitalesBean.banderaBitacoraConsulta}" />
+										</a4j:support>
+									</h:selectOneMenu></td>
+							</tr>
+						</table>
+					</h:panelGroup>
+					
+					<table border="0" class="tablaGeneral" width="100%"
+						cellspacing="0px"
+						style="display: #{empty calendarioCapitalesBean.paginaVO.registros?'none':'inline-table'}">
+						<!--====================================== ENCABEZADOS =============================================================-->
+						<tr>
+							<th class="tituloTabla" rowspan='2'>
+                           		<h:outputText value="#{etq.hora}" /><br/>
+                           		<h:outputText value="#{etq.recepcionMinus}" />                            		                            	
+                           	</th>
+	
+							<th class="tituloTabla" rowspan='4'> 
+                           		<h:outputText value="#{etq.numeroEvento}" />                            		
+                           	</th>
+							<th class="tituloTabla" rowspan='4'>
+                           		<h:outputText value="#{etq.folioMinus}" /><br/>
+                           		<h:outputText value="#{etq.calIndeval}" />                            	
+                           	</th>
+	
+							 <th class="tituloTabla" rowspan='4'>
+                               	<h:outputText value="#{etq.calTipo}" /><br/>
+                               	<h:outputText value="#{etq.mensajeMinus}" />
+                            </th>
+                               
+                            <th class="tituloTabla" rowspan='4'>
+                               	<h:outputText value="#{etq.calTipo}" /><br/>
+                               	<h:outputText value="#{etq.derecho}" /><br/>
+                               	<h:outputText value="#{etq.calCaevCamv}" />
+                            </th>
+                            	<th class="tituloTabla" rowspan='4'> 
+                           		<h:outputText value="#{etq.subtipoDerecho}" />                            		
+                           	</th>
+	
+							<th class="tituloTabla" rowspan='4'>
+                               	<h:outputText value="#{etq.estado}" /><br/>
+                           		<h:outputText value="#{etq.calDel}" /><br/>
+                           		<h:outputText value="#{etq.mensajeMinus}" />
+                            </th>
+	
+							<th class="tituloTabla">
+								<h:outputText value="#{etq.tv} / #{etq.emisoraMinus}" />															
+							</th>
+	
+							<th class="tituloTabla" rowspan='2'>
+                               	<h:outputText value="#{etq.fechaMinus}" /><br/>
+                               	<h:outputText value="#{etq.calExdate}" />
+                            </th>
+							<th class="tituloTabla" rowspan='2'>
+                               	<h:outputText value="#{etq.fechaDe}" /><br/>
+                               	<h:outputText value="#{etq.pago}" />
+                               </th>
+							 <th class="tituloTabla" rowspan='4'>
+                               	<h:outputText value="#{etq.calDueBill}" /><br/>
+                               	<h:outputText value="#{etq.calOffDate}" />
+                               </th>
+							<th class="tituloTabla" rowspan='2'>
+                               	<h:outputText value="#{etq.calRatio}" /><br/>
+                               	<h:outputText value="#{etq.brutoMinus}" />
+                               </th>
+							<th class="tituloTabla" rowspan='4'>
+                               	<h:outputText value="#{etq.calPosicion}" /><br/>
+                               	<h:outputText value="#{etq.calIndeval}" />
+                               </th>
+							<th class="tituloTabla" rowspan='4'>
+                               	<h:outputText value="#{etq.calImporteBruto}" />                                	
+                               </th>
+							<th class="tituloTabla" rowspan='4'>
+                               	<h:outputText value="#{etq.divisaMinus}" />
+                               </th>
+							<th class="tituloTabla" rowspan='2'>
+                               	<h:outputText value="#{etq.calRetencion}" />                                	
+                               </th>
+							<th class="tituloTabla" rowspan='4'>
+                               	<h:outputText value="#{etq.fuente}" />
+                               </th>
+							<th class="tituloTabla" rowspan='4'>
+                               	<h:outputText value="#{etq.bovedaMinus}" />
+                               </th>
+							<th class="tituloTabla" rowspan='4'>
+                               	<h:outputText value="#{etq.fechasMinus}" /><br/>
+                               	<h:outputText value="#{etq.calAdicionales}" />
+                               </th>
+							<th class="tituloTabla" rowspan='4'>
+                               	<h:outputText value="#{etq.estado}" /><br/>
+                               	<h:outputText value="#{etq.calIndeval}" />
+                               </th>
+							<th class="tituloTabla" rowspan='4'>
+                               	<h:outputText value="#{etq.estadoEmision} " />
+                              
+                               </th>
+							<th class="tituloTabla" rowspan='4'>
+                               	<h:outputText value="#{etq.narrativa}" />
+                            </th>
+							<th class="tituloTabla" rowspan='4'>
+								<table>
+							  		<tr>
+							  			<td>
+											<a4j:commandButton id="botonEjecutar" value="#{etq.enviar}" styleClass="submit"
+												onclick="this.disabled=true;getCambiosDestinatario();if(!confirmaEjecutar()){this.disabled=false;return false;}"	
+												oncomplete="this.disabled=false;presentarCriterios();limpiarTodos();"																				
+												actionListener="#{calendarioCapitalesBean.ejecutarEnvioMensaje}"
+												reRender="containerResultados,totalesConsultas,tablaResultados,botones,mensajeUsuario,panelResumen"
+												tabindex="7">											
+											</a4j:commandButton>
+							 			</td>
+							  		</tr>
+									<tr>
+										<td>
+											<h:selectOneMenu styleClass="textoControles" id="destinatarioSeleccionCombo"
+												tabindex="140" onchange="cambiarComboAll(this);" >										 										 
+												<f:selectItem itemValue="-1" itemLabel="Selecciona" />
+												<f:selectItem itemValue="TODOS" itemLabel="TODOS" />													
+												<f:selectItems value="#{calendarioCapitalesBean.destinatarios}" />																					
+											</h:selectOneMenu> 
+										</td>
+									</tr>
+								</table>
+							</th>
+						</tr>
+						<tr>
+							<th class="tituloTabla">
+								<h:outputText value="#{etq.serieMinus} / #{etq.cuponMinus}" />
+							</th>						
+						</tr>
+						<tr>
+							<th class="tituloTabla" rowspan='2'>
+                           		<h:outputText value="#{etq.hora}" /><br/>
+                           		<h:outputText value="#{etq.calEnvio}" />                         	
+                           	</th>
+							<th class="tituloTabla" >
+								<h:outputText value="#{etq.isin}" />
+							</th>
+							<th class="tituloTabla" rowspan='2'>
+                               	<h:outputText value="#{etq.fechaDe}" /><br/>
+                               	<h:outputText value="#{etq.calCorte}" />
+                               </th>
+							<th class="tituloTabla" rowspan='2'>
+                               	<h:outputText value="#{etq.fechaMinus}" /><br/>
+                               	<h:outputText value="#{etq.calEfectiva}" />
+                               </th>
+							<th class="tituloTabla" rowspan='2'>
+                               	<h:outputText value="#{etq.calRatio}" /><br/>
+                               	<h:outputText value="#{etq.netoMinus}" />
+                               </th>
+							<th class="tituloTabla" rowspan='2'>                                	
+                               	<h:outputText value="#{etq.calComision}" />
+                            </th>				
+						</tr>
+						<tr>
+							<th class="tituloTabla" >
+								<h:outputText value="#{etq.calCfi}" />
+							</th>
+						</tr>			
+						<t:dataList id="resultados"
+							value="#{calendarioCapitalesBean.paginaVO.registros}"
+							var="derecho" rowIndexVar="indice">
+							<!-- =============================== DATOS_CONSULTA ========================================= -->
+							<tr>								
+								<td class = "#{(derecho.mapaPropiedades['HoraRecep'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '2'>
+                               		<h:outputText value="#{derecho.fechaHoraRecepcion}" >
+                               			<f:convertDateTime pattern="dd/MM/yyyy HH:mm"  timeZone="America/Mexico_City" />
+                               		</h:outputText>                                		                         		
+                               	</td>
+
+								<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan='4'>
+									<a href="javascript:detalleDerecho(#{derecho.idCalendario});" title="Muestra el mensaje Swift">
+										<h:outputText value="#{derecho.referencia}" />
+									</a>
+								</td>
+									
+								<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan = '4'>
+									<a href="javascript:detalleHistorico(#{derecho.idCalendario});" title="Muestra el Historico">
+										<h:outputText value="#{derecho.idCalendario}" />
+									</a>
+								</td>
+	
+								<td class = "#{(derecho.mapaPropiedades['TipoMsj'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '4'>
+                               		<h:outputText value="#{derecho.tipoMensaje}" />
+                               	</td>
+
+								<td class="#{(derecho.mapaPropiedades['CAEV'] != null or derecho.mapaPropiedades['CAMV'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan='4'>
+								<h:outputText value="#{derecho.tipoPagoCAEV}"
+										rendered="#{!empty derecho.tipoPagoCAEV}"
+										title="#{derecho.tipoPagoCAEVDescripcion}" /> <h:outputText
+										value="-" rendered="#{empty derecho.tipoPagoCAEV}" /> <h:outputText
+										value=" / " /> <h:outputText value="#{derecho.tipoPagoCAMV}"
+										rendered="#{!empty derecho.tipoPagoCAMV}"
+										title="#{derecho.tipoPagoCAMVDescripcion}" /> <h:outputText
+										value="-" rendered="#{empty derecho.tipoPagoCAMV}" /></td>
+
+								<td class = "#{(derecho.mapaPropiedades['SubtipoDer']) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '4'>
+                               		<h:outputText value="#{derecho.valor1}" title="#{calendarioCapitalesBean.mapaSubtipos[derecho.valor1]}" rendered="#{!empty derecho.valor1}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.valor1}"/>
+                               		<h:outputText value=" / "/>
+                               		<h:outputText value="-" rendered="#{empty derecho.valor2}"/>
+                               		<h:outputText value="#{derecho.valor2}" title="#{calendarioCapitalesBean.mapaSubtipos[derecho.valor2]}" rendered="#{!empty derecho.valor2}"/>
+                               		
+                               	</td>
+                               	
+                               	<td class="#{(derecho.mapaPropiedades['funcM'] != null or derecho.mapaPropiedades['EdoProc'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan='4'>                              		
+                               		<h:outputText value="#{derecho.edoFunc}" rendered="#{!empty derecho.edoFunc}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.edoFunc}"/>                                		
+                               		<h:outputText value=" / " />
+                               		<h:outputText value="#{derecho.edoProc}" rendered="#{!empty derecho.edoProc}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.edoProc}"/>
+                               	</td>
+								
+								
+								<td class = "#{(derecho.mapaPropiedades['TV'] != null or derecho.mapaPropiedades['Emisora'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado">                               		
+                               		<h:outputText value="#{derecho.tipoValor}" rendered="#{!empty derecho.tipoValor}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.tipoValor}"/>                                		
+                               		<h:outputText value=" / " />
+                               		<h:outputText value="#{derecho.emisora}" rendered="#{!empty derecho.emisora}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.emisora}"/>                                	
+                               	</td>
+								
+								<td class = "#{(derecho.mapaPropiedades['FXDate'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '2'>
+                               		<h:outputText value="#{derecho.fechaXDate}" rendered="#{!empty derecho.fechaXDate}" >
+                               			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.fechaXDate}"/> 
+                               	</td>
+                               	
+                               	<td class = "#{(derecho.mapaPropiedades['FPago'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '2'>
+                               		<h:outputText value="#{derecho.fechaPago}" rendered="#{!empty derecho.fechaPago}" >
+                               			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.fechaPago}"/>
+                               	</td>
+								
+								<td class = "#{(derecho.mapaPropiedades['FVenc'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '4'>
+                               		<h:outputText value="#{derecho.fechaVencimiento}" rendered="#{!empty derecho.fechaVencimiento}" >
+                               			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.fechaVencimiento}"/>
+                               	</td>
+	
+								<td class = "#{(derecho.mapaPropiedades['GRSS'] != null or derecho.mapaPropiedades['RatioAdic'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '2'>
+                               		<h:outputText value="#{derecho.importeGRSS}" rendered="#{!empty derecho.importeGRSS}">
+                               			<f:convertNumber pattern="###,###,###,###,###,##0.#" maxFractionDigits="12" minFractionDigits="2"/>
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.importeGRSS}"/>                              		
+									<br/>
+									<ui:repeat var="ratio" value="#{derecho.ratioAdicionalLst}" rendered="#{!empty derecho.ratioAdicional}">
+										<h:outputText value="#{ratio}" />
+										<br />
+									</ui:repeat>
+                               	</td>
+                               	
+                               	<td class = "#{(derecho.mapaPropiedades['PosInd'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '4'>
+                               		<h:outputText value="#{derecho.posicionIndeval}" rendered="#{!empty derecho.posicionIndeval}" >
+                               			<f:convertNumber pattern="###,###,###,###,###,###" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.posicionIndeval}"/>
+                               	</td>
+                               	
+                               	<td class = "#{(derecho.mapaPropiedades['ImporteBr'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '4'>        
+                               		<h:outputText value="#{derecho.importeBruto}" rendered="#{!empty derecho.importeBruto}" >
+                               			<f:convertNumber pattern="###,###,###,###,###,##0.#" maxFractionDigits="2" minFractionDigits="2" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.importeBruto}"/>
+                               	</td>
+                               	
+                               	<td class = "#{(derecho.mapaPropiedades['Divisa'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '4'>                                		
+                               		<h:outputText value="#{derecho.divisa}" rendered="#{!empty derecho.divisa}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.divisa}"/>
+                               	</td>
+                               	
+                               <td class = "#{(derecho.mapaPropiedades['WITL'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '2'>
+                               		<h:outputText value="#{derecho.importeWITL}" rendered="#{!empty derecho.importeWITL}" >
+                               			<f:convertNumber pattern="###,###,###,###,###,##0.#" maxFractionDigits="12" minFractionDigits="2" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.importeWITL}"/>                        
+                               	</td>
+                               	
+                               	<td class = "#{(derecho.mapaPropiedades['Custodio'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '4'>                                		
+                               		<h:outputText value="#{derecho.custodio}" rendered="#{!empty derecho.custodio}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.custodio}"/>
+                               	</td>
+                               	
+                               	<td class = "#{(derecho.mapaPropiedades['Boveda'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '4'>                                		
+                               		<h:outputText value="#{derecho.boveda}" rendered="#{!empty derecho.boveda}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.boveda}"/>
+                               	</td>
+
+								<td
+									class="#{derecho.mapaPropiedades['FAdic'] != null ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan='4' nowrap="true">
+									<h:outputText value="-" rendered="#{empty derecho.fechasAdicionales}" />
+									<ui:repeat var="fecha" value="#{derecho.listaFechasDTO}">
+										<h:outputText value="#{fecha.clave}" title="#{calendarioCapitalesBean.mapaDescFechasAd[fecha.clave]}" />
+										<h:outputText value=": " />
+										<h:outputText value="#{fecha.fecha}" />
+										<br />
+									</ui:repeat>
+								</td>
+								<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan = '4'>     
+                               		<h:graphicImage value="/images/#{calendarioCapitalesBean.mapaImagenesEstadosEnvio[derecho.estadoMensajeInt]}" 
+                               		rendered="#{calendarioCapitalesBean.mapaImagenesEstadosEnvio[derecho.estadoMensajeInt] ne null}" title="#{derecho.estadoMensaje}"/> 
+                               		<h:outputText value="-" rendered="#{empty derecho.estadoMensajeInt}"/>
+                               	</td>
+                               	
+                               	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan = '4'>
+                               		<h:outputText value="#{derecho.vEmisionesCalendario}" rendered="#{!empty derecho.vEmisionesCalendario}"/>
+                               		<h:outputText value="DESLISTADA" rendered="#{empty derecho.vEmisionesCalendario}"/> 
+                               	</td>
+								<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan = '4'>
+                               		<a href="javascript:verNarrativasCapitales(#{derecho.idCalendario});">                          	                       
+                            				<h:graphicImage value="/images/search.png"></h:graphicImage>
+                            			</a> 
+                               	</td>
+	
+								  	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan = '4'>
+                               		<h:selectOneMenu styleClass="textoControles" id="slc_none" 
+														 tabindex="370"
+														 rendered="#{derecho.permiteEnvio}"
+														 onfocus="ponNombreId(this,#{derecho.idCalendario});" 
+														 onchange="ponNombreId(this,#{derecho.idCalendario});"
+														 value="#{derecho.destinatario}" disabled="#{!derecho.permiteEnvio}">														 										 		
+												<f:selectItem itemValue="-1" itemLabel="Selecciona" />
+												<f:selectItem itemValue="TODOS" itemLabel="TODOS" />													
+												<f:selectItems value="#{calendarioCapitalesBean.destinatarios}" />																					
+									</h:selectOneMenu>
+									<h:selectOneMenu styleClass="selectDeshabilitado" id="menuDeshabilitado" 
+														 tabindex="370"
+														 rendered="#{!derecho.permiteEnvio}"														 														 
+														 disabled="true">														 										 		
+												<f:selectItem itemValue="-1" itemLabel="Selecciona" />																																																									
+									</h:selectOneMenu>
+							          <br></br>                      
+									<a href="javascript:detalleEnvios(#{derecho.idCalendario}, #{true});" title="Envios Calendario">
+										<h:outputText value="Envios" />
+									</a></td>		
+							</tr>
+							<tr>
+                               	<td class = "#{(derecho.mapaPropiedades['Serie'] != null or derecho.mapaPropiedades['Cupon'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado">                                		
+                               		<h:outputText value="#{derecho.serie}" rendered="#{!empty derecho.serie}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.serie}"/>                                		
+                               		<h:outputText value=" / " />
+                               		<h:outputText value="#{derecho.cupon}" rendered="#{!empty derecho.cupon}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.cupon}"/>                                	
+                               	</td>                               	                                                   	
+                           	</tr>
+                           	<tr>
+                           		<td class = "#{indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos'} centrado" rowspan = '2'>                                		
+                               		<h:outputText value="#{derecho.fechaPrimerEnvio}" rendered="#{!empty derecho.fechaPrimerEnvio}" >
+                               			<f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="America/Mexico_City" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.fechaPrimerEnvio}" />                                		
+                               	</td>
+                           		<td class = "#{(derecho.mapaPropiedades['Isin'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado">                                		
+                               		<h:outputText value="#{derecho.isin}" rendered="#{!empty derecho.isin}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.isin}"/>                                		                                                    
+                               	</td>
+                               	    <td class = "#{(derecho.mapaPropiedades['FCorte'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '2'>                                		
+                               		<h:outputText value="#{derecho.fechaCorte}" rendered="#{!empty derecho.fechaCorte}" >
+                               			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.fechaCorte}"/>
+                               	</td>
+                               	
+                               	<td class = "#{(derecho.mapaPropiedades['FEfect'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '2'>                                		
+                               		<h:outputText value="#{derecho.fechaEfectiva}" rendered="#{!empty derecho.fechaEfectiva}" >
+                               			<f:convertDateTime pattern="dd/MM/yyyy" timeZone="America/Mexico_City" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.fechaEfectiva}"/>
+                               	</td>
+                               	
+                               	<td class = "#{(derecho.mapaPropiedades['NETT'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '2'>                                		
+                               		<h:outputText value="#{derecho.importeNETT}" rendered="#{!empty derecho.importeNETT}" >
+                               			<f:convertNumber pattern="###,###,###,###,###,##0.#" maxFractionDigits="12" minFractionDigits="2" />
+                               		</h:outputText> 
+                               		<h:outputText value="-" rendered="#{empty derecho.importeNETT}"/> 
+                               	</td>
+                               	<td class = "#{(derecho.mapaPropiedades['FEE'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" rowspan = '2'>                                		
+                               		<h:outputText value="#{derecho.importeFEE}" rendered="#{!empty derecho.importeFEE}" >
+                               			<f:convertNumber pattern="###,###,###,###,###,##0.#" maxFractionDigits="12" minFractionDigits="2" />
+                               		</h:outputText>
+                               		<h:outputText value="-" rendered="#{empty derecho.importeFEE}"/> 
+                               	</td>                                	
+                            </tr>
+                            <tr>
+                           		<td class = "#{(derecho.mapaPropiedades['Cfi'] != null) ? 'renglonTablaTres' : (indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado">                                		
+                               		<h:outputText value="#{derecho.cfi}" rendered="#{!empty derecho.cfi}"/>
+                               		<h:outputText value="-" rendered="#{empty derecho.cfi}"/>                                		                                                    
+                               	</td>                            	
+                           	</tr> 				
+						</t:dataList>
+					</table>					
+				</h:panelGroup>
+                <h:inputHidden id="envio_mensaje_C" value ="#{calendarioCapitalesBean.idsDestinatarios}"/>
+				<!-- ======================================= EXPORTAR ============================================================ -->
+				<h:panelGroup id="totalesConsultas"
+                   rendered="#{not empty calendarioCapitalesBean.paginaVO.registros}">
+                       <table cellpadding="0" cellspacing="0" border="0" align="center" width="900px">
+                        <tr>
+                            <td width="100%">
+                                <div id="divControlesReportes" style="display: inline;">
+                                    <table cellpadding="0" cellspacing="0" border="0" align="center" width="100%">
+                                        <tr align="right">
+                                            <td align="right">
+                                                <h:panelGroup id="divReportes"  style="float: right; text-align: right;">
+                                                    <h:outputText value="Exportar los resultados"></h:outputText>
+                                                    <h:commandButton id="generarPdf"
+                                                        action="calendarioCapitalesPDF"
+                                                        actionListener="#{calendarioCapitalesBean.generarReportes}"
+                                                        image="/images/pdf.gif"
+                                                        title="Exportar a PDF todos los resultados de la consulta"
+                                                        immediate="true"
+                                                        onclick="bloquearSeccionReportes();"/>
+                                                    &#160;&#160;
+                                                    <h:commandButton id="generarXls"
+                                                        action="calendarioCapitalesXLS"
+                                                        actionListener="#{calendarioCapitalesBean.generarReportes}"
+                                                        image="/images/excel-file.gif"
+                                                        title="Exportar a XLS todos los resultados de la consulta"
+                                                        immediate="true"
+                                                        onclick="bloquearSeccionReportes();"/>
+                                                    &#160;&#160;                                                  
+                                                </h:panelGroup>
+                                            </td>
+                                        </tr>                                
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100%" align="right">
+                                <div id="monitorPeticionReporte" style="display: none;">
+                                    <h:panelGroup id="panelMonitorPeticionReporte">
+                                        <h:graphicImage value="/images/ajax-loader.gif" />
+                                        &#160;&#160;
+                                        <h:outputText value="#{etq.reporteEnProceso}" />
+                                        <a4j:commandButton id="btnActualizarEstadoPeticion"
+                                            image="/images/transparent.gif"
+                                            styleClass="submit"
+                                            actionListener="#{calendarioCapitalesBean.actualizarEstadoPeticion}"
+                                            reRender="panelMonitorPeticionReporte"
+                                            oncomplete="desbloquearSeccionReportes(#{calendarioCapitalesBean.peticionReporteCompleta});"/>
+                                    </h:panelGroup>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+               </h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+
+	</ui:composition>
+	<!-- FIN DEL DECORATE -->
+</html>

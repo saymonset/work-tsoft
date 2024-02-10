@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:pdf="http://indeval.com/jsf/pdf"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+<pdf:document documentName="DetalleLiqParciales" documentTitle="Consulta Liquidaciones Parciales"
+              landscape="true" institucion="#{consultaOperacionesBean.agenteFirmado.id} #{consultaOperacionesBean.agenteFirmado.folio} #{consultaOperacionesBean.agenteFirmado.razon}"
+			  fecha="#{consultaOperacionesBean.fechaActual}" imageResource="/images/indeval.jpg">
+
+	<pdf:table value="#{consultaOperacionesBean.detalleLiquidacionParcial.lstLiquidacionParcial}" currentBean="detalle" widthPercentage="100" maxColums="5"
+				rendered="#{consultaOperacionesBean.detalleLiquidacionParcial.tipoOperacionSic eq '540'}">
+		<pdf:row>
+			<pdf:col align="LEFT" collspan="5" header="Detalle Liquidaciones Parciales"
+				value="" />
+		</pdf:row>
+		<pdf:row>
+			<pdf:col align="CENTER" header="#{etq.folioControl}" value="#{detalle.folioControlLiquidacion}" />
+			<pdf:col align="CENTER" header="#{etq.fechaHoraLiquidacionTlp}" value="#{detalle.fechaLiquidacion}" footer="#{etq.totalParcialidades}">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss"/>
+		    </pdf:col> 	
+			<pdf:col align="CENTER" header="#{etq.parcialLiquidado}" value="#{detalle.parcialLiquidado}" footer="#{consultaOperacionesBean.paginaVO.valores['totalMonto']}">
+				<f:convertNumber pattern="###,###,###,###,###,##0" />
+			</pdf:col>
+			<pdf:col align="CENTER" header="#{etq.remanente}" value="#{detalle.remanente}" footer="#{consultaOperacionesBean.detalleLiquidacionParcial.remanenteOperacion}">
+				<f:convertNumber pattern="###,###,###,###,###,##0" />
+			</pdf:col>
+			<pdf:col align="CENTER" header="#{etq.estatusParcialidad}" value="#{detalle.estatusOperacion.descEstatusOperacion}" />
+		</pdf:row>
+	</pdf:table>
+
+	<pdf:table value="#{consultaOperacionesBean.detalleLiquidacionParcial.lstLiquidacionParcial}" currentBean="detalle" widthPercentage="100" maxColums="7"
+				rendered="#{consultaOperacionesBean.detalleLiquidacionParcial.tipoOperacionSic eq '541'}">
+		<pdf:row>
+			<pdf:col align="LEFT" collspan="7" header="Detalle Liquidaciones Parciales"
+				value="" />
+		</pdf:row>
+		<pdf:row>
+			<pdf:col align="CENTER" header="#{etq.folioControl}" value="#{detalle.folioControlLiquidacion}" />
+			<pdf:col align="CENTER" header="#{etq.fechaHoraLiquidacionTlp}" value="#{detalle.fechaLiquidacion}" footer="#{etq.totalParcialidades}">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss"/>
+		    </pdf:col> 	
+			<pdf:col align="CENTER" header="#{etq.parcialLiquidado}" value="#{detalle.parcialLiquidado}" footer="#{consultaOperacionesBean.paginaVO.valores['totalMonto']}">
+				<f:convertNumber pattern="###,###,###,###,###,##0" />
+			</pdf:col>
+			<pdf:col align="CENTER" header="#{etq.remanente}" value="#{detalle.remanente}" footer="#{consultaOperacionesBean.detalleLiquidacionParcial.remanenteOperacion}" >
+				<f:convertNumber pattern="###,###,###,###,###,##0" />
+			</pdf:col>
+			<pdf:col align="CENTER" header="#{etq.efectivoParcial}" value="#{detalle.parcialLiquidadoEfectivo}" footer="#{consultaOperacionesBean.paginaVO.valores['totalMontoEfectivo']}">
+				<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+			</pdf:col>
+			<pdf:col align="CENTER" header="#{etq.remanenteEfectivo}" value="#{detalle.remanenteEfectivo}" footer="#{consultaOperacionesBean.detalleLiquidacionParcial.remanenteEfectivoOperacion}">
+				<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+			</pdf:col>
+			<pdf:col align="CENTER" header="#{etq.estatusParcialidad}" value="#{detalle.estatusOperacion.descEstatusOperacion}" />
+		</pdf:row>
+	</pdf:table>
+
+</pdf:document>
+</html>

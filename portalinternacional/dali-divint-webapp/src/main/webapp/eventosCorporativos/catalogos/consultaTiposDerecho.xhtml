@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	
+	<ui:composition template="/layoutConsultas.xhtml">
+	
+		<ui:define name="tituloEncabezado">
+
+		</ui:define>
+		
+		<ui:define name="head">			
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/eventosCorporativos.js">
+			</script>
+		</ui:define>
+		<ui:define name="tituloSeccion">
+			<h:outputText value="Tipos de derecho" />
+		</ui:define>
+
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="Consulta Tipos Derecho"></h:outputText>
+		</ui:define>
+
+		<ui:define name="criterios">
+
+			<h:outputText value="#{tiposDerechoEventoCorporativoBean.init}" />
+			<a4j:keepAlive beanName="tiposDerechoEventoCorporativoBean"/>
+			<h:panelGroup id="mensajeUsuario">
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+				
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+				</div>
+			</h:panelGroup>
+			<!-- Criterios de Busqueda -->
+			<h:panelGroup id="panelCriterios">				
+				<div style='display: "inline"' id="divCriterios">
+					<table width="400px" border="0" cellpadding="0px" cellspacing="5px"
+						align="center">
+						<tr>							
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto" value="Mercado:" />
+										</td>
+										
+										<td align="center">
+											<h:outputText styleClass="texto" value="Tipo Derecho:" />
+										</td>
+										
+										<td align="center">
+											<h:outputText styleClass="texto" value="Estado:" />
+										</td>
+									</tr>
+									<tr>
+										
+										<td align="center">
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{tiposDerechoEventoCorporativoBean.idTipoDerecho}" tabindex="140" >
+												<f:selectItem itemValue="ML" itemLabel="Derecho ML" />
+												<f:selectItem itemValue="MO" itemLabel="Derecho MO" />
+												<f:selectItem itemValue="-1" itemLabel="Ambos" />										
+											</h:selectOneMenu>
+											
+										</td>
+										<td align="center">
+											<h:inputText autocomplete="off" id="inputNombre" styleClass="textoControles" value="#{tiposDerechoEventoCorporativoBean.nombre}" ></h:inputText>
+										</td>
+										<td align="center">
+											<h:selectOneMenu styleClass="textoControles"
+												value="#{tiposDerechoEventoCorporativoBean.activo}" tabindex="140" >
+												<f:selectItem itemValue="1" itemLabel="Inactivo" />
+												<f:selectItem itemValue="0" itemLabel="Activo" />
+												<f:selectItem itemValue="-1" itemLabel="Ambos" />										
+											</h:selectOneMenu>	
+								<a4j:commandButton id="control_bitacora_actual"
+						            action="#{tiposDerechoEventoCorporativoBean.irPaginaActual}"
+						            style="visibility: hidden;"               
+					            	reRender="containerResultados">          
+						        </a4j:commandButton>										
+										</td>																										
+									</tr>
+								</table>
+							</td>	
+						</tr>					
+					</table>
+				</div>
+			</h:panelGroup>
+						<!-- Resumen -->
+			<!-- Resumen -->
+			<h:panelGroup id="panelResumen">
+				<h:panelGroup rendered="#{tiposDerechoEventoCorporativoBean.consultaEjecutada}">
+					<div id="divResumen" style="display: #{tiposDerechoEventoCorporativoBean.consultaEjecutada ? 'inline':'none'}">
+						<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+							<tr>
+								<td class="recuadroTabla">
+									<table class="tablaCriterios texto" border="0" style="text-align: center">
+										
+										<tr>
+											<td align="center">
+												<h:outputText styleClass="texto" value="Mercado" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="Tipo Derecho" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="Estado" />
+											</td>
+										</tr>
+										<tr align="center">
+											<td>
+												<h:panelGroup>
+	                                            <h:outputText styleClass="texto" value="Derecho ML" rendered="#{ tiposDerechoEventoCorporativoBean.idTipoDerecho eq 'ML'}"/>
+	                                            <h:outputText styleClass="texto" value="Derecho MO" rendered="#{ tiposDerechoEventoCorporativoBean.idTipoDerecho eq 'MO'}"/>	                                            
+	                                            <h:outputText styleClass="texto" value="Ambos" rendered="#{ tiposDerechoEventoCorporativoBean.idTipoDerecho eq '-1'}"/>
+												</h:panelGroup>
+											</td>
+											<td>
+												<h:panelGroup>	                                            
+	                                            <h:outputText styleClass="texto" value="Todos" rendered="#{empty tiposDerechoEventoCorporativoBean.nombre}"/>	                                            
+	                                            <h:outputText styleClass="texto" value="#{tiposDerechoEventoCorporativoBean.nombre}" rendered="#{!empty tiposDerechoEventoCorporativoBean.nombre}"/>
+												</h:panelGroup>
+											</td>
+											<td>
+												<h:panelGroup>
+	                                            <h:outputText styleClass="texto" value="Inactivo" rendered="#{ tiposDerechoEventoCorporativoBean.activo eq '1'}"/>
+	                                           	<h:outputText styleClass="texto" value="Activo" rendered="#{ tiposDerechoEventoCorporativoBean.activo eq '0'}"/>
+	                                            <h:outputText styleClass="texto" value="Ambos" rendered="#{ tiposDerechoEventoCorporativoBean.activo eq '-1'}"/>
+												</h:panelGroup>
+											</td>
+										</tr>
+									</table>	
+								</td>
+							</tr>
+						</table>	
+					</div>
+				</h:panelGroup>			
+			</h:panelGroup>
+			</ui:define>
+			<ui:define name="botones">
+		<!-- Botones -->
+				<h:panelGroup id="botones">	
+					<div  class="nuevo" style="text-align: center;" >            
+		            	<h:commandButton styleClass="submit"
+		            		id="botonNuevoTipoDerecho"
+							image="/images/transparent.gif"							
+							onclick='javascript:editaCuenta(0);return false;' />               	
+		           	</div>
+					<div class="limpiar">
+						<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+							styleClass="submit" 
+							onclick="limpiarTodos();"
+							actionListener="#{tiposDerechoEventoCorporativoBean.limpiar}" 
+							tabindex="8"/>
+					</div>
+					<div class="buscar">
+						<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+							styleClass="submit"
+							oncomplete='javascript:presentarResumen();limpiarTodos()'
+							actionListener="#{tiposDerechoEventoCorporativoBean.buscarDerechos}"
+							reRender="containerResultados,totalesConsultas,tablaResultados,botones,mensajeUsuario,panelResumen"
+							tabindex="7">
+							                        <f:setPropertyActionListener value="true"
+                                                     target="#{tiposDerechoEventoCorporativoBean.banderaBitacoraConsulta}" />
+						</a4j:commandButton>
+					</div>
+					<div class="editar" style="display:#{tiposDerechoEventoCorporativoBean.consultaEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios">            
+	            	<input type="image" class="submit"
+						src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+						alt="Editar Criterios" title="Editar Criterios"
+						onclick='presentarCriterios();limpiarTodos();return false;' />                      	
+	           	</div>
+				</h:panelGroup>
+			</ui:define>
+			
+		<ui:define name="seccionContenido">	
+				<h:panelGroup id="containerResultados">
+			
+			<t:dataTable id="noExistenResultados"
+						value="#{tiposDerechoEventoCorporativoBean.paginaVO.registros}"
+						styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+						footerClass="tituloTabla" border="0" cellpadding="3px"
+						cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos" style="width:100%;"
+						rendered="#{empty tiposDerechoEventoCorporativoBean.paginaVO.registros &amp;&amp; tiposDerechoEventoCorporativoBean.consultaEjecutada}">
+
+						<t:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.sinResultados}"></h:outputText>
+							</f:facet>
+						</t:column>
+			</t:dataTable>
+				<h:panelGroup id="tablaResultados">	
+				<h:graphicImage value="/images/blank.gif" width="900px"	height="1px"></h:graphicImage>
+				<!-- Navegacion -->
+					<h:panelGroup
+							rendered="#{not empty tiposDerechoEventoCorporativoBean.paginaVO.registros}">
+							<table width="100%" border="0">
+								<tr>
+									<td align="left" class="textoEstadoCuenta">
+										<a4j:commandLink id="control_bitacora_primero"
+											action="#{tiposDerechoEventoCorporativoBean.irPrimeraPagina}"
+											rendered="#{tiposDerechoEventoCorporativoBean.irAlPrimero}"
+											reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,containerResultados">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_atras_fast"
+											action="#{tiposDerechoEventoCorporativoBean.retrocederPaginasRapido}"
+											rendered="#{tiposDerechoEventoCorporativoBean.retrocederRapido}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_atras"
+											action="#{tiposDerechoEventoCorporativoBean.retrocederPagina}"
+											rendered="#{tiposDerechoEventoCorporativoBean.retroceder}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+												border="0" />
+										</a4j:commandLink>
+										<a4j:commandLink id="control_bitacora_adelante"
+											action="#{tiposDerechoEventoCorporativoBean.avanzarPagina}"
+											rendered="#{tiposDerechoEventoCorporativoBean.avanzar}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_adelante_fast"
+											action="#{tiposDerechoEventoCorporativoBean.avanzarPaginasRapido}"
+											rendered="#{tiposDerechoEventoCorporativoBean.avanzarRapido}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+												border="0" />
+
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_ultimo"
+											action="#{tiposDerechoEventoCorporativoBean.irUltimaPagina}"
+											rendered="#{tiposDerechoEventoCorporativoBean.irAlUltimo}"
+											reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+												border="0" />
+										</a4j:commandLink>
+
+										<br />
+										<h:outputText value="#{etq.mostrando}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{tiposDerechoEventoCorporativoBean.numeroPagina}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+										<h:outputText value="#{tiposDerechoEventoCorporativoBean.totalPaginas}"
+											styleClass="textoResumen" />
+										<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+										&#160;&#160;&#160;
+										<h:outputText
+											value="#{tiposDerechoEventoCorporativoBean.paginaVO.totalRegistros}"
+											styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+										&#160;
+										<h:outputText styleClass="textoResumen"
+											value="#{etq.registrosEncontrados}" />
+									</td>
+									<td align="right" class="textoEstadoCuenta">
+										<h:outputText escape="false" value="#{etq.registrosPorPagina}"
+											styleClass="textoResumen" />
+										<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+											value="#{tiposDerechoEventoCorporativoBean.paginaVO.registrosXPag}">
+											<f:selectItem itemLabel="1" itemValue="1" />
+											<f:selectItem itemLabel="2" itemValue="2" />
+											<f:selectItem itemLabel="5" itemValue="5" />
+											<f:selectItem itemLabel="10" itemValue="10" />
+											<f:selectItem itemLabel="20" itemValue="20" />
+											<f:selectItem itemLabel="50" itemValue="50" />											
+											<a4j:support event="onchange"
+												reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,mensajeUsuario"
+												action="#{tiposDerechoEventoCorporativoBean.ejecutarConsulta}" 
+												ajaxSingle="true">
+                                            </a4j:support>
+										</h:selectOneMenu>&#160;&#160;&#160;&#160;&#160;
+									</td>
+								</tr>
+							</table>
+						</h:panelGroup>		
+				<!-- Fin Navegacion -->
+					<h:panelGroup
+							rendered="#{not empty tiposDerechoEventoCorporativoBean.paginaVO.registros}">
+							<h:dataTable id="resultados"
+							value="#{tiposDerechoEventoCorporativoBean.paginaVO.registros}"
+							var="detalle"
+							rendered="#{not empty tiposDerechoEventoCorporativoBean.paginaVO.registros}"
+							styleClass="tablaGeneral centrado" headerClass="tituloTabla" width="100%"
+							footerClass="texto textoPeque12" border="0" cellpadding="3px"
+							cellspacing="0px" columnClasses="everyColumn"
+							rowClasses="renglonTablaUno, renglonTablaDos">
+							
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="Id" />
+									</f:facet>                       	                       
+   										<h:outputText styleClass="texto textoPeque12" value="#{detalle.idTipoDerecho}" /> 
+								</h:column>
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="Tipo Derecho" />
+									</f:facet>
+										<h:outputText styleClass="texto textoPeque12" value="#{detalle.tipoDerecho}" /> 
+								</h:column>
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="Mercado" />
+									</f:facet>
+										<h:outputText styleClass="texto textoPeque12" value="#{detalle.tipo}" />                 
+								</h:column>	
+								<h:column >
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value="Estado" />
+									</f:facet>
+										<h:outputText styleClass="texto textoPeque12" value="#{detalle.inactivo == 0 ? 'Activo': 'Inactivo' }" />                 
+								</h:column>	
+													<!-- Editar -->
+								<h:column>
+									<f:facet name="header">
+										<h:outputText styleClass="texto textoPeque12" value=""/>
+									</f:facet>
+									<h:panelGroup rendered="true">
+										<a href="javascript:editaCuenta(#{detalle.idTipoDerecho});" title="Edita el tipo de Derecho">
+											<img src="#{facesContext.externalContext.requestContextPath}/images/edit.png"  />
+										</a>
+									</h:panelGroup>					
+								</h:column>							
+							</h:dataTable>
+				
+					</h:panelGroup>	
+					
+					<h:panelGroup id="totalesConsultas" rendered="true">					
+				<table cellpadding="0" cellspacing="0" border="0" align="center" width="900px">
+					<tr align="right">
+						<td align="right">
+							<h:panelGroup id="botonesExportar">
+								<h:panelGroup
+									style="display: #{(tiposDerechoEventoCorporativoBean.consultaEjecutada and not empty tiposDerechoEventoCorporativoBean.paginaVO.registros)? 'inline' : 'none'}">
+	
+									<h:outputText value="Exportar los resultados"></h:outputText>
+									
+									<h:commandButton actionListener="#{tiposDerechoEventoCorporativoBean.generarReportes}"
+										action="tiposDerechoPDF"
+										image="/images/pdf.gif"
+										title="Exportar a PDF todos los resultados de la consulta"
+										id="generarPdf"
+										onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);" />
+	                         				&#160;&#160;
+	
+	                   				<h:commandButton actionListener="#{tiposDerechoEventoCorporativoBean.generarReportes}"
+	                   					action="tiposDerechoXLS"
+	                   					image="/images/excel-file.gif"
+	                   					title="Exportar a Excel todos los resultados de la consulta" 
+	              						id="generarExcel"
+	              						onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);" >
+	                   				</h:commandButton>
+	                   				<div id="monitorPeticionReporte" style="display: none;">
+											<h:panelGroup id="panelMonitorPeticionReporte">
+												<h:graphicImage value="/images/ajax-loader.gif" />
+												&#160;&#160;
+												<h:outputText value="#{etq.reporteEnProceso}" />
+												<a4j:commandButton id="btnActualizarEstadoPeticion"
+													image="/images/transparent.gif"
+													styleClass="submit"
+													actionListener="#{tiposDerechoEventoCorporativoBean.actualizarEstadoPeticion}"
+													reRender="panelMonitorPeticionReporte"
+													oncomplete="desbloquearBotonesReportes(#{tiposDerechoEventoCorporativoBean.peticionReporteCompleta}, ['generarExcel', 'generarPdf']);"/>
+											</h:panelGroup>
+									</div>
+								</h:panelGroup>
+							</h:panelGroup>
+	
+						</td>
+					</tr>
+				</table>
+			</h:panelGroup>
+			</h:panelGroup>	
+					</h:panelGroup>
+										<!-- ================================= EXPORTAR ============================================================ -->
+			
+							<!-- ================================= FIN EXPORTAR ============================================================ -->
+							<br/>
+							
+	
+				
+				
+		</ui:define>
+			<!-- Fin Criterios de Busqueda -->		
+
+	
+	
+	
+	
+	</ui:composition>
+
+
+</html>
+      

@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	
+	<ui:composition template="/layoutConsultasCatalogos.xhtml">
+
+		<ui:define name="configuracion">
+			<a4j:keepAlive beanName="listaDistribucionBean" />
+			<h:outputText value="#{listaDistribucionBean.init}" />
+		</ui:define>
+
+		<ui:define name="head">
+			<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/catalogos.js" />
+		</ui:define>
+
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etqEventosCorporativos.eventosCorporativos}" />
+		</ui:define>
+
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etqEventosCorporativos.listasDistribucion}" />
+		</ui:define>
+
+		<!-- Seccion de mensajes usuarios -->
+		<ui:define name="mensajesUsuario">
+			<h:panelGroup id="panelMensajeUsuario">
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;
+							</h:panelGroup>
+						</f:facet>
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;
+							</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning"></p>
+					</div>
+				</div>
+			</h:panelGroup>
+		</ui:define>
+
+		<!-- Criterios de Busqueda -->
+		<ui:define name="criterios">
+			<h:panelGroup id="panelCriterios">
+				<h:panelGroup rendered="#{listaDistribucionBean.mostrarCriteriosBusqueda}">
+					<table width="100%" border="0" cellpadding="0px" cellspacing="5px" align="center">
+						<tr>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etqEventosCorporativos.nombreLista}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etqEventosCorporativos.estado}" />
+										</td>
+									</tr>
+									<tr>
+										<td align="center">
+											<h:inputText autocomplete="off" id="nombreListaDistribucion"
+												value="#{listaDistribucionBean.nombreListaDistribucion}" styleClass="texto" />
+										</td>
+										<td align="center">
+											<h:selectOneMenu id="selectEstatusLista" value="#{listaDistribucionBean.estatusLista}" styleClass="textoControles" >
+												<f:selectItems value="#{listaDistribucionBean.comboEstatus}"/>
+											</h:selectOneMenu>
+										</td>																										
+									</tr>
+								</table>
+							</td>	
+						</tr>					
+					</table>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+		
+		<!-- Resumen de los criterios de busqueda -->
+		<ui:define name="resumenCriterios">
+			<h:panelGroup id="panelResumenCriterio">
+				<h:panelGroup rendered="#{listaDistribucionBean.mostrarResumenBusqueda}">
+					<table width="100%" border="0" cellpadding="0px" cellspacing="5px" align="center">
+						<tr>
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center">
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etqEventosCorporativos.nombreLista}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etqEventosCorporativos.estado}" />
+										</td>
+									</tr>
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="textoResumen" value="#{listaDistribucionBean.nombreListaDistribucion}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="textoResumen" value="#{listaDistribucionBean.descripcionEstatus}" />
+										</td>																										
+									</tr>
+								</table>
+							</td>	
+						</tr>					
+					</table>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+		
+		<!-- Botones -->
+		<ui:define name="botones">
+			<h:panelGroup id="panelBotones">
+		   		<table width="900px" cellpadding="0px" cellspacing="0px" >
+		            <tr>
+		            	<td>
+		                	<table align="right" cellspacing="0" width="100%">
+								<tr align="right">
+									<td align="right" width="80%">
+										<div class="refrescar" style="float: left;">
+											<a4j:status id="commonStatus">
+												<f:facet name="start">
+													<h:panelGroup>
+														<h:graphicImage value="/images/ajax-loader.gif" />
+														<h:outputText value="#{etq.buscando}" />
+													</h:panelGroup>
+												</f:facet>
+											</a4j:status>
+										</div>
+									</td>
+									<td align="center" width="5%"></td>
+									<td align="center" width="5%">
+										<div class="editar">
+											<a4j:commandButton id="btnEditar"
+												actionListener="#{listaDistribucionBean.editarConsulta}"
+												image="/images/transparent.gif"
+												styleClass="submit"
+												reRender="panelCriterios, panelResumenCriterio, panelBotones"
+												rendered="#{listaDistribucionBean.mostrarBotonEditar}"
+												tabindex="8" />
+										</div>
+									</td>
+									<td align="center" width="5%">
+										<div class="buscar">
+											<a4j:commandButton id="botonBuscar"
+												actionListener="#{listaDistribucionBean.buscarListasDistribucion}"
+												image="/images/transparent.gif"
+												styleClass="submit"
+												reRender="panelCriterios, panelResumenCriterio, panelBotones, panelResultados, panelReportes, panelPaginacion"
+												tabindex="8" />
+										</div>
+									</td>
+									<td align="center" width="5%">
+										<div class="limpiar">
+											<a4j:commandButton id="botonLimpiar"
+												actionListener="#{listaDistribucionBean.limpiarConsulta}" 
+												image="/images/transparent.gif"
+												styleClass="submit"
+												reRender="panelCriterios, panelResumenCriterio, panelBotones, panelResultados, panelReportes, panelPaginacion"
+												tabindex="7" />
+										</div>
+									</td>
+								</tr>
+							</table>
+		                </td>
+		            </tr>
+		   		</table>
+		   		
+		   		<a4j:commandButton 
+					id="btnConsultaAltaModificacion"
+		            actionListener="#{listaDistribucionBean.cerrarVentanaAltaModificacion}"
+		            style="visibility: hidden;"
+	            	reRender="panelCriterios, panelResumenCriterio, panelBotones, panelResultados, panelReportes, panelPaginacion">          
+		        </a4j:commandButton>
+		        
+		        <h:inputHidden id="resultadoRegMod" value="#{listaDistribucionBean.resultadoRegMod}" />
+		   		
+			</h:panelGroup>
+		</ui:define>
+
+		<!-- Paginacion -->
+		<ui:define name="paginacion">
+			<h:panelGroup id="panelPaginacion">
+				<h:panelGroup rendered="#{not empty listaDistribucionBean.listasDistribucion}">
+					<table width="100%" border="0">
+						<tr>
+							<td align="left" class="textoEstadoCuenta">
+								<a4j:commandLink id="control_bitacora_primero"
+									action="#{listaDistribucionBean.irPrimeraPagina}"
+									rendered="#{listaDistribucionBean.irAlPrimero}"
+									reRender="panelPaginacion, panelResultados, panelReportes">
+									<img src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png" border="0" />
+								</a4j:commandLink>
+								<a4j:commandLink id="control_bitacora_atras_fast"
+									action="#{listaDistribucionBean.retrocederPaginasRapido}"
+									rendered="#{listaDistribucionBean.retrocederRapido}"
+									reRender="panelPaginacion, panelResultados, panelReportes">
+									<img src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png" border="0" />
+								</a4j:commandLink>
+								<a4j:commandLink id="control_bitacora_atras"
+									action="#{listaDistribucionBean.retrocederPagina}"
+									rendered="#{listaDistribucionBean.retroceder}"
+									reRender="panelPaginacion, panelResultados, panelReportes">
+									<img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png" border="0" />
+								</a4j:commandLink>
+								<a4j:commandLink id="control_bitacora_adelante"
+									action="#{listaDistribucionBean.avanzarPagina}"
+									rendered="#{listaDistribucionBean.avanzar}"
+									reRender="panelPaginacion, panelResultados, panelReportes">
+									<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png" border="0" />
+								</a4j:commandLink>
+								<a4j:commandLink id="control_bitacora_adelante_fast"
+									action="#{listaDistribucionBean.avanzarPaginasRapido}"
+									rendered="#{listaDistribucionBean.avanzarRapido}"
+									reRender="panelPaginacion, panelResultados, panelReportes">
+									<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png" border="0" />
+								</a4j:commandLink>
+								<a4j:commandLink id="control_bitacora_ultimo"
+									action="#{listaDistribucionBean.irUltimaPagina}"
+									rendered="#{listaDistribucionBean.irAlUltimo}"
+									reRender="panelPaginacion, panelResultados, panelReportes">
+									<img src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png" border="0" />
+								</a4j:commandLink>
+	
+								<br />
+								<h:outputText value="#{etq.mostrando}" styleClass="textoResumen" />
+								<h:outputText value="#{listaDistribucionBean.numeroPagina}" styleClass="textoResumen" />
+								<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+								<h:outputText value="#{listaDistribucionBean.totalPaginas}" styleClass="textoResumen" />
+								<h:outputText value="#{etq.cierre}" styleClass="textoResumen" />
+								&#160;&#160;&#160;
+								<h:outputText value="#{listaDistribucionBean.paginaVO.totalRegistros}" styleClass="textoResumen" converter="formatoEnteroConverter" />
+								&#160;
+								<h:outputText styleClass="textoResumen" value="#{etq.registrosEncontrados}" />
+							</td>
+							<td align="right" class="textoEstadoCuenta">
+								<h:outputText escape="false" value="#{etq.registrosPorPagina}" styleClass="textoResumen" />
+								<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen" value="#{listaDistribucionBean.paginaVO.registrosXPag}">
+									<f:selectItem itemLabel="5" itemValue="5" />
+									<f:selectItem itemLabel="10" itemValue="10" />
+									<f:selectItem itemLabel="20" itemValue="20" />
+									<f:selectItem itemLabel="50" itemValue="50" />											
+									<a4j:support event="onchange" reRender="panelPaginacion, panelResultados, panelReportes" action="#{listaDistribucionBean.ejecutarConsulta}" ajaxSingle="true"/>
+								</h:selectOneMenu>&#160;&#160;&#160;&#160;&#160;
+							</td>
+						</tr>
+					</table>
+				</h:panelGroup>
+			
+			</h:panelGroup>
+		</ui:define>
+
+		<!-- Resultados -->
+		<ui:define name="resultados">
+			<h:panelGroup id="panelResultados">
+				<h:panelGroup rendered="#{listaDistribucionBean.consultaEjecutada}">
+					<!-- Sin resultados -->
+					<t:dataTable id="sinResultados"
+						value="#{listaDistribucionBean.listasDistribucion}"
+						styleClass="tablaGeneral" 
+						headerClass="tituloTabla" 
+						width="100%" border="0" cellpadding="3px" cellspacing="0px"
+						style="width:100%;"
+						footerClass="tituloTabla" 
+						columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos"
+						rendered="#{empty listaDistribucionBean.listasDistribucion}">
+						<t:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.sinResultados}"></h:outputText>
+							</f:facet>
+						</t:column>
+					</t:dataTable>
+				
+					<!-- Resultados -->
+					<h:dataTable id="resultados"
+						value="#{listaDistribucionBean.listasDistribucion}"
+						var="detalle"
+						rendered="#{not empty listaDistribucionBean.listasDistribucion}"
+						styleClass="tablaGeneral centrado" headerClass="tituloTabla"
+						width="100%" border="0" cellpadding="3px" cellspacing="0px"
+						footerClass="texto textoPeque12" 
+						columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos">
+							
+						<h:column >
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="Id" />
+							</f:facet>                       	                       
+ 							<h:outputText styleClass="texto textoPeque12" value="#{detalle.idLista}" /> 
+						</h:column>
+						<h:column >
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="Nombre" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{detalle.nombre}" /> 
+						</h:column>	
+						<h:column >
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="Descripción" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{detalle.descripcion}" /> 
+						</h:column>
+						<h:column >
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="Estado" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{detalle.inactivo == 0 ? 'Activo': 'Inactivo' }" />                 
+						</h:column>	
+						<!-- Editar -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value=""/>
+							</f:facet>
+							<h:panelGroup rendered="true">
+								<a href="javascript:registrarModificarListaDistribucion(#{detalle.idLista});" title="#{etqEventosCorporativos.editarRegistro}">
+									<img src="#{facesContext.externalContext.requestContextPath}/images/edit.png"  />
+								</a>
+							</h:panelGroup>					
+						</h:column>							
+					</h:dataTable>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+		
+		<!-- Reportes -->
+		<ui:define name="reportes">
+			<h:panelGroup id="panelReportes">
+				<h:panelGroup rendered="#{listaDistribucionBean.mostrarReportes}">
+					<table cellpadding="0" cellspacing="0" border="0" align="center" width="900px">
+						<tr align="right">
+							<td align="right">
+								<h:commandButton id="generarPdf"
+									actionListener="#{listaDistribucionBean.generarReportes}"
+									action="listasDistribucionPDF"
+									image="/images/pdf.gif"
+									title="Exportar a PDF todos los resultados de la consulta" 
+									onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);" />
+                         		&#160;&#160;
+                   				<h:commandButton id="generarExcel" 
+                   					actionListener="#{listaDistribucionBean.generarReportes}"
+                   					action="listasDistribucionXLS"
+                   					image="/images/excel-file.gif"
+                   					title="Exportar a Excel todos los resultados de la consulta" 
+                   					onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);" />
+								<div id="monitorPeticionReporte" style="display: none;">
+									<h:panelGroup id="panelMonitorPeticionReporte">
+										<h:graphicImage value="/images/ajax-loader.gif" />
+											&#160;&#160;
+											<h:outputText value="#{etq.reporteEnProceso}" />
+											<a4j:commandButton id="btnActualizarEstadoPeticion"
+												image="/images/transparent.gif"
+												styleClass="submit"
+												actionListener="#{listaDistribucionBean.actualizarEstadoPeticion}"
+												reRender="panelMonitorPeticionReporte"
+												oncomplete="desbloquearBotonesReportes(#{listaDistribucionBean.peticionReporteCompleta}, ['generarExcel', 'generarPdf']);"/>
+										</h:panelGroup>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>		
+		
+		<!-- Boton Agregar -->
+		<ui:define name="botonAgregar">
+			<h:panelGroup id="panelBotonAgregar">
+		   		<table width="900px" cellpadding="0px" cellspacing="0px" >
+		            <tr>
+		            	<td align="center">
+							<div class="nuevo" style="text-align: center;" >            
+				            	<h:commandButton styleClass="submit"
+				            		id="botonNuevo"
+									image="/images/transparent.gif"							
+									onclick='javascript:registrarModificarListaDistribucion(null);return false;' />               	
+				           	</div>
+		                </td>
+		            </tr>
+		   		</table>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</html>
+      

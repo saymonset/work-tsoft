@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+<pdf:document documentName="FileTransferDivisas" documentTitle="Consulta de FileTransfer del Sistema Internacional de Cotizaciones"
+              landscape="true" institucion="#{bitacoraFileTransferExportacionBean.agenteFirmado.id} #{bitacoraFileTransferExportacionBean.agenteFirmado.folio} #{bitacoraFileTransferExportacionBean.agenteFirmado.razon}"
+			  fecha="#{bitacoraFileTransferExportacionBean.fechaActual}" imageResource="/images/indeval.jpg">
+	
+	<pdf:subtitle value="Filtros"/>
+	<pdf:table value="#{bitacoraFileTransferExportacionBean}"
+			currentBean="filtro" widthPercentage="100">
+			<pdf:row>
+				
+				<pdf:col align="center" collspan="1" header="Usuario Registro"
+					value="#{bitacoraFileTransferExportacionBean.usuarioRegistro}" />
+				<pdf:col align="center" collspan="1" header="Usuario Autorizacion"
+					value="#{bitacoraFileTransferExportacionBean.usuarioAutorizacion}" />
+				<pdf:col align="center" collspan="1" header="Fecha Inicial"
+					value="#{bitacoraFileTransferExportacionBean.fechaInicialProcesamiento}">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				<pdf:col align="center" collspan="1" header="Fecha Final"
+					value="#{bitacoraFileTransferExportacionBean.fechaFinalProcesamiento}">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>	
+					
+			</pdf:row>
+	</pdf:table>
+		
+	<pdf:table value="#{bitacoraFileTransferExportacionBean}" currentBean="filtro" widthPercentage="20" align="left">
+		<pdf:row>	
+			<pdf:col align="center" collspan="1" header="Total de Registros"
+					value="#{bitacoraFileTransferExportacionBean.resultados.totalRegistros}" />
+		</pdf:row>
+	</pdf:table>
+	
+	<pdf:subtitle value="Datos"/>
+    <pdf:table value="#{bitacoraFileTransferExportacionBean.resultados.registros}"  currentBean="detalle" widthPercentage="100" maxColums="19">
+        <pdf:row>
+        	<pdf:col header="Id File Transfer" value="#{detalle.idFileTransferDivisasInt}"	 align="CENTER"/>
+        	<pdf:col header="Fecha Registro" value="#{detalle.fechaRegistro}" align="CENTER">
+        		<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss"/>
+        	</pdf:col>
+      		<pdf:col header="Usuario Registro" value="#{detalle.usuarioRegistro.claveUsuario}" align="CENTER"/>
+        	<pdf:col header="Usuario Autoriza" value="#{detalle.usuarioAutoriza.claveUsuario}" align="CENTER"/>
+        	<pdf:col header="Id Folio" value="#{detalle.fileTransferDetalleDivisa.folioInstitucion}" align="CENTER"/>
+        	<pdf:col header="Cuenta" value="#{detalle.fileTransferDetalleDivisa.cuenta}" align="CENTER"/>
+        	<pdf:col header="Monto Bruto" value="#{detalle.fileTransferDetalleDivisa.montoBruto}"  align="right">
+        		<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+        	</pdf:col>
+        	<pdf:col header="Retencion" value="#{detalle.fileTransferDetalleDivisa.retencion}"  align="right">
+        		<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+        	</pdf:col>
+        	<pdf:col header="Comision" value="#{detalle.fileTransferDetalleDivisa.comision}"  align="right">
+        		<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+        	</pdf:col>
+        	<pdf:col header="Divisa" value="#{detalle.fileTransferDetalleDivisa.divisa.claveAlfabetica}" align="CENTER"/>
+        	<pdf:col header="Boveda" value="#{detalle.fileTransferDetalleDivisa.boveda.nombreCorto}" align="CENTER"/>
+        	<pdf:col header="Deposito Por Ajuste" value="#{detalle.fileTransferDetalleDivisa.depositoAjuste}"  align="right">
+        		<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+        	</pdf:col>
+        	<pdf:col header="Retiro Por Ajuste" value="#{detalle.fileTransferDetalleDivisa.retiroAjuste}"  align="right">
+        		<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+        	</pdf:col>
+        	<pdf:col header="Monto Neto" value="#{detalle.fileTransferDetalleDivisa.montoNeto}"  align="right">
+        		<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+        	</pdf:col>
+			<pdf:col header="Concepto" value="#{detalle.fileTransferDetalleDivisa.concepto}" align="CENTER"/>
+			<pdf:col header="Folio Referencia" value="#{detalle.fileTransferDetalleDivisa.referencia}" align="CENTER"/>
+			<pdf:col header="Estatus" value="#{detalle.fileTransferDetalleDivisa.estatusDivisas.descripcion}" align="CENTER"/>
+			<pdf:col header="Comentarios" value="#{detalle.fileTransferDetalleDivisa.comentarios}" align="CENTER"/>
+        	 
+      	</pdf:row>
+  	</pdf:table>
+</pdf:document>
+</html>

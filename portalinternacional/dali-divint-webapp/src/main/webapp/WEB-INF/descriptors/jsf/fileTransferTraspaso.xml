@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd" version="1.2">
+
+	<managed-bean>
+        <managed-bean-name>fileTransferTraspasoBean</managed-bean-name>
+        <managed-bean-class>com.indeval.portalinternacional.presentation.controller.fileTransfer.FileTransferTraspasoController</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>fileTransferService</property-name>
+            <value>#{fileTransferService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>navHome</property-name>
+            <property-class>java.lang.String</property-class>
+            <value>MDFileTransfer-Home</value>
+        </managed-property>
+         <managed-property>
+            <property-name>process</property-name>
+            <property-class>java.lang.String</property-class>
+            <value>TI</value>
+        </managed-property>
+        <managed-property>
+            <property-name>fileUploadService</property-name>
+            <value>#{fileUploadService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>encolador</property-name>
+            <value>#{encoladorDITraspasos}</value>
+        </managed-property>
+    </managed-bean>
+    
+     <managed-bean>
+        <managed-bean-name>fileTransferInversionExtranjeraBean</managed-bean-name>
+        <managed-bean-class>com.indeval.portalinternacional.presentation.controller.fileTransfer.FileTransferTraspasoController</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>fileTransferService</property-name>
+            <value>#{fileTransferInversionExtranjeraService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>navHome</property-name>
+            <property-class>java.lang.String</property-class>
+            <value>IEFileTransfer-Home</value>
+        </managed-property>
+        <managed-property>
+            <property-name>process</property-name>
+            <property-class>java.lang.String</property-class>
+            <value>IE</value>
+        </managed-property>
+        <managed-property>
+            <property-name>fileUploadService</property-name>
+            <value>#{fileUploadService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>encolador</property-name>
+            <value>#{encoladorDITraspasosInversionInt}</value>
+        </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>fileTransferStatementBean</managed-bean-name>
+        <managed-bean-class>com.indeval.portalinternacional.presentation.controller.statements.FileTransferStatementController</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>navHome</property-name>
+            <property-class>java.lang.String</property-class>
+            <value>StatementFileTransfer-Home</value>
+        </managed-property>
+        <managed-property>
+            <property-name>fileUploadService</property-name>
+            <value>#{fileUploadService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>statementUtil</property-name>
+            <value>#{excellStatementUtil}</value>
+        </managed-property>
+    </managed-bean>
+
+    <navigation-rule>
+
+        <navigation-case>
+            <from-outcome>MDFileTransfer-Home</from-outcome>
+            <to-view-id>/fileTransfer/fileTransferTraspaso.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>IEFileTransfer-Home</from-outcome>
+            <to-view-id>/inversionextranjera/fileTransfer/fileTransferInversionExtranjera.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>StatementFileTransfer-Home</from-outcome>
+            <to-view-id>/statements/fileTransferStatement.xhtml</to-view-id>
+        </navigation-case>
+
+    </navigation-rule>
+
+</faces-config>
+

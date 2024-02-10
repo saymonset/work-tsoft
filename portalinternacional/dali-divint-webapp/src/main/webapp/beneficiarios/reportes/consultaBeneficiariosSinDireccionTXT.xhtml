@@ -1,0 +1,70 @@
+<html xmlns:txt="http://indeval.com/jsf/txt"
+      xmlns:cnvtr="http://indeval.com/jsf/converters">
+	<txt:document documentName="consultaBeneficiarios" documentTitle="Consulta de Beneficiarios"
+                  fecha="#{consultaBeneficiariosBean.fechaActual}" institucion="#{consultaBeneficiariosBean.agenteFirmado.id}#{consultaBeneficiariosBean.agenteFirmado.folio} - #{consultaBeneficiariosBean.agenteFirmado.razon}" >
+        
+    	<txt:table value="#{consultaBeneficiariosBean.param.letra}" var="dummy">
+           <txt:row>
+                <txt:col header="#{etq.registrosEncontrados}: #{consultaBeneficiariosBean.paginaReportes.totalRegistros}" value="" size="28"/>
+            </txt:row>
+        </txt:table>
+        
+        <txt:table value="#{consultaBeneficiariosBean.paginaReportes.registros}" var="detalle">
+            <txt:row>
+                <txt:col header="#{etq.custodio}" align="left" size="35"
+                         value="#{consultaBeneficiariosBean.mapaCustodios[detalle.idCuentaNombrada]}" />
+                <txt:col header="#{etq.institucionMinus}" align="left" size="35"
+                         value="#{detalle.nombresInstitucionesConPipe}" />
+                
+                <txt:col header="#{etq.formato}" align="left" size="7" value="#{detalle.tipoFormatoPantalla}" />
+                
+                <txt:col header="#{etq.nombreBeneficiario}" align="left" size="200"
+                         value="#{detalle.nombreGeneral}" />
+                <txt:col header="#{etq.tipoBeneficiario}" align="left" size="33"
+                         value="#{detalle.tipoBeneficiario.descTipoBeneficiario}" />
+                <txt:col header="#{etq.fechaRegistro}" align="left" size="20" value="#{detalle.fechaRegistro}">
+                    <cnvtr:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+                </txt:col>
+                <txt:col header="#{etq.fechaFormato}" align="left" size="13" value="#{detalle.fechaFormato}">
+                    <cnvtr:simpleDateConverter pattern="dd/MM/yyyy" />
+                </txt:col>
+                <txt:col header="Estatus" align="left" size="12"
+                         value="#{detalle.statusBenef.descStatusBenef}" />
+                <txt:col header="#{etq.uoi}" align="left" size="13"
+                         value="#{detalle.uoiNumber}" />
+                <txt:col header="% Ret" align="left" size="7"
+                         value="#{detalle.statusBenef.descStatusBenef ne 'AUTORIZADO' and detalle.tipoFormato ne 'MILA' ? '30' : (empty detalle.porcentajeRetencion ? consultaBeneficiariosBean.mapaPorcentajes[detalle.idCuentaNombrada][detalle.tipoBeneficiario.idTipoBeneficiario] : detalle.porcentajeRetencion)} %" />
+
+                <txt:col header="#{etq.w8benUSIdNumberOnly}" align="left" size="37"
+					value="#{detalle.formatoW8IMY.taxpayerIdNumb} #{consultaBeneficiariosBean.mapaTaxPayerIdNumer[detalle.formatoW8IMY.tipoTaxIdNumb]}#{detalle.formatoW8BENE.usTIN}#{detalle.formatoW8IMY2015.usTIN}" />
+
+				<txt:col header="#{etq.reportesFormatosWGIIN}" value="#{detalle.formatoW8BENE.giin}#{detalle.formatoW8IMY2015.giin}" align="left" size="37" />
+
+                <txt:col header="#{etq.w8benRFC}" align="left" size="32"
+					value="#{detalle.formatoW8IMY.foreignTaxIdNumb}#{detalle.formatoW8BEN.foreignTaxIdNumb}#{detalle.formatoMILA.tipoDocumentoIndentidad.idTipoDocumento eq 70 ? detalle.formatoMILA.numeroDocumento : detalle.formatoMILA.rfc}#{detalle.formatoW8BENE.foreingTIN}" />
+
+                <txt:col header="#{etq.w8benReferenceNumber}" align="left" size="21"
+					value="#{detalle.formatoW8IMY.referenceNumbers}#{detalle.formatoW8BEN.referenceNumbers}#{detalle.formatoMILA.referencia}#{detalle.formatoW8BENE.referenceNumber}#{detalle.formatoW8IMY2015.referenceNumber}" />
+                
+                 <txt:col header="#{etq.w8benCapacityActingOnly}" align="left" size="26"
+                         value="#{detalle.formatoW8BEN.capacityActing}" />
+                 <txt:col header="Estado" align="left" size="14"
+                         value="#{detalle.activo == 'true' ? 'Activo' : (detalle.activo == 'false') ? 'Inactivo' : ''}" />
+                 <txt:col header="#{etq.w9RequesterName}" align="left" size="100"
+                         value="#{detalle.formatoW9.requesterNameAddress}" />
+                 <txt:col header="#{etq.w9ListAccountNumber}" align="left" size="40"
+                         value="#{detalle.formatoW9.listAccountNumbers}" />
+                 <txt:col header="#{etq.w9SSNOnly} or #{etq.w9EINOnly}" align="left" size="20"
+                         value="#{detalle.formatoW9.ssn}#{detalle.formatoW9.employerIdNumb}#{detalle.formatoMILA.tipoDocumentoIndentidad.idTipoDocumento eq 71 or detalle.formatoMILA.tipoDocumentoIndentidad.idTipoDocumento eq 73 ? detalle.formatoMILA.numeroDocumento : ''}" />
+                 <txt:col header="#{etq.w9ExemptPayeeCode}" 
+                 		 value="#{detalle.formatoW9.exemptPayeeW9.fatcaCode}" align="left" size="30"></txt:col>
+                 <txt:col header="#{etq.w9ExemptionFromFatcaReportingCode}" 
+                		 value="#{detalle.formatoW9.exemptionFatcaW9.fatcaCode}" align="left" size="50"></txt:col>
+                 <txt:col header="#{etq.w8ben2014fechaNacimientoSP}" value="#{detalle.formatoW8BEN.fechaNacimiento}" align="left" size="12"  >
+                    <cnvtr:simpleDateConverter pattern="dd/MM/yyyy" />
+                </txt:col>
+                <txt:col header="#{etq.W8ben2014SignerSP}" align="left" value="#{detalle.formatoW8BEN.signer}#{detalle.formatoW8BENE.printName}#{detalle.formatoW8IMY2015.printName}" size="200"/>
+            </txt:row>
+        </txt:table>
+    </txt:document>
+</html>

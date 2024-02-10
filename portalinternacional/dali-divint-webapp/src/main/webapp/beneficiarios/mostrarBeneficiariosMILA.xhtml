@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <ui:composition template="/layoutPopUp.xhtml">
+        <ui:define name="head">
+            <link rel="stylesheet" type="text/css" media="all"
+                  href="#{facesContext.externalContext.requestContextPath}/css/beneficiarioActivo.css" />
+        </ui:define>
+        <ui:define name="titulo">
+		Beneficiario Existente
+        </ui:define>
+        <ui:define name="subtitulo">
+        </ui:define>
+        <ui:define name="body">
+            <h:form id="formaBenefActivo">
+            
+                <h:outputText value="#{mostrarBeneficiarioMILAActivoBean.init}" />
+                <h:panelGroup id="general">
+
+                    <a4j:keepAlive beanName="mostrarBeneficiarioMILAActivoBean" />
+
+                    <table>
+                        <tr>
+                            <td>
+                                <table width="850px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+                                    <tr>
+                                        <td colspan="2">
+                                            <div style="min-height: 21px;">
+                                                <rich:messages warnClass="warning" infoClass="info"
+                                                               errorClass="error" ajaxRendered="true" showDetail="false"
+                                                               showSummary="true" layout="list">
+                                                    <f:facet name="infoMarker">
+                                                        <h:panelGroup>
+                                                            <h:graphicImage url="/images/accept.png" />&#160;
+                                                        </h:panelGroup>
+                                                    </f:facet>
+
+                                                    <f:facet name="errorMarker">
+                                                        <h:panelGroup>
+                                                            <h:graphicImage url="/images/warning.gif" />&#160;
+                                                        </h:panelGroup>
+                                                    </f:facet>
+                                                </rich:messages>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <h:outputText value="#{etq.institucionMinus}" styleClass="textoNegritas"
+                                                          rendered="#{mostrarBeneficiarioMILAActivoBean.mostrarFormaGuardar}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <h:panelGroup rendered="#{mostrarBeneficiarioMILAActivoBean.mostrarFormaGuardar}">
+                                                <a4j:region>
+                                                    <table align="left" border="0" style="text-align: left;">
+                                                        <tr>
+                                                            <td>
+                                                                <h:inputText autocomplete="off" id="idFolioInstitucion" value="#{mostrarBeneficiarioMILAActivoBean.idFolioInstitucion}"
+                                                                             styleClass="textoControles campoNumerico"
+                                                                             size="5" maxlength="5" readonly="#{!capturaOperacionesDIBean.institucionIndeval}">
+                                                                    <a4j:support event="onchange" actionListener="#{mostrarBeneficiarioMILAActivoBean.obtenerDatosParticipante}"
+                                                                                 reRender="nombreInstitucionTraspasante" ajaxSingle="true"/>
+                                                                </h:inputText>
+                                                            </td>
+                                                            <td>
+                                                                <h:inputText autocomplete="off" id="nombreInstitucionTraspasante" size="25"
+                                                                             readonly="true"
+                                                                             value="#{mostrarBeneficiarioMILAActivoBean.nombreInstitucion}"
+                                                                             styleClass="textoControles" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </a4j:region>
+                                            </h:panelGroup>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:outputText value="#{etq.custodio}" styleClass="textoNegritas" />
+                                        </td>
+                                        <td>
+                                            <h:outputText value="#{etq.tipoBeneficiario}" styleClass="textoNegritas" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:outputText id="lstCustodios"
+                                                          value="#{mostrarBeneficiarioMILAActivoBean.mapaCustodios[mostrarBeneficiarioMILAActivoBean.forma.custodio]}" />
+                                        </td>
+                                        <td>
+                                            <h:outputText id="lstTipoBenef"
+                                                          value="#{mostrarBeneficiarioMILAActivoBean.mapaTipoBeneficiario[mostrarBeneficiarioMILAActivoBean.forma.idTipoBeneficiario]}" />
+                                        </td>
+                                    </tr>
+                                    <tr style="height: 5px">
+                                        <td colspan="2">
+                                            &#160;
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="1">
+                                            <h:outputText value="#{etq.fechaFormato}" styleClass="textoNegritas" />
+                                            &#160;&#160;
+                                            <h:outputText id="fechaFormato"
+                                                          value="#{mostrarBeneficiarioMILAActivoBean.forma.fechaFormato}" />
+                                        </td>
+                                        <td>
+                                           <h:outputText value="Estado: " styleClass="textoNegritas" />
+                                           &#160;&#160;
+                                           <h:outputText id="activo"
+                                                              value="#{mostrarBeneficiarioMILAActivoBean.forma.activo == '1' ? 'Activo' : mostrarBeneficiarioMILAActivoBean.forma.activo == '0' ? 'Inactivo' : '---'}" />
+                                       </td>
+                                    </tr>
+                                    <tr style="height: 5px">
+                                        <td colspan="2">
+                                            &#160;
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <u><b><h:outputText value="#{etq.formaMILA}" styleClass="textoNegritas" /></b></u>
+                                        </td>
+                                    </tr>
+                                    <tr style="height: 5px">
+                                        <td colspan="2">
+                                            &#160;
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <b><h:outputText value="PARTE I" styleClass="textoBenefPartes"/>&#160;&#160;
+                                            <h:outputText value="#{etq.milabenParteITitulo}" /></b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                    	<td colspan="2">
+                                    		<h:panelGroup id="datosPersonaFisica" rendered="#{mostrarBeneficiarioMILAActivoBean.forma.personaFisica}">
+                                    		 	<table width="100%" border="0" cellpadding="0px" cellspacing="5px" align="left">
+                                    		 	   <tr>
+				                                    	 <td style="width: 440px">
+				                                            <b><h:outputText value="1" /></b>&#160;&#160;
+				                                            <h:outputText value="#{etq.milaNumIdentificacion}" styleClass="textoNegritas" />
+				                                        </td>
+				                                    </tr>
+				                                    <tr>
+				                                    	<td>
+				                                            <h:outputText id="numeroIdentificacionFisica"
+				                                                          value="#{mostrarBeneficiarioMILAActivoBean.forma.numeroIdentificacion}" />
+				                                        </td>
+				                                    </tr>
+                                    		 		<tr>
+				                                        <td style="width: 440px">
+				                                            <b><h:outputText value="2" /></b>&#160;&#160;
+				                                            <h:outputText value="#{etq.milabenNombre}" styleClass="textoNegritas" />
+				                                        </td>
+				                                        <td style="width: 440px" align="left">
+				                                            <b><h:outputText value="3" /></b>&#160;&#160;
+				                                            <h:outputText value="#{etq.milabenNacionalidad}" styleClass="textoNegritas"/>
+				                                        </td>
+				                                    </tr>
+				                                    <tr>
+				                                        <td>
+				                                            <h:panelGrid columns="3" width="100%">
+				                                                <h:outputText value=" " />
+				                                                <h:outputText value=" " />
+				                                                <h:outputText value=" " />
+				                                                <h:outputText id="nombre"
+				                                                              value="#{mostrarBeneficiarioMILAActivoBean.forma.nombre}" />
+				                                                <h:outputText id="apPaterno"
+				                                                              value="#{mostrarBeneficiarioMILAActivoBean.forma.apellidoPaterno}" />
+				                                                <h:outputText id="apMaterno"
+				                                                              value="#{mostrarBeneficiarioMILAActivoBean.forma.apellidoMaterno}" />
+				                                            </h:panelGrid>
+				                                        </td>
+				                                        <td>
+				                                            <h:outputText id="paisNacionalidadFisica"
+				                                                          value="#{mostrarBeneficiarioMILAActivoBean.mapaPais[mostrarBeneficiarioMILAActivoBean.forma.paisNacionalidad]}" />
+				                                        </td>
+				                                    </tr>
+				                                    <tr>
+				                                    	 <td colspan="1">
+			                                    	 		<h:panelGroup>
+			                                            		<b><h:outputText value="4" /></b>&#160;&#160;
+			                                            		<h:outputText value="#{etq.milabenTipoDocIdentidad}" styleClass="textoNegritas" />
+			                                            	</h:panelGroup>
+				                                        </td>
+				                                        <td colspan="1">
+			                                    	 		<h:panelGroup>
+			                                            		<b><h:outputText value="4a" rendered = "#{!empty mostrarBeneficiarioMILAActivoBean.forma.nombreDocumento or !empty mostrarBeneficiarioMILAActivoBean.forma.rfc}"/></b>&#160;&#160;
+			                                            		<h:outputText value="#{etq.milabenNombreDocumentoIden}" styleClass="textoNegritas" rendered = "#{!empty mostrarBeneficiarioMILAActivoBean.forma.nombreDocumento}"/>
+			                                            		<h:outputText value="#{etq.milabenRfc}" styleClass="textoNegritas" rendered="#{!empty mostrarBeneficiarioMILAActivoBean.forma.rfc}"/>
+			                                            	</h:panelGroup>
+				                                        </td>
+				                                    </tr>
+				                                    <tr>
+				                                    	<td colspan="1">
+			                                               	<h:panelGroup>
+			                                                 	<h:outputText id="tipoDocumentoIdentidad"
+			                                                          value="#{mostrarBeneficiarioMILAActivoBean.mapaTipoDocumentos[mostrarBeneficiarioMILAActivoBean.forma.tipoDocumento]}"/>
+			                                            	</h:panelGroup>
+				                                        </td>
+				                                        <td colspan="1">
+			                                               	<h:panelGroup>
+			                                                	<h:outputText id="tipoDocumentoIdentidadNombre"
+			                                                          value="#{mostrarBeneficiarioMILAActivoBean.forma.nombreDocumento}"/>
+			                                                    <h:outputText id="rfc"
+			                                                          value="#{mostrarBeneficiarioMILAActivoBean.forma.rfc}" />
+			                                            	</h:panelGroup>
+				                                        </td>
+				                                    </tr>
+				                                     <tr>
+				                                    	 <td style="width: 440px">
+				                                            <b><h:outputText value="5" rendered="#{mostrarBeneficiarioMILAActivoBean.forma.personaFisica}" /></b>&#160;&#160;
+				                                            <h:outputText value="#{etq.milabenNumeroDocIdentidad}" styleClass="textoNegritas"/>
+				                                        </td>
+				                                    </tr>
+				                                    <tr>
+				                                    	<td>
+				                                            <h:outputText id="numeroDocumentoIdentidad"
+				                                                          value="#{mostrarBeneficiarioMILAActivoBean.forma.numeroDocumento}"/>
+				                                        </td>
+				                                    </tr>
+                                    		 	</table>
+                                    		</h:panelGroup>
+                                    		<h:panelGroup id="datosPersonaMoral" rendered="#{!mostrarBeneficiarioMILAActivoBean.forma.personaFisica and !empty mostrarBeneficiarioMILAActivoBean.forma.nombreDocumento}">
+                                    		 	<table width="100%" border="0" cellpadding="0px" cellspacing="5px" align="left">
+                                    		 		<tr>
+				                                    	 <td style="width: 440px">
+				                                            <b><h:outputText value="1" /></b>&#160;&#160;
+				                                            <h:outputText value="#{etq.milaNumIdentificacion}" styleClass="textoNegritas" />
+				                                        </td>
+				                                    </tr>
+				                                    <tr>
+				                                    	<td>
+				                                            <h:outputText id="numeroIdentificacionMoral"
+				                                                          value="#{mostrarBeneficiarioMILAActivoBean.forma.numeroIdentificacion}" />
+				                                        </td>
+				                                    </tr>
+                                    		 		<tr>
+				                                        <td style="width: 440px">
+				                                            <b><h:outputText value="2" /></b>&#160;&#160;
+				                                            <h:outputText value="#{etq.milabenNombre}" styleClass="textoNegritas" />
+				                                        </td>
+				                                        <td style="width: 440px" align="left">
+				                                            <b><h:outputText value="3" /></b>&#160;&#160;
+				                                            <h:outputText value="#{etq.milabenPaisOrganizacion}" styleClass="textoNegritas" />
+				                                        </td>
+				                                    </tr>
+				                                    <tr>
+				                                        <td>
+			                                                <h:outputText id="razonSocial"
+			                                                              value="#{mostrarBeneficiarioMILAActivoBean.forma.razonSocial}" />
+				                                        </td>
+				                                        <td>
+				                                            <h:outputText id="paisNacionalidadMoral"
+				                                                          value="#{mostrarBeneficiarioMILAActivoBean.mapaPais[mostrarBeneficiarioMILAActivoBean.forma.paisNacionalidad]}" />
+				                                        </td>
+				                                    </tr>
+                                    		 	     <tr>
+				                                    	<td colspan="1">
+				                                    		<b><h:outputText value="4"/></b>&#160;&#160;
+				                                            	<h:outputText value="#{etq.milabenSectorEconomico}" styleClass="textoNegritas"/>
+				                                    	</td>
+				                                    	<td colspan="1">
+			                                    	 		<h:panelGroup>
+			                                            		<b><h:outputText value="5" /></b>&#160;&#160;
+			                                            		<h:outputText value="#{etq.milabenTipoDocIdentidad}" styleClass="textoNegritas" />
+			                                            	</h:panelGroup>
+				                                    	</td>
+				                                    </tr>
+				                                    <tr>
+				                                    	<td colspan="1">
+				                                    		<h:outputText id="sectorEconomico"
+				                                                          value="#{mostrarBeneficiarioMILAActivoBean.mapaSectoresEconom[mostrarBeneficiarioMILAActivoBean.forma.sectorEconomico]}"/>
+				                                    	</td>
+				                                    	<td colspan="1">
+				                                               	<h:panelGroup>
+				                                                 	<h:outputText id="tipoDocumentoIdentidadJuridico"
+				                                                          value="#{mostrarBeneficiarioMILAActivoBean.mapaTipoDocumentos[mostrarBeneficiarioMILAActivoBean.forma.tipoDocumento]}" />
+				                                            	</h:panelGroup>
+				                                    	</td>
+				                                    </tr>
+				                                    <tr>
+				                                    	 <td colspan="1">
+				                                            &#160;&#160;
+				                                        </td>
+				                                        <td colspan="1">
+			                                    	 		<h:panelGroup>
+			                                            		<b><h:outputText value="5a" rendered = "#{!empty mostrarBeneficiarioMILAActivoBean.forma.nombreDocumento}"/></b>&#160;&#160;
+			                                            		<h:outputText value="#{etq.milabenNombreDocumentoIden}" styleClass="textoNegritas" rendered = "#{!empty mostrarBeneficiarioMILAActivoBean.forma.nombreDocumento}"/>
+			                                            	</h:panelGroup>
+				                                        </td>
+				                                    </tr>
+				                                    <tr>
+				                                    	<td  colspan="1">
+				                                        </td>
+				                                    	<td  colspan="1">
+				                                            <h:outputText id="nombreDocumentoIdentidadJuridica"
+				                                                           value="#{mostrarBeneficiarioMILAActivoBean.forma.nombreDocumento}"/>
+				                                        </td>
+				                                    </tr>
+				                                     <tr>
+				                                    	 <td style="width: 440px">
+				                                            <b><h:outputText value="6" /></b>&#160;&#160;
+				                                            <h:outputText value="#{etq.milabenCaracterEntidad}" styleClass="textoNegritas"/>
+				                                        </td>
+				                                         <td style="width: 440px">
+				                                            <b><h:outputText value="7" /></b>&#160;&#160;
+				                                            <h:outputText value="#{etq.milabenNumeroDocIdentidad}" styleClass="textoNegritas"/>
+				                                        </td>
+				                                    </tr> 
+				                                    <tr>
+				                                    	<td>
+				                                            <h:outputText id="caracterEntidad"
+				                                                          value="#{mostrarBeneficiarioMILAActivoBean.mapaCaracterEntidades[mostrarBeneficiarioMILAActivoBean.forma.caracterEntidad]}"/>
+				                                        </td>
+				                                        <td>
+				                                            <h:outputText id="numeroDocumentoIdentidadJuridico"
+				                                                          value="#{mostrarBeneficiarioMILAActivoBean.forma.numeroDocumento}"/>
+				                                        </td>
+				                                    </tr>
+                                    			</table>
+                                    		</h:panelGroup>
+                                    		<h:panelGroup id="datosPersonaMoralSinDocumento" rendered="#{!mostrarBeneficiarioMILAActivoBean.forma.personaFisica and empty mostrarBeneficiarioMILAActivoBean.forma.nombreDocumento}">
+                                    		 	<table width="100%" border="0" cellpadding="0px" cellspacing="5px" align="left">
+                                    		 		<tr>
+				                                    	 <td style="width: 440px">
+				                                            <b><h:outputText value="1" /></b>&#160;&#160;
+				                                            <h:outputText value="#{etq.milaNumIdentificacion}" styleClass="textoNegritas" />
+				                                        </td>
+				                                    </tr>
+				                                    <tr>
+				                                    	<td>
+				                                            <h:outputText id="numeroIdentificacionMoralSinDocumento"
+				                                                          value="#{mostrarBeneficiarioMILAActivoBean.forma.numeroIdentificacion}" />
+				                                        </td>
+				                                    </tr>
+                                    		 		<tr>
+				                                        <td style="width: 440px">
+				                                            <b><h:outputText value="2" /></b>&#160;&#160;
+				                                            <h:outputText value="#{etq.milabenNombre}" styleClass="textoNegritas" />
+				                                        </td>
+				                                        <td style="width: 440px" align="left">
+				                                            <b><h:outputText value="3" /></b>&#160;&#160;
+				                                            <h:outputText value="#{etq.milabenPaisOrganizacion}" styleClass="textoNegritas" />
+				                                        </td>
+				                                    </tr>
+				                                    <tr>
+				                                        <td>
+			                                                <h:outputText id="razonSocialSinDocumento"
+			                                                              value="#{mostrarBeneficiarioMILAActivoBean.forma.razonSocial}" />
+				                                        </td>
+				                                        <td>
+				                                            <h:outputText id="paisNacionalidadMoralSinDocumento"
+				                                                          value="#{mostrarBeneficiarioMILAActivoBean.mapaPais[mostrarBeneficiarioMILAActivoBean.forma.paisNacionalidad]}" />
+				                                        </td>
+				                                    </tr>
+                                    		 	     <tr>
+				                                    	<td colspan="1">
+				                                    		<b><h:outputText value="4"/></b>&#160;&#160;
+				                                            	<h:outputText value="#{etq.milabenSectorEconomico}" styleClass="textoNegritas"/>
+				                                    	</td>
+				                                    	<td colspan="1">
+			                                    	 		<h:panelGroup>
+			                                            		<b><h:outputText value="5" /></b>&#160;&#160;
+			                                            		<h:outputText value="#{etq.milabenTipoDocIdentidad}" styleClass="textoNegritas" />
+			                                            	</h:panelGroup>
+				                                    	</td>
+				                                    </tr>
+				                                    <tr>
+				                                    	<td colspan="1">
+				                                    		<h:outputText id="sectorEconomicoSinDocumento"
+				                                                          value="#{mostrarBeneficiarioMILAActivoBean.mapaSectoresEconom[mostrarBeneficiarioMILAActivoBean.forma.sectorEconomico]}"/>
+				                                    	</td>
+				                                    	<td colspan="1">
+				                                               	<h:panelGroup>
+				                                                 	<h:outputText id="tipoDocumentoIdentidadJuridicoSinDocumeto"
+				                                                          value="#{mostrarBeneficiarioMILAActivoBean.mapaTipoDocumentos[mostrarBeneficiarioMILAActivoBean.forma.tipoDocumento]}" />
+				                                            	</h:panelGroup>
+				                                    	</td>
+				                                    </tr>
+				                                     <tr>
+				                                    	 <td style="width: 440px">
+				                                            <b><h:outputText value="6" /></b>&#160;&#160;
+				                                            <h:outputText value="#{etq.milabenCaracterEntidad}" styleClass="textoNegritas"/>
+				                                        </td>
+				                                         <td style="width: 440px">
+				                                            <b><h:outputText value="7" /></b>&#160;&#160;
+				                                            <h:outputText value="#{etq.milabenNumeroDocIdentidad}" styleClass="textoNegritas"/>
+				                                        </td>
+				                                    </tr> 
+				                                    <tr>
+				                                    	<td>
+				                                            <h:outputText id="caracterEntidadSinDocumento"
+				                                                          value="#{mostrarBeneficiarioMILAActivoBean.mapaCaracterEntidades[mostrarBeneficiarioMILAActivoBean.forma.caracterEntidad]}"/>
+				                                        </td>
+				                                        <td>
+				                                            <h:outputText id="numeroDocumentoIdentidadJuridicoSinDocumento"
+				                                                          value="#{mostrarBeneficiarioMILAActivoBean.forma.numeroDocumento}"/>
+				                                        </td>
+				                                    </tr>
+                                    			</table>
+                                    		</h:panelGroup>
+                                    	</td>
+                                    </tr>
+                                    <tr style="height: 5px">
+                                        <td colspan="2">
+                                            &#160;
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td colspan="2">
+                                            <b><h:outputText value="PARTE II" styleClass="textoBenefPartes"/>&#160;&#160;
+                                            <h:outputText value="#{etq.milabenParteIITitulo}" /></b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <h:panelGrid style="width: 100%" columns="3">
+                                                <h:outputText value="#{etq.milabenDireccionCalle}" styleClass="textoNegritas" />
+                                                <h:outputText value="#{etq.milabenDireccionNumeroExterior}" styleClass="textoNegritas" />
+                                                <h:outputText value="#{etq.milabenDireccionNumeroInterior}" styleClass="textoNegritas" />
+                                                 <h:outputText id="calleResidencial"
+                                                              value="#{mostrarBeneficiarioMILAActivoBean.forma.calleResidencial}" />
+                                                <h:outputText id="numeroExteriorResidencial"
+                                                              value="#{mostrarBeneficiarioMILAActivoBean.forma.numeroExteriorResidencial}" />
+                                                <h:outputText id="numeroInteriorResidencial"
+                                                              value="#{mostrarBeneficiarioMILAActivoBean.forma.numeroInteriorResidencial}" />
+                                            </h:panelGrid>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <h:panelGrid style="width: 100%" columns="3">
+                                                <h:outputText value="#{etq.milabenDireccionCodigoPostal}" styleClass="textoNegritas" />
+                                                <h:outputText value="#{etq.milabenDireccionCiudadPoblacion}" styleClass="textoNegritas" />
+                                                <h:outputText value="#{etq.milabenDireccionEstadoProvincia}" styleClass="textoNegritas" />
+                                                <h:outputText id="codigoPostalResidencial"
+                                                              value="#{mostrarBeneficiarioMILAActivoBean.forma.codigoPostalResidencial}" />
+                                                <h:outputText id="cityTownResidencial"
+                                                              value="#{mostrarBeneficiarioMILAActivoBean.forma.cityTownResidencial}" />
+                                                <h:outputText id="stateProvinceResidencial"
+                                                              value="#{mostrarBeneficiarioMILAActivoBean.forma.stateProvinceResidencial}" />
+                                            </h:panelGrid>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <h:outputText value="#{etq.milabenDireccionPais}" styleClass="textoNegritas" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:outputText id="paisResidencial"
+                                                          value="#{mostrarBeneficiarioMILAActivoBean.forma.paisResidencial}" />
+                                        </td>
+                                    </tr>
+                                    <tr style="height: 5px">
+                                        <td colspan="2">
+                                            &#160;
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <b><h:outputText value="PARTE III" styleClass="textoBenefPartes"/>&#160;&#160;
+                                            <h:outputText value="#{etq.milabenParteIIITitulo}" /></b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <h:panelGrid style="width: 100%" columns="3">
+                                                <h:outputText value="#{etq.milaDireccionEmail}" styleClass="textoNegritas" />
+                                                <h:outputText value="#{etq.milaTelefono}" styleClass="textoNegritas" />
+                                                <h:outputText value="#{etq.milaFax}" styleClass="textoNegritas" />
+                                                 <h:outputText id="email"
+                                                              value="#{mostrarBeneficiarioMILAActivoBean.forma.email}" />
+                                                <h:outputText id="telefono"
+                                                              value="#{mostrarBeneficiarioMILAActivoBean.forma.telefono}" />
+                                                <h:outputText id="fax"
+                                                              value="#{mostrarBeneficiarioMILAActivoBean.forma.fax}" />
+                                            </h:panelGrid>
+                                        </td>
+                                    </tr>
+                                    <tr style="height: 5px">
+                                        <td colspan="2">
+                                            &#160;
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <b><h:outputText value="PARTE IV" styleClass="textoBenefPartes"/>&#160;&#160;
+                                            <h:outputText value="#{etq.milabenParteIVTitulo}" /></b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <h:panelGrid style="width: 100%" columns="3">
+                                                <h:outputText value="#{etq.milaReferencia}" styleClass="textoNegritas" />
+                                                 <h:outputText id="milaReferencia"
+                                                              value="#{mostrarBeneficiarioMILAActivoBean.forma.numeroReferencia}" />
+                                            </h:panelGrid>
+                                        </td>
+                                    </tr>
+                                     <tr style="height: 5px">
+                                        <td colspan="2">
+                                            &#160;
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <b><h:outputText value="PARTE V" styleClass="textoBenefPartes"/>&#160;&#160;
+                                            <h:outputText value="#{etq.milabenParteVTitulo}" /></b>
+                                        </td>
+                                    </tr>
+                                     <tr>
+                                        <td colspan="2">
+                                            <h:panelGrid style="width: 100%" columns="2">
+                                                <h:panelGrid columns="2">
+													<rich:dataGrid columns="1" value="#{mostrarBeneficiarioMILAActivoBean.files}"
+								                        	var="file" rowKeyVar="row">
+								                        <rich:panel bodyClass="rich-laguna-panel-no-header">
+								                            <h:panelGrid columns="2">
+								                                <a4j:mediaOutput element="img" mimeType="#{file.mime}"
+								                                    createContent="#{mostrarBeneficiarioMILAActivoBean.paint}" value="#{row}"
+								                                    style="width:80px; height:80px;" cacheable="false" rendered="#{file.preview}">
+								                                </a4j:mediaOutput>
+								                                <h:graphicImage url="/images/pdfDocument.png" width="80" height="80" rendered="#{!file.preview}" />
+								                                <h:panelGrid columns="2">
+								                                    <h:outputText value="#{etq.milaArchivoNombre}" />
+																	<h:outputLink value="ObtieneFormatoMILA">
+																	    <f:param name="funcion" value="descargarDocumento" />
+																	    <f:param name="nombreDocumento" value="#{file.name}" />
+																	    <h:outputText value="#{file.name}" />
+																	</h:outputLink>
+								                                    <h:outputText value="#{etq.milaArchivoSize}" />
+								                                    <h:outputText value="#{file.sizeString}" />
+								                                </h:panelGrid>
+								                            </h:panelGrid>
+								                       </rich:panel>
+								                    </rich:dataGrid>
+												</h:panelGrid>
+                                            </h:panelGrid>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="guardar">
+                                    <a4j:commandButton id="botonGuardar" image="/images/transparent.gif"
+                                                       styleClass="submit"
+                                                       action="#{mostrarBeneficiarioMILAActivoBean.guardar}"
+                                                       oncomplete="window.scrollTo(0,0);"
+                                                       rendered="#{mostrarBeneficiarioMILAActivoBean.mostrarFormaGuardar}" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

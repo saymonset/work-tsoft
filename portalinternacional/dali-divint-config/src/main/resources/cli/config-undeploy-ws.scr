@@ -1,0 +1,2 @@
+# Desinstalar el componente WS
+undeploy DerechosCapitalesWS.war --server-groups=${DerechosCapitalesWSGrupo}

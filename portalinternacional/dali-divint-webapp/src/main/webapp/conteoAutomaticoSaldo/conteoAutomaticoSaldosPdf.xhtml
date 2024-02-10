@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:pdf="http://indeval.com/jsf/pdf"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+	<pdf:document documentName="conteoAutomaticoSaldos"
+		documentTitle="Consulta Conteo Autom&#225;tico de Saldos"
+		landscape="false"
+		institucion="#{conteoAutomaticoSaldoController.agenteFirmado.id} #{conteoAutomaticoSaldoController.agenteFirmado.folio} #{conteoAutomaticoSaldoController.agenteFirmado.razon}"
+		fecha="#{conteoAutomaticoSaldoController.fechaActual}"
+		imageResource="/images/indeval.jpg">
+
+		<pdf:subtitle value="#{etq.filtros}" />
+
+		<!-- resumen criterio -->
+
+		<pdf:table value="#{conteoAutomaticoSaldoController}"
+			currentBean="resumen">
+			<pdf:row>
+				<pdf:col align="center" header="#{etq.depRetirosDia}"
+					value="#{conteoAutomaticoSaldoController.fechaConsulta}">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col align="center" header="#{etq.saldoInicialFidBanamex}"
+					value="#{resumen.saldoInicialFideicomisoBanamex}" >
+					<f:convertNumber pattern="###,###,###,###,###,##0" />
+				</pdf:col>
+				<pdf:col align="center" header="#{etq.saldoInicialFidInbur}"
+					value="#{resumen.saldoInicialFideicomisoInbur}" >
+				<f:convertNumber pattern="###,###,###,###,###,##0" />
+				</pdf:col>
+				<pdf:col align="center" header="#{etq.saldoInicialFidNafin}"
+					value="#{resumen.saldoInicialFideicomisoNafin}" >
+					<f:convertNumber pattern="###,###,###,###,###,##0" />
+				</pdf:col>
+				<pdf:col align="center" header="#{etq.saldoInicialFidVitro}"
+					value="#{resumen.saldoInicialFideicomisoVitro}" >
+					<f:convertNumber pattern="###,###,###,###,###,##0" />
+				</pdf:col>
+			</pdf:row>
+		</pdf:table>
+		<pdf:br />
+		<pdf:br />
+		<pdf:br />
+		<pdf:br />
+		<pdf:br />
+		<!-- iterator general -->
+		<pdf:iterator
+			value="#{conteoAutomaticoSaldoController.paginaVO.registros}"
+			var="conteo">
+
+			<pdf:table value="#{conteoAutomaticoSaldoController}"
+				currentBean="participante">
+				<pdf:row>
+					<pdf:col align="center" header="#{etq.participante}"
+						value="#{conteo.cuentaNombrada.institucion.tipoInstitucion.claveTipoInstitucion}#{conteo.cuentaNombrada.institucion.folioInstitucion} #{conteo.cuentaNombrada.cuenta}" />
+					<pdf:col align="center" header="#{etq.nombre}"
+						value="#{conteo.cuentaNombrada.nombreCuenta}" />
+					<pdf:col align="center" header="#{etq.fideicomisoMinus}"
+						value="#{conteo.cuentaNombrada.nombreCuenta}" />
+				</pdf:row>
+
+			</pdf:table>
+			<pdf:table value="#{conteoAutomaticoSaldoController}" rendered="#{empty conteo.movimientosFideicomiso}"
+				currentBean="movimientoVacio">
+				<pdf:row >
+					<pdf:col align="center" header="#{etq.tv}" value="" />
+					<pdf:col align="center" header="#{etq.emisoraMinus}" value="" />
+					<pdf:col align="center" header="#{etq.serieMinus}" value="" />
+					<pdf:col align="center" header="#{etq.cuponMinus}" value="" />
+					<pdf:col align="center" header="#{etq.cantidadOperada}" value=" " />
+					<pdf:col align="center" header="#{etq.folioConfirma}" value="" />
+					<pdf:col align="center" header="#{etq.tm}" value="" />
+					<pdf:col align="center" header="#{etq.usuarioMinus}" value="" />
+				</pdf:row>
+			</pdf:table>
+
+			<pdf:table value="#{conteo.movimientosFideicomiso}"
+				currentBean="movimiento">
+				<pdf:row>
+					<pdf:col align="center" header="#{etq.tv}"
+						value="#{movimiento.cupon.emision.instrumento.claveTipoValor}" />
+					<pdf:col align="center" header="#{etq.emisoraMinus}"
+						value="#{movimiento.cupon.emision.emisora.clavePizarra}" />
+					<pdf:col align="center" header="#{etq.serieMinus}"
+						value="#{movimiento.cupon.emision.serie}" />
+					<pdf:col align="center" header="#{etq.cuponMinus}"
+						value="#{movimiento.cupon.claveCupon}" />
+					<pdf:col align="center" header="#{etq.cantidadOperada}"
+						value="#{movimiento.cantidadOperada}" >
+						<f:convertNumber pattern="###,###,###,###,###,##0" />
+					</pdf:col>
+					<pdf:col align="center" header="#{etq.folioConfirma}"
+						value="#{movimiento.folioConfirmacion}" />
+					<pdf:col align="center" header="#{etq.tm}"
+						value="#{movimiento.tipoMovimiento}" />
+					<pdf:col align="center" header="#{etq.usuarioMinus}"
+						value="#{movimiento.usuario}" />
+				</pdf:row>
+			</pdf:table>
+			
+			<pdf:table value="#{conteoAutomaticoSaldoController}" rendered="#{empty conteo.nombreTotal}"
+				widthPercentage="20" currentBean="totalVacio">
+				<pdf:row >
+					<pdf:col align="center" header="#{etq.totalMinus}" value="" />
+				</pdf:row>
+			</pdf:table>
+			<pdf:table value="#{conteo.nombreTotal}" currentBean="nomTotal"
+				widthPercentage="20">
+				<pdf:row>
+					<pdf:col align="center" header="#{etq.totalMinus}"
+						value="#{nomTotal}" />
+				</pdf:row>
+			</pdf:table>
+
+			<pdf:table value="#{conteoAutomaticoSaldoController}" rendered="#{empty conteo.numeroDepositosRetiros}"
+				widthPercentage="20" currentBean="depRetVacio">
+				<pdf:row >
+					<pdf:col align="center" header="#{etq.numDepRet}" value="" />
+				</pdf:row>
+			</pdf:table>
+			<pdf:table value="#{conteo.numeroDepositosRetiros}"
+				currentBean="depRet" widthPercentage="20">
+				<pdf:row>
+					<pdf:col align="center" header="#{etq.numDepRet}" value="#{depRet}" >
+						<f:convertNumber pattern="###,###,###,###,###,##0" />
+					</pdf:col>
+				</pdf:row>
+			</pdf:table>
+
+			<pdf:table value="#{conteoAutomaticoSaldoController}" rendered="#{empty conteo.numeroTitulosOperados}"
+				widthPercentage="20" currentBean="titulosOperadosVacio">
+				<pdf:row >
+					<pdf:col align="center" header="#{etq.titulosOp}" value="" >
+					</pdf:col>
+				</pdf:row>
+			</pdf:table>
+			<pdf:table value="#{conteo.numeroTitulosOperados}"
+				currentBean="titulosOp" widthPercentage="20">
+				<pdf:row>
+					<pdf:col align="center" header="#{etq.titulosOp}"
+						value="#{titulosOp}" >
+						<f:convertNumber pattern="###,###,###,###,###,##0" />
+					</pdf:col>
+				</pdf:row>
+			</pdf:table>
+
+			<pdf:table value="#{conteoAutomaticoSaldoController}"
+				currentBean="saldoUnoFooter">
+				<pdf:row>
+					<pdf:col align="center" header="#{etq.saldoDe}"
+						value="#{conteo.nombreSaldo}" />
+					<pdf:col align="center" header="#{etq.numDepRet}"
+						value="#{conteo.totalDepositosRetiros}">
+						<f:convertNumber pattern="###,###,###,###,###,##0" />
+					</pdf:col>
+					<pdf:col align="center" header="#{etq.saldoFinalMinus}"
+						value="#{conteo.saldoFinalDepositosRetiros}">
+						<f:convertNumber pattern="###,###,###,###,###,##0" />
+					</pdf:col>
+				</pdf:row>
+			</pdf:table>
+
+			<pdf:table value="#{conteoAutomaticoSaldoController}"
+				currentBean="saldoDosFooter">
+				<pdf:row>
+					<pdf:col align="center" header="#{etq.posValDe}"
+						value="#{conteo.nombrePosicion}" />
+					<pdf:col align="center" header="#{etq.numEmisiones}"
+						value="#{conteo.totalEmisionesPosicion}">
+						<f:convertNumber pattern="###,###,###,###,###,##0" />
+					</pdf:col>
+					<pdf:col align="center" header="#{etq.saldoFinalMinus}"
+						value="#{conteo.saldoFinalPosicion}">
+						<f:convertNumber pattern="###,###,###,###,###,##0" />
+					</pdf:col>
+				</pdf:row>
+			</pdf:table>
+
+			<pdf:table value="#{conteoAutomaticoSaldoController}"
+				currentBean="saldoTresFooter">
+				<pdf:row>
+					<pdf:col align="center" header="#{etq.arqueoDe}"
+						value="#{conteo.nombreArqueo}" />
+					<pdf:col align="center" header="#{etq.numEmisiones}"
+						value="#{conteo.totalEmisionesArqueo}">
+						<f:convertNumber pattern="###,###,###,###,###,##0" />
+					</pdf:col>
+					<pdf:col align="center" header="#{etq.saldoFinalMinus}"
+						value="#{conteo.saldoFinalArqueo}">
+						<f:convertNumber pattern="###,###,###,###,###,##0" />
+					</pdf:col>
+				</pdf:row>
+			</pdf:table>
+		</pdf:iterator>
+
+	</pdf:document>
+</html>

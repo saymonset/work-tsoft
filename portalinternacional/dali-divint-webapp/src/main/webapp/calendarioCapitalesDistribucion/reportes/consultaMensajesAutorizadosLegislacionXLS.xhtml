@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls" xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document documentName="MensajesAutorizadosCapitalesDistribucion" documentTitle="Mensajes Autorizados Capitales Distribución"
+        institucion="#{consultaMensajesAutorizadosLegislacionBean.agenteFirmado.id} #{consultaMensajesAutorizadosLegislacionBean.agenteFirmado.folio} #{consultaMensajesAutorizadosLegislacionBean.agenteFirmado.razon}" 
+         fecha="#{consultaMensajesAutorizadosLegislacionBean.fechaActual}" >
+         <xls:table value="#{consultaMensajesAutorizadosLegislacionBean}" var="consultaMensajes" >
+            <xls:row>
+            	<xls:col header="#{etq.tv}" value="#{!empty consultaMensajes.filtroConsulta.tipoValor ? consultaMensajes.filtroConsulta.tipoValor : 'TODOS'}"  />
+                <xls:col header="#{etq.emisoraMinus}" value="#{!empty consultaMensajes.filtroConsulta.emisora ? consultaMensajes.filtroConsulta.emisora : 'TODAS'}"  />
+                <xls:col header="#{etq.serieMinus}" value="#{!empty consultaMensajes.filtroConsulta.serie ? consultaMensajes.filtroConsulta.serie : 'TODAS'}"  />
+				<xls:col header="#{etq.isin}" value="#{!empty consultaMensajes.filtroConsulta.isin ? consultaMensajes.filtroConsulta.isin : 'TODOS'}"  />				
+				<xls:col header="#{etq.calEstadoEnvio}" value="#{!empty consultaMensajes.selectedEstadoEnvio ? consultaMensajes.selectedEstadoEnvio : 'CUALQUIER'}"  />
+				<xls:col header="#{etq.calDestinatario}" value="#{!empty consultaMensajes.selectedDestinatario ? consultaMensajes.selectedDestinatario : 'TODOS'}"  />
+				<xls:col header="#{etq.folioMensaje}" value="#{!empty consultaMensajes.filtroConsulta.folioMensaje ? consultaMensajes.filtroConsulta.folioMensaje : 'TODOS'}"  />
+				<xls:col header="#{etq.folioIndeval}" value="#{!empty consultaMensajes.filtroConsulta.folioIndeval ? consultaMensajes.filtroConsulta.folioIndeval : 'TODOS'}"  />				
+				<xls:col header="#{etq.fechaXdateInicio}" value="#{!empty consultaMensajes.filtroConsulta.fechaExdateInicio ? consultaMensajes.filtroConsulta.fechaExdateInicio : 'TODAS'}" pattern="dd/MM/yyyy" />					
+				<xls:col header="#{etq.fechaXdateFin}" value="#{!empty consultaMensajes.filtroConsulta.fechaExdateFin ? consultaMensajes.filtroConsulta.fechaExdateFin : 'TODAS'}" pattern="dd/MM/yyyy" />											
+				<xls:col header="#{etq.fechaCorteInicio}" value="#{!empty consultaMensajes.filtroConsulta.fechaCorteInicio ? consultaMensajes.filtroConsulta.fechaCorteInicio : 'TODAS'}" pattern="dd/MM/yyyy" />					
+				<xls:col header="#{etq.fechaCorteFin}" value="#{!empty consultaMensajes.filtroConsulta.fechaCorteFin ? consultaMensajes.filtroConsulta.fechaCorteFin : 'TODAS'}"  pattern="dd/MM/yyyy" />					
+				<xls:col header="#{etq.calUsuarioSolicita}" value="#{!empty consultaMensajes.filtroConsulta.usuario ? consultaMensajes.filtroConsulta.usuario : 'TODOS'}"  />
+				<xls:col header="#{etq.calFechaSolicitudInicial}" value="#{!empty consultaMensajes.filtroConsulta.fechaSolicitudInicio ? consultaMensajes.filtroConsulta.fechaSolicitudInicio : 'TODAS'}"  pattern="dd/MM/yyyy" />				
+				<xls:col header="#{etq.calFechaSolicitudFinal}" value="#{!empty consultaMensajes.filtroConsulta.fechaSolicitudFin ? consultaMensajes.filtroConsulta.fechaSolicitudFin : 'TODAS'}"  pattern="dd/MM/yyyy" />				
+				<xls:col header="#{etq.calUsuarioAutoriza}" value="#{!empty consultaMensajes.filtroConsulta.usuarioAutoriza ? consultaMensajes.filtroConsulta.usuarioAutoriza : 'TODOS'}"  />
+				<xls:col header="#{etq.calFechaAutorizacionIncial}" value="#{!empty consultaMensajes.filtroConsulta.fechaAutorizacionInicio ? consultaMensajes.filtroConsulta.fechaAutorizacionInicio : 'TODAS'}"  pattern="dd/MM/yyyy" />					
+				<xls:col header="#{etq.calFechaAutorizacionFinal}" value="#{!empty consultaMensajes.filtroConsulta.fechaAutorizacionFin ? consultaMensajes.filtroConsulta.fechaAutorizacionFin : 'TODAS'}"  pattern="dd/MM/yyyy" />				
+				<xls:col header="#{etq.estadoEmision}" value="#{!empty consultaMensajes.selectedEstadoEmision ? consultaMensajes.selectedEstadoEmision : 'TODOS'}"  />
+				<xls:col header="#{etq.fuente}" value="#{!empty consultaMensajes.selectedCustodio ? consultaMensajes.selectedCustodio : 'TODOS'}"  />
+				<xls:col header="#{etq.caev}" value="#{!empty consultaMensajes.selectedTipoPagoCAEV ? consultaMensajes.selectedTipoPagoCAEV : 'TODOS'}"  />
+				<xls:col header="#{etq.camv}" value="#{!empty consultaMensajes.selectedTipoPagoCAMV ? consultaMensajes.selectedTipoPagoCAMV : 'TODOS'}"  />            				
+			</xls:row>
+         </xls:table>  
+         
+          <xls:subtitle value="#{etq.registrosEncontrados}: #{consultaMensajesAutorizadosLegislacionBean.totalRegistrosReporte}" />
+          
+           <xls:table value="#{consultaMensajesAutorizadosLegislacionBean.paginaReportes.registros}" var="envio" >
+            <xls:row >
+            	<xls:col header="#{etq.calUsuarioSolicita}" value="#{envio.usuarioSolicitante}"  />
+				<xls:col header="#{etq.calFechaSolicitud}" value="#{envio.fechaSolicitud}"  pattern="dd/MM/yyyy" />					
+				<xls:col header="#{etq.calUsuarioAutoriza}" value="#{!empty envio.usuarioAutoriza ? envio.usuarioAutoriza : '-'}"  />
+				<xls:col header="#{etq.calFechaAutorizacion}" value="#{!empty envio.fechaActualizacion ? envio.fechaActualizacion : '-'}" pattern="dd/MM/yyyy" />					
+				<xls:col header="#{etq.tv}" value="#{!empty envio.tipoValor ? envio.tipoValor : '-'}"  />
+				<xls:col header="#{etq.emisoraMinus}" value="#{!empty envio.emisora ? envio.emisora : '-'}"  />
+				<xls:col header="#{etq.serieMinus}" value="#{!empty envio.serie ? envio.serie : '-'}"  />
+				<xls:col header="#{etq.cuponMinus}" value="#{!empty envio.cupon ? envio.cupon : '-'}"  />
+				<xls:col header="#{etq.isin}" value="#{!empty envio.isin ? envio.isin : '-'}"  />
+				<xls:col header="#{etq.fechaExdate}" value="#{!empty envio.fechaExdate ? envio.fechaExdate : '-'}" pattern="dd/MM/yyyy" />				
+				<xls:col header="#{etq.fechaCorteMinus}" value="#{!empty envio.fechaCorte ? envio.fechaCorte : '-'}" pattern="dd/MM/yyyy" />			
+				<xls:col header="#{etq.folioMensaje}" value="#{!empty envio.folioMensaje ? envio.folioMensaje : '-'}"  />
+				<xls:col header="#{etq.folioIndeval}" value="#{!empty envio.folioIndeval ? envio.folioIndeval : '-'}"  />
+				<xls:col header="#{etq.calDestinatario}" value="#{!empty envio.destinatario ? envio.destinatario : '-'}"  />
+				<xls:col header="#{etq.calEstadoEnvio}" value="#{!empty envio.descEstado ? envio.descEstado : '-'}"  />
+				<xls:col header="#{etq.estadoEmision}" value="#{!empty envio.listada ? envio.listada : 'DESLISTADA'}"  />
+				<xls:col header="#{etq.fuente}" value="#{!empty envio.fuente ? envio.fuente : '-'}"  />
+				<xls:col header="#{etq.calTipoDerechoCaev}" value="#{!empty envio.tipoDerechoCaev ? envio.tipoDerechoCaev : '-'}"  />
+				<xls:col header="#{etq.calTipoDerechoCamv}" value="#{!empty envio.tipoDerechoCamv ? envio.tipoDerechoCamv : '-'}"  />            	            	            	       
+         	</xls:row>
+         </xls:table>	
+         
+   </xls:document>
+</html>         

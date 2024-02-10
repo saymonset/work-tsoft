@@ -1,0 +1,36 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+
+    <bean id="strongEncryptorPwd" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+        <property name="algorithm" value="PBEWithMD5AndDES" />
+        <property name="password" value="d4l1" />
+        <property name="providerName" value="BC" />
+    </bean>
+
+    <bean id="encryptableProperties" class="org.jasypt.spring.properties.EncryptablePropertyPlaceholderConfigurer">
+        <constructor-arg index="0">
+            <ref bean="strongEncryptorPwd" />
+        </constructor-arg>
+        <property name="properties" ref="commonsConfigurationFactoryBean"/>
+    </bean>
+
+
+    <bean id="commonsConfigurationFactoryBean" class="org.springmodules.commons.configuration.CommonsConfigurationFactoryBean">
+        <constructor-arg ref="databaseConfiguration"/>
+    </bean>
+
+    <bean id="databaseConfiguration" class="org.apache.commons.configuration.DatabaseConfiguration">
+        <constructor-arg type="javax.sql.DataSource" ref="dataSourceInternacional"/>
+        <constructor-arg index="1" value="C_PROPIEDADES_DALI"/>
+        <constructor-arg index="2" value="environment"/>
+        <constructor-arg index="3" value="key"/>
+        <constructor-arg index="4" value="value"/>
+        <constructor-arg index="5" value="desarrollo"/>
+    </bean>
+</beans>

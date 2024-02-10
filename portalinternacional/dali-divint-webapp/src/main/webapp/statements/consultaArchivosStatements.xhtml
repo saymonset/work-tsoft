@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:t="http://myfaces.apache.org/tomahawk">
+    <!-- DECORATE -->
+
+    <ui:composition template="/layoutConsultas.xhtml">
+        <ui:define name="head">
+        </ui:define>
+
+        <ui:define name="tituloSeccion">
+            <h:outputText value="#{etq.divisionInternacional}" />
+        </ui:define>
+        <ui:define name="subtituloSeccion">
+            <h:outputText value="#{etq.statements}" />
+        </ui:define>
+        <ui:define name="tituloEncabezado">
+            <h:outputText value="#{etq.admonArchivosStatements}" />
+        </ui:define>
+
+        <ui:define name="criterios">
+            <a4j:keepAlive beanName="consultaArchivosStatementsController" />
+
+            <h:panelGroup id="init">
+                <h:outputText value="#{consultaArchivosStatementsController.init}" />
+            </h:panelGroup>
+
+            <h:panelGroup id="criterios">
+                <br />
+                <br />
+
+                <table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+                    <tr>
+                        <td colspan="4">
+                            <div style="min-height: 21px;">
+                                <rich:messages warnClass="warning" infoClass="info"
+                                               errorClass="error" ajaxRendered="true" showDetail="false"
+                                               showSummary="true" layout="list">
+                                    <f:facet name="infoMarker">
+                                        <h:panelGroup>
+                                            <h:graphicImage url="/images/accept.png" />&#160;
+                                        </h:panelGroup>
+                                    </f:facet>
+
+                                    <f:facet name="errorMarker">
+                                        <h:panelGroup>
+                                            <h:graphicImage url="/images/warning.gif" />&#160;
+                                        </h:panelGroup>
+                                    </f:facet>
+                                </rich:messages>
+
+                                <div id="divWarnings" class="warning" style="display:none;">
+                                    <p id="textoWarning">
+                                    </p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h:outputText value="#{etq.nombreArchivo}" />
+                        </td>
+                        <td>
+                            <h:inputText autocomplete="off" id="txtNombreArchivo" value="#{consultaArchivosStatementsController.nombreArchivo}"
+                                         styleClass="textoControles textoMayusculas" size="100" maxlength="200" />
+                        </td>
+                        <td>
+                            &#160;
+                        </td>
+                        <td>
+                            &#160;
+                        </td>
+                    </tr>
+                </table>
+            </h:panelGroup>
+        </ui:define>
+
+        <ui:define name="botones">
+            <div class="refrescar" style="float: left;">
+                <a4j:status id="commonStatus">
+                    <f:facet name="start">
+                        <h:panelGroup>
+                            <h:graphicImage value="/images/ajax-loader.gif" />
+                            <h:outputText value="#{etq.buscando}"></h:outputText>
+                        </h:panelGroup>
+                    </f:facet>
+                </a4j:status>
+            </div>
+            <div class="limpiar">
+                <a4j:commandButton id="botonLimpiar" image="/images/transparent.gif"
+                                   styleClass="submit" ajaxSingle="true"
+                                   actionListener="#{consultaArchivosStatementsController.limpiar}"
+                                   reRender="init,criterios,containerResultados" />
+            </div>
+            <div class="buscar">
+                <a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+                                   styleClass="submit"
+                                   actionListener="#{consultaArchivosStatementsController.buscar}"
+                                   reRender="containerResultados" />
+            </div>
+        </ui:define>
+
+
+        <ui:define name="seccionContenido">
+            <t:div id="containerResultados" style="width: 700px">
+                <h:panelGroup rendered="#{consultaArchivosStatementsController.consultaEjecutada}">
+
+                    <t:dataTable id="noExistenResultados" var="reg"
+                                 value="#{consultaArchivosStatementsController.paginaVO.registros}"
+                                 styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+                                 footerClass="tituloTabla" border="0" cellpadding="3px"
+                                 cellspacing="0px" columnClasses="everyColumn"
+                                 rowClasses="renglonTablaUno, renglonTablaDos"
+                                 rendered="#{empty consultaArchivosStatementsController.paginaVO.registros}">
+                        <t:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{etq.sinResultados}"></h:outputText>
+                            </f:facet>
+
+                        </t:column>
+                    </t:dataTable>
+
+                    <br/>
+
+                    <h:panelGroup rendered="#{not empty consultaArchivosStatementsController.paginaVO.registros}">
+
+                        <table width="100%" border="0">
+                            <tr>
+                                <td align="left" class="textoEstadoCuenta">
+                                    <a4j:commandLink id="control_bitacora_primero"
+                                                     action="#{consultaArchivosStatementsController.irPrimeraPagina}"
+                                                     rendered="#{consultaArchivosStatementsController.irAlPrimero}"
+                                                     reRender="containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+                                            border="0" />
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_atras_fast"
+                                                     action="#{consultaArchivosStatementsController.retrocederPaginasRapido}"
+                                                     rendered="#{consultaArchivosStatementsController.retrocederRapido}"
+                                                     reRender="containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+                                            border="0" />
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_atras"
+                                                     action="#{consultaArchivosStatementsController.retrocederPagina}"
+                                                     rendered="#{consultaArchivosStatementsController.retroceder}"
+                                                     reRender="containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+                                            border="0" />
+                                    </a4j:commandLink>
+                                    <a4j:commandLink id="control_bitacora_adelante"
+                                                     action="#{consultaArchivosStatementsController.avanzarPagina}"
+                                                     rendered="#{consultaArchivosStatementsController.avanzar}"
+                                                     reRender="containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+                                            border="0" />
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_adelante_fast"
+                                                     action="#{consultaArchivosStatementsController.avanzarPaginasRapido}"
+                                                     rendered="#{consultaArchivosStatementsController.avanzarRapido}"
+                                                     reRender="containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+                                            border="0" />
+
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_ultimo"
+                                                     action="#{consultaArchivosStatementsController.irUltimaPagina}"
+                                                     rendered="#{consultaArchivosStatementsController.irAlUltimo}"
+                                                     reRender="containerResultados">
+                                        <img
+                                            src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+                                            border="0" />
+                                    </a4j:commandLink>
+
+
+                                    <br />
+                                    <h:outputText value="#{etq.mostrando}"
+                                                  styleClass="textoResumen" />
+                                    <h:outputText value="#{consultaArchivosStatementsController.numeroPagina}"
+                                                  styleClass="textoResumen" />
+                                    <h:outputText value="#{etq.de}" styleClass="textoResumen" />
+                                    <h:outputText value="#{consultaArchivosStatementsController.totalPaginas}"
+                                                  styleClass="textoResumen" />
+                                    <h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+                                    &#160;&#160;&#160;
+                                    <h:outputText
+                                        value="#{consultaArchivosStatementsController.paginaVO.totalRegistros}"
+                                        styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+                                    &#160;
+                                    <h:outputText styleClass="textoResumen"
+                                                  value="#{etq.registrosEncontrados}" />
+                                </td>
+                                <td style="text-align: right;"  class="textoEstadoCuenta">
+                                    <h:outputText escape="false" value="#{etq.registrosPorPagina}"
+                                                  styleClass="textoResumen" />
+                                    <h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+                                                     value="#{consultaArchivosStatementsController.paginaVO.registrosXPag}">
+                                        <f:selectItem itemLabel="1" itemValue="1" />
+                                        <f:selectItem itemLabel="2" itemValue="2" />
+                                        <f:selectItem itemLabel="5" itemValue="5" />
+                                        <f:selectItem itemLabel="10" itemValue="10" />
+                                        <f:selectItem itemLabel="20" itemValue="20" />
+                                        <f:selectItem itemLabel="50" itemValue="50" />
+                                        <a4j:support event="onchange"
+                                                     reRender="containerResultados"
+                                                     actionListener="#{consultaArchivosStatementsController.obtenerRegistros}" />
+                                    </h:selectOneMenu>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </h:panelGroup>
+
+                    <t:dataTable id="resultados"
+                                 value="#{consultaArchivosStatementsController.paginaVO.registros}"
+                                 var="archivo"
+                                 rendered="#{not empty consultaArchivosStatementsController.paginaVO.registros}"
+                                 styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+                                 footerClass="pieTabla" border="0" cellpadding="3px"
+                                 cellspacing="0px" columnClasses="everyColumn texto textoPeque12 textoArriba"
+                                 rowClasses="renglonTablaUno, renglonTablaDos">
+
+                        <t:column style="white-space: nowrap">
+                            <f:facet name="header">
+                                <h:outputText value="#{etq.nombreArchivo}" />
+                            </f:facet>
+                            <h:outputText value="#{archivo.nombreArchivo}" />
+                        </t:column>
+                        <t:column style="white-space: nowrap; text-align: right" >
+                            <f:facet name="header">
+                                <h:outputText value="#{etq.registrosCargados}" />
+                            </f:facet>
+                            <h:outputText value="#{archivo.cantidadRegistros}" />
+                        </t:column>
+                        <t:column style="white-space: nowrap; text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="#{etq.eliminarMinus}" />
+                            </f:facet>
+                            <a4j:commandLink id="lnkEliminar" styleClass="texto textoPeque12 sinSubrayar"
+                                             actionListener="#{consultaArchivosStatementsController.eliminarArchivo}"
+                                             reRender="containerResultados"
+                                             onclick="if(!confirm('&#191;Estas seguro que deseas eliminar el archivo #{archivo.nombreArchivo} \\n\\r que contiene #{archivo.cantidadRegistros} registros&#63;')) { return false; }">
+                                <h:outputText value="#{etq.eliminarMinus}" />
+                                <f:attribute name="archivoEliminar" value="#{archivo.nombreArchivo}" />
+                            </a4j:commandLink>
+                        </t:column>
+                    </t:dataTable>
+                </h:panelGroup>
+            </t:div>
+        </ui:define>
+
+
+    </ui:composition>
+
+</html>
+

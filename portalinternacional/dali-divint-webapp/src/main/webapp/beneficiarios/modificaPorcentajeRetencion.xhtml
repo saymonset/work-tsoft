@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <ui:composition template="/layoutPopUp.xhtml">
+    <ui:define name="head">			
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/beneficiarios.js">
+		    </script>
+	</ui:define>
+        <ui:define name="titulo">
+        <h:outputText value="#{etq.modificaPorcentajeRetencion}" />                    
+        </ui:define>
+        <ui:define name="subtitulo">
+        </ui:define>
+        <ui:define name="body">
+            <h:form id="BeneficiarioActivo">
+                <h:outputText value="#{modificarPorcentajeRetencionBean.init}" />
+                
+                <h:panelGroup id="general">
+                    <a4j:keepAlive beanName="modificarPorcentajeRetencionBean" />
+
+                    <table width="850px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+                        <tr>
+                            <td colspan="3">
+                                <div style="min-height: 21px;">
+                                    <rich:messages warnClass="warning" infoClass="info"
+                                                   errorClass="error" ajaxRendered="true" showDetail="false"
+                                                   showSummary="true" layout="list">
+                                        <f:facet name="infoMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/accept.png" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+
+                                        <f:facet name="errorMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/warning.gif" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+                                    </rich:messages>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 10px">
+                            <td>
+                                &#160;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" width="30%">
+                                <h:outputText styleClass="texto" style="font-weight: bold;"
+                                              value="#{etq.uoi}" />
+                                &#160;&#160;
+                              <h:outputText styleClass="texto" value="#{modificarPorcentajeRetencionBean.uoi}" />
+                            </td>
+                            <td align="left" width="40%">
+                            	<h:panelGroup rendered="#{modificarPorcentajeRetencionBean.isPersonaFisica}">                            	
+                                    <h:outputText styleClass="texto" style="font-weight: bold;" value="#{etq.nombreBeneficiario}" />
+                                    &#160;&#160;
+                                    <h:outputText styleClass="texto" value="#{modificarPorcentajeRetencionBean.nombreCompletoBeneficiario}" />
+                                </h:panelGroup>
+                                <h:panelGroup  rendered="#{!modificarPorcentajeRetencionBean.isPersonaFisica}">
+                                    <h:outputText styleClass="texto" style="font-weight: bold;" value="#{etq.razonSocial}" />
+                                    &#160;&#160;
+                                    <h:outputText styleClass="texto" value="#{modificarPorcentajeRetencionBean.razonSocial}" />
+                                </h:panelGroup> 
+                           </td>
+                           <td align="left" width="30%">                                                            
+                                <h:outputText styleClass="texto" style="font-weight: bold;"
+                                              value="#{etq.pais}" />
+                                &#160;&#160;
+                                <h:outputText styleClass="texto"
+                                              value="#{modificarPorcentajeRetencionBean.paisIncorporacion}" />
+                            </td>
+                        </tr>
+                        <tr style="height: 10px">
+                            <td>
+                                &#160;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left">
+                                <h:outputText styleClass="texto" style="font-weight: bold;"
+                                              value="#{etq.porcentajeRetencionMinus}" />
+                                &#160;&#160;
+                                <h:outputText styleClass="texto" value="#{modificarPorcentajeRetencionBean.porcentajeRetencionActual}" />                                                
+                            </td>
+                            <td align="left">
+                                <h:outputText styleClass="texto" style="font-weight: bold;"
+                                              value="#{etq.tipoBeneficiario}" />
+                                &#160;&#160;
+                                <h:outputText styleClass="texto" value="#{modificarPorcentajeRetencionBean.tipoBeneficiario}" /> 
+                                              
+                            </td>
+                            <td align="left">
+                            	<h:outputText styleClass="texto" style="font-weight: bold;"
+                                              value="#{etq.formato}" />
+                                &#160;&#160;
+                               <h:outputText styleClass="texto" value="#{modificarPorcentajeRetencionBean.tipoFormato}" />
+                            	<!-- VALOR PENDIENTE PARA LA SIGUIENTE ETAPA 
+                            	 <h:outputText styleClass="texto" style="font-weight: bold;"
+                                              value="#{etq.activoInactivo}" />
+                                &#160;&#160;
+                                 <h:outputText styleClass="texto" value="Valor Pendiente" />
+                            	-->
+                            </td>
+                        </tr>
+                        <tr style="height: 10px">
+                            <td>
+                                &#160;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left">                            	                                   
+                                  
+                            </td>
+                            <td align="left">
+                             	<h:outputText styleClass="texto" style="font-weight: bold;"
+                                              value="#{etq.custodio}" />
+                                &#160;&#160;
+                                <h:outputText styleClass="texto"
+                                              value="#{modificarPorcentajeRetencionBean.nombreCustodio}" />
+                            </td>
+                        	<td align="left">
+                        		
+                        	</td>                        
+                        </tr>
+                        <tr style="height: 10px">
+                            <td>
+                                &#160;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                <h:outputText styleClass="texto" style="font-weight: bold;" value="#{etq.nuevoPorcentajeRetencion}" />
+                                &#160;&#160;
+                                <h:inputText autocomplete="off" id="valorPorcentaje" styleClass="texto campoNumericoDecimal" value="#{modificarPorcentajeRetencionBean.nuevoPorcentajeRetencion}" maxlength="6" size="6"/>  
+                            </td>
+                            <td align="left" style="top:0%;">                            
+                            	<h:outputText styleClass="texto" style="font-weight: bold; top:0px;" value="#{etq.porcentaje}" />                                                        	
+                            </td>                            
+                            <td align="left"> 
+                                 	  <div class="guardar" style="float: left;">
+                                    <h:commandButton id="botonGuardar" image="/images/transparent.gif"
+                                                       styleClass="submit" reRender="general"
+                                                       action="#{modificarPorcentajeRetencionBean.guardar}"
+                                                       onclick="if(!confirmarGuardarPorcentaje()){resetearValorPorcentajeRetencion();return false;}" />
+                                   </div>                    
+                                   <div class="cancelar" style="float: left;">                                                                                             	                     
+                                	<h:commandButton  id="botonCancelarModificaPorcentaje"  image="/images/transparent.gif"
+                                						styleClass="submit" 
+                                						action="#{modificarPorcentajeRetencionBean.cancelar}"  
+                                						onclick="closeModificaPorcentajeRetencion();" />                                                                                                                                                                  
+                                   </div>                    
+                            </td>
+                            <td>                            
+                        	</td>
+                        </tr>                   
+                    </table>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

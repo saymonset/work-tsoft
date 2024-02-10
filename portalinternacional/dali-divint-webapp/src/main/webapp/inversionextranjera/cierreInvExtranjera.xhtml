@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich" xmlns:t="http://myfaces.apache.org/tomahawk">
+    <!-- DECORATE -->
+   <ui:decorate template="#{facesContext.externalContext.requestContextPath}/layoutConsultas.xhtml">
+    	<ui:define name="head">    		
+    	</ui:define>    	
+    	<ui:define name="tituloSeccion">
+            <h:outputText value="#{etq.divisionInternacional}" />
+        </ui:define>
+        <ui:define name="subtituloSeccion">
+            <h:outputText value="#{etq.sistemaIntCot}" />
+        </ui:define>
+        
+        <ui:define name="tituloEncabezado">
+            <h:outputText value="#{etq.cierreInvExt}"></h:outputText>
+        </ui:define>
+        
+         <ui:define name="criterios">
+        	<a4j:keepAlive beanName="cierreInvExtController" />
+	        <h:panelGroup id="mensajeUsuario">
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+	
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+				
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+				</div>
+			</h:panelGroup>
+	        
+	       	<h:panelGroup id="panelCriterios">
+	       		<div style='display: "inline"' id="divCriterios">
+	       			<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="center">
+	       				<tr>
+	       					<td class="recuadroTabla">
+	       						<table class="tablaCriterios" border="0">
+	       							<tr align="center">
+	       								<td>
+	       									<table>	
+	       										<tr align="center">	       							
+				       								<td>
+				       									<h:outputText styleClass="texto" value="#{etq.fechaConsulta}"/>
+				       								</td>
+	       											<td>
+	       												<h:outputText value="22/22/2222"/>
+	       											</td>	       							
+				       							</tr>       										
+	       										<tr align="center">	       												       											       					
+				       								<td>
+				       									<h:outputText styleClass="texto" value="#{etq.depRetirosDia}"/>
+				       								</td>
+	       											<td>
+														<rich:calendar id="fecha"
+															datePattern="dd/MM/yyyy"
+															inputSize="11"
+															inputClass="textoControles"
+															inputStyle="background-color: #ffffe6;"
+															isDayEnabled="isDayEnabled" />
+	       											</td>	       							
+				       							</tr>
+				       							<tr>
+				       								<td>
+				       									<h:outputText styleClass="texto" value="#{etq.saldoInicialFidBanamex}"/>
+				       								</td>
+				       								<td>
+		       											<h:inputText autocomplete="off" styleClass="textoControles campoNumerico" 
+			       											maxlength="20" size="22" 
+			       											tabindex="20" value=""/>
+		       										</td>
+	       										</tr>
+				       							<tr>
+				       								<td>
+	       												<h:outputText styleClass="texto" value="#{etq.saldoInicialFidInbur}"/>
+	       											</td>
+	       											<td>
+		       											<h:inputText autocomplete="off" styleClass="textoControles campoNumerico" 
+			       											maxlength="20" size="22" 
+			       											tabindex="30" value=""/>
+		       										</td>
+	       										</tr>
+	       										<tr>
+				       								<td>
+				       									<h:outputText styleClass="texto" value="#{etq.saldoInicialFidNafin}"/>
+				       								</td>
+		       										<td>
+		       											<h:inputText autocomplete="off" styleClass="textoControles campoNumerico" 
+			       											maxlength="20" size="22" 
+			       											tabindex="40" value=""/>
+		       										</td>
+	       										</tr>
+	       										<tr>
+				       								<td>
+				       									<h:outputText styleClass="texto" value="#{etq.saldoInicialFidVitro}"/>
+				       								</td>
+		       										<td>
+		       											<h:inputText autocomplete="off" styleClass="textoControles campoNumerico" 
+		       												maxlength="20" size="22"
+		       												tabindex="50" value=""/>
+		       										</td>
+	       										</tr>
+       										</table>
+       									</td>	       							
+       								</tr>	       							
+       							</table>       						
+	       					</td>
+	       				</tr>	       				       						       				       				       			
+	       			</table>
+	       		</div>
+	       	</h:panelGroup>
+	       	
+	       	<h:panelGroup id="panelResumen">
+	       		<h:panelGroup>
+		       		<div id="divResumen" style="display: inline;">
+		       			<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="center">
+		       				<tr>
+		       					<td class="recuadroTabla">
+		       						<table class="tablaCriterios" border="0">
+		       							<tr align="center">
+		       								<td>
+		       									<table>
+		       										<tr align="center">	       							
+					       								<td>
+					       									<h:outputText styleClass="texto" value="#{etq.fechaConsulta}"/>
+					       								</td>
+		       											<td>
+		       												<h:outputText value="22/22/2222"/>
+		       											</td>	       							
+					       							</tr>	       										
+		       										<tr align="center">	       							
+					       								<td>
+					       									<h:outputText styleClass="texto" value="#{etq.depRetirosDia}"/>
+					       								</td>
+		       											<td>
+		       												<h:outputText value="22/22/2222"/>
+		       											</td>	       							
+					       							</tr>
+					       							<tr>
+					       								<td>
+					       									<h:outputText styleClass="texto" value="#{etq.saldoInicialFidBanamex}"/>
+					       								</td>
+					       								<td>
+			       											<h:outputText value="numeroEntero"/>
+			       										</td>
+		       										</tr>
+					       							<tr>
+					       								<td>
+		       												<h:outputText styleClass="texto" value="#{etq.saldoInicialFidInbur}"/>
+		       											</td>
+		       											<td>
+			       											<h:outputText value="numeroEntero"/>
+			       										</td>
+		       										</tr>
+		       										<tr>
+					       								<td>
+					       									<h:outputText styleClass="texto" value="#{etq.saldoInicialFidNafin}"/>
+					       								</td>
+			       										<td>
+			       											<h:outputText value="numeroEntero"/>
+			       										</td>
+		       										</tr>
+		       										<tr>
+					       								<td>
+					       									<h:outputText styleClass="texto" value="#{etq.saldoInicialFidVitro}"/>
+					       								</td>
+			       										<td>
+			       											<h:outputText value="numeroEntero"/>
+			       										</td>
+		       										</tr>
+	       										</table>
+	       									</td>	       							
+	       								</tr>	       							
+	       							</table>       						
+		       					</td>
+		       				</tr>	       				       						       				       				       			
+		       			</table>
+		       		</div>
+	       		</h:panelGroup>
+	       	</h:panelGroup>
+       	</ui:define>
+       	
+       	<ui:define name="seccionContenido">
+       		 <h:panelGroup id="containerResultados">
+       		 <!-- AQUI VAN LAS CONDICIONES DE REPINTADO -->
+       		 	<t:dataTable id="noExistenResultados" value=""
+	                styleClass="tablaGeneral" headerClass="tituloTabla" width="100%" footerClass="tituloTabla" border="0"
+	                cellpadding="3px" cellspacing="0px" columnClasses="everyColumn"
+	                rowClasses="renglonTablaUno, renglonTablaDos"
+	                rendered="true">
+	                <t:column>
+	                    <f:facet name="header">
+	                        <h:outputText value="#{etq.sinResultados}"></h:outputText>
+	                    </f:facet>	
+	                </t:column>
+                </t:dataTable> 
+                
+                <h:panelGroup rendered="true">
+                	<h:panelGroup>
+                		<h:outputText value="#{etq.mostrando}"
+									styleClass="textoResumen" />
+						<h:outputText value="0"
+									styleClass="textoResumen" />
+						<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+						<h:outputText value="0"
+									styleClass="textoResumen" />
+						<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+							&#160;&#160;&#160;
+						<h:outputText
+							value="0"
+							styleClass="textoResumen"></h:outputText>
+								&#160;
+						<h:outputText styleClass="textoResumen"
+								value="#{etq.registrosEncontrados}" />                		
+                	</h:panelGroup>
+                	
+                	<h:panelGrid columns="3" cellspacing="5" rendered="true" styleClass="recuadroTabla">
+                   		<a4j:commandButton rendered="true"
+							value="#{etq.menorQue}"
+							reRender="containerResultados,panelClaveValor" image="/images/control_atras.png"/>							
+						<h:panelGroup>
+							<table align="center">
+								<tr align="center">
+									<td colspan="5">
+										<b><h:outputText styleClass="tablaItem" value="#{etq.agente}"/></b>
+									</td>
+								</tr>
+								<tr align="center">
+									<td>
+										<h:outputText value="#{etq.id}"/>											
+									</td>
+									<td>
+										<h:outputText value="#{etq.folioMinus}"/>											
+									</td>
+									<td>
+										<h:outputText value="#{etq.cuentaMinus}"/>											
+									</td>
+									<td>
+										<h:outputText value="#{etq.nombreCorto}"/>											
+									</td>
+									<td>
+										<h:outputText value="#{etq.fideicomisoMinus}"/>											
+									</td>
+								</tr>
+								<tr align="center">
+									<td><h:outputText value="ID"/></td>
+									<td><h:outputText value="FOLIO"/></td>
+									<td><h:outputText value="CUENTA"/></td>
+									<td><h:outputText value="NOMBREE"/></td>
+									<td><h:outputText value="FIDEICOMISOOO"/></td>																		
+								</tr>
+							</table>
+						</h:panelGroup>						
+                    	<a4j:commandButton rendered="true"
+							value="#{etq.mayorQue}"
+							reRender="" image="/images/control_adelante.png"/>
+                   	</h:panelGrid>
+                	
+                	
+                </h:panelGroup>
+                      		 
+       		 </h:panelGroup>
+       	</ui:define>
+       	
+       	<ui:define name="botones">
+       		<h:panelGroup id="botones">
+	       		<div class="refrescar" style="float: left;">
+		       		 <a4j:status id="commonStatus">
+						<f:facet name="start">
+							<h:panelGroup>
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								<h:outputText value="#{etq.buscando}"></h:outputText>
+							</h:panelGroup>
+						</f:facet>
+					</a4j:status> 	
+	        	</div>
+        		<div class="limpiar">
+	                <h:commandButton id="botonLimpiar" image="/images/transparent.gif" styleClass="submit" tabindex="140"
+	                    actionListener="#{fideicomisoBanamexController.limpiar}">
+	                </h:commandButton>
+	            </div>
+	            <div class="buscar">
+	                <a4j:commandButton id="botonBuscar" image="/images/transparent.gif" styleClass="submit" tabindex="130"	                	
+	                	oncomplete='$j("#divCriterios").css("display","none");'
+	                    actionListener="#{fideicomisoBanamexController.obtenerArqueos}"
+	                    reRender="botones,panelResumen,containerResultados,mensajeUsuario">	 
+	                	<f:attribute name="totalArqueo" value="totalArqueo"/>    	                   	
+                    </a4j:commandButton>
+	            </div>
+	            <div class="editar" style="display:#{!cierreInvExtController.consultaEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios">            
+			            	<input type="image" class="submit"
+								src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+								alt="Editar Criterios" title="Editar Criterios"
+								onclick='javascript:presentarCriterios();return false;' />                      	
+	           	</div>
+      		</h:panelGroup>       	
+    	</ui:define>     		
+    </ui:decorate>    
+</html>    	

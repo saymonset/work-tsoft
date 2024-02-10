@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+      xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+		<ui:define name="head">
+			<!-- <script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/derechos.js">
+            </script>-->
+		</ui:define>
+		
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.admonCustodiosBeneficiarios}" />
+		</ui:define>
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.custodios}"></h:outputText>
+		</ui:define>
+
+ 		<ui:define name="botones">
+			<div class="guardar">
+	                <h:commandButton id="botonGuardar" image="/images/transparent.gif"
+	                    styleClass="submit"
+	                    action="#{adminCustodioBeneficiarioBean.modificarAction}"
+	                    reRender="containerResultados"/>
+	        </div>
+        </ui:define>		
+        
+		<ui:define name="seccionContenido">
+			<a4j:keepAlive beanName="adminCustodioBeneficiarioBean" />
+			<h:outputText value="#{adminCustodioBeneficiarioBean.init}" />																				
+			<h:panelGroup id="containerResultados">								
+				<t:dataTable id="noExistenResultados"
+					value="#{adminCustodioBeneficiarioBean.listCustodios}"
+					styleClass="tablaGeneral" headerClass="tituloTabla" width="900px"
+					footerClass="tituloTabla" border="0" cellpadding="3px"
+					cellspacing="0px" columnClasses="everyColumn"
+					rowClasses="renglonTablaUno, renglonTablaDos"
+					rendered="#{empty adminCustodioBeneficiarioBean.listCustodios}">
+					<t:column>
+						<f:facet name="header">
+							<h:outputText value="#{etq.sinResultados}"></h:outputText>
+						</f:facet>
+
+					</t:column>
+				</t:dataTable>					
+				<h:dataTable id="resultados"
+					value="#{adminCustodioBeneficiarioBean.listCustodios}"
+					var="custodio"
+					rendered="#{not empty adminCustodioBeneficiarioBean.listCustodios}"
+					styleClass="tablaGeneral" headerClass="tituloTabla" width="900px"
+					footerClass="tituloTabla" border="0" cellpadding="3px"
+					cellspacing="0px" columnClasses="everyColumn"
+					rowClasses="renglonTablaUno, renglonTablaDos">
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.cuentaNombrada}" />
+						</f:facet>							
+                           <h:outputText styleClass="texto textoPeque12" value="#{custodio.cuentaNombrada}" />														
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.nombre}" />
+						</f:facet>							
+                           <h:outputText styleClass="texto textoPeque12" value="#{custodio.detalleCustodio}" />														
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.bicProd}" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{custodio.bicProd}" />
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.msgAbreviacion}" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{custodio.abreviacionCustodio}" rendered="#{!custodio.editar}" />
+						<h:panelGroup rendered="#{custodio.editar}" >
+							<h:inputText autocomplete="off" id="abreviacionCustodio" value="#{custodio.abreviacionCustodio}" 
+								styleClass="textoControles textoMayusculas" size="10" maxlength="4" />
+                        </h:panelGroup>
+					</h:column>
+					
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.estado}" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{custodio.activo==1?'Activo':'Inactivo'}" rendered="#{!custodio.editar}"/>
+						<h:panelGroup rendered="#{custodio.editar}" >
+                                                        <h:selectOneMenu styleClass="textoControles"
+                                                                         style="width: 60px"
+                                                                         value="#{custodio.activo}">
+                                                            <f:selectItem itemLabel="Activo" itemValue="1" />
+                                                            <f:selectItem itemLabel="Inactivo" itemValue="0" />
+                                                        </h:selectOneMenu>
+                        </h:panelGroup>
+					</h:column>
+
+                    <h:column>
+                    	<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.editar}" />
+						</f:facet>
+						<h:selectBooleanCheckbox id="editar" styleClass="textoControles" value="#{custodio.editar}">
+                                                        <a4j:support event="onclick"
+                                                                     reRender="resultados, botonGuardar"
+                                                                     actionListener="#{adminCustodioBeneficiarioBean.cambiaEdicion}" />
+                         </h:selectBooleanCheckbox>
+                    </h:column>                                   
+                   </h:dataTable>
+			</h:panelGroup>
+		</ui:define>
+            
+	</ui:composition>
+</html>

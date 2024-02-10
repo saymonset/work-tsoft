@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd" version="1.2">
+	 <managed-bean>
+			<managed-bean-name>eventosCorporativosBean</managed-bean-name>
+			<managed-bean-class>
+				com.indeval.portalinternacional.presentation.controller.eventosCorporativos.ConsultaEventosCorporativosController
+			</managed-bean-class>
+			<managed-bean-scope>request</managed-bean-scope>
+			<managed-property>
+				<property-name>consultaEventosCorporativosService</property-name>				
+				<value>#{consultaEventosCorporativosService}</value>
+			</managed-property>	
+						
+	</managed-bean>
+	<managed-bean>
+			<managed-bean-name>capturaEventosCorporativosBean</managed-bean-name>
+			<managed-bean-class>
+				com.indeval.portalinternacional.presentation.controller.eventosCorporativos.CapturaEventosCorporativosController
+			</managed-bean-class>
+			<managed-bean-scope>request</managed-bean-scope>
+			<managed-property>
+				<property-name>consultaEventosCorporativosService</property-name>				
+				<value>#{consultaEventosCorporativosService}</value>
+			</managed-property>		
+			<managed-property>
+				<property-name>saveEventosCorporativosService</property-name>				
+				<value>#{saveEventosCorporativosService}</value>
+			</managed-property>	
+			<managed-property>
+	            <property-name>emisionDao</property-name>
+	            <value>#{emisionDao}</value>
+        	</managed-property> 
+        	<managed-property>
+	            <property-name>divisionInternacionalService</property-name>
+	            <value>#{divisionInternacionalService}</value>
+	        </managed-property>				
+	</managed-bean>
+	<!-- DEFINICION DE CONTROLLER QUE MANEJA LOS DIALOGOS DE CAPTURA PARA EVENTOS CORPORATIVOS -->
+	<managed-bean>
+		<managed-bean-name>dialogoGeneralEventoCorporativoBean</managed-bean-name>	
+		<managed-bean-class>com.indeval.portalinternacional.presentation.controller.eventosCorporativos.DialogoGeneralEventoCorporativoController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+			<managed-property>
+				<property-name>consultaEventosCorporativosService</property-name>				
+				<value>#{consultaEventosCorporativosService}</value>
+			</managed-property>
+			<managed-property>
+				<property-name>validaDialogoForm</property-name>				
+				<value>#{validadorEvco}</value>
+			</managed-property>			
+	</managed-bean>
+	<!-- DEFINICION DE CONTROLLER QUE MANEJA LA EDICION DEL EVENTO CORPORATIVO -->
+	<managed-bean>
+		<managed-bean-name>edicionEventoCorporativoBean</managed-bean-name>	
+		<managed-bean-class>com.indeval.portalinternacional.presentation.controller.eventosCorporativos.EdicionEventosCorporativosController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+			<managed-property>
+				<property-name>consultaEventosCorporativosService</property-name>				
+				<value>#{consultaEventosCorporativosService}</value>
+			</managed-property>
+			<managed-property>
+				<property-name>saveEventosCorporativosService</property-name>				
+				<value>#{saveEventosCorporativosService}</value>
+			</managed-property>	
+			<managed-property>
+	            <property-name>emisionDao</property-name>
+	            <value>#{emisionDao}</value>
+        	</managed-property> 	
+       	 	<managed-property>
+	            <property-name>divisionInternacionalService</property-name>
+	            <value>#{divisionInternacionalService}</value>
+	        </managed-property>	
+	</managed-bean>
+	<managed-bean>
+			<managed-bean-name>bitacoraEventosCorporativosBean</managed-bean-name>
+			<managed-bean-class>
+				com.indeval.portalinternacional.presentation.controller.eventosCorporativos.BitacoraEventosCorporativosController
+			</managed-bean-class>
+			<managed-bean-scope>request</managed-bean-scope>
+			<managed-property>
+				<property-name>consultaEventosCorporativosService</property-name>				
+				<value>#{consultaEventosCorporativosService}</value>
+			</managed-property>				
+	</managed-bean>
+	<managed-bean>
+			<managed-bean-name>controlCambiosCorporativosBean</managed-bean-name>
+			<managed-bean-class>
+				com.indeval.portalinternacional.presentation.controller.eventosCorporativos.ControlCambiosCorporativosController
+			</managed-bean-class>
+			<managed-bean-scope>request</managed-bean-scope>
+			<managed-property>
+				<property-name>consultaEventosCorporativosService</property-name>				
+				<value>#{consultaEventosCorporativosService}</value>
+			</managed-property>				
+	</managed-bean>
+	<managed-bean>
+			<managed-bean-name>resumenEventoCorporativoBean</managed-bean-name>
+			<managed-bean-class>
+				com.indeval.portalinternacional.presentation.controller.eventosCorporativos.ResumenEventoCorporativoController
+			</managed-bean-class>
+			<managed-bean-scope>request</managed-bean-scope>
+			<managed-property>
+				<property-name>consultaEventosCorporativosService</property-name>				
+				<value>#{consultaEventosCorporativosService}</value>
+			</managed-property>				
+	</managed-bean>
+	<managed-bean>
+			<managed-bean-name>tiposDerechoEventoCorporativoBean</managed-bean-name>
+			<managed-bean-class>
+				com.indeval.portalinternacional.presentation.controller.eventosCorporativos.TiposDerechoController
+			</managed-bean-class>
+			<managed-bean-scope>request</managed-bean-scope>
+			<managed-property>
+				<property-name>consultaEventosCorporativosService</property-name>				
+				<value>#{consultaEventosCorporativosService}</value>
+			</managed-property>				
+	</managed-bean>
+	<managed-bean>
+			<managed-bean-name>creartiposDerechoEvcoBean</managed-bean-name>
+			<managed-bean-class>
+				com.indeval.portalinternacional.presentation.controller.eventosCorporativos.CrearTiposDerechoController
+			</managed-bean-class>
+			<managed-bean-scope>request</managed-bean-scope>
+			<managed-property>
+				<property-name>consultaEventosCorporativosService</property-name>				
+				<value>#{consultaEventosCorporativosService}</value>
+			</managed-property>				
+	</managed-bean>
+	
+	
+	<!-- Definición del controlador para la administración de personas -->
+	<managed-bean>
+		<managed-bean-name>personasBean</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portalinternacional.presentation.controller.eventosCorporativos.catalogos.PersonaController
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>personaService</property-name>				
+			<value>#{personaService}</value>
+		</managed-property>
+		 <managed-property>
+            <property-name>consultaCatService</property-name>
+            <value>#{consultaCatalogoService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>listaDistribucionService</property-name>
+            <value>#{listaDistribucionService}</value>
+        </managed-property>
+	</managed-bean>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>personasPDF</from-outcome>
+			<to-view-id>/eventosCorporativos/catalogos/personasPDF.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>personasXLS</from-outcome>
+			<to-view-id>/eventosCorporativos/catalogos/personasXLS.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	
+	
+	<!-- Definicion del controlador para la administracion de listas de distribucion -->
+	<managed-bean>
+		<managed-bean-name>listaDistribucionBean</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portalinternacional.presentation.controller.eventosCorporativos.catalogos.ListaDistribucionController
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		
+		<managed-property>
+			<property-name>listaDistribucionService</property-name>				
+			<value>#{listaDistribucionService}</value>
+		</managed-property>
+	</managed-bean>
+	<navigation-rule>
+        <from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>listasDistribucionPDF</from-outcome>
+			<to-view-id>/eventosCorporativos/catalogos/listasDistribucionPDF.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>listasDistribucionXLS</from-outcome>
+			<to-view-id>/eventosCorporativos/catalogos/listasDistribucionXLS.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- 
+
+	<managed-bean>
+			<managed-bean-name>tipoDerechoBean</managed-bean-name>
+			<managed-bean-class>
+				com.indeval.portalinternacional.presentation.controller.eventosCorporativos.TipoDerechoController
+			</managed-bean-class>
+			<managed-bean-scope>request</managed-bean-scope>
+			<managed-property>
+				<property-name>conciliacionEfectivoIntService</property-name>				
+				<value>#{conciliacionEfectivoIntService}</value>
+			</managed-property>					
+	</managed-bean> -->
+	 
+	 
+	 <navigation-rule>
+        <from-view-id>*</from-view-id>
+		<navigation-case>            
+            <from-outcome>capturaEventoCorporativo</from-outcome>
+            <to-view-id>/eventosCorporativos/captura/capturaEventoCorporativo.xhtml</to-view-id>
+        </navigation-case>
+      </navigation-rule>
+      
+      <navigation-rule>
+        <from-view-id>*</from-view-id>
+		<navigation-case>            
+            <from-outcome>consultaEventosCorporativosIndeval</from-outcome>
+            <to-view-id>/eventosCorporativos/consultaEventosCorporativosIndeval.xhtml</to-view-id>
+        </navigation-case>
+      </navigation-rule>
+</faces-config>

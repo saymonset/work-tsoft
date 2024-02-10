@@ -1,0 +1,1865 @@
+<!--Cambio Multidivisas-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util" xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+    <description>
+        AplicationContext de configuracion de objetos de acceso a los servicios
+    </description>
+
+    <!--  Poner en ESTRICTO orden alfabetico (por favor) -->
+
+    <bean id="adminCatalogosBenefService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.AdminCatalogosBenefServiceImpl"
+          lazy-init="true">
+        <property name="excepcionEmisionBenefDao">
+            <ref bean="excepcionEmisionBenefDao"/>
+        </property>
+        <property name="horarioBeneficiarioDao">
+            <ref bean="horarioBeneficiarioDao"/>
+        </property>
+        <property name="emisionDao">
+            <ref bean="emisionDaoInt"/>
+        </property>
+        <property name="sicEmisionDao">
+            <ref bean="sicEmisionDao"/>
+        </property>
+    </bean>
+
+
+    <bean id="controlBeneficiariosService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ControlBeneficiariosServiceImpl"
+          lazy-init="true">
+        <description>
+            Bean de Acceso a servicios de Control de Beneficiarios
+        </description>
+
+        <property name="beneficiarioDao">
+            <ref bean="beneficiarioDao"/>
+        </property>
+
+        <property name="camposFormatosDao">
+            <ref bean="camposFormatosDao"/>
+        </property>
+
+        <property name="catBicDao">
+            <ref bean="catBicDao"/>
+        </property>
+
+        <property name="custodioTipoBenefDao">
+            <ref bean="custodioTipoBenefDao"/>
+        </property>
+
+        <property name="dateUtilService">
+            <ref bean="dateUtilService"/>
+        </property>
+
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+
+        <property name="historicoBeneficiarioDao">
+            <ref bean="historicoBeneficiarioDao"/>
+        </property>
+
+        <property name="mailService">
+            <ref local="mailService"/>
+        </property>
+
+        <property name="statusBeneficiarioDao">
+            <ref bean="statusBeneficiarioDao"/>
+        </property>
+
+        <property name="validatorDivIntService">
+            <ref local="validatorDivIntService"/>
+        </property>
+
+        <property name="validatorService">
+            <ref bean="validatorService"/>
+        </property>
+
+        <property name="serviceFormatosFiscales">
+            <ref local="serviceFormatosFiscales"/>
+        </property>
+
+        <property name="countryISO">
+            <map>
+                <entry key="MEXICO" value="MX"/>
+                <entry key="MÉXICO" value="MX"/>
+                <entry key="U.S." value="US"/>
+                <entry key="USA" value="US"/>
+            </map>
+        </property>
+
+        <property name="validatorFormatW9Service">
+            <ref local="validatorFormatW9Service"/>
+        </property>
+        <property name="validatorFormatW8IMYService">
+            <ref local="validatorFormatW8IMYService"/>
+        </property>
+        <property name="validatorFormatW8BENService">
+            <ref local="validatorFormatW8BENService"/>
+        </property>
+        <property name="validatorFormatW8BEN2014Service">
+            <ref local="validatorFormatW8BEN2014Service"/>
+        </property>
+        <property name="validatorFormatMILAService">
+            <ref local="validatorFormatMILAService"/>
+        </property>
+        <property name="conciliacionEfectivoIntService">
+            <ref local="conciliacionEfectivoIntService"/>
+        </property>
+        <property name="validatorFormatW8BENEService">
+            <ref local="validatorFormatW8BENEService"/>
+        </property>
+        <property name="validatorFormatW8BENE2016Service">
+            <ref local="validatorFormatW8BENE2016Service"/>
+        </property>
+        <property name="validatorFormatW8IMY2015Service">
+            <ref local="validatorFormatW8IMY2015Service"/>
+        </property>
+        <property name="validatorFormatW8IMY2017Service">
+            <ref local="validatorFormatW8IMY2017Service"/>
+        </property>
+        <property name="formatoW8Service">
+            <ref bean="formatoW8Service"/>
+        </property>
+        <property name="listaFormatosDepurar" value="${portalDali-divint.listadoFormatosDepurar}"/>
+
+        <property name="claveAdpDao">
+            <ref bean="claveAdpDao"/>
+        </property>
+
+        <property name="adpCustodioPorcentajeDao">
+            <ref bean="adpCustodioPorcentajeDao"/>
+        </property>
+
+    </bean>
+
+    <bean id="cuentasTransitoriasEfectivoService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoServiceImpl"
+          lazy-init="true">
+        <description>
+            Bean de Acceso a servicios de Cuentas Transitorias de Efectivo
+        </description>
+        <property name="cuentasTransitoriasEfectivoDao">
+            <ref bean="cuentasTransitoriasEfectivoDao"/>
+        </property>
+    </bean>
+
+    <bean id="serviceFormatosFiscales"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.FormatoFiscalServiceImpl"
+          lazy-init="true">
+        <description>
+            Bean de Acceso a servicios de Formatos Fiscales
+        </description>
+
+        <property name="formatoFiscalDao">
+            <ref bean="formatoFiscalDao"/>
+        </property>
+
+        <property name="beneficiarioDao">
+            <ref bean="beneficiarioDao"/>
+        </property>
+
+        <property name="historicoBeneficiarioDao">
+            <ref bean="historicoBeneficiarioDao"/>
+        </property>
+
+        <property name="catBicDao">
+            <ref bean="catBicDao"/>
+        </property>
+
+        <property name="validatorFormatoFiscalTinService">
+            <ref local="validatorFormatoFiscalTinService"/>
+        </property>
+
+    </bean>
+
+    <bean id="controlCatalogosService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ControlCatalogosServiceImpl">
+
+        <description>Bean de Acceso a servicios de catalogos</description>
+
+        <property name="estatusDerechoDao">
+            <ref bean="estatusDerechoDao"/>
+        </property>
+        <property name="divisaDao">
+            <ref bean="divisaDao"/>
+        </property>
+        <property name="bovedaDao">
+            <ref bean="bovedaDao"/>
+        </property>
+        <property name="tipoBeneficiarioDao">
+            <ref bean="tipoBeneficiarioDao"/>
+        </property>
+
+    </bean>
+
+    <bean id="controlDerechosService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ControlDerechosServiceImpl">
+
+        <description>Bean de Acceso a servicios de Derechos Internacional</description>
+
+        <property name="derechoDao">
+            <ref bean="derechoDao"/>
+        </property>
+        <property name="dateUtilService">
+            <ref bean="dateUtilService"/>
+        </property>
+        <property name="utilDivIntService">
+            <ref bean="utilDivIntService"/>
+        </property>
+        <property name="sicEmisionDao">
+            <ref bean="sicEmisionDao"/>
+        </property>
+        <property name="excepcionEmisionBenefDao">
+            <ref bean="excepcionEmisionBenefDao"/>
+        </property>
+        <property name="horarioBeneficiarioDao">
+            <ref bean="horarioBeneficiarioDao"/>
+        </property>
+        <property name="grupoRetencionDao">
+            <ref bean="grupoRetencionDao"/>
+        </property>
+        <property name="jmsTemplatePagados">
+            <ref bean="jmsTemplateMoiCapitalesPagados"/>
+        </property>
+        <property name="formatoW8Dao">
+            <ref bean="formatoW8Dao"/>
+        </property>
+    </bean>
+
+
+    <bean id="statementsDivintService" lazy-init="true"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.StatementsDivintServiceImpl">
+        <property name="statementsDivIntDao" ref="statementsDivIntDao"/>
+        <property name="institucionDao" ref="institucionDao"/>
+        <property name="emisionDao" ref="emisionDao"/>
+        <property name="tipoBeneficiarioDao" ref="tipoBeneficiarioDao"/>
+        <property name="validatorDivIntService" ref="validatorDivIntService"/>
+        <property name="dateUtilService" ref="dateUtilService"/>
+        <property name="domiciliosInstitucionesDao" ref="domiciliosInstitucionesDao"/>
+    </bean>
+
+
+    <bean id="divisionInternacionalService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.DivisionInternacionalServiceImpl"
+          lazy-init="true">
+        <description>
+            Bean de Acceso a servicios de Division Internacional
+        </description>
+
+        <property name="bitacoraOperacionesDao">
+            <ref bean="bitacoraOperacionesDao"/>
+        </property>
+
+        <property name="catBicDao">
+            <ref bean="catBicDao"/>
+        </property>
+
+        <property name="cuponDao">
+            <ref bean="cuponDao"/>
+        </property>
+
+        <property name="dateUtilService">
+            <ref bean="dateUtilService"/>
+        </property>
+
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+
+        <property name="estatusOperacionDao">
+            <ref bean="estatusOperacionDao"/>
+        </property>
+
+        <property name="operacionSicDao">
+            <ref bean="operacionSicDao"/>
+        </property>
+
+        <property name="seqFolioControl">
+            <value>SEQ_SLV_FOLIADOR</value>
+        </property>
+
+        <property name="sicDetalleDao">
+            <ref bean="sicDetalleDao"/>
+        </property>
+
+        <property name="sicEmisionDao">
+            <ref bean="sicEmisionDao"/>
+        </property>
+
+        <property name="utilDivIntService">
+            <ref local="utilDivIntService"/>
+        </property>
+
+        <property name="utilService">
+            <ref bean="utilService"/>
+        </property>
+
+        <property name="validatorDivIntService">
+            <ref local="validatorDivIntService"/>
+        </property>
+
+        <property name="validatorService">
+            <ref bean="validatorService"/>
+        </property>
+
+        <property name="posicionNombradaDao">
+            <ref bean="posicionNombradaDao"/>
+        </property>
+
+        <property name="posicionNombradaHDao">
+            <ref bean="posicionNombradaHDao"/>
+        </property>
+
+        <property name="institucionDao">
+            <ref bean="institucionDao"/>
+        </property>
+
+        <property name="cuentaNombradaDao">
+            <ref bean="cuentaNombradaDao"/>
+        </property>
+
+        <property name="emisionDao">
+            <ref bean="emisionDao"/>
+        </property>
+
+        <property name="retirosDivIntDao">
+            <ref bean="retirosDivIntDao"/>
+        </property>
+
+        <property name="depositosDivIntDao">
+            <ref bean="depositosDivIntDao"/>
+        </property>
+
+        <property name="posicionNombradaDivIntDao">
+            <ref bean="posicionNombradaDivIntDao"/>
+        </property>
+
+        <property name="posicionNombradaHDivIntDao">
+            <ref bean="posicionNombradaHDivIntDao"/>
+        </property>
+
+        <property name="topeCirculanteDao">
+            <ref bean="topeCirculanteDao"/>
+        </property>
+
+        <property name="estatusEmisionesDao">
+            <ref bean="estatusEmisionesDao"/>
+        </property>
+
+        <property name="calendarioEmisionesDeudaExtDao">
+            <ref bean="calendarioEmisionesDeudaExtDao"/>
+        </property>
+
+        <property name="jmsTemplate">
+            <ref bean="jmsTemplateMoi"/>
+        </property>
+        <property name="conciliacionIntDao">
+            <ref bean="conciliacionIntDao"/>
+        </property>
+        <property name="jmsTemplateMoiConciliaciones">
+            <ref bean="jmsTemplateMoiConciliaciones"/>
+        </property>
+
+        <property name="jmsTemplateSic">
+            <ref bean="jmsTemplateSic"/>
+        </property>
+        <property name="derechosAutomatizadosDeuda">
+            <value>${moi.deuda.derechosAutomatizados}</value>
+        </property>
+        <property name="custodiosSinEnvioMensaje">
+            <set>
+                <value>DCVVCLRMXXX</value>
+                <value>DCVDCOB1XXX</value>
+                <value>CVLIPEP1XXX</value>
+            </set>
+        </property>
+
+        <property name="sicService" ref="sicService"/>
+        <property name="emisionesConsultasDao">
+            <ref bean="emisionesConsultasDao"/>
+        </property>
+        <property name="bovedaService">
+            <ref bean="bovedaService"/>
+        </property>
+        <property name="rEmisionBovedaDao">
+            <ref bean="rEmisionBovedaDao"/>
+        </property>
+        <property name="signMensaje" ref="signMensaje"/>
+        <property name="validateSignatureService" ref="validateSignatureService"/>
+        <property name="sendMessageServiceSign" ref="sendMessageServiceSign"/>
+        <property name="emisionDaoInt">
+            <ref bean="emisionDaoInt"/>
+        </property>
+        <property name="tipoBeneficiarioDao">
+            <ref bean="tipoBeneficiarioDao"/>
+        </property>
+        <property name="custodioTipoBenefDao">
+            <ref bean="custodioTipoBenefDao"/>
+        </property>
+        <property name="settlementDisciplineRegimeDao">
+            <ref bean="settlementDisciplineRegimeDao"/>
+        </property>
+    </bean>
+
+    <!--
+        Se elimina JPMorgan de la lista por solicitud de Indeval
+        03/05/2016.
+    -->
+    <!-- Se elimina DCVCHILE de la lista por solicitud de Indeval 05/12/2017  -->
+    <util:list id="detalleCustodio" value-type="java.lang.String">
+        <value>THE BANK OF NEW YORK</value>
+        <value>SANTANDER INVESTMENT SERVICES, S.A.</value>
+        <value>BANCO BILBAO VIZCAYA ARGENTARIA SA</value>
+        <value>DECEVAL</value>
+        <value>CAVALI</value>
+    </util:list>
+
+    <bean id="fileTransferBenefService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.FileTransferBenefServiceImpl"
+          lazy-init="true">
+        <property name="fileTransferBenefDao">
+            <ref bean="fileTransferBenefDao"/>
+        </property>
+    </bean>
+
+    <bean id="fileTransferService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.FileTransferServiceImpl"
+          lazy-init="true">
+
+        <description>
+            Bean de Acceso a servicios del FileTransfer de Division Internacional
+        </description>
+
+        <property name="custodiosPredefinidos">
+            <ref local="detalleCustodio"/>
+        </property>
+
+        <property name="messageResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+
+        <property name="fileTransferDao">
+            <ref bean="fileTransferDao"/>
+        </property>
+
+        <property name="dateUtilService">
+            <ref bean="dateUtilService"/>
+        </property>
+
+        <property name="cuentaNombradaDao">
+            <ref bean="cuentaNombradaDao"/>
+        </property>
+
+        <property name="validatorDivIntService">
+            <ref local="validatorDivIntService"/>
+        </property>
+
+        <property name="utilDivIntService">
+            <ref bean="utilDivIntService"/>
+        </property>
+
+        <property name="emisionDao">
+            <ref bean="emisionDao"/>
+        </property>
+
+        <property name="posicionNombradaDao">
+            <ref bean="posicionNombradaDao"/>
+        </property>
+
+        <property name="cuponDao">
+            <ref bean="cuponDao"/>
+        </property>
+
+        <property name="sicEmisionDao">
+            <ref bean="sicEmisionDao"/>
+        </property>
+
+        <property name="catBicDao">
+            <ref bean="catBicDao"/>
+        </property>
+
+        <property name="sicDetalleDao">
+            <ref bean="sicDetalleDao"/>
+        </property>
+
+        <property name="divisaDao">
+            <ref bean="divisaDao"/>
+        </property>
+
+        <property name="divisionInternacionalService">
+            <ref local="divisionInternacionalService"/>
+        </property>
+
+        <property name="utilService">
+            <ref bean="utilService"/>
+        </property>
+        <property name="operacionSicDao" ref="operacionSicDao"/>
+
+        <property name="settlementDisciplineRegimeDao">
+            <ref bean="settlementDisciplineRegimeDao"/>
+        </property>
+    </bean>
+
+
+    <bean id="fileTransferInversionExtranjeraService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.FileTransferInversionExtranjeraServiceImpl"
+          lazy-init="true">
+
+        <description>
+            Bean de Acceso a servicios del FileTransferInversionExtranjera de Division Internacional
+        </description>
+        <property name="messageResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+
+        <property name="fileTransferDao">
+            <ref bean="fileTransferDao"/>
+        </property>
+
+        <property name="dateUtilService">
+            <ref bean="dateUtilService"/>
+        </property>
+
+        <property name="cuentaNombradaDao">
+            <ref bean="cuentaNombradaDao"/>
+        </property>
+
+        <property name="validatorDivIntService">
+            <ref local="validatorDivIntService"/>
+        </property>
+
+        <property name="emisionDao">
+            <ref bean="emisionDao"/>
+        </property>
+
+        <property name="posicionNombradaDao">
+            <ref bean="posicionNombradaDao"/>
+        </property>
+
+        <property name="cuponDao">
+            <ref bean="cuponDao"/>
+        </property>
+
+        <property name="utilService">
+            <ref bean="utilService"/>
+        </property>
+    </bean>
+
+
+    <bean id="mailService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.MailServiceImpl">
+        <property name="mailSender">
+            <ref bean="mailSender"/>
+        </property>
+        <property name="messageMimeMessagePreparator">
+            <ref bean="messageMimeMessagePreparator"/>
+        </property>
+    </bean>
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="session">
+            <ref bean="mailSession"/>
+        </property>
+    </bean>
+
+    <bean id="mailSession" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName">
+            <value>java:jboss/mail/Default</value>
+        </property>
+    </bean>
+
+    <bean id="messageMimeMessagePreparator"
+          class="com.indeval.portalinternacional.middleware.services.util.MimeMessagePreparatorImpl">
+        <property name="from">
+            <value>${portalDali-divint.mailFrom}</value>
+        </property>
+        <property name="to">
+            <value>${portalDali-divint.mailTo}</value>
+        </property>
+        <property name="origen">
+            <value>${portalDali-divint.mailOrigen}</value>
+        </property>
+        <property name="destinatarios">
+            <value>${portalDali-divint.mailDestinatarios}</value>
+        </property>
+        <property name="subject">
+            <value></value>
+        </property>
+        <property name="plainTextContent">
+            <value></value>
+        </property>
+        <property name="htmlContent">
+            <value>
+                <![CDATA[
+				<html>
+					<head></head>
+					<body>
+						<h1>Se puede liquidar el derecho con id %s</h1>
+					</body>
+				</html>
+				]]>
+            </value>
+        </property>
+    </bean>
+
+    <bean id="validatorDivIntService"
+          class="com.indeval.portalinternacional.middleware.services.validador.ValidatorDivIntServiceImpl"
+          lazy-init="true">
+
+        <description>Utileria para validaciones de Division Internacional</description>
+
+        <property name="bovedaDao">
+            <ref bean="bovedaDao"/>
+        </property>
+
+        <property name="catBicDao">
+            <ref bean="catBicDao"/>
+        </property>
+
+        <property name="cuentaNombradaDao">
+            <ref bean="cuentaNombradaDao"/>
+        </property>
+
+        <property name="detalleCustodio">
+            <ref local="detalleCustodio"/>
+        </property>
+
+        <property name="emisionDao">
+            <ref bean="emisionDao"/>
+        </property>
+
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+
+        <property name="institucionDao">
+            <ref bean="institucionDao"/>
+        </property>
+
+        <property name="sicDetalleDao">
+            <ref bean="sicDetalleDao"/>
+        </property>
+
+        <property name="dateUtilService">
+            <ref bean="dateUtilService"/>
+        </property>
+
+        <property name="validatorService">
+            <ref bean="validatorService"/>
+        </property>
+
+    </bean>
+
+
+    <bean id="utilDivIntService"
+          class="com.indeval.portalinternacional.middleware.services.util.UtilDivIntServiceImpl" lazy-init="true">
+
+        <description>Utileria generales de Division Internacional</description>
+
+        <property name="cuentaNombradaDao">
+            <ref bean="cuentaNombradaDao"/>
+        </property>
+
+        <property name="sicEmisionDao">
+            <ref bean="sicEmisionDao"/>
+        </property>
+
+        <!-- property name="validatorService">
+            <ref bean="validatorService" />
+        </property -->
+
+    </bean>
+
+    <bean id="mensajePortalService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.MensajePortalServiceImpl"
+          init-method="init">
+        <property name="mensajePortalDaliDao" ref="mensajePortalDaliDao"></property>
+        <property name="dateDao" ref="dateUtilsDao"></property>
+        <property name="delay" value="70000"></property>
+        <property name="period" value="120000"></property>
+    </bean>
+
+    <bean id="conciliacionEfectivoIntService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConciliacionEfectivoIntServiceImpl">
+
+        <property name="conciliacionEfectivoDao">
+            <ref bean="conciliacionEfectivoDao"/>
+        </property>
+        <property name="divisaDao">
+            <ref bean="divisaDao"/>
+        </property>
+        <property name="jmsTemplateMoiConciliaciones">
+            <ref bean="jmsTemplateMoiConciliaciones"/>
+        </property>
+    </bean>
+
+    <bean id="reporteService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ReporteServiceImpl">
+        <property name="ruta" value="${portalDali-divint.rutaReporteAuditoria}"/>
+    </bean>
+
+    <bean id="errorResolverDivInt"
+          class="com.bursatec.util.message.impl.MessageResolverImpl">
+        <description>Bean de Acceso al Message Error</description>
+
+        <property name="messageSource">
+            <bean
+                    class="org.springframework.context.support.ResourceBundleMessageSource">
+                <property name="basenames">
+                    <list>
+                        <value>erroresDivInt</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="patternResolver"
+          class="com.bursatec.util.message.impl.MessageResolverImpl">
+        <description>Bean de Acceso al Pattern Number</description>
+
+        <property name="messageSource">
+            <bean
+                    class="org.springframework.context.support.ResourceBundleMessageSource">
+                <property name="basenames">
+                    <list>
+                        <value>patternNumber</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="confirmacionIntService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConfirmacionIntServiceImpl"
+          lazy-init="true">
+        <description>
+            Bean de Acceso a servicios de Confirmaciones
+        </description>
+
+        <property name="conciliacionEfectivoDao">
+            <ref bean="conciliacionEfectivoDao"/>
+        </property>
+        <property name="confirmacionIntDao">
+            <ref bean="confirmacionIntDao"/>
+        </property>
+    </bean>
+
+    <bean id="validatorMulticargaDivIntService"
+          class="com.indeval.portalinternacional.middleware.services.validador.ValidatorMulticargaDivIntServiceImpl"
+          lazy-init="true">
+
+        <description>Utileria para validaciones de Multicarga Division Internacional</description>
+        <property name="multicargaInternacionalDao">
+            <ref bean="multicargaInternacionalDao"/>
+        </property>
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+        <property name="catBicDao">
+            <ref bean="catBicDao"/>
+        </property>
+        <property name="institucionDao">
+            <ref bean="institucionDao"/>
+        </property>
+    </bean>
+
+    <bean id="multicargaInternacionalService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.MulticargaInternacionalServiceImpl"
+          lazy-init="true">
+        <description>Servicio de Multicarga Internacional</description>
+        <property name="beneficiarioDao">
+            <ref bean="beneficiarioDao"/>
+        </property>
+        <property name="validatorMulticargaDivIntService">
+            <ref local="validatorMulticargaDivIntService"/>
+        </property>
+        <property name="multicargaInternacionalDao">
+            <ref bean="multicargaInternacionalDao"/>
+        </property>
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+        <property name="controlBeneficiariosService">
+            <ref local="controlBeneficiariosService"/>
+        </property>
+        <property name="institucionDao">
+            <ref bean="institucionDao"/>
+        </property>
+        <property name="dateUtilService">
+            <ref bean="dateUtilService"/>
+        </property>
+        <property name="claveAdpDao">
+            <ref bean="claveAdpDao"/>
+        </property>
+        <property name="adpCustodioPorcentajeDao">
+            <ref bean="adpCustodioPorcentajeDao"/>
+        </property>
+    </bean>
+
+    <bean id="signMensaje"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.SignMensajeImpl">
+        <property name="generateSignatureService" ref="generateSignatureService"/>
+    </bean>
+
+    <bean id="signProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="properties" ref="commonsConfigurationFactoryBeanSign"/>
+    </bean>
+
+    <bean id="utilDivintBeneficiariosService"
+          class="com.indeval.portalinternacional.middleware.services.util.UtilDivintBeneficiariosServiceImpl"
+          lazy-init="true">
+        <description>Servicio Util Divint Beneficiarios</description>
+        <property name="fileTransferCapturaBenefDao">
+            <ref bean="fileTransferCapturaBenefDao"/>
+        </property>
+        <property name="dateUtilService">
+            <ref bean="dateUtilService"/>
+        </property>
+    </bean>
+
+    <bean id="fileTransferCapturaBenefW9Service"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.FileTransferCapturaBenefW9ServiceImpl"
+          lazy-init="true">
+        <description>Servicio FileTransfer Captura Beneficiarios</description>
+        <property name="fileTransferCapturaBenefDao">
+            <ref bean="fileTransferCapturaBenefDao"/>
+        </property>
+        <property name="dateUtilService">
+            <ref bean="dateUtilService"/>
+        </property>
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+        <property name="validatorFormatService">
+            <ref local="validatorFormatW9Service"/>
+        </property>
+        <property name="controlBeneficiariosService">
+            <ref local="controlBeneficiariosService"/>
+        </property>
+
+    </bean>
+
+    <bean id="fileTransferCapturaBenefW8BEN2014Service"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.FileTransferCapturaBenefW8BEN2014ServiceImpl"
+          lazy-init="true">
+        <description>Servicio FileTransfer Captura Beneficiarios</description>
+        <property name="fileTransferCapturaBenefDao">
+            <ref bean="fileTransferCapturaBenefDao"/>
+        </property>
+        <property name="dateUtilService">
+            <ref bean="dateUtilService"/>
+        </property>
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+        <property name="validatorFormatService">
+            <ref local="validatorFormatW8BEN2014Service"/>
+        </property>
+        <property name="controlBeneficiariosService">
+            <ref local="controlBeneficiariosService"/>
+        </property>
+
+    </bean>
+
+    <util:map id="mapfileTransfersCapturaBenefServices">
+        <entry key="1" value-ref="fileTransferCapturaBenefW9Service"/>
+        <entry key="2" value-ref="fileTransferCapturaBenefW8BEN2014Service"/>
+        <entry key="3" value-ref="fileTransferCapturaBenefW8BENE2016Service"/>
+        <entry key="4" value-ref="fileTransferCapturaBenefW8IMY2017Service"/>
+    </util:map>
+
+
+    <!-- *** Validadores de Formato *** -->
+    <bean id="validatorFormatW9Service"
+          class="com.indeval.portalinternacional.middleware.services.validador.ValidatorFormatW9ServiceImpl"
+          lazy-init="true">
+        <description>Utileria para validaciones del Formato W9</description>
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+        <property name="validatorService">
+            <ref bean="validatorService"/>
+        </property>
+
+        <property name="institucionDao">
+            <ref bean="institucionDao"/>
+        </property>
+        <property name="catBicDao">
+            <ref bean="catBicDao"/>
+        </property>
+        <property name="statusBeneficiarioDao">
+            <ref bean="statusBeneficiarioDao"/>
+        </property>
+        <property name="tipoBeneficiarioDao">
+            <ref bean="tipoBeneficiarioDao"/>
+        </property>
+        <property name="mesesFechaFileTransfer">
+            <map>
+                <entry key="JAN" value="01"/>
+                <entry key="FEB" value="02"/>
+                <entry key="MAR" value="03"/>
+                <entry key="APR" value="04"/>
+                <entry key="MAY" value="05"/>
+                <entry key="JUN" value="06"/>
+                <entry key="JUL" value="07"/>
+                <entry key="AUG" value="08"/>
+                <entry key="SEP" value="09"/>
+                <entry key="OCT" value="10"/>
+                <entry key="NOV" value="11"/>
+                <entry key="DEC" value="12"/>
+                <entry key="ENE" value="01"/>
+                <entry key="ABR" value="04"/>
+                <entry key="AGO" value="08"/>
+                <entry key="DIC" value="12"/>
+            </map>
+        </property>
+        <property name="mapeoW9TypeTaxPayer">
+            <util:map key-type="java.lang.String" value-type="java.lang.Long">
+                <entry key="INDIVIDUAL" value="1"/>
+                <entry key="CCORP" value="2"/>
+                <entry key="SCORP" value="6"/>
+                <entry key="PARTN" value="3"/>
+                <entry key="TRUST" value="7"/>
+                <entry key="ESTATE" value="7"/>
+                <entry key="LLC-C" value="4"/>
+                <entry key="LLC-S" value="4"/>
+                <entry key="LLC-P" value="4"/>
+                <entry key="OTH-" value="5"/>
+            </util:map>
+        </property>
+        <property name="mapeoTipoBeneficairioValidoW9">
+            <util:map key-type="java.lang.String" value-type="java.lang.Boolean">
+                <entry key="PFEUA" value="true"/>
+                <entry key="PMEUA" value="false"/>
+            </util:map>
+        </property>
+        <property name="mapeoTipoEstadoBeneficiario">
+            <util:map key-type="java.lang.String" value-type="java.lang.Boolean">
+                <entry key="ACTIVO" value="true"/>
+                <entry key="INACTIVO" value="false"/>
+            </util:map>
+        </property>
+        <property name="beneficiarioDao">
+            <ref bean="beneficiarioDao"/>
+        </property>
+        <!--        <property name="custodios">
+                    <map>
+                        <entry key="CEDE" value="4030" />
+                        <entry key="DEUT" value="4034" />
+                        <entry key="MGTC" value="4031" />
+                        <entry key="CHAS" value="4174" />
+                        <entry key="IRVT" value="4032" />
+                        <entry key="BOFA" value="95881" />
+                    </map>
+                </property>
+        -->
+        <property name="controlBeneficiariosService">
+            <ref local="controlBeneficiariosService"/>
+        </property>
+    </bean>
+
+    <bean id="validatorFormatW8BENService"
+          class="com.indeval.portalinternacional.middleware.services.validador.ValidatorFormatW8BENServiceImpl"
+          lazy-init="true">
+        <description>Utileria para validaciones del Formato W8BEN</description>
+
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+
+        <property name="validatorService">
+            <ref bean="validatorService"/>
+        </property>
+
+        <property name="institucionDao">
+            <ref bean="institucionDao"/>
+        </property>
+        <property name="catBicDao">
+            <ref bean="catBicDao"/>
+        </property>
+        <property name="statusBeneficiarioDao">
+            <ref bean="statusBeneficiarioDao"/>
+        </property>
+        <property name="tipoBeneficiarioDao">
+            <ref bean="tipoBeneficiarioDao"/>
+        </property>
+        <property name="controlBeneficiariosService">
+            <ref local="controlBeneficiariosService"/>
+        </property>
+    </bean>
+
+    <bean id="validatorFormatW8BEN2014Service"
+          class="com.indeval.portalinternacional.middleware.services.validador.ValidatorFormatW8BEN2014ServiceImpl"
+          lazy-init="true">
+        <description>Utileria para validaciones del Formato W9</description>
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+        <property name="validatorService">
+            <ref bean="validatorService"/>
+        </property>
+
+        <property name="institucionDao">
+            <ref bean="institucionDao"/>
+        </property>
+        <property name="catBicDao">
+            <ref bean="catBicDao"/>
+        </property>
+        <property name="statusBeneficiarioDao">
+            <ref bean="statusBeneficiarioDao"/>
+        </property>
+        <property name="tipoBeneficiarioDao">
+            <ref bean="tipoBeneficiarioDao"/>
+        </property>
+        <property name="mesesFechaFileTransfer">
+            <map>
+                <entry key="JAN" value="01"/>
+                <entry key="FEB" value="02"/>
+                <entry key="MAR" value="03"/>
+                <entry key="APR" value="04"/>
+                <entry key="MAY" value="05"/>
+                <entry key="JUN" value="06"/>
+                <entry key="JUL" value="07"/>
+                <entry key="AUG" value="08"/>
+                <entry key="SEP" value="09"/>
+                <entry key="OCT" value="10"/>
+                <entry key="NOV" value="11"/>
+                <entry key="DEC" value="12"/>
+            </map>
+        </property>
+        <property name="mapeoTipoBeneficairioValidoW9">
+            <util:map key-type="java.lang.String" value-type="java.lang.Boolean">
+                <entry key="PFEEUA" value="true"/>
+            </util:map>
+        </property>
+        <property name="mapeoTipoEstadoBeneficiario">
+            <util:map key-type="java.lang.String" value-type="java.lang.Boolean">
+                <entry key="ACTIVO" value="true"/>
+                <entry key="INACTIVO" value="false"/>
+            </util:map>
+        </property>
+        <property name="beneficiarioDao">
+            <ref bean="beneficiarioDao"/>
+        </property>
+        <property name="controlBeneficiariosService">
+            <ref local="controlBeneficiariosService"/>
+        </property>
+        <!-- 		<property name="custodios">
+                    <map>
+                        <entry key="CEDE" value="4030" />
+                        <entry key="DEUT" value="4034" />
+                        <entry key="MGTC" value="4031" />
+                        <entry key="CHAS" value="4174" />
+                        <entry key="IRVT" value="4032" />
+                        <entry key="BOFA" value="95881" />
+                    </map>
+                </property>
+        -->
+    </bean>
+
+
+    <bean id="validatorFormatW8IMYService"
+          class="com.indeval.portalinternacional.middleware.services.validador.ValidatorFormatW8IMYServiceImpl"
+          lazy-init="true">
+        <description>Utileria para validaciones del Formato W8IMY</description>
+
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+
+        <property name="validatorService">
+            <ref bean="validatorService"/>
+        </property>
+
+        <property name="institucionDao">
+            <ref bean="institucionDao"/>
+        </property>
+        <property name="catBicDao">
+            <ref bean="catBicDao"/>
+        </property>
+        <property name="statusBeneficiarioDao">
+            <ref bean="statusBeneficiarioDao"/>
+        </property>
+        <property name="tipoBeneficiarioDao">
+            <ref bean="tipoBeneficiarioDao"/>
+        </property>
+        <property name="controlBeneficiariosService">
+            <ref local="controlBeneficiariosService"/>
+        </property>
+    </bean>
+
+    <bean id="validatorFormatMILAService"
+          class="com.indeval.portalinternacional.middleware.services.validador.ValidatorFormatMILAServiceImpl"
+          lazy-init="true">
+        <description>Utileria para validaciones del Formato W8IMY</description>
+
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+
+        <property name="validatorService">
+            <ref bean="validatorService"/>
+        </property>
+
+        <property name="institucionDao">
+            <ref bean="institucionDao"/>
+        </property>
+        <property name="catBicDao">
+            <ref bean="catBicDao"/>
+        </property>
+        <property name="statusBeneficiarioDao">
+            <ref bean="statusBeneficiarioDao"/>
+        </property>
+        <property name="tipoBeneficiarioDao">
+            <ref bean="tipoBeneficiarioDao"/>
+        </property>
+        <property name="controlBeneficiariosService">
+            <ref local="controlBeneficiariosService"/>
+        </property>
+    </bean>
+
+    <!-- Eventos Corporativos -->
+
+    <bean id="dtoAssemblerEvCorp" class="com.indeval.portalinternacional.middleware.services.util.DTOAssembleEvCorp">
+        <property name="cronUtil">
+            <ref bean="cronUtil"/>
+        </property>
+        <property name="consultaEventosCorporativosDao">
+            <ref bean="consultaEventosCorporativosDao"/>
+        </property>
+    </bean>
+
+    <bean id="bitacoraUtilerias"
+          class="com.indeval.portalinternacional.middleware.services.util.BitacoraEventosCorporativosUtil">
+        <property name="consultaEventosCorporativosDao">
+            <ref bean="consultaEventosCorporativosDao"/>
+        </property>
+        <property name="dtoAssemblerEvCorp">
+            <ref bean="dtoAssemblerEvCorp"/>
+        </property>
+    </bean>
+    <bean id="cronUtil" class="com.indeval.portalinternacional.middleware.services.util.InterpretExpressionCron"/>
+    <bean id="validadorEvco"
+          class="com.indeval.portalinternacional.middleware.services.validador.ValidarCamposEventosCorporativosImp">
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+    </bean>
+    <bean id="consultaEventosCorporativosService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaEventosCorporativosServiceImpl"
+          lazy-init="true">
+        <description>servicio para consulta de EventosCorporativos</description>
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+        <property name="consultaEventosCorporativosDao">
+            <ref bean="consultaEventosCorporativosDao"/>
+        </property>
+        <property name="calendarioEmisionesDeudaExtDao">
+            <ref bean="calendarioEmisionesDeudaExtDao"/>
+        </property>
+        <property name="dtoAssemblerEvCorp">
+            <ref bean="dtoAssemblerEvCorp"/>
+        </property>
+        <property name="bitacoraUtilerias">
+            <ref bean="bitacoraUtilerias"/>
+        </property>
+        <property name="jmsTemplateMoiNotificacionesEvCo">
+            <ref bean="jmsTemplateMoiNotificacionesEvCo"/>
+        </property>
+    </bean>
+
+    <bean id="saveEventosCorporativosService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.SaveEventosCorporativosServiceImpl"
+          lazy-init="true">
+        <description>servicio para guardar de EventosCorporativos</description>
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+        <property name="consultaEventosCorporativosDao">
+            <ref bean="consultaEventosCorporativosDao"/>
+        </property>
+        <property name="dtoAssemblerEvCorp">
+            <ref bean="dtoAssemblerEvCorp"/>
+        </property>
+        <property name="bitacoraUtilerias">
+            <ref bean="bitacoraUtilerias"/>
+        </property>
+        <property name="validadorEvco">
+            <ref bean="validadorEvco"/>
+        </property>
+        <property name="jmsTemplateMoiNotificacionesEvCo">
+            <ref bean="jmsTemplateMoiNotificacionesEvCo"/>
+        </property>
+    </bean>
+    <!-- Fin Eventos Corporativos -->
+    <!-- Catalogos de Eventos Corporativos -->
+    <bean id="listaDistribucionService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ListaDistribucionServiceImpl"
+          lazy-init="true">
+        <property name="listaDistribucionDao">
+            <ref bean="listaDistribucionDao"/>
+        </property>
+    </bean>
+    <bean id="personaService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.PersonaServiceImpl"
+          lazy-init="true">
+        <property name="personaDao">
+            <ref bean="personaDao"/>
+        </property>
+        <property name="listaDistribucionDao">
+            <ref bean="listaDistribucionDao"/>
+        </property>
+    </bean>
+
+    <!-- Formatos W -->
+    <bean id="formatoW8Service"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.FormatoW8ServiceImpl"
+          lazy-init="true">
+        <property name="formatoW8Dao">
+            <ref bean="formatoW8Dao"/>
+        </property>
+    </bean>
+
+    <!-- Bean que define el servicio para la validación de los formatos W8BEN-E -->
+    <bean id="validatorFormatW8BENEService"
+          class="com.indeval.portalinternacional.middleware.services.validador.w8bene.ValidatorFormatW8BENEServiceImpl"
+          lazy-init="true">
+        <property name="validatorService">
+            <ref bean="validatorService"/>
+        </property>
+        <property name="institucionDao">
+            <ref bean="institucionDao"/>
+        </property>
+        <property name="catBicDao">
+            <ref bean="catBicDao"/>
+        </property>
+        <property name="statusBeneficiarioDao">
+            <ref bean="statusBeneficiarioDao"/>
+        </property>
+        <property name="tipoBeneficiarioDao">
+            <ref bean="tipoBeneficiarioDao"/>
+        </property>
+        <property name="beneficiarioDao">
+            <ref bean="beneficiarioDao"/>
+        </property>
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+        <property name="formatoW8Service">
+            <ref bean="formatoW8Service"/>
+        </property>
+        <property name="controlBeneficiariosService">
+            <ref local="controlBeneficiariosService"/>
+        </property>
+        <property name="mesesFechaFileTransfer">
+            <map>
+                <entry key="JAN" value="01"/>
+                <entry key="FEB" value="02"/>
+                <entry key="MAR" value="03"/>
+                <entry key="APR" value="04"/>
+                <entry key="MAY" value="05"/>
+                <entry key="JUN" value="06"/>
+                <entry key="JUL" value="07"/>
+                <entry key="AUG" value="08"/>
+                <entry key="SEP" value="09"/>
+                <entry key="OCT" value="10"/>
+                <entry key="NOV" value="11"/>
+                <entry key="DEC" value="12"/>
+            </map>
+        </property>
+        <property name="tiposBeneficiarios">
+            <map>
+                <entry key="PMEEUA" value="2"/>
+                <entry key="SA" value="3"/>
+                <entry key="FC" value="10"/>
+                <entry key="OTBENE" value="15"/>
+            </map>
+        </property>
+        <!-- 		<property name="custodios">
+                    <map>
+                        <entry key="CEDE" value="4030" />
+                        <entry key="DEUT" value="4034" />
+                        <entry key="MGTC" value="4031" />
+                        <entry key="CHAS" value="4174" />
+                        <entry key="IRVT" value="4032" />
+                        <entry key="BOFA" value="95881" />
+                    </map>
+                </property>
+        -->
+    </bean>
+
+    <!-- Bean que define el servicio para el file transfer de formatos W8BEN-E -->
+    <bean id="fileTransferCapturaBenefW8BENEService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.FileTransferCapturaBenefW8BENEServiceImpl"
+          lazy-init="true">
+        <property name="fileTransferCapturaBenefDao">
+            <ref bean="fileTransferCapturaBenefDao"/>
+        </property>
+        <property name="dateUtilService">
+            <ref bean="dateUtilService"/>
+        </property>
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+        <property name="validatorFormatService">
+            <ref local="validatorFormatW8BENEService"/>
+        </property>
+        <property name="controlBeneficiariosService">
+            <ref local="controlBeneficiariosService"/>
+        </property>
+        <property name="formatoW8Service">
+            <ref bean="formatoW8Service"/>
+        </property>
+    </bean>
+
+    <!-- Bean que define el servicio para el file transfer de formatos W8BEN-E -->
+    <bean id="fileTransferCapturaBenefW8BENE2016Service"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.FileTransferCapturaBenefW8BENE2016ServiceImpl"
+          lazy-init="true">
+        <property name="fileTransferCapturaBenefDao">
+            <ref bean="fileTransferCapturaBenefDao"/>
+        </property>
+        <property name="dateUtilService">
+            <ref bean="dateUtilService"/>
+        </property>
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+        <property name="validatorFormatService">
+            <ref local="validatorFormatW8BENE2016Service"/>
+        </property>
+        <property name="controlBeneficiariosService">
+            <ref local="controlBeneficiariosService"/>
+        </property>
+        <property name="formatoW8Service">
+            <ref bean="formatoW8Service"/>
+        </property>
+    </bean>
+
+    <!-- Bean que define el servicio para la validación de los formatos W8BEN-E 2016 -->
+    <bean id="validatorFormatW8BENE2016Service"
+          class="com.indeval.portalinternacional.middleware.services.validador.w8bene.ValidatorFormatW8BENE2016ServiceImpl"
+          lazy-init="true">
+        <property name="validatorService">
+            <ref bean="validatorService"/>
+        </property>
+        <property name="institucionDao">
+            <ref bean="institucionDao"/>
+        </property>
+        <property name="catBicDao">
+            <ref bean="catBicDao"/>
+        </property>
+        <property name="statusBeneficiarioDao">
+            <ref bean="statusBeneficiarioDao"/>
+        </property>
+        <property name="tipoBeneficiarioDao">
+            <ref bean="tipoBeneficiarioDao"/>
+        </property>
+        <property name="beneficiarioDao">
+            <ref bean="beneficiarioDao"/>
+        </property>
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+        <property name="formatoW8Service">
+            <ref bean="formatoW8Service"/>
+        </property>
+        <property name="controlBeneficiariosService">
+            <ref local="controlBeneficiariosService"/>
+        </property>
+        <property name="mesesFechaFileTransfer">
+            <map>
+                <entry key="JAN" value="01"/>
+                <entry key="FEB" value="02"/>
+                <entry key="MAR" value="03"/>
+                <entry key="APR" value="04"/>
+                <entry key="MAY" value="05"/>
+                <entry key="JUN" value="06"/>
+                <entry key="JUL" value="07"/>
+                <entry key="AUG" value="08"/>
+                <entry key="SEP" value="09"/>
+                <entry key="OCT" value="10"/>
+                <entry key="NOV" value="11"/>
+                <entry key="DEC" value="12"/>
+            </map>
+        </property>
+        <property name="tiposBeneficiarios">
+            <map>
+                <entry key="PMEEUA" value="2"/>
+                <entry key="SA" value="3"/>
+                <entry key="FC" value="10"/>
+                <entry key="OTBENE" value="15"/>
+            </map>
+        </property>
+        <!--         <property name="custodios">
+                    <map>
+                        <entry key="CEDE" value="4030" />
+                        <entry key="DEUT" value="4034" />
+                        <entry key="MGTC" value="4031" />
+                        <entry key="CHAS" value="4174" />
+                        <entry key="IRVT" value="4032" />
+                        <entry key="BOFA" value="95881" />
+                    </map>
+                </property>
+        -->
+    </bean>
+
+    <!-- Bean que define el servicio para la validación de los formatos W8IMY 2015 -->
+    <bean id="validatorFormatW8IMY2015Service"
+          class="com.indeval.portalinternacional.middleware.services.validador.w8imy.ValidatorFormatW8IMY2015ServiceImpl"
+          lazy-init="true">
+        <property name="validatorService">
+            <ref bean="validatorService"/>
+        </property>
+        <property name="institucionDao">
+            <ref bean="institucionDao"/>
+        </property>
+        <property name="catBicDao">
+            <ref bean="catBicDao"/>
+        </property>
+        <property name="statusBeneficiarioDao">
+            <ref bean="statusBeneficiarioDao"/>
+        </property>
+        <property name="tipoBeneficiarioDao">
+            <ref bean="tipoBeneficiarioDao"/>
+        </property>
+        <property name="beneficiarioDao">
+            <ref bean="beneficiarioDao"/>
+        </property>
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+        <property name="formatoW8Service">
+            <ref bean="formatoW8Service"/>
+        </property>
+        <property name="controlBeneficiariosService">
+            <ref local="controlBeneficiariosService"/>
+        </property>
+        <property name="mesesFechaFileTransfer">
+            <map>
+                <entry key="JAN" value="01"/>
+                <entry key="FEB" value="02"/>
+                <entry key="MAR" value="03"/>
+                <entry key="APR" value="04"/>
+                <entry key="MAY" value="05"/>
+                <entry key="JUN" value="06"/>
+                <entry key="JUL" value="07"/>
+                <entry key="AUG" value="08"/>
+                <entry key="SEP" value="09"/>
+                <entry key="OCT" value="10"/>
+                <entry key="NOV" value="11"/>
+                <entry key="DEC" value="12"/>
+            </map>
+        </property>
+        <property name="tiposBeneficiarios">
+            <map>
+                <entry key="ICCRPR" value="5"/>
+                <entry key="ICSRPR" value="6"/>
+                <entry key="FS" value="9"/>
+                <entry key="FSW8" value="12"/>
+                <entry key="OTIMY" value="16"/>
+            </map>
+        </property>
+        <!-- 		<property name="custodios">
+                    <map>
+                        <entry key="CEDE" value="4030" />
+                        <entry key="DEUT" value="4034" />
+                        <entry key="MGTC" value="4031" />
+                        <entry key="CHAS" value="4174" />
+                        <entry key="IRVT" value="4032" />
+                        <entry key="BOFA" value="95881" />
+                    </map>
+                </property>
+        -->
+    </bean>
+
+    <!-- Bean que define el servicio para la validación de los formatos W8IMY 2015 -->
+    <bean id="validatorFormatW8IMY2017Service"
+          class="com.indeval.portalinternacional.middleware.services.validador.w8imy.ValidatorFormatW8IMY2017ServiceImpl"
+          lazy-init="true">
+        <property name="validatorService">
+            <ref bean="validatorService"/>
+        </property>
+        <property name="institucionDao">
+            <ref bean="institucionDao"/>
+        </property>
+        <property name="catBicDao">
+            <ref bean="catBicDao"/>
+        </property>
+        <property name="statusBeneficiarioDao">
+            <ref bean="statusBeneficiarioDao"/>
+        </property>
+        <property name="tipoBeneficiarioDao">
+            <ref bean="tipoBeneficiarioDao"/>
+        </property>
+        <property name="beneficiarioDao">
+            <ref bean="beneficiarioDao"/>
+        </property>
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+        <property name="formatoW8Service">
+            <ref bean="formatoW8Service"/>
+        </property>
+        <property name="mesesFechaFileTransfer">
+            <map>
+                <entry key="JAN" value="01"/>
+                <entry key="FEB" value="02"/>
+                <entry key="MAR" value="03"/>
+                <entry key="APR" value="04"/>
+                <entry key="MAY" value="05"/>
+                <entry key="JUN" value="06"/>
+                <entry key="JUL" value="07"/>
+                <entry key="AUG" value="08"/>
+                <entry key="SEP" value="09"/>
+                <entry key="OCT" value="10"/>
+                <entry key="NOV" value="11"/>
+                <entry key="DEC" value="12"/>
+            </map>
+        </property>
+        <property name="tiposBeneficiarios">
+            <map>
+                <entry key="ICCRPR" value="5"/>
+                <entry key="ICSRPR" value="6"/>
+                <entry key="FS" value="9"/>
+                <entry key="FSW8" value="12"/>
+                <entry key="OTIMY" value="16"/>
+            </map>
+        </property>
+        <!--         <property name="custodios">
+                    <map>
+                        <entry key="CEDE" value="4030" />
+                        <entry key="DEUT" value="4034" />
+                        <entry key="MGTC" value="4031" />
+                        <entry key="CHAS" value="4174" />
+                        <entry key="IRVT" value="4032" />
+                        <entry key="BOFA" value="95881" />
+                    </map>
+                </property>
+        -->
+        <property name="controlBeneficiariosService">
+            <ref local="controlBeneficiariosService"/>
+        </property>
+    </bean>
+
+    <!-- Bean que define el servicio para el file transfer de formatos W8BEN-E -->
+    <bean id="fileTransferCapturaBenefW8IMY2015Service"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.FileTransferCapturaBenefW8IMY2015ServiceImpl"
+          lazy-init="true">
+        <property name="fileTransferCapturaBenefDao">
+            <ref bean="fileTransferCapturaBenefDao"/>
+        </property>
+        <property name="dateUtilService">
+            <ref bean="dateUtilService"/>
+        </property>
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+        <property name="validatorFormatService">
+            <ref local="validatorFormatW8IMY2015Service"/>
+        </property>
+        <property name="controlBeneficiariosService">
+            <ref local="controlBeneficiariosService"/>
+        </property>
+        <property name="formatoW8Service">
+            <ref bean="formatoW8Service"/>
+        </property>
+    </bean>
+
+    <!-- Bean que define el servicio para el file transfer de formatos W8IMY2017 -->
+    <bean id="fileTransferCapturaBenefW8IMY2017Service"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.FileTransferCapturaBenefW8IMY2017ServiceImpl"
+          lazy-init="true">
+        <property name="fileTransferCapturaBenefDao">
+            <ref bean="fileTransferCapturaBenefDao"/>
+        </property>
+        <property name="dateUtilService">
+            <ref bean="dateUtilService"/>
+        </property>
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+        <property name="validatorFormatService">
+            <ref local="validatorFormatW8IMY2017Service"/>
+        </property>
+        <property name="controlBeneficiariosService">
+            <ref local="controlBeneficiariosService"/>
+        </property>
+        <property name="formatoW8Service">
+            <ref bean="formatoW8Service"/>
+        </property>
+    </bean>
+
+    <!-- Validador y servicios para Derechos de Capital -->
+    <bean id="validadorDerechosCapital"
+          class="com.indeval.portalinternacional.middleware.services.validador.ValidadorDerechosCapitalImpl">
+        <property name="messageResolver">
+            <ref bean="errorResolverDivInt"/>
+        </property>
+    </bean>
+
+    <!-- Validador y servicios para Formato Fiscal Tin -->
+    <bean id="validatorFormatoFiscalTinService"
+          class="com.indeval.portalinternacional.middleware.services.validador.ValidatorFormatoFiscalTinServiceImpl">
+    </bean>
+
+    <bean id="derechosCapitalesService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.DerechosCapitalesServiceImpl">
+        <property name="validadorDerechosCapital">
+            <ref bean="validadorDerechosCapital"/>
+        </property>
+        <property name="consultaHistoricoCapitalesDao">
+            <ref bean="consultaHistoricoCapitalesDao"/>
+        </property>
+    </bean>
+
+    <!-- Servicio para las operaciones SIC -->
+    <bean id="sicService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.SicServiceImpl">
+        <property name="operacionSicDao" ref="operacionSicDao"/>
+        <property name="jmsTemplateSic" ref="jmsTemplateSic"/>
+        <property name="custodiosSinEnvioMensaje">
+            <set>
+                <value>DCVVCLRMXXX</value>
+                <value>DCVDCOB1XXX</value>
+                <value>CVLIPEP1XXX</value>
+            </set>
+        </property>
+        <property name="messageResolver" ref="errorResolverDivInt"/>
+        <property name="signMensaje" ref="signMensaje"/>
+        <property name="validateSignatureService" ref="validateSignatureService"/>
+        <property name="sendMessageServiceSign" ref="sendMessageServiceSign"/>
+        <property name="mensajePortalDaliDao" ref="mensajePortalDaliDao"></property>
+        <property name="nombradaSaldoDao" ref="nombradaSaldoDao"></property>
+        <property name="divisaDao" ref="divisaDao"></property>
+    </bean>
+
+    <bean id="bitacoraService" class="com.indeval.sidv.bitacoraauditoria.middleware.service.impl.BitacoraServiceImpl">
+        <property name="bitacoraDao" ref="bitacoraDao" />
+    </bean>
+
+    <bean id="horariosCustodiosService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.HorariosCustodiosServiceImpl">
+        <property name="horariosCustodiosDao" ref="horariosCustodiosDao" />
+    </bean>
+
+    <bean id="custodioService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.CustodioServiceImpl">
+        <property name="custodioDao" ref="custodioDao" />
+    </bean>
+
+    <bean id="diasInhabilesDivisasService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.DiasInhabilesDivisasServiceImpl">
+        <property name="diasInhabilesDivisasDao" ref="diasInhabilesDivisasDao" />
+    </bean>
+
+    <!-- SERVICIOS PARA EL FILE TRANSFER DE CAMBIO DE BOVEDA -->
+
+    <bean id="xstream" class="com.thoughtworks.xstream.XStream"/>
+
+    <bean id="parserAdaptadorService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ParserAdaptadorServiceImpl">
+        <property name="xstream" ref="xstream"/>
+    </bean>
+
+    <bean id="institucionesService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.InstitucionesServiceImpl">
+        <property name="institucionesDao">
+            <ref bean="institucionesDao"/>
+        </property>
+    </bean>
+
+    <bean id="emisionesConsultasService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.EmisionesConsultasServiceImpl"
+          lazy-init="true">
+        <property name="emisionesConsultasDao" ref="emisionesConsultasDao"/>
+        <property name="emisionDao" ref="emisionDao"/>
+        <property name="operacionSicDao" ref="operacionSicDao"/>
+    </bean>
+
+    <bean id="bovedaService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.BovedaServiceImpl"
+          lazy-init="true">
+        <property name="bovedaDao" ref="bovedaDao"/>
+        <property name="bovedaIntDao" ref="bovedaIntDao"/>
+        <property name="catBicDao" ref="catBicDao"/>
+    </bean>
+
+    <bean id="validadorLongitud"
+          class="com.indeval.portalinternacional.middleware.services.validador.ValidadorLongitudImpl"/>
+
+    <bean id="validadorInstitucion"
+          class="com.indeval.portalinternacional.middleware.services.validador.ValidadorInstitucionImpl">
+        <property name="validadorLongitud">
+            <ref bean="validadorLongitud"/>
+        </property>
+        <property name="institucionesService">
+            <ref bean="institucionesService"/>
+        </property>
+    </bean>
+
+    <bean id="validadorEmision"
+          class="com.indeval.portalinternacional.middleware.services.validador.ValidadorEmisionImpl">
+        <property name="emisionesConsultasService">
+            <ref bean="emisionesConsultasService"/>
+        </property>
+    </bean>
+
+    <bean id="rSICCambioBovedaService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.RSICCambioBovedaServiceImpl"
+          lazy-init="true">
+        <property name="rSicCambioBovedaDao" ref="rSicCambioBovedaDao"/>
+    </bean>
+
+    <bean id="fileTransferCambioBovedaService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.FileTransferCambioBovedaServiceImpl"
+          lazy-init="true">
+        <description>
+            Bean de Acceso a servicios del FileTransfer para Cambio de Boveda
+        </description>
+        <property name="fileTransferCambioBovedaDao" ref="fileTransferCambioBovedaDao"/>
+        <property name="parserAdaptadorService" ref="parserAdaptadorService"/>
+        <property name="validadorInstitucion" ref="validadorInstitucion"/>
+        <property name="validadorEmision" ref="validadorEmision"/>
+        <property name="emisionesConsultasService" ref="emisionesConsultasService"/>
+        <property name="seqFolioControl">
+            <value>SEQ_SLV_FOLIADOR</value>
+        </property>
+        <property name="utilService" ref="utilService"/>
+        <property name="dateUtilService" ref="dateUtilService"/>
+        <property name="cuentaNombradaDao" ref="cuentaNombradaDao"/>
+        <property name="sicEmisionDao" ref="sicEmisionDao"/>
+        <property name="sicDetalleDao" ref="sicDetalleDao"/>
+        <property name="rSicCambioBovedaService" ref="rSICCambioBovedaService"/>
+        <property name="operacionSicDao" ref="operacionSicDao"/>
+        <property name="bovedaService" ref="bovedaService"/>
+        <property name="catBicDao" ref="catBicDao"/>
+        <property name="messageResolver" ref="errorResolverDivInt"/>
+    </bean>
+
+    <bean id="consultaOperacionesSICService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaOperacionesSICServiceImpl">
+        <property name="messageResolver">
+            <ref bean="errorResolverDivInt"/>
+        </property>
+        <property name="sicDetalleDao">
+            <ref bean="sicDetalleDao"/>
+        </property>
+    </bean>
+
+    <bean id="emisionesCustodiosDepositantesService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.EmisionesCustodiosDepositantesServiceImpl">
+        <property name="emisionesCustodiosDepositantesDao">
+            <ref bean="emisionesCustodiosDepositantesDao"/>
+        </property>
+    </bean>
+
+    <bean id="consultaFastworkService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaFastworkServiceImpl">
+        <property name="fastworkDao" ref="fastworkDao"/>
+    </bean>
+    <!-- ======Calendario Distrubucion=======  -->
+
+    <bean id="capitalesDistribucionService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.CapitalesDistribucionServiceImpl">
+        <property name="divisaDao">
+            <ref bean="divisaDao"/>
+        </property>
+        <property name="capitalesDistribucionDao">
+            <ref bean="capitalesDistribucionDao"/>
+        </property>
+        <property name="bovedaDao">
+            <ref bean="bovedaDao"/>
+        </property>
+        <property name="jmsTemplateAutorizaLegSic">
+            <ref bean="jmsTemplateMoiAutorizacionLegSic"/>
+        </property>
+        <property name="tipoValorLegislacionSic">
+            <value>${moi.derecho.legislacionSic}</value>
+        </property>
+        <property name="tagsEliminacionSic">
+            <value>${moi.enviosic.eliminacion}</value>
+        </property>
+    </bean>
+
+    <bean id="settlementDisciplineRegimeService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.SettlementDisciplineRegimeServiceImpl">
+        <property name="settlementDisciplineRegimeDao">
+            <ref bean="settlementDisciplineRegimeDao"/>
+        </property>
+    </bean>
+
+    <bean id="workflowClientService"
+          class="com.indeval.portalinternacional.middleware.services.makerchecker.WorkflowClientService">
+        <property name="url" value="${workflow.authorization.end-point}"></property>
+        <property name="secret" value="${seguridad.JWT}"></property>
+    </bean>
+
+    <bean id="solicitudAutorizacionService"
+          class="com.indeval.portalinternacional.middleware.services.makerchecker.SolicitudAutorizacionServiceImpl">
+        <property name="workflowClientService" ref="workflowClientService"></property>
+        <property name="solicitudAutorizacionDao" ref="solicitudAutorizacionDao"></property>
+    </bean>
+
+
+    <!-- Servicio para la exportacion de beneficiarios -->
+    <bean id="exportacionBeneficiariosService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.beneficiarios.ExportacionBeneficiariosServiceImpl">
+        <property name="catBicDao" ref="catBicDao"/>
+        <property name="controlBeneficiariosService" ref="controlBeneficiariosService"/>
+        <property name="formatoW8Service" ref="formatoW8Service"/>
+    </bean>
+
+    <!--Servicios para -->
+
+    <bean id="consultaDivisaService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaDivisaServiceImpl">
+        <property name="divisaDaliDAO" ref="divisaDaliDao"></property>
+        <property name="cuentaCorresponsalDao" ref="cuentaCorresponsalDao"></property>
+    </bean>
+
+
+    <bean id="consultaCuentasService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaCuentasServiceImpl">
+        <property name="cuentaDaliDAO" ref="cuentaDaliDAO"></property>
+    </bean>
+
+    <bean id="consultaSaldosEfectivoService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaSaldosEfectivoServiceImpl" >
+
+        <description>Bean de Acceso a servicios de catalogos</description>
+
+        <property name="saldoDAO">
+            <ref bean="saldoDAO" />
+        </property>
+        <property name="saldoNombradaDao">
+            <ref bean="saldoNombradaDaliDao" />
+        </property>
+        <property name="dateUtilsDao">
+            <ref bean="dateUtilsDao" />
+        </property>
+
+
+
+    </bean>
+
+    <bean id="movimientoEfectivoInternacionalService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.MovimientoEfectivoInternacionalServiceImpl">
+        <property name="movimientoEfectivoInternacionalDao" ref="movimientoEfectivoInternacionalDao"></property>
+    </bean>
+
+    <bean id="retiroEfectivoIntPendientesService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.RetiroEfectivoIntPendienteServiceImpl">
+        <property name="retiroEfectivoIntPendientesDao" ref="retiroEfectivoIntPendientesDao" />
+    </bean>
+
+
+
+    <bean id="bitacoraFileTransferService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.BitacoraFileTransferServiceImpl">
+    	<property name="validatorService">
+            <ref bean="validatorService"/>
+        </property>
+        <property name="bitacoraFileTransferDao" ref="bitacoraFileTransferDao"></property>
+    </bean>
+
+</beans>

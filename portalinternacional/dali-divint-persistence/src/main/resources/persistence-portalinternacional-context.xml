@@ -1,0 +1,1408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+        "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<!--Cambio Multidivisas-->
+    <description>
+        AplicationContext de configuracion de objetos de acceso a
+        datos del modelo Dali
+        para el Portal Internacional
+    </description>
+
+	<bean id="sessionFactoryInternacional"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<description>SessionFactory para Portal Internacional</description>
+
+		<property name="dataSource">
+			<ref bean="dataSourceInternacional" />
+		</property>
+		<property name="configLocations">
+			<list>
+				<value>classpath:com/indeval/sidv/bitacoraauditoria/persistence/model/mapping.cfg.xml</value>
+			</list>
+		</property>
+
+		<property name="annotatedClasses">
+			<list>
+				<!-- Poner en ESTRICTO orden alfabetico (por favor) -->
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.AssetManagerEmision
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.BeneficiarioInstitucion
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.Beneficiario
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.BitacoraConciliacionEfectivoInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.BitacoraConfirmacion
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.BitacoraOperacionesSic
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.BitacoraMensajeConciliacionInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.BitacoraMensajeSwift
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.BitacoraMensajeSwiftImporte
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.BancoCorresponsal
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.BitacoraOperaciones
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.Boveda
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.Bovedas
+				</value>
+				<!--value> com.indeval.portaldali.persistence.modelo.CampoBean </value -->
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.CalendarioDerechosCapitales
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CalendarioDerechos
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.CalendarioHistoricoDerechosCapitales
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.Control
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CatBic
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CatEstatusBitacoraSic
+				</value>
+
+				<!--value> com.indeval.portaldali.persistence.modelo.Ciclo </value -->
+				<!--value> com.indeval.portaldali.persistence.modelo.CicloCompensacion
+					</value -->
+				<!--value> com.indeval.portaldali.persistence.modelo.CreditoEspecial
+					</value -->
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.ComentarioEfectivoInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CodigoIdentificacionEfectivoInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.ConciliacionEfectivoInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.ConciliacionInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.SettlementDisciplineRegime
+				</value>
+				<value>com.indeval.portalinternacional.middleware.servicios.modelo.makercheker.SolicitudAutorizacion
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.ConfirmacionEfectivo
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.CuentaControlada
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CuentaCorresponsal
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CuentaCorresponsal103
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CuentaCorresponsal202
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CuentaEfectivoInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.DivisaBoveda
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.DivisaInt
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.CuentaNombrada
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.CuerpoEventoCorporativo
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.Cupon
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.CatalogoElementos
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.CruceBmv
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CustodioTipoBenef
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.Custodio
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CustodioBoveda
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CustodioCalendarioParticipante
+				</value>
+
+				<value>
+					com.indeval.portaldali.persistence.modelo.DiaInhabil
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.Divisa
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.Depositos
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.Derecho
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.DerechoBeneficiario
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.DerechoCapitalHistorico
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.DerechoCapitalHistoricoCuenta
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.DescFechasAdIntSic
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.DestinatarioIntSic
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.DetalleConciliacionEfectivoInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.DetalleConciliacionInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.DetalleIsinConciliacionInt
+				</value>
+				<value>
+                    com.indeval.portalinternacional.middleware.servicios.modelo.DiasInhabilesDivisas
+                </value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.Domicilio
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.DomiciliosInstituciones
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.ElementEstatusDerecho
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.Emision
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.Emisiones
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.Emisora
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.Emisoras
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.EntidadesFederativas
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.EnvioBitacoraIntSic
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.EnvioIntSic
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.EnvioHistIntSicView
+				</value>
+				<value>
+                    com.indeval.portalinternacional.middleware.servicios.modelo.DiasInhabilesDivisas
+                </value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.EnvioLegislacionSic
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.ErrorSwift
+				</value>
+				<!--value> com.indeval.portaldali.persistence.modelo.EstadoCiclo </value -->
+				<value>
+					com.indeval.portaldali.persistence.modelo.EstadoCuenta
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.TipoInstruccionDivisa
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.EstadoDerechoInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.EstadoMensajeIntSic
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.AdjuntosEventoCorporativo
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.BitacoraCambiosEvco
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.BitacoraEstadosEvco
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.Estado
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.EventoCorporativo
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.FastworkMessage
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.FormatoFiscal
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.ListaDistribucion
+				</value>
+
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.ReglaEstado
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.NotificacionEventoCorporativo
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.OperadorEvco
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.Persona
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.PersonaVista
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.ListaPersona
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.TipoDerechoEvCo
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.TipoEvento
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.TipoMercado
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.TipoValidacionEvco
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.ValidacionesEvco
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.VCalendarioHistoricoDerechosCapitales
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.VCalendarioHistoricoDerechosCapitalesRep
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.VCalendarioHistoricoDerechosExterno
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.VHistoricoNarrativas
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.ExemptPayeeW9
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.ExemptionFatcaW9
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.EstadoInstitucion
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.EstadoInstruccion
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.EstadoMulticarga
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.EstatusCupones
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.EstatusConciliacionInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.EstatusDerecho
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.EstatusEmisiones
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.EstatusFolioOperacion
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CamposW8Ben
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CamposW8IMY
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CamposW8IMY2015
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CamposW8BenE
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.EstatusOperacion
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.ExcepcionEmisionBenef
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.FactorSimulacionMav
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.Field3W8BEN
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.Field3W8IMY
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.Field3W9
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.FileTransfer
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.FileTransBeneficiario
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.FileTransferCapturaBeneficiario
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.FileTransferCambioBoveda
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.FormatoW8BEN
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.FormatoW8BENE
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.FormatoW8IMY
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.FormatoW8IMY2015
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.FormatoW8IMY2017
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.FormatoW9
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.GrupoRetencion
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.HistoricoBeneficiario
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.HistoricoMovimientoEfe
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.HorarioBeneficiario
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.HorariosCustodios
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.Institucion
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.Instituciones
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.Instrumento
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.SaldoNombradaInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.SaldoNombradaHistorico
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.SaldoControladaInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.SaldoControladaHistorico
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.Instrumentos
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.InstruccionCapitales
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.OperacionSic
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.MensajePortal
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.Mercado
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.MovimientoDepositoEfectivoInternacional
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.MovimientoRetiroEfectivoInternacional
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.MulticargaInternacional
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.NarrativaCapitales
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.NotasEventoCorporativo
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.LiquidacionParcialMoi
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.OperacionSicView
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.OpcionesEventoCorporativo
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.Paises
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.PaisInt
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.PosicionControlada
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.PosicionLiquidacion
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.PosicionNombrada
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.PosicionNombradaH
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.RegistrosBeneficiarios
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.RegistroMulticarga
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.REmisionBoveda
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.Retiros
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.RetiroEfectivoIntPendientes
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.RSICCambioBoveda
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.SaldoControlada
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.SaldoNombrada
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.Sector
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.SicDetalle
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.SicEmision
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.StatementDivint
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.StatusBeneficiario
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.SubTipoDerecho
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.SubTipoDerechoIntSic
+				</value>
+				<!--value> com.indeval.portaldali.persistence.modelo.TipoAccion </value -->
+				<value>
+					com.indeval.portaldali.persistence.modelo.TipoCuenta
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.TipoBeneficiario
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.TipoDerecho
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.TipoValorCalendarioInternacional
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.TopeCirculante
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.TipoBoveda
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.TipoFormatoBeneficiario
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.TipoInstitucion
+				</value>
+				<!--value> com.indeval.portaldali.persistence.modelo.TipoPago </value -->
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.TipoPagoInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.TipoPagoIntBR
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.TipoInstruccion
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.TipoOperacionMulticarga
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.TipoTransaccionEfectivoInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.TitulosGrupoRetencion
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.FileUpload
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.MILATipoDocumento
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.MILASectorEconomico
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.MILATipoEmpresa
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.MILACodigoDepartamento
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.FormatoMILA
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.FormatoMilaArchivos
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.VBitacoraOperacionesSic
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.VCalendarioDerechoInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.VCalendarioDerechoIntRep
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.VConsultaDerechosCapital
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.VEmisionesCalendario
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.capitales.VEnvioIntSic
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.VConsultaBeneficiarioDerechosCuenta
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.RTipoValorCustodio
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.adp.ClaveAdp
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.adp.AdpCustodioPorcentaje
+				</value>
+				<value>
+	                com.indeval.portalinternacional.middleware.servicios.modelo.RBovedaValEf
+                </value>
+                <value>
+	                com.indeval.portalinternacional.middleware.servicios.modelo.FileTransferDivisas
+                </value>
+                <value>
+	                com.indeval.portalinternacional.middleware.servicios.modelo.FileTransferDetalleDivisas
+                </value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.SaldoCustodio
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.SaldoPorCuenta
+				</value>
+                <value>
+	                com.indeval.portalinternacional.middleware.servicios.modelo.SeguridadUsuario
+                </value>
+                <value>
+	                com.indeval.portalinternacional.middleware.servicios.modelo.EstatusDivisas
+                </value>
+			</list>
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<!-- <prop key="hibernate.default.schema">DALI_ADMIN</prop> -->
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.format_sql">false</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+				<prop
+					key="hibernate.cache.provider_configuration_file_resource_path">/ehcache.xml</prop>
+				<prop key="hibernate.cache.second_level_cache">true</prop>
+				<prop key="hibernate.cache.use_structured_entries">true</prop>
+				<!-- prop key="hibernate.cache">true</prop -->
+				<!-- prop key="hibernate.cache.use_query_cache">true</prop -->
+				<!-- Se agrega a la configuración el modo de liberación de conexiones
+					after_statement -->
+				<!-- Pablo Balderas 13/Feb/2015 -->
+				<prop key="connection.release_mode">after_statement</prop>
+			</props>
+		</property>
+
+	</bean>
+
+	<bean id="jdbcTemplateInternacional"
+		class="org.springframework.jdbc.core.JdbcTemplate" lazy-init="true">
+		<property name="dataSource">
+			<ref bean="dataSourceInternacional" />
+		</property>
+		<!-- property name="dataSource"> <ref bean="dataSourceHomology" /> </property -->
+	</bean>
+
+	<!-- Poner en ESTRICTO orden alfabetico (por favor) -->
+
+	<bean id="adpCustodioPorcentajeDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.AdpCustodioPorcentajeDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="beneficiarioDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.BeneficiarioDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+		<property name="jdbcTemplate">
+			<ref local="jdbcTemplateInternacional" />
+		</property>
+	</bean>
+
+	<bean id="claveAdpDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.ClaveAdpDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="calendarioEmisionesDeudaExtDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.CalendarioEmisionesDeudaExtDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+		<property name="helper">
+			<ref local="calendarioEmisionesDeudaExtHelper" />
+		</property>
+	</bean>
+
+	<bean id="calendarioEmisionesDeudaExtHelper"
+		class="com.indeval.portalinternacional.persistence.dao.impl.CalendarioEmisionesDeudaExtHelper"
+		lazy-init="true">
+		<property name="filtroCapitales"
+			value="${moi.derecho.legislacionSic}" />
+	</bean>
+
+	<bean id="camposFormatosDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.CamposFormatosDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="catBicDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.CatBicDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="conciliacionIntDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.ConciliacionIntDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="conciliacionEfectivoDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.ConciliacionEfectivoDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="confirmacionIntDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.ConfirmacionesIntDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="consultaEventosCorporativosDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.eventosCorporativos.ConsultaEventosCorporativosDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="consultaHistoricoCapitalesDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.capitales.ConsultaHistoricoCapitalesDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<!--@add Jacito -->
+
+	<bean id="cuentasTransitoriasEfectivoDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="listaDistribucionDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.eventosCorporativos.ListaDistribucionDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+
+	<bean id="personaDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.eventosCorporativos.PersonaDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="custodioTipoBenefDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.CustodioTipoBenefDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="derechoDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.DerechoDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+		<property name="jdbcTemplate">
+			<ref local="jdbcTemplateInternacional" />
+		</property>
+	</bean>
+
+	<bean id="domicilioDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.DomicilioDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="domiciliosInstitucionesDao" lazy-init="true"
+		class="com.indeval.portaldali.persistence.dao.common.impl.DomiciliosInstitucionesDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="emisionDaoInt"
+		class="com.indeval.portalinternacional.persistence.dao.impl.EmisionDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="errorSwiftDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.ErrorSwiftDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+
+	<bean id="estatusDerechoDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.EstatusDerechoDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="estatusOperacionDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.EstatusOperacionDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="fileTransferCapturaBenefDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.FileTransferCapturaBenefDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="fileTransferBenefDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.FileTransferBenefDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="fileTransferDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.FileTransferDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="fileUploadDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.FileUploadDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="formatoFiscalDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.FormatoFiscalDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="formatoW8BENDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.FormatoW8BENDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="formatoW8Dao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.FormatoW8DaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="formatoW8IMYDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.FormatoW8IMYDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="formatoW9Dao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.FormatoW9DaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="historicoBeneficiarioDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.HistoricoBeneficiarioDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="mensajePortalDaliDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.MensajePortalDaliDAOImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="operacionSicDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.OperacionSicDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+		<property name="jdbcTemplate">
+			<ref local="jdbcTemplateInternacional" />
+		</property>
+	</bean>
+	
+	<bean id="nombradaSaldoDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.NombradaSaldoDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+        <property name="jdbcTemplate">
+            <ref local="jdbcTemplateInternacional" />
+        </property>
+	</bean>
+	
+	<bean id="divisaDao"
+       class="com.indeval.portaldali.persistence.dao.common.impl.DivisaDaoImpl"
+       lazy-init="true" >
+       <property name="sessionFactory">
+            <ref local="sessionFactoryInternacional" />
+       </property>
+    </bean>
+
+	<bean id="diasInhabilesDivisasDao"
+		  class="com.indeval.portalinternacional.persistence.dao.impl.DiasInhabilesDivisasDaoImpl"
+		  lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="estatusEmisionesDao"
+		class="com.indeval.portaldali.persistence.dao.common.impl.EstatusEmisionesDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+	<bean id="excepcionEmisionBenefDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.ExcepcionEmisionBenefDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="grupoRetencionDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.GrupoRetencionDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="horarioBeneficiarioDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.HorarioBeneficiarioDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="sicDetalleDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.SicDetalleDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="fastworkDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.FastworkDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="sicEmisionDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.SicEmisionDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+		<property name="jdbcTemplate">
+			<ref local="jdbcTemplateInternacional" />
+		</property>
+	</bean>
+
+	<bean id="statementsDivIntDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.StatementsDivIntDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="statusBeneficiarioDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.StatusBeneficiarioDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="tipoBeneficiarioDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.TipoBeneficiarioDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="depositosDivIntDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.DepositosDivIntDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="retirosDivIntDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.RetirosDivIntDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="posicionNombradaDivIntDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.PosicionNombradaDivIntDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="posicionNombradaHDivIntDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.PosicionNombradaHDivIntDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="topeCirculanteDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.TopeCirculanteDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+    <bean id="multicargaInternacionalDao"
+          class="com.indeval.portalinternacional.persistence.dao.impl.MulticargaInternacionalDaoImpl"
+          lazy-init="true">
+        <property name="sessionFactory">
+            <ref local="sessionFactoryInternacional"/>
+        </property>
+    </bean>
+
+
+
+       <bean id="strongEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor" singleton="false">
+           <property name="algorithm" value="PBEWithMD5AndRC2" />
+           <property name="password" value="${divint.beneficiarios}" />
+           <property name="providerName" value="BC" />
+       </bean>
+
+
+       <bean id="hibernateStringEncryptor1" class="org.jasypt.hibernate.encryptor.HibernatePBEStringEncryptor">
+           <property name="registeredName" value="strongHibernateStringEncryptor1" />
+           <property name="encryptor" ref="strongEncryptor" />
+       </bean>
+
+       <bean id="hibernateStringEncryptor2" class="org.jasypt.hibernate.encryptor.HibernatePBEStringEncryptor">
+           <property name="registeredName" value="strongHibernateStringEncryptor2" />
+           <property name="encryptor" ref="strongEncryptor" />
+       </bean>
+
+       <bean id="hibernateStringEncryptor3" class="org.jasypt.hibernate.encryptor.HibernatePBEStringEncryptor">
+           <property name="registeredName" value="strongHibernateStringEncryptor3" />
+           <property name="encryptor" ref="strongEncryptor" />
+       </bean>
+
+       <bean id="hibernateStringEncryptor4" class="org.jasypt.hibernate.encryptor.HibernatePBEStringEncryptor">
+           <property name="registeredName" value="strongHibernateStringEncryptor4" />
+           <property name="encryptor" ref="strongEncryptor" />
+       </bean>
+
+
+    <bean id="hibernateStringEncryptor5" class="org.jasypt.hibernate.encryptor.HibernatePBEStringEncryptor">
+        <property name="registeredName" value="strongHibernateStringEncryptor5" />
+        <property name="encryptor" ref="strongEncryptor" />
+    </bean>
+
+    <bean id="hibernateStringEncryptor6" class="org.jasypt.hibernate.encryptor.HibernatePBEStringEncryptor">
+        <property name="registeredName" value="strongHibernateStringEncryptor6" />
+        <property name="encryptor" ref="strongEncryptor" />
+    </bean>
+
+    <bean id="hibernateStringEncryptor7" class="org.jasypt.hibernate.encryptor.HibernatePBEStringEncryptor">
+        <property name="registeredName" value="strongHibernateStringEncryptor7" />
+        <property name="encryptor" ref="strongEncryptor" />
+    </bean>
+
+    <bean id="hibernateStringEncryptor8" class="org.jasypt.hibernate.encryptor.HibernatePBEStringEncryptor">
+        <property name="registeredName" value="strongHibernateStringEncryptor8" />
+        <property name="encryptor" ref="strongEncryptor" />
+    </bean>
+
+    <bean id="hibernateStringEncryptor9" class="org.jasypt.hibernate.encryptor.HibernatePBEStringEncryptor">
+        <property name="registeredName" value="strongHibernateStringEncryptor9" />
+        <property name="encryptor" ref="strongEncryptor" />
+    </bean>
+
+    <bean id="hibernateStringEncryptor10" class="org.jasypt.hibernate.encryptor.HibernatePBEStringEncryptor">
+        <property name="registeredName" value="strongHibernateStringEncryptor10" />
+        <property name="encryptor" ref="strongEncryptor" />
+    </bean>
+
+    <bean id="hibernateStringEncryptor11" class="org.jasypt.hibernate.encryptor.HibernatePBEStringEncryptor">
+        <property name="registeredName" value="strongHibernateStringEncryptor11" />
+        <property name="encryptor" ref="strongEncryptor" />
+    </bean>
+
+    <bean id="fileTransferCambioBovedaDao" class="com.indeval.portalinternacional.persistence.dao.impl.FileTransferCambioBovedaDaoImpl" lazy-init="true">
+        <property name="sessionFactory">
+            <ref local="sessionFactoryInternacional" />
+        </property>
+    </bean>
+
+    <bean id="institucionesDao" class="com.indeval.portalinternacional.persistence.dao.impl.InstitucionesDaoImpl"
+          lazy-init="true">
+        <property name="sessionFactory">
+            <ref local="sessionFactoryInternacional"/>
+        </property>
+    </bean>
+
+	<bean id="emisionesConsultasDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.EmisionesConsultasDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="rSicCambioBovedaDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.RSICCambioBovedaDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="bovedaIntDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.BovedaDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="rEmisionBovedaDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.REmisionBovedaDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="capitalesDistribucionDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.CapitalesDistribucionDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="settlementDisciplineRegimeDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.SettlementDisciplineRegimeDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+		<property name="jdbcTemplate">
+			<ref local="jdbcTemplateInternacional" />
+		</property>
+	</bean>
+
+	<bean id="solicitudAutorizacionDao"
+		class="com.indeval.portalinternacional.persistence.dao.makercheker.impl.SolicitudAutorizacionDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="consultaSaldoCustodiosDao"
+		  class="com.indeval.portalinternacional.persistence.dao.impl.consultaSaldoCustodiosDaoImpl"
+		  lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="bitacoraDao"
+		  class="com.indeval.sidv.bitacoraauditoria.persistence.model.dao.impl.BitacoraDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional"/>
+		</property>
+	</bean>
+
+	<bean id="emisionesCustodiosDepositantesDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.EmisionesCustodiosDepositantesDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<!-- Dao para las consultas necesarias para la exportacion de beneficiarios -->
+	<bean id="consultasExportacionBeneficiariosDao"
+		class="com.indeval.portalinternacional.persistence.dao.beneficiarios.impl.ConsultasExportacionBeneficiariosDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="divisaDaliDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.DivisaDaliDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="cuentaCorresponsalDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.CuentaCorresponsalDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="cuentaDaliDAO"
+		class="com.indeval.portalinternacional.persistence.dao.impl.CuentaDaliDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="saldoDAO"
+		class="com.indeval.portalinternacional.persistence.dao.impl.SaldoDAOV2Impl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+		<property name="jdbcTemplate">
+			<ref local="jdbcTemplateInternacional" />
+		</property>
+	</bean>
+
+	<bean id="saldoNombradaDaliDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.SaldoNombradaDaliDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+		<property name="jdbcTemplate">
+			<ref local="jdbcTemplateInternacional" />
+		</property>
+	</bean>
+	<bean id="movimientoEfectivoInternacionalDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.MovimientoEfectivoInternacionalDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+	<bean id="bitacoraFileTransferDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.BitacoraFileTransferDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="horariosCustodiosDao"
+		  class="com.indeval.portalinternacional.persistence.dao.impl.HorariosCustodiosDaoImpl"
+		  lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="retiroEfectivoIntPendientesDao"
+		  class="com.indeval.portalinternacional.persistence.dao.impl.RetiroEfectivoIntPendientesDaoImpl">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional"/>
+		</property>
+	</bean>
+
+	<bean id="custodioDao"
+		  class="com.indeval.portalinternacional.persistence.dao.impl.CustodioDaoImpl"
+		  lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+</beans>
+

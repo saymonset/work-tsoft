@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+      xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+		<ui:define name="head">
+			<link rel="stylesheet" type="text/css" media="all"
+				href="#{facesContext.externalContext.requestContextPath}/css/derechosText.css" />			
+		</ui:define>
+		
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.derechos}" />
+		</ui:define>
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.altaDeHorario}"></h:outputText>
+		</ui:define>
+		
+		
+		<ui:define name="criterios">				
+			
+			<a4j:keepAlive beanName="agregarHorarioBean" />			
+			<h:outputText value="#{agregarHorarioBean.init}" />											
+
+			<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+				<tr>
+                            <td colspan="4">
+                                <div style="min-height: 21px;" colspan="2">
+                                    <rich:messages warnClass="warning" infoClass="info"
+                                                   errorClass="error" ajaxRendered="true" showDetail="false"
+                                                   showSummary="true" layout="list">
+                                        <f:facet name="infoMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/accept.png" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+
+                                        <f:facet name="errorMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/warning.gif" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+                                    </rich:messages>
+
+                                    <div id="divWarnings" class="warning" style="display:none;">
+                                        <p id="textoWarning">
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                       
+				<tr>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.tv}" styleClass="textoNegritas"/>
+					</td>
+					<td style="width: 330px">
+						<h:inputText autocomplete="off" id="tv" value="#{agregarHorarioBean.tv}" styleClass="campoAlphaNumericoEmisora" size="4" maxlength="4"/>
+					</td>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.emisoraMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td style="width: 330px">
+						<h:inputText autocomplete="off" id="emisora" value="#{agregarHorarioBean.emisora}" styleClass="campoAlphaNumericoEmisora" size="7" maxlength="7"/>
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.serieMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td style="width: 330px">
+						<h:inputText autocomplete="off" id="serie" value="#{agregarHorarioBean.serie}" styleClass="campoAlphaNumericoEmisora" size="6" maxlength="6"/>
+					</td>
+					<td>
+						<h:outputText value="#{etq.custodio}" styleClass="textoNegritas"/>
+						<h:outputText value="#{etq.asterisco}" styleClass="required" />
+					</td>
+					<td>						
+						<h:selectOneMenu id="idCustodio" value="#{agregarHorarioBean.idCustodio}" styleClass="textoControles">
+							<f:selectItem itemValue="" itemLabel="#{etq.seleccioneUnCustodio}" />
+							<f:selectItems value="#{agregarHorarioBean.custodios}"/>
+						</h:selectOneMenu>						         
+					</td>
+				</tr>				
+				<tr>
+					<td>
+						<h:outputText value="#{etq.porcentajeRetencionMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+						<h:inputText autocomplete="off" id="porcentajeRetencion" value="#{agregarHorarioBean.porcentajeRet}" styleClass="textoNegritas" size="5" maxlength="5"/>
+						<h:message for="porcentajeRetencion"/>
+					</td>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.numeroDeDias}" styleClass="textoNegritas"/>
+						<h:outputText value="#{etq.asterisco}" styleClass="required" />
+					</td>
+					<td style="width: 330px">
+						<h:inputText autocomplete="off" id="dias" value="#{agregarHorarioBean.dias}" styleClass="" size="3" maxlength="3"/>
+					</td>
+				</tr>								
+				<tr>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.hora}" styleClass="textoNegritas"/>
+						<h:outputText value="#{etq.asterisco}" styleClass="required" />
+					</td>
+					<td style="width: 330px">
+						<h:inputText autocomplete="off" id="hora" value="#{agregarHorarioBean.hora}" styleClass="" size="2" maxlength="2"/><h:outputText value=":" styleClass="textoNegritas"/><h:inputText autocomplete="off" id="minuto" value="#{agregarHorarioBean.minuto}" styleClass="" size="2" maxlength="2"/>
+					</td>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.id} #{etq.folioMinus} #{etq.institucionMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td style="width: 330px">
+						<h:inputText autocomplete="off" id="idFolio" value="#{agregarHorarioBean.idFolioInstitucion}" styleClass="" size="5" maxlength="5"/>
+					</td>
+				</tr>	
+				<tr>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.numeroDiasFecha} #{etq.fechaDespuesDeCorte}" styleClass="textoNegritas"/>
+					</td>
+					<td style="width: 330px">
+						<h:selectBooleanCheckbox value="#{agregarHorarioBean.esDespuesFechaCorte}"/>
+					</td>
+					<td style="width: 110px">
+						<h:outputText value="" styleClass="textoNegritas"/>
+					</td>
+					<td style="width: 330px">
+						<h:outputText value="" styleClass="textoNegritas"/>
+					</td>
+				</tr>						             
+			</table>
+		</ui:define>
+		<ui:define name="seccionContenido">
+			<table width="100%" border="0">
+				<tr>
+					<td style="text-align: right;" colspan="2">
+						<a4j:commandButton id="botonGuardar" value="#{etq.guardar}" action="#{agregarHorarioBean.saveHorario}"/>
+						<h:commandButton id="botonRegresar" value="#{etq.regresar}" action="#{agregarHorarioBean.regresar}"/>                                
+					</td>
+				</tr>
+			</table>
+		</ui:define>				
+		
+												
+	</ui:composition>
+</html>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <ui:composition template="/layoutPopUp.xhtml">
+        <ui:define name="titulo">
+            Asignar ADP a Beneficiario
+        </ui:define>
+        <ui:define name="subtitulo">
+        </ui:define>
+        <ui:define name="body">
+            <h:form id="formaBenefActivo">
+                <h:outputText value="#{asignarAdpBeneficiarioController.init}" />
+                
+                <h:panelGroup id="general">
+                    <a4j:keepAlive beanName="asignarAdpBeneficiarioController" />
+
+                    <table width="850px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+                        <tr>
+                            <td colspan="2">
+                                <div style="min-height: 21px;">
+                                    <rich:messages warnClass="warning" infoClass="info"
+                                                   errorClass="error" ajaxRendered="true" showDetail="false"
+                                                   showSummary="true" layout="list">
+                                        <f:facet name="infoMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/accept.png" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+
+                                        <f:facet name="errorMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/warning.gif" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+                                    </rich:messages>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr style="height: 10px">
+                            <td>
+                                &#160;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left">
+                                <h:outputText styleClass="texto" style="font-weight: bold;"
+                                              value="#{etq.nombreBeneficiario}" />
+                                &#160;&#160;
+                                <h:panelGroup rendered="#{asignarAdpBeneficiarioController.forma.personaFisica}">
+                                    <h:outputText styleClass="texto" value="#{asignarAdpBeneficiarioController.forma.nombreCompleto}" />
+                                </h:panelGroup>
+                                <h:panelGroup  rendered="#{!asignarAdpBeneficiarioController.forma.personaFisica}">
+                                    <h:outputText styleClass="texto" value="#{asignarAdpBeneficiarioController.forma.razonSocial}" />
+                                </h:panelGroup>
+                            </td>
+                            <td align="left">
+                                <h:outputText styleClass="texto" style="font-weight: bold;"
+                                              value="#{etq.tipoBeneficiario}" />
+                                &#160;&#160;
+                                <h:outputText styleClass="texto"
+                                              value="#{asignarAdpBeneficiarioController.forma.descTipoBeneficiario}" />
+                            </td>
+                        </tr>
+                        <tr style="height: 10px">
+                            <td>
+                                &#160;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left">
+                                <h:outputText styleClass="texto" style="font-weight: bold;"
+                                              value="#{etq.fechaRegistro}" />
+                                &#160;&#160;
+                                <h:outputText styleClass="texto" converter="formatoFechaLargaConverter" 
+                                              value="#{asignarAdpBeneficiarioController.forma.fechaRegistro}" />
+                            </td>
+                            <td align="left">
+                                <h:outputText styleClass="texto" style="font-weight: bold;"
+                                              value="#{etq.fechaFormato}" />
+                                &#160;&#160;
+                                <h:outputText styleClass="texto" converter="formatoFechaCortaConverter"
+                                              value="#{asignarAdpBeneficiarioController.forma.fechaFormato}" />
+                            </td>
+                        </tr>
+                        <tr style="height: 10px">
+                            <td>
+                                &#160;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left">
+                                <h:outputText styleClass="texto" style="font-weight: bold;"
+                                              value="#{etq.estatusBeneficiario}" />
+                                &#160;&#160;
+                                <h:outputText styleClass="texto"
+                                              value="#{asignarAdpBeneficiarioController.forma.descStatusBeneficiario}"
+                                              style="color: 'green'" />
+                            </td>
+                            <td align="left">
+                                <h:outputText styleClass="texto" style="font-weight: bold;"
+                                              value="#{etq.w8benAdp}" />
+                                &#160;&#160;
+                                <h:inputText autocomplete="off" id="txtAdp" styleClass="textoControles textoMayusculas" size="20" maxlength="20"
+                                             value="#{asignarAdpBeneficiarioController.adp}" />
+                            </td>
+                        </tr>
+                        <tr style="height: 10px">
+                            <td>
+                                &#160;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="guardar">
+                                    <a4j:commandButton id="botonGuardar" image="/images/transparent.gif"
+                                                       styleClass="submit" reRender="general"
+                                                       action="#{asignarAdpBeneficiarioController.guardar}"
+                                                       oncomplete="window.scrollTo(0,0);" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+      xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/settlementDisciplineRegime.js">
+            </script>
+		</ui:define>
+		
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.admonCustodiosCSDR}" />
+		</ui:define>
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.configFuncionalidadCsdr}"></h:outputText>
+		</ui:define>
+        
+		<ui:define name="seccionContenido">				
+			<a4j:keepAlive beanName="settlementDisciplineRegimeController" />
+			<h:outputText value="#{settlementDisciplineRegimeController.initConfiguracion}" />
+			<h:panelGroup id="mensajeUsuario">
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+		
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+				
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+				</div>
+			</h:panelGroup>
+			
+			<h:panelGroup id="containerResultados">	
+			<table width="900px" border="0">
+				<tr>
+					<td>
+						<div id="Content">
+							<fieldset>
+								<legend>#{etq.configCustodio}</legend>
+								<table width="100%" align="center" border="0" cellspacing="3">
+									<tr>
+										<td colspan="6">
+											<h:panelGroup id="containerResultadosCustodios">
+												<t:dataTable id="noExistenResultados"
+													value=""
+													styleClass="tablaGeneral" headerClass="tituloTabla" width="900px"
+													footerClass="tituloTabla" border="0" cellpadding="3px"
+													cellspacing="0px" columnClasses="everyColumn"
+													rowClasses="renglonTablaUno, renglonTablaDos"
+													rendered="#{empty settlementDisciplineRegimeController.listSettlementDisciplineRegime}">
+													<t:column>
+														<f:facet name="header">
+															<h:outputText value="#{etq.sinResultados}"></h:outputText>
+														</f:facet>
+								
+													</t:column>
+												</t:dataTable>					
+												<h:dataTable id="resultadosCustodio"
+													value="#{settlementDisciplineRegimeController.listSettlementDisciplineRegime}"
+													var="custodio"
+													rendered="#{not empty settlementDisciplineRegimeController.listSettlementDisciplineRegime}"
+													styleClass="tablaGeneral" headerClass="tituloTabla" width="900px"
+													footerClass="tituloTabla" border="0" cellpadding="3px"
+													cellspacing="0px" columnClasses="everyColumn"
+													rowClasses="renglonTablaUno, renglonTablaDos">
+													
+													<h:column>
+														<f:facet name="header">
+															<h:outputText styleClass="texto textoPeque12" value="#{etq.cuentaMinus}" />
+														</f:facet>							
+								                           <h:outputText styleClass="texto textoPeque12" value="#{custodio.cuenta}" />														
+													</h:column>
+													<h:column>
+														<f:facet name="header">
+															<h:outputText styleClass="texto textoPeque12" value="#{etq.msgCustodio}" />
+														</f:facet>							
+								                           <h:outputText styleClass="texto textoPeque12" value="#{custodio.detalleCustodio}" />														
+													</h:column>
+													<h:column>
+														<f:facet name="header">
+															<h:outputText styleClass="texto textoPeque12" value="#{etq.holdAndRelease}" />
+														</f:facet>
+														<h:outputText styleClass="texto textoPeque12" value="#{(custodio.holdAndRelease == 1) ? 'Activo':'Inactivo'}" rendered="#{!custodio.isEditar}"/>
+														<h:panelGroup rendered="#{custodio.isEditar}" >
+								                                                        <h:selectOneMenu styleClass="textoControles"
+								                                                                         style="width: 60px"
+								                                                                         value="#{custodio.holdAndRelease}">
+								                                                            <f:selectItem itemLabel="Activo" itemValue="1" />
+								                                                            <f:selectItem itemLabel="Inactivo" itemValue="0" />
+								                                                        </h:selectOneMenu>
+								                        </h:panelGroup>
+													</h:column>
+													<h:column>
+														<f:facet name="header">
+															<h:outputText styleClass="texto textoPeque12" value="#{etq.liquidacionParcial}" />
+														</f:facet>
+														<h:outputText styleClass="texto textoPeque12" value="#{(custodio.partialSettlement == 1) ? 'Activo':'Inactivo'}" rendered="#{!custodio.isEditar}"/>
+														<h:panelGroup rendered="#{custodio.isEditar}" >
+								                                                        <h:selectOneMenu styleClass="textoControles"
+								                                                                         style="width: 60px"
+								                                                                         value="#{custodio.partialSettlement}">
+								                                                            <f:selectItem itemLabel="Activo" itemValue="1" />
+								                                                            <f:selectItem itemLabel="Inactivo" itemValue="0" />
+								                                                        </h:selectOneMenu>
+								                        </h:panelGroup>
+													</h:column>
+													<h:column>
+														<f:facet name="header">
+															<h:outputText styleClass="texto textoPeque12" value="#{etq.cancelacionBillateral}" />
+														</f:facet>
+														<h:outputText styleClass="texto textoPeque12" value="#{(custodio.bilateralCancellation == 1) ? 'Activo':'Inactivo'}" rendered="#{!custodio.isEditar}"/>
+														<h:panelGroup rendered="#{custodio.isEditar}" >
+								                                                        <h:selectOneMenu styleClass="textoControles"
+								                                                                         style="width: 60px"
+								                                                                         value="#{custodio.bilateralCancellation}">
+								                                                            <f:selectItem itemLabel="Activo" itemValue="1" />
+								                                                            <f:selectItem itemLabel="Inactivo" itemValue="0" />
+								                                                        </h:selectOneMenu>
+								                        </h:panelGroup>
+													</h:column>
+								                    <h:column>
+								                    	<f:facet name="header">
+															<h:outputText styleClass="texto textoPeque12" value="#{etq.editar}" />
+														</f:facet>
+														<h:selectBooleanCheckbox id="editar" styleClass="textoControles" value="#{custodio.isEditar}">
+								                                                        <a4j:support event="onclick"
+								                                                                     reRender="resultadosCustodio"
+								                                                                     actionListener="#{settlementDisciplineRegimeController.cambiaEdicion}" />
+								                         </h:selectBooleanCheckbox>
+								                    </h:column>
+								                    <h:column>
+								                    	<f:facet name="header">
+															<h:outputText styleClass="texto textoPeque12" value="#{etq.eliminarMinus}" />
+														</f:facet>
+														<h:selectBooleanCheckbox id="eliminar" styleClass="textoControles" value="#{custodio.isEliminar}">
+								                         </h:selectBooleanCheckbox>
+								                    </h:column>
+								                   </h:dataTable>
+											</h:panelGroup>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="6">
+											<table width="100%" border="0" align="right">
+												<tr style="text-align: right; font-weight: bold;">
+													<td width="98%">&nbsp;</td>
+													<td width="2%">
+													</td>
+													<td width="2%">
+														<div class="buscar">
+															<a4j:commandButton id="btnNuevoCustodio"
+																			onclick=""
+																		   	value="Nuevo"	
+																		   	action="#{settlementDisciplineRegimeController.nuevaConfiguracion}"
+																		   	styleClass="cssbutton"
+																		   	reRender="containerResultadosCustodios"
+																		   	alt="Nueva Configuración Custodio"
+																		   	title="Nueva Configuración Custodio" >
+																<f:setPropertyActionListener target="#{settlementDisciplineRegimeController.tipoConfiguracion}"  value="Custodio" />
+															</a4j:commandButton>
+														</div>
+													</td>
+													<td width="2%">
+														<div class="limpiar">
+															<a4j:commandButton id="btnEditarCustodio"
+																			onclick=""
+														                 	value="Editar"
+																		 	action="#{settlementDisciplineRegimeController.modificarAction}"
+																		 	styleClass="cssbutton"
+																		 	reRender="containerResultadosCustodios"
+																		 	alt="Editar Configuración Custodio"
+																		 	title="Editar Configuración Custodio">
+																<f:setPropertyActionListener target="#{settlementDisciplineRegimeController.tipoConfiguracion}"  value="Custodio" />
+															</a4j:commandButton>
+														</div>
+													</td>
+													<td width="2%">
+														<div class="eliminar">
+															<a4j:commandButton id="btnEliminarCustodio"
+																			onclick=""
+														                 	value="Eliminar"
+																		 	action="#{settlementDisciplineRegimeController.eliminarCustodio}"
+																		 	styleClass="cssbutton"
+																		 	reRender="containerResultadosCustodios"
+																		 	alt="Eliminar Configuración Custodio"
+																		 	title="Eliminar Configuración Custodio">
+																<f:setPropertyActionListener target="#{settlementDisciplineRegimeController.tipoConfiguracion}"  value="Custodio" />
+															</a4j:commandButton>
+														</div>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>				
+							</fieldset>
+						</div>
+					</td>
+				</tr>
+			</table>
+			</h:panelGroup>
+			
+		</ui:define>
+            
+	</ui:composition>
+</html>

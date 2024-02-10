@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+      xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+	
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/derechos.js">
+			</script>
+		</ui:define>
+
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.beneficiariosPorDerecho}" />
+		</ui:define>
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.adminBeneficiariosDerecho}"></h:outputText>
+		</ui:define>
+		
+		
+		<ui:define name="criterios">								
+			<a4j:keepAlive beanName="adminBeneficiariosDerechoBean" />
+            <h:panelGroup id="init" rendered="#{adminBeneficiariosDerechoBean.banderaInicio}">
+				<h:outputText value="#{adminBeneficiariosDerechoBean.init}" />								
+			</h:panelGroup>						
+						
+			
+			<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+				<tr>
+                            <td colspan="4">
+                                <div style="min-height: 21px;" colspan="2">
+                                    <rich:messages warnClass="warning" infoClass="info"
+                                                   errorClass="error" ajaxRendered="true" showDetail="false"
+                                                   showSummary="true" layout="list">
+                                        <f:facet name="infoMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/accept.png" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+
+                                        <f:facet name="errorMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/warning.gif" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+                                    </rich:messages>
+
+                                    <div id="divWarnings" class="warning" style="display:none;">
+                                        <p id="textoWarning">
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                <tr>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.institucionMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td style="width: 330px">						
+						<h:inputText autocomplete="off" id="claveInstitucion" value="#{adminBeneficiariosDerechoBean.claveInstitucion}"	styleClass="" size="7" maxlength="5" readonly="#{empty sessionScope.roles['INT_BEN_INDEVAL'] and empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN']}">
+							<a4j:support event="onchange" actionListener="#{adminBeneficiariosDerechoBean.ejecutarConsultaListener}" reRender="containerResultados"/>
+						</h:inputText>
+					</td>
+					<td style="width: 110px">						
+					</td>
+					<td style="width: 330px">						
+					</td>
+				</tr>      
+				<tr>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.tv}" styleClass="textoNegritas"/>
+					</td>
+					<td style="width: 330px">
+						<h:outputText value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.emision.tv}"/>
+					</td>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.divisaMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td style="width: 330px">
+						<h:outputText value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.divisa}"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="#{etq.emisoraMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td>						
+						<h:outputText value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.emision.emisora}"/>         
+					</td>
+					<td>
+						<h:outputText value="#{etq.bovedaMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+						<h:outputText value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.bovedaCustodio}"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="#{etq.serieMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+						 <h:outputText value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.emision.serie}"/>
+					</td>
+					<td>
+						<h:outputText value="#{etq.estado}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+						<h:outputText value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.descEstatusDerecho}"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="#{etq.cuponMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+                        <h:outputText value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.emision.cupon}"/> 
+					</td>
+					<td>
+						<h:outputText value="#{etq.fechaCorteMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+                       <h:outputText value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.fechaCorte}"/>
+                       <h:inputText id="fechaCorte" style="display: none;" value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.fechaCorte}"/>
+					</td>
+				</tr>
+                <tr>
+					<td>
+						<h:outputText value="#{etq.isin}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+                        <h:outputText value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.emision.isin}"/>
+					</td>
+					<td>
+						<h:outputText value="#{etq.fechaPago}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+                       <h:outputText value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.fechaPago}"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="#{etq.proporcionMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+                        <h:outputText value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.proporcion}"/>
+					</td>
+					<td>
+						<h:outputText value=""/>
+					</td>
+					<td>
+                       <h:outputText value=""/>
+					</td>
+				</tr>
+				<h:panelGroup rendered="#{not empty adminBeneficiariosDerechoBean.derechoSeleccionado.fee}">
+					<tr>
+						<td>
+							<h:outputText value="#{etq.fee}" styleClass="textoNegritas"/>
+						</td>
+						<td>
+	                        <h:outputText value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.feeAsString}"/>
+						</td>
+						<td>
+							<h:outputText value=""/>
+						</td>
+						<td>
+	                       <h:outputText value=""/>
+						</td>						
+					</tr>	
+				</h:panelGroup>			
+			</table>
+			
+		</ui:define>
+
+
+		<ui:define name="seccionContenido">		
+		<iframe class="divModal"  id="beneficiarios"  frameborder="0"  scrolling="no" aling="top"></iframe>
+			<div class="warning" style="display:none;">						
+				<table width="100%" border="0">
+					<tr>
+						<td>
+							<h:commandButton value="consultar" action="#{adminBeneficiariosDerechoBean.ejecutarConsulta}" id="botonBuscarBenef"/>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<h:panelGroup id="containerResultados">
+				<h:panelGroup>	
+				
+				<h:panelGroup rendered="#{not empty adminBeneficiariosDerechoBean.paginaVO.registros}">
+
+						<table width="100%" border="0">
+							<tr>
+								<td align="left" class="textoEstadoCuenta">
+									<a4j:commandLink id="control_bitacora_primero"
+										action="#{adminBeneficiariosDerechoBean.irPrimeraPagina}"
+										rendered="#{adminBeneficiariosDerechoBean.irAlPrimero}"
+										reRender="containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_atras_fast"
+										action="#{adminBeneficiariosDerechoBean.retrocederPaginasRapido}"
+										rendered="#{adminBeneficiariosDerechoBean.retrocederRapido}"
+										reRender="containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_atras"
+										action="#{adminBeneficiariosDerechoBean.retrocederPagina}"
+										rendered="#{adminBeneficiariosDerechoBean.retroceder}"
+										reRender="containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+											border="0" />
+									</a4j:commandLink>
+									<a4j:commandLink id="control_bitacora_adelante"
+										action="#{adminBeneficiariosDerechoBean.avanzarPagina}"
+										rendered="#{adminBeneficiariosDerechoBean.avanzar}"
+										reRender="containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_adelante_fast"
+										action="#{adminBeneficiariosDerechoBean.avanzarPaginasRapido}"
+										rendered="#{adminBeneficiariosDerechoBean.avanzarRapido}"
+										reRender="containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+											border="0" />
+
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_ultimo"
+										action="#{adminBeneficiariosDerechoBean.irUltimaPagina}"
+										rendered="#{adminBeneficiariosDerechoBean.irAlUltimo}"
+										reRender="containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+											border="0" />
+									</a4j:commandLink>
+
+
+									<br />
+									<h:outputText value="#{etq.mostrando}"
+										styleClass="textoResumen" />
+									<h:outputText value="#{adminBeneficiariosDerechoBean.numeroPagina}"
+										styleClass="textoResumen" />
+									<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+									<h:outputText value="#{adminBeneficiariosDerechoBean.totalPaginas}"
+										styleClass="textoResumen" />
+									<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+									&#160;&#160;&#160;
+									<h:outputText
+										value="#{adminBeneficiariosDerechoBean.paginaVO.totalRegistros}"
+										styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+									&#160;
+									<h:outputText styleClass="textoResumen"
+										value="#{etq.registrosEncontrados}" />
+								</td>
+								<td style="text-align: right;"  class="textoEstadoCuenta">
+									<h:outputText escape="false" value="#{etq.registrosPorPagina}"
+										styleClass="textoResumen" />
+									<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+										value="#{adminBeneficiariosDerechoBean.paginaVO.registrosXPag}">
+										<f:selectItem itemLabel="1" itemValue="1" />
+										<f:selectItem itemLabel="2" itemValue="2" />
+										<f:selectItem itemLabel="5" itemValue="5" />
+										<f:selectItem itemLabel="10" itemValue="10" />
+										<f:selectItem itemLabel="20" itemValue="20" />
+										<f:selectItem itemLabel="50" itemValue="50" />
+										<a4j:support event="onchange"
+											reRender="containerResultados"
+											actionListener="#{adminBeneficiariosDerechoBean.obtenerOperaciones}" />
+									</h:selectOneMenu>
+								</td>
+							</tr>							
+						</table>
+						
+					</h:panelGroup>
+					
+				
+				<rich:dataTable 
+					id="resultados"                    
+                    styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+                    footerClass="tituloTabla" rowClasses="renglonTablaUno, renglonTablaDos"
+                    rendered="#{not empty adminBeneficiariosDerechoBean.paginaVO.registros}" 
+                    border="0" var="posicionCuenta" value="#{adminBeneficiariosDerechoBean.paginaVO.registros}">
+                
+                    <f:facet name="header">
+                        <rich:columnGroup>
+                            <rich:column>
+                             	<h:outputText value="#{etq.cuentasMinus}"/>                                
+                            </rich:column>
+                            <rich:column colspan="11">
+                                <h:outputText value="#{etq.beneficiarios}" />
+                            </rich:column>
+                            <rich:column>
+                                <h:outputText value="#{etq.posicionNoAsignada}" />
+                            </rich:column>
+                            <rich:column>
+                                <h:outputText value="#{etq.posicionAsignada}" />
+                            </rich:column>                            
+                            <rich:column breakBefore="true">
+                                <rich:spacer />
+                            </rich:column>
+                            <rich:column>
+                            	<h:outputText value="#{etq.uoi}" />                            	
+                            </rich:column>
+                            <rich:column>
+                                <h:outputText value="#{etq.nombre}" />
+                            </rich:column>
+                            <rich:column>
+                                <h:outputText value="#{etq.direccionMinus}" />
+                            </rich:column>
+                            <rich:column>
+                                <h:outputText value="#{etq.w8benPaisResidencialOnly}" />
+                            </rich:column>                              
+                            <rich:column>
+                                <h:outputText value="#{etq.rfc}" />
+                            </rich:column>
+                            <rich:column>
+                                <h:outputText value="#{etq.porcentajeRetencionMinus}" />
+                            </rich:column>
+                            <rich:column>
+                                <h:outputText value="#{etq.cantidadDeTitulosMinus}" />
+                            </rich:column>
+                            <rich:column>
+                                 &#160;&#160;&#160;&#160;&#160;&#160;&#160;<h:outputText value="#{etq.monto}" />&#160;&#160;&#160;&#160;&#160;&#160;
+				&#160;<h:outputText value="#{etq.brutoMinus}" />
+                            </rich:column>
+                            <rich:column>
+                                <h:outputText value="#{etq.impuestoRetenidoMinus}" />
+                            </rich:column>                             
+                            <rich:column>
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;<h:outputText value="#{etq.monto}" />&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+							&#160;<h:outputText value="#{etq.netoMinus}" />
+                            </rich:column>
+                            <rich:column colspan="1">
+                                <h:outputText value="#{etq.seleccionarTodos}" /><h:selectBooleanCheckbox onclick="javascript:checkControls();" id="checkPrincipal"/>
+                            </rich:column>
+                            <rich:column colspan="1">
+                    			<rich:spacer />
+                    		</rich:column>     
+                            <rich:column colspan="1">
+                    			<rich:spacer />
+                    		</rich:column>                    		                                      
+                        </rich:columnGroup>
+                    </f:facet>
+    
+					<rich:column  colspan="14">
+					
+						
+						<a4j:commandLink id="btnDetalleBeneficiariosCuenta" 
+							action="#{adminBeneficiariosDerechoBean.getDetalleBeneficiariosCuenta}" 
+							reRender="containerResultados" 
+							rendered="#{empty adminBeneficiariosDerechoBean.beneficiariosPorcuenta[posicionCuenta.idCuentaNombrada]}">
+							<img src="#{facesContext.externalContext.requestContextPath}/images/open.gif" border="0" />							
+							<a4j:actionparam name="idCuentaNombrada" value="#{posicionCuenta.idCuentaNombrada}" />
+							
+						</a4j:commandLink>
+						
+						<a4j:commandLink id="btnEmptyBeneficiariosCuenta" 
+							action="#{adminBeneficiariosDerechoBean.emptyDetalleBeneficiariosCuenta}" 
+							reRender="containerResultados" 
+							rendered="#{not empty adminBeneficiariosDerechoBean.beneficiariosPorcuenta[posicionCuenta.idCuentaNombrada]}" >
+							<img src="#{facesContext.externalContext.requestContextPath}/images/close.gif" border="0" />							
+							<a4j:actionparam name="idCuentaNombrada" value="#{posicionCuenta.idCuentaNombrada}" />
+							
+						</a4j:commandLink>
+						
+						
+						
+                    	<h:panelGroup rendered="#{not empty sessionScope.roles['INT_BEN_INDEVAL'] or not empty sessionScope.roles['INT_BEN_CAPT_CONS'] or not empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN']}">
+                    		<h:panelGroup rendered="#{(adminBeneficiariosDerechoBean.requiereBeneficiarios and adminBeneficiariosDerechoBean.horarioValido and adminBeneficiariosDerechoBean.derechoSeleccionado.idEstatusDerecho &lt;= 2) or (adminBeneficiariosDerechoBean.requiereBeneficiarios and adminBeneficiariosDerechoBean.derechoSeleccionado.idEstatusDerecho == 5 and not empty sessionScope.roles['INT_BEN_INDEVAL'])}">
+                    		
+	                    		<a href="javascript:agregarBeneficiario(#{adminBeneficiariosDerechoBean.derechoSeleccionado.idDerechoCapital},#{adminBeneficiariosDerechoBean.derechoSeleccionado.idEstatusDerecho},#{posicionCuenta.idCuentaNombrada},#{posicionCuenta.idEmision},#{adminBeneficiariosDerechoBean.porcentajeRetencion},'#{adminBeneficiariosDerechoBean.derechoSeleccionado.emision.tv}','#{adminBeneficiariosDerechoBean.derechoSeleccionado.emision.emisora}','#{adminBeneficiariosDerechoBean.derechoSeleccionado.emision.serie}','#{posicionCuenta.claveInstitucion}','#{posicionCuenta.cuenta}');">
+	                    			<h:outputText styleClass="texto textoPeque12" value="#{posicionCuenta.claveInstitucion}"/>&#160;<h:outputText styleClass="texto textoPeque12" value="#{posicionCuenta.nombreInstitucion}"/>&#160;<h:outputText styleClass="texto textoPeque12" value="#{posicionCuenta.cuenta}"/>
+	                    		</a>
+	                    	</h:panelGroup>
+	                    	<h:panelGroup  rendered="#{!adminBeneficiariosDerechoBean.requiereBeneficiarios or (adminBeneficiariosDerechoBean.requiereBeneficiarios and !adminBeneficiariosDerechoBean.horarioValido and adminBeneficiariosDerechoBean.derechoSeleccionado.idEstatusDerecho &lt; 5) or (adminBeneficiariosDerechoBean.derechoSeleccionado.idEstatusDerecho &gt; 2 and adminBeneficiariosDerechoBean.derechoSeleccionado.idEstatusDerecho &lt; 5)}">
+	                    		<h:outputText styleClass="texto textoPeque12" value="#{posicionCuenta.claveInstitucion}"/>&#160;<h:outputText styleClass="texto textoPeque12" value="#{posicionCuenta.nombreInstitucion}"/>&#160;<h:outputText styleClass="texto textoPeque12" value="#{posicionCuenta.cuenta}"/>
+	                    	</h:panelGroup>
+                    	</h:panelGroup>
+                    	<h:panelGroup rendered="#{empty sessionScope.roles['INT_BEN_INDEVAL'] and empty sessionScope.roles['INT_BEN_CAPT_CONS'] and empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN']}">
+                    		<h:outputText styleClass="texto textoPeque12" value="#{posicionCuenta.claveInstitucion}"/>&#160;<h:outputText styleClass="texto textoPeque12" value="#{posicionCuenta.nombreInstitucion}"/>&#160;<h:outputText styleClass="texto textoPeque12" value="#{posicionCuenta.cuenta}"/>
+                    	</h:panelGroup> 
+                    	
+                    </rich:column>
+
+					<rich:subTable                          
+                        var="beneficiarioDerecho" value="#{adminBeneficiariosDerechoBean.beneficiariosPorcuenta[posicionCuenta.idCuentaNombrada]}">
+                        <rich:column colspan="1">
+                    		<rich:spacer />
+                    		<f:facet name="footer">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.totalesPosicionNoAsignada}" />
+                            </f:facet>
+                    	</rich:column>
+                        <rich:column>
+                            <h:outputText styleClass="texto textoPeque12" value="#{beneficiarioDerecho.uoi}" />
+                            <f:facet name="footer">
+                                <rich:spacer />
+                            </f:facet>							
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText styleClass="texto textoPeque12" value="#{beneficiarioDerecho.nombre}" />
+                            <f:facet name="footer">
+                                <rich:spacer />
+                            </f:facet>                       
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText styleClass="texto textoPeque12" value="#{beneficiarioDerecho.direccion}" />
+                            <f:facet name="footer">
+                                <rich:spacer />
+                            </f:facet>
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText styleClass="texto textoPeque12" value="#{beneficiarioDerecho.country}" />
+                            <f:facet name="footer">
+                                <rich:spacer />
+                            </f:facet>
+                        </rich:column>                        
+                        <rich:column>
+                           <h:outputText styleClass="texto textoPeque12" value="#{beneficiarioDerecho.rfc}" />
+                           <f:facet name="footer">
+                                <rich:spacer />
+                            </f:facet>
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText styleClass="texto textoPeque12" value="#{beneficiarioDerecho.porcentajeRetencionAsString}"/><h:outputText styleClass="texto textoPeque12" value=" %"/>
+                            <f:facet name="footer">
+                                <h:outputText styleClass="texto textoPeque12" value="#{adminBeneficiariosDerechoBean.porcentajeRetencionAsString}" rendered="#{adminBeneficiariosDerechoBean.totalXCuenta[posicionCuenta.idCuentaNombrada][0] > 0}"/>
+                            </f:facet>
+                        </rich:column>                  
+                        <rich:column>
+                        	<h:outputText styleClass="texto textoPeque12" value="#{beneficiarioDerecho.posicion}" converter="formatoEnteroConverter"/>                    		                    		
+                            <f:facet name="footer">
+                                <h:outputText styleClass="texto textoPeque12" value="#{adminBeneficiariosDerechoBean.totalXCuenta[posicionCuenta.idCuentaNombrada][0]}" converter="formatoEnteroConverter" rendered="#{adminBeneficiariosDerechoBean.totalXCuenta[posicionCuenta.idCuentaNombrada][0] > 0}"/>
+                            </f:facet>
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText styleClass="texto textoPeque12" value="#{beneficiarioDerecho.monto}" converter="formatoMonedaConverter"/>                            
+                            <f:facet name="footer">
+                                <h:outputText styleClass="texto textoPeque12" value="#{adminBeneficiariosDerechoBean.totalXCuenta[posicionCuenta.idCuentaNombrada][3]}" converter="formatoMonedaConverter" rendered="#{adminBeneficiariosDerechoBean.totalXCuenta[posicionCuenta.idCuentaNombrada][0] > 0}"/>                                
+                            </f:facet>                       
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText styleClass="texto textoPeque12" value="#{beneficiarioDerecho.montoRetenido}" converter="formatoMonedaConverter"/>                            
+                            <f:facet name="footer">                            	
+                                <h:outputText styleClass="texto textoPeque12" value="#{adminBeneficiariosDerechoBean.totalXCuenta[posicionCuenta.idCuentaNombrada][4]}" converter="formatoMonedaConverter" rendered="#{adminBeneficiariosDerechoBean.totalXCuenta[posicionCuenta.idCuentaNombrada][0] > 0}"/>
+                            </f:facet>
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText styleClass="texto textoPeque12" value="#{beneficiarioDerecho.montoPagado}" converter="formatoMonedaConverter"/>                            
+                            <f:facet name="footer">                            	
+                                <h:outputText styleClass="texto textoPeque12" value="#{adminBeneficiariosDerechoBean.totalXCuenta[posicionCuenta.idCuentaNombrada][2]}" converter="formatoMonedaConverter" rendered="#{adminBeneficiariosDerechoBean.totalXCuenta[posicionCuenta.idCuentaNombrada][0] > 0}"/>
+                            </f:facet>
+                        </rich:column>                        
+                        <rich:column>
+                        	<h:panelGroup rendered="#{not empty sessionScope.roles['INT_BEN_INDEVAL'] or not empty sessionScope.roles['INT_BEN_CAPT_CONS'] or not empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN']}">
+                    			<h:panelGroup rendered="#{(adminBeneficiariosDerechoBean.horarioValido and adminBeneficiariosDerechoBean.derechoSeleccionado.idEstatusDerecho &lt;= 2) or (adminBeneficiariosDerechoBean.derechoSeleccionado.idEstatusDerecho == 5 and (not empty sessionScope.roles['INT_BEN_INDEVAL'] or not empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN']))}">
+                        		<h:selectBooleanCheckbox value="#{beneficiarioDerecho.eliminar}"/>
+	                            <a4j:commandLink styleClass="texto textoPeque12 sinSubrayar"
+			                            	actionListener="#{adminBeneficiariosDerechoBean.eliminaBeneficiario}"			                            	
+			                                reRender="containerResultados" >
+			                                <h:graphicImage value="/images/cancel.png"/>			                                			                                                               
+			                            </a4j:commandLink>			                     
+	                    		</h:panelGroup>
+	                    		<h:panelGroup  rendered="#{!adminBeneficiariosDerechoBean.horarioValido and adminBeneficiariosDerechoBean.derechoSeleccionado.idEstatusDerecho &lt; 5 or (adminBeneficiariosDerechoBean.derechoSeleccionado.idEstatusDerecho &gt; 2 and adminBeneficiariosDerechoBean.derechoSeleccionado.idEstatusDerecho &lt; 5)}">
+	                    			<h:outputText styleClass="texto textoPeque12" value="#{etq.eliminarMinus}" />
+	                    		</h:panelGroup>
+			                 </h:panelGroup>
+			                 <h:panelGroup rendered="#{empty sessionScope.roles['INT_BEN_INDEVAL'] and empty sessionScope.roles['INT_BEN_CAPT_CONS'] and empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN']}">
+			                 	<h:outputText styleClass="texto textoPeque12" value="#{etq.eliminarMinus}" />
+			                 </h:panelGroup>
+		                     <f:facet name="footer">
+                                <rich:spacer />
+                            </f:facet>
+                        </rich:column>  
+                        <rich:column colspan="1">
+                    		<rich:spacer />
+		                     <f:facet name="footer">
+                                <h:outputText styleClass="texto textoPeque12" value="#{adminBeneficiariosDerechoBean.totalXCuenta[posicionCuenta.idCuentaNombrada][0]}" converter="formatoEnteroConverter"/>
+                            </f:facet>                    		
+                    	</rich:column>
+                    	<rich:column colspan="1">
+                    		<rich:spacer />
+		                     <f:facet name="footer">
+                                <h:outputText styleClass="texto textoPeque12" value="#{adminBeneficiariosDerechoBean.totalXCuenta[posicionCuenta.idCuentaNombrada][1]}" converter="formatoEnteroConverter"/>
+                            </f:facet>                    		
+                    	</rich:column>                                               
+                    </rich:subTable> 
+                    <f:facet name="footer">                
+                        <rich:columnGroup>
+                            <rich:column>
+                            	<h:outputText styleClass="texto textoPeque12" value="#{etq.totalesMinus}"/>
+                            </rich:column>
+                            <rich:column colspan="6">
+                                <rich:spacer />
+                            </rich:column>
+                            <rich:column>
+                                <h:outputText value="#{adminBeneficiariosDerechoBean.totalPosiciones}" styleClass="texto textoPeque12" converter="formatoEnteroConverter"/>
+                            </rich:column>                            
+                            <rich:column>
+                                <h:outputText value="#{adminBeneficiariosDerechoBean.totalesMontos[0]}" styleClass="texto textoPeque12" converter="formatoMonedaConverter"/>
+                            </rich:column>
+                            <rich:column>
+                                <h:outputText value="#{adminBeneficiariosDerechoBean.totalesMontos[1]}" styleClass="texto textoPeque12" converter="formatoMonedaConverter"/>
+                            </rich:column>
+                            <rich:column>
+                                <h:outputText value="#{adminBeneficiariosDerechoBean.totalesMontos[2]}" styleClass="texto textoPeque12" converter="formatoMonedaConverter"/>
+                            </rich:column> 
+                            <rich:column colspan="1">
+                                <rich:spacer />
+                            </rich:column>                                                                                                               
+                            <rich:column>
+                                <h:outputText value="#{adminBeneficiariosDerechoBean.totalPosicionNoAsignada}" styleClass="texto textoPeque12" converter="formatoEnteroConverter"/>
+                            </rich:column>
+                            <rich:column>
+                                <h:outputText value="#{adminBeneficiariosDerechoBean.totalPosicionAsignada}" styleClass="texto textoPeque12" converter="formatoEnteroConverter"/>
+                            </rich:column>
+                        </rich:columnGroup>
+                    </f:facet>  
+				</rich:dataTable>				
+                	<br />
+	                <t:div style="width: 100%; text-align: right;">
+	                	<h:commandButton value="#{etq.tablaRetencion}" action="#{adminBeneficiariosDerechoBean.toTablaRetencion}" id="botonTablaRetencion" rendered="#{not empty adminBeneficiariosDerechoBean.paginaVO.registros}"/>						
+						<h:commandButton action="#{adminBeneficiariosDerechoBean.regresar}" value="#{etq.regresar}"  id="botonRegresar" />
+	                </t:div>
+	                <br />
+                    <br />
+                    <t:div style="width: 100%; text-align: right;">
+	                    <h:commandButton actionListener="#{adminBeneficiariosDerechoBean.generarReportes}"
+	                                     action="beneficiariosDerchoPDF"
+	                                     image="/images/pdf.gif"
+	                                     title="Exportar a PDF todos los resultados de la consulta"
+	                                     id="generarPdf" />&#160;&#160;
+	                    <h:commandButton actionListener="#{adminBeneficiariosDerechoBean.generarReporteXLS}"
+	                                     action="beneficiariosDerchoXLS"
+	                                     image="/images/excel-file.gif"
+	                                     title="Exportar a XLS todos los resultados de la consulta"
+	                                         id="generarXls" />&#160;&#160;
+                    </t:div>
+                </h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+
+</html>
+

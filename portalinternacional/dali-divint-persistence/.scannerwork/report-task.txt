@@ -1,0 +1,6 @@
+projectKey=com.indeval.dali-dali-divint-persistence-add
+serverUrl=http://localhost:9000
+serverVersion=10.2.1.78527
+dashboardUrl=http://localhost:9000/dashboard?id=com.indeval.dali-dali-divint-persistence-add
+ceTaskId=AYttU2VIdvnPmCl-gWnc
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYttU2VIdvnPmCl-gWnc

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:composition template="/layoutPopUp.xhtml">	
+		<ui:define name="titulo">
+		Emisiones Disponibles
+		</ui:define>
+		<ui:define name="subtitulo">
+		</ui:define>
+		<ui:define name="body">
+			<h:form id="formaPosiciones">
+				<h:outputText value="#{seleccionarPosicionesInvExtBean.init}" />
+				<h:panelGroup id="panelResultados">
+
+					<a4j:keepAlive beanName="seleccionarPosicionesInvExtBean" />
+
+
+					<h:inputHidden value="#{seleccionarPosicionesInvExtBean.numeroPagina}" />
+					<h:inputHidden
+						value="#{seleccionarPosicionesInvExtBean.paginaVO.totalRegistros}" />
+					<h:inputHidden value="#{seleccionarPosicionesInvExtBean.totalPaginas}" />
+					<h:inputHidden
+						value="#{seleccionarPosicionesInvExtBean.registrosPorPagina}" />
+					<table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<tr>
+							<td align="left">
+								<h:panelGroup id="paginacion">
+									<a4j:commandLink id="control_bitacora_primero"
+										action="#{seleccionarPosicionesInvExtBean.irPrimeraPagina}"
+										rendered="#{seleccionarPosicionesInvExtBean.irAlPrimero}"
+										reRender="panelResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_atras_fast"
+										action="#{seleccionarPosicionesInvExtBean.retrocederPaginasRapido}"
+										rendered="#{seleccionarPosicionesInvExtBean.retrocederRapido}"
+										reRender="panelResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_atras"
+										action="#{seleccionarPosicionesInvExtBean.retrocederPagina}"
+										rendered="#{seleccionarPosicionesInvExtBean.retroceder}"
+										reRender="panelResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+											border="0" />
+									</a4j:commandLink>
+									<a4j:commandLink id="control_bitacora_adelante"
+										action="#{seleccionarPosicionesInvExtBean.avanzarPagina}"
+										rendered="#{seleccionarPosicionesInvExtBean.avanzar}"
+										reRender="panelResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_adelante_fast"
+										action="#{seleccionarPosicionesInvExtBean.avanzarPaginasRapido}"
+										rendered="#{seleccionarPosicionesInvExtBean.avanzarRapido}"
+										reRender="panelResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+											border="0" />
+
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_ultimo"
+										action="#{seleccionarPosicionesInvExtBean.irUltimaPagina}"
+										rendered="#{seleccionarPosicionesInvExtBean.irAlUltimo}"
+										reRender="panelResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+											border="0" />
+									</a4j:commandLink>
+									<br />
+									<h:panelGroup rendered="#{not empty seleccionarPosicionesInvExtBean.paginaVO.registros}">
+										<h:outputText value="#{etq.mostrando}" styleClass="textoResumen" />
+		                                <h:outputText value="#{seleccionarPosicionesInvExtBean.numeroPagina}" styleClass="textoResumen"/>
+		                                <h:outputText value="#{etq.de}" styleClass="textoResumen"/>
+		                                <h:outputText value="#{seleccionarPosicionesInvExtBean.totalPaginas}" styleClass="textoResumen"/>
+		                                <h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>&#160;&#160;&#160;
+		                                <h:outputText value="#{seleccionarPosicionesInvExtBean.paginaVO.totalRegistros}" styleClass="textoResumen" 
+		                                converter="formatoEnteroConverter"></h:outputText>&#160;
+										<h:outputText styleClass="textoResumen" value="#{etq.registrosEncontrados}"/>
+									</h:panelGroup>
+	                                
+								</h:panelGroup>
+
+
+
+								<a4j:status id="commonStatus">
+									<f:facet name="start">
+										<h:panelGroup>
+											<h:graphicImage value="/images/ajax-loader.gif" />
+											<h:outputText value="#{etq.buscando}"></h:outputText>
+										</h:panelGroup>
+									</f:facet>
+								</a4j:status>
+							</td>
+						</tr>
+					</table>
+
+
+					<h:dataTable styleClass="tablaGeneral" headerClass="tituloTabla"
+						width="100%" footerClass="tituloTabla" border="0"
+						cellpadding="3px" cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos"
+						value="#{seleccionarPosicionesInvExtBean.paginaVO.registros}"
+						var="posicion">
+						<h:column>
+
+							<a href="javascript:void(0);"
+								onclick="window.parent.seleccionarPosicion('#{posicion[0].cuentaNombrada.cuenta}','#{posicion[0].cupon.emision.instrumento.claveTipoValor}','#{posicion[0].cupon.emision.emisora.clavePizarra}','#{posicion[0].cupon.emision.serie}','#{posicion[1].claveCupon}','#{posicion[0].cupon.emision.isin}','#{posicion[3]}','#{posicion[0].posicionNoDisponible}','','#{posicion[2]}','#{posicion[0].cuentaNombrada.tipoCuenta.claveTipoCuenta}','#{posicion[0].boveda.descripcion}', '#{posicion[0].cupon.emision.emisionExtranjera}',#{posicion[0].boveda.idBoveda});">
+								<h:graphicImage value="/images/accept.png" /> </a>
+
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.tv}" />
+							</f:facet>
+							<h:outputText
+								value="#{posicion[0].cupon.emision.instrumento.claveTipoValor}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.emisora}" />
+							</f:facet>
+							<h:outputText value="#{posicion[0].cupon.emision.emisora.clavePizarra}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.serie}" />
+							</f:facet>
+							<h:outputText value="#{posicion[0].cupon.emision.serie}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.cupon}" />
+							</f:facet>
+							<h:outputText value="#{posicion[0].cupon.claveCupon}"/>&#160; 
+				</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.isin}" />
+							</f:facet>
+							<h:outputText value="#{posicion[0].cupon.emision.isin}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.fechaVencimiento}" />
+							</f:facet>
+							<h:outputText value="#{posicion[0].cupon.emision.fechaVencimiento}" converter="formatoFechaCortaConverter"/>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.posicionDisponible}" />
+							</f:facet>
+							<div align="right">
+								<h:outputText value="#{posicion[0].posicionDisponible}"
+									converter="formatoEnteroConverter" />
+							</div>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.posicionNoDisponible}" />
+							</f:facet>
+							<div align="right">
+								<h:outputText value="#{posicion[0].posicionNoDisponible}"
+									converter="formatoEnteroConverter" />
+							</div>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.posicion}" />
+							</f:facet>
+							<div align="right">
+								<h:outputText
+									value="#{posicion[0].posicionDisponible + posicion[0].posicionNoDisponible}"
+									converter="formatoEnteroConverter" />
+							</div>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.mercado}" />
+							</f:facet>
+							<div align="right">
+								<h:outputText
+									value="#{posicion[0].cupon.emision.instrumento.mercado.clave}" />
+							</div>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.alta}" />
+							</f:facet>
+							<div align="right">
+								<h:outputText
+									value="#{posicion[0].cupon.emision.emisionExtranjera}" />
+							</div>
+						</h:column>
+
+						<f:facet name="footer">
+							<rich:columnGroup
+								rendered="#{empty seleccionarPosicionesInvExtBean.paginaVO.registros}">
+								<rich:column colspan="15" width="100%" styleClass="tituloTabla">
+									<h:outputText value="#{etq.sinResultados}" />
+								</rich:column>
+							</rich:columnGroup>
+						</f:facet>
+
+					</h:dataTable>
+				</h:panelGroup>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</html>

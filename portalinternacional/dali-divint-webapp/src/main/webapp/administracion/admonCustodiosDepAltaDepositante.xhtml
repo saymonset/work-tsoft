@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:composition template="/layoutCaptura.xhtml">
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/admonCustodiosDepositantes.js"></script>
+		</ui:define>
+
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.sistemaIntCot}" />
+		</ui:define>
+
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.admonCustodiosDepositanes} - #{etq.altaDepositante}"></h:outputText>
+		</ui:define>
+
+
+		<ui:define name="seccionForma">
+			<a4j:keepAlive beanName="admonCustodiosDepositantesConsultaDepLiqController" />
+			<a4j:keepAlive beanName="admonCustodiosDepositantesConsultaEmiController" />
+			<a4j:keepAlive beanName="admonCustodiosDepositantesController" />
+			<a4j:keepAlive beanName="admonCustodiosDepositantesEmiController" />
+			<a4j:keepAlive beanName="admonCustodiosDepositantesDepLiqController" />
+			
+			<h:panelGroup id="general">
+				<h:panelGroup id="mensajeUsuario">
+					<div style="min-height: 21px;width: 95%;">
+						<rich:messages warnClass="warning" infoClass="info"
+							errorClass="error" ajaxRendered="true" showDetail="false"
+							showSummary="true" layout="list">
+							<f:facet name="infoMarker">
+								<h:panelGroup>
+									<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+							</f:facet>
+
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+							</f:facet>
+						</rich:messages>
+
+						<div id="divWarnings" class="warning" style="display: none;">
+							<p id="textoWarning">
+							</p>
+						</div>
+					</div>
+				</h:panelGroup>
+			</h:panelGroup>
+			<table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+				align="center">
+				<tr>
+					<td class="recuadroTabla" colspan="2">
+						<h:panelGroup id="panelBusqueda">
+						
+							<table class="tablaCriterios">
+								<tr align="center">
+									<td colspan="3" align="center">
+										<b> <h:outputText styleClass="texto" value="#{etq.custodio}" /> </b>
+									</td>
+									<td colspan="2" align="center">
+										<b> <h:outputText styleClass="texto" value="#{etq.depositosLiq}" /> </b>
+									</td>
+								</tr>
+								<tr align="center">
+									<td>
+										<h:outputText styleClass="texto" value="#{etq.participanteMinus}" />
+									</td>
+									<td>
+										<h:outputText styleClass="texto" value="#{etq.cuentaMinus}" />
+									</td>
+									<td>
+										<h:outputText styleClass="texto" value="#{etq.nombreInstitucion}" />
+									</td>
+									<td>
+										<h:outputText styleClass="texto" value="#{etq.bicDepositoLiq}" />
+									</td>
+									<td>
+										<h:outputText styleClass="texto" value="#{etq.depositoLiq}" />
+									</td>
+									<td>
+										<h:outputText styleClass="texto" value="#{etq.idDepositoLiq}" />
+									</td>
+								</tr>
+								<tr align="center">
+									<td>
+										<h:panelGroup>
+											 <h:inputText autocomplete="off" id="idFolioTraspasante" tabindex="10" readonly="true"
+												value="#{admonCustodiosDepositantesDepLiqController.claveParticipante}" size="5"
+												maxlength="5" styleClass="textoControles" >
+											</h:inputText>
+										</h:panelGroup>
+									</td>
+									<td>
+										<h:panelGroup>
+											 <h:inputText autocomplete="off" id="cuentaTraspasante" readonly="true"
+												value="#{admonCustodiosDepositantesDepLiqController.cuentaParticipante}" size="4"
+												maxlength="4" styleClass="textoControles" tabindex="20" />
+											<input type="hidden" id="nombre_id_folio_traspasante"
+												name="nombre_id_folio_traspasante"
+												value="daliForm:idFolioTraspasante" />
+										</h:panelGroup>
+									</td>
+									<td>
+										 <h:inputText autocomplete="off" id="nombreTraspasante" readonly="true"
+											value="#{admonCustodiosDepositantesDepLiqController.nombreCortoParticipante}" size="40"
+											maxlength="40" styleClass="textoControles" tabindex="30" />
+									</td>
+									<td>
+										 <h:inputText autocomplete="off" id="bicDepLiq" 
+											value="#{admonCustodiosDepositantesDepLiqController.depositante.bicDepLiq}" size="15"
+											maxlength="11" styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="40" />
+									</td>
+									
+									<td>
+										 <h:inputText autocomplete="off" id="depLiq" value="#{admonCustodiosDepositantesDepLiqController.depositante.depLiq}" size="40"
+											maxlength="35" styleClass="textoControles textoMayusculas" tabindex="50" />
+									</td>
+									<td>
+										 <h:inputText autocomplete="off" id="idDepLiq" 
+											value="#{admonCustodiosDepositantesDepLiqController.depositante.idDepLiq}" size="10"
+											maxlength="8" styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="60" />
+									</td>
+								</tr>
+								<tr>
+									<td colspan="7">
+										&#160;
+									</td>
+								</tr>
+								<tr align="center">
+									<td colspan="7" align="center">
+										<h:panelGroup id="botones">
+								            <div class="cancelar">
+								                <h:commandButton id="botonCancelar" image="/images/transparent.gif" 
+								                	styleClass="submit" tabindex="150"
+								                	actionListener="#{admonCustodiosDepositantesController.cancelar}"
+								                    action="regresaAdmonCustDep"/>
+								            </div>
+								            <div class="limpiar">
+								                <a4j:commandButton id="botonLimpiar" image="/images/transparent.gif" 
+								                	styleClass="submit" tabindex="140"
+								                	reRender="panelBusqueda"
+								                    actionListener="#{admonCustodiosDepositantesDepLiqController.limpiarForma}">
+								                </a4j:commandButton>
+								            </div>
+								            <div class="guardar">
+								                <h:commandButton id="botonGuardar" image="/images/transparent.gif" 
+								                	styleClass="submit" tabindex="130"
+								                    action="#{admonCustodiosDepositantesController.guardarDepositante}" 
+								                    onclick="if(!validaAltaDepositante()) return false;"/>
+								            </div>
+										</h:panelGroup>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="7" align="left">
+										<a4j:status id="commonStatus">
+											<f:facet name="start">
+												<h:panelGroup>
+													<h:graphicImage value="/images/ajax-loader.gif" />
+													<h:outputText value="#{etq.procesando}"></h:outputText>
+												</h:panelGroup>
+											</f:facet>
+										</a4j:status>
+									</td>
+								</tr>
+							</table>
+								
+						</h:panelGroup>
+					</td>					
+				</tr>
+			</table>
+		</ui:define>
+
+	</ui:composition>
+
+
+
+
+
+</html>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:composition template="/layoutPopUp.xhtml">
+		<ui:define name="titulo">
+		Beneficiarios Existentes
+		</ui:define>
+		<ui:define name="subtitulo">
+		</ui:define>
+		<ui:define name="body">
+			<h:form id="formaBenefExistentes">
+				<h:outputText value="#{mostrarBeneficiariosBean.init}" />
+				<h:panelGroup id="panelResultados">
+
+					<a4j:keepAlive beanName="mostrarBeneficiariosBean" />
+					
+					<h:dataTable styleClass="tablaGeneral" headerClass="tituloTabla"
+						width="100%" footerClass="tituloTabla" border="0"
+						cellpadding="3px" cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos"
+						value="#{mostrarBeneficiariosBean.paginaVO.registros}"
+						var="posicion">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.seleccioneBeneficiario}" />
+							</f:facet>
+							<a href="javascript:void(0);"
+								onclick="window.parent.seleccionarBeneficiario(#{posicion.idBeneficiario},'#{posicion.formato}');">
+								<h:graphicImage value="/images/accept.png" /> 
+							</a>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.nombreBeneficiario}" />
+							</f:facet>
+							<h:outputText value="#{posicion.nombres}" rendered="#{posicion.personaFisica}"/>
+							<h:outputText value="#{posicion.razonSocial}" rendered="#{!posicion.personaFisica}"/>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.formato}" />
+							</f:facet>
+							<h:outputText value="#{posicion.formato}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.w8benRFC}" />
+							</f:facet>
+							<h:outputText value="#{posicion.rfc}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.tipoBeneficiario}" />
+							</f:facet>
+							<h:outputText value="#{posicion.descTipoBeneficiario}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.descripcionEstatus}" />
+							</f:facet>
+							<h:outputText value="#{mostrarBeneficiariosBean.mapaCustodios[posicion.idCuentaNombrada]}" />
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.descripcionEstatus}" />
+							</f:facet>
+							<h:outputText value="#{posicion.descStatus}" />
+						</h:column>
+					</h:dataTable>
+
+				</h:panelGroup>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</html>

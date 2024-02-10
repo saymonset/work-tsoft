@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:t="http://myfaces.apache.org/tomahawk">
+
+    <ui:composition template="/layoutPopUp.xhtml"> 
+    	<ui:define name="head">	
+    		<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/autorizacionEnvioMoi.js">
+				
+			</script>				
+		</ui:define>
+        <ui:define name="subtitulo">
+        </ui:define>
+        <ui:define name="body">
+        	<h:form id="narrativaForm">         
+            	<h:outputText value="#{etq.narTitulo}" />
+            	<h:outputText value="#{consultaNarrativasCapitalesBean.init}" />
+            	<a4j:keepAlive beanName="consultaNarrativasCapitalesBean" />
+            	<h:panelGroup id="mensajeUsuario">
+            <div style="min-height: 100%;">
+                <rich:messages warnClass="warning" infoClass="info"
+                    errorClass="error" ajaxRendered="true" showDetail="false"
+                    showSummary="true" layout="list">
+                    <f:facet name="infoMarker">
+                        <h:panelGroup>
+                            <h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+                    </f:facet>
+
+                    <f:facet name="errorMarker">
+                        <h:panelGroup>
+                            <h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+                    </f:facet>
+                </rich:messages>
+
+                <div id="divWarnings" class="warning" style="display: none;" >
+                    <p id="textoWarning"></p>
+                </div>
+            </div>
+        </h:panelGroup>               							
+		 <h:graphicImage value="/images/blank.gif" width="900px"
+	                    height="1px">
+	     </h:graphicImage>
+         <table width="100%">
+         	<tr>
+           		<td align="left" width="100%" colspan="2">
+      				<h:panelGroup id="tablaResultados" rendered="#{not empty consultaNarrativasCapitalesBean.listaNarrativas}">
+      					<table border="0" class="tablaGeneral" width="100%" cellspacing="0px"
+                  				style="display: #{empty consultaNarrativasCapitalesBean.listaNarrativas?'none':'inline-table'}">                           
+             		 		<tr>
+                    		 	<th class="tituloTabla">
+                            		<h:outputText value="#{etq.folioMensaje}" />
+                            	</th>
+                            	<th class="tituloTabla"> 
+                            		<h:outputText value="#{etq.folioIndeval}" />                            		
+                            	</th>                            	
+                            	<th class="tituloTabla"> 
+                            		<h:outputText value="#{etq.tipoMensaje}" />                            		
+                            	</th>                            	
+                            	<th class="tituloTabla">
+                                	<h:outputText value="#{etq.fuente}" />                                
+                                </th>                            	                            	                                
+                                 <th class="tituloTabla">
+                                	<h:outputText value="#{etq.tipoDerechoMV}" />
+                                </th>        
+                                <th class="tituloTabla">
+									<h:outputText value="#{etq.narrativa}" />
+								</th>
+								<th class="tituloTabla">
+                                	<h:outputText value="#{etq.origen}" />
+                                </th>                              
+                                <th class="tituloTabla">
+                                	<h:outputText value="#{etq.fechaMensaje}" />
+                                </th>                                                              
+							</tr>														                            
+                           <t:dataList  id="resultados" value="#{consultaNarrativasCapitalesBean.listaNarrativas}" var="narrativa" rowIndexVar="indice" >
+                                <tr></tr>
+                                <tr>                                
+                                	<td class = "#{narrativa.origen == 'U' ? 'renglonTablaAmarilla' : (narrativa.origen == 'E' ? 'renglonTablaNarrativaEnviada' : indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" >
+                                		<h:outputText value="#{narrativa.folioMensaje}" />
+                                		
+                                	</td>
+                                	<td class = "#{narrativa.origen == 'U' ? 'renglonTablaAmarilla' : (narrativa.origen == 'E' ? 'renglonTablaNarrativaEnviada' : indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" >
+                                		<h:outputText value="#{narrativa.folioIndeval}" />                                		
+                                	</td>                                	
+                                	<td class = "#{narrativa.origen == 'U' ? 'renglonTablaAmarilla' : (narrativa.origen == 'E' ? 'renglonTablaNarrativaEnviada' : indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" >                                			
+                                			<h:outputText value="#{narrativa.tipoMensaje}"/>
+                                	</td>
+                                	<td class = "#{narrativa.origen == 'U' ? 'renglonTablaAmarilla' : (narrativa.origen == 'E' ? 'renglonTablaNarrativaEnviada' : indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" >
+                                		<h:outputText value="#{narrativa.fuente}" />
+                                		
+                                	</td>
+                                	<td class = "#{narrativa.origen == 'U' ? 'renglonTablaAmarilla' : (narrativa.origen == 'E' ? 'renglonTablaNarrativaEnviada' : indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" >
+                                		<h:outputText value="#{narrativa.tipoPagoCaev}" title="#{narrativa.descripcionCaev}"/>  
+                                		<h:outputText value="/" />
+                                		<h:outputText value="#{narrativa.tipoPagoCamv}" title="#{narrativa.descripcionCamv}"/>                                		
+                                	</td>                                	
+                                	<td class = "#{narrativa.origen == 'U' ? 'renglonTablaAmarilla' : (narrativa.origen == 'E' ? 'renglonTablaNarrativaEnviada' : indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" >                                			
+                                			<h:outputText value="#{narrativa.narrativa}"/>
+                                	</td>
+                                	<td class = "#{narrativa.origen == 'U' ? 'renglonTablaAmarilla' : (narrativa.origen == 'E' ? 'renglonTablaNarrativaEnviada' : indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" >                                			
+                                			<h:outputText value="#{narrativa.usuario}" rendered="#{!empty narrativa.usuario}"/>
+                                			<h:outputText value="MENSAJE" rendered="#{empty narrativa.usuario}"/>
+                                	</td>	
+                                	<td class = "#{narrativa.origen == 'U' ? 'renglonTablaAmarilla' : (narrativa.origen == 'E' ? 'renglonTablaNarrativaEnviada' : indice%2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos')} centrado" >                                			
+                                			<h:outputText value="#{narrativa.fechaMensaje}"/>
+                                	</td>			                                				                                                                             	
+                                </tr>
+                            </t:dataList>                                                                    
+                    	</table>                    
+             		</h:panelGroup>     			
+                  </td>
+                 </tr>
+               </table>
+               <h:panelGroup id="tablaControles" rendered="#{consultaNarrativasCapitalesBean.isAgregar or consultaNarrativasCapitalesBean.isEditar}">                   		                                     				              
+             	<table align="left" width="100%">
+             		<tr>
+            			<td align="left">
+            				<div id="divBotonInicio" style="display:inline;">	               					
+	            				<h:outputText id="txtAgregar" value="#{etq.narNueva}" rendered="#{consultaNarrativasCapitalesBean.isAgregar and consultaNarrativasCapitalesBean.bloqueaBoton}"/>
+	            				<h:outputText id="txtEditar" value="#{etq.narEditar}" rendered="#{consultaNarrativasCapitalesBean.isEditar and consultaNarrativasCapitalesBean.bloqueaBoton}"/>
+	            				<a4j:commandButton id="botonAgregar" styleClass="submit"               																																																																												
+									onclick="this.disabled=true;"
+									rendered="#{consultaNarrativasCapitalesBean.isAgregar and consultaNarrativasCapitalesBean.bloqueaBoton}"
+									oncomplete="this.disabled=false;presentarTextArea();"																									
+									image="/images/addButton.png"
+									tabindex="10">											 
+								</a4j:commandButton>								
+								<a4j:commandButton id="botonEditar" styleClass="submit"																																																	
+									onclick="this.disabled=true;"
+									rendered="#{consultaNarrativasCapitalesBean.isEditar and consultaNarrativasCapitalesBean.bloqueaBoton}"
+									oncomplete="this.disabled=false;presentarTextArea();"																		
+									image="/images/accept.png"																											
+									tabindex="20">										
+								</a4j:commandButton>
+							</div>		               						               																																                     		
+            			</td>
+         				<td>
+         					<div id="divTextArea" style="display:none;">
+	       						<h:outputText id="txtTitulo_1" value="#{etq.narNuevaTitulo}" />       						       						
+	       						<br/>       					       						
+	       						<h:inputTextarea id="txtArea"  styleClass="textoControles campoAlphaNumericoNarrativa"
+	       							cols="150" rows="30"       					
+	       							value="#{consultaNarrativasCapitalesBean.nuevaNarrativa}" tabindex="30"/>
+       						</div>         							                    		                     						
+        				</td>	                     					
+             		</tr>	                     					                     					                     	
+             		<tr>	                     					
+             			<td colspan="2" align="left">
+             				<div id="divBotones" style="display:none;">
+             					<table align="right" width="20%" >
+             						<tr>
+             							<td align="right">
+        									<div>								
+												<h:commandButton id="botonEliminar" image="/images/eliminar.png" 
+													styleClass="submit"											
+													requestDelay="1000"
+													actionListener="#{consultaNarrativasCapitalesBean.eliminarNarrativa}"
+													oncomplete="this.disabled=false;ocultarTextArea();"
+													rendered="#{consultaNarrativasCapitalesBean.isEditar}" 
+													tabindex="40" title="Eliminar Narrativa"/>										
+											</div>     							
+             							</td>
+             							<td align="left">
+             								<div class="guardar">
+												<h:commandButton id="botonGuardar" image="/images/transparent.gif"
+													styleClass="submit"											
+													requestDelay="1000"
+													actionListener="#{consultaNarrativasCapitalesBean.guardarNarrativa}"
+													oncomplete="this.disabled=false;ocultarTextArea();" 
+													tabindex="60" />										
+											</div>
+             							</td>
+             							<td align="left">
+             								<div class="cancelar">
+			                					<h:commandButton id="botonCancelar" image="/images/transparent.gif" 
+					                				styleClass="submit" 
+					                				requestDelay="1000" tabindex="50"
+					                				actionListener="#{consultaNarrativasCapitalesBean.cancelar}"
+					                				oncomplete="this.disabled=false;ocultarTextArea();"/>
+	           								</div>	             							             							   		
+             							</td>
+             						</tr>
+             					</table>							
+							</div>																	                    			                     				
+             			</td>	                     				
+             		</tr>                    				
+             	</table> 
+	       	</h:panelGroup>		               	                  				              	           							              	                     	                    			                                    									                 						 		
+		</h:form>				 
+   	</ui:define>        
+ </ui:composition>
+</html>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+	
+	<ui:composition template="/layoutPopUp.xhtml">
+		<ui:define name="head"> 
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/eventosCorporativosCreacion.js">
+			</script>
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/eventosCorporativosEdicion.js">
+			</script>
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/ckeditor/ckeditor.js">
+			</script>
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/ckeditor/adapters/jquery.js">
+			</script>
+			<style>
+				.stylePanel{
+					margin-left:0px;
+					margin-rigth:auto;
+				}
+			</style>
+		</ui:define>
+		<ui:define name="titulo">
+		</ui:define>
+		<ui:define name="subtitulo">
+		</ui:define>
+		<ui:define name="body">
+			<h:form id="formNotas">
+				
+				<h:outputText value="#{dialogoGeneralEventoCorporativoBean.init}" />
+			<h:panelGroup id="mensajeUsuario">
+				<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+				
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+				</div>
+			</h:panelGroup>					
+            	<h:panelGrid columns="1">
+            		<h:panelGrid columns="2" cellpadding="1px" cellspacing="1px" styleClass="stylePanel">						        	
+            			<h:inputTextarea styleClass="classNota" id="txtNota" value="#{dialogoGeneralEventoCorporativoBean.txtNota}"/>
+            			<h:outputText value=""/>
+						<h:panelGroup style="display:block; text-align:center">
+							<a4j:commandButton value="Agregar Nota" 
+							id="btn-agregarNota" 
+							render="input"
+							onclick="cierraDialogNotas();"
+							reRender="resumenNotas"/>
+						</h:panelGroup>
+            		</h:panelGrid>
+            	</h:panelGrid>
+            	<!-- DEFINICION DE HIDDENS QUE PERMITEN EL MAPEO DE LAS PROPIEDADES CAPTURADAS EN EL DIALOGO AL CONTROLLER -->
+            	<h:inputHidden id='htmlTxtNota'/>
+            	<h:commandButton id="validaNotas"
+						action="#{dialogoGeneralEventoCorporativoBean.validaNotas}"  
+						tabindex="8"
+						style="visibility: hidden;"
+						value="Guardar"/>
+			</h:form>	
+		</ui:define>
+	</ui:composition>
+</html>

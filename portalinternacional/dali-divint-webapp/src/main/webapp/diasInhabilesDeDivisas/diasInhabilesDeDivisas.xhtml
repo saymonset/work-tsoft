@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	  xmlns:a4j="http://richfaces.org/a4j"
+	  xmlns:rich="http://richfaces.org/rich"
+	  xmlns:t="http://myfaces.apache.org/tomahawk"
+	  xmlns:indeval="http://indeval.com/indeval">
+
+<ui:composition template="/layoutCaptura.xhtml">
+	<ui:define name="head">
+		<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/mostrarFirmaDigital.js"></script>
+		<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js"></script>
+	</ui:define>
+		
+		<ui:define name="tituloSeccion">
+			<h:outputText value="Días Inhábiles de Divisas" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="" />
+		</ui:define>
+		<ui:define name="tituloEncabezado">
+			<h:outputText value=""></h:outputText>
+		</ui:define>
+		
+		
+		<ui:define name="criterios">				
+			
+			<a4j:keepAlive beanName="consultaDerechosBean" />
+			<a4j:keepAlive beanName="consultaDerechosBean.param" />
+			
+            <h:panelGroup id="init" rendered="#{consultaDerechosBean.banderaInicio}">
+				<h:outputText value="#{consultaDerechosBean.init}" />								
+			</h:panelGroup>
+
+			<table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="left">
+				<tr>
+                            <td colspan="4">
+                                <div style="min-height: 21px;" colspan="2">
+                                    <rich:messages warnClass="warning" infoClass="info"
+                                                   errorClass="error" ajaxRendered="true" showDetail="false"
+                                                   showSummary="true" layout="list">
+                                        <f:facet name="infoMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/accept.png" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+
+                                        <f:facet name="errorMarker">
+                                            <h:panelGroup>
+                                                <h:graphicImage url="/images/warning.gif" />&#160;
+                                            </h:panelGroup>
+                                        </f:facet>
+                                    </rich:messages>
+
+                                    <div id="divWarnings" class="warning" style="display:none;">
+                                        <p id="textoWarning">
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+				<tr>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.institucionMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td style="width: 330px">						
+						<h:inputText autocomplete="off" id="claveInstitucion"  value="#{consultaDerechosBean.param.claveInstitucion}" readonly="#{empty sessionScope.roles['INT_BEN_INDEVAL'] and empty sessionScope.roles['INT_BEN_INDEVAL_ADMIN']}" 	styleClass="" size="7" maxlength="5" tabindex="1"/>
+					</td>
+					<td style="width: 110px">						
+					</td>
+					<td style="width: 330px">						
+					</td>
+				</tr>                        
+				<tr>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.tv}" styleClass="textoNegritas"/>
+					</td>
+					<td style="width: 330px">
+						<h:inputText autocomplete="off" id="tv" value="#{consultaDerechosBean.param.emision.tv}"
+							styleClass="campoAlphaNumericoEmisora" size="4" maxlength="4" tabindex="2"/>
+					</td>
+					<td style="width: 110px">
+						<h:outputText value="#{etq.divisaMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td style="width: 330px">
+						<h:selectOneMenu id="idDivisa" value="#{consultaDerechosBean.param.idDivisa}" styleClass="textoControles" tabindex="7">
+							<f:selectItem itemValue="" itemLabel="#{etq.seleccionaDivisa}" />
+							<f:selectItems value="#{consultaDerechosBean.lstDivisas}"/>
+						</h:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="#{etq.emisoraMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td>						
+						<h:inputText autocomplete="off" id="emisora" value="#{consultaDerechosBean.param.emision.emisora}" styleClass="campoAlphaNumericoEmisora" size="7" maxlength="7" tabindex="3"/>         
+					</td>
+					<td>
+						<h:outputText value="#{etq.bovedaMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+						<h:selectOneMenu id="idBoveda" value="#{consultaDerechosBean.param.emision.idBoveda}" styleClass="textoControles" tabindex="8">
+							<f:selectItem itemValue="" itemLabel="#{etq.seleccionaBoveda}" />
+							<f:selectItems value="#{consultaDerechosBean.lstBovedas}"/>
+						</h:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="#{etq.serieMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+						<h:inputText autocomplete="off" id="serie" value="#{consultaDerechosBean.param.emision.serie}" styleClass="campoAlphaNumericoEmisora" size="6" maxlength="6" tabindex="4"/> 
+					</td>
+					<td>
+						<h:outputText value="#{etq.estado}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+						<h:selectOneMenu id="idEstado" value="#{consultaDerechosBean.param.idEstado}" styleClass="textoControles" tabindex="9">							
+							<f:selectItems value="#{consultaDerechosBean.lstEstatusDerecho}"/>
+						</h:selectOneMenu>						
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="#{etq.cuponMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+                        <h:inputText autocomplete="off" id="cupon" value="#{consultaDerechosBean.param.emision.cupon}" styleClass="" size="4" maxlength="4" tabindex="5"/> 
+					</td>
+					<td>
+						<h:outputText value="#{etq.fechaCorteMinus}" styleClass="textoNegritas"/>
+					</td>
+					<td style="float:left">
+						<rich:calendar id="fechaCorte" 
+							value="#{consultaDerechosBean.param.fechaCorte}"
+							datePattern="dd/MM/yyyy"
+							inputSize="11"
+							inputClass="textoControles"
+							inputStyle="background-color: #ffffe6;"
+							isDayEnabled="isDayEnabled" />
+					</td>
+				</tr>
+                <tr>
+					<td>
+						<h:outputText value="#{etq.isin}" styleClass="textoNegritas"/>
+					</td>
+					<td>
+                        <h:inputText autocomplete="off" id="isin" value="#{consultaDerechosBean.param.emision.isin}" styleClass="campoAlphaNumericoEmisora" size="12" maxlength="12" tabindex="6"/>
+					</td>
+					<td>
+						<h:outputText value="#{etq.fechaPago}" styleClass="textoNegritas"/>
+					</td>
+					<td  style="float:left">
+						<rich:calendar id="fechaPago" 
+							value="#{consultaDerechosBean.param.fechaPago}"
+							datePattern="dd/MM/yyyy"
+							inputSize="11"
+							inputClass="textoControles"
+							inputStyle="background-color: #ffffe6;"
+							isDayEnabled="isDayEnabled" />	                                       
+					</td>
+				</tr>
+				<tr style="height: 5px">
+					<td colspan="4">
+						&#160;
+					</td>
+				</tr>				             
+			</table>
+			
+		</ui:define>
+		
+		
+		
+		<ui:define name="botones">
+			<div class="refrescar" style="float: left;">
+        		 <a4j:status id="commonStatus">
+					<f:facet name="start">
+						<h:panelGroup>
+							<h:graphicImage value="/images/ajax-loader.gif" />
+							<h:outputText value="#{etq.buscando}"></h:outputText>
+						</h:panelGroup>
+					</f:facet>
+				</a4j:status> 	
+        	</div>
+        	<div class="limpiar">
+				<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+					styleClass="submit"
+					actionListener="#{consultaDerechosBean.limpiar}" 
+					reRender="criterios,containerResultados" tabindex="13"/>
+			</div>
+			<div class="buscar">
+				<h:commandButton id="botonBuscar" image="/images/transparent.gif"
+					styleClass="submit"
+					actionListener="#{consultaDerechosBean.buscar}"
+					reRender="containerResultados" tabindex="12"/>
+			</div>
+		</ui:define>
+		
+		
+		
+		<ui:define name="seccionContenido">
+			<h:panelGroup id="containerResultados">
+				<h:panelGroup rendered="#{consultaDerechosBean.consultaEjecutada}">
+				
+					<t:dataTable id="noExistenResultados"
+						value="#{consultaDerechosBean.paginaVO.registros}"
+						styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+						footerClass="tituloTabla" border="0" cellpadding="3px"
+						cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos"
+						rendered="#{empty consultaDerechosBean.paginaVO.registros}">
+						<t:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.sinResultados}"></h:outputText>
+							</f:facet>
+
+						</t:column>
+					</t:dataTable>
+					
+					<br/>
+					<br/>
+					<br/>
+					
+					<h:panelGroup rendered="#{not empty consultaDerechosBean.paginaVO.registros}">
+
+						<table width="100%" border="0">
+							<tr>
+								<td align="left" class="textoEstadoCuenta">
+									<a4j:commandLink id="control_bitacora_primero"
+										action="#{consultaDerechosBean.irPrimeraPagina}"
+										rendered="#{consultaDerechosBean.irAlPrimero}"
+										reRender="containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_atras_fast"
+										action="#{consultaDerechosBean.retrocederPaginasRapido}"
+										rendered="#{consultaDerechosBean.retrocederRapido}"
+										reRender="containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_atras"
+										action="#{consultaDerechosBean.retrocederPagina}"
+										rendered="#{consultaDerechosBean.retroceder}"
+										reRender="containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+											border="0" />
+									</a4j:commandLink>
+									<a4j:commandLink id="control_bitacora_adelante"
+										action="#{consultaDerechosBean.avanzarPagina}"
+										rendered="#{consultaDerechosBean.avanzar}"
+										reRender="containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_adelante_fast"
+										action="#{consultaDerechosBean.avanzarPaginasRapido}"
+										rendered="#{consultaDerechosBean.avanzarRapido}"
+										reRender="containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+											border="0" />
+
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_ultimo"
+										action="#{consultaDerechosBean.irUltimaPagina}"
+										rendered="#{consultaDerechosBean.irAlUltimo}"
+										reRender="containerResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+											border="0" />
+									</a4j:commandLink>
+
+
+									<br />
+									<h:outputText value="#{etq.mostrando}"
+										styleClass="textoResumen" />
+									<h:outputText value="#{consultaDerechosBean.numeroPagina}"
+										styleClass="textoResumen" />
+									<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+									<h:outputText value="#{consultaDerechosBean.totalPaginas}"
+										styleClass="textoResumen" />
+									<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+									&#160;&#160;&#160;
+									<h:outputText
+										value="#{consultaDerechosBean.paginaVO.totalRegistros}"
+										styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+									&#160;
+									<h:outputText styleClass="textoResumen"
+										value="#{etq.registrosEncontrados}" />
+								</td>
+								<td style="text-align: right;"  class="textoEstadoCuenta">
+									<h:outputText escape="false" value="#{etq.registrosPorPagina}"
+										styleClass="textoResumen" />
+									<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+										value="#{consultaDerechosBean.paginaVO.registrosXPag}">
+										<f:selectItem itemLabel="1" itemValue="1" />
+										<f:selectItem itemLabel="2" itemValue="2" />
+										<f:selectItem itemLabel="5" itemValue="5" />
+										<f:selectItem itemLabel="10" itemValue="10" />
+										<f:selectItem itemLabel="20" itemValue="20" />
+										<f:selectItem itemLabel="50" itemValue="50" />
+										<a4j:support event="onchange"
+											reRender="containerResultados"
+											actionListener="#{consultaDerechosBean.obtenerOperaciones}" />
+									</h:selectOneMenu>
+								</td>
+							</tr>
+						</table>
+						
+					</h:panelGroup>
+					<h:dataTable id="resultados"
+						value="#{consultaDerechosBean.paginaVO.registros}"
+						var="derecho"
+						rendered="#{not empty consultaDerechosBean.paginaVO.registros}"
+						styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+						footerClass="tituloTabla" border="0" cellpadding="3px"
+						cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos">
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.idTipoDerecho}" />
+							</f:facet>					
+							<div class="textOnCenter">		
+                            	<h:outputText value="#{derecho.idTipoDerecho}"/>
+                            </div>                            													
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.tipoDerecho}" />
+							</f:facet>							
+                            <h:outputText styleClass="texto textoPeque12" value="#{derecho.descTipoDerecho}" />														
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.idSubTipoDerecho}" />
+							</f:facet>	
+							<div class="textOnCenter">						
+                            	<h:outputText value="#{derecho.idSubtipoDerecho}"/>
+                            </div>														
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.subtipoDerecho}" />
+							</f:facet>							
+                            <h:outputText styleClass="texto textoPeque12" value="#{derecho.descSubtipoDerecho}" />														
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.tv}" />
+							</f:facet>							
+                            <h:outputText styleClass="texto textoPeque12" value="#{derecho.claveTipoValor}" />														
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.emisoraMinus}" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{derecho.clavePizarra}" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.serieMinus}" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{derecho.serie}" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.cuponMinus}" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{derecho.claveCupon}" />
+						</h:column>
+
+                        <h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.isin}" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{derecho.isin}" />
+                        </h:column>
+
+                        <h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaCorteMinus}" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{derecho.fechaCorte}" />
+                        </h:column>
+                        
+                        <h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaPago}" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{derecho.fechaPago}" />
+                        </h:column>
+                        
+                        <h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.proporcionMinus}" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{derecho.proporcion}"/>
+                        </h:column>
+                        
+                        <h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.divisaMinus}" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{derecho.divisa}" />
+                        </h:column>
+                        
+                        <h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.bovedaMinus}" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{derecho.bovedaValoresDerecho}" />
+                        </h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.importeEsperado}" />
+							</f:facet>
+							<div class="textOnCenter">
+								<h:outputText styleClass="texto textoPeque12" value="#{derecho.importeEsperado}"/>
+							</div>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.importeRecibido}" />
+							</f:facet>
+							<div class="textOnCenter">
+								<h:outputText styleClass="texto textoPeque12" value="#{derecho.importeRecibido}"/>
+							</div>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.diferencia}" />
+							</f:facet>
+							<div class="textOnCenter">
+								<h:outputText styleClass="texto textoPeque12" value="#{derecho.diferencia}"/>
+							</div>
+						</h:column>
+
+                        <h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.estado}" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{derecho.descEstatusDerecho}" />
+                        </h:column>
+                        <h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="" />
+							</f:facet>
+							
+							<h:commandLink id="beneficiarios" action="#{consultaDerechosBean.consultaBeneficiarios}" value="#{etq.beneficiarios}"/>																						
+														
+                        </h:column> 
+                    </h:dataTable>
+                    <br />
+                    <t:div style="width: 100%; text-align: right; display: #{(not empty consultaDerechosBean.paginaVO.registros)? 'inline' : 'none'}">
+	                    <h:commandButton id="generarPdf"
+                            action="derchosPDF"
+	                    	actionListener="#{consultaDerechosExportacionBean.generarReportePDF}"
+                            image="/images/pdf.gif"
+                            title="Exportar a PDF todos los resultados de la consulta"
+                            onclick="bloquearBotonesReportes(['generarPdf', 'generarXls']);" />
+						&#160;&#160;
+                        <h:commandButton id="generarXls"
+							action="derchosXLS"
+                        	actionListener="#{consultaDerechosExportacionBean.generarReporteXLS}"
+                            image="/images/excel-file.gif"
+                            title="Exportar a XLS todos los resultados de la consulta"
+                            onclick="bloquearBotonesReportes(['generarPdf', 'generarXls']);" />
+						&#160;&#160;
+						<div id="monitorPeticionReporte" style="display: none;">
+							<h:panelGroup id="panelMonitorPeticionReporte">
+							<h:graphicImage value="/images/ajax-loader.gif" />
+							&#160;&#160;
+							<h:outputText value="#{etq.reporteEnProceso}" />
+							<a4j:commandButton id="btnActualizarEstadoPeticion"
+								image="/images/transparent.gif"
+								styleClass="submit"
+								actionListener="#{consultaDerechosExportacionBean.actualizarEstadoPeticion}"
+								reRender="panelMonitorPeticionReporte"
+								oncomplete="desbloquearBotonesReportes(#{consultaDerechosExportacionBean.peticionReporteCompleta}, ['generarPdf', 'generarXls']);"/>
+							</h:panelGroup>
+						</div>
+                    </t:div>
+                </h:panelGroup>
+			</h:panelGroup>
+		</ui:define>						
+	</ui:composition>
+</html>
+

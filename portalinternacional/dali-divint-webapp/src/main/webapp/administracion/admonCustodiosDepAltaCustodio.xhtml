@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:composition template="/layoutCaptura.xhtml">
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/admonCustodiosDepositantes.js"></script>
+		</ui:define>
+
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.sistemaIntCot}" />
+		</ui:define>
+
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.admonCustodiosDepositanes} - #{etq.altaCustodio}"></h:outputText>
+		</ui:define>
+
+
+		<ui:define name="seccionForma">
+			<a4j:keepAlive beanName="admonCustodiosDepositantesConsultaDepLiqController" />
+			<a4j:keepAlive beanName="admonCustodiosDepositantesConsultaEmiController" />
+			<a4j:keepAlive beanName="admonCustodiosDepositantesController" />
+			<a4j:keepAlive beanName="admonCustodiosDepositantesEmiController" />
+			<a4j:keepAlive beanName="admonCustodiosDepositantesDepLiqController" />
+			
+			<h:panelGroup id="general">
+				<h:panelGroup id="mensajeUsuario">
+					<div style="min-height: 21px;width: 95%;">
+						<rich:messages warnClass="warning" infoClass="info"
+							errorClass="error" ajaxRendered="true" showDetail="false"
+							showSummary="true" layout="list">
+							<f:facet name="infoMarker">
+								<h:panelGroup>
+									<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+							</f:facet>
+
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+							</f:facet>
+						</rich:messages>
+
+						<div id="divWarnings" class="warning" style="display: none;">
+							<p id="textoWarning">
+							</p>
+						</div>
+					</div>
+				</h:panelGroup>
+			</h:panelGroup>
+			<table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+				align="center">
+				<tr>
+					<td class="recuadroTabla" colspan="2">
+						<h:panelGroup id="panelBusqueda">
+						
+							<table class="tablaCriterios">
+								<tr align="center">
+									<td colspan="2">
+										<h:outputText styleClass="texto textoNegritas" value="#{etq.custodio}" />
+									</td>
+									<td colspan="2">
+										<h:outputText styleClass="texto textoNegritas" value="#{etq.bics}" />
+									</td>
+									<td colspan="2">
+										<h:outputText styleClass="texto textoNegritas" value="#{etq.generales}" />
+									</td>
+								</tr>
+								<tr align="center">
+									<td>
+										<h:outputText styleClass="texto textoNegritas" value="#{etq.participanteMinus}" />
+									</td>
+									<td>
+										<h:outputText styleClass="texto textoNegritas" value="#{etq.cuentaMinus}" />
+									</td>
+									<td>
+										<h:outputText styleClass="texto textoNegritas" value="#{etq.produccionMinus}" />
+									</td>
+									<td>
+										<h:inputText autocomplete="off" id="produccion" 
+											value="#{admonCustodiosDepositantesController.custodioAlta.produccion}" size="15"
+											maxlength="12" styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="30"
+											onchange='llenaAbreviacion()'/>
+									</td>
+									<td>
+										<h:outputText styleClass="texto textoNegritas" value="#{etq.cuentaIndevalMinus}" />
+									</td>
+									<td>
+										<h:inputText autocomplete="off" id="cuentaIndeval" 
+											value="#{admonCustodiosDepositantesController.custodioAlta.cuentaIndeval}" size="16"
+											maxlength="15" styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="50" />
+									</td>
+								</tr>
+								<tr align="center">
+									<td>
+										<h:panelGroup>
+											<h:inputText autocomplete="off" id="idFolioTraspasante" tabindex="10"
+												value="#{admonCustodiosDepositantesController.claveParticipanteAlta}" size="5"
+												maxlength="5" styleClass="textoControles" >
+												<a4j:support event="onchange"
+													actionListener="#{admonCustodiosDepositantesController.validaParticipanteAlta}"
+													reRender="nombreTraspasante" />
+											</h:inputText>
+										</h:panelGroup>
+									</td>
+									<td>
+										<h:panelGroup>
+											<h:inputText autocomplete="off" id="cuentaTraspasante"
+												value="#{admonCustodiosDepositantesController.cuentaParticipanteAlta}" size="4"
+												maxlength="4" styleClass="textoControles" tabindex="20" />
+											<input type="hidden" id="nombre_id_folio_traspasante"
+												name="nombre_id_folio_traspasante"
+												value="daliForm:idFolioTraspasante" />
+										</h:panelGroup>
+									</td>
+									<td>
+										<h:outputText styleClass="texto textoNegritas" value="#{etq.entrenamientoMinus}" />
+									</td>
+									<td>
+										<h:inputText autocomplete="off" id="entrenamiento" 
+											value="#{admonCustodiosDepositantesController.custodioAlta.entrenamiento}" size="15"
+											maxlength="12" styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="40" />
+									</td>
+									<td>
+										<h:outputText styleClass="texto textoNegritas" value="#{etq.pais}" />
+									</td>
+									<td>
+										<h:inputText autocomplete="off" id="pais" 
+											value="#{admonCustodiosDepositantesController.custodioAlta.pais}" size="10"
+											maxlength="8" styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="60" />
+									</td>
+								</tr>
+								<tr align="center">
+									<td colspan="2">
+										&#160;
+									</td>
+                                    <td>
+                                        <h:outputText styleClass="texto textoNegritas" value="#{etq.abreviacion}" />
+                                    </td>
+                                    <td>
+                                        <h:inputText autocomplete="off" id="abreviacion" disabled="true"
+                                            size="6"
+                                            maxlength="6" styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="70" />
+                                        <h:inputHidden autocomplete="off" id="abreviacionHidden"
+                                            value="#{admonCustodiosDepositantesController.custodioAlta.abreviacion}" size="6"
+                                            maxlength="6" styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="70" />
+                                    </td>
+									<td>
+										<h:outputText styleClass="texto textoNegritas" value="#{etq.mercadoMinus}" />
+									</td>
+									<td>
+										<h:inputText autocomplete="off" id="mercado" 
+											value="#{admonCustodiosDepositantesController.custodioAlta.mercado}" size="3"
+											maxlength="2" styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="80" />
+									</td>
+								</tr>
+                                <tr align="center">
+                                    <td colspan="2">
+                                        &#160;
+                                    </td>
+                                    <td>
+                                        <h:outputText styleClass="texto textoNegritas" value="#{etq.nombreCorto}" />
+                                    </td>
+                                    <td>
+                                        <h:inputText autocomplete="off" id="nombrecorto" 
+                                            value="#{admonCustodiosDepositantesController.custodioAlta.nombreCorto}" size="15"
+                                            maxlength="10" styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="90" />
+                                    </td>
+                                    <td>
+                                        <h:outputText styleClass="texto textoNegritas" value="#{etq.factorCal}" />
+                                    </td>
+                                    <td>
+                                        <h:inputText autocomplete="off" id="factorcalculado" 
+                                            value="#{admonCustodiosDepositantesController.custodioAlta.factorCalculado}" size="10"
+                                            maxlength="7" styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="100" />
+                                    </td>
+                                </tr>
+								<tr align="center">
+									<td colspan="2">
+										<h:outputText styleClass="texto textoNegritas" value="#{etq.nombreInstitucion}" />
+									</td>
+									<!-- Agrego el detalle de Custodio -->
+									<td colspan="2">
+										<h:outputText styleClass="texto textoNegritas" value="#{etq.msgCustodio}" />
+									</td>
+									<td>
+										<h:outputText styleClass="texto textoNegritas" value="#{etq.estatus}" />
+									</td>
+									<td>
+										<h:inputText autocomplete="off" id="estatus" 
+											value="#{admonCustodiosDepositantesController.custodioAlta.estatus}" size="3"
+											maxlength="2" styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="110" />
+									</td>
+								</tr>
+								<tr align="center">
+									<td colspan="2">
+										<h:inputText autocomplete="off" id="nombreTraspasante" readonly="true"
+											value="#{admonCustodiosDepositantesController.nombreCortoParticipanteAlta}" size="40"
+											maxlength="40" styleClass="textoControles" />
+									</td>
+									<!-- Input para detalle de Custodio -->
+									<td colspan="2">
+										<h:inputText autocomplete="off" id="detalleCustodio"
+											value="#{admonCustodiosDepositantesController.custodioAlta.detalleCustodio}" size="40"
+											maxlength="35" styleClass="textoControles" tabindex="120" />
+									</td>
+									<td>
+										<h:outputText styleClass="texto textoNegritas" value="#{etq.moneda}" />
+									</td>
+									<td>
+										<h:selectOneMenu tabindex="130" styleClass="textoControles" id="moneda"
+											value="#{admonCustodiosDepositantesController.custodioAlta.moneda}">
+											<f:selectItems value="#{opcionesCatalogosBean.divisas}" />
+										</h:selectOneMenu>
+									</td>
+								</tr>
+								<tr><td colspan="6">&#160;</td></tr>
+                                <tr align="center">
+
+
+                                    <td colspan="2">
+                
+                <div id="divTiposValorCustodio" style="border:1px solid lightblue">
+
+                    <table width="100%" cellpadding="0px" cellspacing="10px" border="0" style="text-align: center">
+                        <tr>
+                            <td>
+                                <h:outputText value="#{etq.tiposValorDeCustodio}" styleClass="texto textoNegritas" />
+                            </td>
+                        </tr>
+                    </table>
+                
+                    <table width="100%" cellpadding="0px" cellspacing="5px" border="0" id="tablaarenderear">
+                        <tr>
+                            <td width="50%" align="left">
+                                <table width="100%" cellpadding="0px" cellspacing="5px" border="0">
+                                    <tr>
+                                        <td width="35%">
+                                            <h:outputText styleClass="texto textoNegritas" value="#{etq.tipoValorMinus}" />
+                                        </td>
+                                        <td>
+                                          <h:panelGroup id="panelGTipoValor">
+                                            <h:inputText id="tipoValorDeCustodio" tabindex="140" maxlength="4" 
+                                                value="#{admonCustodiosDepositantesController.strElementoAgregar}"
+                                                styleClass="textoControles textoMayusculas" style="width: 40%"
+                                                autocomplete="off"/>
+                                          </h:panelGroup>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td width="40%" align="left">
+                              <h:panelGroup id="panelGListadoTVsCustodio">
+                                <h:selectOneListbox value="#{admonCustodiosDepositantesController.idElementoSeleccionado}"
+                                                    size="5" style="width: 130px;height:200px;" styleClass="textoControles"
+                                                    tabindex="150" id="idsTiposValorDeCustodio">
+                                    <f:selectItems value="#{admonCustodiosDepositantesController.listadoElementos}" />
+                                </h:selectOneListbox>
+                              </h:panelGroup>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="50%" align="left">
+                                <h:panelGroup id="panelGBotonAgregar">
+                                    <div class="agregar">
+                                        <a4j:commandButton id="btnAgregar" image="/images/transparent.gif" 
+                                            styleClass="submit" tabindex="160"
+                                            reRender="panelGListadoTVsCustodio,panelGTipoValor"
+                                            onclick="if (!validaTipoValorDeCustodio()) return false;"
+                                            actionListener="#{admonCustodiosDepositantesController.agregarTipoValorAction}" >
+                                        </a4j:commandButton>
+                                    </div>
+                                </h:panelGroup>
+                            </td>
+                            <td width="40%" align="left">
+                                <h:panelGroup id="panelGBotonEliminar">
+                                    <div class="eliminar">
+                                        <a4j:commandButton id="btnEliminar" image="/images/transparent.gif" 
+                                            styleClass="submit" tabindex="170"
+                                            reRender="panelGListadoTVsCustodio,panelGTipoValor"
+                                            actionListener="#{admonCustodiosDepositantesController.eliminarTipoValorAction}" >
+                                        </a4j:commandButton>
+                                    </div>
+                                </h:panelGroup>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                                    </td>
+
+
+                                    <td colspan="3">
+                
+                <div id="divFormatosCustodio" style="border:1px solid lightblue">
+
+                    <table width="100%" cellpadding="0px" cellspacing="10px" border="0" style="text-align: center">
+                        <tr>
+                            <td>
+                                <h:outputText value="#{etq.tiposDeFormatoDeCustodio}" styleClass="texto textoNegritas" />
+                            </td>
+                        </tr>
+                    </table>
+                
+                    <table width="100%" cellpadding="0px" cellspacing="5px" border="0">
+                        <tr>
+                            <td width="50%" align="left">
+                                <table width="100%" cellpadding="0px" cellspacing="5px" border="0">
+                                    <tr>
+                                        <td width="35%">
+                                            <h:outputText styleClass="texto textoNegritas" value="#{etq.tipoDeFormatoMinus}" />
+                                        </td>
+                                        <td>
+                                            <h:selectOneMenu tabindex="180" styleClass="textoControles" id="selectTiposBeneficiarios"
+                                                value="#{admonCustodiosDepositantesController.idSelectFormatoSeleccionado}">
+                                                <f:selectItems value="#{opcionesCatalogosBean.tiposFormato}" />
+                                            </h:selectOneMenu>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="35%">
+                                            <h:outputText styleClass="texto textoNegritas" value="#{etq.porcentajeRetencionMinus}" />
+                                        </td>
+                                        <td>
+                                          <h:panelGroup id="panelGPorcentajeRetencion">
+                                            <h:inputText id="porcentajeRetencion" tabindex="190" maxlength="6" 
+                                                value="#{admonCustodiosDepositantesController.strElementoPorcentajeAgregar}"
+                                                styleClass="textoControles textoMayusculas" style="width: 25%"
+                                                autocomplete="off"/>
+                                          </h:panelGroup>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td width="40%" align="left">
+                              <h:panelGroup id="panelGListadoFormatosCustodio">
+                                <h:selectOneListbox value="#{admonCustodiosDepositantesController.idElementoFormatoSeleccionado}"
+                                                    size="5" style="width: 130px;height:200px;" styleClass="textoControles"
+                                                    tabindex="200" id="idsFormatosDeCustodio">
+                                    <f:selectItems value="#{admonCustodiosDepositantesController.listadoElementosFormato}" />
+                                </h:selectOneListbox>
+                              </h:panelGroup>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="50%" align="left">
+                                <h:panelGroup id="panelGBotonAgregarFormato">
+                                    <div class="agregar">
+                                        <a4j:commandButton id="btnAgregarFormato" image="/images/transparent.gif" 
+                                            styleClass="submit" tabindex="210"
+                                            reRender="panelGListadoFormatosCustodio,panelGPorcentajeRetencion"
+                                            onclick="if (!validaPorcentajeRetencion()) return false;"
+                                            actionListener="#{admonCustodiosDepositantesController.agregarFormatoAction}" >
+                                        </a4j:commandButton>
+                                    </div>
+                                </h:panelGroup>
+                            </td>
+                            <td width="40%" align="left">
+                                <h:panelGroup id="panelGBotonEliminarFormato">
+                                    <div class="eliminar">
+                                        <a4j:commandButton id="btnEliminarFormato" image="/images/transparent.gif" 
+                                            styleClass="submit" tabindex="220"
+                                            reRender="panelGListadoFormatosCustodio,panelGPorcentajeRetencion"
+                                            actionListener="#{admonCustodiosDepositantesController.eliminarFormatoAction}" >
+                                        </a4j:commandButton>
+                                    </div>
+                                </h:panelGroup>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                                    </td>
+
+
+                                    <td colspan="1">
+                                        &#160;
+                                    </td>
+                                </tr>
+                                <tr><td colspan="6">&#160;</td></tr>
+                                <tr><td colspan="6">&#160;</td></tr>
+								<tr align="center">
+									<td colspan="6" align="center">
+										<h:panelGroup id="botones">
+								            <div class="cancelar">
+								                <h:commandButton id="botonCancelar" image="/images/transparent.gif" 
+								                	styleClass="submit" tabindex="250"
+								                	actionListener="#{admonCustodiosDepositantesController.cancelar}"
+								                    action="regresaAdmonCustDep"/>
+								            </div>
+								            <div class="limpiar">
+								                <a4j:commandButton id="botonLimpiar" image="/images/transparent.gif" 
+								                	styleClass="submit" tabindex="240"
+								                	reRender="panelBusqueda"
+								                    actionListener="#{admonCustodiosDepositantesController.limpiarForma}">
+								                </a4j:commandButton>
+								            </div>
+								            <div class="guardar">
+								                <h:commandButton id="botonGuardar" image="/images/transparent.gif" 
+								                	styleClass="submit" tabindex="230"
+								                    action="#{admonCustodiosDepositantesController.guardarCustodio}" 
+								                    onclick="if(!validaAltaCustodio()) return false;"/>
+								            </div>
+										</h:panelGroup>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="7" align="left">
+										<a4j:status id="commonStatus">
+											<f:facet name="start">
+												<h:panelGroup>
+													<h:graphicImage value="/images/ajax-loader.gif" />
+													<h:outputText value="#{etq.procesando}"></h:outputText>
+												</h:panelGroup>
+											</f:facet>
+										</a4j:status>
+									</td>
+								</tr>
+							</table>
+								
+						</h:panelGroup>
+					</td>					
+				</tr>
+			</table>
+		</ui:define>
+
+	</ui:composition>
+
+
+
+
+
+</html>

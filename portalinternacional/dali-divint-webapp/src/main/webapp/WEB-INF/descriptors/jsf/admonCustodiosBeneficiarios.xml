@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd" version="1.2">
+    <!-- Controller de administracion de custodios para beneficiarios -->
+    <managed-bean>
+        <managed-bean-name>adminCustodioBeneficiarioBean</managed-bean-name>
+        <managed-bean-class>
+        	com.indeval.portalinternacional.presentation.controller.beneficiarios.AdminCustodioBeneficiarioController
+        </managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+        	<property-name>controlBeneficiariosService</property-name>
+        	<value>#{controlBeneficiariosServiceEJB}</value>
+        </managed-property>
+    </managed-bean>
+    
+	<!-- Reglas de navegacion -->
+	<navigation-rule>	
+		<navigation-case>
+			<from-outcome>admonCustodiosBeneficiarios</from-outcome>
+			<to-view-id>/custodios/admonCustodiosBeneficiarios.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+</faces-config>

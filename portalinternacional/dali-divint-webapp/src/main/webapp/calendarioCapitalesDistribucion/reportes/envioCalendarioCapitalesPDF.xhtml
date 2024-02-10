@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="enviosCalendarioCapitales" documentTitle="Envió Capitales Distribución"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        landscape="true" fecha="#{envioMensajesCapitalesBean.fechaActual}"
+        imageResource="/images/indeval.jpg">
+        <pdf:table value="envioMensajesCapitalesBean" currentBean="envCalendario" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{envioMensajesCapitalesBean}" currentBean="envCalendario" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.folioIndeval}" value="#{!empty envioMensajesCapitalesBean.calendarioEnvio.folioIndeval ? envioMensajesCapitalesBean.calendarioEnvio.folioIndeval : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.calFolioMensajeIndeval}" value="#{!empty envioMensajesCapitalesBean.calendarioEnvio.folioMensajeIndeval ? envioMensajesCapitalesBean.calendarioEnvio.folioMensajeIndeval : 'TODAS'}" align="center" />
+                <pdf:col header="#{etq.numeroEnvio}" value="#{!empty envioMensajesCapitalesBean.calendarioEnvio.idEnvios ? envioMensajesCapitalesBean.calendarioEnvio.idEnvios : 'TODAS'}" align="center" />
+			    <pdf:col header="#{etq.calFechaEnvioInicio}" value="#{!empty envioMensajesCapitalesBean.calendarioEnvio.fechaEnvioInicio ? envioMensajesCapitalesBean.calendarioEnvio.fechaEnvioInicio : 'TODAS'}"
+				align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			    </pdf:col>
+			   <pdf:col header="#{etq.calFechaEnvioFin}" value="#{!empty envioMensajesCapitalesBean.calendarioEnvio.fechaEnvioFin ? envioMensajesCapitalesBean.calendarioEnvio.fechaEnvioFin : 'TODAS'}"
+				align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			    </pdf:col>
+			    <pdf:col header="#{etq.fechaModificacionInicio}" value="#{!empty envioMensajesCapitalesBean.calendarioEnvio.fechaModificacionInicio ? envioMensajesCapitalesBean.calendarioEnvio.fechaModificacionInicio : 'TODAS'}"
+				align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			    </pdf:col>
+			    <pdf:col header="#{etq.fechaModificacionFin}" value="#{!empty envioMensajesCapitalesBean.calendarioEnvio.fechaModificacionFin ? envioMensajesCapitalesBean.calendarioEnvio.fechaModificacionFin : 'TODAS'}"
+				align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			    </pdf:col>
+			    <pdf:col header="#{etq.destinatario}" value="#{!empty envioMensajesCapitalesBean.selectedDestinatario ? envioMensajesCapitalesBean.selectedDestinatario : 'TODOS'}" align="center" />                
+                <pdf:col header="#{etq.usuarioMinus}" value="#{!empty envioMensajesCapitalesBean.calendarioEnvio.usuario ? envioMensajesCapitalesBean.calendarioEnvio.usuario : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.consecutivo}" value="#{!empty envioMensajesCapitalesBean.calendarioEnvio.consecutivo ? envioMensajesCapitalesBean.calendarioEnvio.consecutivo : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.tv}" value="#{!empty envioMensajesCapitalesBean.calendarioEnvio.tipoValor ? envioMensajesCapitalesBean.calendarioEnvio.tipoValor : 'TODOS'}" align="center" />			
+				<pdf:col header="#{etq.emisoraMinus}" value="#{!empty envioMensajesCapitalesBean.calendarioEnvio.emisora ? envioMensajesCapitalesBean.calendarioEnvio.emisora :  'TODOS'}" align="center" />
+				<pdf:col header="#{etq.serieMinus}" value="#{!empty envioMensajesCapitalesBean.calendarioEnvio.serie ? envioMensajesCapitalesBean.calendarioEnvio.serie : 'TODOS'}" align="center"  />
+				<pdf:col header="#{etq.isin}" value="#{!empty envioMensajesCapitalesBean.calendarioEnvio.isin ? envioMensajesCapitalesBean.calendarioEnvio.isin : 'TODOS'}" align="center"  />
+				<pdf:col header="#{etq.ACKAMH}" value="#{!empty envioMensajesCapitalesBean.selectedACKAMH ? envioMensajesCapitalesBean.selectedACKAMH : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.ACKBolsas}" value="#{!empty envioMensajesCapitalesBean.selectedACKBolsas ? envioMensajesCapitalesBean.selectedACKBolsas : 'TODOS' }" align="center" />	
+            </pdf:row>
+        </pdf:table>
+        
+        <pdf:br/>
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{envioMensajesCapitalesBean.totalRegistrosReportes}"/>
+        <pdf:br/>
+
+        <pdf:table value="#{envioMensajesCapitalesBean.paginaReportes.registros}" currentBean="envioIntSic">
+            <pdf:row>
+				<pdf:col header="#{etq.idBitacora}" value="#{envioIntSic.idEnvioIntSic}" align="center" />
+				<pdf:col header="#{etq.calFolioMensajeIndeval}" value="#{envioIntSic.idHistorico}" align="center" />
+				<pdf:col header="#{etq.folioIndeval}" value="#{envioIntSic.idCalendario}" align="center" />
+				<pdf:col header="#{etq.tvEmisoraSerieIsinCFI}" value="#{envioIntSic.tipoValor} / #{envioIntSic.emisora} 
+				/ #{envioIntSic.serie} / #{envioIntSic.isin}" align="center" />
+				<pdf:col header="#{etq.estado}" value="#{envioIntSic.nombreEstado} " align="center" />
+				<pdf:col header="#{etq.destinatario}" value="#{envioIntSic.nombreDestinatario} " align="center" />
+				<pdf:col header="#{etq.ACKAMHEnviado}" value="#{envioIntSic.ackAmh == 0 ? 'Enviado' : envioIntSic.ackAmh == 1 ? 'Confirmado' : envioIntSic.ackAmh == 2 ? 'Error NACK' : ''}" align="center" />
+				<pdf:col header="#{etq.ACKBolsasEnviado}" value="#{envioIntSic.ackSwift == 0 ? 'Enviado' : envioIntSic.ackSwift == 1 ? 'Confirmado' : envioIntSic.ackSwift == 2 ? 'Error NACK' : ''}" align="center" />
+				<pdf:col header="#{etq.numeroEnvio}" value="#{envioIntSic.numeroEnvio}" align="center" />
+				<pdf:col header="#{etq.fechaEnvio}" value="#{envioIntSic.fechaEnvio}" align="center" >
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaModificacion}" value="#{envioIntSic.fechaActualizacion}" align="center" >
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+				</pdf:col>
+				<pdf:col header="#{etq.usuarioMinus}" value="#{envioIntSic.usuario}" align="center" />
+				<pdf:col header="#{etq.consecutivo}" value="#{envioIntSic.consecutivo}" align="center" />
+			</pdf:row>
+        </pdf:table>
+    </pdf:document>
+</html>

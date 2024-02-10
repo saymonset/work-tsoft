@@ -1,0 +1,748 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+<!-- DECORATE -->
+<ui:composition template="/layoutCaptura.xhtml">
+	<ui:define name="tituloEncabezado">
+	</ui:define>
+	<ui:define name="head">
+		<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/eventosCorporativosCreacion.js"></script>
+		<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/ckeditor/ckeditor.js"></script>
+		<link type="text/css" href="#{facesContext.externalContext.requestContextPath}/resources/ckeditor/contents.css" rel="stylesheet" />
+		<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/ckeditor/adapters/jquery.js"></script>
+		<style>
+.btnRichButton {
+	background-color: #BED6F8;
+	border-color: #BED6F8;
+	font-size: 11px;
+	color: #000;
+	font-weight: bold;
+	font-family: Arial, Verdana, sans-serif;
+}
+
+.panelNotificaciones {
+	margin-left: 0px;
+	text-align: left;
+}
+
+.panelResumenNotificaciones {
+	border: 1px #e4e4e4 solid;
+	padding: 20px;
+	border-radius: 4px;
+	box-shadow: 0 0 6px #ccc;
+	background-color: #fff;
+}
+
+.panelTableOpciones {
+	border: 1px #e4e4e4 solid;
+	padding: 20px;
+	border-radius: 4px;
+	box-shadow: 0 0 6px #ccc;
+	background-color: #fff;
+}
+
+.separator {
+	border: 1px #e4e4e4 solid;
+	border-radius: 4px;
+	background-color: #fff;
+}
+
+* {
+	margin: 0 0 0 0;
+}
+
+p {
+	margin: 0;
+	padding: 0;
+	color: #000000;
+}
+
+.textBold {
+	font-weight: bold;
+}
+
+.notificaciones {
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+	color: gray;
+	font-size: 16px;
+}
+
+#contenido_pag .seccion h1 {
+	font-size: 250%;
+	font-weight: normal;
+	line-height: 1.2;
+}
+.textoControles {
+    font-size: 9px;
+    font-family: Tahoma,Arial,Helvetica,sans-serif;    
+}
+</style>
+	</ui:define>
+	<ui:define name="tituloSeccion">
+		<h:outputText value="#{etq.eventosCorporativos}" />
+	</ui:define>
+	<ui:define name="tituloEncabezado">
+		<h:outputText value="#{etq.capturaEventosCorporativos}"></h:outputText>
+	</ui:define>
+	<ui:define name="seccionForma">
+		<h:outputText value="#{capturaEventosCorporativosBean.init}" />
+		<a4j:keepAlive beanName="capturaEventosCorporativosBean" />
+		<h:panelGroup id="mensajeUsuario">
+			<div style="min-height: 21px;">
+				<rich:messages warnClass="warning" infoClass="info"
+					errorClass="error" ajaxRendered="true" showDetail="false"
+					showSummary="true" layout="list">
+					<f:facet name="infoMarker">
+						<h:panelGroup>
+							<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+					</f:facet>
+					<f:facet name="errorMarker">
+						<h:panelGroup>
+							<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+					</f:facet>
+				</rich:messages>
+				<div id="divWarnings" class="warning" style="display: none;">
+					<p id="textoWarning"></p>
+				</div>
+			</div>
+		</h:panelGroup>
+
+		<h:panelGroup id="panel-principal">
+			<table width="100%">
+			
+				<tr  align="right">
+					<td></td>
+					<td align="right">
+						<h:commandButton id="boton_cerrar" action="consultaEventosCorporativosIndeval" value="Cerrar Creación"/>
+					</td>
+				</tr>
+				<tr align="center">
+					<td align="center"><h:outputText styleClass="texto"	value="#{etq.tipoEvento}" /><h:outputText style="color:red;" value="*" />  <br /> 				
+								<h:selectOneMenu styleClass="textoControles" id="tipoEvento"
+									value="#{capturaEventosCorporativosBean.tipoEvento}" tabindex="10" 
+									valueChangeListener="#{capturaEventosCorporativosBean.valueChangeMethod}"
+									 >
+									<f:selectItem itemValue="-1" itemLabel="Selecciona" />
+									<f:selectItems value="#{capturaEventosCorporativosBean.tiposEvento}" />	
+									<a4j:support event="onchange" reRender="botonShowOpcion,resumenOpciones" />											
+								</h:selectOneMenu>
+				</td>
+					<td align="center">
+					<h:outputText styleClass="texto" value="Fecha Registro" /> <br /> 
+						<rich:calendar
+							inputClass="textoControles"
+							inputStyle="background-color: #ffffe6;" inputSize="11"
+							value="#{capturaEventosCorporativosBean.fechaRegistro}"
+							datePattern="dd/MM/yyyy" tabindex="20"  /> <!--<h:inputText autocomplete="off" styleClass="texto" value="fecha creacion"></h:inputText>-->
+							
+					</td>
+					
+				</tr>
+	
+				<tr align="left">
+					<td align="left">
+						<h:panelGroup id="panelEmision">
+							<table align="left">
+								<tr align="left">
+									<td align="left">
+										<h:outputText styleClass="texto" value="#{etq.tv}" /><h:outputText style="color:red;" value="*" />  
+										<br /> 
+										<h:inputText autocomplete="off" id="tipoValor" value="#{capturaEventosCorporativosBean.tipoValor}" size="7" maxlength="4" styleClass="textoControles campoAlphaNumerico textoMayusculas"
+											tabindex="30" >
+											<a4j:support event="onchange" 
+															actionListener="#{capturaEventosCorporativosBean.buscaEmision}"
+															reRender="panelEmision,mensajeUsuario,emiicon,comboCustodio" />
+										</h:inputText>
+									</td>
+									<td align="center">
+										<h:outputText styleClass="texto" value="#{etq.emisoraMinus}" /><h:outputText style="color:red;" value="*" />  
+										<br /> 
+										<h:inputText autocomplete="off" id="emisora" size="7" maxlength="7" value="#{capturaEventosCorporativosBean.emisora}" required="false" styleClass="textoControles campoAlphaNumericoEmisora textoMayusculas"
+											tabindex="40" >
+											<a4j:support event="onchange" 
+															actionListener="#{capturaEventosCorporativosBean.buscaEmision}"
+															reRender="panelEmision,mensajeUsuario,emiicon,comboCustodio" />
+										</h:inputText>
+									</td>
+									<td align="center">
+										<h:outputText styleClass="texto" value="#{etq.serieMinus}" /> <h:outputText style="color:red;" value="*" /> 
+										<br /> 
+										<h:inputText autocomplete="off" id="serie" value="#{capturaEventosCorporativosBean.serie}" size="7" maxlength="6" styleClass="textoControles campoAlphaNumericoSerie textoMayusculas"
+											tabindex="50" >
+											<a4j:support event="onchange" 
+															actionListener="#{capturaEventosCorporativosBean.buscaEmision}"
+															reRender="panelEmision,mensajeUsuario,emiicon,comboCustodio" />
+										</h:inputText>
+									</td>
+									<td align="center">
+										<h:outputText styleClass="texto" value="#{etq.isin}" /><h:outputText style="color:red;" value="*" />  
+										<br /> 
+										<h:inputText autocomplete="off" id="isin" value="#{capturaEventosCorporativosBean.isin}" size="12" maxlength="12" styleClass="textoControles campoAlphaNumerico textoMayusculas"
+											tabindex="60" >
+											<a4j:support event="onchange" 
+															actionListener="#{capturaEventosCorporativosBean.buscaEmision}"
+															reRender="panelEmision,mensajeUsuario,emiicon,comboCustodio" />
+										</h:inputText>
+									</td>								
+								</tr>
+							</table>
+						</h:panelGroup>
+						<table>
+							<tr><td></td><td></td></tr>
+							<tr>
+							<!-- <td>
+								<a4j:commandButton id="btn_validaEmision"
+											actionListener="#{capturaEventosCorporativosBean.buscaEmision}"
+											value="valida Emisión"
+											reRender="panelEmision,mensajeUsuario,emiicon,comboCustodio"										
+											image="/images/search.png"																				
+											/>
+							</td> -->
+							<td>
+								<h:graphicImage id="emiicon" value="/images/accept.png" style="visibility:#{capturaEventosCorporativosBean.emisionEncontrada ? 'visible' : 'hidden'}" />
+							</td>
+							</tr>
+						</table>
+					</td>
+					<td align="left">
+						<h:outputText styleClass="texto" value="#{etq.tipoMercadoMinus}" /><h:outputText style="color:red;" value="*" />  
+						<br /> 
+						<h:selectOneMenu styleClass="textoControles" value="#{capturaEventosCorporativosBean.tipoMercado}" tabindex="70">
+							<f:selectItem itemValue="-1" itemLabel="Selecciona" />
+							<f:selectItems value="#{capturaEventosCorporativosBean.tiposMercado}" />
+						</h:selectOneMenu>
+					</td>
+				</tr>
+				<tr align="left">
+					<td align="left">
+						<h:outputText styleClass="texto" value="#{etq.custodio}" /><h:outputText style="color:red;" value="*" />  
+						<br /> 
+						<h:selectOneMenu
+							id="comboCustodio"
+							 disabled="#{capturaEventosCorporativosBean.emisionEncontrada}"
+							styleClass="textoControlesCustodio"
+							value="#{capturaEventosCorporativosBean.custodio}" tabindex="80">
+							<f:selectItem itemValue="-1" itemLabel="Ninguno" />
+							<f:selectItems value="#{capturaEventosCorporativosBean.custodios}" />
+						</h:selectOneMenu>
+					</td>
+					<td align="left">
+						<table align="left">
+							<tr align="left">
+								<td align="left">
+									<h:outputText styleClass="texto" value="#{etq.tipoDerechoMO} " /> 
+									<br /> 
+									<h:selectOneMenu styleClass="textoControles" value="#{capturaEventosCorporativosBean.tipoDerechoMO}" tabindex="90">
+										<f:selectItem itemValue="-1" itemLabel="Selecciona" />
+										<f:selectItems value="#{capturaEventosCorporativosBean.tiposDerechoMO}" />
+									</h:selectOneMenu>
+								</td>
+								<td align="right">&nbsp;
+									<h:outputText styleClass="texto" value="#{etq.tipoDerechoML} " /> 
+									<br /> 
+									<h:selectOneMenu styleClass="textoControles" value="#{capturaEventosCorporativosBean.tipoDerechoML}" tabindex="100">
+										<f:selectItem itemValue="-1" itemLabel="Selecciona" />
+										<f:selectItems value="#{capturaEventosCorporativosBean.tiposDerechoML}" />
+									</h:selectOneMenu>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="left">
+						<table align="left">
+							<tr align="left">
+								<td align="left">
+									<h:outputText styleClass="texto" value="#{etq.fechaLimiteIndeval}" /> 
+									<br /> 
+									<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="15" value="#{capturaEventosCorporativosBean.fechaIndeval}"
+										datePattern="dd/MM/yyyy HH:mm" tabindex="110"  />
+								</td>
+								<td align="center">
+									<h:outputText styleClass="texto" value="#{etq.fechaLimiteParticipante}" /> 
+									<br /> 
+									<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="15" value="#{capturaEventosCorporativosBean.fechaCliente}"
+										datePattern="dd/MM/yyyy HH:mm" tabindex="120"  />
+								</td>
+								<td align="center">
+									<h:outputText styleClass="texto" value="#{etq.fechaPago}" /> 
+									<br /> 
+									<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="15" value="#{capturaEventosCorporativosBean.fechaPago}"
+										datePattern="dd/MM/yyyy" tabindex="130"  />
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td align="left" colspan="3">
+						<h:outputText style="color:red;" value="*" /> <h:outputText value=" Campos requeridos." style="font-size:9px; color:#498FED; font-weight: bold" /> <br/>
+						<h:outputText value="El horario corresponde a tiempo de México." style="font-size:9px; color:#498FED; font-weight: bold" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<br /> 
+						<h:panelGrid columns="2" width="100%">
+							<f:facet name="header">
+								<h:panelGroup>
+								<h:outputText value="Cuerpo del Evento" /><h:outputText style="color:red;" value="*" />
+								</h:panelGroup> 
+							</f:facet>
+							<br />
+							<textarea cols="100" id="cuerpoEvco" name="cuerpoEvco" rows="10" class="editorCuerpo">  
+	           	 				#{capturaEventosCorporativosBean.cuerpoEventoHtml}        
+	           				</textarea>
+						</h:panelGrid> 
+						<h:inputHidden id='cuerpoEvento_htmlH' value='#{capturaEventosCorporativosBean.cuerpoEventoHtml}'></h:inputHidden>
+						<h:inputHidden id='cuerpoEvento_textH' value='#{capturaEventosCorporativosBean.cuerpoEventoText}'></h:inputHidden>
+					</td>
+				</tr>
+				<!-- SECCION DE OPCIONES -->
+				<tr>
+					<td colspan="2">
+						<a4j:commandButton 
+							id="controlOpciones"	
+							reRender="resumenOpciones"	
+							actionListener="#{capturaEventosCorporativosBean.addOpciones}"	
+							style="visibility: hidden;" 
+							oncomplete="asignarHtml();">
+						</a4j:commandButton> 
+						<h:panelGroup id="resumenOpciones" style="display:none;">
+							<h:dataTable 
+								value="#{capturaEventosCorporativosBean.listOp}"
+								var="o" 
+								id="table-opciones" 
+								styleClass="panelTableOpciones"
+								width="100%">
+								<div id="elementoTable_#{o.numeroOpcion}">
+								<h:column>
+									<f:facet name="header">
+										Resumen Opciones
+									</f:facet>
+									<h:panelGrid columns="1" width="100%" cellspacing="20px" id="opcion-id">
+										<div class="rotate" align="center" id="num-opcion_#{o.numeroOpcion}">
+											Opción #{o.numeroOpcion}
+										</div>
+									</h:panelGrid>
+								</h:column>
+								<h:column>
+									<h:panelGrid columns="2" width="100%" styleClass="panelResumenNotificaciones">
+										<div id="id-cpo-opcion_#{o.numeroOpcion}"></div>
+										<h:outputText value="" />
+									</h:panelGrid>
+									<rich:separator height="15px" lineType="none" />
+									<h:panelGrid columns="2">
+										<h:outputText value="Fechas Límite" styleClass="textBold" />
+										<rich:separator height="30px" lineType="none" />
+										<h:outputText value="Tipo Indeval: " styleClass="textBold" />#{o.fechaIndeval}
+										<h:outputText value="Tipo Participante: " styleClass="textBold" />#{o.fechaCliente}	   									
+	   									<h:outputText value="Tipo Pago: " styleClass="textBold" />#{o.fechaPago}
+	   									<h:outputText value="" />
+										<rich:separator height="60px" lineType="none" />
+									</h:panelGrid>
+								</h:column>
+								<h:column>
+									<h:panelGrid columns="2" width="100%" cellspacing="20px">
+										<h:outputText value="" />
+										<div id="valor-default_#{o.numeroOpcion}">
+											<strong>
+												#{o.valorDefault}
+											</strong>
+										</div>
+										<h:outputText value="" />
+										<h:outputText value="" />
+									</h:panelGrid>
+									<h:panelGrid width="100%" columns="1">
+											<a4j:commandButton 
+												value="Editar Opción"
+												oncomplete="editOption(#{o.numeroOpcion},'edit');"
+												actionListener="#{capturaEventosCorporativosBean.editOption}">
+												<f:attribute name="objectEdit" value="#{o}" />
+											</a4j:commandButton>
+											<a4j:commandButton 
+												value="Borrar Opción"
+												actionListener="#{capturaEventosCorporativosBean.deleteOption}"
+												onclick="deleteOpcion(#{o.numeroOpcion});"
+												reRender="resumenOpciones" 
+												oncomplete="setTextOpciones();">
+											</a4j:commandButton>
+										</h:panelGrid>
+									</h:column>
+								</div>
+							</h:dataTable>
+					</h:panelGroup> <rich:separator height="15" lineType="none" /> 
+								<h:panelGroup id="botonShowOpcion">
+									<h:outputText  styleClass="texto" rendered="#{capturaEventosCorporativosBean.tipoEvento == 2}" >	
+										<a4j:commandButton id="botonOpciones" value="Agregar Opción"
+							onclick="openDialogOptions('add');" 
+							tabindex="140" /> 
+									</h:outputText>
+								</h:panelGroup>
+						<!-- HIDDEN QUE MAPEAN LAS PROPIEDADES DEL DIALOGO AL PADRE -->
+						<h:inputHidden id='txt-area-dialog'	value='#{capturaEventosCorporativosBean.txtHtmlArea}'></h:inputHidden>
+						<h:inputHidden id='chk-dialog' value='#{capturaEventosCorporativosBean.valDefault}'></h:inputHidden>
+						<h:inputHidden id='fecha-lim-dialog' value='#{capturaEventosCorporativosBean.fc}'></h:inputHidden> 
+						<h:inputHidden id='fecha-Ind-dialog' value='#{capturaEventosCorporativosBean.fi}'></h:inputHidden>
+						<h:inputHidden id='fecha-Pago-dialog' value='#{capturaEventosCorporativosBean.ftp}'></h:inputHidden> 
+						<h:inputHidden id='numOpcion' value='#{capturaEventosCorporativosBean.numOpcion}'></h:inputHidden>
+						<h:inputHidden id="tipoOperacion" value="#{capturaEventosCorporativosBean.tipoOperacion}"></h:inputHidden>
+						<h:inputHidden id="capturaEdicion" value="#{capturaEventosCorporativosBean.operacion}"></h:inputHidden>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<rich:separator height="10" lineType="none" />
+						<div class="separator" width="100%"></div>
+					</td>
+				</tr>
+				<!-- SECCION DE NOTAS -->
+				<tr>
+					<td colspan="2">
+						<br /> 
+						<rich:separator height="10" lineType="none" /> 
+						<a4j:commandButton 
+							id="controlNotas"
+							reRender="resumenNotas"
+							actionListener="#{capturaEventosCorporativosBean.addNotas}"
+							style="visibility: hidden;" 
+							oncomplete="populateTableNotes();">
+						</a4j:commandButton> 
+						<h:panelGroup id="resumenNotas" style="display:none;">
+							<h:dataTable 
+								value="#{capturaEventosCorporativosBean.listNot}"
+								var="o" 
+								id="table-notas" 
+								styleClass="panelTableOpciones"
+								cellpadding="5px" 
+								cellspacing="5px" 
+								width="100%">
+								<div id="elementoTable_#{o.numNota}">
+									<h:column>
+										<f:facet name="header">
+											Resumen Notas
+										</f:facet>
+										<h:panelGrid columns="1" width="100%" cellspacing="20px" id="opcion-id">
+											<div class="rotate" align="center" id="num-opcion_#{o.numNota}">
+												Nota #{o.numNota}
+											</div>
+										</h:panelGrid>
+									</h:column>
+									<h:column>
+										<div id="id-cpo-nota_#{o.numNota}"></div>
+										<h:outputText value="" />
+									</h:column>
+									<h:column>
+										<h:panelGrid width="100%" columns="1">
+											<a4j:commandButton 
+												value="Editar Nota"
+												oncomplete="editNota(#{o.numNota},'edit');"
+												actionListener="#{capturaEventosCorporativosBean.editNota}">
+												<f:attribute name="noteEdit" value="#{o}" />
+											</a4j:commandButton>
+											<a4j:commandButton 
+												value="Borrar Nota"
+												actionListener="#{capturaEventosCorporativosBean.deleteNota}"
+												onclick="deleteNota(#{o.numNota});" 
+												reRender="resumenNotas"
+												oncomplete="setTextNotas();">
+											</a4j:commandButton>
+										</h:panelGrid>
+									</h:column>
+								</div>
+							</h:dataTable>
+						</h:panelGroup> 
+						<rich:separator height="15" lineType="none" /> 
+						<a4j:commandButton
+							id="btnNota" 
+							value="Agregar Nota" 
+							tabindex="150" 
+							rendered="true"
+							onclick="openNotasDialog('add');">
+						</a4j:commandButton> 
+						<!-- HIDDEN QUE MAPEAN LAS PROPIEDADES DEL DIALOGO PADRE --> 
+						<h:inputHidden id="txt-area-nota" value="#{capturaEventosCorporativosBean.txtNota}"></h:inputHidden>
+						<h:inputHidden id='numNota' value='#{capturaEventosCorporativosBean.numNota}'></h:inputHidden>
+						<h:inputHidden id="tipoOp" value="#{capturaEventosCorporativosBean.operacionNota}"></h:inputHidden>
+						<br />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<rich:separator height="10" lineType="none" />
+						<div class="separator" width="100%"></div>
+					</td>
+				</tr>
+				<!-- SECCION DE ARCHIVOS ADJUNTOS -->
+				<tr>
+					<td>
+						<br /> 
+						<h:panelGrid columns="1" width="100%">
+							<f:facet name="header">
+								<h:outputText value="Archivos adjuntos:" />
+							</f:facet>
+							<rich:fileUpload 
+								id="upload" 
+								maxFilesQuantity="100"
+								addControlLabel="Añadir Archivos ..."
+								clearAllControlLabel="Borrar todos"
+								cancelEntryControlLabel="Cancelar"
+								stopEntryControlLabel="Detener proceso"
+								uploadControlLabel="Subir archivo" 
+								doneLabel="Realizado"
+								clearControlLabel="Borrar" 
+								progressLabel="Subiendo archivo ..."
+								stopControlLabel="Alto"
+								noDuplicate="true"
+								fileUploadListener="#{capturaEventosCorporativosBean.listenerAdjuntos}">
+								<a4j:support event="onclear">
+					               <a4j:actionparam  name="fname" noEscape="true" value="(event.memo.entry)?event.memo.entry.fileName:'' "
+					                   assignTo="#{capturaEventosCorporativosBean.fileNameBorrar}"
+					                   actionListener="#{capturaEventosCorporativosBean.clearUploadData}"/>
+					            </a4j:support>
+							</rich:fileUpload>
+						</h:panelGrid> 
+						<br />
+					</td>
+				</tr>
+				<!-- SECCION DE NOTIFICACIONES -->
+				<tr>
+					<td colspan="2">
+						<br /> 
+						<rich:separator height="10" lineType="none" /> 
+						<a4j:commandButton 
+							id="controlNotificacion"
+							reRender="resumenNotificaciones"
+							actionListener="#{capturaEventosCorporativosBean.addNotificaciones}"
+							style="visibility: hidden;" 
+							oncomplete="showPanelNotificacion();">
+						</a4j:commandButton> 
+						<h:panelGroup id="resumenNotificaciones" style="display:none;">
+							<h:dataTable
+								value="#{capturaEventosCorporativosBean.listNotificaciones}"
+								var="o" 
+								id="table-notificaciones" 
+								styleClass="panelTableOpciones"
+								cellpadding="5px" 
+								cellspacing="5px" 
+								width="100%">
+								<h:column>
+									<f:facet name="header">
+										Resumen Notificaciones
+									</f:facet>
+									<rich:separator height="10" lineType="none" />
+									<h:panelGrid columns="2" width="100%" cellspacing="20px" id="notificacion-id">
+										<div class="notificaciones">
+											Notificacion#{o.numNotificacion}
+										</div>
+									</h:panelGrid>
+								</h:column>
+								<h:column>
+									<h:panelGrid columns="6">
+										<strong>
+											Peridiocidad: 
+										</strong> #{o.strPeridiocidad}
+										<h:outputText value="" />
+										<strong>
+											Destinatario: 
+										</strong> #{o.strDestinatario}
+										<h:outputText value="" />
+										<strong>
+											Texto Notificación: 
+										</strong>#{o.strTextoNotificacion}
+										<h:outputText value="" />
+										<strong>
+											Fecha Inicio: 
+										</strong> #{o.strFechaIncio}
+										<h:outputText value="" />
+										<strong>
+											Fecha Fin: 
+										</strong> #{o.strFechaFin}
+										<h:outputText value="" />
+										<h:outputText value="" />
+									</h:panelGrid>
+								</h:column>
+								<h:column>
+									<h:panelGrid columns="1">
+										<a4j:commandButton 
+											value="Borrar"
+											actionListener="#{capturaEventosCorporativosBean.deleteNotificacion}"
+											reRender="resumenNotificaciones"
+										oncomplete="showPanelNotificacion();"
+											onclick="deleteNotificacion(#{o.numNotificacion});">
+										</a4j:commandButton>
+										<a4j:commandButton 
+											value="Editar"
+											actionListener="#{capturaEventosCorporativosBean.editaNotificacion}"
+											oncomplete="editNotificacion(#{o.numNotificacion},#{o.numOpcAcc},'edit');">
+											<f:attribute name="notificacionEdit" value="#{o}" />
+										</a4j:commandButton>
+									</h:panelGrid>
+								</h:column>
+							</h:dataTable>
+						</h:panelGroup> 
+						<rich:separator height="15" lineType="none" /> 
+						<a4j:commandButton
+							id="btnNotificaciones" 
+							value="Agregar Notificación" 
+							tabindex="160"
+							rendered="true" 
+							onclick="openNotificaciones('add');">
+						</a4j:commandButton> 
+						<!-- DEFINICION DE HIDDENS QUE LIGARAN LOS VALORES DEL DIALOGO CON EL CONTROLLER -->
+						<h:inputHidden id="hrsSeccMin" value="#{capturaEventosCorporativosBean.horaNot}" /> 
+						<h:inputHidden id="minSeccMin" value="#{capturaEventosCorporativosBean.minutosNot}" /> 
+						<h:inputHidden id="txtDestinatario" value="#{capturaEventosCorporativosBean.destinatarioNot}" /> 
+						<h:inputHidden id="txtNotificacion" value="#{capturaEventosCorporativosBean.textoNot}" /> 
+						<h:inputHidden id="txtFechaInicio" value="#{capturaEventosCorporativosBean.fechaIncioNot}" /> 
+						<h:inputHidden id="txtFechaFin" value="#{capturaEventosCorporativosBean.fechaFinNot}" /> 
+						<h:inputHidden id="peridiocidad" value="#{capturaEventosCorporativosBean.periodoNot}" /> 
+						<!-- MAPEO EL TIPO DE CONFIGURACION ELEGIDO -->
+						<h:inputHidden id="config" value="#{capturaEventosCorporativosBean.tipoConfiguracion}" /> 
+						<h:inputHidden id="numDias" value="#{capturaEventosCorporativosBean.numeroDias}" />
+						<h:inputHidden id="diasSemanaSel" value="#{capturaEventosCorporativosBean.arrayDiasSem}" /> 
+						<h:inputHidden id="diaM" value="#{capturaEventosCorporativosBean.diaMes}" /> 
+						<h:inputHidden id="mesM" value="#{capturaEventosCorporativosBean.mesMes}" /> 
+						<h:inputHidden id="numNotificacion" value="#{capturaEventosCorporativosBean.numNotificacion}" /> 
+						<h:inputHidden id="numOpcAcc" value="#{capturaEventosCorporativosBean.numOpcAccordion}" /> 
+						<h:inputHidden id="tipoO" value="#{capturaEventosCorporativosBean.operacionNotificacion}" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<rich:separator height="10" lineType="none" />
+						<div class="separator" width="100%"></div>
+					</td>
+				</tr>
+				<!-- SECCION DE VALIDACIONES -->
+				<tr>
+					<td colspan="2">
+						<br /> 
+						<rich:separator height="10" lineType="none" /> 
+						<a4j:commandButton 
+							id="controlValidaciones"
+							reRender="resumenValidaciones"
+							actionListener="#{capturaEventosCorporativosBean.addValidaciones}"
+							style="visibility: hidden;" 
+							oncomplete="showPanelValidaciones();">
+						</a4j:commandButton> 
+						<h:panelGroup id="resumenValidaciones" style="display:none;">
+							<h:dataTable
+								value="#{capturaEventosCorporativosBean.listValidaciones}"
+								var="o" 
+								id="table-validaciones" 
+								styleClass="panelTableOpciones"
+								cellpadding="5px" 
+								cellspacing="5px" 
+								width="100%">
+								<h:column>
+									<f:facet name="header">
+										Resumen Validaciones
+									</f:facet>
+									<rich:separator height="10" lineType="none" />
+									<h:panelGrid columns="2" width="100%" cellspacing="20px" id="validacion-id">
+										<div class="notificaciones">
+											Validación#{o.strNumValidacion}
+										</div>
+									</h:panelGrid>
+								</h:column>
+								<h:column>
+									<h:panelGrid columns="3">
+										<strong>
+											#{o.strValidacion}
+										</strong>
+										<strong>
+											#{o.strOperador}
+										</strong>
+										<strong>
+											#{o.strCantidadCapturada}
+										</strong>
+									</h:panelGrid>
+								</h:column>
+								<h:column>
+									<h:panelGrid columns="1">
+										<a4j:commandButton 
+											value="Borrar"
+											reRender="resumenValidaciones"
+											onclick="deleteValidacion(#{o.strNumValidacion});"
+										oncomplete="showPanelValidaciones();"
+											actionListener="#{capturaEventosCorporativosBean.deleteValidacion}">
+										</a4j:commandButton>
+									</h:panelGrid>
+								</h:column>
+							</h:dataTable>
+						</h:panelGroup> 
+						<rich:separator height="15" lineType="none" /> 
+						<a4j:commandButton
+							id="btnValidaciones" 
+							value="Agregar Validación" 
+							tabindex="170"
+							rendered="true" 
+							oncomplete="openDialogValidaciones('add');"
+							actionListener="#{capturaEventosCorporativosBean.setDataCombos}">
+						</a4j:commandButton> 
+						<!-- DEFINICION DE HIDDENS PARA EL SEGMENTO DE VALIDACIONES --> 
+						<h:inputHidden id="tipoOpVal" value="#{capturaEventosCorporativosBean.operacionValidacion}" />
+						<h:inputHidden id="validacionVal" value="#{capturaEventosCorporativosBean.validacionVal}" /> 
+						<h:inputHidden id="operadorVal" value="#{capturaEventosCorporativosBean.operadorVal}" /> 
+						<h:inputHidden id="cantidadValidacion" value="#{capturaEventosCorporativosBean.cantidadVal}" /> 
+						<h:inputHidden id="numeroValidacion" value="#{capturaEventosCorporativosBean.numValidacion}" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<rich:separator height="10" lineType="none" />
+						<div class="separator" width="100%"></div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<br /> 
+						<h:panelGrid columns="2" width="100%">
+							<f:facet name="header">
+								<h:outputText value="Pie de Página" />
+							</f:facet>
+							<br />
+							<textarea cols="100" id="piePagina" name="piePagina" rows="10" class="editorPie">
+	           					#{capturaEventosCorporativosBean.piePaginaHtml}  
+	           				</textarea>
+						</h:panelGrid> <h:inputHidden id='piePagina_htmlH' value='#{capturaEventosCorporativosBean.piePaginaHtml}'></h:inputHidden>
+						<h:inputHidden id='piePagina_textH' value='#{capturaEventosCorporativosBean.piePaginaText}'></h:inputHidden>
+					</td>
+				</tr>
+			</table>
+			<br />
+			<div class="nuevoEvento">
+				<h:commandButton id="boton_cerrar_inf" action="consultaEventosCorporativosIndeval" value="Cerrar Creación"/>&nbsp;&nbsp;					
+			<a4j:commandButton id="botonGuardarEvento"
+				value="Guardar Evento Corporativo" styleClass="submit"				
+					onclick="this.disabled=true;enviar();"
+					action="#{capturaEventosCorporativosBean.saveEventoCorporativo}"
+				oncomplete="capturaExitosa();"
+				reRender="capturaC"
+					tabindex="180" />
+			</div>
+		</h:panelGroup>
+			<h:panelGroup id="capturaC">
+				<h:inputHidden id='capturaCorrecta'
+			value='#{capturaEventosCorporativosBean.banderaCreacion}'></h:inputHidden>
+			</h:panelGroup>
+		<h:inputHidden id='actualOpcion'
+			value='#{capturaEventosCorporativosBean.nombreAnclaOpcion}'></h:inputHidden>
+		<h:inputHidden id='actualNota'
+			value='#{capturaEventosCorporativosBean.nombreAnclaNota}'></h:inputHidden>
+	</ui:define>
+	<h:panelGroup>		
+		<h:outputText value="Para una mejor experiencia de usuario utilice navegadores FireFox o Chrome" style="font-size:9px; color:#498FED; font-weight: bold" />
+					
+	</h:panelGroup>
+</ui:composition>
+<!-- FIN DEL DECORATE -->
+</html>

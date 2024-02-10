@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutConsultas.xhtml">
+	
+		<ui:define name="tituloEncabezado">
+
+		</ui:define>
+		<ui:define name="head">	
+			<style type="text/css">
+				.columnSender{
+					width:50px; 
+				}
+			</style>
+				
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/admonCuentaEfectivoInt.js">
+			</script>
+		</ui:define>
+		<ui:define name="tituloSeccion">
+			<h:outputText value="Administración de Cuentas de Efectivo" />
+		</ui:define>
+
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="Administración de Cuentas de Efectivo"></h:outputText>
+		</ui:define>
+
+
+
+		<ui:define name="criterios">
+
+			<h:outputText value="#{admonCuentaEfectivoIntBean.init}" />
+			<a4j:keepAlive beanName="admonCuentaEfectivoIntBean" />
+			
+			<h:panelGroup id="panelCriterios">				
+				<div style='display: "inline"' id="divCriterios">
+					<table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+						align="center">
+						<tr>							
+							<td class="recuadroTabla" align="center">
+								<table class="tablaCriterios" align="center" border="0">
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.bicCode}" />
+										</td>
+										<td align="center" >
+											<h:outputText styleClass="texto" value="#{etq.divisaMinus}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.cuentas}" />
+										</td>
+									</tr>
+									<tr align="center">
+										<td>
+											<h:panelGroup>
+												<rich:orderingList value="#{admonCuentaEfectivoIntBean.listBicCodes}" var="bic" listHeight="100" listWidth="150" selection="#{admonCuentaEfectivoIntBean.bicCodeSelected}"
+																   orderControlsVisible="false" fastOrderControlsVisible="false" rowKeyVar="index" id="bics">
+										            <rich:column  width="180">
+										                <h:outputText value="#{bic}"></h:outputText>
+										            </rich:column>
+										            <a4j:support event="onclick" ignoreDupResponses="true" requestDelay="500" action="#{admonCuentaEfectivoIntBean.obtieneDivisas}" reRender="divisas, cuentas"/>
+										            <a4j:support event="onkeyup" ignoreDupResponses="true" requestDelay="500" action="#{admonCuentaEfectivoIntBean.obtieneDivisas}" reRender="divisas, cuentas"/>
+										        </rich:orderingList>
+											</h:panelGroup>
+										</td>
+										<td>
+											<rich:orderingList value="#{admonCuentaEfectivoIntBean.listDivisas}" var="list" listHeight="100" listWidth="150" selection="#{admonCuentaEfectivoIntBean.divisaSelected}"
+															   orderControlsVisible="false" fastOrderControlsVisible="false" id="divisas">
+									            <rich:column  width="180">
+									                <h:outputText value="#{list}"></h:outputText>
+									            </rich:column>
+									            <a4j:support event="onclick" ignoreDupResponses="true" requestDelay="500" action="#{admonCuentaEfectivoIntBean.obtieneCuentas}" reRender="cuentas"/>
+									            <a4j:support event="onkeyup" ignoreDupResponses="true" requestDelay="500" action="#{admonCuentaEfectivoIntBean.obtieneCuentas}" reRender="cuentas"/>
+									        </rich:orderingList>
+										</td>
+										<td>
+											<rich:orderingList value="#{admonCuentaEfectivoIntBean.listCuentas}" var="list" listHeight="100" listWidth="150" selection="#{admonCuentaEfectivoIntBean.cuentaSelected}"
+															   orderControlsVisible="false" fastOrderControlsVisible="false" rowKeyVar="index" id="cuentas">
+									            <rich:column  width="180">
+									                <h:outputText value="#{list}"></h:outputText>
+									            </rich:column>
+									            <a4j:support event="onclick" ignoreDupResponses="true" requestDelay="500"/>
+									            <a4j:support event="onkeyup" ignoreDupResponses="true" requestDelay="500"/>
+									        </rich:orderingList>
+										</td>
+										<td>
+											<table>
+												<tr>
+													<td>
+														<h:outputText styleClass="texto textoPeque12" value="#{etq.tipoCuentaMinus}" />&#160;
+													</td>
+													<td>
+														<h:selectOneMenu styleClass="textoControles"
+															value="#{admonCuentaEfectivoIntBean.selectTipoCuenta}" tabindex="60">
+															<f:selectItem itemValue="-1" itemLabel="TODAS" />
+															<f:selectItem itemValue="1" itemLabel="Cuenta Comercial"/>
+															<f:selectItem itemValue="2" itemLabel="Cuenta Custodia"/>
+														</h:selectOneMenu>
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<h:outputText styleClass="texto textoPeque12" value="#{etq.cuentaNegocio}" />&#160;
+													</td>
+													<td>
+														<h:selectOneMenu styleClass="textoControles"
+															value="#{admonCuentaEfectivoIntBean.selectCuentaNegocio}" tabindex="60">
+															<f:selectItem itemValue="TODAS" itemLabel="TODAS" />
+															<f:selectItem itemValue="NAC" itemLabel="Nacional"/>
+															<f:selectItem itemValue="INT" itemLabel="Internacional"/>
+														</h:selectOneMenu>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</td>					
+						</tr>
+					</table>
+				</div>
+			</h:panelGroup>
+			
+			<h:panelGroup id="panelResumen">
+				<h:panelGroup rendered="#{admonCuentaEfectivoIntBean.consultaEjecutada}">
+					<div id="divResumen" style="display: #{admonCuentaEfectivoIntBean.consultaEjecutada ? 'inline':'none'}">
+						<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+							<tr>
+								<td class="recuadroTabla">
+									<table class="tablaCriterios texto" border="0" style="text-align: center">
+										<tr>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.bicCode}" />
+											</td>
+											<td align="center" >
+												<h:outputText styleClass="texto" value="#{etq.divisaMinus}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.cuentas}" />
+											</td>
+											<td align="center">
+												<h:outputText styleClass="texto" value="#{etq.tipoCuentaMinus}" />&#160;
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{etq.cuentaNegocio}" />&#160;
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<h:panelGroup>
+	                                            	<h:outputText styleClass="texto" value="#{admonCuentaEfectivoIntBean.bicCodeSelected}"/>
+												</h:panelGroup>
+											</td>
+											<td>
+												<h:panelGroup>
+													<h:outputText styleClass="texto" value="#{admonCuentaEfectivoIntBean.divisaSelected}"/>
+												</h:panelGroup>
+											</td>
+											<td>
+												<h:panelGroup>
+													<h:outputText styleClass="texto" value="#{empty admonCuentaEfectivoIntBean.cuentaSelected ? '[TODAS]' : admonCuentaEfectivoIntBean.cuentaSelected}"/>
+												</h:panelGroup>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{admonCuentaEfectivoIntBean.selectTipoCuenta == -1 ? 'TODAS' : admonCuentaEfectivoIntBean.selectTipoCuenta == 1 ? 'Comercial' : 'Custodia'}"/>
+											</td>
+											<td>
+												<h:outputText styleClass="texto" value="#{admonCuentaEfectivoIntBean.selectCuentaNegocio}"/>
+											</td>
+										</tr>			
+									</table>							
+								</td>
+							</tr>						
+						</table>															
+					</div>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+		
+		<ui:define name="botones">
+			<h:panelGroup id="botones">				
+				<div class="refrescar" style="float: left;">
+	        		 <a4j:status id="commonStatus">
+						<f:facet name="start">
+							<h:panelGroup>
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								<h:outputText value="#{etq.buscando}"></h:outputText>
+							</h:panelGroup>
+						</f:facet>
+					</a4j:status> 	
+	        	</div>
+	        	<div class="limpiar">
+					<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+						styleClass="submit" 
+						onclick="limpiarTodos();"
+						actionListener="#{admonCuentaEfectivoIntBean.limpiar}" 
+						tabindex="6"/>
+				</div>
+				<div class="buscar">
+					<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+						styleClass="submit"
+						oncomplete='javascript:presentarResumen();limpiarTodos()'
+						actionListener="#{admonCuentaEfectivoIntBean.buscarCuentas}"
+						reRender="panelBotonNuevo,containerResultados,totalesConsultas,tablaResultados,botones,mensajeUsuario,panelResumen,panelTotales"
+						tabindex="7">
+					</a4j:commandButton>
+				</div>
+				<div class="editar" style="display:#{admonCuentaEfectivoIntBean.consultaEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios">            
+	            	<input type="image" class="submit"
+						src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+						alt="Editar Criterios" title="Editar Criterios"
+						onclick='javascript:presentarCriterios();return false;' />               	
+	           	</div>
+           	</h:panelGroup>
+		</ui:define>
+
+	
+
+		<ui:define name="seccionContenido">
+			<h:panelGroup id="containerResultados">
+			
+			<t:dataTable id="noExistenResultados"
+						value="#{admonCuentaEfectivoIntBean.paginaVO.registros}"
+						styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+						footerClass="tituloTabla" border="0" cellpadding="3px"
+						cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos" style="width:100%;"
+						rendered="#{empty admonCuentaEfectivoIntBean.paginaVO.registros &amp;&amp; admonCuentaEfectivoIntBean.consultaEjecutada}">
+
+						<t:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.sinResultados}"></h:outputText>
+							</f:facet>
+						</t:column>
+			</t:dataTable>
+			
+			<h:graphicImage value="/images/blank.gif" width="900px" height="1px"></h:graphicImage>
+				<h:panelGroup
+					rendered="#{not empty admonCuentaEfectivoIntBean.paginaVO.registros}">
+					<table width="100%" border="0">
+						<tr>
+							<td align="left" class="textoEstadoCuenta">
+								<a4j:commandLink id="control_bitacora_primero"
+									action="#{admonCuentaEfectivoIntBean.irPrimeraPagina}"
+									rendered="#{admonCuentaEfectivoIntBean.irAlPrimero}"
+									reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,containerResultados">
+									<img
+										src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+										border="0" />
+								</a4j:commandLink>
+
+								<a4j:commandLink id="control_bitacora_atras_fast"
+									action="#{admonCuentaEfectivoIntBean.retrocederPaginasRapido}"
+									rendered="#{admonCuentaEfectivoIntBean.retrocederRapido}"
+									reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+									<img
+										src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+										border="0" />
+								</a4j:commandLink>
+
+								<a4j:commandLink id="control_bitacora_atras"
+									action="#{admonCuentaEfectivoIntBean.retrocederPagina}"
+									rendered="#{admonCuentaEfectivoIntBean.retroceder}"
+									reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+									<img
+										src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+										border="0" />
+								</a4j:commandLink>
+								<a4j:commandLink id="control_bitacora_adelante"
+									action="#{admonCuentaEfectivoIntBean.avanzarPagina}"
+									rendered="#{admonCuentaEfectivoIntBean.avanzar}"
+									reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+									<img
+										src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+										border="0" />
+								</a4j:commandLink>
+
+								<a4j:commandLink id="control_bitacora_adelante_fast"
+									action="#{admonCuentaEfectivoIntBean.avanzarPaginasRapido}"
+									rendered="#{admonCuentaEfectivoIntBean.avanzarRapido}"
+									reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+									<img
+										src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+										border="0" />
+
+								</a4j:commandLink>
+
+								<a4j:commandLink id="control_bitacora_ultimo"
+									action="#{admonCuentaEfectivoIntBean.irUltimaPagina}"
+									rendered="#{admonCuentaEfectivoIntBean.irAlUltimo}"
+									reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+									<img
+										src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+										border="0" />
+								</a4j:commandLink>
+								
+								<a4j:commandButton id="control_bitacora_actual"
+						            action="#{admonCuentaEfectivoIntBean.irPaginaActual}"
+						            style="visibility: hidden;"               
+					            	reRender="containerResultados">          
+						        </a4j:commandButton>
+
+								<br />
+								<h:outputText value="#{etq.mostrando}"
+									styleClass="textoResumen" />
+								<h:outputText value="#{admonCuentaEfectivoIntBean.numeroPagina}"
+									styleClass="textoResumen" />
+								<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+								<h:outputText value="#{admonCuentaEfectivoIntBean.totalPaginas}"
+									styleClass="textoResumen" />
+								<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+								&#160;&#160;&#160;
+								<h:outputText
+									value="#{admonCuentaEfectivoIntBean.paginaVO.totalRegistros}"
+									styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+								&#160;
+								<h:outputText styleClass="textoResumen"
+									value="#{etq.registrosEncontrados}" />
+							</td>
+							<td align="right" class="textoEstadoCuenta">
+								<h:outputText escape="false" value="#{etq.registrosPorPagina}"
+									styleClass="textoResumen" />
+								<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+									value="#{admonCuentaEfectivoIntBean.paginaVO.registrosXPag}">
+									<f:selectItem itemLabel="1" itemValue="1" />
+									<f:selectItem itemLabel="2" itemValue="2" />
+									<f:selectItem itemLabel="5" itemValue="5" />
+									<f:selectItem itemLabel="10" itemValue="10" />
+									<f:selectItem itemLabel="20" itemValue="20" />
+									<f:selectItem itemLabel="50" itemValue="50" />
+									<f:selectItem itemLabel="100" itemValue="100" />
+									<a4j:support event="onchange"
+										reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,mensajeUsuario"
+										action="#{admonCuentaEfectivoIntBean.ejecutarConsulta}" >
+                                              
+                                          </a4j:support>
+								</h:selectOneMenu>&#160;&#160;&#160;&#160;&#160;
+							</td>
+						</tr>
+					</table>
+				</h:panelGroup>
+			
+			<h:dataTable id="resultados"
+					value="#{admonCuentaEfectivoIntBean.paginaVO.registros}"
+					var="con"
+					rendered="#{not empty admonCuentaEfectivoIntBean.paginaVO.registros}"
+					styleClass="tablaGeneral centrado" headerClass="tituloTabla" width="100%"
+					footerClass="texto textoPeque12" border="0" cellpadding="3px"
+					cellspacing="0px" columnClasses="everyColumn" style="width:98%;"
+					rowClasses="renglonTablaUno, renglonTablaDos">
+					<!-- BIC Code -->
+					<h:column >
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.bicCode}" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{con.bicCode}" />
+					</h:column>
+					<!-- Divisa -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.divisaMinus}" />
+						</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{con.divisa.claveAlfabetica}" />									
+					</h:column>
+					<!-- Cuenta -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.cuentaMinus}" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{con.cuenta}" />									
+					</h:column>
+					<!-- Cuenta950 -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.cuenta950}" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{con.cuenta950}" />						
+					</h:column>	
+					<!-- Tipo -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.tipoCuentaMinus}" />									
+						</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{(con.tipoCuenta == 1) ? 'Comercial' : 'Custodia'}"/>																
+					</h:column>	
+					<!-- Pais -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.pais}" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{con.pais.nombrePais}"/>
+					</h:column>	
+					<!-- Activo/Envio  -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.activoEnvio}" />
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{(con.activo == true) ? 'Si' : 'No'}" />
+						<h:outputText styleClass="texto textoPeque12" value="/"/>
+						<h:outputText styleClass="texto textoPeque12" value="#{(con.envioTesoreria == true) ? 'Si' : 'No'}" />
+					</h:column>
+					<!-- Cuenta Negocio -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.cuentaNegocio}"/>
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{con.cuentaNegocio}" />														
+					</h:column>
+					<!-- Horario Mexico -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.horarioMexico}"/>
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{con.horarioInicio}"/>	
+						<h:outputText styleClass="texto textoPeque12" value=" - " />
+						<h:outputText styleClass="texto textoPeque12" value="#{con.horarioFin}"/>
+					</h:column>
+					<!-- Saldo Inicial -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.saldoInicialMinus}"/>
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{con.saldo}">
+							<f:convertNumber pattern="###,###,###,###,###,##0.00" />	
+						</h:outputText>													
+					</h:column>
+					<!-- Boveda -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value="#{etq.bovedaMinus}"/>
+						</f:facet>
+						<h:outputText styleClass="texto textoPeque12" value="#{con.boveda.descripcion}"/>								
+					</h:column>
+					<!-- Editar -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText styleClass="texto textoPeque12" value=""/>
+						</f:facet>
+						<h:panelGroup rendered="true">
+							<a href="javascript:editaCuenta(#{con.idCuenta});" title="Edita la cuenta">
+								<img src="#{facesContext.externalContext.requestContextPath}/images/edit.png"  />
+							</a>
+						</h:panelGroup>					
+					</h:column>
+					
+				</h:dataTable>
+			</h:panelGroup>
+			<!-- ================================= EXPORTAR ============================================================ -->
+			<h:panelGroup id="totalesConsultas" rendered="true">					
+				<table cellpadding="0" cellspacing="0" border="0" align="center" width="900px">
+					<tr align="right">
+						<td align="right">
+							<h:panelGroup id="botonesExportar">
+								<h:panelGroup
+									style="display: #{(admonCuentaEfectivoIntBean.consultaEjecutada and not empty admonCuentaEfectivoIntBean.paginaVO.registros)? 'inline' : 'none'}">
+	
+									<h:outputText value="Exportar los resultados"></h:outputText>
+									
+									<h:commandButton actionListener="#{admonCuentaEfectivoIntBean.generarReportes}"
+										action="admonCuentaEfectivoIntPDF"
+										image="/images/pdf.gif"
+										title="Exportar a PDF todos los resultados de la consulta"
+										id="generarPdf"
+										onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);"/>
+	                         				&#160;&#160;
+	
+	                   				<h:commandButton actionListener="#{admonCuentaEfectivoIntBean.generarReportes}"
+	                   					action="admonCuentaEfectivoIntXLS"
+	                   					image="/images/excel-file.gif"
+	                   					title="Exportar a Excel todos los resultados de la consulta" 
+	              						id="generarExcel"
+	              						onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);">
+	                   				</h:commandButton>
+	                   				<div id="monitorPeticionReporte" style="display: none;">
+											<h:panelGroup id="panelMonitorPeticionReporte">
+												<h:graphicImage value="/images/ajax-loader.gif" />
+												&#160;&#160;
+												<h:outputText value="#{etq.reporteEnProceso}" />
+												<a4j:commandButton id="btnActualizarEstadoPeticion"
+													image="/images/transparent.gif"
+													styleClass="submit"
+													actionListener="#{admonCuentaEfectivoIntBean.actualizarEstadoPeticion}"
+													reRender="panelMonitorPeticionReporte"
+													oncomplete="desbloquearBotonesReportes(#{admonCuentaEfectivoIntBean.peticionReporteCompleta}, ['generarExcel', 'generarPdf']);"/>
+											</h:panelGroup>
+										</div>
+								</h:panelGroup>
+							</h:panelGroup>
+	
+						</td>
+					</tr>
+				</table>
+			</h:panelGroup>
+			<br/>
+			<h:panelGroup id="panelBotonNuevo">
+				<div align="right" class="nuevo" style="display:#{admonCuentaEfectivoIntBean.consultaEjecutada?'inline':'none'};float:right;" id="botonNuevaCuenta">            
+	            	<input type="image" class="submit"
+						src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+						alt="Nueva Cuenta" title="Nueva Cuenta"
+						onclick='javascript:editaCuenta(0);return false;' />               	
+	           	</div>
+			</h:panelGroup>
+		</ui:define>
+
+	</ui:composition>
+
+
+	<!-- FIN DEL DECORATE -->
+</html>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:xls="http://indeval.com/jsf/xls"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+       <xls:document documentName="detalleCargaBeneficiarios" documentTitle="Reporte de Carga" >        
+	        <xls:table value="#{fileTransferCapturaBeneBean.detalleCarga}" var="detalle" >
+	            <xls:row>
+	                <xls:col header="#{etq.tipoFormato}" 							value="#{detalle.tipoFormato}" 					align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.tipoBeneficiario}" 						value="#{detalle.tipoBeneficiario}" 			align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.custodio}" 								value="#{detalle.claveCustodio}" 				align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.idInstitucion}" 							value="#{detalle.claveInstitucion}" 			align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.fechaFormato}" 							value="#{detalle.fechaFormato}" 				align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.estado}" 								value="#{detalle.estado}" 						align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.nombre}" 								value="#{detalle.nombre}" 						align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.apellidoPaterno}" 						value="#{detalle.apellidoPaterno}" 				align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.apellidoMaterno}" 						value="#{detalle.apellidoMaterno}" 				align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>					 
+					<xls:col header="#{etq.w8ben2014paisResidencia}" 				value="#{detalle.paisResidencia}" 				align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.w8ben2014residenceAddressStreet}" 		value="#{detalle.residenceAddressStreet}" 		align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.w8ben2014residenceAddressOutNumber}" 	value="#{detalle.residenceAddressOutNumber}" 	align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.w8ben2014residenceAddressIntNumber}" 	value="#{detalle.residenceAddressIntNumber}" 	align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/> 
+					<xls:col header="#{etq.w8ben2014residenceAddressPostalCode}" 	value="#{detalle.residenceAddressPostalCode}"	align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/> 
+					<xls:col header="#{etq.w8ben2014residenceAddressCity}" 			value="#{detalle.residenceAddressCity}" 		align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.w8ben2014residenceAddressState}" 		value="#{detalle.residenceAddressState}" 		align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.w8ben2014residenceAddressCountry}" 		value="#{detalle.residenceAddressCountry}" 		align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					
+					<xls:col header="#{etq.w8ben2014mailAddressStreet}" 			value="#{detalle.mailAddressStreet}" 			align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.w8ben2014mailAddressOutNumber}" 			value="#{detalle.mailAddressOutNumber}" 		align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.w8ben2014mailAddressIntNumber}" 			value="#{detalle.mailAddressIntNumber}" 		align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/> 
+					<xls:col header="#{etq.w8ben2014mailAddressPostalCode}" 		value="#{detalle.mailAddressPostalCode}"		align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/> 
+					<xls:col header="#{etq.w8ben2014mailAddressCity}" 				value="#{detalle.mailAddressCity}" 				align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.w8ben2014mailAddressState}" 				value="#{detalle.mailAddressState}" 			align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.w8ben2014mailAddressCountry}" 			value="#{detalle.mailAddressCountry}" 			align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					
+					<xls:col header="#{etq.w8ben2014foreingTaxIdNumber}" 			value="#{detalle.foreingTaxIdNumber}" 			align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.w8ben2014referenceNumber}" 				value="#{detalle.referenceNumber}" 				align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.w8ben2014fechaNacimiento}" 				value="#{detalle.fechaNacimiento}" 				align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.w8ben2014paisResidenteBeneficiaro}" 		value="#{detalle.paisResidenteBeneficiaro}" 	align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.w8ben2014idArticuloReclamoTarifa}" 		value="#{detalle.idArticuloReclamoTarifa}" 		align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.w8ben2014porcentajeTasaRetencion}" 		value="#{detalle.porcentajeTasaRetencion}" 		align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.w8ben2014tipoIngreso}" 					value="#{detalle.tipoIngreso}" 					align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					<xls:col header="#{etq.w8ben2014razonArticuloReclamo}" 			value="#{detalle.razonArticuloReclamo}" 		align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					
+					<xls:col header="#{etq.numeroRegistro}" 						value="#{detalle.numeroRegistro}" 				align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>   
+					<xls:col header="#{etq.descripcionError}"						value="#{detalle.descripcionError}" 			align="CENTER" bgcolor="#{detalle.estadoRegistro == 'ER' ? 'ff0000' : ''}"/>
+					
+				
+	            </xls:row>
+	        </xls:table>
+	   </xls:document>
+
+</html>

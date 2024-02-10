@@ -1,0 +1,39 @@
+
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en">
+						
+						<object classid='clsid:CAFEEFAC-0015-0000-0000-ABCDEFFEDCBA' codebase='http://java.sun.com/update/1.5.0/jinstall-1_5-windows-i586.cab#Version=1,5,0,4' width='0' height='0' mayscript='true'>
+								    <param name='type' value='application/x-java-applet;version=1.5'/>
+								    <param name='code' value='DigitalSignerApplet'/>
+								    <param name='archive' value='#{facesContext.externalContext.requestContextPath}/resources/DigitalSignerApplet.jar'/>
+								    <param name='mayscript' value='true'/>
+								    <param name='scriptable' value='true'/>
+								    <PARAM NAME='valueToSign' VALUE="document.daliForm.isoSinFirmar"/>
+								    <PARAM NAME='signButtonCaption' VALUE='Firmar'/>
+								    <PARAM NAME='signatureFieldName' VALUE='document.daliForm.isoFirmado'/>
+								    <PARAM NAME='serialFieldName' VALUE='document.daliForm.numeroSerie'/>
+								    <param name='userSerialFieldName' value='document.daliForm.numeroSerieUsuario'/>
+								    <PARAM NAME='TotalOperaciones' VALUE='document.daliForm.totalOperaciones'/>
+								    <PARAM NAME="functionSubmit" VALUE="firmarOperacion()"/>
+									<comment>
+										<embed type='application/x-java-applet;version=1.5' code='DigitalSignerApplet' archive='#{facesContext.externalContext.requestContextPath}/resources/DigitalSignerApplet.jar' width='70' height='17' mayscript='true' 
+											scriptable='true' 
+											valueToSign="document.daliForm.isoSinFirmar" 
+											signButtonCaption='Firmar' 
+											signatureFieldName='document.daliForm.isoFirmado' 
+											serialFieldName='document.daliForm.numeroSerie'
+											functionSubmit="firmarOperacion()"
+											userSerialFieldName='document.daliForm.numeroSerieUsuario'
+											TotalOperaciones="document.daliForm.totalOperaciones">
+								            <noembed>
+								                 Document signing applet can not be started because Java Plugin 1.5 is not installed.
+								            </noembed>
+								        </embed>
+								    </comment>
+				
+								</object>
+							
+</html>

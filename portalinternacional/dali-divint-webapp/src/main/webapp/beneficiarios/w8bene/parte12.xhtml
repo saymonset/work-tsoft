@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <h:panelGroup>
+        <table style="width: 100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td colspan="3">
+                    <b><h:outputText value="#{etqw8bene.parte_XII}" /></b>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 2%" valign="top"><h:outputText value="#{etqw8bene.campo_26}" /></td>
+                <td style="width: 2%" valign="top"><h:selectBooleanCheckbox id="partXIIcmp26a" value="#{capturaBeneficiariosBean.forma.partXIIcmp26a}" /></td>
+                <td style="width: 96%" valign="top"><h:outputText value="#{etqw8bene.campo_26_1}" /></td>
+            </tr>
+            <tr>
+                <td style="width: 2%" valign="top">&#160;</td>
+                <td style="width: 98%" colspan="2">
+                    <h:outputText value="#{etqw8bene.campo_26_2}" />
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 2%" valign="top">&#160;</td>
+                <td style="width: 98%" colspan="2">
+                    <h:inputText autocomplete="off" id="partXIIcmp26b" value="#{capturaBeneficiariosBean.forma.partXIIcmp26b}" styleClass="textoControles" size="90" style="text-transform: uppercase;" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <h:outputText value="#{etqw8bene.campo_26_2_1}" />
+                   <h:selectBooleanCheckbox id="partXIIcmp26boa" value="#{capturaBeneficiariosBean.forma.partXIIcmp26ba}" 
+                   onclick="habilitarDeshabilitarCampos26(this);"/>
+                   &#160;<h:outputText value="#{etqw8bene.campo_26_2_2}" />&#160;
+                   <h:selectBooleanCheckbox id="partXIIcmp26bob" value="#{capturaBeneficiariosBean.forma.partXIIcmp26bb}" 
+                   onclick="habilitarDeshabilitarCampos26(this);"/>
+                   &#160;<h:outputText value="#{etqw8bene.campo_26_2_3}" />
+
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 2%" valign="top">&#160;</td>
+                <td style="width: 98%" colspan="2">
+                    <h:outputText value="#{etqw8bene.campo_26_3}" />
+                    &#160;
+                    <h:inputText autocomplete="off" id="partXIIcmp26c" value="#{capturaBeneficiariosBean.forma.partXIIcmp26c}" styleClass="textoControles" size="40" style="text-transform: uppercase;" />
+                    &#160;
+                    <h:outputText value="#{etqw8bene.campo_26_4_1}" />
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 2%" valign="top">&#160;</td>
+                <td style="width: 98%" colspan="2">
+                    <h:outputText value="#{etqw8bene.campo_26_5_1}" />
+                    &#160;
+                    <h:inputText autocomplete="off" id="partXIIcmp26d" value="#{capturaBeneficiariosBean.forma.partXIIcmp26d}" styleClass="textoControles" size="40" style="text-transform: uppercase;" />
+                     &#160;
+                     <h:outputText value="#{etqw8bene.campo_26_6}" />
+                     &#160;
+                     <h:inputText autocomplete="off" id="partXIIcmp26e" value="#{capturaBeneficiariosBean.forma.partXIIcmp26e}" styleClass="textoControles" size="40" style="text-transform: uppercase;" />
+                </td>
+            </tr>
+            
+        </table>
+    </h:panelGroup>
+</html>

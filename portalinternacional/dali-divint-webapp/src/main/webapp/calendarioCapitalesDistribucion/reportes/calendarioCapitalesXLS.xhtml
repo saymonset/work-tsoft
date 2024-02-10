@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xls="http://indeval.com/jsf/xls"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document documentName="calendarioCapitales" documentTitle="Calendario Capitales Distribución"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        fecha="#{calendarioCapitalesBean.fechaActual}">
+
+        <xls:table value="#{calendarioCapitalesBean}" var="calendario">
+            <xls:row>
+                <xls:col header="#{etq.tipoValorMinus}" value="#{!empty calendarioCapitalesBean.calendario.tipoValor ? calendarioCapitalesBean.calendario.tipoValor : 'TODOS'}"  />
+                <xls:col header="#{etq.emisoraMinus}" value="#{!empty calendarioCapitalesBean.calendario.emisora ? calendarioCapitalesBean.calendario.emisora : 'TODAS'}"  />
+                <xls:col header="#{etq.serieMinus}" value="#{!empty calendarioCapitalesBean.calendario.serie ? calendarioCapitalesBean.calendario.serie : 'TODAS'}"  />
+				<xls:col header="#{etq.isin}" value="#{!empty calendarioCapitalesBean.calendario.isin ? calendarioCapitalesBean.calendario.isin : 'TODOS'}"  />
+				<xls:col header="#{etq.calTipoMensaje}" value="#{!empty calendarioCapitalesBean.selectedTipoMensaje ? calendarioCapitalesBean.selectedTipoMensaje : 'TODOS'}" />
+                <xls:col header="#{etq.estadoIndeval}" value="#{!empty calendarioCapitalesBean.selectedEstado ? calendarioCapitalesBean.selectedEstado : 'TODOS'}" />
+				<xls:col header="#{etq.bovedaMinus}" value="#{!empty calendarioCapitalesBean.selectedBoveda ? calendarioCapitalesBean.selectedBoveda : 'TODOS'}"  />
+				<xls:col header="#{etq.divisaMinus}" value="#{!empty calendarioCapitalesBean.selectedDivisa ? calendarioCapitalesBean.selectedDivisa : 'TODOS'}"  />
+				<xls:col header="#{etq.fechaXdateInicio}" value="#{!empty calendarioCapitalesBean.calendario.fechaXdateInicio ? calendarioCapitalesBean.calendario.fechaXdateInicio : 'TODAS'}" pattern="dd/MM/yyyy"/>		
+				<xls:col header="#{etq.fechaXdateFin}" value="#{!empty calendarioCapitalesBean.calendario.fechaXdateFin ? calendarioCapitalesBean.calendario.fechaXdateFin : 'TODAS'}" pattern="dd/MM/yyyy"/>		
+				<xls:col header="#{etq.fechaCorteInicio}" value="#{!empty calendarioCapitalesBean.calendario.fechaCorteInicio ? calendarioCapitalesBean.calendario.fechaCorteInicio : 'TODAS'}" pattern="dd/MM/yyyy"/>	
+				<xls:col header="#{etq.fechaCorteFin}" value="#{!empty calendarioCapitalesBean.calendario.fechaCorteFin ? calendarioCapitalesBean.calendario.fechaCorteFin : 'TODAS'}" pattern="dd/MM/yyyy"/>		
+				<xls:col header="#{etq.fechaPagoInicio}" value="#{!empty calendarioCapitalesBean.calendario.fechaPagoInicio ? calendarioCapitalesBean.calendario.fechaPagoInicio : 'TODAS'}" pattern="dd/MM/yyyy"/>		
+				<xls:col header="#{etq.fechaPagoFin}" value="#{!empty calendarioCapitalesBean.calendario.fechaPagoFin ? calendarioCapitalesBean.calendario.fechaPagoFin : 'TODAS'}" pattern="dd/MM/yyyy"/>
+				<xls:col header="#{etq.calFechaEfectivaInicio}" value="#{!empty calendarioCapitalesBean.calendario.fechaEffdInicio ? calendarioCapitalesBean.calendario.fechaEffdInicio :  'TODAS'}" pattern="dd/MM/yyyy" />		
+				<xls:col header="#{etq.calFechaEfectivaFin}" value="#{!empty calendarioCapitalesBean.calendario.fechaEffdFin ? calendarioCapitalesBean.calendario.fechaEffdFin : 'TODAS'}" pattern="dd/MM/yyyy" />		
+				<xls:col header="#{etq.calFechaEnvioInicio}" value="#{!empty calendarioCapitalesBean.calendario.fechaPrimerEnvioInicio ? calendarioCapitalesBean.calendario.fechaPrimerEnvioInicio : 'TODAS'}" pattern="dd/MM/yyyy" />		
+				<xls:col header="#{etq.calFechaEnvioFin}" value="#{!empty calendarioCapitalesBean.calendario.fechaPrimerEnvioFin ? calendarioCapitalesBean.calendario.fechaPrimerEnvioFin : 'TODAS'}" pattern="dd/MM/yyyy" />		
+				<xls:col header="#{etq.calFechaRecepcionInicio}" value="#{!empty calendarioCapitalesBean.calendario.fechaRecepcionInicio ? calendarioCapitalesBean.calendario.fechaRecepcionInicio : 'TODAS'}" pattern="dd/MM/yyyy HH:mm" />		
+				<xls:col header="#{etq.calFechaRecepcionFin}" value="#{!empty calendarioCapitalesBean.calendario.fechaRecepcionFin ? calendarioCapitalesBean.calendario.fechaRecepcionFin : 'TODAS'}"  pattern="dd/MM/yyyy HH:mm" />				
+				<xls:col header="#{etq.fechasAdicionales}" value="#{!empty calendarioCapitalesBean.selectedFechasAdicionales ? calendarioCapitalesBean.selectedFechasAdicionales : 'TODOS'}"  />
+                <xls:col header="#{etq.calNett}" value="#{!empty calendarioCapitalesBean.selectedNett ? calendarioCapitalesBean.selectedNett : 'TODOS'}"  />
+				<xls:col header="#{etq.dueBillOfDateInicio}" value="#{!empty calendarioCapitalesBean.calendario.dueBillOfDateInicio ? calendarioCapitalesBean.calendario.dueBillOfDateInicio : 'TODAS'}" pattern="dd/MM/yyyy"/>		
+				<xls:col header="#{etq.dueBillOfDateFin}" value="#{!empty calendarioCapitalesBean.calendario.dueBillOfDateFin ? calendarioCapitalesBean.calendario.dueBillOfDateFin : 'TODAS'}" pattern="dd/MM/yyyy"/>		
+                <xls:col header="#{etq.folioIndeval}" value="#{!empty calendarioCapitalesBean.calendario.folioIndeval ? calendarioCapitalesBean.calendario.folioIndeval : 'TODOS'}"  />
+                <xls:col header="#{etq.corp}" value="#{!empty calendarioCapitalesBean.calendario.referencia ? calendarioCapitalesBean.calendario.referencia : 'TODOS'}"  />
+                <xls:col header="#{etq.fuente}" value="#{!empty calendarioCapitalesBean.selectedCustodio ? calendarioCapitalesBean.selectedCustodio : 'TODOS'}"  />
+                <xls:col header="#{etq.estadoEmision}" value="#{!empty calendarioCapitalesBean.selectedEstadoEmision ? calendarioCapitalesBean.selectedEstadoEmision : 'TODOS'}"  />			
+			    <xls:col header="#{etq.caev}" value="#{!empty calendarioCapitalesBean.caevsSelected ? calendarioCapitalesBean.caevsSelected :  'TODOS'}" align="center" />
+				<xls:col header="#{etq.camv}" value="#{!empty calendarioCapitalesBean.selectedTipoPagoCAMV ? calendarioCapitalesBean.selectedTipoPagoCAMV : 'TODOS'}"   />
+				<xls:col header="#{etq.subtipoDerecho}" value="#{!empty calendarioCapitalesBean.selectedSubTipoDerecho ? calendarioCapitalesBean.selectedSubTipoDerecho : 'TODOS'}"  />
+				
+            </xls:row>
+        </xls:table>
+
+        <xls:subtitle value="#{etq.registrosEncontrados}: #{calendarioCapitalesBean.totalRegistrosReportes}" />
+
+        <xls:table value="#{calendarioCapitalesBean.paginaReportes.registros}" var="derecho">
+           <xls:row>
+				<xls:col header="#{etq.horaRecepcionEnvio}" value="#{derecho.fechaHoraRecepcion}" bgcolor="#{derecho.mapaPropiedades['HoraRecep'] ne null ? 'ffff50' : ''}" pattern="dd/MM/yyyy HH:mm" />
+				<xls:col header="#{etq.calHoraEnvio}" value="#{!empty derecho.fechaPrimerEnvio ? derecho.fechaPrimerEnvio : '-'}" pattern="dd/MM/yyyy HH:mm" />
+				<xls:col header="#{etq.numeroEvento}" value="#{derecho.referencia}"  />
+				<xls:col header="#{etq.folioIndeval}" value="#{derecho.idCalendario}"  />
+				<xls:col header="#{etq.tipoMensaje}" value="#{derecho.tipoMensaje}" bgcolor="#{derecho.mapaPropiedades['TipoMsj'] ne null ? 'ffff50' : ''}"  />
+				<xls:col header="#{etq.caev}" value="#{derecho.tipoPagoCAEV}" bgcolor="#{derecho.mapaPropiedades['CAEV'] ne null ? 'ffff50' : ''}" />
+				<xls:col header="#{etq.camv}" value="#{derecho.tipoPagoCAMV}" bgcolor="#{derecho.mapaPropiedades['CAMV'] ne null ? 'ffff50' : ''}" />
+				<xls:col header="#{etq.subtipoDerecho}" value="#{derecho.subtipoDerecho}" bgcolor="#{derecho.mapaPropiedades['CAMV'] ne null ? 'ffff50' : ''}" />
+				<xls:col header="#{etq.estadoDelMensaje}" value="#{!empty derecho.edoFunc ? derecho.edoFunc : '-'} / #{!empty derecho.edoProc ? derecho.edoProc : '-'}"  bgcolor="#{derecho.mapaPropiedades['funcM'] != null or derecho.mapaPropiedades['EdoProc'] != null ? 'ffff50' : ''}" />
+				<xls:col header="#{etq.tipoValorMinus}" value="#{derecho.tipoValor}" bgcolor="#{derecho.mapaPropiedades['TV'] ne null ? 'ffff50' : ''}" />
+				<xls:col header="#{etq.emisoraMinus}" value="#{derecho.emisora}" bgcolor="#{derecho.mapaPropiedades['Emisora'] ne null ? 'ffff50' : ''}" />
+				<xls:col header="#{etq.serieMinus}" value="#{derecho.serie}" bgcolor="#{derecho.mapaPropiedades['Serie'] ne null ? 'ffff50' : ''}" />
+				<xls:col header="#{etq.cuponMinus}" value="#{derecho.cupon}" bgcolor="#{derecho.mapaPropiedades['Cupon'] ne null ? 'ffff50' : ''}" />
+				<xls:col header="#{etq.isin}" value="#{derecho.isin}"  bgcolor="#{derecho.mapaPropiedades['Isin'] ne null ? 'ffff50' : ''}" />
+				<xls:col header="#{etq.calCfi}" value="#{derecho.cfi}"  bgcolor="#{derecho.mapaPropiedades['Cfi'] ne null ? 'ffff50' : ''}" />
+				<xls:col header="#{etq.fechaExdate}" value="#{derecho.fechaXDate}"  bgcolor="#{derecho.mapaPropiedades['FXDate'] ne null ? 'ffff50' : ''}" pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.fechaCorteMinus}" value="#{derecho.fechaCorte}"  bgcolor="#{derecho.mapaPropiedades['FCorte'] ne null ? 'ffff50' : ''}" pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.fechaPago}" value="#{derecho.fechaPago}" bgcolor="#{derecho.mapaPropiedades['FPago'] ne null ? 'ffff50' : ''}" pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.fechaEfectiva}" value="#{derecho.fechaEfectiva}"  bgcolor="#{derecho.mapaPropiedades['FEfect'] ne null ? 'ffff50' : ''}" pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.dueBillOfDate}" value="#{derecho.fechaVencimiento}"  bgcolor="#{derecho.mapaPropiedades['FVenc'] ne null ? 'ffff50' : ''}" pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.ratioBruto}" value="#{derecho.importeGRSS}"  bgcolor="#{derecho.mapaPropiedades['GRSS'] ne null ? 'ffff50' : ''}" pattern="###,###,###,###,###,##0.00" maxFractionDigits="12" minFractionDigits="2" />
+				<xls:col header="#{etq.importeBrutoAdic}" value="#{!empty derecho.ratioAdicionalFormatoReporte ? derecho.ratioAdicionalFormatoReporte : '-'}" bgcolor="#{derecho.mapaPropiedades['RatioAdic'] ne null ? 'ffff50' : ''}" />			
+				<xls:col header="#{etq.ratioNeto}" value="#{derecho.importeNETT}"  bgcolor="#{derecho.mapaPropiedades['NETT'] ne null ? 'ffff50' : ''}" pattern="###,###,###,###,###,##0.00" maxFractionDigits="12" minFractionDigits="2" />
+				<xls:col header="#{etq.posicionIndeval}" value="#{derecho.posicionIndeval}"  bgcolor="#{derecho.mapaPropiedades['PosInd'] ne null ? 'ffff50' : ''}" pattern="###,###,###,###,###,###" />
+				<xls:col header="#{etq.calImporteBruto}" value="#{derecho.importeBruto}"  bgcolor="#{derecho.mapaPropiedades['ImporteBr'] ne null ? 'ffff50' : ''}" pattern="###,###,###,###,###,##0.00" maxFractionDigits="2" minFractionDigits="2" />
+				<xls:col header="#{etq.divisaMinus}" value="#{derecho.divisa}"  bgcolor="#{derecho.mapaPropiedades['Divisa'] ne null ? 'ffff50' : ''}" />
+				<xls:col header="#{etq.calRetencion}" value="#{derecho.importeWITL}"  bgcolor="#{derecho.mapaPropiedades['WITL'] ne null ? 'ffff50' : ''}" pattern="###,###,###,###,###,##0.00" maxFractionDigits="12" minFractionDigits="2" />
+				<xls:col header="#{etq.calComision}" value=" #{derecho.importeFEE}" bgcolor="#{derecho.mapaPropiedades['FEE'] ne null ? 'ffff50' : ''}" pattern="###,###,###,###,###,##0.00" maxFractionDigits="12" minFractionDigits="2" />
+				<xls:col header="#{etq.fuente}" value="#{derecho.custodio}" bgcolor="#{derecho.mapaPropiedades['Custodio'] ne null ? '5050ff' : ''}" />
+				<xls:col header="#{etq.bovedaMinus}" value="#{derecho.boveda}" bgcolor="#{derecho.mapaPropiedades['Boveda'] ne null ? '5050ff' : ''}"  />
+				<xls:col header="#{etq.fechasAdicionales}" value="#{!empty derecho.fechasAdicionlesFormatoReporte ? derecho.fechasAdicionlesFormatoReporte : '-'}" bgcolor="#{derecho.mapaPropiedades['FAdic'] ne null ? 'ffff50' : ''}" />
+				<xls:col header="#{etq.estadoIndeval}" value="#{derecho.estadoMensaje}"  />
+				<xls:col header="#{etq.listadaDeslistadaMILA}" value="#{!empty derecho.vEmisionesCalendario ? derecho.vEmisionesCalendario : 'DESLISTADA'}"  />
+			</xls:row> 
+        </xls:table>
+    </xls:document>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+  <bean id="indeval.divint.factory"
+    class="org.springframework.context.support.ClassPathXmlApplicationContext">
+    <constructor-arg>
+      <list>
+      	<value>persistence-core-dao-context.xml</value>
+      	<value>middleware-core-services-context.xml</value>
+      	<value>datasource-portalinternacional-context.xml</value>
+      	<value>jms-portalinternacional-context.xml</value>
+        <value>db-propertiesContext.xml</value>
+        <value>moiJmsContext.xml</value>
+         <value>sicJmsContext.xml</value>
+        <value>persistence-portalinternacional-context.xml</value>
+        <value>middleware-portalinternacional-transactions-context.xml</value>
+        <value>middleware-portalinternacional-services-context.xml</value>
+        <value>middleware-portalinternacional-ejbclient-context.xml</value>
+        <value>middleware-portalinternacional-wsclient-context.xml</value>
+        <value>classpath*:/applicationContext-sign.xml</value>
+      </list>
+    </constructor-arg>
+  </bean>
+    
+</beans>

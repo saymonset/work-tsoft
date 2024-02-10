@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:xls="http://indeval.com/jsf/xls"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cvt="http://indeval.com/jsf/converters">
+    <xls:document
+    	documentName="consultaresultadoEjerDerCapExportacion"
+    	documentTitle="Consulta Derechos Pagados De Beneficiarios"
+		institucion="#{consultaDetalleEjerDerCapExportacion.agenteFirmado.id} #{consultaDetalleEjerDerCapExportacion.agenteFirmado.folio} #{consultaDetalleEjerDerCapExportacion.agenteFirmado.razon}"
+		fecha="#{consultaDetalleEjerDerCapExportacion.fechaActual}">
+		<xls:table value="#{consultaDetalleEjerDerCapExportacion.parametros}" var="parametros">
+			<xls:row>
+				<xls:col header="#{etq.institucionMinus}" value="#{consultaDetalleEjerDerCapExportacion.desParamInstitucion}"/>
+				<xls:col header="#{etq.cuentaMinus}" value="#{consultaDetalleEjerDerCapExportacion.desParamCuenta}"/>
+				<xls:col header="#{etq.tv}" value="#{consultaDetalleEjerDerCapExportacion.descParamTV}"/>
+				<xls:col header="#{etq.emisoraMinus}" value="#{consultaDetalleEjerDerCapExportacion.descParamEmisora}"/>
+			    <xls:col header="#{etq.serieMinus}" value="#{consultaDetalleEjerDerCapExportacion.desParamSerie}"/>					 					
+				<xls:col header="#{etq.isin}" value="#{consultaDetalleEjerDerCapExportacion.desParamIsin}" />
+				<xls:col header="#{etq.fechaCorteInicial}" value="#{consultaDetalleEjerDerCapExportacion.desParamFechaCorteInicial}" pattern="dd/MM/yyyy"/>
+                <xls:col header="#{etq.fechaCorteFinal}" value="#{consultaDetalleEjerDerCapExportacion.desParamFechaCorteFinal}" pattern="dd/MM/yyyy"/>
+                <xls:col header="#{etq.fechaPagoInicial}" value="#{consultaDetalleEjerDerCapExportacion.desParamFechaPagoInicial}" pattern="dd/MM/yyyy"/>
+                <xls:col header="#{etq.fechaPagoFinal}" value="#{consultaDetalleEjerDerCapExportacion.desParamFechaPagoFinal}" pattern="dd/MM/yyyy" />
+                <xls:col header="#{etq.custodio}" value="#{consultaDetalleEjerDerCapExportacion.desParamCustodio}"/>
+                <xls:col header="#{etq.divisaMinus}" value="#{consultaDetalleEjerDerCapExportacion.desParamDivisa}"/>
+                <xls:col header="#{etq.estadoDerecho}" value="#{consultaDetalleEjerDerCapExportacion.descParamEstadoDerecho}"  /> 
+                <xls:col header="#{etq.nombreBeneficiarioRazonSocial}" value="#{consultaDetalleEjerDerCapExportacion.descParamNombreBeneficiario}"/>
+                <xls:col header="#{etq.reportesFormatosWGIIN}" value="#{consultaDetalleEjerDerCapExportacion.descParamGiin}" />
+                <xls:col header="#{etq.rfc}" value="#{consultaDetalleEjerDerCapExportacion.descParamRFC}"/>
+                <xls:col header="#{etq.uoiDetalle}" value="#{consultaDetalleEjerDerCapExportacion.descParamUOI}"/>
+                <xls:col header="#{etq.pais}" value="#{consultaDetalleEjerDerCapExportacion.descParamPais}"/>
+                <xls:col header="#{etq.tipoBeneficiario}" value="#{consultaDetalleEjerDerCapExportacion.descParamTipoBeneficiario}"/>
+                <xls:col header="#{etq.tipoFormato}" value="#{consultaDetalleEjerDerCapExportacion.descParamTipoFormato}" />
+                <xls:col header="#{etq.estadoFormato}" value="#{consultaDetalleEjerDerCapExportacion.descParamEstadoFormatoW}" />
+                <xls:col header="#{etq.referenciaCustodio}" value="#{consultaDetalleEjerDerCapExportacion.descParamReferenciaCustodio}"/>
+                <xls:col header="#{etq.montoBrutoMinus}" value="#{consultaDetalleEjerDerCapExportacion.descParamMontoBruto}"/>
+                <xls:col header="#{etq.impuestoRetenidoMinus}" value="#{consultaDetalleEjerDerCapExportacion.descParamImpuestoRetenido}"/>
+                <xls:col header="#{etq.montoNetoMinus}" value="#{consultaDetalleEjerDerCapExportacion.descParamMontoNeto}"/>
+                <xls:col header="#{etq.porcentajeRetencion}" value="#{consultaDetalleEjerDerCapExportacion.descParamPorcentajeRetencion}"/>
+                <xls:col header="#{etq.proporcionMinus}" value="#{consultaDetalleEjerDerCapExportacion.descParamProporcion}"/>
+                <xls:col header="#{etq.cantidadDeTitulosMinus}" value="#{consultaDetalleEjerDerCapExportacion.descParamCantidadTitulos}"/>
+                <xls:col header="#{etq.referenceNumber}" value="#{consultaDetalleEjerDerCapExportacion.descParamReferenceNumber}"/>
+                
+			</xls:row>
+		</xls:table>
+		<xls:table value="#{consultaDetalleEjerDerCapExportacion.parametros}" var="parametros">
+			<xls:row>
+				<xls:col header="#{etq.registrosEncontrados}" value="#{consultaDetalleEjerDerCapExportacion.paginaVO.totalRegistros}" />
+			</xls:row>
+		</xls:table>
+		<xls:table value="#{consultaDetalleEjerDerCapExportacion.resultadosConsulta}" var="resultado">
+            <xls:row>
+            	<xls:col header="#{etq.idDerecho}" value="#{resultado.idDerechoCapital}" footer="#{etq.totalMinus}" />
+                <xls:col header="#{etq.institucionMinus}" value="#{resultado.idFolioInstitucion}"  />
+                <xls:col header="#{etq.cuentaMinus}" value="#{resultado.cuenta}"  />
+                <xls:col header="#{etq.uoi}" value="#{resultado.uoi}"  />
+                <xls:col header="#{etq.referenciaCustodio}" value="#{resultado.adp}" />
+            	<xls:col header="#{etq.tv}" value="#{resultado.tipoValor}"  />
+                <xls:col header="#{etq.emisoraMinus}" value="#{resultado.emisora}"  />
+            	<xls:col header="#{etq.serieMinus}" value="#{resultado.serie}"  />
+                <xls:col header="#{etq.isin}" value="#{resultado.isin}"  />
+                <xls:col header="#{etq.fechaCorteMinus}" value="#{resultado.fechaCorte}" pattern="dd/MM/yyyy"/>
+                <xls:col header="#{etq.fechaPago}" value="#{resultado.fechaPago}" pattern="dd/MM/yyyy" />
+                <xls:col header="#{etq.custodio}" value="#{resultado.custodio}"  />
+                <xls:col header="#{etq.nombreBeneficiarioRazonSocial}" value="#{resultado.beneficiario}"/>
+                <xls:col header="#{etq.direccionMinus}"
+                	value="#{resultado.domicilio.street} #{resultado.domicilio.outerNumber} #{resultado.domicilio.interiorNumber} #{resultado.domicilio.postalCode} #{resultado.domicilio.cityTown} #{resultado.domicilio.stateProvince}"/>
+                <xls:col header="#{etq.pais}" value="#{resultado.paisIncorporacion}"  />
+                <xls:col header="#{etq.tipoFormato}" value="#{resultado.formatoPantalla}"  />
+                <xls:col header="#{etq.fechaFormato}" value="#{resultado.fechaFormatoW}" pattern="dd/MM/yyyy"/>
+                <xls:col header="#{etq.reportesFormatosWGIIN}" value="#{resultado.giin}" />
+                <xls:col header="#{etq.fechaNacimiento}" value="#{resultado.fechaNacimientoFW}" pattern="dd/MM/yyyy"/>
+                <xls:col header="#{etq.ssn_ein}" value="#{resultado.ssnEin}" />
+                <xls:col header="#{etq.tiin}" value="#{resultado.tiin}" />
+                <xls:col header="#{etq.porcentajeRetencion}" value="#{resultado.porcentajeRetencionReal} #{etq.porcentaje}" />
+                <xls:col header="#{etq.cantidadTit}" value="#{resultado.asignacion}"
+                         footer="#{consultaDetalleEjerDerCapExportacion.consultaDerechosBeneficiarioTO.totalAsignacion}" 
+                         pattern="###,###,###,###,###,##0" />
+                <xls:col header="#{etq.rfc}" value="#{resultado.rfc}" />
+                <xls:col header="#{etq.proporcionMinus}" value="#{resultado.proporcion}" pattern="#####0.0##########" />
+                <xls:col header="#{etq.fee}" value="#{resultado.fee}" pattern="#####0.0##########" />
+                <xls:col header="#{etq.montoBrutoMinus}" value="#{resultado.montoBruto}"
+                         footer="#{consultaDetalleEjerDerCapExportacion.consultaDerechosBeneficiarioTO.totalMontoBruto}" 
+                         pattern="$ ###,###,###,###,###,##0.00" />
+                <xls:col header="#{etq.montoFee}" value="#{resultado.montoFee}"
+                         footer="#{consultaDetalleEjerDerCapExportacion.consultaDerechosBeneficiarioTO.totalMontoFee}" 
+                         pattern="$ ###,###,###,###,###,##0.00" />
+                <xls:col header="#{etq.impuestoRetenidoMinus}" value="#{resultado.impuestoRetenido}" 
+                         footer="#{consultaDetalleEjerDerCapExportacion.consultaDerechosBeneficiarioTO.totalImpuestoRetenido}"
+                         pattern="$ ###,###,###,###,###,##0.00" />
+                <xls:col header="#{etq.montoNetoMinus}" value="#{resultado.montoNeto}" 
+                         footer="#{consultaDetalleEjerDerCapExportacion.consultaDerechosBeneficiarioTO.totalMontoNeto}"
+                         pattern="$ ###,###,###,###,###,##0.00" />
+                <xls:col header="#{etq.divisaMinus}" value="#{resultado.divisa}" />
+                <xls:col header="#{etq.estado}" value="#{resultado.descEstatusDerecho}" />
+                <xls:col header="#{etq.tipoBeneficiario}" value="#{resultado.tipoBeneficiario.descTipoBeneficiario}"  />
+                <xls:col header="#{etq.estadoFormato}" value="#{resultado.estadoW}" />
+                <xls:col header="#{etq.referenceNumber}" value="#{resultado.referenceNumber}" />
+                <xls:col header="#{etq.exemptPayeeCode}" value="#{resultado.exempPayeeCode}" />
+                <xls:col header="#{etq.exemptionFromFatcaReportingCode}" value="#{resultado.exemptFatcaRepCode}"  />
+                <xls:col header="#{etq.tipoDerecho}" value="#{resultado.tipoDerecho}"/>
+           </xls:row>
+        </xls:table>
+    </xls:document>
+</html>

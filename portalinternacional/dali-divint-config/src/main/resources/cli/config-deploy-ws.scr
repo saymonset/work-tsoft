@@ -1,0 +1,2 @@
+# Despliegue del componente WS
+deploy DerechosCapitalesWS.war --server-groups=${DerechosCapitalesWSGrupo}

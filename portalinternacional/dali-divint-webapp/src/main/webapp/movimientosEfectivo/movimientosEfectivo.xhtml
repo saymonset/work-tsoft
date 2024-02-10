@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Cambio Multidivisas-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	  xmlns:a4j="http://richfaces.org/a4j"
+	  xmlns:rich="http://richfaces.org/rich"
+	  xmlns:t="http://myfaces.apache.org/tomahawk"
+	  xmlns:indeval="http://indeval.com/indeval">
+
+<ui:composition template="/layoutCaptura.xhtml">
+	<ui:define name="head">
+		<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/mostrarFirmaDigital.js"></script>
+		<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js"></script>
+	</ui:define>
+
+	<ui:define name="tituloSeccion">
+		<h:outputText value="Captura de Movimientos de Efectivo Divisas Extranjeras" />
+	</ui:define>
+	<ui:define name="subtituloSeccion">
+		<h:outputText value="" />
+	</ui:define>
+
+	<ui:define name="tituloEncabezado">
+		<h:outputText value=""></h:outputText>
+	</ui:define>
+
+	<ui:define name="seccionForma">
+		<a4j:keepAlive beanName="movimientosEfectivoBean" />
+		<h:panelGroup id="init">
+			<h:outputText value="#{movimientosEfectivoBean.inicializar}"/>
+		</h:panelGroup>
+		<h:panelGroup id="mensajeUsuario">
+			<div style="min-height: 21px;">
+				<rich:messages warnClass="warning" infoClass="info"
+							   errorClass="error" ajaxRendered="true" showDetail="false"
+							   showSummary="true" layout="list">
+					<f:facet name="infoMarker">
+						<h:panelGroup>
+							<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+					</f:facet>
+
+					<f:facet name="errorMarker">
+						<h:panelGroup>
+							<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+					</f:facet>
+				</rich:messages>
+
+				<div id="divWarnings" class="warning" style="display:none;">
+					<p id="textoWarning">
+					</p>
+				</div>
+			</div>
+		</h:panelGroup>
+		<h:panelGroup id="general">
+			<table width="50%" border="0" cellspacing="5" align="center">
+				<tr>
+					<td>&#160;</td>
+					<td align="center">
+						<b><h:outputText styleClass="texto"
+										 value="Participante" /></b>
+					</td>
+					<td align="center">
+						<b><h:outputText styleClass="texto"
+										 value="Institución" /></b>
+					</td>
+				</tr>
+				<tr>
+					<td align="left">
+						<h:outputText styleClass="texto" value="Institución" />
+					</td>
+					<td align="center">
+						<h:inputText autocomplete="off" id="idFolioParticipante" size="4" maxlength="5" tabindex="10"
+									 value="#{movimientosEfectivoBean.efectivoInternacionalVO.participante}"
+									 styleClass='#{!movimientosEfectivoBean.institucionIndeval ? "readonly" : "campoNumericoAsterisco" }'>
+							<a4j:support event="onchange" oncomplete="establecerFoco('divisa');"
+										 reRender="nombreParticipante, divisa, boveda, importe, mensajeUsuario,saldoDisponible, saldoActual"
+										 actionListener="#{movimientosEfectivoBean.validarParticipante}"/>
+						</h:inputText>
+
+						<!-- <rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="idFolioParticipante"
+							ignoreDupResponses="true"
+							eventsQueue="folioTraspasanteQueue"
+							requestDelay ="#{inicioSesionBean.delay}"
+							suggestionAction="#{movimientoEfectivoInt.buscarParticipante}"
+							var="coincidencia" fetchValue="#{coincidencia.claveTipoInstitucion}#{coincidencia.folio}"
+							minChars="1" width="450" nothingLabel="Sin coincidencias">
+							<h:column>
+								<h:outputText value="#{coincidencia.claveTipoInstitucion}#{coincidencia.folio}" /> - <h:outputText
+										value="#{coincidencia.nombre}" />
+							</h:column>
+							<a4j:support event="onselect" actionListener="#{movimientoEfectivoInt.validarParticipante}"
+								reRender="nombreParticipante, divisa, boveda" />
+						</rich:suggestionbox> -->
+					</td>
+					<td align="center">
+						<h:inputText autocomplete="off" id="nombreParticipante" size="10" maxlength="5"
+									 styleClass="readonly" value="#{movimientosEfectivoBean.efectivoInternacionalVO.nombreInstitucion}" />
+					</td>
+				</tr>
+				<tr>
+					<td align="left">
+						<h:outputText styleClass="texto" value="Divisa" />
+					</td>
+					<td align="center">
+						<h:selectOneMenu id="divisa" required="false" tabindex="30"
+										 value="#{movimientosEfectivoBean.efectivoInternacionalVO.divisa.idString}">
+							<f:selectItems value="#{movimientosEfectivoBean.divisas}" />
+							<a4j:support event="onchange" actionListener="#{movimientosEfectivoBean.seleccionarDivisa}"
+										 reRender="boveda, saldoDisponible, saldoActual" />
+						</h:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td align="left">
+						<h:outputText styleClass="texto" value="Bóveda" />
+					</td>
+					<td align="center">
+						<h:selectOneMenu id="boveda" required="false" tabindex="30"
+										 value="#{movimientosEfectivoBean.efectivoInternacionalVO.boveda.idBovedaStr}">
+							<f:selectItems value="#{movimientosEfectivoBean.bovedas}" />
+							<a4j:support event="onchange" actionListener="#{movimientosEfectivoBean.seleccionarBoveda}"
+										 reRender="saldoDisponible, saldoActual" />
+						</h:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td align="left">
+						<h:outputText styleClass="texto" value="Tipo de Movimiento" />
+					</td>
+					<td align="center">
+						<h:selectOneRadio id="tipoMovimiento" value="#{movimientosEfectivoBean.efectivoInternacionalVO.tipoMovimiento}">
+							<f:selectItem itemValue="0" itemLabel="Depósito" />
+							<f:selectItem itemValue="1" itemLabel="Retiro" />
+							<a4j:support event="onchange" actionListener="#{movimientosEfectivoBean.seleccionarTipoMovimiento}"
+										 reRender="saldoDisponible, saldoActual, refNumerica, refNumericaLbl, referenciaRelacionada, referenciaRelacionadaLbl, 
+										 comentarios, comentariosLbl, panelFechaLiquidacion, panelLblFechaLiquidacion, divisa, boveda" />
+						</h:selectOneRadio>
+					</td>
+				</tr>
+				<tr>
+					<td align="left">
+						<h:panelGroup id="panelLblFechaLiquidacion">
+							<h:outputText styleClass="texto" value="Fecha Liquidación" rendered="#{movimientosEfectivoBean.renderReferencias}"/>
+						</h:panelGroup>
+					</td>
+					<td align="left">
+						<h:panelGroup id="panelFechaLiquidacion">
+							<rich:calendar id="fechaInicialLiquidacion" rendered="#{movimientosEfectivoBean.renderReferencias}"
+										   inputClass="textoControles" inputStyle="background-color: #ffffe6; font-size:13px;"
+										   value="#{movimientosEfectivoBean.efectivoInternacionalVO.fechaLiquidacion}" tabindex="4"
+										   datePattern="dd/MM/yyyy" isDayEnabled="isDayEnabled"/>
+						</h:panelGroup>
+					</td>
+				</tr>
+				<tr>
+					<td align="left">
+						<h:outputText styleClass="texto" value="Saldo Disponible" />
+					</td>
+					<td align="left">
+						<h:inputText autocomplete="off" id="saldoDisponible" maxlength="5" converter="formatoDecimalConverter"
+									 styleClass="readonly"  value="#{movimientosEfectivoBean.efectivoInternacionalVO.saldoDisponible}"/>
+					</td>
+				</tr>
+				<tr>
+					<td align="left">
+						<h:outputText styleClass="texto" value="Importe" />
+					</td>
+					<td align="left">
+						<h:inputText autocomplete="off" id="importe" converter="formatoDecimalConverter"
+									 styleClass='#{movimientosEfectivoBean.disableImporte ? "campoNumericoDecimal campoNumericoDecimalDosDecimales notPaste" : "readonly" }'
+									 value="#{movimientosEfectivoBean.efectivoInternacionalVO.importeTraspasar}">
+							<a4j:support  event="onchange" actionListener="#{movimientosEfectivoBean.onChangeImporte}"
+										 reRender="saldoActual, mensajeUsuario" />
+						</h:inputText>
+					</td>
+				</tr>
+				<tr>
+					<td align="left">
+						<h:outputText styleClass="texto" value="Saldo Actual" />
+					</td>
+					<td align="left">
+						<h:inputText autocomplete="off" id="saldoActual" converter="formatoDecimalConverter"
+									 styleClass="readonly"  value="#{movimientosEfectivoBean.efectivoInternacionalVO.saldoEfectivo}"/>
+					</td>
+				</tr>
+				<tr>
+					<td align="left">
+						<h:panelGroup id="refNumericaLbl">
+							<h:outputText styleClass="texto"
+										  value="Referencia Numérica" rendered="#{movimientosEfectivoBean.renderReferencias}"/>
+						</h:panelGroup>
+					</td>
+					<td align="left">
+						<h:panelGroup id="refNumerica">
+							<h:inputText autocomplete="off" styleClass="campoNumerico notPaste noEsCero" rendered="#{movimientosEfectivoBean.renderReferencias}"
+										 value="#{movimientosEfectivoBean.efectivoInternacionalVO.referenciaNumerica}" maxlength="16">
+								<a4j:support event="onchange" actionListener="#{movimientosEfectivoBean.notIsZero}" reRender="mensajeUsuario" />
+							</h:inputText>
+						</h:panelGroup>
+					</td>`
+				</tr>
+				<tr>
+					<td align="left">
+						<h:panelGroup id="referenciaRelacionadaLbl">
+							<h:outputText styleClass="texto" value="Referencia Relacionada"/>
+						</h:panelGroup>
+					</td>
+					<td align="left">
+						<h:panelGroup id="referenciaRelacionada">
+							<h:inputText autocomplete="off" styleClass="texto" value="#{movimientosEfectivoBean.efectivoInternacionalVO.referenciaRelacionada}" maxlength="16"/>
+						</h:panelGroup>
+					</td>
+				</tr>
+				<tr>
+					<td align="left">
+						<h:panelGroup id="comentariosLbl">
+							<h:outputText styleClass="texto"
+										  value="Notas/Comentarios" rendered="#{movimientosEfectivoBean.renderReferencias}"/>
+						</h:panelGroup>
+					</td>
+					<td align="left">
+						<h:panelGroup id="comentarios">
+							<h:inputTextarea autocomplete="off" value="#{movimientosEfectivoBean.efectivoInternacionalVO.notasComentarios}"
+											 styleClass="texto textoComentarios"  rendered="#{movimientosEfectivoBean.renderReferencias}"/>
+						</h:panelGroup>
+					</td>
+				</tr>
+			</table>
+			<!-- La facultad debe reflejar el valor de SeguridadConstants.FACULTAD_FIRMA_OPERACION -->
+			<indeval:authorizeFaculty userInFaculty="CON_CERTIFICADO">
+				<h:panelGroup id="panelFirma">
+					<div style="display: none">
+						<textarea id="isoSinFirmar" name="isoSinFirmar">#{movimientosEfectivoBean.isoSinFirmar}</textarea>
+						<textarea id="numeroSerie" name="numeroSerie" ></textarea>
+						<textarea  id="numeroSerieUsuario" name="numeroSerieUsuario">#{sessionScope.usuario.numeroSerieCertificado}</textarea>
+						<textarea id="isoFirmado" name="isoFirmado"></textarea>
+						<textarea  id="hashIso" name="hashIso">#{movimientosEfectivoBean.hashIso}</textarea>
+					</div>
+					<h:panelGroup rendered="#{not empty movimientosEfectivoBean.isoSinFirmar}">
+						<script>
+							function firmarOperacion(){
+								var btnGuardar = $j('#daliForm\\:guardar2')[0];
+								console.log('autorizaSeleccion');
+								btnGuardar.click();
+							}
+						</script>
+						<ui:decorate template="/firmaDigitalSimple.xhtml">
+							<ui:define name="isoSinFirmar"><h:outputText value="#{movimientosEfectivoBean.isoSinFirmar}" /></ui:define>
+						</ui:decorate>
+					</h:panelGroup>
+				</h:panelGroup>
+			</indeval:authorizeFaculty>
+		</h:panelGroup>
+
+	</ui:define>
+
+	<ui:define name="botones">
+		<div class="refrescar" style="float: left;">
+			<a4j:status id="commonStatus">
+				<f:facet name="start">
+					<h:panelGroup>
+						<h:graphicImage value="/images/ajax-loader.gif" />
+						<h:outputText value="#{etq.buscando}"></h:outputText>
+					</h:panelGroup>
+				</f:facet>
+			</a4j:status>
+		</div>
+		<h:panelGrid width="25%">
+			<h:panelGroup id="botones">
+				<div class="limpiar">
+					<h:commandButton id="btnLimpiar" image="/images/transparent.gif"
+									 styleClass="submit" render="general"
+									 actionListener="#{movimientosEfectivoBean.limpiar}">
+					</h:commandButton>
+				</div>
+				<div class="guardar">
+					<a4j:commandButton id="guardar" image="/images/transparent.gif"
+									   styleClass="submit" onclick="if (! window.confirm('¿Seguro que desea realizar movimiento de efectivo internacional?') ) {return false;}"
+									   reRender="general, botones, panelFirma, mensajeUsuario"
+									   actionListener="#{movimientosEfectivoBean.enviarOperacion}"
+									   tabindex="60">
+					</a4j:commandButton>
+					<a4j:commandButton id="guardar2" image="/images/transparent.gif"
+									   styleClass="hidden"
+									   reRender="general, botones, panelFirma, mensajeUsuario"
+									   actionListener="#{movimientosEfectivoBean.enviarOperacion}"
+									   tabindex="60">
+					</a4j:commandButton>
+				</div>
+			</h:panelGroup>
+		</h:panelGrid>
+	</ui:define>
+
+</ui:composition>
+
+</html>

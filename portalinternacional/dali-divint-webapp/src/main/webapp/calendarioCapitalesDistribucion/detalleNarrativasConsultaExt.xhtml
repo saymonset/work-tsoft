@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:t="http://myfaces.apache.org/tomahawk">
+
+    <ui:composition template="/layoutPopUp.xhtml"> 
+    	<ui:define name="head">	
+    		<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/autorizacionEnvioMoi.js">
+				
+			</script>				
+		</ui:define>
+        <ui:define name="subtitulo">
+        </ui:define>
+        <ui:define name="body">
+        	<h:form id="narrativaForm">         
+            	<h:outputText value="#{etq.narTitulo}" />
+            	<h:outputText value="#{consultaNarrativasCapitalesBean.initConsulta}" />
+            	<a4j:keepAlive beanName="consultaNarrativasCapitalesBean" />
+            	<h:panelGroup id="mensajeUsuario">
+            <div style="min-height: 100%;">
+                <rich:messages warnClass="warning" infoClass="info"
+                    errorClass="error" ajaxRendered="true" showDetail="false"
+                    showSummary="true" layout="list">
+                    <f:facet name="infoMarker">
+                        <h:panelGroup>
+                            <h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+                    </f:facet>
+
+                    <f:facet name="errorMarker">
+                        <h:panelGroup>
+                            <h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+                    </f:facet>
+                </rich:messages>
+
+                <div id="divWarnings" class="warning" style="display: none;" >
+                    <p id="textoWarning"></p>
+                </div>
+            </div>
+        </h:panelGroup>               							
+		 <h:graphicImage value="/images/blank.gif" width="900px"
+	                    height="1px">
+	     </h:graphicImage>
+         <table width="100%">
+         	<tr>
+           		<td align="left" width="100%" colspan="2">
+      				<h:panelGroup id="tablaResultados" rendered="#{not empty consultaNarrativasCapitalesBean.listaNarrativas}">
+      					<table border="0" class="tablaGeneral" width="100%" cellspacing="0px"
+                  				style="display: #{empty consultaNarrativasCapitalesBean.listaNarrativas?'none':'inline-table'}">                           
+             		 		<tr>                    	
+                            	<th class="tituloTabla"> 
+                            		<h:outputText value="#{etq.folioIndeval}" />                            		
+                            	</th>                            	                            	                         	                                                      	                            	                                
+                                 <th class="tituloTabla">
+                                	<h:outputText value="#{etq.tipoDerechoMV}" />
+                                </th>        
+                                <th class="tituloTabla">
+									<h:outputText value="#{etq.narrativa}" />
+								</th>							                                                                                                              
+							</tr>														                            
+                           <t:dataList  id="resultados" value="#{consultaNarrativasCapitalesBean.listaNarrativas}" var="narrativa" rowIndexVar="indice" >
+                                <tr></tr>
+                                <tr>                                                            
+                                	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+                                		<h:outputText value="#{narrativa.folioIndeval}" />                                		
+                                	</td>                                	                                                        
+                                	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+                                		<h:outputText value="#{narrativa.tipoPagoCaev}" title="#{narrativa.descripcionCaev}"/>  
+                                		<h:outputText value="/" />
+                                		<h:outputText value="#{narrativa.tipoPagoCamv}" title="#{narrativa.descripcionCamv}"/>                                		
+                                	</td>                                	
+                                	<td class = "#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >                                			
+                                			<h:outputText value="#{narrativa.narrativa}"/>
+                                	</td>                               	                      			                                				                                                                             	
+                                </tr>
+                            </t:dataList>                                                                    
+                    	</table>                    
+             		</h:panelGroup>     			
+                  </td>
+                 </tr>
+               </table>	               	                  				              	           							              	                     	                    			                                    									                 						 		
+		</h:form>				 
+   	</ui:define>        
+ </ui:composition>
+</html>

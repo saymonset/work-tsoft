@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:xls="http://indeval.com/jsf/xls"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document documentName="consultaBeneficiariosDerecho" documentTitle="Consulta de Beneficiarios del Derecho"
+		institucion="#{adminBeneficiariosDerechoBean.agenteFirmado.id} #{adminBeneficiariosDerechoBean.agenteFirmado.folio} #{adminBeneficiariosDerechoBean.agenteFirmado.razon}"
+		fecha="#{adminBeneficiariosDerechoBean.fechaActual}">
+        <xls:br />         
+                        	
+	        <xls:table value="#{adminBeneficiariosDerechoBean.reporte}" var="reporte">
+	            <xls:row>
+	            	<xls:col header="#{etq.cuenta}" value="#{reporte.claveInstitucion} #{reporte.nombreInstitucion} #{reporte.cuenta}" />
+	                <xls:col header="#{etq.tipoValor}" value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.emision.tv}" oddColorDark="true" />
+	                <xls:col header="#{etq.emisora}" value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.emision.emisora}" oddColorDark="true" />
+	                <xls:col header="#{etq.serie}" value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.emision.serie}" oddColorDark="true" />
+	                <xls:col header="#{etq.cupon}" value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.emision.cupon}" oddColorDark="true" />
+	                <xls:col header="#{etq.fechaDePago}" value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.fechaPago}" oddColorDark="true" pattern="dd/MM/yyyy"/>                		
+	                <xls:col header="#{etq.fechaCorte}" value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.fechaCorte}" oddColorDark="true" pattern="dd/MM/yyyy"/>
+	                <xls:col header="#{etq.isin}" value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.emision.isin}" oddColorDark="true"/>                   
+	                <xls:col header="#{etq.institucion}" value="#{reporte.claveInstitucion}" />
+	                <xls:col header="#{etq.adpNumber}" value="#{reporte.adpNumber}" oddColorDark="true"/>
+	                <xls:col header="#{etq.uoi}" value="#{reporte.uoi}" oddColorDark="true" />                		 
+	                <xls:col header="#{etq.nombreDelBeneficiario}" value="#{reporte.nombre}" oddColorDark="true"/>                		 
+	                <xls:col header="#{etq.w8benDireccionResidencialOnly}" value="#{reporte.direccion}" oddColorDark="true"/>
+	                <xls:col header="#{etq.tipoDeFormato}" value="#{reporte.tipoFormato}"  oddColorDark="true"/>                		 
+	                <xls:col header="#{etq.tipoBeneficiario}" value="#{reporte.tipoBeneficiario}" oddColorDark="true"/>                		 
+	                <xls:col header="#{etq.w8benPaisResidencialOnly}" value="#{reporte.country}" oddColorDark="true"/>                		 
+	                <xls:col header="#{etq.porcentajeRetencionMinus}" value="#{reporte.porcentajeRetencion} %" oddColorDark="true" pattern="#,##0"/>
+	                <xls:col header="#{etq.cantidadDeTitulos}" value="#{reporte.posicion}" oddColorDark="true" pattern="#,##0"/>
+	                <xls:col header="#{etq.w8imyRFCOnly}" value="#{reporte.rfc}" oddColorDark="true"/>                		 
+	                <xls:col header="#{etq.proporcion}" value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.proporcion}" oddColorDark="true" pattern="#,##0.000000"/>                
+	                <xls:col header="#{etq.montoBruto}" value="#{reporte.monto}" oddColorDark="true" pattern="$##,##0.00"/>                		 
+	                <xls:col header="#{etq.impuestoRetenido}" value="#{reporte.montoRetenido}" oddColorDark="true" pattern="$##,##0.00"/>                		 
+	                <xls:col header="#{etq.montoNeto}" value="#{reporte.montoPagado}" oddColorDark="true" pattern="$##,##0.00"/>
+				</xls:row>			
+			</xls:table>	 
+			
+			  <xls:table value="" var="totales">
+	            <xls:row>
+	            	<xls:col header="" value="" />
+	                <xls:col header="" value="" />
+	                <xls:col header="" value="" />
+	                <xls:col header="" value="" />
+	                <xls:col header="" value="" />
+	                <xls:col header="" value="" />                		
+	                <xls:col header="" value="" />
+	                <xls:col header="" value="" />                   
+	                <xls:col header="" value="" />
+	                <xls:col header="" value="" />
+	                <xls:col header="" value="" />                		 
+	                <xls:col header="" value="" />                		 
+	                <xls:col header="" value="" />
+	                <xls:col header="" value="" />                		 
+	                <xls:col header="" value="" />                		 
+	                <xls:col header="" value="" />                		 
+	                <xls:col header="" value="" />
+	                <xls:col header="#{etq.cantidadDeTitulos}" value="#{adminBeneficiariosDerechoBean.totalesReportes[5]}" oddColorDark="true" pattern="#,##0"/>
+	                <xls:col header="" value="" />                		 
+	                <xls:col header="" value="" />
+	                <xls:col header="#{etq.montoBruto}" value="#{adminBeneficiariosDerechoBean.totalesReportes[3]}" 		oddColorDark="true" pattern="$##,##0.00" />                		 
+	                <xls:col header="#{etq.impuestoRetenido}" value="#{adminBeneficiariosDerechoBean.totalesReportes[4]}" oddColorDark="true" pattern="$##,##0.00"/>                
+	                <xls:col header="#{etq.montoNeto}" value="#{adminBeneficiariosDerechoBean.totalesReportes[2]}" 		oddColorDark="true" pattern="$##,##0.00"/>               		 	                	           	            																	 
+				</xls:row>			
+			</xls:table>
+    </xls:document>
+</html>

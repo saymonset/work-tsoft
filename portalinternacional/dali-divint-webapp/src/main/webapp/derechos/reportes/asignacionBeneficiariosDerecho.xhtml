@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:xls="http://indeval.com/jsf/xls"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+       <xls:document documentName="detalleAsignacionBeneficiarios" documentTitle="Reporte de Carga" >        
+	        <xls:table value="#{agregarBenefDerechoBean.detalleCarga}" var="detalle" >
+	            <xls:row>
+	            	<xls:col header="#{etq.idFolioMinus}" value="#{detalle.folioID}" align="CENTER" />
+	            	<xls:col header="#{etq.cuentaMinus}" value="#{detalle.cuenta}" align="CENTER" />
+	            	<xls:col header="#{etq.tipoValorMinus}" value="#{detalle.tipoValor}" align="CENTER" />
+	            	<xls:col header="#{etq.emisoraMinus}" value="#{detalle.emisora}" align="CENTER" />
+	            	<xls:col header="#{etq.serieMinus}" value="#{detalle.serie}" align="CENTER" />
+	            	<xls:col header="#{etq.fechaCorteMinus}" value="#{detalle.fechaCorteString}" align="CENTER" />
+	            	<xls:col header="#{etq.uoi}" value="#{detalle.uoi}" align="CENTER" />
+					<xls:col header="#{etq.cantidadDeTitulosMinus}" value="#{detalle.asignacion}" align="CENTER" />
+					<xls:col header="#{etq.porcentajeRetencion}" value="#{detalle.porcentajeRetencion}" align="CENTER" />
+					<xls:col header="#{etq.descripcionError}" value="#{(empty detalle.error) ? 'Registro Correcto' : detalle.error}" align="CENTER" />
+	            </xls:row>
+	        </xls:table>
+	   </xls:document>
+
+</html>

@@ -1,0 +1,75 @@
+<html xmlns:txt="http://indeval.com/jsf/txt"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cvt="http://indeval.com/jsf/converters">
+    <txt:document documentName="consultaBeneficiariosDerecho"
+    	documentTitle="Consulta de Beneficiarios del Derecho"
+        institucion="#{adminBeneficiariosDerechoBean.agenteFirmado.id} #{adminBeneficiariosDerechoBean.agenteFirmado.folio} #{adminBeneficiariosDerechoBean.agenteFirmado.razon}">
+		<txt:iterator value="#{adminBeneficiariosDerechoBean.paginaReportes.registros}" var="cuenta">
+		
+			<txt:table value="#{adminBeneficiariosDerechoBean}" currentBean="cuentaVacia">
+				<txt:row>
+					<txt:col align="left" header="#{etq.cuenta}" value="#{cuenta.claveInstitucion} #{cuenta.nombreInstitucion} #{cuenta.cuenta}" size="15"/>						
+				</txt:row>			
+			</txt:table>
+			                         
+	        <txt:table value="#{adminBeneficiariosDerechoBean.beneficiariosPorcuentaReporte[cuenta.idCuentaNombrada]}" var="detalle">
+	            <txt:row>
+	                <txt:col header="#{etq.tipoValor}" value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.emision.tv}" align="left" size="15"/>
+	                <txt:col header="#{etq.emisora}" value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.emision.emisora}" align="left" size="10"/>
+	                <txt:col header="#{etq.serie}" value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.emision.serie}" align="left" size="10"/>
+	                <txt:col header="#{etq.cupon}" value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.emision.cupon}" align="left" size="10"/>
+	                <txt:col header="#{etq.fechaDePago}" value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.fechaPago}" align="left" size="15">
+	                	<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+	                </txt:col>
+	                <txt:col header="#{etq.fechaCorte}" value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.fechaCorte}" align="left" size="15">
+			 			<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+	                </txt:col>                         
+	                <txt:col header="#{etq.isin}" value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.emision.isin}" align="left" size="15"/>                    
+	                <txt:col header="#{etq.idFolio}" value="#{cuenta.claveInstitucion}" align="left" size="15"/>
+	                <txt:col header="#{etq.adpNumber}" value="#{detalle.adpNumber}" align="left" size="20"/>
+	                <txt:col header="#{etq.uoi}" value="#{detalle.uoi}" align="left" size="50"/>                		 
+	                <txt:col header="#{etq.nombreDelBeneficiario}" value="#{detalle.nombre}" align="left" size="200"/>                		 
+	                <txt:col header="#{etq.w8benDireccionResidencialOnly}" value="#{detalle.direccion}" align="left" size="100"/>
+	                <txt:col header="#{etq.tipoDeFormato}" value="#{detalle.tipoFormato}" align="left" size="15"/>                		 
+	                <txt:col header="#{etq.tipoBeneficiario}" value="#{detalle.tipoBeneficiario}" align="left" size="30"/>                		 
+	                <txt:col header="#{etq.w8benPaisResidencialOnly}" value="#{detalle.country}" align="left" size="50"/>                		 
+	                <txt:col header="#{etq.porcentajeRetencionMinus}" value="#{detalle.porcentajeRetencion}" align="left" size="10">
+	                		<f:convertNumber pattern="#,##0'%'"/>
+	                </txt:col>                		 
+	                <txt:col header="#{etq.cantidadDeTitulos}" value="#{detalle.posicion}" align="left" size="25">
+	                		<f:convertNumber pattern="#,##0"/>
+	                </txt:col>                		 
+	                <txt:col header="#{etq.w8imyRFCOnly}" value="#{detalle.rfc}" align="left" size="25"/>                		 
+	                <txt:col header="#{etq.proporcion}" value="#{adminBeneficiariosDerechoBean.derechoSeleccionado.proporcion}" align="left" size="25">
+	                		<f:convertNumber pattern="#,##0.000000"/>
+	                </txt:col>                		 
+	                <txt:col header="#{etq.montoBruto}" value="#{detalle.monto}" align="left" size="25">
+	                		<f:convertNumber pattern="'$'##,##0.00"/>
+	                </txt:col>
+	                <txt:col header="#{etq.impuestoRetenido}" value="#{detalle.montoRetenido}" align="left" size="25">
+	                		<f:convertNumber pattern="'$'##,##0.00"/>
+	                </txt:col>
+	                <txt:col header="#{etq.montoNeto}" value="#{detalle.montoPagado}" align="left" size="25">
+	                		<f:convertNumber pattern="'$'##,##0.00"/>
+	                </txt:col>                		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		                 		 
+	            </txt:row>
+	        </txt:table>
+		       <txt:table value="#{adminBeneficiariosDerechoBean}" currentBean="cuentaVacia">
+					<txt:row>
+						<txt:col align="left" header="#{etq.porcentajeRetencionMinus}" value="#{adminBeneficiariosDerechoBean.porcentajeRetencion}" size="20"/>
+						<txt:col align="left" header="#{etq.posicionAsignada}" value="#{adminBeneficiariosDerechoBean.totalXCuentaReporte[cuenta.idCuentaNombrada][1]}" size="20"/>
+						<txt:col align="left" header="#{etq.posicionNoAsignada}" value="#{adminBeneficiariosDerechoBean.totalXCuentaReporte[cuenta.idCuentaNombrada][0]}" size="20"/>												
+						<txt:col align="left" header="#{etq.montoBrutoMinus}" value="#{adminBeneficiariosDerechoBean.totalXCuentaReporte[cuenta.idCuentaNombrada][3]}" size="20">
+							<f:convertNumber pattern="'$'##,##0.00"/>
+						</txt:col>
+						<txt:col align="left" header="#{etq.impuestoRetenidoMinus}" value="#{adminBeneficiariosDerechoBean.totalXCuentaReporte[cuenta.idCuentaNombrada][4]}" size="20">
+							<f:convertNumber pattern="'$'##,##0.00"/>
+						</txt:col>
+						<txt:col align="left" header="#{etq.montoNetoMinus}" value="#{adminBeneficiariosDerechoBean.totalXCuentaReporte[cuenta.idCuentaNombrada][2]}" size="20">
+							<f:convertNumber pattern="'$'##,##0.00"/>
+						</txt:col>
+					</txt:row>			
+				</txt:table>	        
+        </txt:iterator>
+    </txt:document>
+</html>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="calendarioEmisionesDeudaExt" documentTitle="Calendario de Emisiones de deuda extranjeras"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        landscape="true" fecha="#{consultaBitacoraEnvOpBean.fechaActual}"
+        imageResource="/images/indeval.jpg">
+        <pdf:table value="calendarioEmisionesDeudaExtBean" currentBean="emision" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{calendarioEmisionesDeudaExtBean}" currentBean="emision" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.tv}" value="#{!empty calendarioEmisionesDeudaExtBean.tipoValor ? calendarioEmisionesDeudaExtBean.tipoValor : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.emisoraMinus}" value="#{!empty calendarioEmisionesDeudaExtBean.emisora ? calendarioEmisionesDeudaExtBean.emisora : 'TODAS'}" align="center" />
+                <pdf:col header="#{etq.serieMinus}" value="#{!empty calendarioEmisionesDeudaExtBean.serie ? calendarioEmisionesDeudaExtBean.serie : 'TODAS'}" align="center" />
+				<pdf:col header="#{etq.cuponMinus}" value="#{!empty calendarioEmisionesDeudaExtBean.cupon ? calendarioEmisionesDeudaExtBean.cupon : 'TODOS'}" align="center" />
+				<pdf:col header="#{etq.isin}" value="#{!empty calendarioEmisionesDeudaExtBean.isin ? calendarioEmisionesDeudaExtBean.isin : 'TODOS'}" align="center"/>
+                <pdf:col header="#{etq.fechaCorteMinus}" value="#{calendarioEmisionesDeudaExtBean.fechaCorte}" rendered="#{!empty calendarioEmisionesDeudaExtBean.fechaCorte}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaCorteMinus}" value="TODAS" rendered="#{empty calendarioEmisionesDeudaExtBean.fechaCorte}" align="center">
+				    <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>			
+				
+				<pdf:col header="#{etq.fechaPago}" value="#{calendarioEmisionesDeudaExtBean.fechaPago}" rendered="#{!empty calendarioEmisionesDeudaExtBean.fechaPago}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaPago}" value="TODAS" rendered="#{empty calendarioEmisionesDeudaExtBean.fechaPago}" align="center">
+				   <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				
+                <pdf:col header="#{etq.divisaMinus}" value="#{calendarioEmisionesDeudaExtBean.selectedDivisa}" align="center" />
+                <pdf:col header="#{etq.custodio}" value="#{calendarioEmisionesDeudaExtBean.selectedCustodio}" align="center" />
+				<pdf:col header="#{etq.estatus}" value="#{calendarioEmisionesDeudaExtBean.selectedEstado}" align="center"/>
+				<pdf:col header="#{etq.referencia}" value="#{!empty calendarioEmisionesDeudaExtBean.refCustodio?calendarioEmisionesDeudaExtBean.refCustodio:'TODAS'}" align="center"/>				
+				<pdf:col header="#{etq.caev}" value="#{calendarioEmisionesDeudaExtBean.selectedTipoPagoCAEV}" align="center" />
+				<pdf:col header="#{etq.camv}" value="#{calendarioEmisionesDeudaExtBean.selectedTipoPagoCAMV}" align="center"  />
+				<pdf:col header="Hoja de trabajo" value="#{calendarioEmisionesDeudaExtBean.hojaDeTrabajo ? 'Si' : 'No'}"  align="center"/>
+            </pdf:row>
+        </pdf:table>
+        
+        <pdf:br/>
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{calendarioEmisionesDeudaExtBean.totalRegistros}"/>
+        <pdf:br/>
+
+        <pdf:table value="#{calendarioEmisionesDeudaExtBean.paginaReportes.registros}" currentBean="derecho">
+            <pdf:row>
+				<pdf:col header="#{etq.mensajeMinus}" value="#{derecho.folio}" align="center" />
+				<pdf:col header="#{etq.referencia}" value="#{derecho.referencia}" align="center" />
+				<pdf:col header="#{etq.tv}" value="#{derecho.tipoValor}" align="center" />
+				<pdf:col header="#{etq.emisoraMinus}" value="#{derecho.emisora}" align="center" />
+				<pdf:col header="#{etq.serieMinus}" value="#{derecho.serie}" align="center" />
+				<pdf:col header="#{etq.cuponMinus}" value="#{derecho.cupon}" align="center" />
+				<pdf:col header="#{etq.isin}" value="#{derecho.isin}" align="center" />
+				<pdf:col header="#{etq.fechaCorteMinus}" value="#{derecho.fechaCorte}" align="center" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaPago}" value="#{derecho.fechaPago}" align="center"  >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaValor}" value="#{derecho.fechaValor}" align="center"  >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaPost}" value="#{derecho.fechaPost}" align="center" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.periodo} Inicio" value="#{derecho.periodoInicio}" align="center"  >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"  />
+				</pdf:col>
+				<pdf:col header="#{etq.periodo} Fin" value="#{derecho.periodoFin}" align="center"  >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy"  />
+				</pdf:col>
+				<pdf:col header="#{etq.diasMensaje}" value="#{derecho.diasMensaje}" align="center" />
+				<pdf:col header="#{etq.diasSP}" value="#{derecho.diasSP}" align="center" />					
+				<pdf:col header="#{etq.diasVerificacion}" value="#{derecho.diasVerificacion}" align="center" />
+				<pdf:col header="#{etq.tipoTasa}" value="#{derecho.tipoTasa}" align="center" />
+				<pdf:col header="#{etq.tasaPorcentaje}" value="#{derecho.tasa}" align="center" />
+				<pdf:col header="#{etq.tasaVerificacion}" value="#{derecho.tasaVerificacion}" align="center"  />				
+				<pdf:col header="#{etq.factor}" value="#{derecho.factor}" align="center"  />
+				<pdf:col header="#{etq.factorCal}" value="#{derecho.factorCalculado}" align="center"  />
+				<pdf:col header="#{etq.factorVerificacion}" value="#{derecho.factorVerificacion}" align="center"  />
+				<pdf:col header="#{etq.valorNominalMinus}" value="#{derecho.valorNominal}" align="center" >
+					<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+				</pdf:col>
+				<pdf:col header="#{etq.posicionMensaje}" value="#{derecho.posicionMensaje}" align="center"   >
+					<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+				</pdf:col>
+				<pdf:col header="#{etq.posicionIndeval}" value="#{derecho.posicionIndeval}" align="center"   >
+					<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+				</pdf:col>
+				<pdf:col header="#{etq.importe}" value="#{derecho.importe}" align="center"  >
+					<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+				</pdf:col>
+				<pdf:col header="#{etq.importeIndeval}" value="#{derecho.importeIndeval}" align="center"  >
+					<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+				</pdf:col>
+				<pdf:col header="#{etq.importePTSA}" value="#{derecho.importePTSA}" align="center" >
+					<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+				</pdf:col>
+				<pdf:col header="#{etq.importeGRSS}" value="#{derecho.importeGRSS}" align="center"  >
+					<f:convertNumber pattern="###,###,###,###,###,##0.00" />
+				</pdf:col>
+				<pdf:col header="#{etq.divisaMinus}" value="#{derecho.divisa}" align="center" />
+				<pdf:col header="#{etq.custodio}" value="#{derecho.custodio.codigoBanco}" align="center" />
+				<pdf:col header="#{etq.estado}" value="#{derecho.estado.descripcion}" align="center" />
+				<pdf:col header="#{etq.caev}" value="#{derecho.tipoPagoCAEV.clavePago}" align="center"  />
+				<pdf:col header="#{etq.camv}" value="#{derecho.tipoPagoCAMV.clavePago}" align="center"  />
+			</pdf:row>
+        </pdf:table>
+
+    </pdf:document>
+</html>

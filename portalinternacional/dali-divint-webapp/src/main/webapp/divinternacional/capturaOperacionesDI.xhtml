@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rich="http://richfaces.org/rich">
+	
+	
+	<ui:composition template="/layoutCaptura.xhtml">
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js">
+                </script>
+			<script language="javascript" type="text/javascript">
+                function posicionSeleccionada(){
+                	$j("input[id$='saldoDisponible']").click();   
+					$j("input[id$='saldoDisponible']").change();                	               	
+	    			$j("input[id$='botonResetInit']").click();
+                }
+                
+                function limpiarCustodioDepositante(){
+                	$j("input[id$='botonResetCustodioDepositante']").click();
+                } 
+            </script>
+		</ui:define>
+
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.divisionInternacional}" />
+		</ui:define>
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.sistemaIntCot}" />
+		</ui:define>
+
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.capturaOperaciones}"></h:outputText>
+			
+		</ui:define>
+
+
+
+		<ui:define name="seccionForma">
+			<a4j:keepAlive beanName="capturaOperacionesDIBean" />
+
+			<h:panelGroup id="init">
+				<h:outputText value="#{capturaOperacionesDIBean.init}" />								
+			</h:panelGroup>
+			
+			
+			
+				
+			<h:panelGroup id="general">
+
+				<table width="100%">
+					<tr>
+						<td colspan="2">
+							<h:panelGroup id="mensajeUsuario">
+								<div style="min-height: 21px;">						
+									<rich:messages warnClass="warning" infoClass="info"
+										errorClass="error" ajaxRendered="true" showDetail="false"
+										showSummary="true" layout="list">
+										<f:facet name="infoMarker">
+											<h:panelGroup>
+												<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+										</f:facet>
+				
+										<f:facet name="errorMarker">
+											<h:panelGroup>
+												<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+										</f:facet>
+									</rich:messages>
+								
+									<div id="divWarnings" class="warning" style="display:none;">
+										<p id="textoWarning">										
+										</p>
+									</div>
+								</div>
+							</h:panelGroup>
+						</td>
+					</tr>
+					
+					<tr>
+						<td align="center">
+							<h:panelGroup>
+								<h:panelGrid width="100%" id="tipoOperacion"
+									style="text-align: center">
+									<f:facet name="header">
+										<h:outputText value="#{etq.tipoOp}" />
+									</f:facet>
+									<h:selectOneMenu id="operacion" styleClass="textoControles"
+										tabindex="10"
+										value="#{capturaOperacionesDIBean.operacionSic.tipoTraspaso}">
+										<f:selectItems value="#{opcionesCatalogosBean.tiposOperacion}" />
+										<a4j:support event="onchange"
+											actionListener="#{capturaOperacionesDIBean.cambiaTipoOperacion}"
+											reRender="importeDivisa,init,mensajeUsuario" />
+									</h:selectOneMenu>
+								</h:panelGrid>
+							</h:panelGroup>
+						</td>
+						<td>
+							<h:panelGroup>
+								<h:panelGrid width="100%" id="entregaRecibe"
+									style="text-align: center">
+									<f:facet name="header">
+										<h:outputText value="#{etq.entregaRecibeLP}" />
+									</f:facet>
+									<h:selectOneMenu styleClass="texto"
+										value="#{capturaOperacionesDIBean.operacionSic.tipoOperacion}"
+										tabindex="20">
+										<f:selectItems value="#{opcionesCatalogosBean.operaciones}" />
+										<a4j:support event="onchange"
+											actionListener="#{capturaOperacionesDIBean.realizarCalculos}"
+											reRender="posicionActual,cantidadOperada,mensajeUsuario,txtLiquidacionParcial,selectLquidacionParcial" />
+									</h:selectOneMenu>
+								</h:panelGrid>
+							</h:panelGroup>
+						</td>
+
+					</tr>
+
+					<tr>
+						<td width="50%">
+							<h:panelGroup>
+								<h:panelGrid width="100%" columns="3" id="agente"
+									style="text-align: center">
+									<f:facet name="header">
+										<h:outputText value="#{etq.agente}" />
+									</f:facet>
+									<h:outputText styleClass="texto"
+										value="#{etq.participanteMinus}" />
+									<h:outputText styleClass="texto" value="#{etq.cuentaMinus}" />
+									<!-- h:outputText styleClass="texto" value="#{etq.tenencia}" /-->
+									<h:outputText styleClass="texto"
+										value="#{etq.nombreCuenta}" />
+									<h:panelGroup>
+										<h:inputText autocomplete="off" id="idFolioTraspasante" size="5" maxlength="5"
+											value="#{capturaOperacionesDIBean.idFolioTraspasante}"
+											styleClass="textoControles #{capturaOperacionesDIBean.institucionIndeval ? 'campoNumericoAsterisco' : 'readonly'}"
+											tabindex="30" >
+												<a4j:support event="onchange" 
+													reRender="nombreInstitucionTraspasante"/>
+											</h:inputText>										
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:panelGroup id="panelCuentaTraspasante">
+											<h:inputText autocomplete="off" id="cuentaTraspasante" size="4" maxlength="4"
+												value="#{capturaOperacionesDIBean.cuentaTraspasante}"
+												styleClass="campoNumericoAsterisco textoControles textoCuenta textoMayusculas" tabindex="40" >
+												<a4j:support event="onchange"													
+														reRender="init,panelEmisora,panelCupon,panelIsin,panelBoveda,seccionCustodio,saldoDisponible,tenenciaTraspasante,mensajeUsuario,nombreInstitucionTraspasante" />
+											</h:inputText>
+	
+											<input type="hidden" id="nombre_id_folio_traspasante"
+												name="nombre_id_folio_traspasante"
+												value="daliForm:idFolioTraspasante" />											
+										</h:panelGroup>
+									</h:panelGroup>
+
+									<!-- h:inputText id="tenenciaTraspasante" size="4" maxlength="4"
+										value="#{capturaOperacionesDIBean.tenencia}" readonly="true"
+										styleClass="textoControles" /-->
+									<h:inputText autocomplete="off" id="nombreInstitucionTraspasante" size="40"
+										readonly="true"
+										value="#{capturaOperacionesDIBean.nombreCuenta}"
+										styleClass="textoControles textoMayusculas"/>
+								</h:panelGrid>
+							</h:panelGroup>
+						</td>
+						<td colspan="2" >
+							<table width="100%" id="fechas" align="left">
+								<tr>
+									<td width="50%">
+										<h:outputText value="#{etq.fechaNotificacion}"
+														styleClass="texto"/>	
+									</td>
+									<td align="left" width="50%" colspan="2">
+										<h:inputText autocomplete="off" styleClass="textoControles" 
+										value="#{capturaOperacionesDIBean.operacionSic.fechaNotificacion}"
+										disabled="false"
+										readonly="true"
+										size="10"
+										converter="formatoFechaCortaConverter"/>
+									</td>
+								</tr>
+								<tr>
+									<td align="left" width="50%">
+										<h:outputText value="#{etq.fechaLiq}" styleClass="texto" />
+									</td>
+									<td align="left" width="15%" colspan="2">
+										<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+													   value="#{capturaOperacionesDIBean.operacionSic.fechaLiquidacion}" 
+												       	datePattern="dd/MM/yyyy"  isDayEnabled="isDayEnabled"  />												       											
+																				
+									</td>
+								</tr>
+									<tr>
+										<td align="left" width="50%">
+											<h:outputText value="#{etq.fechaOperacion}" styleClass="texto" />
+										</td>
+										<td>										
+											<rich:calendar inputClass="textoControles" inputStyle="background-color: #ffffe6;" inputSize="11"
+														   value="#{capturaOperacionesDIBean.operacionSic.fechaOperacion}" 
+												       	datePattern="dd/MM/yyyy"   isDayEnabled="isDayEnabled"/>
+										</td>
+									</tr>
+									<tr>
+										<td align="left" width="50%">
+											<h:outputText value="#{etq.saldoDisponibleMinus}"
+											styleClass="texto" />
+										</td>
+										<td align="left" width="50%" colspan="2">
+											<h:inputText autocomplete="off" id="saldoDisponible" size="30" maxlength="30"
+														value="#{capturaOperacionesDIBean.emisionVO.saldoDisponible}"
+														styleClass="readonly textoControles"
+														converter="formatoEnteroConverter" >
+											<a4j:support event="onchange"
+														 actionListener="#{capturaOperacionesDIBean.realizarCalculos}"
+														 reRender="cantidadOperada,posicionActual,mensajeUsuario" />
+											</h:inputText>
+										</td>
+									</tr>
+									<tr>
+									<td align="left" width="50%">
+										<h:panelGroup>
+											<h:outputText value="#{etq.cantidadOperada}" styleClass="texto" />
+											<h:outputText value="#{etq.asterisco}" styleClass="required" />
+										</h:panelGroup>
+									</td>
+									<td align="left" width="50%" colspan="2">
+										<h:inputText autocomplete="off" id="cantidadOperada" size="30" maxlength="30"
+													 value="#{capturaOperacionesDIBean.operacionSic.cantidadTitulos}"
+													 styleClass="textoControles campoNumerico"
+													 converter="formatoEnteroConverter" 
+										  			 tabindex="120">
+										<a4j:support event="onchange" 
+													 actionListener="#{capturaOperacionesDIBean.realizarCalculos}"
+													 reRender="cantidadOperada,posicionActual,saldoDisponible,mensajeUsuario" />
+									   </h:inputText>
+									</td>
+									</tr>
+									<tr>
+									<td align="left" width="50%">
+										<h:outputText value="#{etq.posicionSimulada}" styleClass="texto" />
+									</td>
+									<td align="left" width="50%" colspan="2">
+											<h:inputText autocomplete="off" id="posicionActual" size="30" maxlength="30"
+														 value="#{capturaOperacionesDIBean.saldoActual}"
+														 rendered="true" styleClass="textoControles readonly"
+														 converter="formatoEnteroConverter">
+											</h:inputText>
+									</td>
+									</tr>
+									<!-- Etiqueta para Liquidaciones Parciales -->
+									<tr>									
+										<td align="left" width="50%">
+											<h:panelGroup id="txtLiquidacionParcial">
+												<h:panelGroup rendered="#{capturaOperacionesDIBean.recepcion}">
+													<h:outputText value="#{etq.liquidacionParcial}" styleClass="texto" />
+												</h:panelGroup>
+											</h:panelGroup>
+										</td>
+										<td align="left" width="50%" colspan="2">
+											<h:panelGroup id="selectLquidacionParcial">
+												<h:panelGroup rendered="#{capturaOperacionesDIBean.recepcion}">
+													<h:selectOneMenu styleClass="texto"
+														value="#{capturaOperacionesDIBean.liquidacionParcial}">
+														<f:selectItem itemLabel="NO" itemValue="NO" />
+														<f:selectItem itemLabel="SI" itemValue="SI" />
+													</h:selectOneMenu>
+												</h:panelGroup>
+											</h:panelGroup>
+										</td>
+									</tr>
+							</table>
+							
+						</td>
+					</tr>
+
+					<tr>
+						<td width="50%" style="vertical-align: top;">
+							<h:panelGroup>
+								<h:panelGroup id="emision">
+									<h:panelGrid width="100%" columns="2">
+										<f:facet name="header">
+											<h:outputText value="#{etq.emisionMinus}" />
+										</f:facet>
+										<h:panelGroup>
+											<h:outputText styleClass="texto" value="#{etq.tipoValorMinus}" />
+											<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />
+										</h:panelGroup>
+	
+										<h:panelGroup>
+											<h:panelGroup id="panelTipoValor">
+												<h:inputText autocomplete="off" id="tipoValor" size="7" maxlength="4"
+													value="#{capturaOperacionesDIBean.emisionVO.tv}"
+													styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas" tabindex="50" >
+													<a4j:support event="onchange"													
+														reRender="init,panelCuentaTraspasante,panelCupon,panelBoveda,panelIsin,saldoDisponible,tenenciaTraspasante,mensajeUsuario" />
+												</h:inputText>												
+											</h:panelGroup>
+										</h:panelGroup>
+	
+										<h:panelGroup>
+											<h:outputText value="#{etq.emisoraMinus}" styleClass="texto" />
+											<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />
+										</h:panelGroup>
+										<h:panelGroup>
+											<h:panelGroup id="panelEmisora">
+												<h:inputText autocomplete="off" id="emisora" size="7" maxlength="7"
+													value="#{capturaOperacionesDIBean.emisionVO.emisora}"
+													styleClass="textoControles campoAlphaNumericoAsterisco textoMayusculas"
+													tabindex="60">
+													<a4j:support event="onchange" 
+														reRender="init,panelCuentaTraspasante,panelTipoValor,panelerie,panelBoveda,cupon,isin,saldoDisponible,tenenciaTraspasante,mensajeUsuario,posicionActual" />
+												</h:inputText>
+											</h:panelGroup>
+										</h:panelGroup>
+	
+										<h:panelGroup>
+											<h:outputText value="#{etq.serieMinus}" styleClass="texto" />
+											<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />
+										</h:panelGroup>
+										<h:panelGroup>
+											<h:panelGroup id="panelSerie">
+												<h:inputText autocomplete="off" id="serie" size="7" maxlength="6"
+													value="#{capturaOperacionesDIBean.emisionVO.serie}"
+													styleClass="textoControles campoAlphaNumericoSerie textoMayusculas" tabindex="70" >
+													<a4j:support event="onchange" 								 					
+														reRender="init,panelCuentaTraspasante,panelTipoValor,panelEmisora,panelCupon,panelIsin,panelBoveda,saldoDisponible,seccionCustodio,tenenciaTraspasante,mensajeUsuario,depositantes,serie,nombreInstitucionTraspasante" />														
+												</h:inputText>
+											</h:panelGroup>
+										</h:panelGroup>
+	
+	
+										<h:panelGroup>
+											<h:outputText value="#{etq.cuponMinus}" styleClass="texto" />
+											<h:outputText value="#{etq.asterisco}" styleClass="required" />
+										</h:panelGroup>
+										<h:panelGroup>
+											<h:panelGroup id="panelCupon">
+												<h:inputText autocomplete="off" id="cupon" size="7" maxlength="4"
+													value="#{capturaOperacionesDIBean.emisionVO.cupon}"
+													styleClass="textoControles campoNumerico" tabindex="80" />
+											</h:panelGroup>
+										</h:panelGroup>
+										<h:panelGroup >
+											<h:outputText value="#{etq.bovedaMinus}" style="texto" />
+											<h:outputText value="#{etq.asterisco}" styleClass="required" />
+										</h:panelGroup>
+										<h:panelGroup >
+											<h:panelGroup id="panelBoveda">
+												<h:inputText autocomplete="off" styleClass="readonly textoControles" id="boveda" 
+													value="#{capturaOperacionesDIBean.operacionSic.boveda.descripcion}" size="28" maxlength="25" />
+												
+												<h:inputHidden id="idBoveda" value="#{capturaOperacionesDIBean.operacionSic.boveda.idBoveda}" />
+												<h:selectOneMenu styleClass="readonly textoControles" id="boveda2" rendered="false"
+													value="#{capturaOperacionesDIBean.operacionSic.boveda.idBoveda}"
+													tabindex="120" disabled="true">
+													<f:selectItem itemValue="-1"
+														itemLabel="#{etq.seleccioneUnaBoveda}" />
+													<f:selectItems
+														value="#{opcionesCatalogosBean.bovedasValor}" />
+												</h:selectOneMenu>
+											</h:panelGroup>
+										</h:panelGroup>
+										<h:panelGroup>
+											<h:outputText value="#{etq.isin}" styleClass="texto" />
+										</h:panelGroup>
+										<h:panelGroup>
+											<h:panelGroup id="panelIsin">
+												<h:inputText autocomplete="off" id="isin" size="30" maxlength="30"
+													styleClass="textoControles campoAlphaNumerico textoMayusculas" tabindex="90"
+													value="#{capturaOperacionesDIBean.emisionVO.isin}">
+													<a4j:support event="onchange"													
+														reRender="init,cuentaTraspasante,tipoValor,emisora,serie,cupon,panelBoveda,saldoDisponible,tenenciaTraspasante,mensajeUsuario,depositantes,isin,nombreInstitucionTraspasante" />
+												</h:inputText>
+											</h:panelGroup>												                                    	
+										</h:panelGroup>										
+										<h:panelGroup>
+										<a href="javascript: mostrarPosiciones();" tabindex="100">
+												<h:graphicImage value="/images/search.png"></h:graphicImage>
+												<h:outputText value="#{etq.buscarPosicionMinus}"
+													styleClass="texto" />	</a>
+	
+										</h:panelGroup>
+										<h:panelGroup>
+											<a
+												href="javascript:limpiarDatosPosicion();" tabindex="110">
+												<h:graphicImage value="/images/page_refresh.png"></h:graphicImage>
+												<h:outputText value="#{etq.limpiarPosicionMinus}"
+													styleClass="texto" /> </a>
+										</h:panelGroup>
+	
+									</h:panelGrid>
+								</h:panelGroup>								
+							</h:panelGroup>
+						</td>
+						<td colspan="2">
+						<h:panelGroup id="seccionCustodio">
+							<table width="100%"  align="left">
+								<tr>
+									<td width="50%">
+										<b><h:outputText value="#{etq.custodio}"/></b>
+									</td>
+								</tr>
+								<tr>
+									<td width="50%">
+									<h:panelGroup>
+										<h:outputText value="#{etq.descripcionCustodia}" />
+										<h:outputText value="#{etq.asterisco}" styleClass="required" />
+									</h:panelGroup>
+									</td>
+									<td width="50%">
+									<h:panelGroup id="custodio">
+										<h:selectOneMenu styleClass="textoControles"
+											value="#{capturaOperacionesDIBean.operacionSic.catBic.idCatbic}"
+											tabindex="130">
+											<f:selectItems
+												value="#{capturaOperacionesDIBean.listaCustodios}" />
+											<a4j:support event="onchange"
+												actionListener="#{capturaOperacionesDIBean.obtenerDepositantes}"
+												reRender="depositantes,descripcionCuentaCustodio,idCustodio,folioCustodio,cuentaCustodio,pais,monedaCustodio,numCuentaCustodio,mensajeUsuario,seccionCustodio" />	
+										</h:selectOneMenu>
+										
+									</h:panelGroup>
+									</td>
+								</tr>
+								<tr>
+									<td width="50%">
+									<h:panelGroup>
+										<h:outputText value="#{etq.descripcionCuenta}" />
+										<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />
+									</h:panelGroup>
+									</td>						
+									<td width="50%">
+									<h:panelGroup id="descripcionCuentaCustodio">
+										<h:inputText autocomplete="off" size="18" maxlength="15"   
+											value="#{capturaOperacionesDIBean.operacionSic.catBic.cuentaIndeval}"
+											styleClass="readonly textoControles textoMayusculas" />
+									</h:panelGroup>
+									</td>
+								</tr>
+								<tr>
+									<td width="50%">
+									<h:panelGroup>
+										<h:outputText value="#{etq.idMinus}" />
+										<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />
+									</h:panelGroup>
+									</td>								
+									<td width="50%">
+									<h:panelGroup id="idCustodio">
+										<h:inputText autocomplete="off"  size="5" maxlength="5"
+											value="#{capturaOperacionesDIBean.operacionSic.catBic.cuentaNombrada.institucion.tipoInstitucion.claveTipoInstitucion}"
+											styleClass="readonly textoControles textoMayusculas" />
+									</h:panelGroup>
+									</td>
+								</tr>
+								<tr>
+									<td width="50%">
+									<h:panelGroup>
+										<h:outputText value="#{etq.folioMinus}" />
+										<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />
+									</h:panelGroup>
+									</td>								
+									<td width="50%">
+									<h:panelGroup id="folioCustodio">
+										<h:inputText autocomplete="off" size="5" maxlength="5"
+											value="#{capturaOperacionesDIBean.operacionSic.catBic.cuentaNombrada.institucion.folioInstitucion}"
+											styleClass="readonly textoControles textoMayusculas" />
+									</h:panelGroup>
+									</td>
+								</tr>
+								<tr>
+									<td width="50%">
+									<h:panelGroup>
+										<h:outputText value="#{etq.cuentaMinus}" />
+										<h:outputText value="#{etq.asterisco}" styleClass="required" />
+									</h:panelGroup>
+									</td>								
+									<td width="50%">
+									<h:panelGroup id="cuentaCustodio">
+										<h:inputText autocomplete="off" size="4" maxlength="4"
+											value="#{capturaOperacionesDIBean.operacionSic.catBic.cuentaNombrada.cuenta}"
+											styleClass="readonly textoControles textoMayusculas" />
+									</h:panelGroup>
+									</td>
+								</tr>
+								<tr>
+									<td width="50%">
+									<h:panelGroup>
+										<h:outputText value="#{etq.pais}" />
+										<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />
+									</h:panelGroup>
+									</td>								
+									<td width="50%">
+									<h:panelGroup id="pais">
+										<h:inputText autocomplete="off" size="10" maxlength="8"
+											value="#{capturaOperacionesDIBean.operacionSic.catBic.pais}"
+											styleClass="readonly textoControles textoMayusculas" />
+									</h:panelGroup>
+									</td>
+								</tr>
+								<tr>
+									<td width="50%">
+									<h:panelGroup>
+										<h:outputText value="#{etq.moneda}" />
+										<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />
+									</h:panelGroup>
+									</td>							
+									<td width="50%">
+									<h:panelGroup id="monedaCustodio">
+										<h:inputText autocomplete="off" size="10" maxlength="8"
+											value="#{capturaOperacionesDIBean.operacionSic.catBic.moneda}"
+											styleClass="readonly textoControles textoMayusculas" />
+									</h:panelGroup>
+									</td>
+								</tr>
+								<tr>
+									<td width="50%">
+									<h:panelGroup>
+										<h:outputText value="#{etq.cuentaMinus}" />
+										<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />
+									</h:panelGroup>
+									</td>								
+									<td width="50%">
+									<h:panelGroup id="numCuentaCustodio">
+										<h:inputText autocomplete="off" size="25" maxlength="30" 
+											value="#{capturaOperacionesDIBean.operacionSic.catBic.cuentaNombrada.institucion.nombreCorto}"
+											styleClass="readonly textoControles textoMayusculas" />
+									</h:panelGroup>
+									</td>
+								</tr>
+							</table>	
+							</h:panelGroup>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="2">
+							<h:panelGroup>
+								<h:panelGrid width="100%" columns="4" style="text-align: center"
+									id="seccionContraparte">
+									<f:facet name="header">
+										<h:outputText value="#{etq.contraparteMinus}" />
+									</f:facet>
+
+									<h:panelGroup>
+										<h:outputText value="#{etq.cuentaContraparte}" />
+										<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText value="#{etq.descripcionCuenta}" />
+										<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText value="#{etq.depositante}" />
+										<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText value="#{etq.instruccionesEspContraparte}" />
+									</h:panelGroup>
+									<h:inputText autocomplete="off"
+										value="#{capturaOperacionesDIBean.operacionSic.cuentaContraparte}"
+										styleClass="textoControles textoMayusculas" tabindex="150" size="18"
+										maxlength="15" />
+										
+									<h:inputText autocomplete="off"
+										value="#{capturaOperacionesDIBean.operacionSic.descContraparte}"
+										styleClass="textoControles textoMayusculas" tabindex="160" size="42"
+										maxlength="40" />
+									<h:panelGroup id="depositantes">	
+									   <h:selectOneMenu styleClass="texto"  tabindex="170" 
+										   value="#{capturaOperacionesDIBean.operacionSic.sicDetalle.idSicDetalle}">
+										   <f:selectItem itemValue="-1" 		itemLabel="Selecciones Depositante" />
+										   <f:selectItems 
+											  value="#{capturaOperacionesDIBean.listaDepositantes}" />
+									    </h:selectOneMenu>
+									</h:panelGroup>
+
+									<h:inputTextarea cols="25" rows="4"
+										styleClass="textoControles textoMayusculas"
+										style="resize: none;"
+										value="#{capturaOperacionesDIBean.operacionSic.instruccEspeciales}"
+										tabindex="180"></h:inputTextarea>
+								</h:panelGrid>
+							</h:panelGroup>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<h:panelGroup>
+								<h:panelGrid width="100%" columns="2" style="text-align: center"
+									id="seccionBeneficiario">
+									<f:facet name="header">
+										<h:outputText value="#{etq.beneficiarioFinal}" />
+									</f:facet>
+									<h:panelGroup>
+										<h:outputText value="#{etq.nomCuenta}" />
+										<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />
+									</h:panelGroup>
+									<h:panelGroup>
+										<h:outputText value="#{etq.numCuenta}" />
+										<h:outputText value="#{etq.asterisco}" styleClass="required textoMayusculas" />
+									</h:panelGroup>
+									<h:inputText autocomplete="off" styleClass="textoControles textoMayusculas"
+										value="#{capturaOperacionesDIBean.operacionSic.nomCtaBenef}"
+										tabindex="190" size="42" maxlength="140" >
+									</h:inputText>
+									<h:inputText autocomplete="off" styleClass="textoControles textoMayusculas"
+										value="#{capturaOperacionesDIBean.operacionSic.numCtaBenef}"
+										tabindex="200" size="18" maxlength="35">
+									</h:inputText>
+
+								</h:panelGrid>
+							</h:panelGroup>
+						</td>
+						<td colspan="2">
+							<h:panelGroup>
+								<h:panelGroup id="importeDivisa">
+									<h:panelGroup rendered="#{capturaOperacionesDIBean.contrapago}">
+										<h:panelGrid width="100%" columns="2"
+											style="text-align: center">
+											<h:panelGroup>
+												<h:outputText value="#{etq.importe}" />
+												<h:outputText value="#{etq.asterisco}" styleClass="required" />
+											</h:panelGroup>
+											<h:panelGroup>
+												<h:outputText value="#{etq.divisaMinus}" />
+												<h:outputText value="#{etq.asterisco}" styleClass="required" />
+											</h:panelGroup>
+											<h:panelGroup>
+												<h:inputText autocomplete="off" id="importe"
+													value="#{capturaOperacionesDIBean.operacionSic.importe}"
+													converter="formatoMonedaChileConverter"
+													styleClass="textoControles campoNumericoDecimal campoNumericoDecimalCuatroDecimales" size="35"
+													maxlength="35" tabindex="210" >
+                                                    <a4j:support event="onchange" reRender="importe" ajaxSingle="true"
+                                                                 limitToList="true" />
+												</h:inputText>
+											</h:panelGroup>
+											<h:panelGroup>
+												<h:selectOneMenu tabindex="220" styleClass="textoControles"
+													value="#{capturaOperacionesDIBean.operacionSic.divisa}">
+													<f:selectItems value="#{opcionesCatalogosBean.divisas}" />
+												</h:selectOneMenu>
+											</h:panelGroup>
+										</h:panelGrid>
+									</h:panelGroup>
+								</h:panelGroup>
+							</h:panelGroup>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<h:outputText value="#{etq.asterisco}" styleClass="required" />
+							<h:outputText value="#{etq.requeridos}" styleClass="texto" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<h:panelGroup id="panelFirma">
+								<div style="display: none">
+									<textarea id="isoSinFirmar" name="isoSinFirmar">#{capturaOperacionesDIBean.isoSinFirmar}</textarea>
+									<textarea id="numeroSerie" name="numeroSerie"></textarea>
+									<textarea  id="numeroSerieUsuario" name="numeroSerieUsuario">#{sessionScope.usuario.numeroSerieCertificado}</textarea>
+									<textarea id="isoFirmado" name="isoFirmado"></textarea>
+									<textarea id="hashIso" name="hashIso">#{capturaOperacionesDIBean.hashIso}</textarea>
+								</div>
+								<h:panelGroup
+									rendered="#{not empty capturaOperacionesDIBean.isoSinFirmar}">
+									<script>
+                            		   function firmarOperacion(){
+			                                $j("input[id$='botonGuardar2']").attr("disabled",false);
+			                                $j("input[id$='botonLimpiar']").attr("disabled",false);
+			                                $j("input[id$='botonGuardar2']").click();
+			                            }
+                        			</script>
+
+									<ui:decorate template="/firmaDigitalSimple.xhtml">
+									</ui:decorate>
+
+								</h:panelGroup>
+
+							</h:panelGroup>
+						</td>
+					</tr>					
+				</table>
+			</h:panelGroup>
+		</ui:define>
+
+		<ui:define name="botones">
+			<div class="refrescar" style="float: left;">
+        		 <a4j:status id="commonStatus">
+					<f:facet name="start">
+						<h:panelGroup>
+							<h:graphicImage value="/images/ajax-loader.gif" />
+							<h:outputText value="#{etq.buscando}"></h:outputText>
+						</h:panelGroup>
+					</f:facet>
+				</a4j:status> 	
+        	</div>
+        	<h:panelGrid width="25%">
+				<h:panelGroup id="botones">
+					<div class="limpiar" style="float: center;">
+						<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+							styleClass="submit"
+							actionListener="#{capturaOperacionesDIBean.limpiar}"
+							tabindex="240">
+						</h:commandButton>
+					</div>
+					<div class="guardar" style="float: center;">
+						<a4j:commandButton id="botonGuardar" image="/images/transparent.gif"
+							styleClass="submit"
+							actionListener="#{capturaOperacionesDIBean.confirmarTraspaso}"
+							onclick="if(confirmarGuardar()){removeApplet();deshabilitarBoton('botonGuardar');}else return false;"
+							rendered="#{!capturaOperacionesDIBean.isoYaFirmado}"
+							oncomplete="habilitarBoton('botonGuardar');" 
+							reRender="tipoOperacion,entregaRecibe,agente,emision,seccionCustodio,seccionContraparte,saldoDisponible,posicionActual,
+								cantidadOperada,divisa,seccionBeneficiario,depositantes,importeDivisa,panelFirma,botones,mensajeUsuario" 
+							tabindex="230"/>
+					</div>
+					<div class="guardar">
+						<h:commandButton id="botonGuardar2" image="/images/transparent.gif"
+							styleClass="submit"
+							rendered="#{capturaOperacionesDIBean.isoYaFirmado}"
+							actionListener="#{capturaOperacionesDIBean.confirmarTraspaso}" 
+							tabindex="230">
+						</h:commandButton>
+					</div>
+										
+					<div style="display: none">
+						<a4j:commandButton id="botonResetInit" reRender="init,seccionCustodio,mensajeUsuario,depositantes,saldoDisponible" />
+					</div>
+					
+					<div style="display: none">
+						<a4j:commandButton id="botonResetCustodioDepositante" actionListener="#{capturaOperacionesDIBean.limpiarDepositantesCustodios}"						
+							reRender="init,seccionCustodio,depositantes,mensajeUsuario,depositantes,importeDivisa" />
+					</div>
+				</h:panelGroup>
+			</h:panelGrid>
+		</ui:define>
+
+
+	</ui:composition>
+
+
+</html>

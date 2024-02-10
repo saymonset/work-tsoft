@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls" xmlns:a4j="http://richfaces.org/a4j">
+
+<xls:document documentName="FileTransferDivisas" documentTitle="Consulta de Filetransfer del Sistema Internacional de Cotizaciones" landscape="true" >
+
+	<xls:table value="#{bitacoraFileTransferExportacionBean}" var="filtro">
+		<xls:row>
+			<xls:col align="center"  value="#{etq.institucionMinus}:" oddColorDark="true"/>
+			<xls:col align="center"  value="#{bitacoraFileTransferExportacionBean.agenteFirmado.id} #{bitacoraFileTransferExportacionBean.agenteFirmado.folio} #{bitacoraFileTransferExportacionBean.agenteFirmado.razon }" />
+		</xls:row>
+		<xls:row>
+			<xls:col align="center"  	value="#{etq.fechaMinus}:" />
+			<xls:col align="center"		value="#{bitacoraFileTransferExportacionBean.fechaActual}" pattern="dd/MM/yyyy" />
+		</xls:row>
+	</xls:table>
+	<xls:subtitle value="Filtros"/>
+	<xls:table value="#{bitacoraFileTransferExportacionBean}" var="filtro">
+		<xls:row>
+			<xls:col align="center" header="Usuario Registro" value="#{bitacoraFileTransferExportacionBean.usuarioRegistro}" />
+			<xls:col align="center" header="Usuario Autorizacion" value="#{bitacoraFileTransferExportacionBean.usuarioAutorizacion}" />
+			<xls:col align="center" header="Fecha Inicial" value="#{bitacoraFileTransferExportacionBean.fechaInicialProcesamiento}" pattern="dd/MM/yyyy"/>
+			<xls:col align="center" header="Fecha Final" value="#{bitacoraFileTransferExportacionBean.fechaFinalProcesamiento}" pattern="dd/MM/yyyy"/>
+		</xls:row>
+	</xls:table>
+	<xls:table value="#{bitacoraFileTransferExportacionBean}" var="filtro">
+		<xls:row >
+			<xls:col align="center" collspan="2" header="Total de Registros" value="#{bitacoraFileTransferExportacionBean.resultados.totalRegistros}" />
+		</xls:row>
+	</xls:table>				
+	<xls:subtitle value="Datos"/>
+    <xls:table value="#{bitacoraFileTransferExportacionBean.resultados.registros}" var="detalle">
+        <xls:row>
+        	<xls:col header="Id File Transfer" value="#{detalle.idFileTransferDivisasInt}" align="CENTER"/>     			 
+    		<xls:col header="Fecha Registro" value="#{detalle.fechaRegistro}" pattern="dd/MM/yyyy HH:mm:ss"/>
+        	<xls:col header="Usuario Registro" value="#{detalle.usuarioRegistro.claveUsuario}" align="CENTER"/>
+        	<xls:col header="Usuario Autoriza" value="#{detalle.usuarioAutoriza.claveUsuario}" align="CENTER"/>
+        	<xls:col header="Id Folio" value="#{detalle.fileTransferDetalleDivisa.folioInstitucion}" align="CENTER"/>
+            <xls:col header="Cuenta" value="#{detalle.fileTransferDetalleDivisa.cuenta}" align="CENTER"/>
+            <xls:col header="Monto Bruto" value="#{detalle.fileTransferDetalleDivisa.montoBruto}" pattern="$###,###,###,###,###,##0.00" />
+            <xls:col header="Retencion" value="#{detalle.fileTransferDetalleDivisa.retencion}" pattern="$###,###,###,###,###,##0.00"/>
+            <xls:col header="Comision" value="#{detalle.fileTransferDetalleDivisa.comision}" pattern="$###,###,###,###,###,##0.00"/>
+            <xls:col header="Divisa" value="#{detalle.fileTransferDetalleDivisa.divisa.claveAlfabetica}" align="CENTER"/>
+            <xls:col header="Boveda" value="#{detalle.fileTransferDetalleDivisa.boveda.nombreCorto}" align="CENTER"/>
+            <xls:col header="Deposito Por Ajuste" value="#{detalle.fileTransferDetalleDivisa.depositoAjuste}" pattern="$###,###,###,###,###,##0.00" />
+           	<xls:col header="Retiro Por Ajuste" value="#{detalle.fileTransferDetalleDivisa.retiroAjuste}" pattern="$###,###,###,###,###,##0.00" />
+           	<xls:col header="Monto Neto" value="#{detalle.fileTransferDetalleDivisa.montoNeto}" pattern="$###,###,###,###,###,##0.00" />
+            <xls:col header="Concepto" value="#{detalle.fileTransferDetalleDivisa.concepto}" align="CENTER"/>
+            <xls:col header="Folio Referencia" value="#{detalle.fileTransferDetalleDivisa.referencia}" align="CENTER"/>
+        	<xls:col header="Estatus" value="#{detalle.fileTransferDetalleDivisa.estatusDivisas.descripcion}" align="CENTER"/>
+        	<xls:col header="Comentarios" value="#{detalle.fileTransferDetalleDivisa.comentarios}" align="CENTER"/>
+        </xls:row>      
+    </xls:table>
+</xls:document>
+</html>

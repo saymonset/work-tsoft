@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:rich="http://richfaces.org/rich">
+
+    <ui:composition template="/layoutCaptura.xhtml">
+        <ui:define name="head">
+
+        </ui:define>
+
+        <ui:define name="tituloSeccion">
+            <h:outputText value="#{etq.divisionInternacional}" />
+        </ui:define>
+        <ui:define name="subtituloSeccion">
+            <h:outputText value="#{etq.beneficiarios}" />
+        </ui:define>
+        <ui:define name="tituloEncabezado">
+            <h:outputText value="#{etq.capturaBeneficiarios}" />
+        </ui:define>
+
+
+        <ui:define name="seccionForma">
+            <a4j:keepAlive beanName="capturaBeneficiariosBean" />
+
+            <h:panelGroup id="init">
+                <h:outputText value="#{capturaBeneficiariosBean.init}" />
+            </h:panelGroup>
+
+            <br />
+
+            <h:panelGroup id="criterios">
+                <a4j:region>
+                    <table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+                           align="left">
+                         <tr>
+                            <td colspan="2">
+                                <t:div rendered="#{not empty mensajeInternacionalBean.mensajeUsuario}" styleClass="warning" style="width: 800px">
+                                    <h:graphicImage url="/images/accept.png" />&#160;
+                                    <h:outputText value="#{mensajeInternacionalBean.mensajeUsuario}" />
+                                    <h:outputText value="#{mensajeInternacionalBean.limpiaMensaje}" />
+                                </t:div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 110px">
+                                <h:outputText value="#{etq.custodio}" styleClass="textoNegritas" />
+                            </td>
+                            <td style="width: 780px">
+                                <h:selectOneMenu id="lstCustodios" value="#{capturaBeneficiariosBean.custodio}"
+                                                 styleClass="textoControles">
+                                    <f:selectItem itemValue="-1" itemLabel="#{etq.seleccioneUnCustodio}" />
+                                    <f:selectItems value="#{capturaBeneficiariosBean.listaCustodios}"/>
+                                    <a4j:support event="onchange" actionListener="#{capturaBeneficiariosBean.cambiaCustodio}"
+                                                 reRender="lstTipoBeneficiario" />
+                                </h:selectOneMenu>
+                            </td>
+                        </tr>
+                        <tr style="height: 10px">
+                            <td colspan="2">
+                                &#160;
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h:outputText value="#{etq.tipoBeneficiario}" styleClass="textoNegritas" />
+                            </td>
+                            <td>
+                                <h:selectOneMenu id="lstTipoBeneficiario" value="#{capturaBeneficiariosBean.tipoBeneficiario}"
+                                                 styleClass="textoControles">
+                                    <f:selectItem itemValue="-1" itemLabel="#{etq.seleccioneUnTipoBeneficiario}" />
+                                    <f:selectItems value="#{capturaBeneficiariosBean.tiposBeneficiarios}"/>
+                                    <a4j:support event="onchange" actionListener="#{capturaBeneficiariosBean.cambiaTipoBeneficiario}"
+                                                 oncomplete="document.getElementById('daliForm:botonNav').click();"
+                                                 reRender="criterios" />
+                                </h:selectOneMenu>
+                                <h:commandButton id="botonNav" action="#{capturaBeneficiariosBean.navegaFormato}"
+                                                 style="display: none" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <h:panelGroup id="mensajeUsuario">
+                                    <div style="min-height: 21px;">
+                                        <rich:messages warnClass="warning" infoClass="info"
+                                                       errorClass="error" ajaxRendered="true" showDetail="false"
+                                                       showSummary="true" layout="list">
+                                            <f:facet name="infoMarker">
+                                                <h:panelGroup>
+                                                    <h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+                                            </f:facet>
+
+                                            <f:facet name="errorMarker">
+                                                <h:panelGroup>
+                                                    <h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+                                            </f:facet>
+                                        </rich:messages>
+
+                                        <div id="divWarnings" class="warning" style="display:none;">
+                                            <p id="textoWarning">
+                                            </p>
+                                        </div>
+                                    </div>
+                                </h:panelGroup>
+                            </td>
+                        </tr>
+                    </table>
+
+                </a4j:region>
+            </h:panelGroup>
+        </ui:define>
+
+    </ui:composition>
+</html>

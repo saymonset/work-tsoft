@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:pdf="http://indeval.com/jsf/pdf"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="NotificacionesEfectivo" documentTitle="Notificaciones de Efectivo"
+        institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}" 
+        landscape="true" fecha="#{consultaBitacoraEnvOpBean.fechaActual}"
+        imageResource="/images/indeval.jpg">
+        <pdf:table value="confirmacionIntBean" currentBean="emision" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{confirmacionIntBean}" currentBean="confirmacion" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.bicCode}" value="#{confirmacionIntBean.bicSelected}" align="center" />
+                <pdf:col header="#{etq.divisaMinus}" value="#{confirmacionIntBean.divisaSelected}" align="center" />
+				<pdf:col header="#{etq.cuentas}" value="#{confirmacionIntBean.cuentaSelected}" align="center"/>
+                <pdf:col header="#{etq.tipoMensaje}" value="#{confirmacionIntBean.tipoMensajeSelected}" align="center"/>
+                <pdf:col header="#{etq.fechaRecepcionMensajeInicio}" value="TODAS" rendered="#{empty confirmacionIntBean.fechaRecepcionMensajeInicio}" align="center">
+                    <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+                </pdf:col>
+				<pdf:col header="#{etq.fechaRecepcionMensajeInicio}" value="#{confirmacionIntBean.fechaRecepcionMensajeInicio}" rendered="#{!empty confirmacionIntBean.fechaRecepcionMensajeInicio}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaRecepcionMensajeFin}" value="TODAS" rendered="#{empty confirmacionIntBean.fechaRecepcionMensajeFin}" align="center">
+				    <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				<pdf:col header="#{etq.fechaRecepcionMensajeFin}" value="#{confirmacionIntBean.fechaRecepcionMensajeFin}" rendered="#{!empty confirmacionIntBean.fechaRecepcionMensajeFin}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaCreditoDebitoInicio}" value="TODAS" rendered="#{empty confirmacionIntBean.fechaCreditoDebitoInicio}" align="center">
+				     <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+                <pdf:col header="#{etq.fechaCreditoDebitoInicio}" value="#{confirmacionIntBean.fechaCreditoDebitoInicio}" rendered="#{!empty confirmacionIntBean.fechaCreditoDebitoInicio}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+                <pdf:col header="#{etq.fechaCreditoDebitoFin}" value="TODAS" rendered="#{empty confirmacionIntBean.fechaCreditoDebitoFin}" align="center">
+                     <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+                </pdf:col>
+                <pdf:col header="#{etq.fechaCreditoDebitoFin}" value="#{confirmacionIntBean.fechaCreditoDebitoFin}" rendered="#{!empty confirmacionIntBean.fechaCreditoDebitoFin}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaRecepcionDaliInicio}" value="TODAS" rendered="#{empty confirmacionIntBean.fechaRecepcionDaliInicio}" align="center">
+				     <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				<pdf:col header="#{etq.fechaRecepcionDaliInicio}" value="#{confirmacionIntBean.fechaRecepcionDaliInicio}" rendered="#{!empty confirmacionIntBean.fechaRecepcionDaliInicio}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaRecepcionDaliFin}" value="TODAS" rendered="#{empty confirmacionIntBean.fechaRecepcionDaliFin}" align="center">
+				     <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+				</pdf:col>
+				<pdf:col header="#{etq.fechaRecepcionDaliFin}" value="#{confirmacionIntBean.fechaRecepcionDaliFin}" rendered="#{!empty confirmacionIntBean.fechaRecepcionDaliFin}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.mtEspecifico}" value="#{empty confirmacionIntBean.mtEspecifico ? 'Niguno': confirmacionIntBean.mtEspecifico}" align="center"/>
+                <pdf:col header="#{etq.referenciaMensaje}" value="#{empty confirmacionIntBean.referencia ? 'TODAS' : confirmacionIntBean.referencia}" align="center" />
+                <pdf:col header="#{etq.relatedReference}" value="#{empty confirmacionIntBean.relatedReference ? 'TODAS' : confirmacionIntBean.relatedReference}" align="center"/>
+                <pdf:col header="#{etq.idFolioMinus}" value="#{empty confirmacionIntBean.folio ? 'TODAS' : confirmacionIntBean.folio}" align="center"/>
+                <pdf:col header="#{etq.isin}" value="#{empty confirmacionIntBean.isin ? 'TODAS' : confirmacionIntBean.isin}" align="center"/>
+                <pdf:col header="#{etq.cuentasCustodia}" value="#{confirmacionIntBean.cuentasCustodia ? 'Si' : 'No'}" align="center"/>
+				<pdf:col header="#{etq.cuentasComercial}" value="#{confirmacionIntBean.cuentasComercial ? 'Si' : 'No'}" align="center"/>
+				<pdf:col header="#{etq.tipoNotificacion}" value="TODAS" align="center" rendered="#{confirmacionIntBean.tipoNotificacion == -1}"/>
+				<pdf:col header="#{etq.tipoNotificacion}" value="CREDITO" align="center" rendered="#{confirmacionIntBean.tipoNotificacion == 1}"/>
+				<pdf:col header="#{etq.tipoNotificacion}" value="DEBITO" align="center" rendered="#{confirmacionIntBean.tipoNotificacion == 2}"/>
+            </pdf:row>
+        </pdf:table>
+        
+        <pdf:br/>
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{confirmacionIntBean.totalRegistros}"/>
+        <pdf:br/>
+
+        <pdf:table value="#{confirmacionIntBean.paginaReportes.registros}" currentBean="con">
+            <pdf:row>
+				<pdf:col header="#{etq.folioConf}" value="#{con.idConfirmacion}" align="center" />
+				<pdf:col header="#{etq.referenciaMensaje}" value="#{con.referenciaMensaje}" align="center"/>
+				<pdf:col header="#{etq.relatedReference}" value="#{con.relatedReference}" align="center"/>
+				<pdf:col header="#{etq.fechaRecepcionMT}" value="#{con.fechaEmision}" align="right">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaRecepcionDali}" value="#{con.fechaRecepcionDali}" align="right">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaCreditoDebito}" value="#{con.fechaCreditoDebito}" align="right">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+				</pdf:col>
+				<pdf:col header="#{etq.tipoMensaje}" value="#{con.tipoMensaje}" align="center"/>
+				<pdf:col header="#{etq.custodioBic}" value="#{con.bicCode}" align="center"/>
+				<pdf:col header="#{etq.cuentaMinus}" value="#{con.cuenta}"  align="center"/>
+				<pdf:col header="#{etq.divisaMinus}" value="#{con.divisa}" align="center"/>
+				<pdf:col header="#{etq.credito}" value="#{con.tipoMensaje == '910' ?  con.cantidad : 0}" align="right">
+					<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+				</pdf:col>
+				<pdf:col header="#{etq.debito}" value="#{con.tipoMensaje != '910' ? con.cantidad : 0}" align="right">
+					<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+				</pdf:col>
+				<pdf:col header="#{etq.isin}" value="#{con.comentariosDali}" align="center" />
+				<pdf:col header="#{etq.idFolioMinus}" value="#{con.idFolio}" align="center" />
+				<pdf:col header="#{etq.orderingCustomer}" value="#{con.orderingCustomer}" align="center" />
+				<pdf:col header="#{etq.orderingInstitution}" value="#{con.orderingInstitution}" align="center" />
+				<pdf:col header="#{etq.senderReferenceInfo}" value="#{con.detalle}" align="center" />
+			</pdf:row>
+        </pdf:table>
+        
+        <pdf:table value="#{confirmacionIntBean}" currentBean="confirmacion" widthPercentage="50" rendered="#{confirmacionIntBean.totales}">
+        	<pdf:row>
+        		<pdf:col header="Total Creditos" value="#{confirmacionIntBean.totalCreditos}" align="right">
+        			<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+        		</pdf:col>
+        		<pdf:col header="Total Debitos" value="#{confirmacionIntBean.totalDebitos}" align="right">
+        			<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+        		</pdf:col>
+        	</pdf:row>
+        </pdf:table>
+
+    </pdf:document>
+</html>
