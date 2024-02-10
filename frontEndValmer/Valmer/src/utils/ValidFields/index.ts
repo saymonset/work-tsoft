@@ -1,5 +1,0 @@
-export * from './Deuda'
-export * from './Internacional'
-export * from './Acciones'
-export * from './Calificaciones'
-export * from './Derivados'
