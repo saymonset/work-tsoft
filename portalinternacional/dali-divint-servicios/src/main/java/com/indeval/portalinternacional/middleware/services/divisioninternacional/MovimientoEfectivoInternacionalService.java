@@ -2,6 +2,7 @@
 package com.indeval.portalinternacional.middleware.services.divisioninternacional;
 
 import com.indeval.portaldali.middleware.servicios.modelo.vo.PaginaVO;
+import com.indeval.portalinternacional.middleware.servicios.modelo.CuentaTransitoria;
 import com.indeval.portalinternacional.middleware.servicios.modelo.MovimientoDepositoEfectivoInternacional;
 import com.indeval.portalinternacional.middleware.servicios.modelo.MovimientoRetiroEfectivoInternacional;
 import com.indeval.portalinternacional.middleware.servicios.vo.CriteriosConsultaMovEfeDivExtVO;
@@ -39,4 +40,7 @@ public interface MovimientoEfectivoInternacionalService {
 
 	boolean esUsuarioPermitidoCancelarAutorizado(String usuario, Long folioControl);
 
+    boolean esUsuarioPermitidoCancelar(String usuario, Long folioControl);
+
+	CuentaTransitoria validaCuentaTransitoria(MovimientoEfectivoInternacionalVO mov);
 }

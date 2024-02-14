@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/jee	http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+    <!--     <bean id="ejbEnvironment" class="java.util.Properties"> -->
+    <!--         <constructor-arg> -->
+    <!--             <map> -->
+    <!--                 <entry key="java.naming.factory.initial"> -->
+    <!--                     <value>weblogic.jndi.WLInitialContextFactory</value> -->
+    <!--                 </entry> -->
+    <!--             </map> -->
+    <!--         </constructor-arg> -->
+
+    <!--     </bean> -->
+
+    <bean id="adminCatalogosBenefServiceEJB" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ejb:dali_divint_services/dali_divint_services_ejb//ejb.adminCatalogosBenefService!com.indeval.portalinternacional.middleware.services.divisioninternacional.AdminCatalogosBenefService" />
+        <!--         <property name="jndiEnvironment" ref="ejbEnvironment"></property> -->
+        <property name="proxyInterface" value="com.indeval.portalinternacional.middleware.services.divisioninternacional.AdminCatalogosBenefService"></property>
+        <property name="lookupOnStartup" value="false"></property>
+    </bean>
+
+    <bean id="divisionInternacionalServiceEJB" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ejb:dali_divint_services/dali_divint_services_ejb//ejb.divisionInternacionalService!com.indeval.portalinternacional.middleware.services.divisioninternacional.DivisionInternacionalService" />
+        <!--         <property name="jndiEnvironment" ref="ejbEnvironment"></property> -->
+        <property name="proxyInterface" value="com.indeval.portalinternacional.middleware.services.divisioninternacional.DivisionInternacionalService"></property>
+        <property name="lookupOnStartup" value="false"></property>
+    </bean>
+
+    <bean id="controlBeneficiariosServiceEJB" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ejb:dali_divint_services/dali_divint_services_ejb//ejb.controlBeneficiariosService!com.indeval.portalinternacional.middleware.services.divisioninternacional.ControlBeneficiariosService" />
+        <!--         <property name="jndiEnvironment" ref="ejbEnvironment"></property> -->
+        <property name="proxyInterface" value="com.indeval.portalinternacional.middleware.services.divisioninternacional.ControlBeneficiariosService"></property>
+        <property name="lookupOnStartup" value="false"></property>
+    </bean>
+
+    <bean id="controlCatalogosServiceEJB" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ejb:dali_divint_services/dali_divint_services_ejb//ejb.controlCatalogosService!com.indeval.portalinternacional.middleware.services.divisioninternacional.ControlCatalogosService" />
+        <!--         <property name="jndiEnvironment" ref="ejbEnvironment"></property> -->
+        <property name="proxyInterface" value="com.indeval.portalinternacional.middleware.services.divisioninternacional.ControlCatalogosService"></property>
+        <property name="lookupOnStartup" value="false"></property>
+    </bean>
+
+    <bean id="controlDerechosServiceEJB" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ejb:dali_divint_services/dali_divint_services_ejb//ejb.controlDerechosService!com.indeval.portalinternacional.middleware.services.divisioninternacional.ControlDerechosService" />
+        <!--         <property name="jndiEnvironment" ref="ejbEnvironment"></property> -->
+        <property name="proxyInterface" value="com.indeval.portalinternacional.middleware.services.divisioninternacional.ControlDerechosService"></property>
+        <property name="lookupOnStartup" value="false"></property>
+    </bean>
+
+    <bean id="fileTransfBeneficiariosServiceEJB" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ejb:dali_divint_services/dali_divint_services_ejb//ejb.fileTransfBenefService!com.indeval.portalinternacional.middleware.services.divisioninternacional.FileTransferBeneficiariosService" />
+        <!--         <property name="jndiEnvironment" ref="ejbEnvironment"></property> -->
+        <property name="proxyInterface" value="com.indeval.portalinternacional.middleware.services.divisioninternacional.FileTransferBeneficiariosService"></property>
+        <property name="lookupOnStartup" value="false"></property>
+    </bean>
+
+    <bean id="mailServiceEJB" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ejb:dali_divint_services/dali_divint_services_ejb//ejb.mailService!com.indeval.portalinternacional.middleware.services.divisioninternacional.MailService" />
+        <!--         <property name="jndiEnvironment" ref="ejbEnvironment"></property> -->
+        <property name="proxyInterface" value="com.indeval.portalinternacional.middleware.services.divisioninternacional.MailService"></property>
+        <property name="lookupOnStartup" value="false"></property>
+    </bean>
+
+    <bean id="statementsDivintServiceEJB" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ejb:dali_divint_services/dali_divint_services_ejb//ejb.statementsDivintService!com.indeval.portalinternacional.middleware.services.divisioninternacional.StatementsDivintService" />
+        <!--         <property name="jndiEnvironment" ref="ejbEnvironment"></property> -->
+        <property name="proxyInterface" value="com.indeval.portalinternacional.middleware.services.divisioninternacional.StatementsDivintService"></property>
+        <property name="lookupOnStartup" value="false"></property>
+    </bean>
+
+    <bean id="conciliacionEfectivoIntServiceEJB" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ejb:dali_divint_services/dali_divint_services_ejb//ejb.conciliacionEfectivoIntService!com.indeval.portalinternacional.middleware.services.divisioninternacional.ConciliacionEfectivoIntService" />
+        <!--         <property name="jndiEnvironment" ref="ejbEnvironment"></property> -->
+        <property name="proxyInterface" value="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConciliacionEfectivoIntService"></property>
+        <property name="lookupOnStartup" value="false"></property>
+    </bean>
+
+    <bean id="confirmacionIntServiceEJB" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ejb:dali_divint_services/dali_divint_services_ejb//ejb.conciliacionEfectivoIntService!com.indeval.portalinternacional.middleware.services.divisioninternacional.ConfirmacionIntService" />
+        <!--         <property name="jndiEnvironment" ref="ejbEnvironment"></property> -->
+        <property name="proxyInterface" value="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConfirmacionIntService"></property>
+        <property name="lookupOnStartup" value="false"></property>
+    </bean>
+
+
+    <bean id="exportacionBeneficiariosServiceEJB" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ejb:dali_divint_services/dali_divint_services_ejb//ejb.exportacionBeneficiariosService!com.indeval.portalinternacional.middleware.services.divisioninternacional.beneficiarios.ExportacionBeneficiariosService" />
+        <property name="proxyInterface" value="com.indeval.portalinternacional.middleware.services.divisioninternacional.beneficiarios.ExportacionBeneficiariosService" />
+        <property name="lookupOnStartup" value="false" />
+    </bean>
+
+    <bean id="fileUploadService" class="com.indeval.portalinternacional.middleware.services.util.FileUploadServiceImpl">
+        <property name="fileUploadDao" ref="fileUploadDao" />
+    </bean>
+    <tx:advice id="txAdvicePresentationInternacional" transaction-manager="txManager">
+        <!-- the transactional semantics... -->
+        <tx:attributes>
+            <tx:method name="*" read-only="true"
+                       propagation="NOT_SUPPORTED" />
+        </tx:attributes>
+    </tx:advice>
+
+    <tx:advice id="txAdviceServicesInternacional" transaction-manager="txManager">
+        <!-- the transactional semantics... -->
+        <tx:attributes>
+            <tx:method name="*" read-only="false"
+                       propagation="NOT_SUPPORTED" />
+            <tx:method name="obtainLock"
+                       propagation="REQUIRED" />
+        </tx:attributes>
+    </tx:advice>
+
+
+    <aop:config proxy-target-class="true">
+        <aop:pointcut id="controllerMethodsInternacional"
+                      expression="execution(* com.indeval.portalinternacional.presentation.controller.*.*Controller.*(..))" />
+        <aop:advisor advice-ref="txAdvicePresentationInternacional" pointcut-ref="controllerMethodsInternacional" />
+    </aop:config>
+
+    <aop:config proxy-target-class="true">
+        <aop:pointcut id="serviceMethodsInternacional"
+                      expression="execution(* com.indeval.portalinternacional.middleware.services.*.*ServiceImpl.*(..))" />
+        <aop:advisor advice-ref="txAdviceServicesInternacional" pointcut-ref="serviceMethodsInternacional" />
+    </aop:config>
+
+
+    <bean id="txManager" class="org.springframework.transaction.jta.JtaTransactionManager">
+        <property name="transactionManagerName" value="java:jboss/TransactionManager"/>
+        <property name="userTransactionName" value="java:jboss/UserTransaction" />
+
+    </bean>
+
+    <jee:jndi-lookup id="jmsConnectionFactoryNonXA" jndi-name="java:/jms/QCF" proxy-interface="javax.jms.QueueConnectionFactory" />
+
+    <jee:jndi-lookup id="queueIngresos" jndi-name="java:/jms/queue/PortalDali/Request/BitacoraIngresos" proxy-interface="javax.jms.Queue" />
+
+    <bean id="jmsDestinationResolver" class="org.springframework.jms.support.destination.JndiDestinationResolver">
+        <property name="cache" value="true"/>
+    </bean>
+
+
+    <bean id="jmsTemplateDivInt" class="org.springframework.jms.core.JmsTemplate"
+          lazy-init="true">
+        <description>Facilita el envio de mensajes JMS</description>
+        <property name="connectionFactory" ref="jmsConnectionFactoryNonXA" />
+        <property name="pubSubDomain" value="false" />
+        <property name="explicitQosEnabled" value="true" />
+        <property name="sessionTransacted" value="false" />
+        <property name="sessionAcknowledgeModeName" value="AUTO_ACKNOWLEDGE" />
+        <property name="defaultDestination" ref="queueIngresos" />
+    </bean>
+
+    <bean id="serviceBitacoraAdviceDivInt" class="com.indeval.portalinternacional.presentation.advice.AfterConsultaServiceAspect">
+
+        <property name="mapaProyecciones">
+            <map key-type="java.lang.String" value-type="java.lang.String">
+                <entry key="consultaOperaciones" value="CONSULTA_OPERACIONES_SIC" />
+                <entry key="findSicEmisionesByEmisionAndCustodio" value="CONSULTA_EMISIONES" />
+                <entry key="consultaDetalleDerechosCapital" value="CONSULTA_INT_CAPITALES_HIST_BENEF" />
+                <entry key="consultaDetalleDerechosCapitalCuenta" value="CONSULTA_INT_CAPITALES_HIST_CUENTA" />
+            </map>
+        </property>
+
+        <property name="jmsTemplate" ref="jmsTemplateDivInt" />
+    </bean>
+
+
+
+    <bean id="webAdvice" class="com.indeval.portalinternacional.presentation.advice.AfterThrowingWebAspect"></bean>
+	<aop:aspectj-autoproxy/>
+	
+</beans>

@@ -4,6 +4,7 @@ package com.indeval.portalinternacional.middleware.services.divisioninternaciona
 import com.indeval.portalinternacional.middleware.servicios.dto.BovedaDto;
 import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
 import com.indeval.portalinternacional.middleware.servicios.dto.TipoBovedaDto;
+import com.indeval.portalinternacional.middleware.servicios.modelo.Bovedas;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -47,5 +48,39 @@ public class Util {
 
         return ids;
     }
+
+    public static List<Bovedas> getAllBovedasEfectivoEsperadas() {
+        List<Bovedas> bovedasEfectivoEsperadas = new ArrayList<>();
+        Integer idTipoBoveda = 2;
+
+        // Lista de nombres cortos correspondientes
+        String[] nombresCortos = {"E-JPMORGAN", "E-CLEARST", "E-EUROCLE", "E-BONY", "E-BBVA", "E-DEUTSCHE", "E-SANTAND", "E-BOFA", "E-DCVCHILE", "E-DECEVAL", "E-CAVALI", "E-BOFAMERI", "E-CITIBANK", "E-BNPPARIBAS", "E-CUSGUS"};
+
+        // Lista de descripciones correspondientes
+        String[] descripciones = {"BOVEDA DE EFECTIVO JPMORGAN", "BOVEDA DE EFECTIVO CLEAR STREAM", "BOVEDA DE EFECTIVO EUROCLEAR", "BOVEDA DE EFECTIVO BONY", "BOVEDA DE EFECTIVO BBVA", "BOVEDA DE EFECTIVO DEUTSCHE", "BOVEDA DE EFECTIVO SANTANDER", "BOVEDA DE EFECTIVO BOFA", "BOVEDA DE EFECTIVO DCVCHILE", "BOVEDA DE EFECTIVO DECEVAL", "BOVEDA DE EFECTIVO CAVALI", "BOVEDA DE EFECTIVO BOFAMERI", "BOVEDA DE EFECTIVO CITIBANK", "BOVEDA DE EFECTIVO BNP PARIBAS", "BOVEDA EFECTIVO CUS GUS"};
+
+        for (int i = 0; i < nombresCortos.length; i++) {
+            Bovedas boveda = new Bovedas();
+            boveda.setIdTipoBoveda(idTipoBoveda);
+            boveda.setIdBoveda(i + 1);
+            boveda.setNombreCorto(nombresCortos[i]);
+            boveda.setDescripcion(descripciones[i]);
+            bovedasEfectivoEsperadas.add(boveda);
+        }
+
+        return bovedasEfectivoEsperadas;
+    }
+
+
+    public static String bovedasToString(Bovedas boveda) {
+        return "Boveda{" +
+                "idBoveda=" + boveda.getIdBoveda() +
+                ", idTipoBoveda=" + boveda.getIdTipoBoveda() +
+                ", nombreCorto='" + boveda.getNombreCorto() + '\'' +
+                ", descripcion='" + boveda.getDescripcion() +
+                '}';
+
+    }
+
 
 }

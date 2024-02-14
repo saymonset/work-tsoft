@@ -76,7 +76,17 @@
             <from-outcome>consultaOperacionesSICXls</from-outcome>
             <to-view-id>/divinternacional/consultaOperacionesSICXls.xhtml</to-view-id>
         </navigation-case>
-        
+
+        <navigation-case>
+            <from-outcome>detalleFileTransferDivisasPdf</from-outcome>
+            <to-view-id>/divinternacional/detalleFileTransferDivisasPdf.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>detalleFileTransferDivisasXls</from-outcome>
+            <to-view-id>/divinternacional/detalleFileTransferDivisasXls.xhtml</to-view-id>
+        </navigation-case>
+
         <navigation-case>
             <from-outcome>bitacoraFileTransferPdf</from-outcome>
             <to-view-id>/divinternacional/bitacoraFileTransferPdf.xhtml</to-view-id>
@@ -437,7 +447,7 @@
             <to-view-id>/calendarioCapitalesDistribucion/reportes/consultaEmisionesXLS.xhtml</to-view-id>
         </navigation-case>
 
-        <!-- Cuentas Transitorias Efectivo -->
+        <!-- Multidivisas: Inicio Cuentas Transitorias Efectivo -->
         <navigation-case>
             <from-outcome>consultaCuentaTransitoriaEfectivoXLS</from-outcome>
             <to-view-id>/cuentasTransitoriasEfectivo/reportes/consultaCuentaTransitoriaEfectivoXLS.xhtml</to-view-id>
@@ -450,5 +460,17 @@
             <from-outcome>consultaCuentaTransitoriaEfectivoTXT</from-outcome>
             <to-view-id>/cuentasTransitoriasEfectivo/reportes/consultaCuentaTransitoriaEfectivoTXT.xhtml</to-view-id>
         </navigation-case>
+        <!-- Multidivisas: Fin Cuentas Transitorias Efectivo -->
+
+        <!-- Multidivisas: Inicio Movimiento de Efectivo Internacional -->
+        <navigation-case>
+            <from-outcome>consultaMovimientosEfectivoDivisasExtrXls</from-outcome>
+            <to-view-id>/movimientoEfectivo/consultaMovimientosEfectivoDivisasExtrXLS.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>consultaMovimientosEfectivoDivisasExtrPdf</from-outcome>
+            <to-view-id>/movimientoEfectivo/consultaMovimientosEfectivoDivisasExtrPDF.xhtml</to-view-id>
+        </navigation-case>
+        <!-- Multidivisas: Fin Movimiento de Efectivo Internacional -->
     </navigation-rule>
 </faces-config>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+              version="1.2">
+    <managed-bean>
+        <managed-bean-name>fileTransferTransitoriaEfectivo</managed-bean-name>
+        <managed-bean-class>com.indeval.portalinternacional.presentation.controller.cuentasTransitoriasEfectivo.FileTransferCuentasTransitoriasEfectivoController</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>fileTransferService</property-name>
+            <value>#{fileTransferMultiDivService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>navHome</property-name>
+            <property-class>java.lang.String</property-class>
+            <value>MDivFileTransfer-Home</value>
+        </managed-property>
+        <managed-property>
+            <property-name>process</property-name>
+            <property-class>java.lang.String</property-class>
+            <value>MD</value>
+        </managed-property>
+        <managed-property>
+            <property-name>fileUploadService</property-name>
+            <value>#{fileUploadMultiDivService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>encolador</property-name>
+            <value>#{encoladorDITraspasos}</value>
+        </managed-property>
+    </managed-bean>
+
+    <navigation-rule>
+
+        <navigation-case>
+            <from-outcome>MDivFileTransfer-Home</from-outcome>
+            <to-view-id>/fileTransferMultiDiv/fileTransferTransitoriaEfectivo.xhtml</to-view-id>
+        </navigation-case>
+
+<!--        <navigation-case>-->
+<!--            <from-outcome>IEFileTransfer-Home</from-outcome>-->
+<!--            <to-view-id>/inversionextranjera/fileTransfer/fileTransferInversionExtranjera.xhtml</to-view-id>-->
+<!--        </navigation-case>-->
+
+<!--        <navigation-case>-->
+<!--            <from-outcome>StatementFileTransfer-Home</from-outcome>-->
+<!--            <to-view-id>/statements/fileTransferStatement.xhtml</to-view-id>-->
+<!--        </navigation-case>-->
+
+    </navigation-rule>
+
+</faces-config>

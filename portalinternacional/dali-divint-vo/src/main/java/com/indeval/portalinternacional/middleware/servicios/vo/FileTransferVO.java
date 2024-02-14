@@ -3,13 +3,13 @@
  */
 package com.indeval.portalinternacional.middleware.servicios.vo;
 
-import java.util.Map;
-
-import org.springframework.validation.Errors;
-
 import com.indeval.portaldali.middleware.servicios.modelo.AbstractBaseDTO;
 import com.indeval.portaldali.middleware.servicios.modelo.vo.AgenteVO;
 import com.indeval.portaldali.middleware.servicios.modelo.vo.PaginaVO;
+import org.springframework.validation.Errors;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author <a href="mailto:david.rengifo@itbrain.com.mx">David A. Rengifo R.</a>
@@ -42,7 +42,14 @@ public class FileTransferVO extends AbstractBaseDTO {
 	private Integer offset;
 	
 	private String[] informacionArchivo;
-	
+
+	 /**
+		* Genner - Para FileTransfer de multidivisas
+		* @return
+		*/
+	private List<RegistroExcelMultiDivVO> rowsArchivo;
+
+	private String clvUsuario;
 	@Override
 	public String toString() {
 		return super.toString();
@@ -187,4 +194,19 @@ public class FileTransferVO extends AbstractBaseDTO {
 		this.nombreUsuario = nombreUsuario;
 	}
 
+	public List<RegistroExcelMultiDivVO> getRowsArchivo() {
+		return rowsArchivo;
+	}
+
+	public void setRowsArchivo(List<RegistroExcelMultiDivVO> rowsArchivo) {
+		this.rowsArchivo = rowsArchivo;
+	}
+
+	public String getClvUsuario() {
+		return clvUsuario;
+	}
+
+	public void setClvUsuario(String clvUsuario) {
+		this.clvUsuario = clvUsuario;
+	}
 }

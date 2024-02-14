@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Cambio Multidivisas-->
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+              version="1.2">
+
+    <managed-bean>
+        <managed-bean-name>horariosCustodiosConsultaController</managed-bean-name>
+        <managed-bean-class>com.indeval.portalinternacional.presentation.controller.horariosCustodios.HorariosCustodiosConsultaController
+        </managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+
+        <managed-property>
+            <property-name>divisaDao</property-name>
+            <value>#{divisaDao}</value>
+        </managed-property>
+
+        <managed-property>
+            <property-name>custodioService</property-name>
+            <value>#{custodioService}</value>
+        </managed-property>
+
+        <managed-property>
+            <property-name>horariosCustodiosService</property-name>
+            <value>#{horariosCustodiosService}</value>
+        </managed-property>
+    </managed-bean>
+
+</faces-config>

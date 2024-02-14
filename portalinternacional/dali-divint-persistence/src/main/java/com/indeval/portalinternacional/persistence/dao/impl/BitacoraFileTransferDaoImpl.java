@@ -15,6 +15,7 @@ import com.bursatec.persistence.dao.impl.BaseDaoHibernateImpl;
 import com.indeval.portaldali.middleware.servicios.modelo.vo.PaginaVO;
 import com.indeval.portaldali.middleware.servicios.util.UtilsVO;
 import com.indeval.portaldali.persistence.util.DateUtils;
+import com.indeval.portalinternacional.middleware.servicios.modelo.FileTransferDetalleDivisas;
 import com.indeval.portalinternacional.middleware.servicios.modelo.FileTransferDivisas;
 import com.indeval.portalinternacional.middleware.servicios.vo.BitacoraFileTransferVO;
 import com.indeval.portalinternacional.persistence.dao.BitacoraFileTransferDao;
@@ -59,7 +60,7 @@ public class BitacoraFileTransferDaoImpl extends BaseDaoHibernateImpl implements
 
 			detachedCriteria = this.obtieneCriteriaFindFileTransfer(parametros);
 			detachedCriteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
-			detachedCriteria.addOrder(Order.desc("fechaRegistro"));
+			detachedCriteria.addOrder(Order.asc("idFileTransferDivisasInt"));
 			paginaVO.setRegistros(this.getHibernateTemplate().findByCriteria(detachedCriteria, paginaVO.getOffset(), 
 					paginaVO.getRegistrosXPag()));
 
@@ -68,18 +69,69 @@ public class BitacoraFileTransferDaoImpl extends BaseDaoHibernateImpl implements
 		return paginaVO;
 
 	}
+	
+	@Override
+	public PaginaVO findDetalleFileTransfer(Long idFileTransferDivisasInt, PaginaVO paginaVO,
+			Boolean obtenerRegistrosTotales) {
+
+		paginaVO = UtilsVO.getPaginaNotBlank(paginaVO);
+
+		DetachedCriteria detachedCriteria = null;
+
+		if (obtenerRegistrosTotales) {
+
+			detachedCriteria = this.obtieneCriteriaFindDetalleFileTransfer(idFileTransferDivisasInt);
+			detachedCriteria.setProjection(Projections.rowCount());
+			final List listaCount = this.getHibernateTemplate().findByCriteria(detachedCriteria);
+
+			if (listaCount == null || listaCount.isEmpty()) {
+				throw new IllegalArgumentException("Error al tratar de obtener el total de registros");
+			}
+			
+			paginaVO.setTotalRegistros((Integer) listaCount.get(0));
+			
+		}
+
+		boolean continuarConsulta = !obtenerRegistrosTotales 
+				|| (paginaVO.getTotalRegistros() != null && paginaVO.getTotalRegistros().intValue() > 0);
+
+		if (continuarConsulta) {
+
+			detachedCriteria = this.obtieneCriteriaFindDetalleFileTransfer(idFileTransferDivisasInt);
+			detachedCriteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+			detachedCriteria.addOrder(Order.asc("idFileTransferDetalleDivisasInt"));
+			paginaVO.setRegistros(this.getHibernateTemplate().findByCriteria(detachedCriteria, paginaVO.getOffset(), 
+					paginaVO.getRegistrosXPag()));
+
+		}
+
+		return paginaVO;
+		
+	}
+	
+	private DetachedCriteria obtieneCriteriaFindDetalleFileTransfer(final Long idFileTransferDivisasInt) {
+
+		log.info("Entrando a obtieneCriteriaFindDetalleFileTransfer()");
+		
+		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(FileTransferDetalleDivisas.class);
+		detachedCriteria.createAlias("fileTransferDivisas", "file");
+	    detachedCriteria.add(Restrictions.eq("file.idFileTransferDivisasInt", idFileTransferDivisasInt));
+		
+		return detachedCriteria;
+		
+	}
 
 	private DetachedCriteria obtieneCriteriaFindFileTransfer(final BitacoraFileTransferVO parametros) {
 
-		log.info("Entrando a obtieneCriteriaFindFileTransferView()");
+		log.info("Entrando a obtieneCriteriaFindFileTransfer()");
 		
 		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(FileTransferDivisas.class);
 		
-		if (parametros.getUsRegistro() != null && !parametros.getUsRegistro().isEmpty()) {
-			
+		if (parametros.getUsRegistro() != null && !parametros.getUsRegistro().isEmpty()) 
 	        detachedCriteria.add(Restrictions.eq("usuarioRegistro", parametros.getUsRegistro()));
 	        
-	    }
+		if (parametros.getUsAutoriza() != null && !parametros.getUsAutoriza().isEmpty()) 
+	        detachedCriteria.add(Restrictions.eq("usuarioAutoriza", parametros.getUsAutoriza()));
 
 		if (parametros.getFechaProcesamiento() != null && parametros.getFechaProcesamiento()[0] != null 
 				&& parametros.getFechaProcesamiento()[1] != null) {

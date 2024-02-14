@@ -2,8 +2,11 @@
 package com.indeval.portalinternacional.persistence.dao.custodio;
 
 import com.indeval.persistence.unittest.BaseDaoTestCase;
+import com.indeval.portalinternacional.middleware.servicios.modelo.Custodio;
 import com.indeval.portalinternacional.persistence.dao.CustodioDao;
 import junit.framework.TestCase;
+
+import java.util.List;
 
 public class CustodioDaoImplTest extends BaseDaoTestCase {
     CustodioDao dao;
@@ -16,10 +19,18 @@ public class CustodioDaoImplTest extends BaseDaoTestCase {
     public void testGetIdCustodioByIdCatbic() {
         Long idCatbic = 5L;
         Integer expectedIdCustodio = 2;
-        Integer idCustodio =dao.getIdCustodioByIdCatbic(idCatbic);
+        Integer idCustodio = dao.getIdCustodioByIdCatbic(idCatbic);
 
         System.out.println("Id Custodio: " + idCustodio);
 
         assertEquals(expectedIdCustodio, idCustodio);
+    }
+
+    public void testFindAll() {
+        List<Custodio> custodios = dao.findAll();
+        for (Custodio custodio : custodios) {
+            System.out.println(custodio.getId() + ".- " + custodio.getNombreCorto() + " : " + custodio.getDescripcion());
+        }
+        assertNotNull(custodios);
     }
 }

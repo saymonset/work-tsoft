@@ -565,4 +565,46 @@ public class SicServiceImpl implements SicService {
 		
 	}
 
+    /**
+     * Multidivisas
+     * @see com.indeval.portalinternacional.middleware.services.divisioninternacional.SicService#notificaCambioEstadoMovEfeDivInt(Multidivisa)
+     */
+    @Override
+    public void notificaCambioEstadoMovEfeDivInt(Multidivisa multidivisa) {
+        XStream xstream = new XStream();
+        Annotations.configureAliases(xstream, Multidivisa.class);
+        String xmlMultidivisa = null;
+
+        try {
+            xmlMultidivisa = xstream.toXML(multidivisa);
+
+            if (validateSignatureService.isSignature()) {
+                xmlMultidivisa = signMensaje.signMensaje(xmlMultidivisa);
+            }
+
+            final String xmlEnviar = xmlMultidivisa;
+            jmsTemplateSic.send(new MessageCreator() {
+                public Message createMessage(Session session) throws JMSException {
+                    final Message msgSession = session.createTextMessage(xmlEnviar);
+                    return msgSession;
+                }
+            });
+        } catch (DigitalSignException e) {
+            log.error(e.getMessage(), e.getCause());
+            ErrorSeguridadMensajeriaVo error = new ErrorSeguridadMensajeriaVo();
+            error.setError(e.getMessage().split("\\|")[0].trim());
+            error.setModulo(Constante.PORTAL_INTERNAIONAL);
+            error.setXml(xmlMultidivisa);
+
+            Document doc = XMLUtils.convertStringToDocument(xmlMultidivisa);
+            error.setNumeroSerieCertificado(e.getMessage().split("\\|")[1].trim());
+            error.setTipoMensaje(XMLUtils.getStringToElement(doc, Constante.TIPO_MENSAJE));
+
+            sendMessageServiceSign.sendQueueAlert(error);
+        } catch (Exception e) {
+            throw new BusinessException(e.getMessage(), e);
+        }
+    }
+
+
 }

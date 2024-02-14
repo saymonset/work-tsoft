@@ -655,18 +655,15 @@
                 <value>
 	                com.indeval.portalinternacional.middleware.servicios.modelo.FileTransferDetalleDivisas
                 </value>
-				<value>
-					com.indeval.portalinternacional.middleware.servicios.modelo.SaldoCustodio
-				</value>
-				<value>
-					com.indeval.portalinternacional.middleware.servicios.modelo.SaldoPorCuenta
-				</value>
                 <value>
 	                com.indeval.portalinternacional.middleware.servicios.modelo.SeguridadUsuario
                 </value>
                 <value>
 	                com.indeval.portalinternacional.middleware.servicios.modelo.EstatusDivisas
                 </value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CuentaTransitoria
+				</value>
 			</list>
 		</property>
 
@@ -1290,14 +1287,6 @@
 		</property>
 	</bean>
 
-	<bean id="consultaSaldoCustodiosDao"
-		  class="com.indeval.portalinternacional.persistence.dao.impl.consultaSaldoCustodiosDaoImpl"
-		  lazy-init="true">
-		<property name="sessionFactory">
-			<ref local="sessionFactoryInternacional" />
-		</property>
-	</bean>
-
 	<bean id="bitacoraDao"
 		  class="com.indeval.sidv.bitacoraauditoria.persistence.model.dao.impl.BitacoraDaoImpl">
 		<property name="sessionFactory">
@@ -1399,6 +1388,14 @@
 
 	<bean id="custodioDao"
 		  class="com.indeval.portalinternacional.persistence.dao.impl.CustodioDaoImpl"
+		  lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="fileTransferMultiDao"
+		  class="com.indeval.portalinternacional.persistence.dao.impl.FileTransferMultiDaoImpl"
 		  lazy-init="true">
 		<property name="sessionFactory">
 			<ref local="sessionFactoryInternacional" />

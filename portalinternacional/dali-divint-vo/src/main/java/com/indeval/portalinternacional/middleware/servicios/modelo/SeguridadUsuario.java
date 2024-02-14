@@ -124,5 +124,4 @@ public class SeguridadUsuario implements Serializable {
 	public void setInstitucion(String institucion) {
 		this.institucion = institucion;
 	}
-	
 }

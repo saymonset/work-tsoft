@@ -19,6 +19,8 @@
 			src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js"></script>
 		<script language="javascript" type="text/javascript"
 			src="#{facesContext.externalContext.requestContextPath}/js/consultaOperacionesSic.js"></script>
+		<script language="javascript" type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/js/bitacoraFileTransfer.js"></script>
 	</ui:define>
 	<ui:define name="subtituloSeccion">
 
@@ -52,46 +54,77 @@
 						</p>
 					</div>
 				</div>
-			</h:panelGroup>
+		</h:panelGroup>
 		<h:panelGroup id="panelCriterios">
-			<table width="50%" border="0" cellspacing="5" align="left">
+			<table width="100%" border="0" cellspacing="5" align="center">
 				<tr>
 					<td>&#160;</td>
-					<td align="left"><b><h:outputText styleClass="texto"
-								value="Usuario Registro" /></b></td>
+					<td align="left">
+					<div style="display: inline-block; width: 95px; text-align: right;">
+							<b>
+								<h:outputText styleClass="texto" 
+								
+								value="Usuario Registro" />
+							</b>
+					</div>
+					</td>
 					<td align="left"><h:panelGroup id="usuarioPorRegistro">
 							<h:inputText autocomplete="off" styleClass="texto"
 								value="#{bitacoraFileTransferBean.usuarioRegistro}"
 								maxlength="29" />
 						</h:panelGroup></td>
-					<td align="left"><b><h:outputText styleClass="texto"
-								value="Usuario Autorizacion" /></b></td>
+						
+					<td align="left">
+					<div style="display: inline-block; width: 120px; text-align: right;">
+							<b>
+								<h:outputText styleClass="texto" 
+								
+								value="Usuario Autorizacion" />
+							</b>
+					</div>
+					</td>
 					<td align="left"><h:panelGroup id="usuarioPorAutorizacion">
 							<h:inputText autocomplete="off" styleClass="texto"
 								value="#{bitacoraFileTransferBean.usuarioAutorizacion}"
 								maxlength="29" />
 						</h:panelGroup></td>
-					<td align="left"><b><h:outputText styleClass="texto"
-								value="Fecha Inicial" /></b></td>
+					<td align="left">
+					<div style="display: inline-block; width: 50px; text-align: right;">
+							<b>
+								<h:outputText styleClass="texto" 
+								
+								value="Fecha Inicial" />
+							</b>
+					</div>
+					</td>
 					<td><rich:calendar id="fechaInicialProcesamiento"
 							inputClass="textoControles"
 							inputStyle="background-color: #ffffe6;" inputSize="11"
 							value="#{bitacoraFileTransferBean.fechaInicialProcesamiento}"
 							datePattern="dd/MM/yyyy" tabindex="120"
-							isDayEnabled="isDayEnabled" /></td>
-					<td align="left"><b><h:outputText styleClass="texto"
-								value="Fecha Final" /></b></td>
+							isDayEnabled="isDayEnabled"
+							align = "right"/></td>
+					<td align="left">
+					<div style="display: inline-block; width: 50px; text-align: right;">
+							<b>
+								<h:outputText styleClass="texto" 
+								
+								value="Fecha Final" />
+							</b>
+					</div>	
+					</td>
 					<td><rich:calendar id="fechaFinalProcesamiento"
 							inputClass="textoControles"
 							inputStyle="background-color: #ffffe6;" inputSize="11"
 							value="#{bitacoraFileTransferBean.fechaFinalProcesamiento}"
 							datePattern="dd/MM/yyyy" tabindex="130"
-							isDayEnabled="isDayEnabled" /></td>
+							isDayEnabled="isDayEnabled" 
+							align = "right"/></td>
 				</tr>
 			</table>
 		</h:panelGroup>
 	</ui:define>
-	
+	<br/>
 	<ui:define name="botones">
 		<h:panelGroup id="botones">
 			<div class="refrescar" style="float: left;">
@@ -142,7 +175,6 @@
 				<br />
 				<br />
 				<br />
-
 				<h:panelGroup id="tablaResultados">
 					<h:graphicImage value="/images/blank.gif" width="900px"
 						height="1px">
@@ -239,8 +271,10 @@
 							<f:facet name="header">
 								<h:outputText styleClass="texto textoPeque12" value="Id File Transfer" />
 							</f:facet>
+							<a href="javascript:detalleFileTransferDivisas(#{bitacora.idFileTransferDivisasInt})" >
 							<h:outputText styleClass="texto textoPeque12"
 								value="#{bitacora.idFileTransferDivisasInt}" />
+							</a>
 						</h:column>
 
 						<h:column>
@@ -252,7 +286,34 @@
 								value="#{bitacora.fechaRegistro}"
 								converter="formatoFechaLargaConverter" />
 						</h:column>
-
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12"
+									value="Registros totales" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12"
+								value="#{bitacora.registrosTotal}" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12"
+									value="Registros exitosos" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12"
+								value="#{bitacora.registrosExitosos}" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12"
+									value="Registros error" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12"
+								value="#{bitacora.registrosError}" />
+						</h:column>
+						
 						<h:column>
 							<f:facet name="header">
 								<h:outputText styleClass="texto textoPeque12"
@@ -260,6 +321,16 @@
 							</f:facet>
 							<h:outputText styleClass="texto textoPeque12"
 								value="#{bitacora.usuarioRegistro}" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12"
+									value="Fecha Autoriza" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12"
+								value="#{bitacora.fechaAutoriza}"
+								converter="formatoFechaLargaConverter" />
 						</h:column>
 
 						<h:column>
@@ -269,118 +340,6 @@
 							</f:facet>
 							<h:outputText styleClass="texto textoPeque12"
 								value="#{bitacora.usuarioAutoriza}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12" value="Id Folio" />
-							</f:facet>
-							<h:outputText styleClass="texto textoPeque12"
-								value="#{bitacora.fileTransferDetalleDivisa.folioInstitucion}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12" value="Cuenta" />
-							</f:facet>
-							<h:outputText styleClass="texto textoPeque12"
-								value="#{bitacora.fileTransferDetalleDivisa.cuenta}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12"
-									value="Monto Bruto" />
-							</f:facet>
-							<h:outputText styleClass="texto textoPeque12"
-								value="#{bitacora.fileTransferDetalleDivisa.montoBruto}"
-								converter="formatoMonedaChileConverter"
-								style="white-space: nowrap" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12" value="Retencion" />
-							</f:facet>
-							<h:outputText styleClass="texto textoPeque12"
-								value="#{bitacora.fileTransferDetalleDivisa.retencion}"
-								converter="formatoMonedaChileConverter"
-								style="white-space: nowrap" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12" value="Comision" />
-							</f:facet>
-							<h:outputText styleClass="texto textoPeque12"
-								value="#{bitacora.fileTransferDetalleDivisa.comision}"
-								converter="formatoMonedaChileConverter"
-								style="white-space: nowrap" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12" value="Divisa" />
-							</f:facet>
-							<h:outputText styleClass="texto textoPeque12"
-								value="#{bitacora.fileTransferDetalleDivisa.divisa.claveAlfabetica}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12" value="Boveda" />
-							</f:facet>
-							<h:outputText styleClass="texto textoPeque12"
-								value="#{bitacora.fileTransferDetalleDivisa.boveda.nombreCorto}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12"
-									value="Deposito Por Ajuste" />
-							</f:facet>
-							<h:outputText styleClass="texto textoPeque12"
-								value="#{bitacora.fileTransferDetalleDivisa.depositoAjuste}"
-								converter="formatoMonedaChileConverter"
-								style="white-space: nowrap" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12"
-									value="Retiro Por Ajuste" />
-							</f:facet>
-							<h:outputText styleClass="texto textoPeque12"
-								value="#{bitacora.fileTransferDetalleDivisa.retiroAjuste}"
-								converter="formatoMonedaChileConverter"
-								style="white-space: nowrap" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12" value="Monto Neto" />
-							</f:facet>
-							<h:outputText styleClass="texto textoPeque12"
-								value="#{bitacora.fileTransferDetalleDivisa.montoNeto}"
-								converter="formatoMonedaChileConverter"
-								style="white-space: nowrap" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12" value="Concepto" />
-							</f:facet>
-							<h:outputText styleClass="texto textoPeque12"
-								value="#{bitacora.fileTransferDetalleDivisa.concepto}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12"
-									value="Folio Referencia" />
-							</f:facet>
-							<h:outputText styleClass="texto textoPeque12"
-								value="#{bitacora.fileTransferDetalleDivisa.referencia}" />
 						</h:column>
 
 						<h:column>
@@ -397,7 +356,7 @@
 									value="Comentarios" />
 							</f:facet>
 							<h:outputText styleClass="texto textoPeque12"
-								value="#{bitacora.fileTransferDetalleDivisa.comentarios}" />
+								value="#{bitacora.comentarios}" />
 						</h:column>
 
 						<f:facet name="footer">

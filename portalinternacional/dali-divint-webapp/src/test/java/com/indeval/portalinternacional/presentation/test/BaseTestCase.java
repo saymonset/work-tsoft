@@ -30,7 +30,11 @@ public class BaseTestCase extends AbstractDependencyInjectionSpringContextTests 
      */
     private static String[] archivosContext = new String[]{
         "iTestApplicationContext.xml",
-        "persistence-core-dao-context.xml"
+           // "db-propertiesContext-Test.xml",
+            "test-persistence-portalinternacional-context.xml",
+            "test-middleware-portalinternacional-services-context.xml"
+
+       // "persistence-core-dao-context.xml"
     };
 
     /**

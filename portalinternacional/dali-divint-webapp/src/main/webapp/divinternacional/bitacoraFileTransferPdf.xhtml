@@ -42,34 +42,16 @@
         	<pdf:col header="Fecha Registro" value="#{detalle.fechaRegistro}" align="CENTER">
         		<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss"/>
         	</pdf:col>
-      		<pdf:col header="Usuario Registro" value="#{detalle.usuarioRegistro.claveUsuario}" align="CENTER"/>
-        	<pdf:col header="Usuario Autoriza" value="#{detalle.usuarioAutoriza.claveUsuario}" align="CENTER"/>
-        	<pdf:col header="Id Folio" value="#{detalle.fileTransferDetalleDivisa.folioInstitucion}" align="CENTER"/>
-        	<pdf:col header="Cuenta" value="#{detalle.fileTransferDetalleDivisa.cuenta}" align="CENTER"/>
-        	<pdf:col header="Monto Bruto" value="#{detalle.fileTransferDetalleDivisa.montoBruto}"  align="right">
-        		<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+        	<pdf:col header="Registros total" value="#{detalle.registrosTotal}" align="CENTER"/>
+        	<pdf:col header="Registros exitosos" value="#{detalle.registrosExitosos}" align="CENTER"/>
+        	<pdf:col header="Registros error" value="#{detalle.registrosError}" align="CENTER"/>
+      		<pdf:col header="Usuario Registro" value="#{detalle.usuarioRegistro}" align="CENTER"/>
+      		<pdf:col header="Fecha Autoriza" value="#{detalle.fechaAutoriza}" align="CENTER">
+        		<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss"/>
         	</pdf:col>
-        	<pdf:col header="Retencion" value="#{detalle.fileTransferDetalleDivisa.retencion}"  align="right">
-        		<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
-        	</pdf:col>
-        	<pdf:col header="Comision" value="#{detalle.fileTransferDetalleDivisa.comision}"  align="right">
-        		<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
-        	</pdf:col>
-        	<pdf:col header="Divisa" value="#{detalle.fileTransferDetalleDivisa.divisa.claveAlfabetica}" align="CENTER"/>
-        	<pdf:col header="Boveda" value="#{detalle.fileTransferDetalleDivisa.boveda.nombreCorto}" align="CENTER"/>
-        	<pdf:col header="Deposito Por Ajuste" value="#{detalle.fileTransferDetalleDivisa.depositoAjuste}"  align="right">
-        		<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
-        	</pdf:col>
-        	<pdf:col header="Retiro Por Ajuste" value="#{detalle.fileTransferDetalleDivisa.retiroAjuste}"  align="right">
-        		<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
-        	</pdf:col>
-        	<pdf:col header="Monto Neto" value="#{detalle.fileTransferDetalleDivisa.montoNeto}"  align="right">
-        		<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
-        	</pdf:col>
-			<pdf:col header="Concepto" value="#{detalle.fileTransferDetalleDivisa.concepto}" align="CENTER"/>
-			<pdf:col header="Folio Referencia" value="#{detalle.fileTransferDetalleDivisa.referencia}" align="CENTER"/>
-			<pdf:col header="Estatus" value="#{detalle.fileTransferDetalleDivisa.estatusDivisas.descripcion}" align="CENTER"/>
-			<pdf:col header="Comentarios" value="#{detalle.fileTransferDetalleDivisa.comentarios}" align="CENTER"/>
+        	<pdf:col header="Usuario Autoriza" value="#{detalle.usuarioAutoriza}" align="CENTER"/>
+			<pdf:col header="Estatus" value="#{detalle.estatusDivisas.descripcion}" align="CENTER"/>
+			<pdf:col header="Comentarios" value="#{detalle.comentarios}" align="CENTER"/>
         	 
       	</pdf:row>
   	</pdf:table>

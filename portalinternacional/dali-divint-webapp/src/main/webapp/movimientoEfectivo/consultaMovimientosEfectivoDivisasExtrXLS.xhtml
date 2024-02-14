@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--Multidivisas: Reporte XLS: Consulta de Movimientos de Efectivo Internacional-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xls="http://indeval.com/jsf/xls"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <xls:document documentName="consultaMovimientosEfectivoDivisasExtranjeras" documentTitle="Consulta Movimientos Efectivo Divisas Extranjeras"
+        institucion="#{movimientoEfectivoInt.agenteFirmado.id} #{movimientoEfectivoInt.agenteFirmado.folio} #{movimientoEfectivoInt.agenteFirmado.razon}" 
+        fecha="#{movimientoEfectivoInt.fechaActual}">
+
+        <xls:table value="#{movimientoEfectivoInt}" var="dummy">
+            <xls:row>
+                <xls:col header="#{etq.participante}" value="#{!empty movimientoEfectivoInt.idFolioParticipante ? movimientoEfectivoInt.idFolioParticipante : 'TODOS'}" align="center" />
+                <xls:col header="#{etq.folioControl}" value="#{!empty movimientoEfectivoInt.folioControl ? movimientoEfectivoInt.folioControl : 'TODOS'}" align="center" />
+                <xls:col header="#{etq.tipoMinus} #{etq.movimientoMinus}" value="#{!empty movimientoEfectivoInt.descTipoMovimiento ? movimientoEfectivoInt.descTipoMovimiento : 'TODOS'}" align="center" />
+                <xls:col header="#{etq.estatus} #{etq.movimientoMinus}" value="#{!empty movimientoEfectivoInt.descEstatusMovimiento ? movimientoEfectivoInt.descEstatusMovimiento : 'TODOS'}" align="center" />
+                <xls:col header="#{etq.divisaMinus}" value="#{!empty movimientoEfectivoInt.descDivisa ? movimientoEfectivoInt.descDivisa : 'TODAS'}" align="center" />
+                <xls:col header="#{etq.bovedaMinus}" value="#{!empty movimientoEfectivoInt.descBoveda ? movimientoEfectivoInt.descBoveda : 'TODAS'}" align="center" />
+                <xls:col header="#{etq.fechaRegInicial}" value="#{movimientoEfectivoInt.fechaInicioStr}" align="center" />
+                <xls:col header="#{etq.fechaRegFinal}" value="#{movimientoEfectivoInt.fechaFinStr}" align="center"/>
+                <xls:col header="#{etq.fechaLiqInicial}" value="#{movimientoEfectivoInt.fechaLiqInicioStr}" align="center" />
+                <xls:col header="#{etq.fechaLiqFinal}" value="#{movimientoEfectivoInt.fechaLiqFinStr}" align="center"/>
+            </xls:row>
+        </xls:table>
+
+        <xls:subtitle value="#{etq.registrosEncontrados}: #{movimientoEfectivoInt.totalRegistros}" />
+
+        <xls:table value="#{movimientoEfectivoInt.resultados.registros}" var="movimiento">
+            <xls:row>
+                <xls:col header="#{etq.participante}" value="#{movimiento.participante}" align="center"/>
+                <xls:col header="#{etq.fechaRegistro}" value="#{movimiento.fechaAlta}" align="center" pattern="dd/MM/yyyy HH:mm:ss" />
+                <xls:col header="#{etq.fechaLiquidacionMinus}" value="#{movimiento.fechaLiquidacion}" align="center" pattern="dd/MM/yyyy" />
+                <xls:col header="#{etq.tipoMinus} #{etq.movimientoMinus}" value="#{movimiento.tipoMovimiento}" align="center"/>
+                <xls:col header="#{etq.bovedaMinus}" value="#{movimiento.boveda.nombreCorto}" align="center"/>
+                <xls:col header="#{etq.divisaMinus}" value="#{movimiento.divisa.claveAlfabetica}" align="center"/>
+                <xls:col header="#{etq.estatus} #{etq.movimientoMinus}" value="#{movimiento.descEstadoMovimiento}" align="center"/>
+                <xls:col header="#{etq.estatus} #{etq.liquidacion}" value="#{movimiento.descEstadoLiqIndeval}" align="center"/>
+                <xls:col header="#{etq.saldoDisponibleMinus}" value="#{movimiento.saldoDisponible}" align="center" pattern="$ ###,###,###,###,###,##0.00" />
+                <xls:col header="#{etq.importe}" value="#{movimiento.importeTraspasar}" align="center" pattern="$ ###,###,###,###,###,##0.00" />
+                <xls:col header="#{etq.saldoActual}" value="#{movimiento.saldoEfectivo}" align="center" pattern="$ ###,###,###,###,###,##0.00" />
+                <xls:col header="#{etq.folioControl}" value="#{movimiento.folioControl}" align="center"/>
+                <xls:col header="#{etq.referencia} #{etq.numerica}" value="#{movimiento.referenciaNumerica}" align="center"/>
+                <xls:col header="#{etq.referencia} #{etq.relacionada}" value="#{movimiento.referenciaRelacionada}" align="center"/>
+                <xls:col header="#{etq.notas}/#{etq.comentarios}" value="#{movimiento.notasComentarios}" align="center"/>
+            </xls:row>
+        </xls:table>
+
+    </xls:document>
+</html>

@@ -547,13 +547,13 @@ public class MovimientoEfectivoInternacionalVO implements Serializable {
 		sb.append("Boveda=").append(this.boveda.getNombreCorto()).append(", ");
 		sb.append("Divisa=").append(this.divisa.getClaveAlfabetica()).append(", ");
 		sb.append("Estatus Movimiento=").append(this.descEstadoMovimiento).append(", ");
-		sb.append("Estatus Liquidación=").append(this.descEstadoLiqIndeval).append(", ");
+		sb.append("Estatus LiquidaciÃ³n=").append(this.descEstadoLiqIndeval).append(", ");
 		sb.append("Saldo Disponible=").append(df.format(this.saldoDisponible)).append(", ");
 		sb.append("Importe=").append(df.format(this.importeTraspasar)).append(", ");
 		sb.append("Saldo Actual=").append(df.format(this.saldoEfectivo)).append(", ");
 		sb.append("Folio Control=").append(this.folioControl);
 		if(this.idMovimientoStr != null && Constantes.PREFIJO_ID_RETIRO.equals(this.idMovimientoStr.substring(0, 2))) {
-			sb.append(", ").append("Referencia Numérica=").append(this.referenciaNumerica).append(", ");
+			sb.append(", ").append("Referencia NumÃ©rica=").append(this.referenciaNumerica).append(", ");
 			sb.append("Referencia Relacionada=").append(this.referenciaRelacionada).append(", ");
 			sb.append("Notas/Comentarios=").append(this.notasComentarios).append("] ");
 		} else {

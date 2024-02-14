@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:t="http://myfaces.apache.org/tomahawk"
+	  xmlns:a4j="http://richfaces.org/a4j"
+	  xmlns:rich="http://richfaces.org/rich"
+	  xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en">
+
+<ui:decorate template="/layoutCapturaMultiPart.xhtml">
+
+	<ui:define name="tituloEncabezado">
+		<h:outputText value="#{etq.mdTituloEncabezado}"></h:outputText>
+	</ui:define>
+
+
+	<ui:define name="seccionForma">
+		<a4j:keepAlive beanName="fileTransferTransitoriaEfectivo" />
+		<h:outputText value="#{fileTransferTransitoriaEfectivo.init}" />
+
+		<!-- Mensajes al usuario -->
+		<rich:messages id="mensajesConsulta" warnClass="warning" infoClass="info"
+					   errorClass="error" ajaxRendered="true" showDetail="false"
+					   showSummary="true" layout="list">
+			<f:facet name="infoMarker">
+				<h:panelGroup>
+					<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+			</f:facet>
+			<f:facet name="errorMarker">
+				<h:panelGroup>
+					<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+			</f:facet>
+		</rich:messages>
+
+		<h:panelGroup id="general">
+			<h:outputText style="color:red" value="#{fileTransferTransitoriaEfectivo.mensajeError}"/>
+			<h:panelGroup
+					rendered="#{!fileTransferTransitoriaEfectivo.polling and !fileTransferTransitoriaEfectivo.esperaConfirmacion}">
+				<table cellpadding="0" cellspacing="0" border="0" width="100%" class="recuadroTabla">
+					<tr>
+						<td align="center"><h:outputText value="#{etq.idFolioMinus}" styleClass="texto" /></td>
+						<td align="center"><h:outputText value="#{etq.mdFechaCargaMinus}" styleClass="texto" /></td>
+						<td align="center"><h:outputText value="#{etq.registrosCargados}" styleClass="texto" /></td>
+						<td align="center"><h:outputText value="#{etq.registrosError}" styleClass="texto" /></td>
+						<td align="center"><h:outputText value="#{etq.totalRegistros}" styleClass="texto" /></td>
+						<td align="center"><h:outputText value="#{etq.usuarioMinus}" styleClass="texto" /></td>
+						<td align="center"><h:outputText value="#{etq.estatus}" styleClass="texto" /></td>
+					</tr>
+					<tr>
+						<td align="center">
+							<h:outputText id="idFolio" value="#{1}" />
+						</td>
+						<td align="center">
+							<h:outputText id="fechaCarga"  value="#{fileTransferTransitoriaEfectivo.resumen.fechaCarga}" />
+						</td>
+						<td align="center">
+							<h:outputText id="registrosCargados"
+										  value="#{fileTransferTransitoriaEfectivo.resumen.totalCargados}" />
+						</td>
+						<td align="center">
+							<h:outputText id="registrosError" value="#{0}" />
+						</td>
+						<td align="center">
+							<h:outputText id="totalRegistros"  value="#{fileTransferTransitoriaEfectivo.resumen.totalRegistros}" />
+						</td>
+						<td align="center">
+							<h:outputText id="usuario" 	value="#{fileTransferTransitoriaEfectivo.resumen.nombreUsuario}" />
+						</td>
+
+						<td align="center">
+							<h:outputText id="estatus" value="Pendiente"/>
+						</td>
+					</tr>
+				</table>
+				<h:outputText value="#{fileTransferTransitoriaEfectivo.detenerPoll}" />
+			</h:panelGroup>
+
+
+
+			<h:panelGroup id="pollGrid">
+				<h:panelGroup
+						rendered="#{fileTransferTransitoriaEfectivo.polling and !fileTransferTransitoriaEfectivo.esperaConfirmacion}">
+
+					<div align="center">
+						<h:outputText style="color:red" value="#{fileTransferTransitoriaEfectivo.mensajeError}"/>
+						<b><h:outputText value="#{etq.archivo_usuario}" styleClass="texto" /></b><h:outputText value="#{fileTransferTransitoriaEfectivo.institucionActual.clave}#{fileTransferTransitoriaEfectivo.institucionActual.folio}" styleClass="texto" />
+						<br/>
+						<br/>
+						<h:outputText value="#{etq.estatus}: " styleClass="texto"/> <h:outputText value="#{fileTransferTransitoriaEfectivo.processInfo.status}" styleClass="texto"></h:outputText>
+						<br/>
+						<br/>
+						<h:outputText
+								value="#{fileTransferTransitoriaEfectivo.processInfo.porcentajeTerminado}">
+							<f:convertNumber maxFractionDigits="2" pattern="###.##"/>
+						</h:outputText>
+						<br/>
+						<a4j:commandButton
+								actionListener="#{fileTransferTransitoriaEfectivo.abortProcess}"
+								rendered="#{fileTransferTransitoriaEfectivo.mostrarBotonDetenerProceso}"
+								reRender="general,botones,panelPoll"
+								value="#{etq.detener_proceso}"
+								onclick="this.disabled=true"
+								oncomplete="this.disabled=false">
+						</a4j:commandButton>
+					</div>
+
+
+
+				</h:panelGroup>
+
+
+			</h:panelGroup>
+
+
+			<h:panelGroup id="resumenCarga">
+				<h:panelGroup
+						rendered="#{!fileTransferTransitoriaEfectivo.polling and fileTransferTransitoriaEfectivo.esperaConfirmacion}">
+					<h:outputText value="#{fileTransferTransitoriaEfectivo.detenerPoll}" />
+					<t:commandButton id="resumenPrevio" action="#{fileTransferTransitoriaEfectivo.getResumenPrevioCarga}"
+									 style="display:none" />
+					<h:panelGrid columns="5" id="encabezadoResumen">
+						<h:outputText value="#{etq.resumenMinus}:" />
+						<h:outputText value="#{etq.registrosCargarMinus}:" style="color: #00FF80" />
+						<t:outputText value="#{fileTransferTransitoriaEfectivo.resumenPrevio.registrosACargar}" />
+						<h:outputText value="#{etq.registrosError}:" style="color: #FF0000" />
+						<t:outputText value="#{fileTransferTransitoriaEfectivo.resumenPrevio.registrosConError}" />
+					</h:panelGrid>
+
+					<h:panelGroup id="containerInfoPaginacion">
+						<h:panelGroup
+								rendered="#{not empty fileTransferTransitoriaEfectivo.pagina.registros}">
+							<table width="100%" border="0">
+								<tr>
+									<td colspan="2">
+										<div class="refrescar" style="float: left;">
+											<a4j:status id="commonStatus">
+												<f:facet name="start">
+													<h:panelGroup>
+														<h:graphicImage value="/images/ajax-loader.gif" />
+														<h:outputText value="#{etq.buscando}"></h:outputText>
+													</h:panelGroup>
+												</f:facet>
+											</a4j:status>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td align="left" class="textoEstadoCuenta">
+										<a4j:commandLink id="control_bitacora_primero"
+														 action="#{fileTransferTransitoriaEfectivo.irPrimeraPagina}"
+														 rendered="#{fileTransferTransitoriaEfectivo.irAlPrimero}"
+														 reRender="containerInfoPaginacion,tablaResultados">
+											<img src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+												 border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_atras_fast"
+														 action="#{fileTransferTransitoriaEfectivo.retrocederPaginasRapido}"
+														 rendered="#{fileTransferTransitoriaEfectivo.retrocederRapido}"
+														 reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+											<img src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+												 border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_atras"
+														 action="#{fileTransferTransitoriaEfectivo.retrocederPagina}"
+														 rendered="#{fileTransferTransitoriaEfectivo.retroceder}"
+														 reRender="containerInfoPaginacion,tablaResultados">
+											<img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+												 border="0" />
+										</a4j:commandLink>
+										<a4j:commandLink id="control_bitacora_adelante"
+														 action="#{fileTransferTransitoriaEfectivo.avanzarPagina}"
+														 rendered="#{fileTransferTransitoriaEfectivo.avanzar}"
+														 reRender="containerInfoPaginacion,tablaResultados">
+											<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+												 border="0" />
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_adelante_fast"
+														 action="#{fileTransferTransitoriaEfectivo.avanzarPaginasRapido}"
+														 rendered="#{fileTransferTransitoriaEfectivo.avanzarRapido}"
+														 reRender="containerInfoPaginacion,tablaResultados">
+											<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+												 border="0" />
+
+										</a4j:commandLink>
+
+										<a4j:commandLink id="control_bitacora_ultimo" action="#{fileTransferTransitoriaEfectivo.irUltimaPagina}"
+														 rendered="#{fileTransferTransitoriaEfectivo.irAlUltimo}"
+														 reRender="containerInfoPaginacion,tablaResultados">
+											<img src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+												 border="0" />
+										</a4j:commandLink>
+
+										<br />
+										<h:outputText value="#{etq.mostrando}" />
+										<h:outputText value="#{fileTransferTransitoriaEfectivo.numeroPagina}" />
+										<h:outputText value="#{etq.de}" />
+										<h:outputText value="#{fileTransferTransitoriaEfectivo.totalPaginas}" />
+										<h:outputText value="#{etq.cierre}"></h:outputText>
+									</td>
+									<td align="right" class="textoEstadoCuenta">
+										<h:outputText escape="false" value="#{etq.registrosPorPagina}" styleClass="texto" />
+										<h:selectOneMenu id="tamanioPagina" styleClass="texto"
+														 value="#{fileTransferTransitoriaEfectivo.paginaVO.registrosXPag}">
+											<f:selectItem itemLabel="1" itemValue="1" />
+											<f:selectItem itemLabel="2" itemValue="2" />
+											<f:selectItem itemLabel="5" itemValue="5" />
+											<f:selectItem itemLabel="10" itemValue="10" />
+											<f:selectItem itemLabel="20" itemValue="20" />
+											<f:selectItem itemLabel="50" itemValue="50" />
+											<a4j:support event="onchange"
+														 reRender="containerInfoPaginacion,tablaResultados"
+														 actionListener="#{fileTransferTransitoriaEfectivo.actualizarPaginacionRegistro}" />
+										</h:selectOneMenu>
+									</td>
+								</tr>
+							</table>
+						</h:panelGroup>
+					</h:panelGroup>
+
+					<h:panelGroup id="tablaResultados">
+						<table width="100%" class="tablaGeneral" border="0">
+							<t:dataList value="#{fileTransferTransitoriaEfectivo.pagina.registros}" var="item" rowIndexVar="indice">
+								<tr>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+										<table width="100%" cellpadding="3px" cellspacing="0px" border="0">
+											<tr class="tituloTabla">
+												<td>
+													<h:outputText value="#" />
+												</td>
+												<td>
+													<h:outputText value="#{etq.usuarioMinus}" />
+												</td>
+												<td>
+													<h:outputText value="#{etq.fechaMinus}" />
+												</td>
+												<td>
+													<h:outputText value="#{etq.estadoRegistroMinus}" />
+												</td>
+												<td>
+													<h:outputText value="#{etq.mensajeMinus}" />
+												</td>
+											</tr>
+											<tr>
+												<td align="center">
+													<h:outputText value="#{item.consec}" />
+												</td>
+												<td align="center">
+													<h:outputText value="#{item.nombreUsuario}" escape="false" />
+												</td>
+												<td align="center">
+													<h:outputText value="#{item.fechaRegistro}" converter="formatoFechaLargaConverter" />
+												</td>
+												<td align="center">
+													<h:outputText value="#{item.estado}" />
+												</td>
+												<td align="center">
+													<t:dataList value="#{item.mensajesError}" style="text-align:left" var="variable"
+																layout="unorderedList">
+														<t:outputText styleClass="#{item.estado == 'ER' ? 'fileError' : 'regFileUploadMsg'}"
+																	  value="#{variable}"  />
+													</t:dataList>
+												</td>
+											</tr>
+											<tr class="tituloTabla">
+												<td colspan="5">
+													<h:outputText styleClass="tablaitem" value="#{etq.informacionMinus}" />
+												</td>
+											</tr>
+											<tr>
+												<td colspan="5">
+													<h:panelGroup rendered="#{not empty item.datos}">
+														<table cellpadding='0' cellspacing='0' align='left' width="100%">
+
+															<tr>
+																<t:dataList var="campo" value="#{item.datos}" rows="10">
+																	<td style="width:20px;" class='tituloTabla'>
+																		<t:outputText value="#{campo.nombre} [#{campo.longitud}]" />
+																	</td>
+																</t:dataList>
+															</tr>
+															<tr>
+																<t:dataList var="campo" value="#{item.datos}" rows="10">
+																	<td style="width:20px;" align="center">
+																		<t:outputText value="#{campo.valor}" styleClass="#{campo.tieneError?'fileError':'regFileUpload'}" escape="false" />
+																	</td>
+																</t:dataList>
+															</tr>
+															<tr>
+																<t:dataList var="campo" value="#{item.datos}" first="10" rows="10">
+																	<td style="width:20px;" class='tituloTabla'>
+																		<t:outputText value="#{campo.nombre} [#{campo.longitud}]" />
+																	</td>
+																</t:dataList>
+															</tr>
+															<tr>
+																<t:dataList var="campo" value="#{item.datos}" first="10" rows="10">
+																	<td style="width:20px;" align="center">
+																		<t:outputText value="#{campo.valor}" styleClass="#{campo.tieneError?'fileError':'regFileUpload'}" escape="false" />
+																	</td>
+																</t:dataList>
+															</tr>
+															<tr>
+																<t:dataList var="campo" value="#{item.datos}" first="20" rows="10">
+																	<td style="width:20px;"  class='tituloTabla'>
+																		<t:outputText value="#{campo.nombre} [#{campo.longitud}]" />
+																	</td>
+																</t:dataList>
+															</tr>
+															<tr>
+																<t:dataList var="campo" value="#{item.datos}" first="20" rows="10">
+																	<td style="width:20px;" align="center">
+																		<t:outputText value="#{campo.valor}" styleClass="#{campo.tieneError?'fileError':'regFileUpload'}" escape="false" />
+																	</td>
+																</t:dataList>
+															</tr>
+														</table>
+													</h:panelGroup>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr><td>&#160;</td></tr>
+							</t:dataList>
+						</table>
+					</h:panelGroup>
+
+					<h:panelGroup id="botonesPreview">
+						<h:panelGrid width="100%">
+							<a4j:commandButton id="btnProcesar"
+											   value="#{etq.procesarMinus}"
+											   actionListener="#{fileTransferTransitoriaEfectivo.procesar}"
+											   rendered="#{fileTransferTransitoriaEfectivo.isThisMyProcess and !fileTransferTransitoriaEfectivo.isosYaFirmados}"
+											   reRender="general,botones,panelPoll"
+											   oncomplete="window.scrollTo(0,0);"/>
+
+							<t:commandButton id="btnProcesar2" value="#{etq.procesarMinus}"
+											 rendered="#{fileTransferTransitoriaEfectivo.isosYaFirmados}"
+											 actionListener="#{fileTransferTransitoriaEfectivo.procesar}">
+							</t:commandButton>
+
+							<t:commandButton id="btnCancelar" value="#{etq.cancelarMinus}"
+											 actionListener="#{fileTransferTransitoriaEfectivo.cancelar}"
+											 rendered="#{fileTransferTransitoriaEfectivo.isThisMyProcess}" />
+						</h:panelGrid>
+					</h:panelGroup>
+
+					<h:panelGroup id="panelFirma">
+						<h:panelGroup
+								rendered="#{not empty fileTransferTransitoriaEfectivo.isosSinFirmar}">
+							<div style="display: none">
+								<t:dataList value="#{fileTransferTransitoriaEfectivo.isosSinFirmar}"
+											rowIndexVar="indice" var="iso">
+
+										<textarea id="isoSinFirmar#{indice+1}"
+												  name="isoSinFirmar#{indice+1}">#{fileTransferTransitoriaEfectivo.isosSinFirmar[indice]}</textarea>
+
+
+
+								</t:dataList>
+								<textarea id="numeroSerie" name="numeroSerie"></textarea>
+								<textarea  id="numeroSerieUsuario" name="numeroSerieUsuario">#{sessionScope.usuario.numeroSerieCertificado}</textarea>
+								<textarea name="totalOperaciones"
+										  id="totalOperaciones">#{fileTransferTransitoriaEfectivo.totalOperaciones}</textarea>
+							</div>
+
+							<script>
+								function firmarOperacion(){
+									$j("input[id$='btnProcesar2']").attr("disabled",false);
+									$j("input[id$='btnCancelar']").attr("disabled",false);
+									$j("input[id$='btnProcesar2']").click();
+								}
+							</script>
+
+							<ui:decorate template="/firmaDigitalMultipleCompress.xhtml">
+							</ui:decorate>
+						</h:panelGroup>
+
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:panelGroup>
+	</ui:define>
+
+
+	<ui:define name="botones">
+		<h:panelGroup id="botones">
+			<h:panelGrid columns="3"
+						 rendered="#{!fileTransferTransitoriaEfectivo.polling and !fileTransferTransitoriaEfectivo.esperaConfirmacion}">
+				<h:panelGroup>
+					<h:outputText value="#{etq.archivo}" />
+				</h:panelGroup>
+				<t:inputFileUpload id="archivoOperaciones" storage="memory"
+								   value="#{fileTransferTransitoriaEfectivo.archivo}" size="50"
+								   required="false" />
+				<h:commandButton id="iniciarProceso" value="Iniciar Proceso"
+								 actionListener="#{fileTransferTransitoriaEfectivo.uploadFile}"></h:commandButton>
+			</h:panelGrid>
+		</h:panelGroup>
+	</ui:define>
+
+
+</ui:decorate>
+
+<a4j:region>
+	<h:form>
+		<h:panelGroup id="panelPoll">
+			<h:panelGroup >
+				<a4j:poll id="poll" interval="500"
+						  enabled="#{fileTransferTransitoriaEfectivo.pollHabilitado}"
+						  actionListener="#{fileTransferTransitoriaEfectivo.pollEstado}"
+						  reRender="general,botones,panelPoll" />
+			</h:panelGroup>
+
+		</h:panelGroup>
+	</h:form>
+</a4j:region>
+</html>

@@ -1,0 +1,693 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--Multidivisas:  Consulta de horarios de custodios-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:indeval="http://indeval.com/indeval">
+
+<ui:composition template="/layoutCaptura.xhtml">
+    <ui:define name="head">
+        <script language="javascript" type="text/javascript"
+                src="#{facesContext.externalContext.requestContextPath}/js/horarioCustodios.js"></script>
+        <script language="javascript" type="text/javascript"
+                src="#{facesContext.externalContext.requestContextPath}/js/mostrarFirmaDigital.js"></script>
+        <script language="javascript" type="text/javascript"
+                src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js"></script>
+    </ui:define>
+
+    <ui:define name="tituloSeccion">
+        <h:outputText
+                value="#{etq.tituloConsultaHorariosCustodio}"/>
+    </ui:define>
+    <ui:define name="subtituloSeccion">
+        <h:outputText value=""/>
+    </ui:define>
+
+    <ui:define name="tituloEncabezado">
+        <h:outputText value=""></h:outputText>
+    </ui:define>
+
+    <ui:define name="seccionForma">
+        <a4j:keepAlive beanName="horariosCustodiosConsultaController"/>
+        <h:panelGroup id="init">
+            <h:outputText value="#{horariosCustodiosConsultaController.inicializarConsulta}"/>
+        </h:panelGroup>
+
+        <h:panelGroup id="mensajeUsuario">
+            <div style="min-height: 21px;">
+                <rich:messages warnClass="warning" infoClass="info"
+                               errorClass="error" ajaxRendered="true" showDetail="false"
+                               showSummary="true" layout="list">
+                    <f:facet name="infoMarker">
+                        <h:panelGroup>
+                            <h:graphicImage url="/images/accept.png"/>&#160;</h:panelGroup>
+                    </f:facet>
+
+                    <f:facet name="errorMarker">
+                        <h:panelGroup><h:graphicImage url="/images/warning.gif"/>&#160;</h:panelGroup>
+                    </f:facet>
+                </rich:messages>
+
+                <div id="divWarnings" class="warning" style="display:none;">
+                    <p id="textoWarning">
+                    </p>
+                </div>
+            </div>
+            <rich:modalPanel id="modalNotificacion"
+                             onshow="setTimeout(function(){Richfaces.hideModalPanel('modalNotificacion')}, 8000)"
+                             width="450" height="110">
+                <f:facet name="header">
+                    <img alt=""
+                         src="#{facesContext.externalContext.requestContextPath}/images/#{horariosCustodiosConsultaController.iconoNotificacionUsuario}"/>
+                    &#160;
+                    <h:outputText styleClass="texto"
+                                  value="#{horariosCustodiosConsultaController.tipoNotificacionUsuario}"/>
+                </f:facet>
+                <p>
+                    <h:outputText styleClass="texto"
+                                  value="#{horariosCustodiosConsultaController.mensajeNotificacionUsuario}"/>
+                </p><br/><br/>
+                <a onclick="Richfaces.hideModalPanel('modalNotificacion');" href="#" style="float:right">
+                    CERRAR
+                </a>
+            </rich:modalPanel>
+        </h:panelGroup>
+
+        <h:panelGroup id="general">
+            <h:panelGroup id="panelCriterios">
+                <div style='display: inline' id="divCriterios">
+                    <table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+                           align="center">
+                        <tr>
+                            <td class="recuadroTabla" align="center">
+                                <table class="tablaCriterios" align="center">
+                                    <tr>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.custodio}"/>
+                                        </td>
+
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.divisa}"/>
+                                        </td>
+
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.fechaRegistro}"/>
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.tipoMinus} #{etq.estatus}"/>
+                                        </td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td align="center">
+                                            <h:selectOneMenu id="lstCustodios"
+                                                             value="#{horariosCustodiosConsultaController.idCustodio}"
+                                                             styleClass="textoControles" tabindex="6">
+                                                <f:selectItem itemValue="-1" itemLabel="Todos"/>
+                                                <f:selectItems
+                                                        value="#{horariosCustodiosConsultaController.listaCustodio}"/>
+                                            </h:selectOneMenu>
+                                        </td>
+                                        <td align="center">
+                                            <h:selectOneMenu id="lstDivisas"
+                                                             value="#{horariosCustodiosConsultaController.idDivisa}"
+                                                             styleClass="textoControles" tabindex="5">
+                                                <f:selectItem itemValue="-1" itemLabel="Todas"/>
+                                                <f:selectItems
+                                                        value="#{horariosCustodiosConsultaController.listaDivisas}"/>
+                                            </h:selectOneMenu>
+                                        </td>
+                                        <td align="center">
+                                            <rich:calendar inputClass="textoControles"
+                                                           inputStyle="background-color: #ffffe6;"
+                                                           inputSize="14"
+                                                           datePattern="dd/MM/yyyy" tabindex="120"
+                                                           popup="true"
+                                                           direction="auto"
+                                                           id="id-txt-fecha-inicio"
+                                                           value="#{horariosCustodiosConsultaController.fechaCreacion}"/>
+
+                                        </td>
+                                        <td align="center">
+                                            <h:selectOneMenu id="lstEstados"
+                                                             value="#{horariosCustodiosConsultaController.estatus}"
+                                                             styleClass="textoControles" tabindex="5">
+                                                <f:selectItem itemValue="-1" itemLabel="Todos"/>
+                                                <f:selectItems
+                                                        value="#{horariosCustodiosConsultaController.estados}"/>
+                                            </h:selectOneMenu>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+            </h:panelGroup>
+
+            <h:panelGroup id="panelResumen">
+                <h:panelGroup rendered="#{horariosCustodiosConsultaController.consultaEjecutada}">
+                    <div id="divResumen"
+                         style="display: #{horariosCustodiosConsultaController.consultaEjecutada ? 'inline':'none'}">
+                        <table width="900px" border="0" cellpadding="0px" cellspacing="5px">
+                            <tr>
+                                <td class="recuadroTabla">
+                                    <table class="tablaCriterios texto" border="0" style="text-align: center">
+                                        <tr style="display: flex;">
+                                            <td align="center" style="display: block; width: 25%;">
+                                                <h:outputText styleClass="texto" value="#{etq.custodio}"/>
+                                            </td>
+                                            <td align="center" style="display: block; width: 25%;">
+                                                <h:outputText styleClass="texto" value="#{etq.divisa}"/>
+                                            </td>
+                                            <td align="center"
+                                                style="display: #{horariosCustodiosConsultaController.fechaCreacionFormateada == null ? 'none':'block'};  width: 25%;">
+                                                <h:outputText styleClass="texto" value="#{etq.fechaRegistro}"/>
+                                            </td>
+                                            <td align="center" style="display: block; width: 25%;">
+                                                <h:outputText styleClass="texto" value="#{etq.estatus}"/>
+                                            </td>
+                                        </tr>
+                                        <tr style="display: flex;">
+                                            <td align="center" style="display: block;  width: 25%;">
+                                                <h:outputText
+                                                        value="#{horariosCustodiosConsultaController.custodioSeleccionado}"/>
+                                            </td>
+                                            <td align="center" style="display: block;  width: 25%;">
+                                                <h:outputText
+                                                        value="#{horariosCustodiosConsultaController.divisaSeleccionada}"/>
+                                            </td>
+                                            <td align="center"
+                                                style="display: #{horariosCustodiosConsultaController.fechaCreacionFormateada == null ? 'none':'block'};  width: 25%;">
+                                                <h:outputText
+                                                        value="#{horariosCustodiosConsultaController.fechaCreacion}"/>
+                                            </td>
+                                            <td align="center" style="display: block; width: 25%;">
+                                                <h:outputText
+                                                        value="#{horariosCustodiosConsultaController.estatusSeleccionado}"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
+
+        <h:panelGroup id="botones">
+            <div class="refrescar" style="float: left;">
+                <a4j:status id="commonStatus">
+                    <f:facet name="start">
+                        <h:panelGroup>
+                            <h:graphicImage value="/images/ajax-loader.gif"/>
+                            <h:outputText value="#{etq.buscando}"></h:outputText>
+                        </h:panelGroup>
+                    </f:facet>
+                </a4j:status>
+            </div>
+            <div class="limpiar">
+                <a4j:commandButton id="botonLimpiar" image="/images/transparent.gif"
+                                   styleClass="submit"
+                                   oncomplete='javascript:consultasPresentarCriterios();'
+                                   actionListener="#{horariosCustodiosConsultaController.limpiar}"
+                                   reRender="containerResultados,totalesConsultas,tablaResultados,botones,panelResumen">
+                </a4j:commandButton>
+            </div>
+            <div class="buscar">
+                <a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+                                   styleClass="submit"
+                                   oncomplete='javascript:consultasPresentarResumen();'
+                                   actionListener="#{horariosCustodiosConsultaController.consultarAction}"
+                                   reRender="containerResultados,totalesConsultas,tablaResultados,botones,panelResumen">
+                </a4j:commandButton>
+            </div>
+            <div class="editar"
+                 style="display:#{horariosCustodiosConsultaController.consultaEjecutada?'inline':'none'};float:right;"
+                 id="botonEditarCriterios">
+                <input type="image" class="submit"
+                       src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+                       alt="Editar Criterios" title="Editar Criterios"
+                       onclick='javascript:consultasPresentarCriterios();return false;'/>
+            </div>
+        </h:panelGroup>
+
+
+        <h:panelGroup id="containerResultados">
+            <h:inputHidden id="esTipo" value="#{horariosCustodiosConsultaController.esTipo}"></h:inputHidden>
+            <h:inputHidden id="validationErrors"
+                           value="#{horariosCustodiosConsultaController.validationErrors}"></h:inputHidden>
+            <h:inputHidden id="idMovimientoStrSelected"
+                           value="#{horariosCustodiosConsultaController.idMovimientoStrSelected}"></h:inputHidden>
+
+            <h:panelGroup rendered="#{horariosCustodiosConsultaController.consultaEjecutada}">
+                <h:dataTable id="noExistenResultados"
+                             value="#{horariosCustodiosConsultaController.paginaVO.registros}"
+                             styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+                             footerClass="tituloTabla" border="0" cellpadding="3px"
+                             cellspacing="0px" columnClasses="everyColumn"
+                             rowClasses="renglonTablaUno, renglonTablaDos"
+                             rendered="#{empty horariosCustodiosConsultaController.paginaVO.registros}">
+
+                    <t:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{etq.sinResultados}"></h:outputText>
+                        </f:facet>
+
+                    </t:column>
+                </h:dataTable>
+
+                <br/>
+                <br/>
+                <br/>
+                <h:panelGroup id="tablaResultados">
+                    <script type="text/javascript">
+                        checkAutoriza = new Array();
+                        iLibera = 0;
+                        checkCancela = new Array();
+                        iCancela = 0;
+                    </script>
+                    <h:graphicImage value="/images/blank.gif" width="900px" height="1px"/>
+                    <h:panelGroup id="controlPaginado"
+                                  rendered="#{not empty horariosCustodiosConsultaController.paginaVO.registros}">
+                        <table width="900px" border="0" style="left:-150px;position:relative">
+                            <tr>
+                                <td align="left" class="textoEstadoCuenta">
+                                    <a4j:commandLink id="control_bitacora_primero"
+                                                     action="#{horariosCustodiosConsultaController.irPrimeraPagina}"
+                                                     rendered="#{horariosCustodiosConsultaController.irAlPrimero}"
+                                                     reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,containerResultados">
+                                        <img alt=""
+                                             src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+                                             border="0"/>
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_atras_fast"
+                                                     action="#{horariosCustodiosConsultaController.retrocederPaginasRapido}"
+                                                     rendered="#{horariosCustodiosConsultaController.retrocederRapido}"
+                                                     reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados">
+                                        <img alt=""
+                                             src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+                                             border="0"/>
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_atras"
+                                                     action="#{horariosCustodiosConsultaController.retrocederPagina}"
+                                                     rendered="#{horariosCustodiosConsultaController.retroceder}"
+                                                     reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados">
+                                        <img alt=""
+                                             src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+                                             border="0"/>
+                                    </a4j:commandLink>
+                                    <a4j:commandLink id="control_bitacora_adelante"
+                                                     action="#{horariosCustodiosConsultaController.avanzarPagina}"
+                                                     rendered="#{horariosCustodiosConsultaController.avanzar}"
+                                                     reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados">
+                                        <img alt=""
+                                             src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+                                             border="0"/>
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_adelante_fast"
+                                                     action="#{horariosCustodiosConsultaController.avanzarPaginasRapido}"
+                                                     rendered="#{horariosCustodiosConsultaController.avanzarRapido}"
+                                                     reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados">
+                                        <img alt=""
+                                             src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+                                             border="0"/>
+
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_ultimo"
+                                                     action="#{horariosCustodiosConsultaController.irUltimaPagina}"
+                                                     rendered="#{horariosCustodiosConsultaController.irAlUltimo}"
+                                                     reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados">
+                                        <img alt=""
+                                             src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+                                             border="0"/>
+                                    </a4j:commandLink>
+
+                                    <br/>
+                                    <h:outputText value="#{etq.mostrando}"
+                                                  styleClass="textoResumen"/>
+                                    <h:outputText value="#{horariosCustodiosConsultaController.numeroPagina}"
+                                                  styleClass="textoResumen"/>
+                                    <h:outputText value="#{etq.de}" styleClass="textoResumen"/>
+                                    <h:outputText value="#{horariosCustodiosConsultaController.totalPaginas}"
+                                                  styleClass="textoResumen"/>
+                                    <h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+                                    &#160;&#160;&#160;
+                                    <h:outputText
+                                            value="#{horariosCustodiosConsultaController.paginaVO.totalRegistros}"
+                                            styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+                                    &#160;
+                                    <h:outputText styleClass="textoResumen"
+                                                  value="#{etq.registrosEncontrados}"/>
+                                </td>
+                                <td align="right" class="textoEstadoCuenta">
+                                    <h:outputText escape="false" value="#{etq.registrosPorPagina}"
+                                                  styleClass="textoResumen"/>
+                                    <h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+                                                     value="#{horariosCustodiosConsultaController.paginaVO.registrosXPag}">
+                                        <f:selectItem itemLabel="1" itemValue="1"/>
+                                        <f:selectItem itemLabel="2" itemValue="2"/>
+                                        <f:selectItem itemLabel="5" itemValue="5"/>
+                                        <f:selectItem itemLabel="10" itemValue="10"/>
+                                        <f:selectItem itemLabel="20" itemValue="20"/>
+                                        <f:selectItem itemLabel="50" itemValue="50"/>
+                                        <f:selectItem itemLabel="100" itemValue="100"/>
+                                        <a4j:support event="onchange"
+                                                     reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,mensajeUsuario"
+                                                     action="#{horariosCustodiosConsultaController.irPrimeraPagina}">
+                                        </a4j:support>
+                                    </h:selectOneMenu>
+                                </td>
+                            </tr>
+                        </table>
+                    </h:panelGroup>
+
+
+                    <h:dataTable id="resultados"
+                                 value="#{horariosCustodiosConsultaController.paginaVO.registros}"
+                                 var="horarioCustodio"
+                                 rendered="#{not empty horariosCustodiosConsultaController.paginaVO.registros}"
+                                 styleClass="tablaGeneral tableLarge" headerClass="tituloTabla" width="100%"
+                                 footerClass="tituloTabla" border="0" cellpadding="3px"
+                                 cellspacing="0px" columnClasses="everyColumn"
+                                 rowClasses="renglonTablaUno, renglonTablaDos">
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.ID}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{horarioCustodio.idHorariosCustodios}"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.fechaRegistro}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{horarioCustodio.fechaCreacion}"
+                                              converter="formatoFechaCortaConverter"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.custodio}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{horarioCustodio.custodioNombre}"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.divisaMinus}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{horarioCustodio.divisaClave}"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.horarioInicial}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{horarioCustodio.horarioInicial}"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.horarioFinal}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{horarioCustodio.horarioFinal}"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{etq.usuarioQue} #{etq.usuarioRegistra}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{horarioCustodio.creador}"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{etq.usuarioQue } #{etq.usuarioAutoriza} \ #{etq.usuarioCancela}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{horarioCustodio.usuarioChecker}"/>
+                            </div>
+                        </h:column>
+
+                        <h:column headerClass="tituloTabla column80">
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.estatus}"/>
+                            </f:facet>
+                            <div align="right">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{horariosCustodiosConsultaController.obtenerDescripcionEstatus(horarioCustodio.estatus)}"/>
+                            </div>
+                        </h:column>
+                        <h:column rendered="#{horariosCustodiosConsultaController.institucionIndeval}">
+                            <f:facet name="header">
+                                <h:panelGroup id="accionParaTodos"
+                                              rendered="#{horariosCustodiosConsultaController.validarOperacionesPermitidas()}">
+                                    <h:outputText styleClass="texto textoPeque12"
+                                                  value="#{etq.AUTORIZAR}/#{etq.CANCELAR}"/>
+                                    <t:div id="autorizarTodos"
+                                           rendered="#{horariosCustodiosConsultaController.usuarioPuedeAutorizar}">
+                                        <h:selectBooleanCheckbox id="chk_autorizar"
+                                                                 value="#{horariosCustodiosConsultaController.checkAllAutoriza}">
+                                            <a4j:support event="onclick"
+                                                         oncomplete="javascript:seleccionarTodos(this.checked, 'Autoriza');"
+                                                         actionListener="#{horariosCustodiosConsultaController.checkAllOperAutoriza}"
+                                                         reRender="containerResultados,mensajeUsuario"></a4j:support>
+                                        </h:selectBooleanCheckbox>
+                                        <a4j:commandButton id="btnAutorizaSeleccion"
+                                                           alt="#{etq.autorizaSeleccion}"
+                                                           image="/images/autorizar.png"
+                                                           onclick="if (! window.confirm('#{mensajes.mensajeConfirmarAutorizaSeleccion}') ) {return false;}"
+                                                           reRender="panelfirma, containerResultados,mensajeUsuario"
+                                                           actionListener="#{horariosCustodiosConsultaController.cargaFirmaAutorizarSeleccion}"
+                                                           tabindex="60">
+                                        </a4j:commandButton>
+                                        <a4j:commandButton id="btnAutorizaSeleccion2"
+                                                           style="display: none;"
+                                                           styleClass="btnAutorizaSeleccion2"
+                                                           reRender="panelFirma, containerResultados,mensajeUsuario"
+                                                           actionListener="#{horariosCustodiosConsultaController.autorizaSeleccion}"
+                                                           oncomplete="Richfaces.showModalPanel('modalNotificacion');">
+                                        </a4j:commandButton>
+                                    </t:div>
+                                    <t:div id="cancelarTodos"
+                                           rendered="#{horariosCustodiosConsultaController.usuarioPuedeCancelar}">
+                                        <h:selectBooleanCheckbox id="chk_cancelar"
+                                                                 styleClass="chkAllCancela"
+                                                                 value="#{horariosCustodiosConsultaController.checkAllCancela}">
+                                            <a4j:support event="onclick"
+                                                         oncomplete="javascript:seleccionarTodos(this.checked, 'Cancela');"
+                                                         actionListener="#{horariosCustodiosConsultaController.checkAllOperCancela}"
+                                                         reRender="containerResultados,mensajeUsuario"></a4j:support>
+                                        </h:selectBooleanCheckbox>
+                                        <a4j:commandButton id="btnCancelaSeleccion"
+                                                           alt="#{etq.cancelaSeleccion}"
+                                                           image="/images/cancelar.png"
+                                                           onclick="if (! window.confirm('#{mensajes.mensajeConfirmarCancelaSeleccion}') ) {return false;}"
+                                                           actionListener="#{horariosCustodiosConsultaController.cargaFirmaCancelarSeleccion}"
+                                                           reRender="containerResultados,mensajeUsuario,panelFirma">
+                                        </a4j:commandButton>
+                                        <a4j:commandButton id="btnCancelaSeleccion2"
+                                                           style="display: none;"
+                                                           styleClass="btnCancelaSeleccion2"
+                                                           actionListener="#{horariosCustodiosConsultaController.cancelaSeleccion}"
+                                                           reRender="containerResultados, mensajeUsuario,panelFirma"
+                                                           oncomplete="Richfaces.showModalPanel('modalNotificacion');">
+                                        </a4j:commandButton>
+                                    </t:div>
+                                </h:panelGroup>
+                            </f:facet>
+                            <div align="center">
+                                <h:panelGroup id="autorizar"
+                                              rendered="#{horariosCustodiosConsultaController.validarOperacionAutorizar(horarioCustodio.estatus)}">
+                                    <div id="libe_movEfeIn_#{horarioCustodio.idHorariosCustodios}">
+                                        <h:selectBooleanCheckbox
+                                                id="chk_autorizar_#{horarioCustodio.idHorariosCustodios}"
+                                                styleClass="chkAutoriza chk_autoriza_#{horarioCustodio.idHorariosCustodios}"
+                                                value="#{horarioCustodio.seleccionadoAutorizar}"
+                                                onchange="onChangeChk('Autoriza');">
+                                        </h:selectBooleanCheckbox>
+                                        <a4j:commandButton id="btnAutorizar_#{horarioCustodio.idHorariosCustodios}"
+                                                           title="#{etq.autoriza}" alt="#{etq.autoriza}"
+                                                           ajaxSingle="true" limitToList="true"
+                                                           image="/images/autorizar.png"
+                                                           onclick="if (! window.confirm('#{horarioCustodio.idHorariosCustodios}'+': '+'#{mensajes.mensajeConfirmarAutoriza}') ) {return false;}"
+                                                           reRender="containerResultados,mensajeUsuario,panelFirma"
+                                                           actionListener="#{horariosCustodiosConsultaController.cargaFirmaAutorizacion}"
+                                                           tabindex="60">
+                                            <a4j:actionparam name="idMovimientoStr"
+                                                             value="#{horarioCustodio.idHorariosCustodios}"/>
+                                        </a4j:commandButton>
+                                        <a4j:commandButton id="btnAutoriza2_#{horarioCustodio.idHorariosCustodios}"
+                                                           style="display: none;"
+                                                           styleClass="btnAutoriza2_#{horarioCustodio.idHorariosCustodios}"
+                                                           actionListener="#{horariosCustodiosConsultaController.autoriza}"
+                                                           reRender="containerResultados,panelFirma,mensajeUsuario"
+                                                           oncomplete="Richfaces.showModalPanel('modalNotificacion');">
+                                        </a4j:commandButton>
+                                    </div>
+                                </h:panelGroup>
+                                <h:panelGroup id="cancelacion"
+                                              rendered="#{horariosCustodiosConsultaController.validarOperacionCancelar(horarioCustodio.estatus) }">
+                                    <div id="cancel_movEfeIn_#{horarioCustodio.idHorariosCustodios}">
+                                        <h:selectBooleanCheckbox
+                                                id="chk_cancelar_#{horarioCustodio.idHorariosCustodios}"
+                                                styleClass="chkCancela chk_cancelar_#{horarioCustodio.idHorariosCustodios}"
+                                                value="#{horarioCustodio.seleccionadoCancelar}"
+                                                onchange="onChangeChk('Cancela');">
+                                        </h:selectBooleanCheckbox>
+                                        <a4j:commandButton id="btnCancelar_#{horarioCustodio.idHorariosCustodios}"
+                                                           title="#{etq.cancela}" alt="#{etq.cancela}"
+                                                           ajaxSingle="true" limitToList="true"
+                                                           image="/images/cancelar.png"
+                                                           onclick="if (! window.confirm('#{horarioCustodio.idHorariosCustodios}'+': '+'#{mensajes.mensajeConfirmarCancela}') ) {return false;}"
+                                                           reRender="containerResultados,mensajeUsuario,panelFirma"
+                                                           actionListener="#{horariosCustodiosConsultaController.cargaFirmaCancelacion}"
+                                                           tabindex="60">
+                                            <a4j:actionparam name="idMovimientoStr"
+                                                             value="#{horarioCustodio.idHorariosCustodios}"/>
+                                        </a4j:commandButton>
+                                        <a4j:commandButton id="btnCancelar2_#{horarioCustodio.idHorariosCustodios}"
+                                                           style="display: none;"
+                                                           styleClass="btnCancelar2_#{horarioCustodio.idHorariosCustodios}"
+                                                           actionListener="#{horariosCustodiosConsultaController.cancela}"
+                                                           reRender="containerResultados,panelFirma,mensajeUsuario"
+                                                           oncomplete="Richfaces.showModalPanel('modalNotificacion');">
+                                        </a4j:commandButton>
+
+
+                                    </div>
+                                </h:panelGroup>
+                            </div>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+
+                <!-- La facultad debe reflejar el valor de SeguridadConstants.FACULTAD_FIRMA_OPERACION -->
+                <indeval:authorizeFaculty userInFaculty="CON_CERTIFICADO">
+                    <h:panelGroup id="panelFirma">
+                        <h:panelGroup
+                                rendered="#{not empty horariosCustodiosConsultaController.isosSinFirmar}">
+                            <div style="display: none">
+
+                                <t:dataList value="#{horariosCustodiosConsultaController.isosSinFirmar}"
+                                            rowIndexVar="indice" var="iso">
+
+                                    <!-- Importante no dejar espacios despues de la llave que cierra -->
+                                    <textarea id="isoSinFirmar#{indice+1}"
+                                              name="isoSinFirmar#{indice+1}">
+                                        #{horariosCustodiosConsultaController.isosSinFirmar[indice]}
+                                    </textarea>
+
+                                </t:dataList>
+
+                                <textarea id="numeroSerie" name="numeroSerie"></textarea>
+                                <textarea id="numeroSerieUsuario"
+                                          name="numeroSerieUsuario">#{sessionScope.usuario.numeroSerieCertificado}</textarea>
+                                <textarea name="totalOperaciones"
+                                          id="totalOperaciones">#{horariosCustodiosConsultaController.totalOperaciones}</textarea>
+                            </div>
+
+                            <script type="javascript">
+                                function firmarOperacion() {
+                                    console.log("firmarOperacion");
+                                    try {
+
+                                        const esTipo = $j('#daliForm\\:esTipo')[0];
+
+                                        let idHorarioCustodio = null;
+                                        let nameC = null;
+
+                                        if (esTipo.value == 'autorizaSeleccion') {
+                                            console.log('autorizaSeleccion');
+                                            nameC = '.btnAutorizaSeleccion2';
+                                        } else if (esTipo.value == 'cancelaSeleccion') {
+                                            console.log('cancelaSeleccion');
+                                            nameC = '.btnCancelaSeleccion2';
+                                        } else if (esTipo.value == 'autoriza') {
+                                            idHorarioCustodio = $j('#daliForm\\:idMovimientoStrSelected').val();
+                                            console.log('autoriza :: ' + idHorarioCustodio);
+                                            nameC = '.btnAutoriza2_' + idHorarioCustodio;
+                                        } else if (esTipo.value == 'cancela') {
+                                            idHorarioCustodio = $j('#daliForm\\:idMovimientoStrSelected').val();
+                                            console.log('cancela :: ' + idHorarioCustodio);
+                                            nameC = '.btnCancelar2_' + idHorarioCustodio;
+                                        } else {
+                                            console.log('esTipo', esTipo.value);
+                                        }
+
+                                        if (nameC) {
+                                            console.log(nameC);
+                                            const buttonElement = $j(nameC);
+                                            console.log(buttonElement);
+
+                                            if (buttonElement) {
+                                                buttonElement.click();
+                                            } else {
+                                                console.error("Elemento no encontrado");
+                                            }
+                                        }
+                                    } catch (e) {
+                                        console.error(e);
+                                        alert("ERROR: Al intentar continuar con el procesamiento de HorariosCustodios")
+                                    }
+                                }
+
+
+                            </script>
+                            <div id="firmaId">
+                                <ui:decorate template="/firmaDigitalMultipleCompress.xhtml"></ui:decorate>
+                            </div>
+
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </indeval:authorizeFaculty>
+
+            </h:panelGroup>
+
+        </h:panelGroup>
+
+
+    </ui:define>
+
+
+</ui:composition>
+
+</html>

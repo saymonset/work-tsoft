@@ -1,7 +1,9 @@
 // Cambio Multidivisas
 package com.indeval.portalinternacional.persistence.dao.MovimientosEfectivoInternacional;
 
+import com.ibm.icu.math.BigDecimal;
 import com.indeval.persistence.unittest.BaseDaoTestCase;
+import com.indeval.portalinternacional.middleware.servicios.modelo.CuentaTransitoria;
 import com.indeval.portalinternacional.middleware.servicios.modelo.MovimientoDepositoEfectivoInternacional;
 import com.indeval.portalinternacional.middleware.servicios.modelo.MovimientoRetiroEfectivoInternacional;
 import com.indeval.portalinternacional.persistence.dao.MovimientoEfectivoInternacionalDao;
@@ -24,7 +26,7 @@ public class MovimientoEfectivoInternacionalDaoImplTest extends BaseDaoTestCase 
         System.out.println("testGetFolioControl()");
 
         assertNotNull("MovimientoEfectivoInternacionalDao Nulo", dao);
-        Long folioControl =  dao.getFolioControl();
+        Long folioControl = dao.getFolioControl();
 
         assertNotNull(folioControl);
     }
@@ -65,4 +67,20 @@ public class MovimientoEfectivoInternacionalDaoImplTest extends BaseDaoTestCase 
 
         assertTrue(esPermitido);
     }
+
+    public void testObtenerCuentaTransitorioByRefAndMontoAndBovedaAndDivisa() {
+        System.out.println("testObtenerCuentaTransitorioByRefAndMontoAndBovedaAndDivisa()");
+
+        String referencia = "41000000190182";
+        Long idDivisa = 3L;
+        Long idCustodio = 2L;
+        BigDecimal monto = new BigDecimal("202.02");
+        String tipoMensaje = "910";
+
+        CuentaTransitoria cuentaTransitoria = dao.obtenerCuentaTransitorioByRefAndMontoAndBovedaAndDivisa(
+                referencia, idCustodio, idDivisa, monto, tipoMensaje);
+
+        assertNotNull(cuentaTransitoria);
+    }
+
 }

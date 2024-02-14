@@ -7,18 +7,6 @@ http://www.springframework.org/schema/context
 http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
 
-    <bean id="strongEncryptorPwd" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
-        <property name="algorithm" value="PBEWithMD5AndDES" />
-        <property name="password" value="d4l1" />
-        <property name="providerName" value="BC" />
-    </bean>
-
-    <bean id="encryptableProperties" class="org.jasypt.spring.properties.EncryptablePropertyPlaceholderConfigurer">
-        <constructor-arg index="0">
-            <ref bean="strongEncryptorPwd" />
-        </constructor-arg>
-        <property name="properties" ref="commonsConfigurationFactoryBean"/>
-    </bean>
 
 
     <bean id="commonsConfigurationFactoryBean" class="org.springmodules.commons.configuration.CommonsConfigurationFactoryBean">

@@ -76,6 +76,17 @@ public abstract class ControllerBase {
      */
     private int totalPaginas = -1;
 
+    private String mensajeNotificacionUsuario;
+    private String tipoNotificacionUsuario;
+    private String iconoNotificacionUsuario;
+
+
+    private static final String TIPO_NOTIFICACION_USUARIO_INFO = "INFO";
+    private static final String TIPO_NOTIFICACION_USUARIO_ERROR = "ERROR";
+
+    private static final String ICONO_NOTIFICACION_USUARIO_INFO = "accept.png";
+    private static final String ICONO_NOTIFICACION_USUARIO_ERROR = "warning.gif";
+
     /**
      * Indica el estado de la peticion de un reporte
      */
@@ -248,6 +259,15 @@ public abstract class ControllerBase {
     }
 
     /**
+     * Actualiza el valor del error en la &uacute;ltima invocaci&oacute;n de un servicio de negocio remoto
+     *
+     * @return
+     */
+    public void actualizaErrorInvocacion(Boolean actualizacion) {
+        ResultadoInvocacionServicioUtil.setExisteError(actualizacion);
+    }
+
+    /**
      * Agrega un mensaje proveniente de una excepci&oacute;n de negocio producto de una llamada a un EJB
      *
      * @param ex
@@ -321,6 +341,7 @@ public abstract class ControllerBase {
         FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, mensaje, null));
     }
+
     /**
      * Agrega un mensaje informativo
      *
@@ -952,26 +973,75 @@ public abstract class ControllerBase {
         indevalCacheService.removeFromCache(key);
     }
 
-	/**
-	 * Obtiene institucion actual del usuario logueado
-	 * 
-	 * @author genner.cardenas
-	 * @since 20/06/2023
-	 * @return
-	 */
-	public InstitucionVO getInstitucionVigente() {
-		FacesContext ctx = FacesContext.getCurrentInstance();
-		Object obj = ((HttpSession) ctx.getExternalContext().getSession(false))
-				.getAttribute(SeguridadConstants.INSTITUCION_VO_ACTUAL);
+    /**
+     * Obtiene institucion actual del usuario logueado
+     *
+     * @return
+     * @author genner.cardenas
+     * @since 20/06/2023
+     */
+    public InstitucionVO getInstitucionVigente() {
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        Object obj = ((HttpSession) ctx.getExternalContext().getSession(false))
+                .getAttribute(SeguridadConstants.INSTITUCION_VO_ACTUAL);
 
-		InstitucionVO institucionVO = null;
-		if (obj instanceof InstitucionVO) {
-			institucionVO = (InstitucionVO) obj;
-		} else {
-			institucionVO = new InstitucionVO();
-		}
+        InstitucionVO institucionVO = null;
+        if (obj instanceof InstitucionVO) {
+            institucionVO = (InstitucionVO) obj;
+        } else {
+            institucionVO = new InstitucionVO();
+        }
 
-		return institucionVO;
-	}
+        return institucionVO;
+    }
+
+    public void addNotificacionInfo(String mensaje) {
+        this.mensajeNotificacionUsuario = mensaje;
+        this.tipoNotificacionUsuario = TIPO_NOTIFICACION_USUARIO_INFO;
+        this.iconoNotificacionUsuario = ICONO_NOTIFICACION_USUARIO_INFO;
+    }
+
+    public void addNotificacionError(String mensaje) {
+        this.mensajeNotificacionUsuario = mensaje;
+        this.tipoNotificacionUsuario = TIPO_NOTIFICACION_USUARIO_ERROR;
+        this.iconoNotificacionUsuario = ICONO_NOTIFICACION_USUARIO_ERROR;
+    }
+
+    public String getMensajeNotificacionUsuario() {
+        return mensajeNotificacionUsuario;
+    }
+
+    public void setMensajeNotificacionUsuario(String mensajeNotificacionUsuario) {
+        this.mensajeNotificacionUsuario = mensajeNotificacionUsuario;
+    }
+
+    public String getTipoNotificacionUsuario() {
+        return tipoNotificacionUsuario;
+    }
+
+    public void setTipoNotificacionUsuario(String tipoNotificacionUsuario) {
+        this.tipoNotificacionUsuario = tipoNotificacionUsuario;
+    }
+
+    public String getIconoNotificacionUsuario() {
+        return iconoNotificacionUsuario;
+    }
+
+    public void setIconoNotificacionUsuario(String iconoNotificacionUsuario) {
+        this.iconoNotificacionUsuario = iconoNotificacionUsuario;
+    }
+
+    @Override
+    public String toString() {
+        return "ControllerBase{" +
+                "numeroPagina=" + numeroPagina +
+                ", registrosPorPagina=" + registrosPorPagina +
+                ", totalPaginas=" + totalPaginas +
+                ", peticionReporteCompleta=" + peticionReporteCompleta +
+                ", mensajeNotificacionUsuario='" + mensajeNotificacionUsuario + '\'' +
+                ", tipoNotificacionUsuario='" + tipoNotificacionUsuario + '\'' +
+                ", iconoNotificacionUsuario='" + iconoNotificacionUsuario + '\'' +
+                '}';
+    }
 
 }

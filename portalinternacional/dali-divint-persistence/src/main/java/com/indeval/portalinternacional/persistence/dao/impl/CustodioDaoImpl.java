@@ -35,4 +35,10 @@ public class CustodioDaoImpl extends BaseDaoHibernateImpl implements CustodioDao
 
         return resultados.get(0);
     }
+
+    @Override
+    public List<Custodio> findAll() {
+        List<Custodio> custodios = findAll(Custodio.class.getName());
+        return custodios;
+    }
 }

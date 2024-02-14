@@ -1,9 +1,6 @@
 dali-divint-webapp/.metadata/
 .project
 .settings/
-.idea
-/.idea
-
 dali-divint-ear/.gitignore
 dali-divint-ear/.project
 dali-divint-ear/.settings/

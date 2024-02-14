@@ -31,24 +31,16 @@
 	<xls:subtitle value="Datos"/>
     <xls:table value="#{bitacoraFileTransferExportacionBean.resultados.registros}" var="detalle">
         <xls:row>
-        	<xls:col header="Id File Transfer" value="#{detalle.idFileTransferDivisasInt}" align="CENTER"/>     			 
-    		<xls:col header="Fecha Registro" value="#{detalle.fechaRegistro}" pattern="dd/MM/yyyy HH:mm:ss"/>
-        	<xls:col header="Usuario Registro" value="#{detalle.usuarioRegistro.claveUsuario}" align="CENTER"/>
-        	<xls:col header="Usuario Autoriza" value="#{detalle.usuarioAutoriza.claveUsuario}" align="CENTER"/>
-        	<xls:col header="Id Folio" value="#{detalle.fileTransferDetalleDivisa.folioInstitucion}" align="CENTER"/>
-            <xls:col header="Cuenta" value="#{detalle.fileTransferDetalleDivisa.cuenta}" align="CENTER"/>
-            <xls:col header="Monto Bruto" value="#{detalle.fileTransferDetalleDivisa.montoBruto}" pattern="$###,###,###,###,###,##0.00" />
-            <xls:col header="Retencion" value="#{detalle.fileTransferDetalleDivisa.retencion}" pattern="$###,###,###,###,###,##0.00"/>
-            <xls:col header="Comision" value="#{detalle.fileTransferDetalleDivisa.comision}" pattern="$###,###,###,###,###,##0.00"/>
-            <xls:col header="Divisa" value="#{detalle.fileTransferDetalleDivisa.divisa.claveAlfabetica}" align="CENTER"/>
-            <xls:col header="Boveda" value="#{detalle.fileTransferDetalleDivisa.boveda.nombreCorto}" align="CENTER"/>
-            <xls:col header="Deposito Por Ajuste" value="#{detalle.fileTransferDetalleDivisa.depositoAjuste}" pattern="$###,###,###,###,###,##0.00" />
-           	<xls:col header="Retiro Por Ajuste" value="#{detalle.fileTransferDetalleDivisa.retiroAjuste}" pattern="$###,###,###,###,###,##0.00" />
-           	<xls:col header="Monto Neto" value="#{detalle.fileTransferDetalleDivisa.montoNeto}" pattern="$###,###,###,###,###,##0.00" />
-            <xls:col header="Concepto" value="#{detalle.fileTransferDetalleDivisa.concepto}" align="CENTER"/>
-            <xls:col header="Folio Referencia" value="#{detalle.fileTransferDetalleDivisa.referencia}" align="CENTER"/>
-        	<xls:col header="Estatus" value="#{detalle.fileTransferDetalleDivisa.estatusDivisas.descripcion}" align="CENTER"/>
-        	<xls:col header="Comentarios" value="#{detalle.fileTransferDetalleDivisa.comentarios}" align="CENTER"/>
+        	<xls:col header="Id File Transfer" value="#{detalle.idFileTransferDivisasInt}"	 align="CENTER"/>
+        	<xls:col header="Fecha Registro" value="#{detalle.fechaRegistro}" pattern="dd/MM/yyyy HH:mm:ss"/>
+        	<xls:col header="Registros total" value="#{detalle.registrosTotal}" align="CENTER"/>
+        	<xls:col header="Registros exitosos" value="#{detalle.registrosExitosos}" align="CENTER"/>
+        	<xls:col header="Registros error" value="#{detalle.registrosError}" align="CENTER"/>
+      		<xls:col header="Usuario Registro" value="#{detalle.usuarioRegistro}" align="CENTER"/>
+      		<xls:col header="Fecha Autoriza" value="#{detalle.fechaAutoriza}" pattern="dd/MM/yyyy HH:mm:ss"/>
+        	<xls:col header="Usuario Autoriza" value="#{detalle.usuarioAutoriza}" align="CENTER"/>
+			<xls:col header="Estatus" value="#{detalle.estatusDivisas.descripcion}" align="CENTER"/>
+			<xls:col header="Comentarios" value="#{detalle.comentarios}" align="CENTER"/>
         </xls:row>      
     </xls:table>
 </xls:document>

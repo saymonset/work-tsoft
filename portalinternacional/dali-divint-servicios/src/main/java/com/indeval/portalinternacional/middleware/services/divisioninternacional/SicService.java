@@ -63,10 +63,18 @@ public interface SicService {
 	// Cambio Multidivisas
 	/**
 	 * Envia a MOI mensaje de notificacion de cambio de estado de Movimiento de Efectivo en Divisas Extranjeras
-	 * @param multidivisa Objeto con info del movimiento efectivo y su cambio de estado
+	 * @param xmlEnviar Objeto con info del movimiento efectivo y su cambio de estado
 	 */
 	void notificaCambioEstadoMovEfeDivInt(String xmlEnviar);
 
     String crearXML(Multidivisa multidivisa);
+
+    /**
+     * Multidivisas
+     * Envia a MOI mensaje de notificacion de cambio de estado de Movimiento de Efectivo en Divisas Extranjeras
+     * @param multidivisa Objeto con info del movimiento efectivo y su cambio de estado
+     */
+    void notificaCambioEstadoMovEfeDivInt(Multidivisa multidivisa);
+
 	// Fin Cambio Multidivisas
 }

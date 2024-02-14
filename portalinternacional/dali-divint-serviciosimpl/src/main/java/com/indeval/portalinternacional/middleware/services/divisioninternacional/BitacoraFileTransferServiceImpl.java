@@ -13,6 +13,7 @@ import com.indeval.portaldali.middleware.services.util.ValidatorService;
 import com.indeval.portaldali.middleware.servicios.modelo.BusinessException;
 import com.indeval.portaldali.middleware.servicios.modelo.vo.PaginaVO;
 import com.indeval.portaldali.middleware.servicios.util.UtilsVO;
+import com.indeval.portalinternacional.middleware.servicios.modelo.FileTransferDetalleDivisas;
 import com.indeval.portalinternacional.middleware.servicios.modelo.FileTransferDivisas;
 import com.indeval.portalinternacional.middleware.servicios.vo.BitacoraFileTransferVO;
 import com.indeval.portalinternacional.persistence.dao.BitacoraFileTransferDao;
@@ -53,6 +54,35 @@ public class BitacoraFileTransferServiceImpl implements BitacoraFileTransferServ
 		return paginaVO;
 		
 	}
+	
+	@Override
+	public PaginaVO consultarDetalleFileTransfer(Long idFileTransferDivisasInt, PaginaVO paginaVO, Boolean obtenerTotalRegistros) {
+		
+		log.info("Entrando a consultarDetalleFileTransfer()");
+		
+		final List listaDetalleFileTransfer = new ArrayList<FileTransferDetalleDivisas>();
+        paginaVO = UtilsVO.getPaginaNotBlank(paginaVO);
+        paginaVO = this.bitacoraFileTransferDao.findDetalleFileTransfer(idFileTransferDivisasInt, paginaVO, obtenerTotalRegistros);
+        
+        if (!this.validatorService.validaPagina(paginaVO))
+        	paginaVO.setRegistros(new ArrayList<FileTransferDivisas>());
+        else {
+        	
+        	for (final Iterator iter = paginaVO.getRegistros().iterator(); iter.hasNext();) {
+        		
+        		final FileTransferDetalleDivisas detalleFileTransferr = (FileTransferDetalleDivisas) iter.next();
+        		listaDetalleFileTransfer.add(detalleFileTransferr);
+        		
+        	}
+       
+        }
+        
+        paginaVO.setRegistros(listaDetalleFileTransfer);
+		
+		return paginaVO;
+		
+	}
+	
 
 	public ValidatorService getValidatorService() {
 		return validatorService;

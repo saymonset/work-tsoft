@@ -2,7 +2,11 @@
 package com.indeval.portalinternacional.persistence.dao.HorariosCustodios;
 
 import com.indeval.persistence.unittest.BaseDaoTestCase;
+import com.indeval.portaldali.middleware.servicios.modelo.vo.PaginaVO;
+import com.indeval.portaldali.persistence.modelo.Divisa;
 import com.indeval.portalinternacional.middleware.servicios.dto.HorariosCustodiosDto;
+import com.indeval.portalinternacional.middleware.servicios.modelo.Custodio;
+import com.indeval.portalinternacional.middleware.servicios.vo.CriteriosConsultaHorariosCustodiosVO;
 import com.indeval.portalinternacional.persistence.dao.HorariosCustodiosDao;
 
 import java.text.ParseException;
@@ -36,7 +40,7 @@ public class HorariosCustodiosDaoImplTest extends BaseDaoTestCase {
         assertEquals(expectedSize, horariosCustodiosDtos.size());
     }
 
-    public void testGetHorarioInicialYHorarioFinalPorIdCustodio () {
+    public void testGetHorarioInicialYHorarioFinalPorIdCustodio() {
         System.out.println("testGetHorarioInicialYHorarioFinalPorIdCustodio()");
 
         Integer idCustodio = 2;
@@ -77,5 +81,54 @@ public class HorariosCustodiosDaoImplTest extends BaseDaoTestCase {
         boolean esValido = horaAlta.after(horarioInicial) && horaAlta.before(horarioFinal);
 
         assertTrue("OOOOAAAA", esValido);
+    }
+
+    public void testUltimoID() {
+        Integer id = dao.ultimoID();
+        System.out.println(id);
+        assertNotNull(id);
+    }
+
+    public void testSalvarHorarioCustodio() {
+        HorariosCustodiosDto horariosCustodios = new HorariosCustodiosDto();
+        horariosCustodios.setIdDivisa(3);
+        horariosCustodios.setIdCustodio(13);
+        horariosCustodios.setHorarioInicial("00:00:00");
+        horariosCustodios.setHorarioFinal("00:59:59");
+        horariosCustodios.setFechaCreacion(new Date());
+        horariosCustodios.setFechaUltModificacion(horariosCustodios.getFechaCreacion());
+        horariosCustodios.setEstatus(1);
+        horariosCustodios.setCreador("indevaldrp");
+        HorariosCustodiosDto nuevoHorariosCustodios = dao.salvarHorarioCustodio(horariosCustodios);
+        System.out.println(nuevoHorariosCustodios);
+        assertNotNull(horariosCustodios);
+    }
+
+    public void testObtenerDivisa() {
+        Divisa divisa = dao.obtenerDivisa(3);
+        System.out.println(divisa.getIdDivisa() + ".- " + divisa.getClaveAlfabetica() + " :: " + divisa.getDescripcion());
+        assertNotNull(divisa);
+    }
+
+    public void testObtenerCustodio() {
+        Custodio custodio = dao.obtenerCustodio(13);
+        System.out.println(custodio.getId() + ".- " + custodio.getNombreCorto() + " :: " + custodio.getDescripcion());
+
+    }
+
+    public void testGetHorariosCustodios() {
+        CriteriosConsultaHorariosCustodiosVO criteriosConsulta = new CriteriosConsultaHorariosCustodiosVO();
+        PaginaVO paginaVO = new PaginaVO();
+        paginaVO = dao.getHorariosCustodios(criteriosConsulta, paginaVO);
+        System.out.println(paginaVO.getTotalRegistros());
+        assertNotNull(paginaVO.getRegistros());
+    }
+
+    public void testUpdateHorariosCustodios() {
+        Integer idHorarioCustodio = 1;
+        Integer cambioEstado = 1;
+        String usuarioChecker = "Jacito";
+        HorariosCustodiosDto horariosCustodios = dao.updateHorariosCustodios(idHorarioCustodio, cambioEstado, usuarioChecker);
+        assertNotNull(horariosCustodios);
     }
 }

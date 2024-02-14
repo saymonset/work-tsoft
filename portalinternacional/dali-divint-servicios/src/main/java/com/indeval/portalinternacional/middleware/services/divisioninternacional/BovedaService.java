@@ -97,5 +97,13 @@ public interface BovedaService {
 	 * @return Regresa el id del catbic.
 	 * */
 	Long findCatBicEnBaseABovedaEfectivoParticipante(Long idBovedaEfectivo, Long idInstitucion);
-// Fin Cambio Multidivisas
+
+    /**
+     * Multidivisas: Obtiene las bovedas para Movimiento de Efectivo Internacional
+     *
+     * @return List
+     * */
+    List<Bovedas> findAllBovedasEfectivo();
+
+    // Fin Cambio Multidivisas
 }

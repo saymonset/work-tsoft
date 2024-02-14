@@ -4,6 +4,7 @@ package com.indeval.portalinternacional.persistence.dao.Boveda;
 import com.indeval.persistence.unittest.BaseDaoTestCase;
 import com.indeval.portalinternacional.middleware.servicios.dto.BovedaDto;
 import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
+import com.indeval.portalinternacional.middleware.servicios.modelo.Bovedas;
 import com.indeval.portalinternacional.persistence.dao.BovedaDao;
 
 import java.math.BigInteger;
@@ -52,5 +53,13 @@ public class BovedaDaoImplTest extends BaseDaoTestCase {
         assertNotNull(bovedas);
         assertEquals(expectedSize, bovedas.size());
 
+    }
+
+    public void testFindAllBovedasEfectivo() {
+        List<Bovedas>  bovedasEfectivo = dao.findAllBovedasEfectivo();
+        for(Bovedas boveda: bovedasEfectivo ){
+            System.out.println(Util.bovedasToString(boveda));
+        }
+        assertNotNull(bovedasEfectivo);
     }
 }

@@ -25,6 +25,8 @@ public class ProcessInfoVO {
     private BigDecimal porcentajeTerminado;
     private String status;
     private char abort;
+
+	private Integer totalRegistros;
     
     /**
 	 * @return the idProceso
@@ -61,5 +63,13 @@ public class ProcessInfoVO {
     }
     public void setAbort(char abort) {
         this.abort = abort;
-    } 
+    }
+
+	public Integer getTotalRegistros() {
+		return totalRegistros;
+	}
+
+	public void setTotalRegistros(Integer totalRegistros) {
+		this.totalRegistros = totalRegistros;
+	}
 }

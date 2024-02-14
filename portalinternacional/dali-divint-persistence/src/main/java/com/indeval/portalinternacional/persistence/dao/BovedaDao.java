@@ -59,5 +59,13 @@ public interface BovedaDao extends BaseDao {
      * o de Valores.
      */
     List<BovedaDto> buscarBovedasPorTipoCustodia(BovedaDto boveda, EstadoPaginacionDTO estadoPaginacion);
-// Fin Cambio Multidivisas
+
+    /**
+     * Multidivisas: Encuentra todas las bovedas de movimiento efectivo
+     *
+     * @return Un listado con las bovedas.
+     */
+    List<Bovedas> findAllBovedasEfectivo();
+
+    // Fin Cambio Multidivisas
 }

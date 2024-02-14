@@ -645,5 +645,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
      <bean id="propHabilitaCaptcha" class="java.lang.Boolean">
 	   		<constructor-arg value="${portalDali.habilitaCaptcha}"/>
 	</bean>
-   
+    <bean id="fileUploadMultiDivService" class="com.indeval.portalinternacional.middleware.services.util.FileUploadMultiDivServiceImpl">
+        <property name="fileUploadDao" ref="fileUploadDao" />
+    </bean>
 </beans>

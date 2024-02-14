@@ -1,0 +1,997 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--Multidivisas:  Pantalla de Movimiento de Efectivo Internacional-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:indeval="http://indeval.com/indeval">
+
+<ui:composition template="/layoutCaptura.xhtml">
+    <ui:define name="head">
+        <script language="javascript" type="text/javascript"
+                src="#{facesContext.externalContext.requestContextPath}/js/consultaMovEfecDivisasExtr.js"></script>
+        <script language="javascript" type="text/javascript"
+                src="#{facesContext.externalContext.requestContextPath}/js/mostrarFirmaDigital.js"></script>
+        <script language="javascript" type="text/javascript"
+                src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js"></script>
+    </ui:define>
+
+    <ui:define name="tituloSeccion">
+        <h:outputText value="#{etq.consultaMovEfectivo} en #{etq.divisasExtranjeras}"/>
+    </ui:define>
+    <ui:define name="subtituloSeccion"/>
+
+    <ui:define name="tituloEncabezado"/>
+
+    <ui:define name="seccionForma">
+        <a4j:keepAlive beanName="movimientoEfectivoInt"/>
+        <h:panelGroup id="init">
+            <h:outputText value="#{movimientoEfectivoInt.init}"/>
+        </h:panelGroup>
+
+
+        <h:panelGroup id="mensajeUsuario">
+            <div style="min-height: 21px;">
+                <rich:messages warnClass="warning" infoClass="info"
+                               errorClass="error" ajaxRendered="true" showDetail="false"
+                               showSummary="true" layout="list">
+                    <f:facet name="infoMarker">
+                        <h:panelGroup>
+                            <h:graphicImage url="/images/accept.png"/>&#160;</h:panelGroup>
+                    </f:facet>
+
+                    <f:facet name="errorMarker">
+                        <h:panelGroup><h:graphicImage url="/images/warning.gif"/>&#160;</h:panelGroup>
+                    </f:facet>
+                </rich:messages>
+
+                <div id="divWarnings" class="warning" style="display:none;">
+                    <p id="textoWarning">
+                    </p>
+                </div>
+            </div>
+            <rich:modalPanel id="modalNotificacion"
+                             onshow="setTimeout(function(){Richfaces.hideModalPanel('modalNotificacion')}, 8000)"
+                             width="450" height="110">
+                <f:facet name="header">
+                    <img alt=""
+                         src="#{facesContext.externalContext.requestContextPath}/images/#{movimientoEfectivoInt.iconoNotificacionUsuario}"/>
+                    &#160;
+                    <h:outputText styleClass="texto"
+                                  value="#{movimientoEfectivoInt.tipoNotificacionUsuario}"/>
+                </f:facet>
+                <p>
+                    <h:outputText styleClass="texto"
+                                  value="#{movimientoEfectivoInt.mensajeNotificacionUsuario}"/>
+                </p><br/><br/>
+                <a onclick="Richfaces.hideModalPanel('modalNotificacion');" href="#" style="float:right">
+                    CERRAR
+                </a>
+            </rich:modalPanel>
+        </h:panelGroup>
+
+        <h:panelGroup id="general">
+            <div style='display: inline' id="divCriterios">
+                <table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+                       align="center">
+                    <tr>
+                        <td class="recuadroTabla" align="center" colspan="2">
+                            <table class="tablaCriterios" align="center">
+                                <tr>
+                                    <td align="center">
+                                        <h:outputText styleClass="texto" value="#{etq.participante}"/>
+                                    </td>
+                                    <td align="center">
+                                        <h:outputText styleClass="texto" value="#{etq.folioControl}"/>
+                                    </td>
+                                    <td align="center">
+                                        <h:outputText styleClass="texto"
+                                                      value="#{etq.tipoMinus} #{etq.movimientoMinus}"/>
+                                    </td>
+                                    <td align="center">
+                                        <h:outputText styleClass="texto" value="#{etq.estatus} #{etq.movimientoMinus}"/>
+                                    </td>
+                                    <td align="center">
+                                        <h:outputText styleClass="texto" value="#{etq.divisaMinus}"/>
+                                    </td>
+                                    <td align="center">
+                                        <h:outputText styleClass="texto" value="#{etq.bovedaMinus}"/>
+                                    </td>
+                                </tr>
+                                <tr align="center">
+                                    <td>
+                                        <h:panelGroup>
+                                            <h:inputText autocomplete="off" id="idFolioParticipante"
+                                                         value="#{movimientoEfectivoInt.idFolioParticipante}"
+                                                         size="5"
+                                                         maxlength="5"
+                                                         styleClass="textoControles textoMayusculas campoNumericoAsterisco #{movimientoEfectivoInt.institucionIndeval ? '' : 'readonly'}"
+                                                         tabindex="1"/>
+                                        </h:panelGroup>
+                                    </td>
+                                    <td>
+                                        <h:panelGroup>
+                                            <h:inputText autocomplete="off" id="folioControl"
+                                                         value="#{movimientoEfectivoInt.folioControl}"
+                                                         size="10"
+                                                         maxlength="10"
+                                                         styleClass="textoControles textoMayusculas campoNumericoAsterisco"
+                                                         tabindex="2"/>
+                                        </h:panelGroup>
+                                    </td>
+                                    <td>
+                                        <h:selectOneMenu id="lstTiposMovimiento"
+                                                         value="#{movimientoEfectivoInt.tipoMovimiento}"
+                                                         styleClass="textoControles" tabindex="3">
+                                            <f:selectItem itemValue="#{etq.todosMayusculas}"
+                                                          itemLabel="#{etq.todosMayusculas}"/>
+                                            <f:selectItems
+                                                    value="#{movimientoEfectivoInt.listaTiposMovimiento}"/>
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td>
+                                        <h:selectOneMenu id="lstEstatusMovimiento"
+                                                         value="#{movimientoEfectivoInt.estatusMovimiento}"
+                                                         styleClass="textoControles" tabindex="4">
+                                            <f:selectItem itemValue="-1" itemLabel="#{etq.todosMayusculas}"/>
+                                            <f:selectItems
+                                                    value="#{movimientoEfectivoInt.listaEstatusMovimiento}"/>
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td>
+                                        <h:selectOneMenu id="lstDivisas"
+                                                         value="#{movimientoEfectivoInt.idDivisa}"
+                                                         styleClass="textoControles" tabindex="5">
+                                            <f:selectItem itemValue="-1" itemLabel="#{etq.todasMayusculas}"/>
+                                            <f:selectItems
+                                                    value="#{movimientoEfectivoInt.listaDivisas}"/>
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td>
+                                        <h:selectOneMenu id="lstBovedas"
+                                                         value="#{movimientoEfectivoInt.idBoveda}"
+                                                         styleClass="textoControles" tabindex="6">
+                                            <f:selectItem itemValue="-1" itemLabel="#{etq.todasMayusculas}"/>
+                                            <f:selectItems
+                                                    value="#{movimientoEfectivoInt.listaBovedas}"/>
+                                        </h:selectOneMenu>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="recuadroTabla" align="center">
+                            <table class="tablaCriterios" align="center">
+                                <tr>
+                                    <td colspan="2" align="center">
+                                        <b> <h:outputText styleClass="texto"
+                                                          value="#{etq.fechaRegistro}"/> </b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <h:outputText styleClass="texto" value="#{etq.fechaInicial}"/>
+                                    </td>
+                                    <td align="center">
+                                        <h:outputText styleClass="texto" value="#{etq.fechaFinal}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <rich:calendar id="fechaInicialConsulta"
+                                                       inputClass="textoControles"
+                                                       inputStyle="background-color: #ffffe6;" inputSize="11"
+                                                       value="#{movimientoEfectivoInt.fechaInicio}"
+                                                       tabindex="7"
+                                                       datePattern="dd/MM/yyyy" isDayEnabled="isDayEnabled"/>
+                                    </td>
+                                    <td align="center">
+                                        <rich:calendar id="fechaFinalConsulta"
+                                                       inputClass="textoControles"
+                                                       inputStyle="background-color: #ffffe6;" inputSize="11"
+                                                       value="#{movimientoEfectivoInt.fechaFin}"
+                                                       tabindex="8"
+                                                       datePattern="dd/MM/yyyy" isDayEnabled="isDayEnabled"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td class="recuadroTabla" align="center">
+                            <table class="tablaCriterios" align="center">
+                                <tr>
+                                    <td colspan="2" align="center">
+                                        <b> <h:outputText styleClass="texto"
+                                                          value="#{etq.fechaLiquidacionMinus}"/> </b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <h:outputText styleClass="texto" value="#{etq.fechaInicial}"/>
+                                    </td>
+                                    <td align="center">
+                                        <h:outputText styleClass="texto" value="#{etq.fechaFinal}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <rich:calendar id="fechaLiqInicialConsulta"
+                                                       inputClass="textoControles"
+                                                       inputStyle="background-color: #ffffe6;" inputSize="11"
+                                                       value="#{movimientoEfectivoInt.fechaLiqInicio}"
+                                                       tabindex="9"
+                                                       datePattern="dd/MM/yyyy" isDayEnabled="isDayEnabled"/>
+                                    </td>
+                                    <td align="center">
+                                        <rich:calendar id="fechaLiqFinalConsulta"
+                                                       inputClass="textoControles"
+                                                       inputStyle="background-color: #ffffe6;" inputSize="11"
+                                                       value="#{movimientoEfectivoInt.fechaLiqFin}"
+                                                       tabindex="10"
+                                                       datePattern="dd/MM/yyyy" isDayEnabled="isDayEnabled"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </h:panelGroup>
+
+        <h:panelGroup id="panelResumen">
+            <h:panelGroup rendered="#{movimientoEfectivoInt.consultaEjecutada}">
+                <div id="divResumen"
+                     style="display: #{movimientoEfectivoInt.consultaEjecutada ? 'inline':'none'}">
+                    <table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+                        <tr>
+                            <td class="recuadroTabla" colspan="2">
+                                <table class="tablaCriterios texto" border="0" style="text-align: center">
+                                    <tr>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.participante}"/>
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.folioControl}"/>
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto"
+                                                          value="#{etq.tipoMinus} #{etq.movimientoMinus}"/>
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto"
+                                                          value="#{etq.estatus} #{etq.movimientoMinus}"/>
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.divisaMinus}"/>
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.bovedaMinus}"/>
+                                        </td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:outputText styleClass="texto"
+                                                              value="#{movimientoEfectivoInt.idFolioParticipante}"
+                                                              rendered="#{!empty movimientoEfectivoInt.idFolioParticipante}"/>
+                                                <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+                                                              rendered="#{empty movimientoEfectivoInt.idFolioParticipante}"/>
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:outputText styleClass="texto"
+                                                              value="#{movimientoEfectivoInt.folioControl}"
+                                                              rendered="#{!empty movimientoEfectivoInt.folioControl}"/>
+                                                <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+                                                              rendered="#{empty movimientoEfectivoInt.folioControl}"/>
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                            <h:outputText styleClass="texto"
+                                                          value="#{movimientoEfectivoInt.descTipoMovimiento}"
+                                                          rendered="#{!empty movimientoEfectivoInt.descTipoMovimiento}"/>
+                                            <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+                                                          rendered="#{empty movimientoEfectivoInt.descTipoMovimiento}"/>
+                                        </td>
+                                        <td>
+                                            <h:outputText styleClass="texto"
+                                                          value="#{movimientoEfectivoInt.descEstatusMovimiento}"
+                                                          rendered="#{!empty movimientoEfectivoInt.descEstatusMovimiento}"/>
+                                            <h:outputText styleClass="texto" value="#{etq.todosMayusculas}"
+                                                          rendered="#{empty movimientoEfectivoInt.descEstatusMovimiento}"/>
+                                        </td>
+                                        <td>
+                                            <h:outputText styleClass="texto"
+                                                          value="#{movimientoEfectivoInt.descDivisa}"
+                                                          rendered="#{!empty movimientoEfectivoInt.descDivisa}"/>
+                                            <h:outputText styleClass="texto" value="#{etq.todasMayusculas}"
+                                                          rendered="#{empty movimientoEfectivoInt.descDivisa}"/>
+                                        </td>
+                                        <td>
+                                            <h:outputText styleClass="texto"
+                                                          value="#{movimientoEfectivoInt.descBoveda}"
+                                                          rendered="#{!empty movimientoEfectivoInt.descBoveda}"/>
+                                            <h:outputText styleClass="texto" value="#{etq.todasMayusculas}"
+                                                          rendered="#{empty movimientoEfectivoInt.descBoveda}"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="recuadroTabla" align="center">
+                                <table class="tablaCriterios" align="center">
+                                    <tr>
+                                        <td colspan="2" align="center">
+                                            <b> <h:outputText styleClass="texto"
+                                                              value="#{etq.fechaRegistro}"/> </b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.fechaInicial}"/>
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.fechaFinal}"/>
+                                        </td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td>
+                                            <h:outputText styleClass="texto"
+                                                          value="#{movimientoEfectivoInt.fechaInicioStr}"/>
+                                        </td>
+                                        <td>
+                                            <h:outputText styleClass="texto"
+                                                          value="#{movimientoEfectivoInt.fechaFinStr}"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="recuadroTabla" align="center">
+                                <table class="tablaCriterios" align="center">
+                                    <tr>
+                                        <td colspan="2" align="center">
+                                            <b> <h:outputText styleClass="texto"
+                                                              value="#{etq.fechaLiquidacionMinus}"/> </b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.fechaInicial}"/>
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.fechaFinal}"/>
+                                        </td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td>
+                                            <h:outputText styleClass="texto"
+                                                          value="#{movimientoEfectivoInt.fechaLiqInicioStr}"/>
+                                        </td>
+                                        <td>
+                                            <h:outputText styleClass="texto"
+                                                          value="#{movimientoEfectivoInt.fechaLiqFinStr}"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </h:panelGroup>
+        </h:panelGroup>
+
+
+        <h:panelGroup id="botones">
+
+            <div class="refrescar" style="float: left;">
+                <a4j:status id="commonStatus">
+                    <f:facet name="start">
+                        <h:panelGroup>
+                            <h:graphicImage value="/images/ajax-loader.gif"/>
+                            <h:outputText value="#{etq.buscando}"></h:outputText>
+                        </h:panelGroup>
+                    </f:facet>
+                </a4j:status>
+            </div>
+
+            <div class="limpiar">
+                <a4j:commandButton id="botonLimpiar" image="/images/transparent.gif"
+                                   styleClass="submit"
+                                   oncomplete='javascript: presentarCriterios();'
+                                   actionListener="#{movimientoEfectivoInt.limpiar}"
+                                   reRender="containerResultados,totalesConsultas,tablaResultados,botones,panelResumen">
+                </a4j:commandButton>
+            </div>
+
+            <div class="buscar">
+                <a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+                                   styleClass="submit"
+                                   oncomplete='javascript:presentarResumen();'
+                                   actionListener="#{movimientoEfectivoInt.buscarEmisiones}"
+                                   reRender="containerResultados,totalesConsultas,tablaResultados,botones,panelResumen"
+                                   tabindex="7">
+                </a4j:commandButton>
+            </div>
+
+            <div class="editar"
+                 style="display:#{movimientoEfectivoInt.consultaEjecutada?'inline':'none'};float:right;"
+                 id="botonEditarCriterios">
+                <input type="image" class="submit"
+                       src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+                       alt="Editar Criterios" title="Editar Criterios"
+                       onclick='javascript:presentarCriterios();return false;'/>
+            </div>
+
+        </h:panelGroup>
+
+
+        <h:panelGroup id="containerResultados">
+            <h:inputHidden id="esTipo" value="#{movimientoEfectivoInt.esTipo}"></h:inputHidden>
+            <h:inputHidden id="validationErrors"
+                           value="#{movimientoEfectivoInt.validationErrors}"></h:inputHidden>
+            <h:inputHidden id="idMovimientoStrSelected"
+                           value="#{movimientoEfectivoInt.idMovimientoStrSelected}"></h:inputHidden>
+
+            <h:panelGroup rendered="#{movimientoEfectivoInt.consultaEjecutada}">
+                <h:dataTable id="noExistenResultados"
+                             value="#{movimientoEfectivoInt.paginaVO.registros}"
+                             styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+                             footerClass="tituloTabla" border="0" cellpadding="3px"
+                             cellspacing="0px" columnClasses="everyColumn"
+                             rowClasses="renglonTablaUno, renglonTablaDos"
+                             rendered="#{empty movimientoEfectivoInt.paginaVO.registros}">
+
+                    <t:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{etq.sinResultados}"></h:outputText>
+                        </f:facet>
+
+                    </t:column>
+                </h:dataTable>
+
+                <br/>
+                <br/>
+                <br/>
+                <h:panelGroup id="tablaResultados">
+                    <script type="text/javascript">
+                        checkLibera = new Array();
+                        iLibera = 0;
+                        checkCancela = new Array();
+                        iCancela = 0;
+                    </script>
+                    <h:graphicImage value="/images/blank.gif" width="900px" height="1px"/>
+                    <h:panelGroup id="controlPaginado"
+                                  rendered="#{not empty movimientoEfectivoInt.paginaVO.registros}">
+                        <table width="900px" border="0" style="left:-150px;position:relative">
+                            <tr>
+                                <td align="left" class="textoEstadoCuenta">
+                                    <a4j:commandLink id="control_bitacora_primero"
+                                                     action="#{movimientoEfectivoInt.irPrimeraPagina}"
+                                                     rendered="#{movimientoEfectivoInt.irAlPrimero}"
+                                                     reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,containerResultados">
+                                        <img alt=""
+                                             src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+                                             border="0"/>
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_atras_fast"
+                                                     action="#{movimientoEfectivoInt.retrocederPaginasRapido}"
+                                                     rendered="#{movimientoEfectivoInt.retrocederRapido}"
+                                                     reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img alt=""
+                                             src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+                                             border="0"/>
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_atras"
+                                                     action="#{movimientoEfectivoInt.retrocederPagina}"
+                                                     rendered="#{movimientoEfectivoInt.retroceder}"
+                                                     reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img alt=""
+                                             src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+                                             border="0"/>
+                                    </a4j:commandLink>
+                                    <a4j:commandLink id="control_bitacora_adelante"
+                                                     action="#{movimientoEfectivoInt.avanzarPagina}"
+                                                     rendered="#{movimientoEfectivoInt.avanzar}"
+                                                     reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img alt=""
+                                             src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+                                             border="0"/>
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_adelante_fast"
+                                                     action="#{movimientoEfectivoInt.avanzarPaginasRapido}"
+                                                     rendered="#{movimientoEfectivoInt.avanzarRapido}"
+                                                     reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img alt=""
+                                             src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+                                             border="0"/>
+
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_ultimo"
+                                                     action="#{movimientoEfectivoInt.irUltimaPagina}"
+                                                     rendered="#{movimientoEfectivoInt.irAlUltimo}"
+                                                     reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+                                        <img alt=""
+                                             src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+                                             border="0"/>
+                                    </a4j:commandLink>
+
+                                    <br/>
+                                    <h:outputText value="#{etq.mostrando}"
+                                                  styleClass="textoResumen"/>
+                                    <h:outputText value="#{movimientoEfectivoInt.numeroPagina}"
+                                                  styleClass="textoResumen"/>
+                                    <h:outputText value="#{etq.de}" styleClass="textoResumen"/>
+                                    <h:outputText value="#{movimientoEfectivoInt.totalPaginas}"
+                                                  styleClass="textoResumen"/>
+                                    <h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+                                    &#160;&#160;&#160;
+                                    <h:outputText
+                                            value="#{movimientoEfectivoInt.paginaVO.totalRegistros}"
+                                            styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+                                    &#160;
+                                    <h:outputText styleClass="textoResumen"
+                                                  value="#{etq.registrosEncontrados}"/>
+                                </td>
+                                <td align="right" class="textoEstadoCuenta">
+                                    <h:outputText escape="false" value="#{etq.registrosPorPagina}"
+                                                  styleClass="textoResumen"/>
+                                    <h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+                                                     value="#{movimientoEfectivoInt.paginaVO.registrosXPag}">
+                                        <f:selectItem itemLabel="1" itemValue="1"/>
+                                        <f:selectItem itemLabel="2" itemValue="2"/>
+                                        <f:selectItem itemLabel="5" itemValue="5"/>
+                                        <f:selectItem itemLabel="10" itemValue="10"/>
+                                        <f:selectItem itemLabel="20" itemValue="20"/>
+                                        <f:selectItem itemLabel="50" itemValue="50"/>
+                                        <f:selectItem itemLabel="100" itemValue="100"/>
+                                        <a4j:support event="onchange"
+                                                     reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,mensajeUsuario"
+                                                     action="#{movimientoEfectivoInt.irPrimeraPagina}">
+                                        </a4j:support>
+                                    </h:selectOneMenu>
+                                </td>
+                            </tr>
+                        </table>
+                    </h:panelGroup>
+
+
+                    <h:dataTable id="resultados"
+                                 value="#{movimientoEfectivoInt.paginaVO.registros}"
+                                 var="movimiento"
+                                 rendered="#{not empty movimientoEfectivoInt.paginaVO.registros}"
+                                 styleClass="tablaGeneral tableLarge" headerClass="tituloTabla" width="1200px"
+                                 footerClass="tituloTabla" border="0" cellpadding="3px"
+                                 cellspacing="0px" columnClasses="everyColumn"
+                                 rowClasses="renglonTablaUno, renglonTablaDos">
+
+                        <h:column rendered="#{movimientoEfectivoInt.institucionIndeval}">
+                            <f:facet name="header">
+                                <h:panelGroup id="accionParaTodos"
+                                              rendered="#{movimientoEfectivoInt.validarOperacionesPermitidas()}">
+                                    <h:outputText styleClass="texto textoPeque12"
+                                                  value="#{etq.liberar}-#{etq.cancelarMinus}"/>
+                                    <t:div id="liberarTodos"
+                                           rendered="#{movimientoEfectivoInt.usuarioPuedeLiberar}">
+                                        <h:selectBooleanCheckbox id="chk_liberar"
+                                                                 value="#{movimientoEfectivoInt.checkAllLibera}">
+                                            <a4j:support event="onclick"
+                                                         oncomplete="javascript:seleccionarTodos(this.checked, 'Libera');"
+                                                         actionListener="#{movimientoEfectivoInt.checkAllOperLibera}"
+                                                         reRender="containerResultados,mensajeUsuario"></a4j:support>
+                                        </h:selectBooleanCheckbox>
+                                        <a4j:commandButton id="btnLiberaSeleccion"
+                                                           alt="#{etq.liberaSeleccion}"
+                                                           image="/images/liberar.png"
+                                                           onclick="if (! window.confirm('#{mensajes.mensajeConfirmarLiberaSeleccion}') ) {return false;}"
+                                                           reRender="panelfirma, containerResultados,mensajeUsuario"
+                                                           actionListener="#{movimientoEfectivoInt.cargaFirmaLiberarSeleccion}"
+                                                           tabindex="60">
+                                        </a4j:commandButton>
+                                        <a4j:commandButton id="btnLiberaSeleccion2"
+                                                           style="display: none;"
+                                                           styleClass="btnLiberaSeleccion2"
+                                                           reRender="containerResultados,mensajeUsuario"
+                                                           actionListener="#{movimientoEfectivoInt.liberaSeleccion}"
+                                                           oncomplete="Richfaces.showModalPanel('modalNotificacion');">
+                                        </a4j:commandButton>
+                                    </t:div>
+                                    <t:div id="cancelarTodos"
+                                           rendered="#{movimientoEfectivoInt.usuarioPuedeCancelar}">
+                                        <h:selectBooleanCheckbox id="chk_cancelar"
+                                                                 styleClass="chkAllCancela"
+                                                                 value="#{movimientoEfectivoInt.checkAllCancela}">
+                                            <a4j:support event="onclick"
+                                                         oncomplete="javascript:seleccionarTodos(this.checked, 'Cancela');"
+                                                         actionListener="#{movimientoEfectivoInt.checkAllOperCancela}"
+                                                         reRender="containerResultados,mensajeUsuario"></a4j:support>
+                                        </h:selectBooleanCheckbox>
+                                        <a4j:commandButton id="btnCancelaSeleccion"
+                                                           alt="#{etq.cancelaSeleccion}"
+                                                           image="/images/cancelar.png"
+                                                           onclick="if (! window.confirm('#{mensajes.mensajeConfirmarCancelaSeleccion}') ) {return false;}"
+                                                           actionListener="#{movimientoEfectivoInt.cargaFirmaCancelarSeleccion}"
+                                                           reRender="containerResultados,mensajeUsuario,panelFirma">
+                                        </a4j:commandButton>
+                                        <a4j:commandButton id="btnCancelaSeleccion2"
+                                                           style="display: none;"
+                                                           styleClass="btnCancelaSeleccion2"
+                                                           actionListener="#{movimientoEfectivoInt.cancelaSeleccion}"
+                                                           reRender="containerResultados, mensajeUsuario"
+                                                           oncomplete="Richfaces.showModalPanel('modalNotificacion');">
+                                        </a4j:commandButton>
+                                    </t:div>
+                                </h:panelGroup>
+                            </f:facet>
+                            <div align="center">
+                                <h:panelGroup id="liberacion"
+                                              rendered="#{movimientoEfectivoInt.validarOperacionLiberar(movimiento.estadoMovimiento)}">
+                                    <div id="libe_movEfeIn_#{movimiento.idMovimientoStr}">
+                                        <h:selectBooleanCheckbox id="chk_liberar_#{movimiento.idMovimientoStr}"
+                                                                 styleClass="chkLibera chk_liberar_#{movimiento.idMovimientoStr}"
+                                                                 value="#{movimiento.seleccionadoLiberar}"
+                                                                 onchange="onChangeChk('Libera');">
+                                        </h:selectBooleanCheckbox>
+                                        <a4j:commandButton id="btnLiberar_#{movimiento.idMovimientoStr}"
+                                                           title="#{etq.libera}" alt="#{etq.libera}"
+                                                           ajaxSingle="true" limitToList="true"
+                                                           image="/images/liberar.png"
+                                                           onclick="if (! window.confirm('#{movimiento.folioControl}'+': '+'#{mensajes.mensajeConfirmarLibera}') ) {return false;}"
+                                                           reRender="containerResultados,mensajeUsuario,panelFirma"
+                                                           actionListener="#{movimientoEfectivoInt.cargaFirmaLiberacion}"
+                                                           tabindex="60">
+                                            <a4j:actionparam name="idMovimientoStr"
+                                                             value="#{movimiento.idMovimientoStr}"/>
+                                        </a4j:commandButton>
+                                        <a4j:commandButton id="btnLiberar2_#{movimiento.idMovimientoStr}"
+                                                           style="display: none;"
+                                                           styleClass="btnLiberar2_#{movimiento.idMovimientoStr}"
+                                                           actionListener="#{movimientoEfectivoInt.libera}"
+                                                           reRender="containerResultados,mensajeUsuario"
+                                                           oncomplete="Richfaces.showModalPanel('modalNotificacion');">
+                                        </a4j:commandButton>
+                                    </div>
+                                </h:panelGroup>
+                                <h:panelGroup id="cancelacion"
+                                              rendered="#{movimientoEfectivoInt.validarOperacionCancelar(movimiento.estadoMovimiento) }">
+                                    <div id="cancel_movEfeIn_#{movimiento.idMovimientoStr}">
+                                        <h:selectBooleanCheckbox id="chk_cancelar_#{movimiento.idMovimientoStr}"
+                                                                 styleClass="chkCancela chk_cancelar_#{movimiento.idMovimientoStr}"
+                                                                 value="#{movimiento.seleccionadoCancelar}"
+                                                                 onchange="onChangeChk('Cancela');">
+                                        </h:selectBooleanCheckbox>
+                                        <a4j:commandButton id="btnCancelar_#{movimiento.idMovimientoStr}"
+                                                           title="#{etq.cancela}" alt="#{etq.cancela}"
+                                                           ajaxSingle="true" limitToList="true"
+                                                           image="/images/cancelar.png"
+                                                           onclick="if (! window.confirm('#{movimiento.folioControl}'+': '+'#{mensajes.mensajeConfirmarCancela}') ) {return false;}"
+                                                           reRender="containerResultados,mensajeUsuario,panelFirma"
+                                                           actionListener="#{movimientoEfectivoInt.cargaFirmaCancelacion}"
+                                                           tabindex="60">
+                                            <a4j:actionparam name="idMovimientoStr"
+                                                             value="#{movimiento.idMovimientoStr}"/>
+                                        </a4j:commandButton>
+                                        <a4j:commandButton id="btnCancelar2_#{movimiento.idMovimientoStr}"
+                                                           style="display: none;"
+                                                           styleClass="btnCancelar2_#{movimiento.idMovimientoStr}"
+                                                           actionListener="#{movimientoEfectivoInt.cancela}"
+                                                           reRender="containerResultados,mensajeUsuario"
+                                                           oncomplete="Richfaces.showModalPanel('modalNotificacion');">
+                                        </a4j:commandButton>
+
+
+                                    </div>
+                                </h:panelGroup>
+
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.participante}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{movimiento.participante}"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.fechaRegistro}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{movimiento.fechaAlta}" converter="formatoFechaLargaConverter"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.fechaLiquidacionMinus}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{movimiento.fechaLiquidacion}"
+                                              converter="formatoFechaCortaConverter"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{etq.tipoMinus} #{etq.movimientoMinus}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{movimiento.tipoMovimiento}"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.bovedaMinus}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{movimiento.boveda.nombreCorto}"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.divisaMinus}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{movimiento.divisa.claveAlfabetica}"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{etq.estatus} #{etq.movimientoMinus}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{movimiento.descEstadoMovimiento}"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{etq.estatus} #{etq.liquidacion}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{movimiento.descEstadoLiqIndeval}"
+                                              rendered="#{movimiento.descEstadoLiqIndeval != 'ERROR'}"/>
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{movimiento.descEstadoLiqIndeval}"
+                                              title="#{movimiento.descripcionError}"
+                                              rendered="#{movimiento.descEstadoLiqIndeval == 'ERROR'}"/>
+                            </div>
+                        </h:column>
+
+                        <h:column headerClass="tituloTabla column80">
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.saldoDisponibleMinus}"/>
+                            </f:facet>
+                            <div align="right">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{movimiento.saldoDisponible}" converter="formatoMonedaConverter"/>
+                            </div>
+                        </h:column>
+
+                        <h:column headerClass="tituloTabla column80">
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.importe}"/>
+                            </f:facet>
+                            <div align="right">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{movimiento.importeTraspasar}"
+                                              converter="formatoMonedaConverter"/>
+                            </div>
+                        </h:column>
+
+                        <h:column headerClass="tituloTabla column80">
+                            <f:facet name="header">
+                                <h:panelGroup>
+                                    <h:outputText styleClass="texto textoPeque12" value="#{etq.saldoActual}"/>
+                                </h:panelGroup>
+                            </f:facet>
+                            <div align="right">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{movimiento.saldoEfectivo}" converter="formatoMonedaConverter"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{etq.folioControl}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{movimiento.folioControl}"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{etq.referencia} #{etq.numerica}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{movimiento.referenciaNumerica}"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{etq.referencia} #{etq.relacionada}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{movimiento.referenciaRelacionada}"/>
+                            </div>
+                        </h:column>
+
+                        <h:column headerClass="tituloTabla column120">
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{etq.notas}/#{etq.comentarios}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{movimiento.notasComentarios}"/>
+                            </div>
+                        </h:column>
+
+                    </h:dataTable>
+                </h:panelGroup>
+
+                <!-- La facultad debe reflejar el valor de SeguridadConstants.FACULTAD_FIRMA_OPERACION -->
+                <indeval:authorizeFaculty userInFaculty="CON_CERTIFICADO">
+                    <h:panelGroup id="panelFirma">
+                        <h:panelGroup
+                                rendered="#{not empty movimientoEfectivoInt.isosSinFirmar and not movimientoEfectivoInt.validationErrors}">
+                            <div style="display: none">
+
+                                <t:dataList value="#{movimientoEfectivoInt.isosSinFirmar}"
+                                            rowIndexVar="indice" var="iso">
+
+                                    <!-- Importante no dejar espacios despues de la llave que cierra -->
+                                    <textarea id="isoSinFirmar#{indice+1}"
+                                              name="isoSinFirmar#{indice+1}">
+                                        #{movimientoEfectivoInt.isosSinFirmar[indice]}
+                                    </textarea>
+
+                                </t:dataList>
+
+                                <textarea id="numeroSerie" name="numeroSerie"></textarea>
+                                <textarea id="numeroSerieUsuario"
+                                          name="numeroSerieUsuario">#{sessionScope.usuario.numeroSerieCertificado}</textarea>
+                                <textarea name="totalOperaciones"
+                                          id="totalOperaciones">#{movimientoEfectivoInt.totalOperaciones}</textarea>
+                            </div>
+
+                            <script type="javascript">
+                                function firmarOperacion() {
+                                    console.log("firmarOperacion");
+
+                                    const esTipo = $j('#daliForm\\:esTipo')[0];
+
+                                    let idMovimiento = null;
+                                    let nameC = null;
+
+                                    if (esTipo.value == 'liberaSeleccion') {
+                                        console.log('liberaSeleccion');
+                                        nameC = '.btnLiberaSeleccion2';
+                                    } else if (esTipo.value == 'cancelaSeleccion') {
+                                        console.log('cancelaSeleccion');
+                                        nameC = '.btnCancelaSeleccion2';
+                                    } else if (esTipo.value == 'libera') {
+                                        idMovimiento = $j('#daliForm\\:idMovimientoStrSelected').val();
+                                        console.log('libera :: ' + idMovimiento);
+                                        nameC = '.btnLiberar2_' + idMovimiento;
+                                    } else if (esTipo.value == 'cancela') {
+                                        idMovimiento = $j('#daliForm\\:idMovimientoStrSelected').val();
+                                        console.log('cancela :: ' + idMovimiento);
+                                        nameC = '.btnCancelar2_' + idMovimiento;
+                                    } else {
+                                        console.log('esTipo', esTipo.value);
+                                    }
+
+                                    if (nameC) {
+                                        console.log(nameC);
+                                        const buttonElement = $j(nameC);
+                                        console.log(buttonElement);
+
+                                        if (buttonElement) {
+                                            buttonElement.click();
+                                        } else {
+                                            console.error("Elemento no encontrado");
+                                        }
+                                    }
+                                }
+
+
+                            </script>
+                            <div id="firmaId">
+                                <ui:decorate template="/firmaDigitalMultipleCompress.xhtml"></ui:decorate>
+                            </div>
+
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </indeval:authorizeFaculty>
+
+            </h:panelGroup>
+
+        </h:panelGroup>
+
+        <h:panelGroup id="totalesConsultas" rendered="true">
+            <table cellpadding="0" cellspacing="0" border="0" align="center" width="900px">
+                <tr align="right">
+                    <td align="right">
+                        <h:panelGroup id="botonesExportar">
+                            <h:panelGroup
+                                    style="display: #{(movimientoEfectivoInt.consultaEjecutada and not empty movimientoEfectivoInt.paginaVO.registros)? 'inline' : 'none'}">
+
+                                <h:outputText value="Exportar los resultados"></h:outputText>
+
+                                <h:commandButton id="generarPdf"
+                                                 actionListener="#{movimientoEfectivoInt.generarReportes}"
+                                                 action="consultaMovimientosEfectivoDivisasExtrPdf"
+                                                 image="/images/pdf.gif"
+                                                 title="Exportar a PDF todos los resultados de la consulta"
+                                                 onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);"/>
+                                &#160;&#160;
+                                <h:commandButton id="generarExcel"
+                                                 actionListener="#{movimientoEfectivoInt.generarReportes}"
+                                                 action="consultaMovimientosEfectivoDivisasExtrXls"
+                                                 image="/images/excel-file.gif"
+                                                 title="Exportar a Excel todos los resultados de la consulta"
+                                                 onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);">
+                                </h:commandButton>
+
+                                <div id="monitorPeticionReporte" style="display: none;">
+                                    <h:panelGroup id="panelMonitorPeticionReporte">
+                                        <h:graphicImage value="/images/ajax-loader.gif"/>
+                                        &#160;&#160;
+                                        <h:outputText value="#{etq.reporteEnProceso}"/>
+                                        <a4j:commandButton id="btnActualizarEstadoPeticion"
+                                                           image="/images/transparent.gif"
+                                                           styleClass="submit"
+                                                           actionListener="#{movimientoEfectivoInt.actualizarEstadoPeticion}"
+                                                           reRender="panelMonitorPeticionReporte"
+                                                           oncomplete="desbloquearBotonesReportes(#{movimientoEfectivoInt.peticionReporteCompleta}, ['generarExcel', 'generarPdf']);"/>
+                                    </h:panelGroup>
+                                </div>
+
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </td>
+                </tr>
+            </table>
+        </h:panelGroup>
+
+    </ui:define>
+
+</ui:composition>
+
+</html>

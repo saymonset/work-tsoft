@@ -8,9 +8,11 @@ public class HorariosCustodiosDto implements Serializable {
 
     private Integer idHorariosCustodios;
     private Integer idDivisa;
+    private String nombreDivisa;
     private Integer idCustodio;
+    private String nombreCustodio;
     private String horarioInicial;
-    private String  horarioFinal;
+    private String horarioFinal;
     private String creador;
     private Date fechaCreacion;
     private Date fechaUltModificacion;
@@ -49,12 +51,28 @@ public class HorariosCustodiosDto implements Serializable {
         this.idDivisa = idDivisa;
     }
 
+    public String getNombreDivisa() {
+        return nombreDivisa;
+    }
+
+    public void setNombreDivisa(String nombreDivisa) {
+        this.nombreDivisa = nombreDivisa;
+    }
+
     public Integer getIdCustodio() {
         return idCustodio;
     }
 
     public void setIdCustodio(Integer idCustodio) {
         this.idCustodio = idCustodio;
+    }
+
+    public String getNombreCustodio() {
+        return nombreCustodio;
+    }
+
+    public void setNombreCustodio(String nombreCustodio) {
+        this.nombreCustodio = nombreCustodio;
     }
 
     public String getHorarioInicial() {
@@ -111,5 +129,23 @@ public class HorariosCustodiosDto implements Serializable {
 
     public void setUsuarioChecker(String usuarioChecker) {
         this.usuarioChecker = usuarioChecker;
+    }
+
+    @Override
+    public String toString() {
+        return "HorariosCustodiosDto{" +
+                "idHorariosCustodios=" + idHorariosCustodios +
+                ", idDivisa=" + idDivisa +
+                ", nombreDivisa='" + nombreDivisa + '\'' +
+                ", idCustodio=" + idCustodio +
+                ", nombreCustodio='" + nombreCustodio + '\'' +
+                ", horarioInicial='" + horarioInicial + '\'' +
+                ", horarioFinal='" + horarioFinal + '\'' +
+                ", creador='" + creador + '\'' +
+                ", fechaCreacion=" + fechaCreacion +
+                ", fechaUltModificacion=" + fechaUltModificacion +
+                ", estatus=" + estatus +
+                ", usuarioChecker='" + usuarioChecker + '\'' +
+                '}';
     }
 }

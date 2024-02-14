@@ -1,23 +1,23 @@
 package com.indeval.portalinternacional.persistence.dao.impl;
 
-import java.math.BigInteger;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.type.Type;
-import org.springframework.orm.hibernate3.HibernateCallback;
-
 import com.bursatec.persistence.dao.impl.BaseDaoHibernateImpl;
+import com.indeval.portaldali.persistence.modelo.Divisa;
 import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
 import com.indeval.portalinternacional.middleware.servicios.dto.EstadoPaginacionDTO;
 import com.indeval.portalinternacional.middleware.servicios.modelo.DivisaInt;
 import com.indeval.portalinternacional.middleware.servicios.modelo.TipoInstruccionDivisa;
 import com.indeval.portalinternacional.persistence.dao.DivisaDaliDao;
 import com.indeval.portalinternacional.persistence.util.DTOAssembler;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.type.Type;
+import org.springframework.orm.hibernate3.HibernateCallback;
+
+import java.math.BigInteger;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DivisaDaliDaoImpl extends BaseDaoHibernateImpl implements DivisaDaliDao {
 	private List<Long> divisa;
@@ -236,6 +236,19 @@ public class DivisaDaliDaoImpl extends BaseDaoHibernateImpl implements DivisaDal
 					divisaDTO = DTOAssembler.crearDivisaDTO(consulta.get(0));
 				}
 				return divisaDTO;
+			}
+		});
+	}
+
+	public Divisa findDivisaByClaveAlfabetica(final String claveDivisa) {
+		return (Divisa) getHibernateTemplate().execute(new HibernateCallback() {
+
+			public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				Query query = session.createQuery(
+						" FROM " + Divisa.class.getName() + " d " + " where d.claveAlfabetica = '" + claveDivisa + "' ");
+				Divisa divisa = (Divisa) query.uniqueResult();
+
+				return divisa;
 			}
 		});
 	}

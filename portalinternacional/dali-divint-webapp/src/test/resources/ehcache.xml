@@ -1,0 +1,43 @@
+<ehcache>
+
+    <diskStore path="java.io.tmpdir"/>
+
+    <defaultCache
+        maxElementsInMemory="10000"
+        eternal="true"
+        timeToIdleSeconds="120"
+        timeToLiveSeconds="120"
+        overflowToDisk="false"
+        diskPersistent="false"
+        diskExpiryThreadIntervalSeconds="120"
+        memoryStoreEvictionPolicy="LRU" />
+
+    <cache name="com.indeval.portalinternacional.middleware.servicios.modelo.CatBic"
+        maxElementsInMemory="60"
+        eternal="false"
+        timeToIdleSeconds="0"
+        timeToLiveSeconds="86400"
+        overflowToDisk="false"/>
+        
+    <cache name="com.indeval.portalinternacional.middleware.servicios.modelo.Custodio"
+        maxElementsInMemory="60"
+        eternal="false"
+        timeToIdleSeconds="0"
+        timeToLiveSeconds="86400"
+        overflowToDisk="false"/>
+        
+   <cache name="com.indeval.portalinternacional.middleware.servicios.modelo.ExemptPayeeW9"
+        maxElementsInMemory="60"
+        eternal="false"
+        timeToIdleSeconds="0"
+        timeToLiveSeconds="86400"
+        overflowToDisk="false"/> 
+      
+   <cache name="com.indeval.portalinternacional.middleware.servicios.modelo.ExemptionFatcaW9"
+        maxElementsInMemory="60"
+        eternal="false"
+        timeToIdleSeconds="0"
+        timeToLiveSeconds="86400"
+        overflowToDisk="false"/>      
+	
+</ehcache>

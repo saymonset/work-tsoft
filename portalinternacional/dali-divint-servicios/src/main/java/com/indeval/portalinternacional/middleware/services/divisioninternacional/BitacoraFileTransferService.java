@@ -8,4 +8,6 @@ public interface BitacoraFileTransferService {
 	
 	public PaginaVO consultarFileTransfer(BitacoraFileTransferVO parametros, PaginaVO paginaVO, Boolean obtenerTotalRegistros) throws BusinessException;
 
+	public PaginaVO consultarDetalleFileTransfer(Long idFileTransferDivisasInt, PaginaVO paginaVO, Boolean obtenerTotalRegistros) throws BusinessException;
+	
 }

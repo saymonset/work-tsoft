@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls" xmlns:a4j="http://richfaces.org/a4j">
+
+<xls:document documentName="DetalleFileTransferDivisas" documentTitle="Consulta de DetalleFiletransfer del Sistema Internacional de Cotizaciones" landscape="true" >
+
+	<xls:table value="#{detalleFileTransferExportacionBean}" var="filtro">
+		<xls:row>
+			<xls:col align="center"  value="#{etq.institucionMinus}:" oddColorDark="true"/>
+			<xls:col align="center"  value="#{detalleFileTransferExportacionBean.agenteFirmado.id} #{detalleFileTransferExportacionBean.agenteFirmado.folio} #{detalleFileTransferExportacionBean.agenteFirmado.razon }" />
+		</xls:row>
+		<xls:row>
+			<xls:col align="center"  	value="#{etq.fechaMinus}:" />
+			<xls:col align="center"		value="#{detalleFileTransferExportacionBean.fechaActual}" pattern="dd/MM/yyyy" />
+		</xls:row>
+	</xls:table>
+	<xls:subtitle value="Filtros"/>
+	<xls:table value="#{detalleFileTransferExportacionBean}" var="filtro">
+		<xls:row>
+			<xls:col align="center" header="Id File Transfer Divisas" value="#{detalleFileTransferExportacionBean.idFileTransferDivisas}" />
+		</xls:row>
+	</xls:table>
+	<xls:table value="#{detalleFileTransferExportacionBean}" var="filtro">
+		<xls:row >
+			<xls:col align="center" collspan="2" header="Total de Registros" value="#{detalleFileTransferExportacionBean.resultados.totalRegistros}" />
+		</xls:row>
+	</xls:table>				
+	<xls:subtitle value="Datos"/>
+    <xls:table value="#{detalleFileTransferExportacionBean.resultados.registros}" var="detalle">
+        <xls:row>
+        	<xls:col header="Id File Transfer Detalle Divisas" value="#{detalle.idFileTransferDetalleDivisasInt}"	 align="CENTER"/>
+        	<xls:col header="Id File Transfer Divisas" value="#{detalle.fileTransferDivisas.idFileTransferDivisasInt}"	 align="CENTER"/>
+        	<xls:col header="Clave Tipo Institucion" value="#{detalle.claveTipoInstitucion}"	 align="CENTER"/>
+        	<xls:col header="Folio Institucion" value="#{detalle.folioInstitucion}"	 align="CENTER"/>
+        	<xls:col header="Divisa" value="#{detalle.divisa.claveAlfabetica}"	 align="CENTER"/>
+        	<xls:col header="Boveda" value="#{detalle.boveda.nombreCorto}"	 align="CENTER"/>
+        	<xls:col header="Monto Bruto" value="#{detalle.montoBruto}" pattern="$###,###,###,###,###,##0.00" />
+        	<xls:col header="Retencion" value="#{detalle.retencion}" pattern="$###,###,###,###,###,##0.00" />
+        	<xls:col header="Comision" value="#{detalle.comision}" pattern="$###,###,###,###,###,##0.00" />
+        	<xls:col header="Deposito Ajuste" value="#{detalle.depositoAjuste}" pattern="$###,###,###,###,###,##0.00" />
+        	<xls:col header="Retiro Ajuste" value="#{detalle.retiroAjuste}" pattern="$###,###,###,###,###,##0.00" />
+        	<xls:col header="Monto Neto" value="#{detalle.montoNeto}" pattern="$###,###,###,###,###,##0.00" />
+        	<xls:col header="Concepto" value="#{detalle.concepto}"	 align="CENTER"/>
+        	<xls:col header="Referencia" value="#{detalle.referencia}"	 align="CENTER"/>
+			<xls:col header="Estatus" value="#{detalle.estatusDivisas.descripcion}" align="CENTER"/>
+			<xls:col header="Comentarios" value="#{detalle.comentarios}" align="CENTER"/>
+        </xls:row>      
+    </xls:table>
+</xls:document>
+</html>

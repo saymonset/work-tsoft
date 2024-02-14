@@ -45,15 +45,19 @@
 			/WEB-INF/descriptors/jsf/admonCustodiosBeneficiarios.xml,
 			/WEB-INF/descriptors/jsf/admonCustodiosCSDR.xml,
 			/WEB-INF/descriptors/jsf/consultaCustodiosDepositantes.xml,
-			<!-- @add Jacito -->
+			<!-- Multidivisas: Descriptor de Cuentas Transitorias -->
 			/WEB-INF/descriptors/jsf/cuentasTransitoriasEfectivo.xml,
 			<!-- @add Genner -->
 			/WEB-INF/descriptors/jsf/movimientosEfectivo.xml,
 			/WEB-INF/descriptors/jsf/bitacoraFileTransfer.xml,
 			/WEB-INF/descriptors/jsf/bitacoraFileTransferExportacion.xml,
-			<!-- @add Edgar -->
-			/WEB-INF/descriptors/jsf/consultaSaldoCustodios.xml
-			
+			/WEB-INF/descriptors/jsf/detalleFileTransferExportacion.xml,
+			/WEB-INF/descriptors/jsf/fileTransferTransitoriaEfectivo.xml,
+            <!-- Multidivisas: Movimientos de Efectivo Internacional -->
+            /WEB-INF/descriptors/jsf/capturaMovimientos.xml,
+			<!-- Multidivisas: Horarios de Custodios -->
+			/WEB-INF/descriptors/jsf/horariosCustodioConsulta.xml,
+			/WEB-INF/descriptors/jsf/horariosCustodioRegistro.xml
 		</param-value>
 	</context-param>
 

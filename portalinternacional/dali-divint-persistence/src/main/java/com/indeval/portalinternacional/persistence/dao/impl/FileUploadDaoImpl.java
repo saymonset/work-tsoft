@@ -3,26 +3,27 @@
  */
 package com.indeval.portalinternacional.persistence.dao.impl;
 
-import java.util.List;
-
+import com.bursatec.persistence.dao.impl.BaseDaoHibernateImpl;
+import com.indeval.portalinternacional.middleware.servicios.modelo.FileTransferDivisas;
+import com.indeval.portalinternacional.middleware.servicios.modelo.FileUpload;
+import com.indeval.portalinternacional.persistence.dao.FileUploadDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.bursatec.persistence.dao.impl.BaseDaoHibernateImpl;
-import com.indeval.portalinternacional.middleware.servicios.modelo.FileUpload;
-import com.indeval.portalinternacional.persistence.dao.FileUploadDao;
+import java.util.List;
 
 /**
  * Implementacion del DAO para el mecanismo de lock de trasferencia de archivos
- * 
+ *
  * @author Esteban Herrera
- * 
  */
 @SuppressWarnings({"unchecked"})
 public class FileUploadDaoImpl extends BaseDaoHibernateImpl implements
 		FileUploadDao {
 
-	/** Objeto de loggeo */
+	/**
+	 * Objeto de loggeo
+	 */
 	private static final Logger log = LoggerFactory.getLogger(FileUploadDaoImpl.class);
 
 	/**
@@ -30,12 +31,14 @@ public class FileUploadDaoImpl extends BaseDaoHibernateImpl implements
 	 */
 	public Boolean getLock(FileUpload fileUpload) {
 		log.info("Entrando a FileUploadDaoImpl.getLock()");
+
 		List<Object> registros = getHibernateTemplate()
 				.find(
-						"from "+ FileUpload.class.getName()  +" f where f.idProceso = ? ",
+						"from " + FileUpload.class.getName() + " f where f.idProceso = ? ",
 						fileUpload.getIdProceso());
 		if (registros != null && !registros.isEmpty())
 			return Boolean.FALSE;
+		System.out.println("Antes guardar");
 		getHibernateTemplate().save(fileUpload);
 		return Boolean.TRUE;
 	}
@@ -84,4 +87,62 @@ public class FileUploadDaoImpl extends BaseDaoHibernateImpl implements
 		getHibernateTemplate().update(fileUpload);
 	}
 
+	@Override
+	public FileTransferDivisas getLockMulti(FileTransferDivisas ftransfer) {
+		FileTransferDivisas ft = null;
+
+		List<FileTransferDivisas> lft = getHibernateTemplate().find(" FROM " + FileTransferDivisas.class.getName() +
+				" f WHERE f.idFileTransferDivisasInt=? ", ftransfer.getIdFileTransferDivisasInt());
+
+		if (lft != null && !lft.isEmpty()) {
+			ft = lft.get(0);
+			return ft;
+
+		} else {
+			ftransfer.getEstatusDivisas().setIdEstatus(0L);
+			Long id = (Long) getHibernateTemplate().save(ftransfer);
+			ft = (FileTransferDivisas) getHibernateTemplate().get(FileTransferDivisas.class, id);
+			System.out.println("FileTransferMultiDiv SAVE " + ft);
+			return ft;
+		}
+	}
+
+	public void updateProcessInfoMulti(FileTransferDivisas fileUpload) {
+		log.info("Entrando a FileUploadDaoImpl.updateProcessInfo()");
+		getHibernateTemplate().update(fileUpload);
+	}
+
+	public FileTransferDivisas getProcessInfoMulti(FileTransferDivisas fileUpload) {
+
+		log.info("Entrando a FileUploadDaoImpl.getProcessInfoMulti()");
+		List<FileTransferDivisas> registros = getHibernateTemplate().find(" FROM " + FileTransferDivisas.class.getName() + " f  WHERE f.idFileTransferDivisasInt=? ", fileUpload.getIdFileTransferDivisasInt());
+
+		if (registros != null && !registros.isEmpty())
+			return registros.get(0);
+		return null;
+	}
+
+	public Boolean isProcessRunning(FileTransferDivisas fileUpload) {
+		log.info("Entrando a FileUploadDaoImpl.isProcessRunning(FileTransferDivisas)");
+		List<FileTransferDivisas> registros = getHibernateTemplate()
+				.find(
+						"from " + FileTransferDivisas.class.getName() + " f  f.idFileTransferDivisasInt=? ",
+						fileUpload.getIdFileTransferDivisasInt());
+		if (registros != null && !registros.isEmpty())
+			return Boolean.TRUE;
+		return Boolean.FALSE;
+	}
+
+	public FileTransferDivisas getFileTransferMDById(Long idFileTransferMD) {
+		FileTransferDivisas f = null;
+		f = (FileTransferDivisas) getHibernateTemplate().get(FileTransferDivisas.class, idFileTransferMD);
+		return f;
+	}
+
+//	public void releaseLock(FileTransferDivisas fileUpload) {
+//		log.info("Entrando a FileUploadDaoImpl.releaseLockFileTransferDivisas)");
+//
+//		getHibernateTemplate().get(EstatusDivisas.class,)
+//		getHibernateTemplate().delete(fileUpload);
+//	}
 }

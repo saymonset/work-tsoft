@@ -2,6 +2,7 @@
 package com.indeval.portalinternacional.persistence.dao.Boveda;
 
 import com.indeval.portalinternacional.middleware.servicios.dto.*;
+import com.indeval.portalinternacional.middleware.servicios.modelo.Bovedas;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -44,6 +45,16 @@ public class Util {
         ids.add(new BigInteger("45"));
 
         return ids;
+    }
+
+    public static String bovedasToString(Bovedas boveda) {
+        return "Boveda{" +
+                "idBoveda=" + boveda.getIdBoveda() +
+                ", idTipoBoveda=" + boveda.getIdTipoBoveda() +
+                ", nombreCorto='" + boveda.getNombreCorto() + '\'' +
+                ", descripcion='" + boveda.getDescripcion() +
+                '}';
+
     }
 
 }

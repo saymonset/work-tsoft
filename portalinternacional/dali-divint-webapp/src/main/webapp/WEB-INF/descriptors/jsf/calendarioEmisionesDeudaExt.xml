@@ -1,62 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <faces-config xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd" version="1.2">
-	<managed-bean>
-		<managed-bean-name>calendarioEmisionesDeudaExtBean</managed-bean-name>
-		<managed-bean-class>
-			com.indeval.portalinternacional.presentation.controller.ejercicioDerechosInt.CalendarioEmisionesDeudaExtController
-		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-		<managed-property>
-			<property-name>divisionInternacionalService</property-name>
-			<value>#{divisionInternacionalService}</value>
-		</managed-property>
-		<managed-property>
-			<property-name>divisaDao</property-name>
-			<value>#{divisaDao}</value>
-		</managed-property>
+	 <managed-bean>
+			<managed-bean-name>calendarioEmisionesDeudaExtBean</managed-bean-name>
+			<managed-bean-class>
+				com.indeval.portalinternacional.presentation.controller.ejercicioDerechosInt.CalendarioEmisionesDeudaExtController
+			</managed-bean-class>
+			<managed-bean-scope>request</managed-bean-scope>
+			<managed-property>
+				<property-name>divisionInternacionalService</property-name>				
+				<value>#{divisionInternacionalService}</value>
+			</managed-property>
+			<managed-property>
+				<property-name>divisaDao</property-name>				
+				<value>#{divisaDao}</value>
+			</managed-property>			
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>bitacoraCalendarioEmisionesDeudaExtBean</managed-bean-name>
-		<managed-bean-class>
-			com.indeval.portalinternacional.presentation.controller.ejercicioDerechosInt.BitacoraCalendarioEmisionesDeudaExtController
-		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-		<managed-property>
-			<property-name>divisionInternacionalService</property-name>
-			<value>#{divisionInternacionalService}</value>
-		</managed-property>
-		<managed-property>
-			<property-name>origen</property-name>
-			<property-class>java.lang.String</property-class>
-			<value>DEUDA</value>
-		</managed-property>
+			<managed-bean-name>bitacoraCalendarioEmisionesDeudaExtBean</managed-bean-name>
+			<managed-bean-class>
+				com.indeval.portalinternacional.presentation.controller.ejercicioDerechosInt.BitacoraCalendarioEmisionesDeudaExtController
+			</managed-bean-class>
+			<managed-bean-scope>request</managed-bean-scope>
+			<managed-property>
+				<property-name>divisionInternacionalService</property-name>				
+				<value>#{divisionInternacionalService}</value>
+			</managed-property>
+			<managed-property>
+            	<property-name>origen</property-name>
+            	<property-class>java.lang.String</property-class>
+            	<value>DEUDA</value>
+        	</managed-property>				
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>bovedaCalendarioEmisionesDeudaExtBean</managed-bean-name>
-		<managed-bean-class>
-			com.indeval.portalinternacional.presentation.controller.ejercicioDerechosInt.BovedaCalendarioEmisionesDeudaExtController
-		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-		<managed-property>
-			<property-name>divisionInternacionalService</property-name>
-			<value>#{divisionInternacionalService}</value>
-		</managed-property>
+			<managed-bean-name>bovedaCalendarioEmisionesDeudaExtBean</managed-bean-name>
+			<managed-bean-class>
+				com.indeval.portalinternacional.presentation.controller.ejercicioDerechosInt.BovedaCalendarioEmisionesDeudaExtController
+			</managed-bean-class>
+			<managed-bean-scope>request</managed-bean-scope>
+			<managed-property>
+				<property-name>divisionInternacionalService</property-name>				
+				<value>#{divisionInternacionalService}</value>
+			</managed-property>		
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>bitacoraCalendarioCapitalesHistBean</managed-bean-name>
-		<managed-bean-class>
-			com.indeval.portalinternacional.presentation.controller.ejercicioDerechosInt.BitacoraCalendarioEmisionesDeudaExtController
-		</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-		<managed-property>
-			<property-name>divisionInternacionalService</property-name>
-			<value>#{divisionInternacionalService}</value>
-		</managed-property>
-		<managed-property>
-			<property-name>origen</property-name>
-			<property-class>java.lang.String</property-class>
-			<value>CAPITALES</value>
-		</managed-property>
+			<managed-bean-name>bitacoraCalendarioCapitalesHistBean</managed-bean-name>
+			<managed-bean-class>
+				com.indeval.portalinternacional.presentation.controller.ejercicioDerechosInt.BitacoraCalendarioEmisionesDeudaExtController
+			</managed-bean-class>
+			<managed-bean-scope>request</managed-bean-scope>
+			<managed-property>
+				<property-name>divisionInternacionalService</property-name>				
+				<value>#{divisionInternacionalService}</value>
+			</managed-property>
+			<managed-property>
+            	<property-name>origen</property-name>
+            	<property-class>java.lang.String</property-class>
+            	<value>CAPITALES</value>
+        	</managed-property>				
 	</managed-bean>
 </faces-config>

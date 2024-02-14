@@ -1,13 +1,9 @@
 package com.indeval.portalinternacional.presentation.controller.cuentasTransitoriasEfectivo;
 
 import com.indeval.portalinternacional.middleware.services.divisioninternacional.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoService;
-import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.CuentaTransitoriaEfectivoDto;
 import com.indeval.portalinternacional.presentation.test.BaseTestCase;
 
 import javax.faces.context.FacesContext;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import static com.indeval.portalinternacional.presentation.controller.cuentasTransitoriasEfectivo.Util.*;

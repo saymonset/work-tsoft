@@ -3,10 +3,10 @@
  */
 package com.indeval.portalinternacional.persistence.dao;
 
-import java.util.List;
-
 import com.bursatec.persistence.dao.BaseDao;
 import com.indeval.portalinternacional.middleware.servicios.modelo.FileTransfer;
+
+import java.util.List;
 
 /**
  * @author javiles
@@ -21,5 +21,4 @@ public interface FileTransferDao extends BaseDao {
 	 * @return List
 	 */
 	List<FileTransfer> findFileTransferDivIntByIdFolioTipoReg(String id, String folio, String tipoReg);
-	
 }

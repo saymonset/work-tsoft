@@ -1645,16 +1645,19 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="bitacoraDao" ref="bitacoraDao" />
     </bean>
 
-    <bean id="horariosCustodiosService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.HorariosCustodiosServiceImpl">
-        <property name="horariosCustodiosDao" ref="horariosCustodiosDao" />
+    <bean id="horariosCustodiosService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.HorariosCustodiosServiceImpl">
+        <property name="horariosCustodiosDao" ref="horariosCustodiosDao"/>
     </bean>
 
-    <bean id="custodioService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.CustodioServiceImpl">
-        <property name="custodioDao" ref="custodioDao" />
+    <bean id="custodioService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.CustodioServiceImpl">
+        <property name="custodioDao" ref="custodioDao"/>
     </bean>
 
-    <bean id="diasInhabilesDivisasService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.DiasInhabilesDivisasServiceImpl">
-        <property name="diasInhabilesDivisasDao" ref="diasInhabilesDivisasDao" />
+    <bean id="diasInhabilesDivisasService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.DiasInhabilesDivisasServiceImpl">
+        <property name="diasInhabilesDivisasDao" ref="diasInhabilesDivisasDao"/>
     </bean>
 
     <!-- SERVICIOS PARA EL FILE TRANSFER DE CAMBIO DE BOVEDA -->
@@ -1816,44 +1819,46 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
 
     <!--Servicios para -->
 
-    <bean id="consultaDivisaService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaDivisaServiceImpl">
+    <bean id="consultaDivisaService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaDivisaServiceImpl">
         <property name="divisaDaliDAO" ref="divisaDaliDao"></property>
         <property name="cuentaCorresponsalDao" ref="cuentaCorresponsalDao"></property>
     </bean>
 
 
-    <bean id="consultaCuentasService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaCuentasServiceImpl">
+    <bean id="consultaCuentasService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaCuentasServiceImpl">
         <property name="cuentaDaliDAO" ref="cuentaDaliDAO"></property>
     </bean>
 
     <bean id="consultaSaldosEfectivoService"
-          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaSaldosEfectivoServiceImpl" >
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaSaldosEfectivoServiceImpl">
 
         <description>Bean de Acceso a servicios de catalogos</description>
 
         <property name="saldoDAO">
-            <ref bean="saldoDAO" />
+            <ref bean="saldoDAO"/>
         </property>
         <property name="saldoNombradaDao">
-            <ref bean="saldoNombradaDaliDao" />
+            <ref bean="saldoNombradaDaliDao"/>
         </property>
         <property name="dateUtilsDao">
-            <ref bean="dateUtilsDao" />
+            <ref bean="dateUtilsDao"/>
         </property>
 
 
-
     </bean>
 
-    <bean id="movimientoEfectivoInternacionalService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.MovimientoEfectivoInternacionalServiceImpl">
+    <bean id="movimientoEfectivoInternacionalService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.MovimientoEfectivoInternacionalServiceImpl">
         <property name="movimientoEfectivoInternacionalDao" ref="movimientoEfectivoInternacionalDao"></property>
+        <property name="custodioService" ref="custodioService"></property>
     </bean>
 
-    <bean id="retiroEfectivoIntPendientesService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.RetiroEfectivoIntPendienteServiceImpl">
-        <property name="retiroEfectivoIntPendientesDao" ref="retiroEfectivoIntPendientesDao" />
+    <bean id="retiroEfectivoIntPendientesService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.RetiroEfectivoIntPendienteServiceImpl">
+        <property name="retiroEfectivoIntPendientesDao" ref="retiroEfectivoIntPendientesDao"/>
     </bean>
-
-
 
     <bean id="bitacoraFileTransferService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.BitacoraFileTransferServiceImpl">
     	<property name="validatorService">
@@ -1862,4 +1867,90 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="bitacoraFileTransferDao" ref="bitacoraFileTransferDao"></property>
     </bean>
 
+    <bean id="fileTransferMultiDivService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.FileTransferMultiDivServiceImpl"
+          lazy-init="true">
+
+        <description>
+            Bean de Acceso a servicios del FileTransfer de Division Internacional
+        </description>
+
+        <property name="custodiosPredefinidos">
+            <ref local="detalleCustodio"/>
+        </property>
+
+        <property name="messageResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+
+        <property name="fileTransferMultiDao">
+            <ref bean="fileTransferMultiDao"/>
+        </property>
+
+        <property name="dateUtilService">
+            <ref bean="dateUtilService"/>
+        </property>
+
+        <property name="cuentaNombradaDao">
+            <ref bean="cuentaNombradaDao"/>
+        </property>
+
+        <property name="validatorDivIntService">
+            <ref local="validatorDivIntService"/>
+        </property>
+
+        <property name="utilDivIntService">
+            <ref bean="utilDivIntService"/>
+        </property>
+
+        <property name="emisionDao">
+            <ref bean="emisionDao"/>
+        </property>
+
+        <property name="posicionNombradaDao">
+            <ref bean="posicionNombradaDao"/>
+        </property>
+
+        <property name="cuponDao">
+            <ref bean="cuponDao"/>
+        </property>
+
+        <property name="sicEmisionDao">
+            <ref bean="sicEmisionDao"/>
+        </property>
+
+        <property name="catBicDao">
+            <ref bean="catBicDao"/>
+        </property>
+
+        <property name="sicDetalleDao">
+            <ref bean="sicDetalleDao"/>
+        </property>
+
+        <property name="divisaDao">
+            <ref bean="divisaDao"/>
+        </property>
+
+        <property name="divisionInternacionalService">
+            <ref local="divisionInternacionalService"/>
+        </property>
+
+        <property name="utilService">
+            <ref bean="utilService"/>
+        </property>
+        <property name="operacionSicDao" ref="operacionSicDao"/>
+
+        <property name="settlementDisciplineRegimeDao">
+            <ref bean="settlementDisciplineRegimeDao"/>
+        </property>
+        <property name="bovedaDao">
+            <ref bean="bovedaDao"></ref>
+        </property>
+        <property name="divisaDaliDao">
+            <ref bean="divisaDaliDao"></ref>
+        </property>
+        <property name="institucionDao">
+            <ref bean="institucionDao"></ref>
+        </property>
+    </bean>
 </beans>

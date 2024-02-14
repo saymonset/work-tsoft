@@ -3,15 +3,16 @@ package com.indeval.portalinternacional.middleware.services.divisioninternaciona
 
 import com.indeval.portalinternacional.middleware.servicios.dto.BovedaDto;
 import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
-import com.indeval.portalinternacional.middleware.servicios.modelo.MovimientoDepositoEfectivoInternacional;
-import com.indeval.portalinternacional.middleware.servicios.modelo.MovimientoRetiroEfectivoInternacional;
+import com.indeval.portalinternacional.middleware.servicios.modelo.*;
 import com.indeval.portalinternacional.middleware.servicios.vo.MovimientoEfectivoInternacionalVO;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 
 public class Util {
 
-    public static MovimientoEfectivoInternacionalVO getMovimientoDeposito(){
+    public static MovimientoEfectivoInternacionalVO getMovimientoDeposito() {
         MovimientoEfectivoInternacionalVO deposito = new MovimientoEfectivoInternacionalVO();
         DivisaDTO divisaDTO = new DivisaDTO();
         divisaDTO.setId(3);
@@ -38,7 +39,7 @@ public class Util {
         return deposito;
     }
 
-    public static MovimientoEfectivoInternacionalVO getMovimientoRetiro(){
+    public static MovimientoEfectivoInternacionalVO getMovimientoRetiro() {
         MovimientoEfectivoInternacionalVO retiro = new MovimientoEfectivoInternacionalVO();
         DivisaDTO divisaDTO = new DivisaDTO();
         divisaDTO.setId(3);
@@ -80,4 +81,30 @@ public class Util {
         return retiro;
     }
 
+    public static CuentaTransitoria obtenerCuentaTransitoriaEsperada(
+            MovimientoEfectivoInternacionalVO movimientoEfectivoInternacionalVO) {
+        CuentaTransitoria cuentaTransitoria = new CuentaTransitoria();
+        cuentaTransitoria.setIdCuentaTransitoria(1);
+
+        DivisaInt divisa = new DivisaInt();
+        divisa.setIdDivisa(
+                new BigInteger(String.valueOf(movimientoEfectivoInternacionalVO.getDivisa().getId())));
+        divisa.setClaveAlfabetica(movimientoEfectivoInternacionalVO.getDivisa().getClaveAlfabetica());
+        divisa.setDescripcion(movimientoEfectivoInternacionalVO.getDivisa().getDescripcion());
+        cuentaTransitoria.setIdDivisa(divisa);
+
+        Custodio custodio = new Custodio();
+        custodio.setId(2);
+        custodio.setNombreCorto("EUROCLE");
+        custodio.setDescripcion("EUROCLEAR BANK");
+        custodio.setCodigoBanco("MGTC");
+        cuentaTransitoria.setIdCustodio(custodio);
+
+        cuentaTransitoria.setFolioRelacionado(
+                String.valueOf(movimientoEfectivoInternacionalVO.getFolioControl()));
+        cuentaTransitoria.setMonto(
+                new BigDecimal(movimientoEfectivoInternacionalVO.getSaldoEfectivo().toString()));
+
+        return cuentaTransitoria;
+    }
 }

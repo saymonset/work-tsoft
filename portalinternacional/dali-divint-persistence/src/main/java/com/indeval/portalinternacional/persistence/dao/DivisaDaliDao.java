@@ -1,10 +1,11 @@
 package com.indeval.portalinternacional.persistence.dao;
 
-import java.math.BigInteger;
-import java.util.List;
-
+import com.indeval.portaldali.persistence.modelo.Divisa;
 import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
 import com.indeval.portalinternacional.middleware.servicios.dto.EstadoPaginacionDTO;
+
+import java.math.BigInteger;
+import java.util.List;
 
 /**
  * Interface que expone los metodos para las operaciones realizadas sobre el
@@ -74,4 +75,5 @@ public interface DivisaDaliDao {
 	 */
 	DivisaDTO obtenerDivisaPorClaveAlfavetica(String claveDivisa);
 
+	Divisa findDivisaByClaveAlfabetica(String claveDivisa);
 }

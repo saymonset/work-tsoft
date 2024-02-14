@@ -27,7 +27,7 @@ import com.indeval.portaldali.persistence.util.constants.DaliConstants;
  */
 public class FormatoFechaCortoConverter implements Converter {
 	
-	private static SimpleDateFormat sdf = new SimpleDateFormat(DaliConstants.FORMATO_FECHA_CORTO);
+	private static final SimpleDateFormat sdf = new SimpleDateFormat(DaliConstants.FORMATO_FECHA_CORTO);
 	/*
 	 * (non-Javadoc)
 	 * @see javax.faces.convert.Converter#getAsObject(javax.faces.context.FacesContext, javax.faces.component.UIComponent, java.lang.String)

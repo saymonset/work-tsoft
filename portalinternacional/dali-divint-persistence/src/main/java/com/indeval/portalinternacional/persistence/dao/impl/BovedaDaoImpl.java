@@ -150,5 +150,26 @@ public class BovedaDaoImpl extends BaseDaoHibernateImpl implements BovedaDao {
             }
         });
     }
+
+    /**
+     * Multidivisas
+     * @see com.indeval.portalinternacional.persistence.dao.BovedaDao#findAllBovedasValores()
+     */
+    @SuppressWarnings("unchecked")
+    public List<Bovedas> findAllBovedasEfectivo() {
+        final StringBuilder sb = new StringBuilder();
+
+        sb.append(" FROM " + Bovedas.class.getName() + " bov ");
+        sb.append(" WHERE bov.idTipoBoveda = " + TipoBoveda.INTERNACIONAL_EFECTIVO + " ");
+        sb.append(" ORDER BY bov.idBoveda ");
+
+        return (List<Bovedas>) getHibernateTemplate().execute(new HibernateCallback() {
+            public Object doInHibernate(Session session) throws HibernateException, SQLException {
+                Query query = session.createQuery(sb.toString());
+                return query.list();
+            }
+        });
+    }
+
     //Fin Cambio Multidivisas
 }

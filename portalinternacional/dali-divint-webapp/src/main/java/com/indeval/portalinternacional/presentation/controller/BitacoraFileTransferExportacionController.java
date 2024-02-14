@@ -25,7 +25,6 @@ public class BitacoraFileTransferExportacionController extends ControllerBase {
 	private Date fechaFinalProcesamiento;
 	private Date fechaProcesamiento;
 	private PaginaVO resultados;
-	private boolean consultaEjecutada = false;
 	private BitacoraFileTransferVO bitacoraFileTransferVO = new BitacoraFileTransferVO();
 	
 	private BitacoraFileTransferService bitacoraFileTransferService;
@@ -38,14 +37,6 @@ public class BitacoraFileTransferExportacionController extends ControllerBase {
 	
 		
 		
-	}
-	
-	public void limpiar(ActionEvent e) {
-		
-		consultaEjecutada = false;
-		paginaVO = new PaginaVO();
-		paginaVO.setRegistrosXPag(50);
-
 	}
 	
 	public void crearFiltros() {
@@ -107,7 +98,6 @@ public class BitacoraFileTransferExportacionController extends ControllerBase {
             this.resultados =
                     this.bitacoraFileTransferService.consultarFileTransfer(bitacoraFileTransferVO, paginaVO, false);
             this.resultados.setTotalRegistros(this.resultados.getRegistros().size());
-            consultaEjecutada = true;
 		}
 		catch (BusinessException exc) {
 			log.error("Ocurrio un error:",exc);
@@ -172,14 +162,6 @@ public class BitacoraFileTransferExportacionController extends ControllerBase {
 		this.resultados = resultados;
 	}
 
-	public boolean isConsultaEjecutada() {
-		return consultaEjecutada;
-	}
-
-	public void setConsultaEjecutada(boolean consultaEjecutada) {
-		this.consultaEjecutada = consultaEjecutada;
-	}
-	
 	public BitacoraFileTransferVO getBitacoraFileTransferVO() {
 		return bitacoraFileTransferVO;
 	}

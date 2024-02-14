@@ -88,6 +88,26 @@
     </managed-bean>
     
     <managed-bean>
+        <managed-bean-name>detalleFileTransferDivisasBean</managed-bean-name>
+        <managed-bean-class>com.indeval.portalinternacional.presentation.controller.common.DetalleFileTransferController</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+
+        <managed-property>
+			<property-name>bitacoraFileTransferService</property-name>
+			<value>#{bitacoraFileTransferService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>dateUtilService</property-name>
+			<value>#{dateUtilService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>registrosXPag</property-name>
+			<value>20</value>
+		</managed-property>
+		
+    </managed-bean>
+    
+    <managed-bean>
     	<description>Bean para seleccionar posiciones con Emision Extranjera</description>
         <managed-bean-name>seleccionarPosicionesInvExtBean</managed-bean-name>
         <managed-bean-class>com.indeval.portalinternacional.presentation.controller.common.SeleccionarPosicionEmisionExtranjeraController</managed-bean-class>

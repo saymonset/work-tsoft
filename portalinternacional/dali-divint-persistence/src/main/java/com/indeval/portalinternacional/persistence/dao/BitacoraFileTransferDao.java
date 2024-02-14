@@ -8,4 +8,6 @@ public interface BitacoraFileTransferDao extends BaseDao {
 	
 	public PaginaVO findFileTransfer(BitacoraFileTransferVO parametros, PaginaVO paginaVO, Boolean obtenerTotalRegistros);
 	
+	public PaginaVO findDetalleFileTransfer(Long idFileTransferDivisasInt, PaginaVO paginaVO, Boolean obtenerRegistrosTotales);
+	
 }

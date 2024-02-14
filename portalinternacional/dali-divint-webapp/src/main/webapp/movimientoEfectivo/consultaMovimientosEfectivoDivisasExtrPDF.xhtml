@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--Multidivisas: Reporte PDF: Consulta de Movimientos de Efectivo Internacional-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="consultaMovimientosEfectivoDivisasExtranjeras" documentTitle="Consulta Movimientos Efectivo Divisas Extranjeras"
+        institucion="#{movimientoEfectivoInt.agenteFirmado.id} #{movimientoEfectivoInt.agenteFirmado.folio} #{movimientoEfectivoInt.agenteFirmado.razon}" 
+        landscape="true" fecha="#{movimientoEfectivoInt.fechaActual}"
+        imageResource="/images/indeval.jpg">
+        <pdf:table value="movimientoEfectivoInt" currentBean="movimiento" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{movimientoEfectivoInt}" currentBean="emision" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.participante}" value="#{!empty movimientoEfectivoInt.idFolioParticipante ? movimientoEfectivoInt.idFolioParticipante : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.folioControl}" value="#{!empty movimientoEfectivoInt.folioControl ? movimientoEfectivoInt.folioControl : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.tipoMinus} #{etq.movimientoMinus}" value="#{!empty movimientoEfectivoInt.descTipoMovimiento ? movimientoEfectivoInt.descTipoMovimiento : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.estatus} #{etq.movimientoMinus}" value="#{!empty movimientoEfectivoInt.descEstatusMovimiento ? movimientoEfectivoInt.descEstatusMovimiento : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.divisaMinus}" value="#{!empty movimientoEfectivoInt.descDivisa ? movimientoEfectivoInt.descDivisa : 'TODAS'}" align="center" />
+                <pdf:col header="#{etq.bovedaMinus}" value="#{!empty movimientoEfectivoInt.descBoveda ? movimientoEfectivoInt.descBoveda : 'TODAS'}" align="center" />
+                <pdf:col header="#{etq.fechaRegInicial}" value="#{movimientoEfectivoInt.fechaInicioStr}" align="center" />
+                <pdf:col header="#{etq.fechaRegFinal}" value="#{movimientoEfectivoInt.fechaFinStr}" align="center"/>
+                <pdf:col header="#{etq.fechaLiqInicial}" value="#{movimientoEfectivoInt.fechaLiqInicioStr}" align="center" />
+                <pdf:col header="#{etq.fechaLiqFinal}" value="#{movimientoEfectivoInt.fechaLiqFinStr}" align="center"/>
+            </pdf:row>
+        </pdf:table>
+        
+        <pdf:br/>
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{movimientoEfectivoInt.totalRegistros}"/>
+        <pdf:br/>
+
+        <pdf:table value="#{movimientoEfectivoInt.resultados.registros}" currentBean="movimiento">
+            <pdf:row>
+                <pdf:col header="#{etq.participante}" value="#{movimiento.participante}" align="center"/>
+                <pdf:col header="#{etq.fechaRegistro}" value="#{movimiento.fechaAlta}" align="center">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaLiquidacionMinus}" value="#{movimiento.fechaLiquidacion}" align="center">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.tipoMinus} #{etq.movimientoMinus}" value="#{movimiento.tipoMovimiento}" align="center"/>
+                <pdf:col header="#{etq.bovedaMinus}" value="#{movimiento.boveda.nombreCorto}" align="center"/>
+                <pdf:col header="#{etq.divisaMinus}" value="#{movimiento.divisa.claveAlfabetica}" align="center"/>
+                <pdf:col header="#{etq.estatus} #{etq.movimientoMinus}" value="#{movimiento.descEstadoMovimiento}" align="center"/>
+                <pdf:col header="#{etq.estatus} #{etq.liquidacion}" value="#{movimiento.descEstadoLiqIndeval}" align="center"/>
+                <pdf:col header="#{etq.saldoDisponibleMinus}" value="#{movimiento.saldoDisponible}" align="center">
+					<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                </pdf:col>
+                <pdf:col header="#{etq.importe}" value="#{movimiento.importeTraspasar}" align="center">
+					<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                </pdf:col>
+                <pdf:col header="#{etq.saldoActual}" value="#{movimiento.saldoEfectivo}" align="center">
+					<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                </pdf:col>
+                <pdf:col header="#{etq.folioControl}" value="#{movimiento.folioControl}" align="center"/>
+                <pdf:col header="#{etq.referencia} #{etq.numerica}" value="#{movimiento.referenciaNumerica}" align="center"/>
+                <pdf:col header="#{etq.referencia} #{etq.relacionada}" value="#{movimiento.referenciaRelacionada}" align="center"/>
+                <pdf:col header="#{etq.notas}/#{etq.comentarios}" value="#{movimiento.notasComentarios}" align="center"/>
+            </pdf:row>
+        </pdf:table>
+
+    </pdf:document>
+</html>

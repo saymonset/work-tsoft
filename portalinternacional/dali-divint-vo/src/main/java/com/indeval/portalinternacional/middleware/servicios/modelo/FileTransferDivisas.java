@@ -3,6 +3,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 @Entity
 @Table(name = "T_FILETRANSFER_DIVISAS_INT")
 @SequenceGenerator(name = "SEQ_FILETRANSFER_DIVISAS_INT", sequenceName = "SEQ_FILETRANSFER_DIVISAS_INT", allocationSize = 1, initialValue = 1)
@@ -18,9 +19,10 @@ public class FileTransferDivisas implements Serializable {
     public String usuarioAutoriza;
     public EstatusDivisas estatusDivisas;
     public String comentarios;
-    FileTransferDetalleDivisas fileTransferDetalleDivisa;
-    public String usuario;
-    @Id
+    public Long porcentaje;
+    public List<FileTransferDetalleDivisas> filesTransferDetalleDivisa;
+	public  Long estatusDivisa;
+	@Id
     @Column(name = "ID_FILETRANSFER_DIVISAS_INT", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_FILETRANSFER_DIVISAS_INT")
     public Long getIdFileTransferDivisasInt() {
@@ -29,28 +31,28 @@ public class FileTransferDivisas implements Serializable {
     public void setIdFileTransferDivisasInt(Long idFileTransferDivisasInt) {
        this.idFileTransferDivisasInt = idFileTransferDivisasInt;
     }
-    @Column(name = "FECHA_REGISTRO", unique = false, nullable = false)
+    @Column(name = "FECHA_REGISTRO",unique = false, nullable = false)
     public Date getFechaRegistro() {
        return fechaRegistro;
     }
     public void setFechaRegistro(Date fechaRegistro) {
        this.fechaRegistro = fechaRegistro;
     }
-    @Column(name = "REGISTROS_TOTAL", unique = false, nullable = false)
+    @Column(name = "REGISTROS_TOTAL",unique = false, nullable = false)
     public BigInteger getRegistrosTotal() {
        return registrosTotal;
     }
     public void setRegistrosTotal(BigInteger registrosTotal) {
        this.registrosTotal = registrosTotal;
     }
-    @Column(name = "REGISTROS_EXITOSOS", unique = false, nullable = false)
+    @Column(name = "REGISTROS_EXITOSOS",unique = false, nullable = false)
     public BigInteger getRegistrosExitosos() {
        return registrosExitosos;
     }
     public void setRegistrosExitosos(BigInteger registrosExitosos) {
        this.registrosExitosos = registrosExitosos;
     }
-    @Column(name = "REGISTROS_ERROR", unique = false, nullable = false)
+    @Column(name = "REGISTROS_ERROR",unique = false, nullable = false)
     public BigInteger getRegistrosError() {
        return registrosError;
     }
@@ -65,7 +67,7 @@ public class FileTransferDivisas implements Serializable {
     public void setUsuarioRegistro(String usuarioRegistro) {
        this.usuarioRegistro = usuarioRegistro;
     }
-    @Column(name = "FECHA_AUTORIZA", unique = false, nullable = false)
+    @Column(name = "FECHA_AUTORIZA")
     public Date getFechaAutoriza() {
        return fechaAutoriza;
     }
@@ -80,26 +82,42 @@ public class FileTransferDivisas implements Serializable {
        this.usuarioAutoriza = usuarioAutoriza;
     }
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ID_ESTATUS", nullable = false)
+    @JoinColumn(name = "ID_ESTATUS", nullable = false,insertable = false, updatable = false)
     public EstatusDivisas getEstatusDivisas() {
        return estatusDivisas;
     }
     public void setEstatusDivisas(EstatusDivisas estatusDivisas) {
        this.estatusDivisas = estatusDivisas;
     }
-    @Column(name = "COMENTARIOS", unique = false, nullable = true)
+    @Column(name = "COMENTARIOS", unique = false,nullable = true)
     public String getComentarios() {
        return comentarios;
     }
     public void setComentarios(String comentarios) {
        this.comentarios = comentarios;
     }
-    @OneToOne(mappedBy = "fileTransferDivisas")
-    public FileTransferDetalleDivisas getFileTransferDetalleDivisa() {
-       return fileTransferDetalleDivisa;
-    }
-    public void setFileTransferDetalleDivisa(FileTransferDetalleDivisas fileTransferDetalleDivisa) {
-       this.fileTransferDetalleDivisa = fileTransferDetalleDivisa;
-    }
-    
+    @Column(name = "PORCENTAJE", nullable = true)
+    public Long getPorcentaje() {
+		return porcentaje;
+	}
+	public void setPorcentaje(Long porcentaje) {
+		this.porcentaje = porcentaje;
+	}
+	@OneToMany
+	public List<FileTransferDetalleDivisas> getFilesTransferDetalleDivisa() {
+		return filesTransferDetalleDivisa;
+	}
+	public void setFilesTransferDetalleDivisa(List<FileTransferDetalleDivisas> filesTransferDetalleDivisa) {
+		this.filesTransferDetalleDivisa = filesTransferDetalleDivisa;
+	}
+
+
+	@Column(name = "ID_ESTATUS")
+	public Long getEstatusDivisa() {
+		return estatusDivisa;
+	}
+
+	public void setEstatusDivisa(Long estatusDivisa) {
+		this.estatusDivisa = estatusDivisa;
+	}
 }

@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:composition template="/layoutPopUp.xhtml">
+		<ui:define name="titulo">
+		
+		</ui:define>
+		<ui:define name="subtitulo">
+		</ui:define>
+		<ui:define name="body">
+			<h:form id="formaDetalles">
+				<h:panelGroup id="init">
+					<h:outputText value="#{detalleFileTransferDivisasBean.init}" />
+				</h:panelGroup>
+				
+				<!--  
+				<h:panelGroup id="mensajeUsuario">
+					<div style="min-height: 21px;">						
+					<rich:messages warnClass="warning" infoClass="info"
+						errorClass="error" ajaxRendered="true" showDetail="false"
+						showSummary="true" layout="list">
+						<f:facet name="infoMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+						</f:facet>
+
+						<f:facet name="errorMarker">
+							<h:panelGroup>
+								<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+						</f:facet>
+					</rich:messages>
+				
+					<div id="divWarnings" class="warning" style="display:none;">
+						<p id="textoWarning">										
+						</p>
+					</div>
+					</div>
+				</h:panelGroup>
+				-->
+				
+				<h:panelGroup id="panelResultados">
+					<a4j:keepAlive beanName="detalleFileTransferDivisasBean" />
+					<h:inputHidden value="#{detalleFileTransferDivisasBean.numeroPagina}" />
+					<h:inputHidden
+						value="#{detalleFileTransferDivisasBean.paginaVO.totalRegistros}" />
+					<h:inputHidden value="#{detalleFileTransferDivisasBean.totalPaginas}" />
+					<h:inputHidden
+						value="#{detalleFileTransferDivisasBean.registrosPorPagina}" />
+					<table cellpadding="0" cellspacing="0" border="0" width="100%">
+						<tr>
+							<td align="left">
+								<h:panelGroup id="paginacion">
+									<a4j:commandLink id="control_bitacora_primero"
+										action="#{detalleFileTransferDivisasBean.irPrimeraPagina}"
+										rendered="#{detalleFileTransferDivisasBean.irAlPrimero}"
+										reRender="panelResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_atras_fast"
+										action="#{detalleFileTransferDivisasBean.retrocederPaginasRapido}"
+										rendered="#{detalleFileTransferDivisasBean.retrocederRapido}"
+										reRender="panelResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_atras"
+										action="#{detalleFileTransferDivisasBean.retrocederPagina}"
+										rendered="#{detalleFileTransferDivisasBean.retroceder}"
+										reRender="panelResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+											border="0" />
+									</a4j:commandLink>
+									<a4j:commandLink id="control_bitacora_adelante"
+										action="#{detalleFileTransferDivisasBean.avanzarPagina}"
+										rendered="#{detalleFileTransferDivisasBean.avanzar}"
+										reRender="panelResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+											border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_adelante_fast"
+										action="#{detalleFileTransferDivisasBean.avanzarPaginasRapido}"
+										rendered="#{detalleFileTransferDivisasBean.avanzarRapido}"
+										reRender="panelResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+											border="0" />
+
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_ultimo"
+										action="#{detalleFileTransferDivisasBean.irUltimaPagina}"
+										rendered="#{detalleFileTransferDivisasBean.irAlUltimo}"
+										reRender="panelResultados">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+											border="0" />
+									</a4j:commandLink>
+									<br />
+									<h:panelGroup rendered="#{not empty detalleFileTransferDivisasBean.paginaVO.registros}">
+										<h:outputText value="#{etq.mostrando}" styleClass="textoResumen" />
+		                                <h:outputText value="#{detalleFileTransferDivisasBean.numeroPagina}" styleClass="textoResumen"/>
+		                                <h:outputText value="#{etq.de}" styleClass="textoResumen"/>
+		                                <h:outputText value="#{detalleFileTransferDivisasBean.totalPaginas}" styleClass="textoResumen"/>
+		                                <h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>&#160;&#160;&#160;
+		                                <h:outputText value="#{detalleFileTransferDivisasBean.paginaVO.totalRegistros}" styleClass="textoResumen" 
+		                                converter="formatoEnteroConverter"></h:outputText>&#160;
+										<h:outputText styleClass="textoResumen" value="#{etq.registrosEncontrados}"/>
+									</h:panelGroup>
+	                                
+								</h:panelGroup>
+
+
+
+								<a4j:status id="commonStatus">
+									<f:facet name="start">
+										<h:panelGroup>
+											<h:graphicImage value="/images/ajax-loader.gif" />
+											<h:outputText value="#{etq.buscando}"></h:outputText>
+										</h:panelGroup>
+									</f:facet>
+								</a4j:status>
+							</td>
+						</tr>
+					</table>
+
+
+					<h:dataTable
+						styleClass="tablaGeneral" headerClass="tituloTabla"
+						width="100%" footerClass="tituloTabla" border="0"
+						cellpadding="3px" cellspacing="0px" columnClasses="everyColumn"
+						rowClasses="renglonTablaUno, renglonTablaDos"
+						value="#{detalleFileTransferDivisasBean.paginaVO.registros}"
+						var="detalle">
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Id File Transfer Detalle" />
+							</f:facet>
+							<h:outputText value="#{detalle.idFileTransferDetalleDivisasInt}" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Clave Tipo Institucion" />
+							</f:facet>
+							<h:outputText
+								value="#{detalle.claveTipoInstitucion}" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Folio Institucion" />
+							</f:facet>
+							<h:outputText
+								value="#{detalle.folioInstitucion}" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="Divisa" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12"
+								value="#{detalle.divisa.claveAlfabetica}" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="Boveda" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12"
+								value="#{detalle.boveda.nombreCorto}" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12"
+									value="Monto Bruto" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12"
+								value="#{detalle.montoBruto}"
+								converter="formatoMonedaChileConverter"
+								style="white-space: nowrap" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="Retencion" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12"
+								value="#{detalle.retencion}"
+								converter="formatoMonedaChileConverter"
+								style="white-space: nowrap" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="Comision" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12"
+								value="#{detale.comision}"
+								converter="formatoMonedaChileConverter"
+								style="white-space: nowrap" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12"
+									value="Deposito Por Ajuste" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12"
+								value="#{detalle.depositoAjuste}"
+								converter="formatoMonedaChileConverter"
+								style="white-space: nowrap" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12"
+									value="Retiro Por Ajuste" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12"
+								value="#{detalle.retiroAjuste}"
+								converter="formatoMonedaChileConverter"
+								style="white-space: nowrap" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="Monto Neto" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12"
+								value="#{detalle.montoNeto}"
+								converter="formatoMonedaChileConverter"
+								style="white-space: nowrap" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="Concepto" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12"
+								value="#{detalle.concepto}" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12"
+									value="Folio Referencia" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12"
+								value="#{detalle.referencia}" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="Estatus" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12"
+								value="#{detalle.estatusDivisas.descripcion}" />
+						</h:column>
+						
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="Comentarios" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12"
+								value="#{detalle.comentarios}" />
+						</h:column>
+						
+						<f:facet name="footer">
+							<rich:columnGroup
+								rendered="#{empty detalleFileTransferDivisasBean.paginaVO.registros}">
+								<rich:column colspan="15" width="100%" styleClass="tituloTabla">
+									<h:outputText value="#{etq.sinResultados}" />
+								</rich:column>
+							</rich:columnGroup>
+					</f:facet>
+					</h:dataTable>
+				</h:panelGroup>
+				
+				<h:panelGroup id="totalesConsultas"
+					rendered="#{not empty detalleFileTransferDivisasBean.paginaVO.registros}">
+					<table cellpadding="0" cellspacing="0" border="0" align="center"
+						width="900px">
+						<tr align="right">
+							<td align="right">
+							<h:panelGroup id="botonesExportar">
+									<h:panelGroup
+										style="display: #{(detalleFileTransferDivisasBean.consultaEjecutada and not empty detalleFileTransferDivisasBean.paginaVO.registros)? 'inline' : 'none'}">
+
+										<h:outputText value="Exportar los resultados" />
+										<h:commandButton
+											actionListener="#{detalleFileTransferExportacionBean.generarReportes}"
+											action="detalleFileTransferDivisasPdf" image="/images/pdf.gif"
+											title="Exportar a PDF todos los resultados de la consulta"
+											id="generarPdf"
+											onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);" />
+                           				&#160;&#160;
+                          				<h:commandButton
+											actionListener="#{detalleFileTransferExportacionBean.generarReportes}"
+											action="detalleFileTransferDivisasXls"
+											image="/images/excel-file.gif"
+											title="Exportar a Excel todos los resultados de la consulta"
+											id="generarExcel"
+											onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);" />
+
+										<div id="monitorPeticionReporte" style="display: none;">
+											<h:panelGroup id="panelMonitorPeticionReporte">
+												<h:graphicImage value="/images/ajax-loader.gif" />
+												&#160;&#160;
+												<h:outputText value="#{etq.reporteEnProceso}" />
+												<a4j:commandButton id="btnActualizarEstadoPeticion"
+													image="/images/transparent.gif" styleClass="submit"
+													actionListener="#{detalleFileTransferExportacionBean.actualizarEstadoPeticion}"
+													reRender="panelMonitorPeticionReporte"
+													oncomplete="desbloquearBotonesReportes(#{detalleFileTransferExportacionBean.peticionReporteCompleta}, ['generarExcel', 'generarPdf']);" />
+											</h:panelGroup>
+										</div>
+										
+
+									</h:panelGroup>
+							</h:panelGroup>
+						</td>
+						</tr>
+					</table>
+				</h:panelGroup>
+			
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+</html>

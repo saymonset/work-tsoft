@@ -55,6 +55,7 @@ public class BaseDaoTestCase extends AbstractDependencyInjectionSpringContextTes
             this.sessionFactoryInternacional =
                     (SessionFactory) this.getBean("sessionFactoryInternacional");
         }
+        System.out.println("Sesion factoru "+this.sessionFactoryInternacional);
 
         if (this.transactionManager == null) {
             this.transactionManager = new HibernateTransactionManager();
@@ -77,9 +78,10 @@ public class BaseDaoTestCase extends AbstractDependencyInjectionSpringContextTes
      */
     @Override
     protected String[] getConfigLocations() {
+//
         String[] paths =
-                new String[] {"iTestApplicationContext.xml", "db-propertiesContext-Test.xml",
-                        "persistence-portalinternacional-context.xml",
+                new String[] {"iTestApplicationContext.xml","db-propertiesContext-Test.xml",
+                        "test-persistence-portalinternacional-context.xml",
                         "test-middleware-portalinternacional-services-context.xml"};
         return paths;
     }
@@ -120,4 +122,7 @@ public class BaseDaoTestCase extends AbstractDependencyInjectionSpringContextTes
         return this.hibernateTemplate;
     }
 
+    public SessionFactory getSessionFactoryInternacional() {
+        return sessionFactoryInternacional;
+    }
 }

@@ -108,7 +108,7 @@
 						<h:outputText styleClass="texto" value="Divisa" />
 					</td>
 					<td align="center">
-						<h:selectOneMenu id="divisa" required="false" tabindex="30"
+						<h:selectOneMenu id="divisa" required="false" tabindex="30" requiredMessage="Divisa es obligatorio"
 										 value="#{movimientosEfectivoBean.efectivoInternacionalVO.divisa.idString}">
 							<f:selectItems value="#{movimientosEfectivoBean.divisas}" />
 							<a4j:support event="onchange" actionListener="#{movimientosEfectivoBean.seleccionarDivisa}"
@@ -121,7 +121,7 @@
 						<h:outputText styleClass="texto" value="Bóveda" />
 					</td>
 					<td align="center">
-						<h:selectOneMenu id="boveda" required="false" tabindex="30"
+						<h:selectOneMenu id="boveda" required="false" tabindex="30" requiredMessage="Bóveda es obligatorio"
 										 value="#{movimientosEfectivoBean.efectivoInternacionalVO.boveda.idBovedaStr}">
 							<f:selectItems value="#{movimientosEfectivoBean.bovedas}" />
 							<a4j:support event="onchange" actionListener="#{movimientosEfectivoBean.seleccionarBoveda}"
@@ -213,7 +213,7 @@
 					</td>
 					<td align="left">
 						<h:panelGroup id="referenciaRelacionada">
-							<h:inputText autocomplete="off" styleClass="texto" value="#{movimientosEfectivoBean.efectivoInternacionalVO.referenciaRelacionada}" maxlength="16"/>
+							<h:inputText autocomplete="off" required="false" styleClass="texto" value="#{movimientosEfectivoBean.efectivoInternacionalVO.referenciaRelacionada}" maxlength="16"/>
 						</h:panelGroup>
 					</td>
 				</tr>

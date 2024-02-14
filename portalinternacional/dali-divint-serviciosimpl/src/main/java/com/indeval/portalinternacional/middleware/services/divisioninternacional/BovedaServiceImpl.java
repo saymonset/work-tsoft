@@ -142,6 +142,17 @@ public class BovedaServiceImpl implements BovedaService {
     public Long findCatBicEnBaseABovedaEfectivoParticipante(Long idBovedaEfectivo, Long idInstitucion) {
         return this.catBicDao.findCatBicEnBaseABovedaEfectivoParticipante(idBovedaEfectivo, idInstitucion);
     }
+
+    /**
+     * Multidivisas
+     * @see com.indeval.portalinternacional.middleware.services.divisioninternacional.BovedaService#findAllBovedasEfectivo()
+     * */
+    @Override
+    public List<Bovedas> findAllBovedasEfectivo() {
+        return this.bovedaIntDao.findAllBovedasEfectivo();
+    }
+
+
 // Fin Cambio Multidivisas
     public void setBovedaDao(BovedaDao bovedaDao) {
         this.bovedaDao = bovedaDao;

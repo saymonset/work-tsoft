@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--Multidivisas:  Registro de horarios de custodios-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xml:lang="es" lang="es" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://java.sun.com/jsf/facelets ">
+
+<ui:composition template="/layoutCaptura.xhtml">
+    <ui:define name="head">
+        <script language="javascript" type="text/javascript"
+                src="#{facesContext.externalContext.requestContextPath}/js/horarioCustodios.js"></script>
+    </ui:define>
+
+    <ui:define name="tituloSeccion">
+        <h:outputText
+                value="#{etq.tituloRegistroHorariosCustodio}"/>
+    </ui:define>
+    <ui:define name="subtituloSeccion">
+        <h:outputText value=""/>
+    </ui:define>
+
+    <ui:define name="tituloEncabezado">
+        <h:outputText value=""></h:outputText>
+    </ui:define>
+
+    <ui:define name="seccionForma">
+        <a4j:keepAlive beanName="horariosCustodioRegistroController"/>
+        <h:panelGroup id="init">
+            <h:outputText value="#{horariosCustodioRegistroController.inicializarRegistro}"/>
+        </h:panelGroup>
+
+        <h:panelGroup id="mensajeUsuario">
+            <div style="min-height: 21px;">
+                <rich:messages warnClass="warning" infoClass="info"
+                               errorClass="error" ajaxRendered="true" showDetail="false"
+                               showSummary="true" layout="list">
+                    <f:facet name="infoMarker">
+                        <h:panelGroup>
+                            <h:graphicImage url="/images/accept.png"/>&#160;
+                        </h:panelGroup>
+                    </f:facet>
+
+                    <f:facet name="errorMarker">
+                        <h:panelGroup>
+                            <h:graphicImage url="/images/warning.gif"/>&#160;
+                        </h:panelGroup>
+                    </f:facet>
+                </rich:messages>
+
+                <div id="divWarnings" class="warning" style="display:none;">
+                    <p id="textoWarning">
+                    </p>
+                </div>
+            </div>
+        </h:panelGroup>
+
+        <h:panelGroup id="general">
+            <div style='display: inline' id="divCriterios">
+                <table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+                       align="center">
+                    <tr>
+                        <td class="recuadroTabla" align="center" colspan="2">
+                            <table class="tablaCriterios" align="center">
+                                <tr>
+                                    <td align="center">
+                                        <h:outputText styleClass="texto" value="#{etq.custodio}"/>
+                                    </td>
+
+                                    <td align="center">
+                                        <h:outputText styleClass="texto" value="#{etq.divisa}"/>
+                                    </td>
+
+                                    <td align="center">
+                                        <h:outputText styleClass="texto" value="#{etq.horarioInicial}"/>
+                                    </td>
+                                    <td align="center">
+                                        <h:outputText styleClass="texto"
+                                                      value="#{etq.tipoMinus} #{etq.horarioFinal}"/>
+                                    </td>
+                                </tr>
+                                <tr align="center">
+                                    <td>
+                                        <h:selectOneMenu id="lstCustodios"
+                                                         value="#{horariosCustodioRegistroController.idCustodio}"
+                                                         styleClass="textoControles" tabindex="6">
+                                            <f:selectItems
+                                                    value="#{horariosCustodioRegistroController.listaCustodio}"/>
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td>
+                                        <h:selectOneMenu id="lstDivisas"
+                                                         value="#{horariosCustodioRegistroController.idDivisa}"
+                                                         styleClass="textoControles" tabindex="5">
+                                            <f:selectItems
+                                                    value="#{horariosCustodioRegistroController.listaDivisas}"/>
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td>
+                                        <h:selectOneMenu id="lstFechasInicio"
+                                                         value="#{horariosCustodioRegistroController.horarioInicial}"
+                                                         styleClass="textoControles" tabindex="5">
+                                            <f:selectItems
+                                                    value="#{horariosCustodioRegistroController.horaInicio}"/>
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td>
+                                        <h:selectOneMenu id="lstFechasFin"
+                                                         value="#{horariosCustodioRegistroController.horarioFinal}"
+                                                         styleClass="textoControles" tabindex="5">
+                                            <f:selectItems
+                                                    value="#{horariosCustodioRegistroController.horaFin}"/>
+                                        </h:selectOneMenu>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </h:panelGroup>
+
+        <h:panelGroup id="botones">
+            <div id="registrarHorario" class="guardar">
+                <a4j:commandButton id="botonGuardar" image="/images/transparent.gif"
+                                   styleClass="submit"
+                                   actionListener="#{horariosCustodioRegistroController.registrarHorarioCustodio}"
+                                   reRender="containerResultados,totalesConsultas,mensajeUsuario,panelResumen"
+                                   oncomplete='javascript:consultasPresentarRegistro();'
+                                   tabindex="7">
+                </a4j:commandButton>
+            </div>
+        </h:panelGroup>
+
+        <h:panelGroup id="panelResumen">
+            <h:panelGroup rendered="#{horariosCustodioRegistroController.consultaEjecutada}">
+                <div id="divResumen"
+                     style="display: #{horariosCustodioRegistroController.consultaEjecutada ? 'inline':'none'}">
+
+                    <h:panelGroup id="containerResultados">
+                        <h:panelGroup>
+                            <h:panelGroup id="totalesConsultas">
+                                <table cellpadding="0" cellspacing="0" border="0" align="center" width="900px">
+                                    <tr>
+                                        <th class="tituloTabla" style="text-align: center">
+                                            <h:outputText styleClass="texto" value="#{etq.ID}"/>
+                                        </th>
+                                        <th class="tituloTabla" style="text-align: center">
+                                            <h:outputText styleClass="texto" value="#{etq.fechaDeRegistro}"/>
+                                        </th>
+                                        <th class="tituloTabla" style="text-align: center">
+                                            <h:outputText styleClass="texto" value="#{etq.custodio}"/>
+                                        </th>
+                                        <th class="tituloTabla" style="text-align: center">
+                                            <h:outputText styleClass="texto" value="#{etq.divisa}"/>
+                                        </th>
+                                        <th class="tituloTabla" style="text-align: center">
+                                            <h:outputText styleClass="texto" value="#{etq.horarioInicial}"/>
+                                        </th>
+                                        <th class="tituloTabla" style="text-align: center">
+                                            <h:outputText styleClass="texto" value="#{etq.horarioFinal}"/>
+                                        </th>
+                                        <th class="tituloTabla" style="text-align: center">
+                                            <h:outputText styleClass="texto"
+                                                          value="#{etq.usuarioQue} #{etq.usuarioRegistra}"/>
+                                        </th>
+                                        <th class="tituloTabla" style="text-align: center">
+                                            <h:outputText styleClass="texto" value="#{etq.estatus}"/>
+                                        </th>
+                                    </tr>
+                                    <t:dataList var="horariosCustodiosDto"
+                                                value="#{horariosCustodioRegistroController.horariosCustodiosDto}"
+                                                rowIndexVar="indice">
+                                        <tr>
+                                            <td style="text-align: center;"
+                                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                                <h:outputText styleClass="texto textoPeque12"
+                                                              value="#{horariosCustodiosDto.idHorariosCustodios}"/>
+                                            </td>
+                                            <td style="text-align: center;"
+                                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                                <h:outputText styleClass="texto textoPeque12"
+                                                              value="#{horariosCustodiosDto.fechaCreacion}"/>
+                                            </td>
+                                            <td style="text-align: center;"
+                                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                                <h:outputText styleClass="texto textoPeque12"
+                                                              value="#{horariosCustodiosDto.nombreCustodio}"/>
+                                            </td>
+                                            <td style="text-align: center;"
+                                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                                <h:outputText styleClass="texto textoPeque12"
+                                                              value="#{horariosCustodiosDto.nombreDivisa}">
+                                                </h:outputText>
+                                            </td>
+                                            <td style="text-align: center;"
+                                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                                <h:outputText styleClass="texto textoPeque12"
+                                                              value="#{horariosCustodiosDto.horarioInicial}"/>
+                                            </td>
+                                            <td style="text-align: center;"
+                                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                                <h:outputText styleClass="texto textoPeque12"
+                                                              value="#{horariosCustodiosDto.horarioFinal}"/>
+                                            </td>
+                                            <td style="text-align: center;"
+                                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                                <h:outputText styleClass="texto textoPeque12"
+                                                              value="#{horariosCustodiosDto.creador}"/>
+                                            </td>
+                                            <td style="text-align: center;"
+                                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                                <h:outputText styleClass="texto textoPeque12"
+                                                              value="#{horariosCustodioRegistroController.obtenerDescripcionEstatus(horariosCustodiosDto.estatus)}"/>
+                                            </td>
+                                        </tr>
+                                    </t:dataList>
+                                </table>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                </div>
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:define>
+
+
+</ui:composition>
+
+</html>

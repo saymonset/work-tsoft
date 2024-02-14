@@ -3,6 +3,7 @@
  */
 package com.indeval.portalinternacional.persistence.dao;
 
+import com.indeval.portalinternacional.middleware.servicios.modelo.FileTransferDivisas;
 import com.indeval.portalinternacional.middleware.servicios.modelo.FileUpload;
 
 
@@ -51,4 +52,16 @@ public interface FileUploadDao {
 	 * @param fileUpload
 	 */
 	public void updateProcessInfo(FileUpload fileUpload);
+
+	public FileTransferDivisas getLockMulti(FileTransferDivisas ftransfer);
+
+	public void updateProcessInfoMulti(FileTransferDivisas fileUpload);
+
+	public FileTransferDivisas getProcessInfoMulti(FileTransferDivisas fileUpload);
+
+	public Boolean isProcessRunning(FileTransferDivisas fileUpload);
+
+//	public void releaseLock(FileTransferDivisas fileUpload);
+
+	public FileTransferDivisas getFileTransferMDById(Long idFileTransferMD);
 }

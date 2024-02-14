@@ -624,10 +624,22 @@
                     com.indeval.portalinternacional.middleware.servicios.modelo.adp.AdpCustodioPorcentaje
                 </value>
                 <value>
-                    com.indeval.portalinternacional.middleware.servicios.modelo.SaldoPorCuenta
+                    com.indeval.portalinternacional.middleware.servicios.modelo.RBovedaValEf
                 </value>
                 <value>
-                    com.indeval.portalinternacional.middleware.servicios.modelo.SaldoCustodio
+                    com.indeval.portalinternacional.middleware.servicios.modelo.FileTransferDivisas
+                </value>
+                <value>
+                    com.indeval.portalinternacional.middleware.servicios.modelo.FileTransferDetalleDivisas
+                </value>
+                <value>
+                    com.indeval.portalinternacional.middleware.servicios.modelo.SeguridadUsuario
+                </value>
+                <value>
+                    com.indeval.portalinternacional.middleware.servicios.modelo.EstatusDivisas
+                </value>
+                <value>
+                    com.indeval.portalinternacional.middleware.servicios.modelo.CuentaTransitoria
                 </value>
             </list>
         </property>
@@ -853,14 +865,6 @@
           lazy-init="true">
         <property name="sessionFactory">
             <ref local="sessionFactoryInternacional"/>
-        </property>
-    </bean>
-
-    <bean id="ConsultaSaldoCustodiosDao"
-          class="com.indeval.portalinternacional.persistence.dao.impl.consultaSaldoCustodiosDaoImpl"
-          lazy-init="true">
-        <property name="sessionFactory">
-            <ref local="sessionFactoryInternacional" />
         </property>
     </bean>
 
@@ -1099,7 +1103,7 @@
           class="com.indeval.portalinternacional.persistence.dao.impl.DivisaDaliDaoImpl"
           lazy-init="true">
         <property name="sessionFactory">
-            <ref local="sessionFactoryInternacional" />
+            <ref local="sessionFactoryInternacional"/>
         </property>
     </bean>
 
@@ -1108,7 +1112,7 @@
           class="com.indeval.portalinternacional.persistence.dao.impl.CuentaDaliDaoImpl"
           lazy-init="true">
         <property name="sessionFactory">
-            <ref local="sessionFactoryInternacional" />
+            <ref local="sessionFactoryInternacional"/>
         </property>
     </bean>
 
@@ -1116,7 +1120,7 @@
           class="com.indeval.portalinternacional.persistence.dao.impl.CuentaCorresponsalDaoImpl"
           lazy-init="true">
         <property name="sessionFactory">
-            <ref local="sessionFactoryInternacional" />
+            <ref local="sessionFactoryInternacional"/>
         </property>
     </bean>
 
@@ -1124,10 +1128,10 @@
           class="com.indeval.portalinternacional.persistence.dao.impl.SaldoDAOV2Impl"
           lazy-init="true">
         <property name="sessionFactory">
-            <ref local="sessionFactoryInternacional" />
+            <ref local="sessionFactoryInternacional"/>
         </property>
         <property name="jdbcTemplate">
-            <ref local="jdbcTemplateInternacional" />
+            <ref local="jdbcTemplateInternacional"/>
         </property>
     </bean>
 
@@ -1232,7 +1236,7 @@
           class="com.indeval.portalinternacional.persistence.dao.impl.HorariosCustodiosDaoImpl"
           lazy-init="true">
         <property name="sessionFactory">
-            <ref local="sessionFactoryInternacional" />
+            <ref local="sessionFactoryInternacional"/>
         </property>
     </bean>
 
@@ -1240,7 +1244,7 @@
           class="com.indeval.portalinternacional.persistence.dao.impl.CustodioDaoImpl"
           lazy-init="true">
         <property name="sessionFactory">
-            <ref local="sessionFactoryInternacional" />
+            <ref local="sessionFactoryInternacional"/>
         </property>
     </bean>
 
@@ -1248,7 +1252,7 @@
           class="com.indeval.portalinternacional.persistence.dao.impl.DiasInhabilesDivisasDaoImpl"
           lazy-init="true">
         <property name="sessionFactory">
-            <ref local="sessionFactoryInternacional" />
+            <ref local="sessionFactoryInternacional"/>
         </property>
     </bean>
 
