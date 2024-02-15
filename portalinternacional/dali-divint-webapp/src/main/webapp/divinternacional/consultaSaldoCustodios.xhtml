@@ -68,6 +68,8 @@
 									<td align="left">
 										<h:outputText styleClass="texto" value="#{etq.bovedaMinus}" />
 									</td>
+								</tr>
+						    	<tr>
 									<td align="left">
 										<h:outputText styleClass="texto" value="#{etq.custodio}" />
 									</td>
@@ -75,9 +77,9 @@
 								<tr align="left">
 									<td>
 										<h:selectOneMenu styleClass="textoControles"
-														 value="#{conciliacionesIntBean.bovedaDali}" tabindex="60" >
+														 value="#{consultaSaldoCustodiosBean.bovedaDali}" tabindex="60" >
 											<f:selectItem itemValue="-1" itemLabel="Todas" />
-											<f:selectItems value="#{conciliacionesIntBean.bovedas}" />
+											<f:selectItems value="#{consultaSaldoCustodiosBean.bovedas}" />
 											<a4j:support event="onchange" reRender="estadoMensajeriaChk" />
 										</h:selectOneMenu>
 									</td>
@@ -85,9 +87,9 @@
 								<tr align="left">
 									<td>
 										<h:selectOneMenu styleClass="textoControles"
-														 value="#{conciliacionesIntBean.custodio}" tabindex="50" >
+														 value="#{consultaSaldoCustodiosBean.custodio}" tabindex="50" >
 											<f:selectItem itemValue="-1" itemLabel="Todos" />
-											<f:selectItems value="#{conciliacionesIntBean.custodios}" />
+											<f:selectItems value="#{consultaSaldoCustodiosBean.custodios}" />
 											<a4j:support event="onchange" reRender="estadoMensajeriaChk" />
 										</h:selectOneMenu>
 									</td>
@@ -99,8 +101,8 @@
 			</div>
 		</h:panelGroup>
 		<h:panelGroup id="panelResumen">
-			<h:panelGroup rendered="#{conciliacionesIntBean.consultaEjecutada}">
-				<div id="divResumen" style="display: #{conciliacionesIntBean.consultaEjecutada ? 'inline':'none'}">
+			<h:panelGroup rendered="#{consultaSaldoCustodiosBean.consultaEjecutada}">
+				<div id="divResumen" style="display: #{consultaSaldoCustodiosBean.consultaEjecutada ? 'inline':'none'}">
 					<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
 						<tr>
 							<td class="recuadroTabla">
@@ -117,12 +119,12 @@
 									</tr>
 									<tr align="center">
 										<td>
-											<h:outputText styleClass="texto" value="#{conciliacionesIntBean.selectedBoveda}" rendered="#{!empty conciliacionesIntBean.bovedaDali }"/>
-											<h:outputText styleClass="texto" value="TODAS" rendered="#{empty conciliacionesIntBean.bovedaDali}"/>
+											<h:outputText styleClass="texto" value="#{consultaSaldoCustodiosBean.selectedBoveda}" rendered="#{!empty consultaSaldoCustodiosBean.bovedaDali }"/>
+											<h:outputText styleClass="texto" value="TODAS" rendered="#{empty consultaSaldoCustodiosBean.bovedaDali}"/>
 										</td>
 										<td>
-											<h:outputText styleClass="texto" value="#{conciliacionesIntBean.selectedCustodio}" rendered="#{!empty conciliacionesIntBean.custodio}"/>
-											<h:outputText styleClass="texto" value="TODOS" rendered="#{empty conciliacionesIntBean.custodio}"/>
+											<h:outputText styleClass="texto" value="#{consultaSaldoCustodiosBean.selectedCustodio}" rendered="#{!empty consultaSaldoCustodiosBean.custodio}"/>
+											<h:outputText styleClass="texto" value="TODOS" rendered="#{empty consultaSaldoCustodiosBean.custodio}"/>
 										</td>
 									</tr>
 								</table>
@@ -150,21 +152,21 @@
 				<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
 								 styleClass="submit"
 								 onclick="limpiarTodos();"
-								 actionListener="#{conciliacionesIntBean.limpiar}"
+								 actionListener="#{consultaSaldoCustodiosBean.limpiar}"
 								 tabindex="6"/>
 			</div>
 			<div class="buscar">
 				<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
 								   styleClass="submit"
 								   oncomplete='javascript:presentarResumen();limpiarTodos()'
-								   actionListener="#{conciliacionesIntBean.buscarConciliaciones}"
+								   actionListener="#{consultaSaldoCustodiosBean.buscarConciliaciones}"
 								   reRender="containerResultados,totalesConsultas,tablaResultados,botones,mensajeUsuario,panelResumen"
 								   tabindex="7">
 					<f:setPropertyActionListener value="true"
-												 target="#{conciliacionesIntBean.banderaBitacoraConsulta}" />
+												 target="#{consultaSaldoCustodiosBean.banderaBitacoraConsulta}" />
 				</a4j:commandButton>
 			</div>
-			<div class="editar" style="display:#{conciliacionesIntBean.consultaEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios">
+			<div class="editar" style="display:#{consultaSaldoCustodiosBean.consultaEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios">
 				<input type="image" class="submit"
 					   src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
 					   alt="Editar Criterios" title="Editar Criterios"
@@ -175,14 +177,14 @@
 
 	<ui:define name="seccionContenido">
 		<h:panelGroup id="containerResultados">
-			<h:panelGroup rendered="#{conciliacionesIntBean.consultaEjecutada}">
+			<h:panelGroup rendered="#{consultaSaldoCustodiosBean.consultaEjecutada}">
 				<t:dataTable id="noExistenResultados"
-							 value="#{conciliacionesIntBean.paginaVO.registros}"
+							 value="#{consultaSaldoCustodiosBean.paginaVO.registros}"
 							 styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
 							 footerClass="tituloTabla" border="0" cellpadding="3px"
 							 cellspacing="0px" columnClasses="everyColumn"
 							 rowClasses="renglonTablaUno, renglonTablaDos"
-							 rendered="#{empty conciliacionesIntBean.paginaVO.registros}">
+							 rendered="#{empty consultaSaldoCustodiosBean.paginaVO.registros}">
 
 					<t:column>
 						<f:facet name="header">
@@ -199,13 +201,13 @@
 					<h:graphicImage value="/images/blank.gif" width="900px"
 									height="1px"></h:graphicImage>
 					<h:panelGroup
-							rendered="#{not empty conciliacionesIntBean.paginaVO.registros}">
+							rendered="#{not empty consultaSaldoCustodiosBean.paginaVO.registros}">
 						<table width="100%" border="0">
 							<tr>
 								<td align="left" class="textoEstadoCuenta">
 									<a4j:commandLink id="control_bitacora_primero"
-													 action="#{conciliacionesIntBean.irPrimeraPagina}"
-													 rendered="#{conciliacionesIntBean.irAlPrimero}"
+													 action="#{consultaSaldoCustodiosBean.irPrimeraPagina}"
+													 rendered="#{consultaSaldoCustodiosBean.irAlPrimero}"
 													 reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,containerResultados">
 										<img
 												src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
@@ -213,8 +215,8 @@
 									</a4j:commandLink>
 
 									<a4j:commandLink id="control_bitacora_atras_fast"
-													 action="#{conciliacionesIntBean.retrocederPaginasRapido}"
-													 rendered="#{conciliacionesIntBean.retrocederRapido}"
+													 action="#{consultaSaldoCustodiosBean.retrocederPaginasRapido}"
+													 rendered="#{consultaSaldoCustodiosBean.retrocederRapido}"
 													 reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
 										<img
 												src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
@@ -222,16 +224,16 @@
 									</a4j:commandLink>
 
 									<a4j:commandLink id="control_bitacora_atras"
-													 action="#{conciliacionesIntBean.retrocederPagina}"
-													 rendered="#{conciliacionesIntBean.retroceder}"
+													 action="#{consultaSaldoCustodiosBean.retrocederPagina}"
+													 rendered="#{consultaSaldoCustodiosBean.retroceder}"
 													 reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
 										<img
 												src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
 												border="0" />
 									</a4j:commandLink>
 									<a4j:commandLink id="control_bitacora_adelante"
-													 action="#{conciliacionesIntBean.avanzarPagina}"
-													 rendered="#{conciliacionesIntBean.avanzar}"
+													 action="#{consultaSaldoCustodiosBean.avanzarPagina}"
+													 rendered="#{consultaSaldoCustodiosBean.avanzar}"
 													 reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
 										<img
 												src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
@@ -239,8 +241,8 @@
 									</a4j:commandLink>
 
 									<a4j:commandLink id="control_bitacora_adelante_fast"
-													 action="#{conciliacionesIntBean.avanzarPaginasRapido}"
-													 rendered="#{conciliacionesIntBean.avanzarRapido}"
+													 action="#{consultaSaldoCustodiosBean.avanzarPaginasRapido}"
+													 rendered="#{consultaSaldoCustodiosBean.avanzarRapido}"
 													 reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
 										<img
 												src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
@@ -249,8 +251,8 @@
 									</a4j:commandLink>
 
 									<a4j:commandLink id="control_bitacora_ultimo"
-													 action="#{conciliacionesIntBean.irUltimaPagina}"
-													 rendered="#{conciliacionesIntBean.irAlUltimo}"
+													 action="#{consultaSaldoCustodiosBean.irUltimaPagina}"
+													 rendered="#{consultaSaldoCustodiosBean.irAlUltimo}"
 													 reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
 										<img
 												src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
@@ -260,15 +262,15 @@
 									<br />
 									<h:outputText value="#{etq.mostrando}"
 												  styleClass="textoResumen" />
-									<h:outputText value="#{conciliacionesIntBean.numeroPagina}"
+									<h:outputText value="#{consultaSaldoCustodiosBean.numeroPagina}"
 												  styleClass="textoResumen" />
 									<h:outputText value="#{etq.de}" styleClass="textoResumen" />
-									<h:outputText value="#{conciliacionesIntBean.totalPaginas}"
+									<h:outputText value="#{consultaSaldoCustodiosBean.totalPaginas}"
 												  styleClass="textoResumen" />
 									<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
 									&#160;&#160;&#160;
 									<h:outputText
-											value="#{conciliacionesIntBean.paginaVO.totalRegistros}"
+											value="#{consultaSaldoCustodiosBean.paginaVO.totalRegistros}"
 											styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
 									&#160;
 									<h:outputText styleClass="textoResumen"
@@ -278,7 +280,7 @@
 									<h:outputText escape="false" value="#{etq.registrosPorPagina}"
 												  styleClass="textoResumen" />
 									<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
-													 value="#{conciliacionesIntBean.paginaVO.registrosXPag}">
+													 value="#{consultaSaldoCustodiosBean.paginaVO.registrosXPag}">
 										<f:selectItem itemLabel="1" itemValue="1" />
 										<f:selectItem itemLabel="2" itemValue="2" />
 										<f:selectItem itemLabel="5" itemValue="5" />
@@ -288,9 +290,9 @@
 										<f:selectItem itemLabel="100" itemValue="100" />
 										<a4j:support event="onchange"
 													 reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,mensajeUsuario"
-													 action="#{conciliacionesIntBean.ejecutarConsulta}" >
+													 action="#{consultaSaldoCustodiosBean.ejecutarConsulta}" >
 											<f:setPropertyActionListener value="false"
-																		 target="#{conciliacionesIntBean.banderaBitacoraConsulta}" />
+																		 target="#{consultaSaldoCustodiosBean.banderaBitacoraConsulta}" />
 										</a4j:support>
 									</h:selectOneMenu>&#160;&#160;&#160;&#160;&#160;
 								</td>
@@ -301,9 +303,9 @@
 					<h:inputHidden id="idConciliacionHidden"/>
 					<h:inputHidden id="reporteAuditoria"/>
 					<h:dataTable id="resultados"
-								 value="#{conciliacionesIntBean.paginaVO.registros}"
+								 value="#{consultaSaldoCustodiosBean.paginaVO.registros}"
 								 var="conciliacion"
-								 rendered="#{not empty conciliacionesIntBean.paginaVO.registros}"
+								 rendered="#{not empty consultaSaldoCustodiosBean.paginaVO.registros}"
 								 styleClass="tablaGeneral centrado" headerClass="tituloTabla" width="100%"
 								 footerClass="tituloTabla" border="0" cellpadding="3px"
 								 cellspacing="0px" columnClasses="everyColumn"
@@ -417,7 +419,7 @@
 											   value="conciliar"
 											   image="/images/conciliar.png"
 											   rendered="#{((conciliacion.estatusConciliacion.id eq 1) or (!empty sessionScope.roles['INT_CONCILIACION_SU'])) and (conciliacion.estatusConciliacion.id ne 5) and (!conciliacion.conciliacionNacional)}"
-											   actionListener="#{conciliacionesIntBean.concilia}"
+											   actionListener="#{consultaSaldoCustodiosBean.concilia}"
 											   onclick="lockBotones();capturaConciliacion('#{conciliacion.id}');if(!validarAccion()){unlockBotones();return false;}"
 											   reRender="resultados,containerResultados,tablaResultados,panelResumen"
 											   limitToList="true"
@@ -433,7 +435,7 @@
 							<f:facet name="header">
 								<h:outputText styleClass="texto textoPeque12" value="Reporte" />
 							</f:facet>
-							<h:commandButton action="#{conciliacionesIntBean.generarReporteAuditoria}"
+							<h:commandButton action="#{consultaSaldoCustodiosBean.generarReporteAuditoria}"
 											 rendered="#{(conciliacion.estatusConciliacion.id eq 4) or (!empty sessionScope.roles['INT_CONCILIACION_SU'])}"
 											 onclick="capturaConciliacion('#{conciliacion.id}');marcaReporteAuditoria();"
 											 image="/images/TXT.gif"
@@ -445,18 +447,18 @@
 				</h:panelGroup>
 				<!-- ================================= EXPORTAR ============================================================ -->
 				<h:panelGroup id="totalesConsultas"
-							  rendered="#{not empty conciliacionesIntBean.paginaVO.registros}">
+							  rendered="#{not empty consultaSaldoCustodiosBean.paginaVO.registros}">
 					<table cellpadding="0" cellspacing="0" border="0" align="center"
 						   width="900px">
 						<tr align="right">
 							<td align="right">
 								<h:panelGroup id="botonesExportar">
 									<h:panelGroup
-											style="display: #{(conciliacionesIntBean.consultaEjecutada and not empty conciliacionesIntBean.paginaVO.registros)? 'inline' : 'none'}">
+											style="display: #{(consultaSaldoCustodiosBean.consultaEjecutada and not empty consultaSaldoCustodiosBean.paginaVO.registros)? 'inline' : 'none'}">
 
 										<h:outputText value="Exportar los resultados"></h:outputText>
 
-										<h:commandButton actionListener="#{conciliacionesIntBean.generarReportes}"
+										<h:commandButton actionListener="#{consultaSaldoCustodiosBean.generarReportes}"
 														 action="conciliacionesInternacionalPDF"
 														 image="/images/pdf.gif"
 														 title="Exportar a PDF todos los resultados de la consulta"
@@ -464,7 +466,7 @@
 														 onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);"/>
 										&#160;&#160;
 
-										<h:commandButton actionListener="#{conciliacionesIntBean.generarReportes}"
+										<h:commandButton actionListener="#{consultaSaldoCustodiosBean.generarReportes}"
 														 action="conciliacionesInternacionalXLS"
 														 image="/images/excel-file.gif"
 														 title="Exportar a Excel todos los resultados de la consulta"
@@ -480,9 +482,9 @@
 												<a4j:commandButton id="btnActualizarEstadoPeticion"
 																   image="/images/transparent.gif"
 																   styleClass="submit"
-																   actionListener="#{conciliacionesIntBean.actualizarEstadoPeticion}"
+																   actionListener="#{consultaSaldoCustodiosBean.actualizarEstadoPeticion}"
 																   reRender="panelMonitorPeticionReporte"
-																   oncomplete="desbloquearBotonesReportes(#{conciliacionesIntBean.peticionReporteCompleta}, ['generarExcel', 'generarPdf']);"/>
+																   oncomplete="desbloquearBotonesReportes(#{consultaSaldoCustodiosBean.peticionReporteCompleta}, ['generarExcel', 'generarPdf']);"/>
 											</h:panelGroup>
 										</div>
 									</h:panelGroup>
