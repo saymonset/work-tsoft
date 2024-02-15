@@ -10,7 +10,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
     public ConsultaCustodiosController() {
     }
 
-    public String getInicializar() {
+    public String getInit() {
 
 
         return null;

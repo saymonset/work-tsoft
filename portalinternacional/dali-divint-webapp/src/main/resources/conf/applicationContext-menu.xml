@@ -1395,14 +1395,11 @@
                                             </property>
                                         </bean>
 
-                                        <!-- Consulta Saldo De Custodios Global-->
+<!--                                         Consulta Saldo De Custodios Global-->
                                         <bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
                                             <property name="id" value="ConsultaSaldoDeCustodios"></property>
                                             <property name="etiqueta" value="Consulta de Saldo de Custodios saymons"></property>
                                             <property name="url" value="/dali-divint/divinternacional/consultaSaldoCustodios.faces"></property>
-
-
-
                                             <property name="roles">
                                                 <list>
                                                     <value>INDEVAL</value>
@@ -2183,7 +2180,7 @@
                                                             <list>
                                                                 <value>INT_EVCO_SU</value>
                                                                 <value>INT_EVCO_AUT</value>
-1                                                                <value>INT_EVCO_OP</value>
+                                                                <value>INT_EVCO_OP</value>
                                                                 <value>DEV_MODE_DALI</value>
                                                             </list>
                                                         </property>

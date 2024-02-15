@@ -11,9 +11,11 @@
 	  xmlns:t="http://myfaces.apache.org/tomahawk"
 	  xmlns:indeval="http://indeval.com/indeval">
 
-<ui:composition template="/layoutCaptura.xhtml">
+<ui:composition template="/layoutConsultas.xhtml">
 	<ui:define name="head">
-
+		<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/consultaSaldoCustodios.js">
+		</script>
 	</ui:define>
 
 	<ui:define name="tituloSeccion">
@@ -24,14 +26,14 @@
 	</ui:define>
 
 	<ui:define name="tituloEncabezado">
-		<h:outputText value="Criterios:"></h:outputText>
+		<h:outputText value="Consulta de Saldo de Custodios Internacional"></h:outputText>
 	</ui:define>
 
-	<ui:define name="seccionForma">
+
+	<ui:define name="criterios">
+
+		<h:outputText value="#{consultaSaldoCustodiosBean.init}"/>
 		<a4j:keepAlive beanName="consultaSaldoCustodiosBean" />
-		<h:panelGroup id="init">
-			<h:outputText value="#{consultaSaldoCustodiosBean.inicializar}"/>
-		</h:panelGroup>
 		<h:panelGroup id="mensajeUsuario">
 			<div style="min-height: 21px;">
 				<rich:messages warnClass="warning" infoClass="info"
@@ -54,22 +56,122 @@
 				</div>
 			</div>
 		</h:panelGroup>
-		<h:panelGroup id="general">
-			<table width="50%" border="0" cellspacing="5" align="center">
-				<tr>
-					<td align="left">
-						<h:outputText styleClass="texto" value="Divisa" />
-					</td>
+		<h:panelGroup id="panelCriterios">
+			<div style='display: "inline"' id="divCriterios">
+				<table width="900px" border="0" cellpadding="0px" cellspacing="5px"
+					   align="center">
+					<tr>
+						<td class="recuadroTabla" align="center">
+							<table class="tablaCriterios" align="center" border="0">
 
-				</tr>
-				<tr>
-					<td align="left">
-						<h:outputText styleClass="texto" value="Bóveda" />
-					</td>
+								<tr>
+									<td align="left">
+										<h:outputText styleClass="texto" value="#{etq.bovedaMinus}" />
+									</td>
+									<td align="left">
+										<h:outputText styleClass="texto" value="#{etq.custodio}" />
+									</td>
+								</tr>
+								<tr align="left">
+									<td>
+										<h:selectOneMenu styleClass="textoControles"
+														 value="#{conciliacionesIntBean.bovedaDali}" tabindex="60" >
+											<f:selectItem itemValue="-1" itemLabel="Todas" />
+											<f:selectItems value="#{conciliacionesIntBean.bovedas}" />
+											<a4j:support event="onchange" reRender="estadoMensajeriaChk" />
+										</h:selectOneMenu>
+									</td>
+								</tr>
+								<tr align="left">
+									<td>
+										<h:selectOneMenu styleClass="textoControles"
+														 value="#{conciliacionesIntBean.custodio}" tabindex="50" >
+											<f:selectItem itemValue="-1" itemLabel="Todos" />
+											<f:selectItems value="#{conciliacionesIntBean.custodios}" />
+											<a4j:support event="onchange" reRender="estadoMensajeriaChk" />
+										</h:selectOneMenu>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</h:panelGroup>
+		<h:panelGroup id="panelResumen">
+			<h:panelGroup rendered="#{conciliacionesIntBean.consultaEjecutada}">
+				<div id="divResumen" style="display: #{conciliacionesIntBean.consultaEjecutada ? 'inline':'none'}">
+					<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+						<tr>
+							<td class="recuadroTabla">
+								<table class="tablaCriterios texto" border="0" style="text-align: center">
 
-				</tr>
-			</table>
+									<tr>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.bovedaMinus}" />
+										</td>
+										<td align="center">
+											<h:outputText styleClass="texto" value="#{etq.custodio}" />
+										</td>
+
+									</tr>
+									<tr align="center">
+										<td>
+											<h:outputText styleClass="texto" value="#{conciliacionesIntBean.selectedBoveda}" rendered="#{!empty conciliacionesIntBean.bovedaDali }"/>
+											<h:outputText styleClass="texto" value="TODAS" rendered="#{empty conciliacionesIntBean.bovedaDali}"/>
+										</td>
+										<td>
+											<h:outputText styleClass="texto" value="#{conciliacionesIntBean.selectedCustodio}" rendered="#{!empty conciliacionesIntBean.custodio}"/>
+											<h:outputText styleClass="texto" value="TODOS" rendered="#{empty conciliacionesIntBean.custodio}"/>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</h:panelGroup>
 		</h:panelGroup>
 	</ui:define>
+
+	<ui:define name="botones">
+		<h:panelGroup id="botones">
+			<div class="refrescar" style="float: left;">
+				<a4j:status id="commonStatus">
+					<f:facet name="start">
+						<h:panelGroup>
+							<h:graphicImage value="/images/ajax-loader.gif" />
+							<h:outputText value="#{etq.buscando}"></h:outputText>
+						</h:panelGroup>
+					</f:facet>
+				</a4j:status>
+			</div>
+			<div class="limpiar">
+				<h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+								 styleClass="submit"
+								 onclick="limpiarTodos();"
+								 actionListener="#{conciliacionesIntBean.limpiar}"
+								 tabindex="6"/>
+			</div>
+			<div class="buscar">
+				<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+								   styleClass="submit"
+								   oncomplete='javascript:presentarResumen();limpiarTodos()'
+								   actionListener="#{conciliacionesIntBean.buscarConciliaciones}"
+								   reRender="containerResultados,totalesConsultas,tablaResultados,botones,mensajeUsuario,panelResumen"
+								   tabindex="7">
+					<f:setPropertyActionListener value="true"
+												 target="#{conciliacionesIntBean.banderaBitacoraConsulta}" />
+				</a4j:commandButton>
+			</div>
+			<div class="editar" style="display:#{conciliacionesIntBean.consultaEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios">
+				<input type="image" class="submit"
+					   src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+					   alt="Editar Criterios" title="Editar Criterios"
+					   onclick='javascript:presentarCriterios();return false;' />
+			</div>
+		</h:panelGroup>
+	</ui:define>
+
 </ui:composition>
 </html>
