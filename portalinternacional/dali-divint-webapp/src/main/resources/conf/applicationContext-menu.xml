@@ -74,6 +74,7 @@
 
 				<value>AUTORIZADOR</value>
 				<value>INT_AUTORIZA_SIC_RCP</value>
+                <value>INT_SALDO_CUSTODIO</value>
 				<value>INT_LIBERA_MOV_EFEC</value>
 				<value>INT_CANCELA_MOV_EFEC</value>
 			</list>
@@ -1394,6 +1395,23 @@
                                             </property>
                                         </bean>
 
+                                        <!-- Consulta Saldo De Custodios Global-->
+                                        <bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+                                            <property name="id" value="ConsultaSaldoDeCustodios"></property>
+                                            <property name="etiqueta" value="Consulta de Saldo de Custodios saymons"></property>
+                                            <property name="url" value="/dali-divint/divinternacional/consultaSaldoCustodios.faces"></property>
+
+
+
+                                            <property name="roles">
+                                                <list>
+                                                    <value>INDEVAL</value>
+                                                    <value>DEV_MODE_DALI</value>
+                                                    <value>INT_SALDO_CUSTODIO</value>
+                                                </list>
+                                            </property>
+                                        </bean>
+
                                         <!-- Conciliaciones Internacional -->
                                         <bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
                                             <property name="id" value="conciliacionesInternacional"></property>
@@ -2165,7 +2183,7 @@
                                                             <list>
                                                                 <value>INT_EVCO_SU</value>
                                                                 <value>INT_EVCO_AUT</value>
-                                                                <value>INT_EVCO_OP</value>
+1                                                                <value>INT_EVCO_OP</value>
                                                                 <value>DEV_MODE_DALI</value>
                                                             </list>
                                                         </property>
