@@ -11,8 +11,8 @@
 		<managed-bean-class>com.indeval.portalinternacional.presentation.controller.divinternacional.ConsultaCustodiosController</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
-			<property-name>divisionInternacionalService</property-name>
-			<value>#{divisionInternacionalService}</value>
+			<property-name>consultaSaldoCustodiosService</property-name>
+			<value>#{consultaSaldoCustodiosService}</value>
 		</managed-property>
 	</managed-bean>
 

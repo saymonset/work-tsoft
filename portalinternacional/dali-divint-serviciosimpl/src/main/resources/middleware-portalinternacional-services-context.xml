@@ -407,6 +407,168 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         </property>
     </bean>
 
+    <bean id="consultaSaldoCustodiosService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaSaldoCustodiosServiceImpl"
+          lazy-init="true">
+        <description>
+            Bean de Acceso a servicios de Consulta de saldo de custodios
+        </description>
+
+        <property name="bitacoraOperacionesDao">
+            <ref bean="bitacoraOperacionesDao"/>
+        </property>
+
+        <property name="catBicDao">
+            <ref bean="catBicDao"/>
+        </property>
+
+        <property name="cuponDao">
+            <ref bean="cuponDao"/>
+        </property>
+
+        <property name="dateUtilService">
+            <ref bean="dateUtilService"/>
+        </property>
+
+        <property name="errorResolver">
+            <ref local="errorResolverDivInt"/>
+        </property>
+
+        <property name="estatusOperacionDao">
+            <ref bean="estatusOperacionDao"/>
+        </property>
+
+        <property name="operacionSicDao">
+            <ref bean="operacionSicDao"/>
+        </property>
+
+        <property name="seqFolioControl">
+            <value>SEQ_SLV_FOLIADOR</value>
+        </property>
+
+        <property name="sicDetalleDao">
+            <ref bean="sicDetalleDao"/>
+        </property>
+
+        <property name="sicEmisionDao">
+            <ref bean="sicEmisionDao"/>
+        </property>
+
+        <property name="utilDivIntService">
+            <ref local="utilDivIntService"/>
+        </property>
+
+        <property name="utilService">
+            <ref bean="utilService"/>
+        </property>
+
+        <property name="validatorDivIntService">
+            <ref local="validatorDivIntService"/>
+        </property>
+
+        <property name="validatorService">
+            <ref bean="validatorService"/>
+        </property>
+
+        <property name="posicionNombradaDao">
+            <ref bean="posicionNombradaDao"/>
+        </property>
+
+        <property name="posicionNombradaHDao">
+            <ref bean="posicionNombradaHDao"/>
+        </property>
+
+        <property name="institucionDao">
+            <ref bean="institucionDao"/>
+        </property>
+
+        <property name="cuentaNombradaDao">
+            <ref bean="cuentaNombradaDao"/>
+        </property>
+
+        <property name="emisionDao">
+            <ref bean="emisionDao"/>
+        </property>
+
+        <property name="retirosDivIntDao">
+            <ref bean="retirosDivIntDao"/>
+        </property>
+
+        <property name="depositosDivIntDao">
+            <ref bean="depositosDivIntDao"/>
+        </property>
+
+        <property name="posicionNombradaDivIntDao">
+            <ref bean="posicionNombradaDivIntDao"/>
+        </property>
+
+        <property name="posicionNombradaHDivIntDao">
+            <ref bean="posicionNombradaHDivIntDao"/>
+        </property>
+
+        <property name="topeCirculanteDao">
+            <ref bean="topeCirculanteDao"/>
+        </property>
+
+        <property name="estatusEmisionesDao">
+            <ref bean="estatusEmisionesDao"/>
+        </property>
+
+        <property name="calendarioEmisionesDeudaExtDao">
+            <ref bean="calendarioEmisionesDeudaExtDao"/>
+        </property>
+
+        <property name="jmsTemplate">
+            <ref bean="jmsTemplateMoi"/>
+        </property>
+        <property name="conciliacionIntDao">
+            <ref bean="conciliacionIntDao"/>
+        </property>
+        <property name="jmsTemplateMoiConciliaciones">
+            <ref bean="jmsTemplateMoiConciliaciones"/>
+        </property>
+
+        <property name="jmsTemplateSic">
+            <ref bean="jmsTemplateSic"/>
+        </property>
+        <property name="derechosAutomatizadosDeuda">
+            <value>${moi.deuda.derechosAutomatizados}</value>
+        </property>
+        <property name="custodiosSinEnvioMensaje">
+            <set>
+                <value>DCVVCLRMXXX</value>
+                <value>DCVDCOB1XXX</value>
+                <value>CVLIPEP1XXX</value>
+            </set>
+        </property>
+
+        <property name="sicService" ref="sicService"/>
+        <property name="emisionesConsultasDao">
+            <ref bean="emisionesConsultasDao"/>
+        </property>
+        <property name="bovedaService">
+            <ref bean="bovedaService"/>
+        </property>
+        <property name="rEmisionBovedaDao">
+            <ref bean="rEmisionBovedaDao"/>
+        </property>
+        <property name="signMensaje" ref="signMensaje"/>
+        <property name="validateSignatureService" ref="validateSignatureService"/>
+        <property name="sendMessageServiceSign" ref="sendMessageServiceSign"/>
+        <property name="emisionDaoInt">
+            <ref bean="emisionDaoInt"/>
+        </property>
+        <property name="tipoBeneficiarioDao">
+            <ref bean="tipoBeneficiarioDao"/>
+        </property>
+        <property name="custodioTipoBenefDao">
+            <ref bean="custodioTipoBenefDao"/>
+        </property>
+        <property name="settlementDisciplineRegimeDao">
+            <ref bean="settlementDisciplineRegimeDao"/>
+        </property>
+    </bean>
+
     <!--
         Se elimina JPMorgan de la lista por solicitud de Indeval
         03/05/2016.
@@ -1953,4 +2115,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             <ref bean="institucionDao"></ref>
         </property>
     </bean>
+
+
 </beans>

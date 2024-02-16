@@ -2,7 +2,7 @@ package com.indeval.portalinternacional.presentation.controller.divinternacional
 
 import com.indeval.portaldali.middleware.servicios.modelo.vo.PaginaVO;
 import com.indeval.portaldali.persistence.modelo.Boveda;
-import com.indeval.portalinternacional.middleware.services.divisioninternacional.DivisionInternacionalService;
+import com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaSaldoCustodiosService;
 import com.indeval.portalinternacional.middleware.servicios.modelo.Custodio;
 import com.indeval.portalinternacional.middleware.servicios.vo.ConciliacionIntDTO;
 import com.indeval.portalinternacional.middleware.servicios.vo.DetalleConciliacionIntDTO;
@@ -28,7 +28,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
 
     private boolean consultaEjecutada;
     private ConciliacionIntDTO conciliacion;
-    private DivisionInternacionalService divisionInternacionalService;
+    private ConsultaSaldoCustodiosService consultaSaldoCustodiosService;
 
     private List<SelectItem> listaBoveda;
     private List<SelectItem> listaCustodios;
@@ -89,7 +89,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
         if(this.listaBoveda != null && this.listaBoveda.size() > 0) {
             return this.listaBoveda;
         }
-        List<Boveda> bovedas = divisionInternacionalService.consultaBovedas(divisionInternacionalService.BOVEDA_VALORES_INTERNACIONAL);
+        List<Boveda> bovedas = consultaSaldoCustodiosService.consultaBovedas(consultaSaldoCustodiosService.BOVEDA_VALORES_INTERNACIONAL);
         List <SelectItem> listaBoveda = new ArrayList<SelectItem>();
         if(bovedas != null){
             for (Boveda boveda : bovedas){
@@ -109,7 +109,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
         if(this.listaCustodios != null && this.listaCustodios.size() > 0){
             return this.listaCustodios;
         }
-        List<Custodio> custodios = divisionInternacionalService.obtieneCatalogoCustodios();
+        List<Custodio> custodios = consultaSaldoCustodiosService.obtieneCatalogoCustodios();
         List <SelectItem> listaCustodios = new ArrayList<SelectItem>();
         if( custodios != null){
             for (Custodio custodio : custodios){
@@ -138,7 +138,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
     public String ejecutarConsulta(){
 
         setParams();
-        paginaVO = divisionInternacionalService.consultaConciliacion(conciliacion, paginaVO);
+        paginaVO = consultaSaldoCustodiosService.consultaConciliacion(conciliacion, paginaVO);
 
         totalPaginas = paginaVO.getTotalRegistros() / paginaVO.getRegistrosXPag();
 
@@ -169,7 +169,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
      */
     public void concilia(ActionEvent evt){
         Long idConciliacion=Long.valueOf(getHiddenField("daliForm:idConciliacionHidden"));
-        divisionInternacionalService.instruyeConciliacion(idConciliacion);
+        consultaSaldoCustodiosService.instruyeConciliacion(idConciliacion);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                 "Se esta conciliando el folio: "+idConciliacion+" actualice en unos momentos",
                 "Se esta conciliando el folio: "+idConciliacion+" actualice en unos momentos"));
@@ -186,14 +186,14 @@ public class ConsultaCustodiosController  extends ControllerBase {
         String guardarReporte = getHiddenField("daliForm:reporteAuditoria");
         if(guardarReporte.equals("true")){
             log.info("guardar el reporte "+idConciliacion);
-            divisionInternacionalService.generaReporteAuditoriaConciliacion(Long.valueOf(idConciliacion));
+            consultaSaldoCustodiosService.generaReporteAuditoriaConciliacion(Long.valueOf(idConciliacion));
         }
         DetalleConciliacionIntDTO conc= new DetalleConciliacionIntDTO();
         conc.setFolio(Long.valueOf(idConciliacion));
         paginaReportes = new PaginaVO();
         paginaReportes.setOffset(0);
         paginaReportes.setRegistrosXPag(PaginaVO.TODOS);
-        paginaReportes = divisionInternacionalService.consultaDetalleConciliacion(conc, paginaReportes);
+        paginaReportes = consultaSaldoCustodiosService.consultaDetalleConciliacion(conc, paginaReportes);
         this.totalRegistros=paginaReportes.getTotalRegistros();
         return "conciliacionInternacionalXLSAuditoria";
     }
@@ -207,7 +207,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
         paginaReportes = new PaginaVO();
         paginaReportes.setOffset(0);
         paginaReportes.setRegistrosXPag(PaginaVO.TODOS);
-        paginaReportes = divisionInternacionalService.consultaConciliacion(conciliacion, paginaReportes);
+        paginaReportes = consultaSaldoCustodiosService.consultaConciliacion(conciliacion, paginaReportes);
         this.totalRegistros=paginaReportes.getTotalRegistros();
 
     }
@@ -240,18 +240,18 @@ public class ConsultaCustodiosController  extends ControllerBase {
     }
 
     /**
-     * @return the divisionInternacionalService
+     * @return the ConsultaSaldoCustodiosService
      */
-    public DivisionInternacionalService getDivisionInternacionalService() {
-        return divisionInternacionalService;
+    public ConsultaSaldoCustodiosService getConsultaSaldoCustodiosService() {
+        return consultaSaldoCustodiosService;
     }
 
     /**
-     * @param divisionInternacionalService the divisionInternacionalService to set
+     * @param consultaSaldoCustodiosService the consultaSaldoCustodiosService to set
      */
-    public void setDivisionInternacionalService(
-            DivisionInternacionalService divisionInternacionalService) {
-        this.divisionInternacionalService = divisionInternacionalService;
+    public void setConsultaSaldoCustodiosService(
+            ConsultaSaldoCustodiosService consultaSaldoCustodiosService) {
+        this.consultaSaldoCustodiosService = consultaSaldoCustodiosService;
     }
 
     /**

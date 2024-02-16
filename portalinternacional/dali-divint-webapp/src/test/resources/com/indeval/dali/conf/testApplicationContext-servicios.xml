@@ -27,10 +27,18 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
         <property name="lookupOnStartup" value="false"></property>
     </bean>
 
+
     <bean id="divisionInternacionalServiceEJB" class="org.springframework.jndi.JndiObjectFactoryBean">
         <property name="jndiName" value="ejb:dali_divint_services/dali_divint_services_ejb//ejb.divisionInternacionalService!com.indeval.portalinternacional.middleware.services.divisioninternacional.DivisionInternacionalService" />
         <!--         <property name="jndiEnvironment" ref="ejbEnvironment"></property> -->
         <property name="proxyInterface" value="com.indeval.portalinternacional.middleware.services.divisioninternacional.DivisionInternacionalService"></property>
+        <property name="lookupOnStartup" value="false"></property>
+    </bean>
+
+    <bean id="consultaSaldoCustodiosServiceEJB" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="ejb:dali_divint_services/dali_divint_services_ejb//ejb.consultaSaldoCustodiosService!com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaSaldoCustodiosService" />
+        <!--         <property name="jndiEnvironment" ref="ejbEnvironment"></property> -->
+        <property name="proxyInterface" value="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaSaldoCustodiosService"></property>
         <property name="lookupOnStartup" value="false"></property>
     </bean>
 
