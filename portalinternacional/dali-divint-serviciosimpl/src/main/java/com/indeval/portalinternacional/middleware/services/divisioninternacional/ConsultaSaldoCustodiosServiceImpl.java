@@ -259,6 +259,7 @@ public class ConsultaSaldoCustodiosServiceImpl  implements ConsultaSaldoCustodio
 
     private CalendarioEmisionesDeudaExtDao calendarioEmisionesDeudaExtDao;
 
+    private DivisaDaliDao divisaDaliDAO;
     private JmsTemplate jmsTemplate;
 
     private ConciliacionIntDao conciliacionIntDao;
@@ -3535,8 +3536,7 @@ public class ConsultaSaldoCustodiosServiceImpl  implements ConsultaSaldoCustodio
     public List<DivisaDTO> findDivisaByBovedad(Long idBoveda) throws BusinessException {
 
         System.out.println("idBoveda = " + idBoveda);
-        return null;
-     //   return divisaDaliDAO.findDivisaByBovedad(idBoveda);
+        return divisaDaliDAO.findDivisaByBovedad(idBoveda);
     }
 
     /**
@@ -4767,4 +4767,11 @@ public class ConsultaSaldoCustodiosServiceImpl  implements ConsultaSaldoCustodio
         operacionSicDao.flush();
     }
 
+    public DivisaDaliDao getDivisaDaliDAO() {
+        return divisaDaliDAO;
+    }
+
+    public void setDivisaDaliDAO(DivisaDaliDao divisaDaliDAO) {
+        this.divisaDaliDAO = divisaDaliDAO;
+    }
 }

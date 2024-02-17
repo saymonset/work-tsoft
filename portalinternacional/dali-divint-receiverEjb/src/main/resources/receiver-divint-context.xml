@@ -99,6 +99,9 @@
 		<description>
 			Bean de Acceso a servicios de Division Internacional
 		</description>
+		<property name="divisaDaliDAO">
+			<ref bean="divisaDaliDao"/>
+		</property>
 		<property name="dateUtilService">
 			<ref bean="dateUtilService" />
 		</property>

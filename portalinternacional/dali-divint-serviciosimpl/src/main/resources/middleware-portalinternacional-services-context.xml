@@ -414,6 +414,12 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             Bean de Acceso a servicios de Consulta de saldo de custodios
         </description>
 
+
+
+        <property name="divisaDaliDAO">
+            <ref bean="divisaDaliDao"/>
+        </property>
+
         <property name="bitacoraOperacionesDao">
             <ref bean="bitacoraOperacionesDao"/>
         </property>
