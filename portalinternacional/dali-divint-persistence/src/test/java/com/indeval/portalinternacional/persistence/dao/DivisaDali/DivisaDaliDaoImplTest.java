@@ -49,4 +49,20 @@ public class DivisaDaliDaoImplTest extends BaseDaoTestCase {
         assertEquals(expectedClaveNumerica, divisa.getClaveNumerica());
         assertEquals(expectedDescripcion, divisa.getDescripcion());
     }
+
+    public void testFindDivisasByBovedad() {
+        System.out.println("testFindDivisaByBovedad()");
+
+        long idBoveda = 26;
+
+        assertNotNull("DivisaDaliDao Nulo", dao);
+        List<DivisaDTO> list = dao.findDivisaByBovedad(idBoveda);
+
+
+        assertNotNull(list);
+//        assertEquals(expectedClaveAlfabetica, divisa.getClaveAlfabetica());
+//        assertEquals(expectedClaveNumerica, divisa.getClaveNumerica());
+//        assertEquals(expectedDescripcion, divisa.getDescripcion());
+    }
+
 }

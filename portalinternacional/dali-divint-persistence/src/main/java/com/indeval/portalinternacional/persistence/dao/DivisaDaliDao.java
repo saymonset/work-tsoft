@@ -76,4 +76,11 @@ public interface DivisaDaliDao {
 	DivisaDTO obtenerDivisaPorClaveAlfavetica(String claveDivisa);
 
 	Divisa findDivisaByClaveAlfabetica(String claveDivisa);
+
+	/**
+	 * Obtiene List<DivisaDTO>  de Divisas a travs de su boveda
+	 * @param idBoveda para filtrar la divisas
+	 * @return	List<DivisaDTO>  Que son las Divisa solicitadas, null si no existe.
+	 */
+	List<DivisaDTO> findDivisaByBovedad(final Long idBoveda);
 }

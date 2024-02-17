@@ -69,11 +69,7 @@
 										<h:outputText styleClass="texto" value="#{etq.bovedaMinus}" />
 									</td>
 								</tr>
-						    	<tr>
-									<td align="left">
-										<h:outputText styleClass="texto" value="#{etq.custodio}" />
-									</td>
-								</tr>
+
 								<tr align="left">
 									<td>
 										<h:selectOneMenu styleClass="textoControles"
@@ -82,6 +78,11 @@
 											<f:selectItems value="#{consultaSaldoCustodiosBean.bovedas}" />
 											<a4j:support event="onchange" reRender="estadoMensajeriaChk" />
 										</h:selectOneMenu>
+									</td>
+								</tr>
+								<tr>
+									<td align="left">
+										<h:outputText styleClass="texto" value="Divisa" />
 									</td>
 								</tr>
 								<tr align="left">
@@ -113,7 +114,7 @@
 											<h:outputText styleClass="texto" value="#{etq.bovedaMinus}" />
 										</td>
 										<td align="center">
-											<h:outputText styleClass="texto" value="#{etq.custodio}" />
+											<h:outputText styleClass="texto" value="Divisa" />
 										</td>
 
 									</tr>
@@ -310,20 +311,30 @@
 								 footerClass="tituloTabla" border="0" cellpadding="3px"
 								 cellspacing="0px" columnClasses="everyColumn"
 								 rowClasses="renglonTablaUno, renglonTablaDos">
-						<!-- Folio  -->
+
+						<!-- Custodio  -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="Divisa" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.custodio.codigoBanco}" />
+						</h:column>
+
+						<!-- Boveda DALI  -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.bovedaMinus}" />
+							</f:facet>
+							<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.bovedaDali.nombreCorto}" rendered="#{not empty conciliacion.bovedaDali.nombreCorto}" />
+							<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.conciliacionNacional ? 'NACIONAL' : 'N/A'}" rendered="#{empty conciliacion.bovedaDali or conciliacion.bovedaDali.nombreCorto}" />
+						</h:column>
+						<!-- Saldo  -->
 						<h:column >
 							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12" value="#{etq.folioMinus}" />
+								<h:outputText styleClass="texto textoPeque12" value="Saldo" />
 							</f:facet>
 							<table align="left">
 								<tr>
-									<td>
-										<h:panelGroup rendered="#{!conciliacion.conciliacionNacional}">
-											<a href="javascript:detalleResultadoMensaje(#{conciliacion.id});" title="Muestra el mensaje Swift">
-												<img src="#{facesContext.externalContext.requestContextPath}/images/msg.gif"  />
-											</a>
-										</h:panelGroup>
-									</td>
 									<td>
 										<a href="javascript:detalleResultado(#{conciliacion.id});" title="detalle de la Conciliacion" >
 											<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.id}" />
@@ -332,66 +343,17 @@
 								</tr>
 							</table>
 						</h:column>
-						<!-- Custodio  -->
+						<!--Disponible -->
 						<h:column>
 							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12" value="#{etq.custodio}" />
-							</f:facet>
-							<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.custodio.codigoBanco}" />
-						</h:column>
-						<!-- Fecha Mensaje  -->
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaMensaje}" />
-							</f:facet>
-							<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.fechaMensaje}"  converter="formatoFechaLargaConverter" />
-						</h:column>
-						<!-- Fecha Conciliacion  -->
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12" value="#{etq.fechaConciliacionMinus}" />
-							</f:facet>
-							<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.fechaConciliacion}" rendered="#{not empty conciliacion.fechaConciliacion}" converter="formatoFechaLargaConverter"/>
-							<h:outputText styleClass="texto textoPeque12" value="#{etq.aunNoConciliado}" rendered="#{empty conciliacion.fechaConciliacion}" />
-						</h:column>
-						<!-- Posicion Mensaje  -->
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12" value="#{etq.posicionMensaje}" />
-							</f:facet>
-							<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.posicionGlobalMensaje}" >
-								<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
-							</h:outputText>
-						</h:column>
-						<!-- Posicion Dali  -->
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12" value="#{etq.posicionDali}" />
-							</f:facet>
-							<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.posicionDali}" rendered="#{not empty conciliacion.posicionDali}">
-								<f:convertNumber pattern="###,###,###,###,###,##0"/>
-							</h:outputText>
-							<h:outputText styleClass="texto textoPeque12" value="#{etq.aunNoConciliado}" rendered="#{empty conciliacion.posicionDali}" />
-						</h:column>
-						<!-- Boveda DALI  -->
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12" value="#{etq.bovedaDaliMinus}" />
-							</f:facet>
-							<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.bovedaDali.nombreCorto}" rendered="#{not empty conciliacion.bovedaDali.nombreCorto}" />
-							<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.conciliacionNacional ? 'NACIONAL' : 'N/A'}" rendered="#{empty conciliacion.bovedaDali or conciliacion.bovedaDali.nombreCorto}" />
-						</h:column>
-						<!--Diferencia -->
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12" value="Diferencia" />
+								<h:outputText styleClass="texto textoPeque12" value="Disponible" />
 							</f:facet>
 							<table>
 								<tr><td>
-									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.diferencia}" rendered="#{not empty conciliacion.diferencia and conciliacion.diferencia gt 0}" style="color:red" >
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.diferencia}" rendered="#{not empty conciliacion.diferencia and conciliacion.diferencia gt 0}" >
 										<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
 									</h:outputText>
-									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.diferencia}" rendered="#{not empty conciliacion.diferencia and conciliacion.diferencia lt 0}" style="color:blue" >
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.diferencia}" rendered="#{not empty conciliacion.diferencia and conciliacion.diferencia lt 0}" >
 										<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
 									</h:outputText>
 									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.diferencia}" rendered="#{not empty conciliacion.diferencia and conciliacion.diferencia eq 0}" >
@@ -400,49 +362,31 @@
 									<h:outputText styleClass="texto textoPeque12" value="#{etq.aunNoConciliado}" rendered="#{empty conciliacion.diferencia}" />
 								</td>
 								</tr>
+							</table>
+						</h:column>
+						<!--No Disponible -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText styleClass="texto textoPeque12" value="No Disponible" />
+							</f:facet>
+							<table>
 								<tr><td>
-									<h:outputText styleClass="texto textoPeque12" value="#{etq.diferenciaEmisionesDali}" rendered="#{conciliacion.diferenciaEmisionesDali}" style="color:OrangeRed" title="Hay mas emisiones en DALI que en los mensajes"/>
-								</td></tr>
-								<tr><td>
-									<h:outputText styleClass="texto textoPeque12" value="#{etq.diferenciaEmisionesCustodio}" rendered="#{conciliacion.diferenciaEmisionesMensaje}" style="color:DarkMagenta" title="Hay mas emisiones en los mensajes que en DALI"/>
-								</td></tr>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.diferencia}" rendered="#{not empty conciliacion.diferencia and conciliacion.diferencia gt 0}" >
+										<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
+									</h:outputText>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.diferencia}" rendered="#{not empty conciliacion.diferencia and conciliacion.diferencia lt 0}" >
+										<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
+									</h:outputText>
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.diferencia}" rendered="#{not empty conciliacion.diferencia and conciliacion.diferencia eq 0}" >
+										<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
+									</h:outputText>
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.aunNoConciliado}" rendered="#{empty conciliacion.diferencia}" />
+								</td>
+								</tr>
 							</table>
 						</h:column>
 
-						<!-- Conciliacion  -->
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12" value="Conciliacion" />
-							</f:facet>
 
-							<a4j:commandButton id="botonConciliar" title="Conciliar"
-											   value="conciliar"
-											   image="/images/conciliar.png"
-											   rendered="#{((conciliacion.estatusConciliacion.id eq 1) or (!empty sessionScope.roles['INT_CONCILIACION_SU'])) and (conciliacion.estatusConciliacion.id ne 5) and (!conciliacion.conciliacionNacional)}"
-											   actionListener="#{consultaSaldoCustodiosBean.concilia}"
-											   onclick="lockBotones();capturaConciliacion('#{conciliacion.id}');if(!validarAccion()){unlockBotones();return false;}"
-											   reRender="resultados,containerResultados,tablaResultados,panelResumen"
-											   limitToList="true"
-											   oncomplete="unlockBotones();refresco();window.scrollTo(0,0);"
-							>
-
-							</a4j:commandButton>
-							<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.estatusConciliacion.descripcion}" rendered="#{(conciliacion.estatusConciliacion.id gt 1) and (empty sessionScope.roles['INT_CONCILIACION_SU'])}" style="color:DarkGray"/>
-
-						</h:column>
-						<!-- Reporte Auditoria  -->
-						<h:column>
-							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12" value="Reporte" />
-							</f:facet>
-							<h:commandButton action="#{consultaSaldoCustodiosBean.generarReporteAuditoria}"
-											 rendered="#{(conciliacion.estatusConciliacion.id eq 4) or (!empty sessionScope.roles['INT_CONCILIACION_SU'])}"
-											 onclick="capturaConciliacion('#{conciliacion.id}');marcaReporteAuditoria();"
-											 image="/images/TXT.gif"
-											 title="Generar XLS reporte auditoria"
-											 id="generarXLSAuditoria"/>
-
-						</h:column>
 					</h:dataTable>
 				</h:panelGroup>
 				<!-- ================================= EXPORTAR ============================================================ -->

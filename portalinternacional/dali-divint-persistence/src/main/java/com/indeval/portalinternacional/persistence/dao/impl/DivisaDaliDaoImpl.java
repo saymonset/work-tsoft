@@ -4,13 +4,14 @@ import com.bursatec.persistence.dao.impl.BaseDaoHibernateImpl;
 import com.indeval.portaldali.persistence.modelo.Divisa;
 import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
 import com.indeval.portalinternacional.middleware.servicios.dto.EstadoPaginacionDTO;
+import com.indeval.portalinternacional.middleware.servicios.dto.SettlementDisciplineRegimeVO;
+import com.indeval.portalinternacional.middleware.servicios.modelo.DivisaBoveda;
 import com.indeval.portalinternacional.middleware.servicios.modelo.DivisaInt;
 import com.indeval.portalinternacional.middleware.servicios.modelo.TipoInstruccionDivisa;
 import com.indeval.portalinternacional.persistence.dao.DivisaDaliDao;
 import com.indeval.portalinternacional.persistence.util.DTOAssembler;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
+import org.hibernate.*;
+import org.hibernate.transform.Transformers;
 import org.hibernate.type.Type;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
@@ -252,5 +253,40 @@ public class DivisaDaliDaoImpl extends BaseDaoHibernateImpl implements DivisaDal
 			}
 		});
 	}
+
+		/*
+		 * (non-Javadoc)
+		 *
+		 * @see com.indeval.portaldali.persistence.dao.common.DivisaDaliDAO#
+		 * buscarDivisasPorTipoOperacion(com.indeval.portaldali.middleware.dto.util.
+		 * EstadoPaginacionDTO, com.indeval.portaldali.persistence.model.TipoOperacion)
+		 */
+		@SuppressWarnings("unchecked")
+
+		public List<DivisaDTO> findDivisaByBovedad(final Long idBoveda)  {
+		//	log.debug("SettlementDisciplineRegimeDaoImpl :: getSettlementDisciplineRegimeForInstitucion");
+
+			final StringBuilder query = new StringBuilder();
+			query.append(" SELECT cd.ID_DIVISA as id, cd.CLAVE_ALFABETICA as claveAlfabetica, " +
+					"cd.CLAVE_NUMERICA  as claveNumerica, cd.DESCRIPCION as descripcion ");
+			query.append(" FROM C_DIVISA cd, R_DIVISA_BOVEDA rdb  ");
+			query.append(" WHERE cd.ID_DIVISA = rdb.ID_DIVISA  and rdb.ID_BOVEDA = 26 ");
+
+			return (List) getHibernateTemplate().execute(new HibernateCallback() {
+
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					SQLQuery sqlQuery = session.createSQLQuery(query.toString());
+
+					sqlQuery.addScalar("id", Hibernate.LONG);
+					sqlQuery.addScalar("claveAlfabetica", Hibernate.STRING);
+					sqlQuery.addScalar("claveNumerica", Hibernate.STRING);
+					sqlQuery.addScalar("descripcion", Hibernate.STRING);
+
+					sqlQuery.setResultTransformer(Transformers.aliasToBean(DivisaDTO.class));
+					return sqlQuery.list();
+				}
+			});
+		}
+
 
 }
