@@ -605,5 +605,6 @@ public interface ConsultaSaldoCustodiosService  {
     public void updateStatusOperacionWithParcialidad(List<LiquidacionParcialMoi> lstLiquidacionParcialMoi, OperacionSic operacionSic);
 
     List<DivisaDTO> findDivisaByBovedad(Long idBoveda) throws BusinessException;
+    public PaginaVO consultaSaldoCustodio(ConsultaSaldoCustodiosInDTO consultaSaldoCustodiosInDTO,PaginaVO paginaVO) throws BusinessException ;
 
 }

@@ -1,6 +1,8 @@
 package com.indeval.portalinternacional.persistence.dao.impl;
 
 import com.bursatec.persistence.dao.impl.BaseDaoHibernateImpl;
+import com.indeval.portaldali.middleware.servicios.modelo.BusinessException;
+import com.indeval.portaldali.middleware.servicios.modelo.vo.PaginaVO;
 import com.indeval.portaldali.persistence.modelo.Divisa;
 import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
 import com.indeval.portalinternacional.middleware.servicios.dto.EstadoPaginacionDTO;
@@ -8,6 +10,7 @@ import com.indeval.portalinternacional.middleware.servicios.dto.SettlementDiscip
 import com.indeval.portalinternacional.middleware.servicios.modelo.DivisaBoveda;
 import com.indeval.portalinternacional.middleware.servicios.modelo.DivisaInt;
 import com.indeval.portalinternacional.middleware.servicios.modelo.TipoInstruccionDivisa;
+import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaSaldoCustodiosInDTO;
 import com.indeval.portalinternacional.persistence.dao.DivisaDaliDao;
 import com.indeval.portalinternacional.persistence.util.DTOAssembler;
 import org.hibernate.*;
@@ -287,6 +290,13 @@ public class DivisaDaliDaoImpl extends BaseDaoHibernateImpl implements DivisaDal
 				}
 			});
 		}
+
+	@Override
+	public PaginaVO consultaSaldoCustodio(ConsultaSaldoCustodiosInDTO consultaSaldoCustodiosInDTO, PaginaVO paginaVO) throws BusinessException {
+		System.out.println(consultaSaldoCustodiosInDTO.getDivisaDali());
+		System.out.println(consultaSaldoCustodiosInDTO.getBovedaDali());
+		return null;
+	}
 
 
 }

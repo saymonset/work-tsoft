@@ -88,20 +88,12 @@
 									</td>
 								</tr>
 								<tr align="left">
-<!--									<td>-->
-<!--										<h:selectOneMenu id="divisasId" styleClass="textoControles"-->
-<!--														 value="#{consultaSaldoCustodiosBean.custodio}" tabindex="50" >-->
-<!--											<f:selectItem itemValue="-1" itemLabel="Todos" />-->
-<!--											<f:selectItems value="#{consultaSaldoCustodiosBean.custodios}" />-->
-<!--											<a4j:support event="onchange" reRender="estadoMensajeriaChk" />-->
-<!--										</h:selectOneMenu>-->
-<!--									</td>-->
 									<td>
 										<h:selectOneMenu id="divisasId" styleClass="textoControles"
 														 value="#{consultaSaldoCustodiosBean.divisaDali}" tabindex="50" >
 											<f:selectItem itemValue="-1" itemLabel="Todos" />
 											<f:selectItems value="#{consultaSaldoCustodiosBean.divisas}" />
-											<a4j:support event="onchange" reRender="estadoMensajeriaChk"
+											<a4j:support event="onchange"
 											actionListener="#{consultaSaldoCustodiosBean.seleccionarDivisas}"/>
 
 										</h:selectOneMenu>

@@ -3534,8 +3534,6 @@ public class ConsultaSaldoCustodiosServiceImpl  implements ConsultaSaldoCustodio
     }
 
     public List<DivisaDTO> findDivisaByBovedad(Long idBoveda) throws BusinessException {
-
-        System.out.println("idBoveda = " + idBoveda);
         return divisaDaliDAO.findDivisaByBovedad(idBoveda);
     }
 
@@ -3950,6 +3948,11 @@ public class ConsultaSaldoCustodiosServiceImpl  implements ConsultaSaldoCustodio
     public PaginaVO consultaConciliacion(ConciliacionIntDTO conciliacion,PaginaVO paginaVO) throws BusinessException {
 
         return conciliacionIntDao.consultaConciliacion(conciliacion, paginaVO);
+    }
+
+    public PaginaVO consultaSaldoCustodio(ConsultaSaldoCustodiosInDTO consultaSaldoCustodiosInDTO,PaginaVO paginaVO) throws BusinessException {
+
+        return divisaDaliDAO.consultaSaldoCustodio(consultaSaldoCustodiosInDTO, paginaVO);
     }
 
     /**

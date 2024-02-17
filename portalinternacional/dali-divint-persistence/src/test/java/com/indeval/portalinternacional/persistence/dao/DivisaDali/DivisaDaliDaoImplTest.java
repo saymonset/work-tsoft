@@ -53,7 +53,7 @@ public class DivisaDaliDaoImplTest extends BaseDaoTestCase {
     public void testFindDivisasByBovedad() {
         System.out.println("testFindDivisaByBovedad()");
 
-        long idBoveda = 26;
+        long idBoveda = 12;
 
         assertNotNull("DivisaDaliDao Nulo", dao);
         List<DivisaDTO> list = dao.findDivisaByBovedad(idBoveda);

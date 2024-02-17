@@ -6,6 +6,7 @@ import com.indeval.portalinternacional.middleware.services.divisioninternacional
 import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
 import com.indeval.portalinternacional.middleware.servicios.modelo.Custodio;
 import com.indeval.portalinternacional.middleware.servicios.vo.ConciliacionIntDTO;
+import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaSaldoCustodiosInDTO;
 import com.indeval.portalinternacional.middleware.servicios.vo.DetalleConciliacionIntDTO;
 import com.indeval.portalinternacional.presentation.controller.common.ControllerBase;
 import org.slf4j.Logger;
@@ -22,12 +23,13 @@ import java.util.Map;
 
 public class ConsultaCustodiosController  extends ControllerBase {
     private static final Logger log = LoggerFactory.getLogger(ConsultaCustodiosController.class);
-    private String bovedaDali;
+
     private boolean banderaBitacoraConsulta = false;
 
 
     private boolean consultaEjecutada;
     private ConciliacionIntDTO conciliacion;
+    private ConsultaSaldoCustodiosInDTO consultaSaldoCustodiosInDTO;
     private ConsultaSaldoCustodiosService consultaSaldoCustodiosService;
 
     private List<SelectItem> listaBoveda;
@@ -35,6 +37,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
     public List<SelectItem> listaDivisas;
 
     private String custodio;
+    private String bovedaDali;
     private String divisaDali;
 
     /** Pagina para los reportes*/
@@ -53,18 +56,28 @@ public class ConsultaCustodiosController  extends ControllerBase {
     public String getInit() {
         this.bovedaDali="-1";
         this.custodio="-1";
+        this.divisaDali ="-1";
         banderaBitacoraConsulta = false;
         return null;
     }
 
     private void setParams() {
-        conciliacion= new ConciliacionIntDTO();
-        if (this.bovedaDali != null && !this.bovedaDali.equals("") && this.bovedaDali.matches("-*[0-9]+")) {
-            conciliacion.setBovedaDali(Integer.valueOf(bovedaDali));
-        }
-        if (this.custodio != null && !this.custodio.equals("") && this.custodio.matches("-*[0-9]+")) {
-            conciliacion.setCustodio(Integer.valueOf(custodio));
-        }
+        /**
+         *  System.out.println("divisaDali = " + divisaDali);
+         *             System.out.println("bovedaDali = " + bovedaDali);
+         *             System.out.println(" " );
+         * */
+        consultaSaldoCustodiosInDTO = new ConsultaSaldoCustodiosInDTO();
+        consultaSaldoCustodiosInDTO.setDivisaDali(divisaDali);
+        consultaSaldoCustodiosInDTO.setBovedaDali(bovedaDali);
+
+//        conciliacion= new ConciliacionIntDTO();
+//        if (this.bovedaDali != null && !this.bovedaDali.equals("") && this.bovedaDali.matches("-*[0-9]+")) {
+//            conciliacion.setBovedaDali(Integer.valueOf(bovedaDali));
+//        }
+//        if (this.custodio != null && !this.custodio.equals("") && this.custodio.matches("-*[0-9]+")) {
+//            conciliacion.setCustodio(Integer.valueOf(custodio));
+//        }
     }
 
     /**
@@ -76,7 +89,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
         banderaBitacoraConsulta = false;
         this.custodio="-1";
 
-
+        this.divisaDali ="-1";
         this.bovedaDali="-1";
 
     }
@@ -106,16 +119,13 @@ public class ConsultaCustodiosController  extends ControllerBase {
 
     public void seleccionarDivisas(ActionEvent event) {
         try {
-            System.out.println("divisaDali = " + divisaDali);
-            System.out.println("bovedaDali = " + bovedaDali);
-            System.out.println(" " );
+
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), e.getMessage()));
         }
     }
     public void seleccionarBovedas(ActionEvent event) {
         try {
-            System.out.println("bovedaDali = " + bovedaDali);
 
 //            Forzamos que la lista divisa sea nula pata hacer una nueva busqueda con getDivisas y la bovedad seleccionada
             this.listaDivisas = null;
@@ -180,7 +190,8 @@ public class ConsultaCustodiosController  extends ControllerBase {
     public String ejecutarConsulta(){
 
         setParams();
-        paginaVO = consultaSaldoCustodiosService.consultaConciliacion(conciliacion, paginaVO);
+        //paginaVO = consultaSaldoCustodiosService.consultaConciliacion(conciliacion, paginaVO);
+        paginaVO = consultaSaldoCustodiosService.consultaSaldoCustodio(consultaSaldoCustodiosInDTO, paginaVO);
 
         totalPaginas = paginaVO.getTotalRegistros() / paginaVO.getRegistrosXPag();
 
@@ -398,5 +409,13 @@ public class ConsultaCustodiosController  extends ControllerBase {
 
     public void setDivisaDali(String divisaDali) {
         this.divisaDali = divisaDali;
+    }
+
+    public ConsultaSaldoCustodiosInDTO getConsultaSaldoCustodiosInDTO() {
+        return consultaSaldoCustodiosInDTO;
+    }
+
+    public void setConsultaSaldoCustodiosInDTO(ConsultaSaldoCustodiosInDTO consultaSaldoCustodiosInDTO) {
+        this.consultaSaldoCustodiosInDTO = consultaSaldoCustodiosInDTO;
     }
 }
