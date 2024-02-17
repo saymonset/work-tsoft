@@ -18,6 +18,7 @@ import com.indeval.portalinternacional.middleware.services.util.FactoryDivInt;
 import com.indeval.portalinternacional.middleware.services.util.UtilDivIntService;
 import com.indeval.portalinternacional.middleware.services.validador.ValidatorDivIntService;
 import com.indeval.portalinternacional.middleware.servicios.constantes.Constantes;
+import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
 import com.indeval.portalinternacional.middleware.servicios.modelo.*;
 import com.indeval.portalinternacional.middleware.servicios.vo.*;
 import com.indeval.portalinternacional.persistence.dao.*;
@@ -3530,6 +3531,14 @@ public class ConsultaSaldoCustodiosServiceImpl  implements ConsultaSaldoCustodio
     public List<Custodio> obtieneCatalogoCustodios() throws BusinessException {
         return calendarioEmisionesDeudaExtDao.getCatalogoCustodios();
     }
+
+    public List<DivisaDTO> findDivisaByBovedad(Long idBoveda) throws BusinessException {
+
+        System.out.println("idBoveda = " + idBoveda);
+        return null;
+     //   return divisaDaliDAO.findDivisaByBovedad(idBoveda);
+    }
+
     /**
      * Actualiza un estado en la BD
      */

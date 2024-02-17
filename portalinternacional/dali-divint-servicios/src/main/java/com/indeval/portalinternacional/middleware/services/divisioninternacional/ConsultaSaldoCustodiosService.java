@@ -6,6 +6,7 @@ import com.indeval.portaldali.middleware.servicios.modelo.vo.AgenteVO;
 import com.indeval.portaldali.middleware.servicios.modelo.vo.EmisionVO;
 import com.indeval.portaldali.middleware.servicios.modelo.vo.PaginaVO;
 import com.indeval.portaldali.persistence.modelo.Boveda;
+import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
 import com.indeval.portalinternacional.middleware.servicios.modelo.*;
 import com.indeval.portalinternacional.middleware.servicios.vo.*;
 import com.indeval.protocolofinanciero.api.vo.TraspasoLibrePagoVO;
@@ -602,5 +603,7 @@ public interface ConsultaSaldoCustodiosService  {
     public Long findOperacionesParcialesPendientes(Long idCuentaNombrada);
 
     public void updateStatusOperacionWithParcialidad(List<LiquidacionParcialMoi> lstLiquidacionParcialMoi, OperacionSic operacionSic);
+
+    List<DivisaDTO> findDivisaByBovedad(Long idBoveda) throws BusinessException;
 
 }

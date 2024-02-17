@@ -3,11 +3,11 @@ package com.indeval.portalinternacional.presentation.controller.divinternacional
 import com.indeval.portaldali.middleware.servicios.modelo.vo.PaginaVO;
 import com.indeval.portaldali.persistence.modelo.Boveda;
 import com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaSaldoCustodiosService;
+import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
 import com.indeval.portalinternacional.middleware.servicios.modelo.Custodio;
 import com.indeval.portalinternacional.middleware.servicios.vo.ConciliacionIntDTO;
 import com.indeval.portalinternacional.middleware.servicios.vo.DetalleConciliacionIntDTO;
 import com.indeval.portalinternacional.presentation.controller.common.ControllerBase;
-import com.indeval.portalinternacional.presentation.controller.conciliacionInternacional.ConciliacionInternacionalController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,8 +32,10 @@ public class ConsultaCustodiosController  extends ControllerBase {
 
     private List<SelectItem> listaBoveda;
     private List<SelectItem> listaCustodios;
+    public List<SelectItem> listaDivisas;
 
     private String custodio;
+    private String divisaDali;
 
     /** Pagina para los reportes*/
     private PaginaVO paginaReportes;
@@ -102,6 +104,27 @@ public class ConsultaCustodiosController  extends ControllerBase {
         return listaBoveda;
     }
 
+    public void seleccionarDivisas(ActionEvent event) {
+        try {
+            System.out.println("divisaDali = " + divisaDali);
+            System.out.println("bovedaDali = " + bovedaDali);
+            System.out.println(" " );
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), e.getMessage()));
+        }
+    }
+    public void seleccionarBovedas(ActionEvent event) {
+        try {
+            System.out.println("bovedaDali = " + bovedaDali);
+
+//            Forzamos que la lista divisa sea nula pata hacer una nueva busqueda con getDivisas y la bovedad seleccionada
+            this.listaDivisas = null;
+            getDivisas();
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), e.getMessage()));
+        }
+    }
     /**
      * obtiene la lista de custodios
      */
@@ -110,6 +133,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
             return this.listaCustodios;
         }
         List<Custodio> custodios = consultaSaldoCustodiosService.obtieneCatalogoCustodios();
+        getDivisas();
         List <SelectItem> listaCustodios = new ArrayList<SelectItem>();
         if( custodios != null){
             for (Custodio custodio : custodios){
@@ -119,6 +143,24 @@ public class ConsultaCustodiosController  extends ControllerBase {
             listaCustodios.add(new SelectItem("-2","VACIO"));
         }
         this.listaCustodios=listaCustodios;
+        return listaCustodios;
+    }
+    public List<SelectItem> getDivisas(){
+        if(this.listaDivisas != null && this.listaDivisas.size() > 0){
+            return this.listaDivisas;
+        }
+        if (bovedaDali!=null){
+            List<DivisaDTO> divisasDtos = consultaSaldoCustodiosService.findDivisaByBovedad(Long.valueOf(bovedaDali));
+            List <SelectItem> listaDivisasNew = new ArrayList<SelectItem>();
+            if( divisasDtos != null){
+                for (DivisaDTO divDto : divisasDtos){
+                    listaDivisasNew.add(new SelectItem(divDto.getId()+"", divDto.getDescripcion()));
+                }
+            }else{
+                listaDivisasNew.add(new SelectItem("-2","VACIO"));
+            }
+            this.listaDivisas=listaDivisasNew;
+        }
         return listaCustodios;
     }
 
@@ -349,5 +391,12 @@ public class ConsultaCustodiosController  extends ControllerBase {
 
     public void setConciliacion(ConciliacionIntDTO conciliacion) {
         this.conciliacion = conciliacion;
+    }
+    public String getDivisaDali() {
+        return divisaDali;
+    }
+
+    public void setDivisaDali(String divisaDali) {
+        this.divisaDali = divisaDali;
     }
 }
