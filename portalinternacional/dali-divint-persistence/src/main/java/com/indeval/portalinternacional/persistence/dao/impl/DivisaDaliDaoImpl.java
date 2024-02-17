@@ -270,7 +270,7 @@ public class DivisaDaliDaoImpl extends BaseDaoHibernateImpl implements DivisaDal
 			query.append(" SELECT cd.ID_DIVISA as id, cd.CLAVE_ALFABETICA as claveAlfabetica, " +
 					"cd.CLAVE_NUMERICA  as claveNumerica, cd.DESCRIPCION as descripcion ");
 			query.append(" FROM C_DIVISA cd, R_DIVISA_BOVEDA rdb  ");
-			query.append(" WHERE cd.ID_DIVISA = rdb.ID_DIVISA  and rdb.ID_BOVEDA = 26 ");
+			query.append(" WHERE cd.ID_DIVISA = rdb.ID_DIVISA  and rdb.ID_BOVEDA =  "+idBoveda);
 
 			return (List) getHibernateTemplate().execute(new HibernateCallback() {
 

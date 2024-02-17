@@ -76,8 +76,10 @@
 														 value="#{consultaSaldoCustodiosBean.bovedaDali}" tabindex="60" >
 											<f:selectItem itemValue="-1" itemLabel="Todas" />
 											<f:selectItems value="#{consultaSaldoCustodiosBean.bovedas}" />
-											<a4j:support event="onchange" reRender="estadoMensajeriaChk" />
+											<a4j:support event="onchange" reRender="estadoMensajeriaChk,divisasId"
+											  actionListener="#{consultaSaldoCustodiosBean.seleccionarBovedas}"/>
 										</h:selectOneMenu>
+
 									</td>
 								</tr>
 								<tr>
@@ -86,12 +88,22 @@
 									</td>
 								</tr>
 								<tr align="left">
+<!--									<td>-->
+<!--										<h:selectOneMenu id="divisasId" styleClass="textoControles"-->
+<!--														 value="#{consultaSaldoCustodiosBean.custodio}" tabindex="50" >-->
+<!--											<f:selectItem itemValue="-1" itemLabel="Todos" />-->
+<!--											<f:selectItems value="#{consultaSaldoCustodiosBean.custodios}" />-->
+<!--											<a4j:support event="onchange" reRender="estadoMensajeriaChk" />-->
+<!--										</h:selectOneMenu>-->
+<!--									</td>-->
 									<td>
-										<h:selectOneMenu styleClass="textoControles"
-														 value="#{consultaSaldoCustodiosBean.custodio}" tabindex="50" >
+										<h:selectOneMenu id="divisasId" styleClass="textoControles"
+														 value="#{consultaSaldoCustodiosBean.divisaDali}" tabindex="50" >
 											<f:selectItem itemValue="-1" itemLabel="Todos" />
-											<f:selectItems value="#{consultaSaldoCustodiosBean.custodios}" />
-											<a4j:support event="onchange" reRender="estadoMensajeriaChk" />
+											<f:selectItems value="#{consultaSaldoCustodiosBean.divisas}" />
+											<a4j:support event="onchange" reRender="estadoMensajeriaChk"
+											actionListener="#{consultaSaldoCustodiosBean.seleccionarDivisas}"/>
+
 										</h:selectOneMenu>
 									</td>
 								</tr>

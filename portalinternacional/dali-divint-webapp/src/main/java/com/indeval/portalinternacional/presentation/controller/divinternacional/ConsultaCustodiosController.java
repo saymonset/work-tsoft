@@ -161,7 +161,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
             }
             this.listaDivisas=listaDivisasNew;
         }
-        return listaCustodios;
+        return listaDivisas;
     }
 
     private String getSelected(String key, List<SelectItem> lista){
