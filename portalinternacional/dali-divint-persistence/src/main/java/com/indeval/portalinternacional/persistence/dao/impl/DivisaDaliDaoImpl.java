@@ -336,6 +336,10 @@ public class DivisaDaliDaoImpl extends BaseDaoHibernateImpl implements DivisaDal
 			BigInteger idCuenta = new BigInteger(consultaSaldoCustodiosInDTO.getIdCuenta());
 			criteria.add(Restrictions.ne("idCuenta", idCuenta));
 		}
+		if(consultaSaldoCustodiosInDTO.getIdCuentaPopup() != null ){
+			BigInteger idCuenta = new BigInteger(consultaSaldoCustodiosInDTO.getIdCuentaPopup());
+			criteria.add(Restrictions.eq("idCuenta", idCuenta));
+		}
 //		criteria.add(Restrictions.eq("sn.idDivisa", consultaSaldoCustodiosInDTO.getDivisaDali()));
 //		criteria.add(Restrictions.eq("sn.idBoveda", consultaSaldoCustodiosInDTO.getBovedaDali()));
 //		criteria.add(Restrictions.ne("sn.idCuenta", 4040));

@@ -339,7 +339,7 @@
 							<table align="left">
 								<tr>
 									<td>
-										<a href="javascript:detalleResultado(#{conciliacion.idCuenta});" title="detalle de la Conciliacion" >
+										<a href="javascript:detalleResultado(#{conciliacion.idCuenta});" title="detalle del saldo" >
 											<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.idCuenta}" />
 										</a>
 									</td>
@@ -392,7 +392,7 @@
 										<h:outputText value="Exportar los resultados"></h:outputText>
 
 										<h:commandButton actionListener="#{consultaSaldoCustodiosBean.generarReportes}"
-														 action="conciliacionesInternacionalPDF"
+														 action="consultaSaldoCustodiosPDF"
 														 image="/images/pdf.gif"
 														 title="Exportar a PDF todos los resultados de la consulta"
 														 id="generarPdf"

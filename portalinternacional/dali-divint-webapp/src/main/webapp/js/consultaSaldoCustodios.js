@@ -24,21 +24,14 @@ function limpiarTodos() {
 
 }
 
-function detalleResultadoMensaje(folio){
-    var url = contextPath+'/conciliacionInternacional/consultaMensajesConciliacionInternacional.faces';
-    url += '?idConciliacion=' + folio
+
+function detalleResultado(idCuentaPopup){
+    var url = contextPath+'/divinternacional/consultaSaldoCustodiosPopUp.faces';
+    url += '?idCuentaPopup=' + idCuentaPopup
         + '&idMuestraConsulta=false'
         + '&TB_iframe=true'
         +'&height=550&width=925';
-    mostrarDetalle('Conciliacion',url);
-}
-function detalleResultado(folio){
-    var url = contextPath+'/conciliacionInternacional/consultaDetalleConciliacionInternacionalPopUp.faces';
-    url += '?folio=' + folio
-        + '&idMuestraConsulta=false'
-        + '&TB_iframe=true'
-        +'&height=550&width=925';
-    mostrarDetalle('Conciliacion',url);
+    mostrarDetalle('Detalle Saldos de Efectivos de Custodios ',url);
 }
 function presentarCriterios() {
     $j("#divCriterios").css("display", "inline");

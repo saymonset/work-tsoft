@@ -9,6 +9,7 @@ import com.indeval.portalinternacional.middleware.servicios.vo.ConciliacionIntDT
 import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaSaldoCustodiosInDTO;
 import com.indeval.portalinternacional.middleware.servicios.vo.DetalleConciliacionIntDTO;
 import com.indeval.portalinternacional.presentation.controller.common.ControllerBase;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,15 +17,15 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ConsultaCustodiosController  extends ControllerBase {
     private static final Logger log = LoggerFactory.getLogger(ConsultaCustodiosController.class);
 
     private boolean banderaBitacoraConsulta = false;
+
+    /** Parametros enviados por el Request */
+    private Map<String, String> params;
 
 
     private boolean consultaEjecutada;
@@ -40,12 +41,16 @@ public class ConsultaCustodiosController  extends ControllerBase {
     private String bovedaDali;
     private String divisaDali;
 
+    private PaginaVO resultados = null;
+
     /** Pagina para los reportes*/
     private PaginaVO paginaReportes;
 
     private int totalRegistros = 0;
 
     private int totalPaginas = 1;
+
+    private String idCuentaPopup;
     public ConsultaCustodiosController() {
     }
 
@@ -71,13 +76,12 @@ public class ConsultaCustodiosController  extends ControllerBase {
         consultaSaldoCustodiosInDTO.setDivisaDali(divisaDali);
         consultaSaldoCustodiosInDTO.setBovedaDali(bovedaDali);
 
-//        conciliacion= new ConciliacionIntDTO();
-//        if (this.bovedaDali != null && !this.bovedaDali.equals("") && this.bovedaDali.matches("-*[0-9]+")) {
-//            conciliacion.setBovedaDali(Integer.valueOf(bovedaDali));
-//        }
-//        if (this.custodio != null && !this.custodio.equals("") && this.custodio.matches("-*[0-9]+")) {
-//            conciliacion.setCustodio(Integer.valueOf(custodio));
-//        }
+
+
+
+        if (StringUtils.isNotEmpty(this.idCuentaPopup)  && this.idCuentaPopup.matches("[0-9]+")){
+            consultaSaldoCustodiosInDTO.setIdCuentaPopup(idCuentaPopup);
+        }
     }
 
     /**
@@ -92,8 +96,49 @@ public class ConsultaCustodiosController  extends ControllerBase {
         this.divisaDali ="-1";
         this.bovedaDali="-1";
 
+        if(resultados != null)
+            resultados.getRegistros().clear();
+        if(paginaVO.getRegistros() != null) {
+            paginaVO.getRegistros().clear();
+        }
+        paginaVO.setRegistrosXPag(50);
+        paginaVO.setOffset(0);
+
+        setConsultaEjecutada(false);
+
     }
 
+    public String getInitPopUp() {
+        params = new HashMap<String, String>();
+        Set<String> keys = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().keySet();
+
+        for (String key : keys) {
+            params.put(key, FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get(key));
+        }
+
+        FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        ejecutarConsultaPopUp();
+        return null;
+    }
+
+    /* =========================LAYOUT POPUP================================ */
+    //para layoutpopup
+    public String ejecutarConsultaPopUp() {
+        Long id=null;
+        if(params.get("idCuentaPopup")!=null ){
+            id=Long.valueOf(params.get("idCuentaPopup"));
+        }
+        if(id != null){
+
+            setIdCuentaPopup(id.toString());
+            setParams();
+            resultados = new PaginaVO();
+            resultados.setOffset(0);
+            resultados.setRegistrosXPag(PaginaVO.TODOS);
+            resultados = consultaSaldoCustodiosService.consultaSaldoCustodio(consultaSaldoCustodiosInDTO, paginaVO);
+        }
+        return null;
+    }
 
     /**
      * Obtiene la consulta de Bovedas
@@ -191,7 +236,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
     public String ejecutarConsulta(){
 
         setParams();
-        //paginaVO = consultaSaldoCustodiosService.consultaConciliacion(conciliacion, paginaVO);
+    //    paginaVO = consultaSaldoCustodiosService.consultaConciliacion(conciliacion, paginaVO);
         paginaVO = consultaSaldoCustodiosService.consultaSaldoCustodio(consultaSaldoCustodiosInDTO, paginaVO);
 
         totalPaginas = paginaVO.getTotalRegistros() / paginaVO.getRegistrosXPag();
@@ -426,5 +471,29 @@ public class ConsultaCustodiosController  extends ControllerBase {
 
     public void setConsultaSaldoCustodiosInDTO(ConsultaSaldoCustodiosInDTO consultaSaldoCustodiosInDTO) {
         this.consultaSaldoCustodiosInDTO = consultaSaldoCustodiosInDTO;
+    }
+
+    public Map<String, String> getParams() {
+        return params;
+    }
+
+    public void setParams(Map<String, String> params) {
+        this.params = params;
+    }
+
+    public PaginaVO getResultados() {
+        return resultados;
+    }
+
+    public void setResultados(PaginaVO resultados) {
+        this.resultados = resultados;
+    }
+
+    public String getIdCuentaPopup() {
+        return idCuentaPopup;
+    }
+
+    public void setIdCuentaPopup(String idCuentaPopup) {
+        this.idCuentaPopup = idCuentaPopup;
     }
 }

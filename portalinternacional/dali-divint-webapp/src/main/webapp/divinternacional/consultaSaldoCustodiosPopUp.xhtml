@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	<!-- DECORATE -->
+
+	<ui:composition template="/layoutPopUp.xhtml">			
+		<ui:define name="head">			
+			<script language="javascript" type="text/javascript"
+					src="#{facesContext.externalContext.requestContextPath}/js/consultaSaldoCustodios.js">
+			</script>
+		</ui:define>
+		<ui:define name="titulo">
+			Detalle de Saldo
+		</ui:define>
+		<ui:define name="subtitulo">
+		</ui:define>
+
+		<ui:define name="body">
+			<h:form id="formaDetalleConciliacion">
+			<h:outputText value="#{consultaSaldoCustodiosBean.initPopUp}" />
+			<a4j:keepAlive beanName="consultaSaldoCustodiosBean" />
+		
+			<!--===============================================RESULTADOS=================================================  -->	
+				<h:panelGroup id ="resultPanel">		
+						<h:dataTable id="resultados"
+							value="#{consultaSaldoCustodiosBean.resultados.registros}"
+							var="conciliacion"
+							rendered="#{!empty consultaSaldoCustodiosBean.resultados and not empty consultaSaldoCustodiosBean.resultados.registros}"
+							styleClass="tablaGeneral centrado" headerClass="tituloTabla" width="100%"
+							footerClass="tituloTabla" border="0" cellpadding="3px"
+							cellspacing="0px" columnClasses="everyColumn"
+							rowClasses="renglonTablaUno, renglonTablaDos">
+							<!-- Custodio  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="Divisa" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.divisa.descripcion}" />
+							</h:column>
+
+							<!-- Boveda DALI  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.bovedaMinus}" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.boveda.nombreCorto}" rendered="#{not empty conciliacion.boveda.nombreCorto}" />
+							</h:column>
+							<!-- Saldo  -->
+							<h:column >
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="Saldo" />
+								</f:facet>
+								<table align="left">
+									<tr>
+										<td>
+												<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.idCuenta}" />
+										</td>
+									</tr>
+								</table>
+							</h:column>
+							<!--Disponible -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="Disponible" />
+								</f:facet>
+								<table>
+									<tr><td>
+										<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.saldoDisponible}" rendered="#{not empty conciliacion.saldoDisponible}" >
+											<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
+										</h:outputText>
+									</td>
+									</tr>
+								</table>
+							</h:column>
+							<!--No Disponible -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="No Disponible" />
+								</f:facet>
+								<table>
+									<tr><td>
+										<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.saldoNoDisponible}" rendered="#{not empty conciliacion.saldoNoDisponible}" >
+											<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
+										</h:outputText>
+									</td>
+									</tr>
+								</table>
+							</h:column>
+						</h:dataTable>
+					</h:panelGroup>
+					<!-- ================================= EXPORTAR ============================================================ -->
+					<h:panelGroup id="totalesConsultas"
+						rendered="#{not empty consultaSaldoCustodiosBean.resultados.registros}">
+					<table cellpadding="0" cellspacing="0" border="0" align="center"
+						width="900px">
+						<tr align="right">
+							<td align="right">
+								<h:panelGroup id="botonesExportar">
+									<h:panelGroup
+										style="display: #{(not empty consultaSaldoCustodiosBean.resultados.registros)? 'inline' : 'none'}">
+
+										<h:outputText value="Exportar los resultados"></h:outputText>
+										
+										<h:commandButton actionListener="#{consultaSaldoCustodiosBean.generarReportesPopUp}"
+											action="consultaDetalleConciliacionInternacionalPDF"
+											image="/images/pdf.gif"
+											title="Exportar a PDF todos los resultados de la consulta"
+											id="generarPdf"/>
+                           				&#160;&#160;
+
+                          				<h:commandButton actionListener="#{consultaSaldoCustodiosBean.generarReportesPopUp}"
+                          					action="consultaDetalleConciliacionInternacionalXLS"
+                          					image="/images/excel-file.gif"
+                          					title="Exportar a Excel todos los resultados de la consulta" 
+                            				id="generarExcel">
+                           				</h:commandButton>
+									</h:panelGroup>
+								</h:panelGroup>
+
+							</td>
+						</tr>
+					</table>
+				
+			</h:panelGroup>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+
+
+	<!-- FIN DEL DECORATE -->
+</html>

@@ -6,6 +6,8 @@ public class ConsultaSaldoCustodiosInDTO {
 
     private String idCuenta;
 
+    private String idCuentaPopup;
+
     public String getBovedaDali() {
         return bovedaDali;
     }
@@ -29,5 +31,13 @@ public class ConsultaSaldoCustodiosInDTO {
 
     public void setIdCuenta(String idCuenta) {
         this.idCuenta = idCuenta;
+    }
+
+    public String getIdCuentaPopup() {
+        return idCuentaPopup;
+    }
+
+    public void setIdCuentaPopup(String idCuentaPopup) {
+        this.idCuentaPopup = idCuentaPopup;
     }
 }
