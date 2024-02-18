@@ -27,8 +27,112 @@
 			<h:outputText value="#{consultaSaldoCustodiosBean.initPopUp}" />
 			<a4j:keepAlive beanName="consultaSaldoCustodiosBean" />
 		
-			<!--===============================================RESULTADOS=================================================  -->	
-				<h:panelGroup id ="resultPanel">		
+			<!--===============================================RESULTADOS=================================================  -->
+
+				<h:panelGroup id ="resultPanel">
+					<h:graphicImage value="/images/blank.gif" width="900px"
+									height="1px"></h:graphicImage>
+					<h:panelGroup
+							rendered="#{not empty consultaSaldoCustodiosBean.paginaVO.registros}">
+						<table width="100%" border="0">
+							<tr>
+								<td align="left" class="textoEstadoCuenta">
+									<a4j:commandLink id="control_bitacora_primero"
+													 action="#{consultaSaldoCustodiosBean.irPrimeraPagina}"
+													 rendered="#{consultaSaldoCustodiosBean.irAlPrimero}"
+													 reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,containerResultados">
+										<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+												border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_atras_fast"
+													 action="#{consultaSaldoCustodiosBean.retrocederPaginasRapido}"
+													 rendered="#{consultaSaldoCustodiosBean.retrocederRapido}"
+													 reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+										<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+												border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_atras"
+													 action="#{consultaSaldoCustodiosBean.retrocederPagina}"
+													 rendered="#{consultaSaldoCustodiosBean.retroceder}"
+													 reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+										<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+												border="0" />
+									</a4j:commandLink>
+									<a4j:commandLink id="control_bitacora_adelante"
+													 action="#{consultaSaldoCustodiosBean.avanzarPagina}"
+													 rendered="#{consultaSaldoCustodiosBean.avanzar}"
+													 reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+										<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+												border="0" />
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_adelante_fast"
+													 action="#{consultaSaldoCustodiosBean.avanzarPaginasRapido}"
+													 rendered="#{consultaSaldoCustodiosBean.avanzarRapido}"
+													 reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+										<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+												border="0" />
+
+									</a4j:commandLink>
+
+									<a4j:commandLink id="control_bitacora_ultimo"
+													 action="#{consultaSaldoCustodiosBean.irUltimaPagina}"
+													 rendered="#{consultaSaldoCustodiosBean.irAlUltimo}"
+													 reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar">
+										<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+												border="0" />
+									</a4j:commandLink>
+
+									<br />
+									<h:outputText value="#{etq.mostrando}"
+												  styleClass="textoResumen" />
+									<h:outputText value="#{consultaSaldoCustodiosBean.numeroPagina}"
+												  styleClass="textoResumen" />
+									<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+									<h:outputText value="#{consultaSaldoCustodiosBean.totalPaginas}"
+												  styleClass="textoResumen" />
+									<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+									&#160;&#160;&#160;
+									<h:outputText
+											value="#{consultaSaldoCustodiosBean.paginaVO.totalRegistros}"
+											styleClass="textoResumen" converter="formatoEnteroConverter"></h:outputText>
+									&#160;
+									<h:outputText styleClass="textoResumen"
+												  value="#{etq.registrosEncontrados}" />
+								</td>
+								<td align="right" class="textoEstadoCuenta">
+									<h:outputText escape="false" value="#{etq.registrosPorPagina}"
+												  styleClass="textoResumen" />
+									<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+													 value="#{consultaSaldoCustodiosBean.paginaVO.registrosXPag}">
+										<f:selectItem itemLabel="1" itemValue="1" />
+										<f:selectItem itemLabel="2" itemValue="2" />
+										<f:selectItem itemLabel="5" itemValue="5" />
+										<f:selectItem itemLabel="10" itemValue="10" />
+										<f:selectItem itemLabel="20" itemValue="20" />
+										<f:selectItem itemLabel="50" itemValue="50" />
+										<f:selectItem itemLabel="100" itemValue="100" />
+										<a4j:support event="onchange"
+													 reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,mensajeUsuario"
+													 action="#{consultaSaldoCustodiosBean.ejecutarConsulta}" >
+											<f:setPropertyActionListener value="false"
+																		 target="#{consultaSaldoCustodiosBean.banderaBitacoraConsulta}" />
+										</a4j:support>
+									</h:selectOneMenu>&#160;&#160;&#160;&#160;&#160;
+								</td>
+							</tr>
+						</table>
+					</h:panelGroup>
+
+
 						<h:dataTable id="resultados"
 							value="#{consultaSaldoCustodiosBean.resultados.registros}"
 							var="conciliacion"

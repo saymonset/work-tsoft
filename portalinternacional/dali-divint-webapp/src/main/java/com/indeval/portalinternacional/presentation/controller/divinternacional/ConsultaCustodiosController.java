@@ -141,6 +141,26 @@ public class ConsultaCustodiosController  extends ControllerBase {
     }
 
     /**
+     * Ejecuta la consulta y calcula el numero de pagina para la paginacion.
+     *  Este metodo es un overide de la clase padre
+     */
+    public String ejecutarConsulta(){
+
+        setParams();
+        //    paginaVO = consultaSaldoCustodiosService.consultaConciliacion(conciliacion, paginaVO);
+        paginaVO = consultaSaldoCustodiosService.consultaSaldoCustodio(consultaSaldoCustodiosInDTO, paginaVO);
+
+        totalPaginas = paginaVO.getTotalRegistros() / paginaVO.getRegistrosXPag();
+
+        if(paginaVO.getTotalRegistros() % paginaVO.getRegistrosXPag() > 0)
+            totalPaginas++;
+        totalPaginas = (totalPaginas <= 0) ? 1 : totalPaginas;
+
+        setConsultaEjecutada(true);
+        return null;
+    }
+
+    /**
      * Obtiene la consulta de Bovedas
      *
      */
@@ -229,25 +249,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
         return resultado;
     }
 
-    /**
-     * Ejecuta la consulta y calcula el numero de pagina para la paginacion.
-     *  Este metodo es un overide de la clase padre
-     */
-    public String ejecutarConsulta(){
 
-        setParams();
-    //    paginaVO = consultaSaldoCustodiosService.consultaConciliacion(conciliacion, paginaVO);
-        paginaVO = consultaSaldoCustodiosService.consultaSaldoCustodio(consultaSaldoCustodiosInDTO, paginaVO);
-
-        totalPaginas = paginaVO.getTotalRegistros() / paginaVO.getRegistrosXPag();
-
-        if(paginaVO.getTotalRegistros() % paginaVO.getRegistrosXPag() > 0)
-            totalPaginas++;
-        totalPaginas = (totalPaginas <= 0) ? 1 : totalPaginas;
-
-        setConsultaEjecutada(true);
-        return null;
-    }
 
     /**
      * Buscar las emisiones
