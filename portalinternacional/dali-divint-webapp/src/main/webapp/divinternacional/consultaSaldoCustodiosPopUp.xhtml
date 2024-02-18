@@ -26,10 +26,31 @@
 			<h:form id="formaDetalleConciliacion">
 			<h:outputText value="#{consultaSaldoCustodiosBean.initPopUp}" />
 			<a4j:keepAlive beanName="consultaSaldoCustodiosBean" />
-		
+				<h:panelGroup id="mensajeUsuario">
+					<div style="min-height: 21px;">
+						<rich:messages warnClass="warning" infoClass="info"
+									   errorClass="error" ajaxRendered="true" showDetail="false"
+									   showSummary="true" layout="list">
+							<f:facet name="infoMarker">
+								<h:panelGroup>
+									<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+							</f:facet>
+
+							<f:facet name="errorMarker">
+								<h:panelGroup>
+									<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+							</f:facet>
+						</rich:messages>
+
+						<div id="divWarnings" class="warning" style="display:none;">
+							<p id="textoWarning">
+							</p>
+						</div>
+					</div>
+				</h:panelGroup>
 			<!--===============================================RESULTADOS=================================================  -->
 
-				<h:panelGroup id ="resultPanel">
+				<h:panelGroup id ="containerResultados">
 					<h:graphicImage value="/images/blank.gif" width="900px"
 									height="1px"></h:graphicImage>
 					<h:panelGroup
@@ -133,7 +154,7 @@
 					</h:panelGroup>
 
 
-						<h:dataTable id="resultados"
+						<h:dataTable id="tablaResultados"
 							value="#{consultaSaldoCustodiosBean.resultados.registros}"
 							var="conciliacion"
 							rendered="#{!empty consultaSaldoCustodiosBean.resultados and not empty consultaSaldoCustodiosBean.resultados.registros}"
