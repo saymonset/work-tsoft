@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaSaldoCustodiosInDTO;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -251,42 +252,42 @@ public class ITestConciliacion extends BaseDaoTestCase {
 	
 	
 	
-*/	
+*/
 
-	
 	public void testFindConciliacionByParams() throws ParseException {
 
 		//assertNotNull(conciliacionIntDao);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		// Objeto de prueba 
+		// Objeto de prueba
 		ConciliacionIntDTO params = new ConciliacionIntDTO();
-		
-		// Campos de la consulta 
+
+		// Campos de la consulta
 		//params.setFolio("1");
 		//params.setPorConc(true);
-		
+
 		//params.setCustodio(2);
 		//params.setBovedaDali(4);
 		//params.setFechaMensajeInicio(sdf.parse("09/07/2012"));
 		//params.setFechaMensajeFin(sdf.parse("08/07/2012"));
-		
-		
-		// Prueba de consulta 
+
+
+		// Prueba de consulta
 		PaginaVO pvo=new PaginaVO();
 		pvo.setRegistrosXPag(PaginaVO.TODOS);
 		pvo.setOffset(0);
-		 PaginaVO cons=conciliacionIntDao.consultaConciliacion( params,pvo);
-			
-			for(ConciliacionInt reg : (List<ConciliacionInt>)cons.getRegistros()){			
-				log.debug("reg =\n"+ObjectToString(reg));
-				//System.out.println(ObjectToString(reg));
-				System.out.println(reg.getId());
-			}
-			System.out.println("TOTAL REGISTROS "+cons.getTotalRegistros());
-			
-			assertTrue(true);
-		
+		PaginaVO cons=conciliacionIntDao.consultaConciliacion( params,pvo);
+
+		for(ConciliacionInt reg : (List<ConciliacionInt>)cons.getRegistros()){
+			log.debug("reg =\n"+ObjectToString(reg));
+			//System.out.println(ObjectToString(reg));
+			System.out.println(reg.getId());
+		}
+		System.out.println("TOTAL REGISTROS "+cons.getTotalRegistros());
+
+		assertTrue(true);
+
 	}
+
 	
 	public void tesstOperacionesConciliacionXML(){
 		XStream xstream = new XStream();

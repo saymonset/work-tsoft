@@ -4,6 +4,8 @@ public class ConsultaSaldoCustodiosInDTO {
     private String bovedaDali;
     private String divisaDali;
 
+    private String idCuenta;
+
     public String getBovedaDali() {
         return bovedaDali;
     }
@@ -21,4 +23,11 @@ public class ConsultaSaldoCustodiosInDTO {
     }
 
 
+    public String getIdCuenta() {
+        return idCuenta;
+    }
+
+    public void setIdCuenta(String idCuenta) {
+        this.idCuenta = idCuenta;
+    }
 }

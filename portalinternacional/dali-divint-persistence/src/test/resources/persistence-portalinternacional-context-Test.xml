@@ -155,6 +155,9 @@
                     com.indeval.portalinternacional.middleware.servicios.modelo.DivisaInt
                 </value>
                 <value>
+                    com.indeval.portalinternacional.middleware.servicios.modelo.SaldoNombradaInt
+                </value>
+                <value>
                     com.indeval.portaldali.persistence.modelo.Depositos
                 </value>
                 <value>

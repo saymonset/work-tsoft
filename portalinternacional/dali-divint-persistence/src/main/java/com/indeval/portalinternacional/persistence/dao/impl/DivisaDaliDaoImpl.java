@@ -4,16 +4,21 @@ import com.bursatec.persistence.dao.impl.BaseDaoHibernateImpl;
 import com.indeval.portaldali.middleware.servicios.modelo.BusinessException;
 import com.indeval.portaldali.middleware.servicios.modelo.vo.PaginaVO;
 import com.indeval.portaldali.persistence.modelo.Divisa;
+import com.indeval.portaldali.persistence.util.DateUtils;
 import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
 import com.indeval.portalinternacional.middleware.servicios.dto.EstadoPaginacionDTO;
 import com.indeval.portalinternacional.middleware.servicios.dto.SettlementDisciplineRegimeVO;
-import com.indeval.portalinternacional.middleware.servicios.modelo.DivisaBoveda;
-import com.indeval.portalinternacional.middleware.servicios.modelo.DivisaInt;
-import com.indeval.portalinternacional.middleware.servicios.modelo.TipoInstruccionDivisa;
+import com.indeval.portalinternacional.middleware.servicios.modelo.*;
+import com.indeval.portalinternacional.middleware.servicios.vo.ConciliacionIntDTO;
 import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaSaldoCustodiosInDTO;
 import com.indeval.portalinternacional.persistence.dao.DivisaDaliDao;
 import com.indeval.portalinternacional.persistence.util.DTOAssembler;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.*;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 import org.hibernate.type.Type;
 import org.springframework.orm.hibernate3.HibernateCallback;
@@ -267,8 +272,6 @@ public class DivisaDaliDaoImpl extends BaseDaoHibernateImpl implements DivisaDal
 		@SuppressWarnings("unchecked")
 
 		public List<DivisaDTO> findDivisaByBovedad(final Long idBoveda)  {
-		//	log.debug("SettlementDisciplineRegimeDaoImpl :: getSettlementDisciplineRegimeForInstitucion");
-
 			final StringBuilder query = new StringBuilder();
 			query.append(" SELECT cd.ID_DIVISA as id, cd.CLAVE_ALFABETICA as claveAlfabetica, " +
 					"cd.CLAVE_NUMERICA  as claveNumerica, cd.DESCRIPCION as descripcion ");
@@ -290,12 +293,103 @@ public class DivisaDaliDaoImpl extends BaseDaoHibernateImpl implements DivisaDal
 				}
 			});
 		}
+		/**BORRAR INICIO*/
+		/**BORRAR */
+
+	/**
+	 * Genera parametros para conciliacion
+	 * @param consultaSaldoCustodiosInDTO
+	 * @return DetachedCriteria
+	 */
+	private DetachedCriteria paramsConsultaSaldoCustodios(ConsultaSaldoCustodiosInDTO consultaSaldoCustodiosInDTO){
+		//Criteria
+		DetachedCriteria criteria = DetachedCriteria.forClass(SaldoNombradaInt.class);
+
+//
+//		select ins.razon_social, ins.id_tipo_institucion, ins.id_institucion, cue.cuenta, nom.id_divisa, nom.id_boveda, nom.saldo_disponible, nom.saldo_no_disponible
+//		from DALI_ADMIN.t_saldo_nombrada nom
+//		inner join DALI_ADMIN.c_cuenta_nombrada cue
+//		on cue.id_cuenta_nombrada = nom.id_cuenta
+//		inner join DALI_ADMIN.c_institucion ins
+//		on ins.id_institucion = cue.id_institucion
+//		where nom.ID_DIVISA=3
+//		AND nom.id_boveda = 13
+//		AND nom.ID_CUENTA <> 4040;
+		// Realiza las uniones necesarias utilizando el método createAlias
+		criteria.createAlias("divisa", "div");
+		criteria.createAlias("boveda", "bov");
+		criteria.createAlias("cuentaNombrada", "cue");
+		criteria.createAlias("cue.institucion", "ins");
+		// Agrega las restricciones utilizando el método add
+		if(consultaSaldoCustodiosInDTO.getDivisaDali() != null ){
+			BigInteger divisaId = new BigInteger(consultaSaldoCustodiosInDTO.getDivisaDali());
+		//	criteria.add(Restrictions.eq("div.idDivisa", divisaId));
+			criteria.add(Restrictions.eq("idDivisa", divisaId));
+		}
+		if(consultaSaldoCustodiosInDTO.getDivisaDali() != null ){
+		//	Long bovedaId = new Long(consultaSaldoCustodiosInDTO.getBovedaDali());
+ 		//	criteria.add(Restrictions.eq("bov.idBoveda", bovedaId));
+			BigInteger bovedaId = new BigInteger(consultaSaldoCustodiosInDTO.getBovedaDali());
+			criteria.add(Restrictions.eq("idBoveda", bovedaId));
+		}
+		if(consultaSaldoCustodiosInDTO.getIdCuenta() != null ){
+			BigInteger idCuenta = new BigInteger(consultaSaldoCustodiosInDTO.getIdCuenta());
+			criteria.add(Restrictions.ne("idCuenta", idCuenta));
+		}
+//		criteria.add(Restrictions.eq("sn.idDivisa", consultaSaldoCustodiosInDTO.getDivisaDali()));
+//		criteria.add(Restrictions.eq("sn.idBoveda", consultaSaldoCustodiosInDTO.getBovedaDali()));
+//		criteria.add(Restrictions.ne("sn.idCuenta", 4040));
+
+		/*================PARAMETROS==========================*/
+
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		return criteria;
+	}
 
 	@Override
-	public PaginaVO consultaSaldoCustodio(ConsultaSaldoCustodiosInDTO consultaSaldoCustodiosInDTO, PaginaVO paginaVO) throws BusinessException {
-		System.out.println(consultaSaldoCustodiosInDTO.getDivisaDali());
-		System.out.println(consultaSaldoCustodiosInDTO.getBovedaDali());
-		return null;
+	public PaginaVO consultaSaldoCustodio(ConsultaSaldoCustodiosInDTO consultaSaldoCustodiosInDTO, PaginaVO pagina) throws BusinessException {
+		try {
+			if(pagina == null){
+				pagina = new PaginaVO();
+			}
+			final Integer offset = pagina.getOffset() != null ? pagina.getOffset():null;
+			final Integer regxpag = pagina.getRegistrosXPag() != null ? pagina.getRegistrosXPag():null;
+
+			final DetachedCriteria criteria=paramsConsultaSaldoCustodios(consultaSaldoCustodiosInDTO);
+
+			//Callback
+			HibernateCallback hibernateCallback = new HibernateCallback() {
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					Criteria crit = criteria.getExecutableCriteria(session);
+					if ( offset != null && regxpag !=null && regxpag != PaginaVO.TODOS) {
+						crit.setMaxResults(regxpag);
+						crit.setFetchSize(regxpag);
+						crit.setFirstResult(offset);
+					}
+					return crit.list();
+				}
+			};
+			//Ejecucion
+			@SuppressWarnings("unchecked")
+			List<SaldoNombradaInt> saldoCustodios = (List<SaldoNombradaInt>)this.getHibernateTemplate().executeFind(hibernateCallback);
+			if(saldoCustodios != null){
+				pagina.setRegistros(saldoCustodios);
+			}
+			final DetachedCriteria criteriaSum = paramsConsultaSaldoCustodios(consultaSaldoCustodiosInDTO);
+			Integer tam = (Integer) this.getHibernateTemplate().execute(new HibernateCallback(){
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					criteriaSum.setProjection(Projections.rowCount());
+					Criteria crit = criteriaSum.getExecutableCriteria(session);
+					return crit.uniqueResult();
+				}
+
+			});
+			pagina.setTotalRegistros(tam);
+		}catch (Exception e){
+			System.out.println("e.toString() = " + e.toString());
+		}
+
+		return pagina;
 	}
 
 

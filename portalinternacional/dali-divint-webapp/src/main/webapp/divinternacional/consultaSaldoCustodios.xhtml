@@ -128,8 +128,8 @@
 											<h:outputText styleClass="texto" value="TODAS" rendered="#{empty consultaSaldoCustodiosBean.bovedaDali}"/>
 										</td>
 										<td>
-											<h:outputText styleClass="texto" value="#{consultaSaldoCustodiosBean.selectedCustodio}" rendered="#{!empty consultaSaldoCustodiosBean.custodio}"/>
-											<h:outputText styleClass="texto" value="TODOS" rendered="#{empty consultaSaldoCustodiosBean.custodio}"/>
+											<h:outputText styleClass="texto" value="#{consultaSaldoCustodiosBean.selectedDivisa}" rendered="#{!empty consultaSaldoCustodiosBean.divisaDali}"/>
+											<h:outputText styleClass="texto" value="TODOS" rendered="#{empty consultaSaldoCustodiosBean.divisaDali}"/>
 										</td>
 									</tr>
 								</table>
@@ -321,7 +321,7 @@
 							<f:facet name="header">
 								<h:outputText styleClass="texto textoPeque12" value="Divisa" />
 							</f:facet>
-							<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.custodio.codigoBanco}" />
+							<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.divisa.descripcion}" />
 						</h:column>
 
 						<!-- Boveda DALI  -->
@@ -329,8 +329,7 @@
 							<f:facet name="header">
 								<h:outputText styleClass="texto textoPeque12" value="#{etq.bovedaMinus}" />
 							</f:facet>
-							<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.bovedaDali.nombreCorto}" rendered="#{not empty conciliacion.bovedaDali.nombreCorto}" />
-							<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.conciliacionNacional ? 'NACIONAL' : 'N/A'}" rendered="#{empty conciliacion.bovedaDali or conciliacion.bovedaDali.nombreCorto}" />
+							<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.boveda.nombreCorto}" rendered="#{not empty conciliacion.boveda.nombreCorto}" />
 						</h:column>
 						<!-- Saldo  -->
 						<h:column >
@@ -340,8 +339,8 @@
 							<table align="left">
 								<tr>
 									<td>
-										<a href="javascript:detalleResultado(#{conciliacion.id});" title="detalle de la Conciliacion" >
-											<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.id}" />
+										<a href="javascript:detalleResultado(#{conciliacion.idCuenta});" title="detalle de la Conciliacion" >
+											<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.idCuenta}" />
 										</a>
 									</td>
 								</tr>
@@ -354,16 +353,9 @@
 							</f:facet>
 							<table>
 								<tr><td>
-									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.diferencia}" rendered="#{not empty conciliacion.diferencia and conciliacion.diferencia gt 0}" >
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.saldoDisponible}" rendered="#{not empty conciliacion.saldoDisponible}" >
 										<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
 									</h:outputText>
-									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.diferencia}" rendered="#{not empty conciliacion.diferencia and conciliacion.diferencia lt 0}" >
-										<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
-									</h:outputText>
-									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.diferencia}" rendered="#{not empty conciliacion.diferencia and conciliacion.diferencia eq 0}" >
-										<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
-									</h:outputText>
-									<h:outputText styleClass="texto textoPeque12" value="#{etq.aunNoConciliado}" rendered="#{empty conciliacion.diferencia}" />
 								</td>
 								</tr>
 							</table>
@@ -375,16 +367,9 @@
 							</f:facet>
 							<table>
 								<tr><td>
-									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.diferencia}" rendered="#{not empty conciliacion.diferencia and conciliacion.diferencia gt 0}" >
+									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.saldoNoDisponible}" rendered="#{not empty conciliacion.saldoNoDisponible}" >
 										<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
 									</h:outputText>
-									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.diferencia}" rendered="#{not empty conciliacion.diferencia and conciliacion.diferencia lt 0}" >
-										<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
-									</h:outputText>
-									<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.diferencia}" rendered="#{not empty conciliacion.diferencia and conciliacion.diferencia eq 0}" >
-										<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
-									</h:outputText>
-									<h:outputText styleClass="texto textoPeque12" value="#{etq.aunNoConciliado}" rendered="#{empty conciliacion.diferencia}" />
 								</td>
 								</tr>
 							</table>

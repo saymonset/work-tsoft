@@ -104,7 +104,8 @@ public class ConsultaCustodiosController  extends ControllerBase {
         if(this.listaBoveda != null && this.listaBoveda.size() > 0) {
             return this.listaBoveda;
         }
-        List<Boveda> bovedas = consultaSaldoCustodiosService.consultaBovedas(consultaSaldoCustodiosService.BOVEDA_VALORES_INTERNACIONAL);
+        Integer tipoBoveda = null;
+        List<Boveda> bovedas = consultaSaldoCustodiosService.consultaBovedas(tipoBoveda);
         List <SelectItem> listaBoveda = new ArrayList<SelectItem>();
         if(bovedas != null){
             for (Boveda boveda : bovedas){
@@ -286,6 +287,14 @@ public class ConsultaCustodiosController  extends ControllerBase {
     }
     public String getSelectedCustodio(){
         String resultado = getSelected(getCustodio() ,this.listaCustodios);
+        if(resultado != null){
+            return resultado;
+        }
+        return "TODOS";
+    }
+
+    public String getSelectedDivisa(){
+        String resultado = getSelected(getDivisaDali() ,this.listaDivisas);
         if(resultado != null){
             return resultado;
         }
