@@ -315,8 +315,6 @@ public class DivisaDaliDaoImpl extends BaseDaoHibernateImpl implements DivisaDal
 			criteria.add(Restrictions.eq("idDivisa", divisaId));
 		}
 		if(consultaSaldoCustodiosInDTO.getDivisaDali() != null ){
-		//	Long bovedaId = new Long(consultaSaldoCustodiosInDTO.getBovedaDali());
- 		//	criteria.add(Restrictions.eq("bov.idBoveda", bovedaId));
 			BigInteger bovedaId = new BigInteger(consultaSaldoCustodiosInDTO.getBovedaDali());
 			criteria.add(Restrictions.eq("idBoveda", bovedaId));
 		}
@@ -328,12 +326,7 @@ public class DivisaDaliDaoImpl extends BaseDaoHibernateImpl implements DivisaDal
 			BigInteger idCuenta = new BigInteger(consultaSaldoCustodiosInDTO.getIdCuentaPopup());
 			criteria.add(Restrictions.eq("idCuenta", idCuenta));
 		}
-//		criteria.add(Restrictions.eq("sn.idDivisa", consultaSaldoCustodiosInDTO.getDivisaDali()));
-//		criteria.add(Restrictions.eq("sn.idBoveda", consultaSaldoCustodiosInDTO.getBovedaDali()));
-//		criteria.add(Restrictions.ne("sn.idCuenta", 4040));
-
 		/*================PARAMETROS==========================*/
-
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		return criteria;
 	}

@@ -4,8 +4,6 @@ import com.indeval.portaldali.middleware.servicios.modelo.vo.PaginaVO;
 import com.indeval.portaldali.persistence.modelo.Boveda;
 import com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaSaldoCustodiosService;
 import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
-import com.indeval.portalinternacional.middleware.servicios.modelo.Custodio;
-import com.indeval.portalinternacional.middleware.servicios.vo.ConciliacionIntDTO;
 import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaSaldoCustodiosInDTO;
 import com.indeval.portalinternacional.middleware.servicios.vo.DetalleConciliacionIntDTO;
 import com.indeval.portalinternacional.presentation.controller.common.ControllerBase;
@@ -28,16 +26,13 @@ public class ConsultaCustodiosController  extends ControllerBase {
     private Map<String, String> params;
 
 
-    private boolean consultaEjecutada;
-    private ConciliacionIntDTO conciliacion;
     private ConsultaSaldoCustodiosInDTO consultaSaldoCustodiosInDTO;
     private ConsultaSaldoCustodiosService consultaSaldoCustodiosService;
 
     private List<SelectItem> listaBoveda;
-    private List<SelectItem> listaCustodios;
     public List<SelectItem> listaDivisas;
 
-    private String custodio;
+
     private String bovedaDali;
     private String divisaDali;
 
@@ -52,6 +47,8 @@ public class ConsultaCustodiosController  extends ControllerBase {
 
     private String idCuentaPopup;
 
+    private boolean consultaEjecutada;
+
 
     public ConsultaCustodiosController() {
     }
@@ -62,7 +59,6 @@ public class ConsultaCustodiosController  extends ControllerBase {
      */
     public String getInit() {
         this.bovedaDali="-1";
-        this.custodio="-1";
         this.divisaDali ="-1";
         banderaBitacoraConsulta = false;
         setIdCuentaPopup(null);
@@ -90,8 +86,6 @@ public class ConsultaCustodiosController  extends ControllerBase {
     public void limpiar(ActionEvent evt)
     {
         banderaBitacoraConsulta = false;
-        this.custodio="-1";
-
         this.divisaDali ="-1";
         this.bovedaDali="-1";
 
@@ -129,19 +123,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
             setIdCuentaPopup(id.toString());
         }
         ejecutarConsulta();
-//        Long id=null;
-//        if(params.get("idCuentaPopup")!=null ){
-//            id=Long.valueOf(params.get("idCuentaPopup"));
-//        }
-//        if(id != null){
-//
-//            setIdCuentaPopup(id.toString());
-//            setParams();
-//            resultados = new PaginaVO();
-//            resultados.setOffset(0);
-//            resultados.setRegistrosXPag(PaginaVO.TODOS);
-//            resultados = consultaSaldoCustodiosService.consultaSaldoCustodio(consultaSaldoCustodiosInDTO, resultados);
-//        }
+
         return null;
     }
 
@@ -152,7 +134,6 @@ public class ConsultaCustodiosController  extends ControllerBase {
     public String ejecutarConsulta(){
 
         setParams();
-        //    paginaVO = consultaSaldoCustodiosService.consultaConciliacion(conciliacion, paginaVO);
         paginaVO = consultaSaldoCustodiosService.consultaSaldoCustodio(consultaSaldoCustodiosInDTO, paginaVO);
 
         if ( paginaVO.getRegistrosXPag() !=0){
@@ -209,26 +190,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), e.getMessage()));
         }
     }
-    /**
-     * obtiene la lista de custodios
-     */
-    public List<SelectItem> getCustodios(){
-        if(this.listaCustodios != null && this.listaCustodios.size() > 0){
-            return this.listaCustodios;
-        }
-        List<Custodio> custodios = consultaSaldoCustodiosService.obtieneCatalogoCustodios();
-        getDivisas();
-        List <SelectItem> listaCustodios = new ArrayList<SelectItem>();
-        if( custodios != null){
-            for (Custodio custodio : custodios){
-                listaCustodios.add(new SelectItem(custodio.getId().toString(), custodio.getDescripcion()));
-            }
-        }else{
-            listaCustodios.add(new SelectItem("-2","VACIO"));
-        }
-        this.listaCustodios=listaCustodios;
-        return listaCustodios;
-    }
+
     public List<SelectItem> getDivisas(){
         if(this.listaDivisas != null && this.listaDivisas.size() > 0){
             return this.listaDivisas;
@@ -272,18 +234,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
 
     }
 
-    /**
-     * Concilia
-     * @param evt
-     */
-    public void concilia(ActionEvent evt){
-        Long idConciliacion=Long.valueOf(getHiddenField("daliForm:idConciliacionHidden"));
-        consultaSaldoCustodiosService.instruyeConciliacion(idConciliacion);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                "Se esta conciliando el folio: "+idConciliacion+" actualice en unos momentos",
-                "Se esta conciliando el folio: "+idConciliacion+" actualice en unos momentos"));
-//		addMessage("Se esta conciliando el folio: "+idConciliacion+" actualice en unos momentos");
-    }
+
 
     /**
      * Action para generar el reporte de auditoria
@@ -341,13 +292,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
 
         return conciliacion;
     }
-    public String getSelectedCustodio(){
-        String resultado = getSelected(getCustodio() ,this.listaCustodios);
-        if(resultado != null){
-            return resultado;
-        }
-        return "TODOS";
-    }
+
 
     public String getSelectedDivisa(){
         String resultado = getSelected(getDivisaDali() ,this.listaDivisas);
@@ -372,19 +317,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
         this.consultaSaldoCustodiosService = consultaSaldoCustodiosService;
     }
 
-    /**
-     * @return the custodio
-     */
-    public String getCustodio() {
-        return custodio;
-    }
 
-    /**
-     * @param custodio the custodio to set
-     */
-    public void setCustodio(String custodio) {
-        this.custodio = custodio;
-    }
 
     /**
      * @return the consultaEjecutada
@@ -461,13 +394,6 @@ public class ConsultaCustodiosController  extends ControllerBase {
         this.bovedaDali = bovedaDali;
     }
 
-    public ConciliacionIntDTO getConciliacion() {
-        return conciliacion;
-    }
-
-    public void setConciliacion(ConciliacionIntDTO conciliacion) {
-        this.conciliacion = conciliacion;
-    }
     public String getDivisaDali() {
         return divisaDali;
     }

@@ -58,7 +58,7 @@ import java.util.*;
 public class ConsultaSaldoCustodiosServiceImpl  implements ConsultaSaldoCustodiosService, Constantes {
 
     /** Para el registro de log de esta clase */
-    private static final Logger log = LoggerFactory.getLogger(DivisionInternacionalServiceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(ConsultaSaldoCustodiosServiceImpl.class);
 
     /**
      * EmisionVO[]
