@@ -316,7 +316,8 @@ public class ConsultaCustodiosController  extends ControllerBase {
         paginaReportes = new PaginaVO();
         paginaReportes.setOffset(0);
         paginaReportes.setRegistrosXPag(PaginaVO.TODOS);
-        paginaReportes = consultaSaldoCustodiosService.consultaConciliacion(conciliacion, paginaReportes);
+        //paginaReportes = consultaSaldoCustodiosService.consultaSaldoCustodio(conciliacion, paginaReportes);
+        paginaReportes = consultaSaldoCustodiosService.consultaSaldoCustodio(consultaSaldoCustodiosInDTO, paginaReportes);
         this.totalRegistros=paginaReportes.getTotalRegistros();
 
     }

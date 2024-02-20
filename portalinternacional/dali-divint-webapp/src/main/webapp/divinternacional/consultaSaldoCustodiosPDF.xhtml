@@ -3,105 +3,47 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
 	  xmlns:cvt="http://indeval.com/jsf/converters">
 
-<pdf:document documentName="conciliacionesIntBean" documentTitle="Conciliacion Internacional"
+<pdf:document documentName="consultaSaldoCustodiosPDF" documentTitle="Consulta saldo custodio"
 			  institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}"
 			  landscape="true" fecha="#{consultaBitacoraEnvOpBean.fechaActual}"
 			  imageResource="/images/indeval.jpg">
-	<pdf:table value="conciliacionesIntBean" currentBean="emision" widthPercentage="100">
+	<pdf:table value="consultaSaldoCustodiosBean" currentBean="emision" widthPercentage="100">
 		<pdf:row>
 			<pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
 		</pdf:row>
 	</pdf:table>
-	<pdf:table value="#{conciliacionesIntBean}" currentBean="emision" widthPercentage="100">
+	<pdf:table value="#{consultaSaldoCustodiosBean}" currentBean="emision" widthPercentage="100">
 		<pdf:row>
-			<pdf:col header="#{etq.folioConciliacionMinus}" value="#{!empty conciliacionesIntBean.folio ? conciliacionesIntBean.folio : 'TODOS'}" align="center" />
-			<pdf:col header="#{etq.fechaMensajeInicio}" value="#{conciliacionesIntBean.fechaMensajeInicio}" align="center" rendered="#{!empty conciliacionesIntBean.fechaMensajeInicio}" >
-				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
-			</pdf:col>
-			<pdf:col header="#{etq.fechaMensajeInicio}" value="TODAS" rendered="#{empty conciliacionesIntBean.fechaMensajeInicio}" align="center">
-				<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
-			</pdf:col>
-			<pdf:col header="#{etq.fechaMensajeFin}" value="#{conciliacionesIntBean.fechaMensajeFin }" align="center" rendered="#{!empty conciliacionesIntBean.fechaMensajeFin }">
-				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
-			</pdf:col>
-			<pdf:col header="#{etq.fechaMensajeFin}" value="TODAS" rendered="#{empty conciliacionesIntBean.fechaMensajeFin}" align="center">
-				<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
-			</pdf:col>
-			<pdf:col header="#{etq.custodio}" value="#{conciliacionesIntBean.selectedCustodio}" align="center" />
-			<pdf:col header="#{etq.bovedaDaliMinus}" value="#{conciliacionesIntBean.selectedBoveda}" align="center" />
+			<pdf:col header="#{etq.bovedaMinus}" value="#{!empty consultaSaldoCustodiosBean.bovedaDali ? consultaSaldoCustodiosBean.selectedBoveda : ''}" align="center" />
+			<pdf:col header="#{etq.divisaMinus}" value="#{!empty consultaSaldoCustodiosBean.divisaDali ? consultaSaldoCustodiosBean.selectedDivisa : ''}" align="center" />
 
-			<pdf:col header="#{etq.fechaConciliacionInicio}" value="#{conciliacionesIntBean.fechaConciliacionInicio}" align="center" rendered="#{!empty conciliacionesIntBean.fechaConciliacionInicio}" >
-				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
-			</pdf:col>
-			<pdf:col header="#{etq.fechaConciliacionInicio}" value="TODAS" rendered="#{empty conciliacionesIntBean.fechaConciliacionInicio}" align="center">
-				<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
-			</pdf:col>
-			<pdf:col header="#{etq.fechaConciliacionFin}" value="#{conciliacionesIntBean.fechaConciliacionFin }" align="center" rendered="#{!empty conciliacionesIntBean.fechaConciliacionFin }">
-				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
-			</pdf:col>
-			<pdf:col header="#{etq.fechaConciliacionFin}" value="TODAS" rendered="#{empty conciliacionesIntBean.fechaConciliacionFin}" align="center">
-				<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
-			</pdf:col>
-			<pdf:col header="#{etq.diferenciaPosicion}" value="#{conciliacionesIntBean.difPos ? 'Si' : 'No'}"  align="center"/>
-			<pdf:col header="#{etq.diferenciaEmisionesCustodio}" value="#{conciliacionesIntBean.difCust ? 'Si' : 'No'}"  align="center"/>
-			<pdf:col header="#{etq.diferenciaEmisionesDali}" value="#{conciliacionesIntBean.difDali ? 'Si' : 'No'}"  align="center"/>
-			<pdf:col header="#{etq.porConciliar}" value="#{conciliacionesIntBean.porConc ? 'Si' : 'No'}"  align="center"/>
-			<pdf:col header="#{etq.enBovedasNacionales}" value="#{conciliacionesIntBean.conciliacionNacional ? 'Si' : 'No'}"  align="center"/>
 
 		</pdf:row>
 	</pdf:table>
 
 	<pdf:br/>
-	<pdf:text align="center" value="#{etq.registrosEncontrados}: #{conciliacionesIntBean.totalRegistros}"/>
+	<pdf:text align="center" value="#{etq.registrosEncontrados}: #{consultaSaldoCustodiosBean.totalRegistros}"/>
 	<pdf:br/>
 
-	<pdf:table value="#{conciliacionesIntBean.paginaReportes.registros}" currentBean="conciliacion">
+	<pdf:table value="#{consultaSaldoCustodiosBean.paginaReportes.registros}" currentBean="conciliacion">
 		<pdf:row>
 
-			<pdf:col header="#{etq.folioConciliacionMinus}" value="#{conciliacion.id}" align="center" />
+			<pdf:col header="#{etq.divisaMinus}" value="#{conciliacion.divisa.descripcion}" align="center" />
+			<pdf:col header="#{etq.bovedaMinus}" value="#{conciliacion.boveda.nombreCorto}" align="center"/>
 
 
-			<pdf:col header="#{etq.custodio}" value="#{conciliacion.custodio.codigoBanco}" align="center" rendered="#{(!empty conciliacion.custodio) and (!empty conciliacion.custodio.codigoBanco) }"/>
-			<pdf:col header="#{etq.custodio}" value="N/A" align="center" rendered="#{(empty conciliacion.custodio) or (empty conciliacion.custodio.codigoBanco) }"/>
 
+			<pdf:col header="Saldo" value="#{conciliacion.idCuenta}" align="center" rendered="#{!empty conciliacion.idCuenta}">
 
-			<pdf:col header="#{etq.fechaMensaje}" value="#{conciliacion.fechaMensaje}" align="center" rendered="#{!empty conciliacion.fechaMensaje}" >
-				<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
 			</pdf:col>
-			<pdf:col header="#{etq.fechaMensaje}" value="N/A" align="center" rendered="#{empty conciliacion.fechaMensaje}" />
 
-
-			<pdf:col header="#{etq.fechaConciliacionMinus}" value="#{conciliacion.fechaConciliacion}" align="center" rendered="#{!empty conciliacion.fechaConciliacion}" >
-				<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
-			</pdf:col>
-			<pdf:col header="#{etq.fechaConciliacionMinus}" value="N/A" align="center" rendered="#{empty conciliacion.fechaConciliacion}" />
-
-
-			<pdf:col header="#{etq.posicionMensaje}" value="#{conciliacion.posicionGlobalMensaje}" align="right" rendered="#{!empty conciliacion.posicionGlobalMensaje}">
+			<pdf:col header="Disponible" value="#{conciliacion.saldoDisponible}" align="right" rendered="#{!empty conciliacion.saldoDisponible}">
 				<f:convertNumber pattern="###,###,###,###,###,##0.######" />
 			</pdf:col>
-			<pdf:col header="#{etq.posicionMensaje}" value="N/A" align="right" rendered="#{empty conciliacion.posicionGlobalMensaje}"/>
-
-
-			<pdf:col header="#{etq.posicionDali}" value="#{conciliacion.posicionDali}" align="right" rendered="#{!empty conciliacion.posicionDali}"  >
-				<f:convertNumber pattern="###,###,###,###,###,##0" />
-			</pdf:col>
-			<pdf:col header="#{etq.posicionDali}" value="N/A" align="right" rendered="#{empty conciliacion.posicionDali}"  />
-
-
-			<pdf:col header="#{etq.bovedaDaliMinus}" value="#{conciliacion.bovedaDali.nombreCorto}" align="center" rendered ="#{(!empty conciliacion.bovedaDali) and (!empty conciliacion.bovedaDali.nombreCorto) }" />
-			<pdf:col header="#{etq.bovedaDaliMinus}" value="#{conciliacion.bovedaDali.nombreCorto}" align="center" rendered ="#{(empty conciliacion.bovedaDali) or (empty conciliacion.bovedaDali.nombreCorto) }" />
-
-			<pdf:col header="#{etq.diferencia}" value="#{conciliacion.diferencia}" align="right"  rendered="#{!empty conciliacion.diferencia}" >
+			<pdf:col header="No Disponible" value="#{conciliacion.saldoNoDisponible}" align="right" rendered="#{!empty conciliacion.saldoNoDisponible}">
 				<f:convertNumber pattern="###,###,###,###,###,##0.######" />
 			</pdf:col>
-			<pdf:col header="#{etq.diferencia}" value="N/A" align="right"  rendered="#{empty conciliacion.diferencia}" />
 
-			<pdf:col header="#{etq.porConciliar}" value="#{conciliacion.estatusConciliacion.id lt 4 ? 'Si' : 'No'}"  align="center"/>
-
-			<pdf:col header="#{etq.diferenciaEmisionesDali}" value="#{conciliacion.diferenciaEmisionesDali ? 'Si' : 'No'}" align="center" />
-
-			<pdf:col header="#{etq.diferenciaEmisionesCustodio}" value="#{conciliacion.diferenciaEmisionesMensaje ? 'Si' : 'No'}" align="center" />
 		</pdf:row>
 	</pdf:table>
 

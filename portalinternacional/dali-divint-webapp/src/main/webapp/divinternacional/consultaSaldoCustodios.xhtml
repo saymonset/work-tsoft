@@ -84,7 +84,7 @@
 								</tr>
 								<tr>
 									<td align="left">
-										<h:outputText styleClass="texto" value="Divisa" />
+										<h:outputText styleClass="texto" value="#{etq.divisaMinus}" />
 									</td>
 								</tr>
 								<tr align="left">
@@ -118,7 +118,7 @@
 											<h:outputText styleClass="texto" value="#{etq.bovedaMinus}" />
 										</td>
 										<td align="center">
-											<h:outputText styleClass="texto" value="Divisa" />
+											<h:outputText styleClass="texto" value="#{etq.divisaMinus}" />
 										</td>
 
 									</tr>
@@ -319,7 +319,7 @@
 						<!-- Custodio  -->
 						<h:column>
 							<f:facet name="header">
-								<h:outputText styleClass="texto textoPeque12" value="Divisa" />
+								<h:outputText styleClass="texto textoPeque12" value="#{etq.divisaMinus}" />
 							</f:facet>
 							<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.divisa.descripcion}" />
 						</h:column>
@@ -340,7 +340,7 @@
 								<tr>
 									<td>
 										<a href="javascript:detalleResultado(#{conciliacion.idCuenta});" title="detalle del saldo" >
-											<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.idCuenta}" />
+											<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.saldo}" />
 										</a>
 									</td>
 								</tr>

@@ -304,17 +304,6 @@ public class DivisaDaliDaoImpl extends BaseDaoHibernateImpl implements DivisaDal
 	private DetachedCriteria paramsConsultaSaldoCustodios(ConsultaSaldoCustodiosInDTO consultaSaldoCustodiosInDTO){
 		//Criteria
 		DetachedCriteria criteria = DetachedCriteria.forClass(SaldoNombradaInt.class);
-
-//
-//		select ins.razon_social, ins.id_tipo_institucion, ins.id_institucion, cue.cuenta, nom.id_divisa, nom.id_boveda, nom.saldo_disponible, nom.saldo_no_disponible
-//		from DALI_ADMIN.t_saldo_nombrada nom
-//		inner join DALI_ADMIN.c_cuenta_nombrada cue
-//		on cue.id_cuenta_nombrada = nom.id_cuenta
-//		inner join DALI_ADMIN.c_institucion ins
-//		on ins.id_institucion = cue.id_institucion
-//		where nom.ID_DIVISA=3
-//		AND nom.id_boveda = 13
-//		AND nom.ID_CUENTA <> 4040;
 		// Realiza las uniones necesarias utilizando el método createAlias
 		criteria.createAlias("divisa", "div");
 		criteria.createAlias("boveda", "bov");
@@ -323,7 +312,6 @@ public class DivisaDaliDaoImpl extends BaseDaoHibernateImpl implements DivisaDal
 		// Agrega las restricciones utilizando el método add
 		if(consultaSaldoCustodiosInDTO.getDivisaDali() != null ){
 			BigInteger divisaId = new BigInteger(consultaSaldoCustodiosInDTO.getDivisaDali());
-		//	criteria.add(Restrictions.eq("div.idDivisa", divisaId));
 			criteria.add(Restrictions.eq("idDivisa", divisaId));
 		}
 		if(consultaSaldoCustodiosInDTO.getDivisaDali() != null ){
