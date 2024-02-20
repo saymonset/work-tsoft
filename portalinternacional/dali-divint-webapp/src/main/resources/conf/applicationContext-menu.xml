@@ -1398,7 +1398,7 @@
 <!--                                         Consulta Saldo De Custodios Global-->
                                         <bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
                                             <property name="id" value="ConsultaSaldoDeCustodios"></property>
-                                            <property name="etiqueta" value="Consulta de Saldo de Custodios saymons"></property>
+                                            <property name="etiqueta" value="Consulta de Saldo de Custodios"></property>
                                             <property name="url" value="/dali-divint/divinternacional/consultaSaldoCustodios.faces"></property>
                                             <property name="roles">
                                                 <list>
