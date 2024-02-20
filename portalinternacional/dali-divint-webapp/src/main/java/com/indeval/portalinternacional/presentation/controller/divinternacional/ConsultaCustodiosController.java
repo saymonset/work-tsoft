@@ -51,6 +51,8 @@ public class ConsultaCustodiosController  extends ControllerBase {
     private int totalPaginas = 1;
 
     private String idCuentaPopup;
+
+
     public ConsultaCustodiosController() {
     }
 
@@ -63,15 +65,12 @@ public class ConsultaCustodiosController  extends ControllerBase {
         this.custodio="-1";
         this.divisaDali ="-1";
         banderaBitacoraConsulta = false;
+        setIdCuentaPopup(null);
         return null;
     }
 
     private void setParams() {
-        /**
-         *  System.out.println("divisaDali = " + divisaDali);
-         *             System.out.println("bovedaDali = " + bovedaDali);
-         *             System.out.println(" " );
-         * */
+
         consultaSaldoCustodiosInDTO = new ConsultaSaldoCustodiosInDTO();
         consultaSaldoCustodiosInDTO.setDivisaDali(divisaDali);
         consultaSaldoCustodiosInDTO.setBovedaDali(bovedaDali);
@@ -127,16 +126,22 @@ public class ConsultaCustodiosController  extends ControllerBase {
         Long id=null;
         if(params.get("idCuentaPopup")!=null ){
             id=Long.valueOf(params.get("idCuentaPopup"));
-        }
-        if(id != null){
-
             setIdCuentaPopup(id.toString());
-            setParams();
-            resultados = new PaginaVO();
-            resultados.setOffset(0);
-            resultados.setRegistrosXPag(PaginaVO.TODOS);
-            resultados = consultaSaldoCustodiosService.consultaSaldoCustodio(consultaSaldoCustodiosInDTO, paginaVO);
         }
+        ejecutarConsulta();
+//        Long id=null;
+//        if(params.get("idCuentaPopup")!=null ){
+//            id=Long.valueOf(params.get("idCuentaPopup"));
+//        }
+//        if(id != null){
+//
+//            setIdCuentaPopup(id.toString());
+//            setParams();
+//            resultados = new PaginaVO();
+//            resultados.setOffset(0);
+//            resultados.setRegistrosXPag(PaginaVO.TODOS);
+//            resultados = consultaSaldoCustodiosService.consultaSaldoCustodio(consultaSaldoCustodiosInDTO, resultados);
+//        }
         return null;
     }
 
@@ -150,11 +155,14 @@ public class ConsultaCustodiosController  extends ControllerBase {
         //    paginaVO = consultaSaldoCustodiosService.consultaConciliacion(conciliacion, paginaVO);
         paginaVO = consultaSaldoCustodiosService.consultaSaldoCustodio(consultaSaldoCustodiosInDTO, paginaVO);
 
-        totalPaginas = paginaVO.getTotalRegistros() / paginaVO.getRegistrosXPag();
+        if ( paginaVO.getRegistrosXPag() !=0){
+            totalPaginas = paginaVO.getTotalRegistros() / paginaVO.getRegistrosXPag();
 
-        if(paginaVO.getTotalRegistros() % paginaVO.getRegistrosXPag() > 0)
-            totalPaginas++;
-        totalPaginas = (totalPaginas <= 0) ? 1 : totalPaginas;
+            if(paginaVO.getTotalRegistros() % paginaVO.getRegistrosXPag() > 0)
+                totalPaginas++;
+            totalPaginas = (totalPaginas <= 0) ? 1 : totalPaginas;
+        }
+
 
         setConsultaEjecutada(true);
         return null;

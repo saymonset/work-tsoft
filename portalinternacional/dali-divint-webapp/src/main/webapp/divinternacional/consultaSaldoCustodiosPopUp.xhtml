@@ -155,9 +155,9 @@
 
 
 						<h:dataTable id="tablaResultados"
-							value="#{consultaSaldoCustodiosBean.resultados.registros}"
+							value="#{consultaSaldoCustodiosBean.paginaVO.registros}"
 							var="conciliacion"
-							rendered="#{!empty consultaSaldoCustodiosBean.resultados and not empty consultaSaldoCustodiosBean.resultados.registros}"
+							rendered="#{!empty consultaSaldoCustodiosBean.paginaVO and not empty consultaSaldoCustodiosBean.paginaVO.registros}"
 							styleClass="tablaGeneral centrado" headerClass="tituloTabla" width="100%"
 							footerClass="tituloTabla" border="0" cellpadding="3px"
 							cellspacing="0px" columnClasses="everyColumn"
@@ -222,28 +222,28 @@
 					</h:panelGroup>
 					<!-- ================================= EXPORTAR ============================================================ -->
 					<h:panelGroup id="totalesConsultas"
-						rendered="#{not empty consultaSaldoCustodiosBean.resultados.registros}">
+						rendered="#{not empty consultaSaldoCustodiosBean.paginaVO.registros}">
 					<table cellpadding="0" cellspacing="0" border="0" align="center"
 						width="900px">
 						<tr align="right">
 							<td align="right">
 								<h:panelGroup id="botonesExportar">
 									<h:panelGroup
-										style="display: #{(not empty consultaSaldoCustodiosBean.resultados.registros)? 'inline' : 'none'}">
+										style="display: #{(not empty consultaSaldoCustodiosBean.paginaVO.registros)? 'inline' : 'none'}">
 
-										<h:outputText value="Exportar los resultados"></h:outputText>
+										<h:outputText value="Exportar los paginaVO"></h:outputText>
 										
 										<h:commandButton actionListener="#{consultaSaldoCustodiosBean.generarReportesPopUp}"
 											action="consultaDetalleConciliacionInternacionalPDF"
 											image="/images/pdf.gif"
-											title="Exportar a PDF todos los resultados de la consulta"
+											title="Exportar a PDF todos los paginaVO de la consulta"
 											id="generarPdf"/>
                            				&#160;&#160;
 
                           				<h:commandButton actionListener="#{consultaSaldoCustodiosBean.generarReportesPopUp}"
                           					action="consultaDetalleConciliacionInternacionalXLS"
                           					image="/images/excel-file.gif"
-                          					title="Exportar a Excel todos los resultados de la consulta" 
+                          					title="Exportar a Excel todos los paginaVO de la consulta"
                             				id="generarExcel">
                            				</h:commandButton>
 									</h:panelGroup>
