@@ -33,8 +33,8 @@
 
 
 
-			<pdf:col header="Saldo" value="#{conciliacion.idCuenta}" align="center" rendered="#{!empty conciliacion.idCuenta}">
-
+			<pdf:col header="Saldo" value="#{conciliacion.idSaldo}" align="center" rendered="#{!empty conciliacion.idSaldo}">
+				<f:convertNumber pattern="###,###,###,###,###,##0.######" />
 			</pdf:col>
 
 			<pdf:col header="Disponible" value="#{conciliacion.saldoDisponible}" align="right" rendered="#{!empty conciliacion.saldoDisponible}">

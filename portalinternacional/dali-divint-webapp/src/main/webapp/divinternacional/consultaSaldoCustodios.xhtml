@@ -340,7 +340,9 @@
 								<tr>
 									<td>
 										<a href="javascript:detalleResultado(#{conciliacion.idCuenta});" title="detalle del saldo" >
-											<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.idSaldo}" />
+											<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.idSaldo}"  >
+												<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
+											</h:outputText>
 										</a>
 									</td>
 								</tr>
@@ -400,7 +402,7 @@
 										&#160;&#160;
 
 										<h:commandButton actionListener="#{consultaSaldoCustodiosBean.generarReportes}"
-														 action="conciliacionesInternacionalXLS"
+														 action="consultaSaldoCustodiosXLS"
 														 image="/images/excel-file.gif"
 														 title="Exportar a Excel todos los resultados de la consulta"
 														 id="generarExcel"

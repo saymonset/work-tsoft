@@ -301,6 +301,10 @@
             <from-outcome>consultaSaldoCustodiosPDF</from-outcome>
             <to-view-id>/divinternacional/consultaSaldoCustodiosPDF.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>consultaSaldoCustodiosXLS</from-outcome>
+            <to-view-id>/divinternacional/consultaSaldoCustodiosXLS.xhtml</to-view-id>
+        </navigation-case>
         <!--Conciliaciones Internacional-->
         <navigation-case>
             <from-outcome>conciliacionesInternacionalPDF</from-outcome>
