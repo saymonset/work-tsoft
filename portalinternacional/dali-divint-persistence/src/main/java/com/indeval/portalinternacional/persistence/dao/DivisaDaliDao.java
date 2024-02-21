@@ -88,12 +88,5 @@ public interface DivisaDaliDao {
 	 */
 	List<DivisaDTO> findDivisaByBovedad(final Long idBoveda);
 
-	/**
-	 * Consulta Saldo Custodio
-	 * @param consultaSaldoCustodiosInDTO
-	 * @param paginaVO
-	 * @return
-	 * @throws BusinessException
-	 */
-	public PaginaVO consultaSaldoCustodio(ConsultaSaldoCustodiosInDTO consultaSaldoCustodiosInDTO, PaginaVO paginaVO) throws BusinessException;
+
 }

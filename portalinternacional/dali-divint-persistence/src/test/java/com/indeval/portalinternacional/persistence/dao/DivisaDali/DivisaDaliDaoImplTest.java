@@ -67,33 +67,6 @@ public class DivisaDaliDaoImplTest extends BaseDaoTestCase {
         assertNotNull(list);
 
     }
-    public void testConsultaSaldoCustodio() throws ParseException {
 
-
-        // Objeto de prueba
-        //ConciliacionIntDTO params = new ConciliacionIntDTO();
-        ConsultaSaldoCustodiosInDTO params = new ConsultaSaldoCustodiosInDTO();
-        params.setBovedaDali("13");
-        params.setDivisaDali("3");
-        params.setIdCuenta("4040");
-
-
-
-        // Prueba de consulta
-        PaginaVO pvo=new PaginaVO();
-        pvo.setRegistrosXPag(PaginaVO.TODOS);
-        pvo.setOffset(0);
-        PaginaVO cons=dao.consultaSaldoCustodio( params,pvo);
-
-        for(SaldoNombradaInt reg : (List<SaldoNombradaInt>)cons.getRegistros()){
-         //   log.debug("reg =\n"+ObjectToString(reg));
-            //System.out.println(ObjectToString(reg));
-            System.out.println(reg.getCuentaNombrada().getInstitucion().getRazonSocial());
-        }
-        System.out.println("TOTAL REGISTROS "+cons.getTotalRegistros());
-
-        assertTrue(true);
-
-    }
 
 }

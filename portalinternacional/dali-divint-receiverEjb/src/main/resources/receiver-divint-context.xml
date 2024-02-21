@@ -102,6 +102,9 @@
 		<property name="divisaDaliDAO">
 			<ref bean="divisaDaliDao"/>
 		</property>
+		<property name="consultaSaldoCustodiosDao">
+			<ref bean="consultaSaldoCustodiosDao"/>
+		</property>
 		<property name="calendarioEmisionesDeudaExtDao">
 			<ref bean="calendarioEmisionesDeudaExtDao"/>
 		</property>
