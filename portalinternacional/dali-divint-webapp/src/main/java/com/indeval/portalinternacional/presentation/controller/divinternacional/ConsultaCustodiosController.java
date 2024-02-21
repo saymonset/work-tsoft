@@ -246,14 +246,14 @@ public class ConsultaCustodiosController  extends ControllerBase {
         String guardarReporte = getHiddenField("daliForm:reporteAuditoria");
         if(guardarReporte.equals("true")){
             log.info("guardar el reporte "+idConciliacion);
-            consultaSaldoCustodiosService.generaReporteAuditoriaConciliacion(Long.valueOf(idConciliacion));
+           // consultaSaldoCustodiosService.generaReporteAuditoriaConciliacion(Long.valueOf(idConciliacion));
         }
         DetalleConciliacionIntDTO conc= new DetalleConciliacionIntDTO();
         conc.setFolio(Long.valueOf(idConciliacion));
         paginaReportes = new PaginaVO();
         paginaReportes.setOffset(0);
         paginaReportes.setRegistrosXPag(PaginaVO.TODOS);
-        paginaReportes = consultaSaldoCustodiosService.consultaDetalleConciliacion(conc, paginaReportes);
+   //     paginaReportes = consultaSaldoCustodiosService.consultaDetalleConciliacion(conc, paginaReportes);
         this.totalRegistros=paginaReportes.getTotalRegistros();
         return "conciliacionInternacionalXLSAuditoria";
     }
