@@ -407,6 +407,23 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         </property>
     </bean>
 
+    <bean id="consultaSaldoCustodiosService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaSaldoCustodiosServiceImpl"
+          lazy-init="true">
+        <description>
+            Bean de Acceso a servicios de Consulta de saldo de custodios
+        </description>
+        <property name="divisaDaliDAO">
+            <ref bean="divisaDaliDao"/>
+        </property>
+        <property name="consultaSaldoCustodiosDao">
+            <ref bean="consultaSaldoCustodiosDao"/>
+        </property>
+        <property name="calendarioEmisionesDeudaExtDao">
+            <ref bean="calendarioEmisionesDeudaExtDao"/>
+        </property>
+    </bean>
+
     <!--
         Se elimina JPMorgan de la lista por solicitud de Indeval
         03/05/2016.
@@ -1953,4 +1970,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
             <ref bean="institucionDao"></ref>
         </property>
     </bean>
+
+
 </beans>

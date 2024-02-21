@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:cvt="http://indeval.com/jsf/converters">
+
+<pdf:document documentName="consultaSaldoCustodiosPDF" documentTitle="Consulta saldo custodio"
+			  institucion="#{consultaBitacoraEnvOpBean.agenteFirmado.id} #{consultaBitacoraEnvOpBean.agenteFirmado.folio} #{consultaBitacoraEnvOpBean.agenteFirmado.razon}"
+			  landscape="true" fecha="#{consultaBitacoraEnvOpBean.fechaActual}"
+			  imageResource="/images/indeval.jpg">
+	<pdf:table value="consultaSaldoCustodiosBean" currentBean="emision" widthPercentage="100">
+		<pdf:row>
+			<pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+		</pdf:row>
+	</pdf:table>
+	<pdf:table value="#{consultaSaldoCustodiosBean}" currentBean="emision" widthPercentage="100">
+		<pdf:row>
+			<pdf:col header="#{etq.bovedaMinus}" value="#{!empty consultaSaldoCustodiosBean.bovedaDali ? consultaSaldoCustodiosBean.selectedBoveda : ''}" align="center" />
+			<pdf:col header="#{etq.divisaMinus}" value="#{!empty consultaSaldoCustodiosBean.divisaDali ? consultaSaldoCustodiosBean.selectedDivisa : ''}" align="center" />
+
+
+		</pdf:row>
+	</pdf:table>
+
+	<pdf:br/>
+	<pdf:text align="center" value="#{etq.registrosEncontrados}: #{consultaSaldoCustodiosBean.totalRegistros}"/>
+	<pdf:br/>
+
+	<pdf:table value="#{consultaSaldoCustodiosBean.paginaReportes.registros}" currentBean="conciliacion">
+		<pdf:row>
+
+			<pdf:col header="#{etq.divisaMinus}" value="#{conciliacion.divisa.descripcion}" align="center" />
+			<pdf:col header="#{etq.bovedaMinus}" value="#{conciliacion.boveda.nombreCorto}" align="center"/>
+
+
+
+			<pdf:col header="Saldo" value="#{conciliacion.idCuenta}" align="center" rendered="#{!empty conciliacion.idCuenta}">
+
+			</pdf:col>
+
+			<pdf:col header="Disponible" value="#{conciliacion.saldoDisponible}" align="right" rendered="#{!empty conciliacion.saldoDisponible}">
+				<f:convertNumber pattern="###,###,###,###,###,##0.######" />
+			</pdf:col>
+			<pdf:col header="No Disponible" value="#{conciliacion.saldoNoDisponible}" align="right" rendered="#{!empty conciliacion.saldoNoDisponible}">
+				<f:convertNumber pattern="###,###,###,###,###,##0.######" />
+			</pdf:col>
+
+		</pdf:row>
+	</pdf:table>
+
+</pdf:document>
+</html>

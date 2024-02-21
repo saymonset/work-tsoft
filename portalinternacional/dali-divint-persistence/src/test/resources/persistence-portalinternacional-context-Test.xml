@@ -155,6 +155,9 @@
                     com.indeval.portalinternacional.middleware.servicios.modelo.DivisaInt
                 </value>
                 <value>
+                    com.indeval.portalinternacional.middleware.servicios.modelo.SaldoNombradaInt
+                </value>
+                <value>
                     com.indeval.portaldali.persistence.modelo.Depositos
                 </value>
                 <value>
@@ -1104,6 +1107,14 @@
           lazy-init="true">
         <property name="sessionFactory">
             <ref local="sessionFactoryInternacional"/>
+        </property>
+    </bean>
+
+    <bean id="consultaSaldoCustodiosDao"
+          class="com.indeval.portalinternacional.persistence.dao.impl.ConsultaSaldoCustodiosDaoImpl"
+          lazy-init="true">
+        <property name="sessionFactory">
+            <ref local="sessionFactoryInternacional" />
         </property>
     </bean>
 
