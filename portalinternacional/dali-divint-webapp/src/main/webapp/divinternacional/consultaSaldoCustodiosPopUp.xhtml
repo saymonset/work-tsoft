@@ -167,7 +167,7 @@
 								<f:facet name="header">
 									<h:outputText styleClass="texto textoPeque12" value="Divisa" />
 								</f:facet>
-								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.divisa.descripcion}" />
+								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.divisa}" />
 							</h:column>
 
 							<!-- Boveda DALI  -->
@@ -175,7 +175,7 @@
 								<f:facet name="header">
 									<h:outputText styleClass="texto textoPeque12" value="#{etq.bovedaMinus}" />
 								</f:facet>
-								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.boveda.nombreCorto}" rendered="#{not empty conciliacion.boveda.nombreCorto}" />
+								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.boveda}" rendered="#{not empty conciliacion.boveda}" />
 							</h:column>
 							<!-- Saldo  -->
 							<h:column >

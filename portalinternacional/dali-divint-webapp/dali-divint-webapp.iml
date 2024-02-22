@@ -31,7 +31,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: com.indeval.commons:commons-firma-digital:war:1.0.26" level="project" />
     <orderEntry type="library" name="Maven: com.bursatec:seguridad-ejb:2.2.12" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet.jsp:jsp-api:2.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.jboss.spec.javax.servlet:jboss-servlet-api_3.1_spec:1.0.0.Final" level="project" />
@@ -73,6 +72,7 @@
     <orderEntry type="library" name="Maven: org.owasp.esapi:esapi:2.1.0" level="project" />
     <orderEntry type="library" name="Maven: com.sun.facelets:jsf-facelets:1.1.15.B1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.jms:jms:1.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.indeval.commons:commons-firma-digital:war:1.0.26" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.36" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.4" level="project" />
     <orderEntry type="library" name="Maven: com.indeval.dali:dali-core-serviciosimpl:2.0.0" level="project" />

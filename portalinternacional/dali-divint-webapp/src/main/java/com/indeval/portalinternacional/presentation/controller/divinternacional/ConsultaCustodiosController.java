@@ -70,10 +70,6 @@ public class ConsultaCustodiosController  extends ControllerBase {
         consultaSaldoCustodiosInDTO = new ConsultaSaldoCustodiosInDTO();
         consultaSaldoCustodiosInDTO.setDivisaDali(divisaDali);
         consultaSaldoCustodiosInDTO.setBovedaDali(bovedaDali);
-
-
-
-
         if (StringUtils.isNotEmpty(this.idCuentaPopup)  && this.idCuentaPopup.matches("[0-9]+")){
             consultaSaldoCustodiosInDTO.setIdCuentaPopup(idCuentaPopup);
         }

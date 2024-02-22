@@ -12,5 +12,5 @@ public interface ConsultaSaldoCustodiosDao {
      * @return
      * @throws BusinessException
      */
-    public PaginaVO consultaSaldoCustodio(ConsultaSaldoCustodiosInDTO consultaSaldoCustodiosInDTO, PaginaVO paginaVO) throws BusinessException;
+     PaginaVO consultaSaldoCustodio( final ConsultaSaldoCustodiosInDTO consultaSaldoCustodiosInDTO,final PaginaVO paginaVO) throws BusinessException;
 }

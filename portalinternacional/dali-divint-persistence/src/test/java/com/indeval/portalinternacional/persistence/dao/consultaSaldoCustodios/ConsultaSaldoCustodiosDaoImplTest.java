@@ -38,14 +38,14 @@ public class ConsultaSaldoCustodiosDaoImplTest extends BaseDaoTestCase {
     public void testConsultaPorCuenta() {
     }
 
+
     public void testConsultaSaldoCustodio() throws ParseException {
 
 
         // Objeto de prueba
         ConsultaSaldoCustodiosInDTO params = new ConsultaSaldoCustodiosInDTO();
-        params.setBovedaDali("13");
-        params.setDivisaDali("3");
-        params.setIdCuenta("4040");
+        params.setBovedaDali("16");
+        params.setDivisaDali("5");
 
 
 
@@ -55,9 +55,7 @@ public class ConsultaSaldoCustodiosDaoImplTest extends BaseDaoTestCase {
         pvo.setOffset(0);
         PaginaVO cons=dao.consultaSaldoCustodio( params,pvo);
 
-        for(SaldoNombradaInt reg : (List<SaldoNombradaInt>)cons.getRegistros()){
-            System.out.println(reg.getCuentaNombrada().getInstitucion().getRazonSocial());
-        }
+
         System.out.println("TOTAL REGISTROS "+cons.getTotalRegistros());
 
         assertTrue(true);
