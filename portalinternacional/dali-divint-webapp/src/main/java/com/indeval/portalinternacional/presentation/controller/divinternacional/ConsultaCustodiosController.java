@@ -117,6 +117,13 @@ public class ConsultaCustodiosController  extends ControllerBase {
         if(params.get("idCuentaPopup")!=null ){
             setIdCuentaPopup(params.get("idCuentaPopup").toString());
         }
+        if(params.get("divisaDali")!=null ){
+            setDivisaDali(params.get("divisaDali").toString());
+        }
+        if(params.get("bovedaDali")!=null ){
+            setBovedaDali(params.get("bovedaDali").toString());
+        }
+
         ejecutarConsulta();
 
         return null;

@@ -25,11 +25,11 @@ function limpiarTodos() {
 }
 
 
-function detalleResultado(idCuentaPopup){
+function detalleResultado(idCuentaPopup, divisaDali, bovedaDali){
     var url = contextPath+'/divinternacional/consultaSaldoCustodiosPopUp.faces';
     url += '?idCuentaPopup=' + idCuentaPopup
-        + '&idMuestraConsulta=false'
-        + '&TB_iframe=true'
+        + '&bovedaDali='+bovedaDali
+        + '&divisaDali=' + divisaDali
         +'&height=550&width=925';
     mostrarDetalle('Detalle Saldos de Efectivos de Custodios ',url);
 }

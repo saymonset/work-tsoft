@@ -339,7 +339,7 @@
 							<table align="left">
 								<tr>
 									<td>
-										<a href="javascript:detalleResultado(#{conciliacion.idCuenta});" title="detalle del saldo" >
+										<a href="javascript:detalleResultado(#{conciliacion.idCuenta}, #{consultaSaldoCustodiosBean.divisaDali}, #{consultaSaldoCustodiosBean.bovedaDali});" title="detalle del saldo">
 											<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.idSaldo}"  >
 												<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
 											</h:outputText>
