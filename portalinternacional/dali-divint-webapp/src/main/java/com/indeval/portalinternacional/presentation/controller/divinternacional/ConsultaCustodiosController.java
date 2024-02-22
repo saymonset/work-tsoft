@@ -63,6 +63,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
         banderaBitacoraConsulta = false;
         setIdCuentaPopup(null);
         return null;
+
     }
 
     private void setParams() {
@@ -70,7 +71,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
         consultaSaldoCustodiosInDTO = new ConsultaSaldoCustodiosInDTO();
         consultaSaldoCustodiosInDTO.setDivisaDali(divisaDali);
         consultaSaldoCustodiosInDTO.setBovedaDali(bovedaDali);
-        if (StringUtils.isNotEmpty(this.idCuentaPopup)  && this.idCuentaPopup.matches("[0-9]+")){
+        if (StringUtils.isNotEmpty(this.idCuentaPopup)){
             consultaSaldoCustodiosInDTO.setIdCuentaPopup(idCuentaPopup);
         }
     }
@@ -113,10 +114,8 @@ public class ConsultaCustodiosController  extends ControllerBase {
     /* =========================LAYOUT POPUP================================ */
     //para layoutpopup
     public String ejecutarConsultaPopUp() {
-        Long id=null;
         if(params.get("idCuentaPopup")!=null ){
-            id=Long.valueOf(params.get("idCuentaPopup"));
-            setIdCuentaPopup(id.toString());
+            setIdCuentaPopup(params.get("idCuentaPopup").toString());
         }
         ejecutarConsulta();
 
@@ -226,6 +225,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
         paginaVO.setRegistrosXPag(50);
         paginaVO.setOffset(0);
         getPaginaVO().setRegistros(null);
+        setIdCuentaPopup(null);
         ejecutarConsulta();
 
     }
@@ -259,6 +259,18 @@ public class ConsultaCustodiosController  extends ControllerBase {
      * @param evt
      */
     public void generarReportes(ActionEvent evt)
+    {
+        setIdCuentaPopup(null);
+        reportes( evt);
+
+    }
+
+    public void generarReportesPopup(ActionEvent evt)
+    {
+        reportes( evt);
+    }
+
+    private void reportes(ActionEvent evt)
     {
         paginaReportes = new PaginaVO();
         paginaReportes.setOffset(0);

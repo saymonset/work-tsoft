@@ -46,6 +46,7 @@ public class ConsultaSaldoCustodiosDaoImplTest extends BaseDaoTestCase {
         ConsultaSaldoCustodiosInDTO params = new ConsultaSaldoCustodiosInDTO();
         params.setBovedaDali("16");
         params.setDivisaDali("5");
+        params.setIdCuentaPopup("1");
 
 
 
