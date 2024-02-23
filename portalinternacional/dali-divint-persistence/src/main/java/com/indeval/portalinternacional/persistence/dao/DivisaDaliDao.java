@@ -1,8 +1,12 @@
 package com.indeval.portalinternacional.persistence.dao;
 
+import com.indeval.portaldali.middleware.servicios.modelo.BusinessException;
+import com.indeval.portaldali.middleware.servicios.modelo.vo.PaginaVO;
 import com.indeval.portaldali.persistence.modelo.Divisa;
 import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
 import com.indeval.portalinternacional.middleware.servicios.dto.EstadoPaginacionDTO;
+import com.indeval.portalinternacional.middleware.servicios.vo.ConciliacionIntDTO;
+import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaSaldoCustodiosInDTO;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -76,4 +80,13 @@ public interface DivisaDaliDao {
 	DivisaDTO obtenerDivisaPorClaveAlfavetica(String claveDivisa);
 
 	Divisa findDivisaByClaveAlfabetica(String claveDivisa);
+
+	/**
+	 * Obtiene List<DivisaDTO>  de Divisas a travs de su boveda
+	 * @param idBoveda para filtrar la divisas
+	 * @return	List<DivisaDTO>  Que son las Divisa solicitadas, null si no existe.
+	 */
+	List<DivisaDTO> findDivisaByBovedad(final Long idBoveda);
+
+
 }

@@ -1292,6 +1292,14 @@
 		</property>
 	</bean>
 
+	<bean id="consultaSaldoCustodiosDao"
+		  class="com.indeval.portalinternacional.persistence.dao.impl.ConsultaSaldoCustodiosDaoImpl"
+		  lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
 	<bean id="cuentaCorresponsalDao"
 		class="com.indeval.portalinternacional.persistence.dao.impl.CuentaCorresponsalDaoImpl"
 		lazy-init="true">
