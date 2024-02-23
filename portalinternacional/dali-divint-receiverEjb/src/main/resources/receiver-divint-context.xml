@@ -94,20 +94,4 @@
 	      </property>
 	</bean>
 
-	<bean id="consultaSaldoCustodiosService"
-		  class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaSaldoCustodiosServiceImpl">
-		<description>
-			Bean de Acceso a servicios de Division Internacional
-		</description>
-		<property name="divisaDaliDAO">
-			<ref bean="divisaDaliDao"/>
-		</property>
-		<property name="consultaSaldoCustodiosDao">
-			<ref bean="consultaSaldoCustodiosDao"/>
-		</property>
-		<property name="calendarioEmisionesDeudaExtDao">
-			<ref bean="calendarioEmisionesDeudaExtDao"/>
-		</property>
-	</bean>
-
 </beans>

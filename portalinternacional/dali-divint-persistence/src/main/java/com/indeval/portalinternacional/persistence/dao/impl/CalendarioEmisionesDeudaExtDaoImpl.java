@@ -318,9 +318,7 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 		List<Boveda> retorno = (List<Boveda>) getHibernateTemplate().execute(new HibernateCallback() {
 			public Object doInHibernate(Session session) throws HibernateException, SQLException {
 				Query query = session.createQuery(sb.toString());	
-				if(tipoBoveda != null){
-					query.setInteger("id", tipoBoveda);
-				}
+				query.setInteger("id", tipoBoveda);
 				return query.list();
 			}
 		});

@@ -2,14 +2,9 @@
 package com.indeval.portalinternacional.persistence.dao.DivisaDali;
 
 import com.indeval.persistence.unittest.BaseDaoTestCase;
-import com.indeval.portaldali.middleware.servicios.modelo.vo.PaginaVO;
 import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
-import com.indeval.portalinternacional.middleware.servicios.modelo.ConciliacionInt;
-import com.indeval.portalinternacional.middleware.servicios.modelo.SaldoNombradaInt;
-import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaSaldoCustodiosInDTO;
 import com.indeval.portalinternacional.persistence.dao.DivisaDaliDao;
 
-import java.text.ParseException;
 import java.util.List;
 
 public class DivisaDaliDaoImplTest extends BaseDaoTestCase {
@@ -54,19 +49,4 @@ public class DivisaDaliDaoImplTest extends BaseDaoTestCase {
         assertEquals(expectedClaveNumerica, divisa.getClaveNumerica());
         assertEquals(expectedDescripcion, divisa.getDescripcion());
     }
-
-    public void testFindDivisasByBovedad() {
-        System.out.println("testFindDivisaByBovedad()");
-
-        long idBoveda = 12;
-
-        assertNotNull("DivisaDaliDao Nulo", dao);
-        List<DivisaDTO> list = dao.findDivisaByBovedad(idBoveda);
-
-
-        assertNotNull(list);
-
-    }
-
-
 }

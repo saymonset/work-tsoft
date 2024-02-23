@@ -57,9 +57,7 @@
             /WEB-INF/descriptors/jsf/capturaMovimientos.xml,
 			<!-- Multidivisas: Horarios de Custodios -->
 			/WEB-INF/descriptors/jsf/horariosCustodioConsulta.xml,
-			/WEB-INF/descriptors/jsf/horariosCustodioRegistro.xml,
-			/WEB-INF/descriptors/jsf/consultaSaldoCustodios.xml
-
+			/WEB-INF/descriptors/jsf/horariosCustodioRegistro.xml
 		</param-value>
 	</context-param>
 
