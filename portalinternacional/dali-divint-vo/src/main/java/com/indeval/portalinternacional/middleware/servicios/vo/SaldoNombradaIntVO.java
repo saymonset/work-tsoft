@@ -16,6 +16,13 @@ public class SaldoNombradaIntVO implements Serializable{
     private BigDecimal saldoDisponible;
     private BigDecimal saldoNoDisponible;
 
+    private BigDecimal totalSaldo = new BigDecimal(0);
+    private BigDecimal totalDisponible = new BigDecimal(0);
+    private BigDecimal totalNoDisponible = new BigDecimal(0);
+    private BigDecimal totalSaldoPage = new BigDecimal(0);
+    private BigDecimal totalDisponiblePage = new BigDecimal(0);
+    private BigDecimal totalNoDisponiblePage = new BigDecimal(0);
+
     public String getDivisa() {
         return divisa;
     }
@@ -62,5 +69,53 @@ public class SaldoNombradaIntVO implements Serializable{
 
     public void setSaldoNoDisponible(BigDecimal saldoNoDisponible) {
         this.saldoNoDisponible = saldoNoDisponible;
+    }
+
+    public BigDecimal getTotalSaldo() {
+        return totalSaldo;
+    }
+
+    public void setTotalSaldo(BigDecimal totalSaldo) {
+        this.totalSaldo = totalSaldo;
+    }
+
+    public BigDecimal getTotalDisponible() {
+        return totalDisponible;
+    }
+
+    public void setTotalDisponible(BigDecimal totalDisponible) {
+        this.totalDisponible = totalDisponible;
+    }
+
+    public BigDecimal getTotalNoDisponible() {
+        return totalNoDisponible;
+    }
+
+    public void setTotalNoDisponible(BigDecimal totalNoDisponible) {
+        this.totalNoDisponible = totalNoDisponible;
+    }
+
+    public BigDecimal getTotalSaldoPage() {
+        return totalSaldoPage;
+    }
+
+    public void setTotalSaldoPage(BigDecimal totalSaldoPage) {
+        this.totalSaldoPage = totalSaldoPage;
+    }
+
+    public BigDecimal getTotalDisponiblePage() {
+        return totalDisponiblePage;
+    }
+
+    public void setTotalDisponiblePage(BigDecimal totalDisponiblePage) {
+        this.totalDisponiblePage = totalDisponiblePage;
+    }
+
+    public BigDecimal getTotalNoDisponiblePage() {
+        return totalNoDisponiblePage;
+    }
+
+    public void setTotalNoDisponiblePage(BigDecimal totalNoDisponiblePage) {
+        this.totalNoDisponiblePage = totalNoDisponiblePage;
     }
 }

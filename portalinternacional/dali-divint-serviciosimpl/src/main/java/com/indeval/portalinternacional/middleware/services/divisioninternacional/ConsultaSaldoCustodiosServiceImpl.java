@@ -45,6 +45,11 @@ public class ConsultaSaldoCustodiosServiceImpl  implements ConsultaSaldoCustodio
         return consultaSaldoCustodiosDao.consultaSaldoCustodio(consultaSaldoCustodiosInDTO, paginaVO);
     }
 
+    @Override
+    public ConsultaSaldoCustodiosTotalesInDTO consultaSaldoCustodioTotales(ConsultaSaldoCustodiosInDTO criteriosConsulta) throws BusinessException {
+        return consultaSaldoCustodiosDao.consultaSaldoCustodioTotales(criteriosConsulta);
+    }
+
     public DivisaDaliDao getDivisaDaliDAO() {
         return divisaDaliDAO;
     }

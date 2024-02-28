@@ -34,4 +34,6 @@ public interface ConsultaSaldoCustodiosService  {
     List<DivisaDTO> findDivisaByBovedad(Long idBoveda) throws BusinessException;
     public PaginaVO consultaSaldoCustodio(ConsultaSaldoCustodiosInDTO consultaSaldoCustodiosInDTO,PaginaVO paginaVO) throws BusinessException ;
 
+    ConsultaSaldoCustodiosTotalesInDTO consultaSaldoCustodioTotales(final ConsultaSaldoCustodiosInDTO criteriosConsulta) throws BusinessException ;
+
 }

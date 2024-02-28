@@ -5,6 +5,7 @@ import com.indeval.portaldali.middleware.servicios.modelo.BusinessException;
 import com.indeval.portaldali.middleware.servicios.modelo.vo.PaginaVO;
 import com.indeval.portalinternacional.middleware.servicios.modelo.SaldoNombradaInt;
 import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaSaldoCustodiosInDTO;
+import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaSaldoCustodiosTotalesInDTO;
 import com.indeval.portalinternacional.middleware.servicios.vo.HorariosCustodiosVO;
 import com.indeval.portalinternacional.middleware.servicios.vo.SaldoNombradaIntVO;
 import com.indeval.portalinternacional.persistence.dao.ConsultaSaldoCustodiosDao;
@@ -63,6 +64,19 @@ public class ConsultaSaldoCustodiosDaoImpl extends BaseDaoHibernateImpl implemen
         return criteria;
     }
 
+    public ConsultaSaldoCustodiosTotalesInDTO consultaSaldoCustodioTotales(final ConsultaSaldoCustodiosInDTO criteriosConsulta) throws BusinessException {
+
+        ConsultaSaldoCustodiosTotalesInDTO consultaSaldoCustodiosTotalesInDTO =null;
+        if(criteriosConsulta.getIdCuentaPopup() != null ){
+            //Se genera en el popup
+            consultaSaldoCustodiosTotalesInDTO = vSaldo_por_razon_socialTotal( criteriosConsulta);
+        }else{
+            //Principal pantalla
+            consultaSaldoCustodiosTotalesInDTO = vSaldo_custodiosTotal( criteriosConsulta);
+        }
+
+        return consultaSaldoCustodiosTotalesInDTO == null ? new ConsultaSaldoCustodiosTotalesInDTO() : consultaSaldoCustodiosTotalesInDTO;
+    }
     @Override
     public PaginaVO consultaSaldoCustodio(final ConsultaSaldoCustodiosInDTO criteriosConsulta,final PaginaVO paginaVO) throws BusinessException {
 
@@ -87,21 +101,17 @@ public class ConsultaSaldoCustodiosDaoImpl extends BaseDaoHibernateImpl implemen
                 "       v.saldo_calculado AS idSaldo, \n" +
 
                 "       v.saldo_disponible AS saldoDisponible,\n" +
-                "       v.saldo_no_disponible AS saldoNoDisponible\n" +
+                "       v.saldo_no_disponible AS saldoNoDisponible \n" +
+
                 "                                  FROM v_saldo_custodios v  WHERE 1 = 1 ");
 
 
         if(criteriosConsulta.getDivisaDali() != null  && !"-1".equalsIgnoreCase(criteriosConsulta.getDivisaDali()) ){
-//            BigInteger divisaId = new BigInteger(consultaSaldoCustodiosInDTO.getDivisaDali());
-//            criteria.add(Restrictions.eq("idDivisa", divisaId));
             sb.append("  AND v.id_div = :idDivisa");
         }
         if(criteriosConsulta.getBovedaDali() != null && !"-1".equalsIgnoreCase(criteriosConsulta.getBovedaDali() )){
-//            BigInteger divisaId = new BigInteger(consultaSaldoCustodiosInDTO.getDivisaDali());
-//            criteria.add(Restrictions.eq("idDivisa", divisaId));
             sb.append("  AND v.id_bov  = :idBoveda");
         }
-
 
         List<SaldoNombradaIntVO> resultados = (List<SaldoNombradaIntVO>) getHibernateTemplate().execute(new HibernateCallback() {
             public Object doInHibernate(Session session) throws HibernateException, SQLException {
@@ -132,6 +142,7 @@ public class ConsultaSaldoCustodiosDaoImpl extends BaseDaoHibernateImpl implemen
                 query.addScalar("idSaldo", bi);
                 query.addScalar("saldoDisponible", bi);
                 query.addScalar("saldoNoDisponible", bi);
+
 
 
                 log.debug(query.toString());
@@ -163,23 +174,19 @@ public class ConsultaSaldoCustodiosDaoImpl extends BaseDaoHibernateImpl implemen
                 "       v.boveda AS boveda,\n" +
                 "        v.saldo_calculado AS idSaldo,\n" +
                 "       v.saldo_disponible AS saldoDisponible,\n" +
-                "       v.saldo_no_disponible AS saldoNoDisponible\n" +
+                "       v.saldo_no_disponible AS saldoNoDisponible \n" +
+
                 "FROM v_saldo_por_razon_social v   \n" +
                 "                          WHERE  1 =1 \n" +
                 "                               ");
 
 
         if(criteriosConsulta.getDivisaDali() != null  && !"-1".equalsIgnoreCase(criteriosConsulta.getDivisaDali()) ){
-//            BigInteger divisaId = new BigInteger(consultaSaldoCustodiosInDTO.getDivisaDali());
-//            criteria.add(Restrictions.eq("idDivisa", divisaId));
             sb.append("  AND v.id_divisa = :idDivisa");
         }
         if(criteriosConsulta.getBovedaDali() != null && !"-1".equalsIgnoreCase(criteriosConsulta.getBovedaDali() )){
-//            BigInteger divisaId = new BigInteger(consultaSaldoCustodiosInDTO.getDivisaDali());
-//            criteria.add(Restrictions.eq("idDivisa", divisaId));
             sb.append("  AND v.id_bov  = :idBoveda");
         }
-
 
         List<SaldoNombradaIntVO> resultados = (List<SaldoNombradaIntVO>) getHibernateTemplate().execute(new HibernateCallback() {
             public Object doInHibernate(Session session) throws HibernateException, SQLException {
@@ -212,6 +219,7 @@ public class ConsultaSaldoCustodiosDaoImpl extends BaseDaoHibernateImpl implemen
                 query.addScalar("saldoNoDisponible", bi);
 
 
+
                 log.debug(query.toString());
                 query.setResultTransformer(Transformers.aliasToBean(SaldoNombradaIntVO.class));
 
@@ -231,5 +239,57 @@ public class ConsultaSaldoCustodiosDaoImpl extends BaseDaoHibernateImpl implemen
         paginaVO.setRegistros(resultados);
 
         return paginaVO;
+    }
+
+    private  ConsultaSaldoCustodiosTotalesInDTO vSaldo_por_razon_socialTotal(final ConsultaSaldoCustodiosInDTO criteriosConsulta) throws BusinessException {
+
+        ConsultaSaldoCustodiosTotalesInDTO consultaSaldoCustodiosTotalesInDTO = new ConsultaSaldoCustodiosTotalesInDTO();
+        final StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT \n" +
+                "       sum(v.saldo_calculado) AS totalSaldo,\n" +
+                "       sum(v.saldo_disponible) AS totalDisponible,\n" +
+                "       sum(v.saldo_no_disponible) AS totalNoDisponible \n" +
+                " FROM v_saldo_por_razon_social v   \n" +
+                "                          WHERE  1 =1 \n" +
+                "                               ");
+        ConsultaSaldoCustodiosTotalesInDTO resultados = (ConsultaSaldoCustodiosTotalesInDTO) getHibernateTemplate().execute(new HibernateCallback() {
+            public Object doInHibernate(Session session) throws HibernateException, SQLException {
+                SQLQuery query = session.createSQLQuery(sb.toString());
+                query.setCacheable(false);
+                BigDecimalType bi = new BigDecimalType();
+                query.addScalar("totalSaldo", bi);
+                query.addScalar("totalDisponible", bi);
+                query.addScalar("totalNoDisponible", bi);
+                query.setResultTransformer(Transformers.aliasToBean(ConsultaSaldoCustodiosTotalesInDTO.class));
+                return query.uniqueResult();
+            }
+        });
+        return resultados;
+    }
+
+    private  ConsultaSaldoCustodiosTotalesInDTO vSaldo_custodiosTotal(final ConsultaSaldoCustodiosInDTO criteriosConsulta) throws BusinessException {
+
+        ConsultaSaldoCustodiosTotalesInDTO consultaSaldoCustodiosTotalesInDTO = new ConsultaSaldoCustodiosTotalesInDTO();
+        final StringBuilder sb = new StringBuilder();
+        sb.append(" SELECT \n" +
+                "       sum(v.saldo_calculado) AS totalSaldo,\n" +
+                "       sum(v.saldo_disponible) AS totalDisponible,\n" +
+                "       sum(v.saldo_no_disponible) AS totalNoDisponible \n" +
+                " FROM v_saldo_custodios v   \n" +
+                "                          WHERE  1 =1 \n" +
+                "                               ");
+        ConsultaSaldoCustodiosTotalesInDTO resultados = (ConsultaSaldoCustodiosTotalesInDTO) getHibernateTemplate().execute(new HibernateCallback() {
+            public Object doInHibernate(Session session) throws HibernateException, SQLException {
+                SQLQuery query = session.createSQLQuery(sb.toString());
+                query.setCacheable(false);
+                BigDecimalType bi = new BigDecimalType();
+                query.addScalar("totalSaldo", bi);
+                query.addScalar("totalDisponible", bi);
+                query.addScalar("totalNoDisponible", bi);
+                query.setResultTransformer(Transformers.aliasToBean(ConsultaSaldoCustodiosTotalesInDTO.class));
+                return query.uniqueResult();
+            }
+        });
+        return resultados;
     }
 }

@@ -776,7 +776,9 @@ textarea {
     width: 85px;
     height: 28px;
 }
-
+.everyColumn {
+    border: none !important;
+}
 .tablaGeneral {
     clear: both;
     margin: 10px 0 15px 0;
