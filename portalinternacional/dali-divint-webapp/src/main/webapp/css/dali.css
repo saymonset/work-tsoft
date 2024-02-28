@@ -779,6 +779,18 @@ textarea {
 .everyColumn {
     border: none !important;
 }
+.tablaGeneralsinborde {
+    clear: both;
+    margin: 10px 0 15px 0;
+    padding: 0;
+    border-left: 0px solid #acd0de;
+    border-right: 0px solid #acd0de;
+    border-bottom: 0px solid #acd0de;
+    font-size: 9px;
+}
+
+
+
 .tablaGeneral {
     clear: both;
     margin: 10px 0 15px 0;

@@ -57,7 +57,9 @@ public class ConsultaSaldoCustodiosDaoImplTest extends BaseDaoTestCase {
     public void testConsultaSaldoCustodioTotales() throws ParseException {
         // Objeto de prueba
         ConsultaSaldoCustodiosInDTO params = new ConsultaSaldoCustodiosInDTO();
-        params.setIdCuentaPopup(null);
+        params.setBovedaDali("16");
+        params.setDivisaDali("5");
+        params.setIdCuentaPopup("1");
         // Prueba de consulta
         ConsultaSaldoCustodiosTotalesInDTO cons=dao.consultaSaldoCustodioTotales( params);
         System.out.println("TOTAL SALDO "+cons.getTotalSaldo());

@@ -252,10 +252,29 @@ public class ConsultaSaldoCustodiosDaoImpl extends BaseDaoHibernateImpl implemen
                 " FROM v_saldo_por_razon_social v   \n" +
                 "                          WHERE  1 =1 \n" +
                 "                               ");
+
+
+        if(criteriosConsulta.getDivisaDali() != null  && !"-1".equalsIgnoreCase(criteriosConsulta.getDivisaDali()) ){
+            sb.append("  AND v.id_divisa = :idDivisa");
+        }
+        if(criteriosConsulta.getBovedaDali() != null && !"-1".equalsIgnoreCase(criteriosConsulta.getBovedaDali() )) {
+            sb.append("  AND v.id_bov  = :idBoveda");
+        }
         ConsultaSaldoCustodiosTotalesInDTO resultados = (ConsultaSaldoCustodiosTotalesInDTO) getHibernateTemplate().execute(new HibernateCallback() {
             public Object doInHibernate(Session session) throws HibernateException, SQLException {
                 SQLQuery query = session.createSQLQuery(sb.toString());
                 query.setCacheable(false);
+                if(criteriosConsulta.getDivisaDali() != null  && !"-1".equalsIgnoreCase(criteriosConsulta.getDivisaDali()) ){
+                    Integer divisaId = new Integer(criteriosConsulta.getDivisaDali());
+                    query.setInteger("idDivisa", divisaId);
+                }
+                if(criteriosConsulta.getBovedaDali() != null && !"-1".equalsIgnoreCase(criteriosConsulta.getBovedaDali() )){
+                    Integer bovedaId = new Integer(criteriosConsulta.getBovedaDali());
+                    query.setInteger("idBoveda",bovedaId);
+                }
+
+
+
                 BigDecimalType bi = new BigDecimalType();
                 query.addScalar("totalSaldo", bi);
                 query.addScalar("totalDisponible", bi);
@@ -278,10 +297,26 @@ public class ConsultaSaldoCustodiosDaoImpl extends BaseDaoHibernateImpl implemen
                 " FROM v_saldo_custodios v   \n" +
                 "                          WHERE  1 =1 \n" +
                 "                               ");
+        if(criteriosConsulta.getDivisaDali() != null  && !"-1".equalsIgnoreCase(criteriosConsulta.getDivisaDali()) ){
+            sb.append("  AND v.id_div = :idDivisa");
+        }
+        if(criteriosConsulta.getBovedaDali() != null && !"-1".equalsIgnoreCase(criteriosConsulta.getBovedaDali() )){
+            sb.append("  AND v.id_bov  = :idBoveda");
+        }
+
+        log.info(sb.toString());
         ConsultaSaldoCustodiosTotalesInDTO resultados = (ConsultaSaldoCustodiosTotalesInDTO) getHibernateTemplate().execute(new HibernateCallback() {
             public Object doInHibernate(Session session) throws HibernateException, SQLException {
                 SQLQuery query = session.createSQLQuery(sb.toString());
                 query.setCacheable(false);
+                if(criteriosConsulta.getDivisaDali() != null  && !"-1".equalsIgnoreCase(criteriosConsulta.getDivisaDali()) ){
+                    Integer divisaId = new Integer(criteriosConsulta.getDivisaDali());
+                    query.setInteger("idDivisa", divisaId);
+                }
+                if(criteriosConsulta.getBovedaDali() != null && !"-1".equalsIgnoreCase(criteriosConsulta.getBovedaDali() )){
+                    Integer bovedaId = new Integer(criteriosConsulta.getBovedaDali());
+                    query.setInteger("idBoveda",bovedaId);
+                }
                 BigDecimalType bi = new BigDecimalType();
                 query.addScalar("totalSaldo", bi);
                 query.addScalar("totalDisponible", bi);

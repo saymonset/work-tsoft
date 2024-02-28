@@ -4,10 +4,7 @@ import com.indeval.portaldali.middleware.servicios.modelo.vo.PaginaVO;
 import com.indeval.portaldali.persistence.modelo.Boveda;
 import com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaSaldoCustodiosService;
 import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
-import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaSaldoCustodiosInDTO;
-import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaSaldoCustodiosTotalesInDTO;
-import com.indeval.portalinternacional.middleware.servicios.vo.DetalleConciliacionIntDTO;
-import com.indeval.portalinternacional.middleware.servicios.vo.SaldoNombradaIntVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.*;
 import com.indeval.portalinternacional.presentation.controller.common.ControllerBase;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -73,37 +70,38 @@ public class ConsultaCustodiosController  extends ControllerBase {
 
     }
 
-    private List<ConsultaSaldoCustodiosTotalesInDTO> consultaSaldoCustodiosTotales() {
+
+
+    //        Seteamos los totales por pagina
+    private List<ConsultaSaldoCustodiosTotalesInDTO> consultaSaldoCustodiosTotalMetodo(ConsultaSaldoCustodiosTotalesInDTO totalConsulta) {
         consultaSaldoCustodiosTotales = new ArrayList<>();
-        List<SaldoNombradaIntVO> resultados = paginaVO.getRegistros();
-        if (resultados != null && !resultados.isEmpty()){
-            SaldoNombradaIntVO saldoNombradaIntVO = resultados.get(0);
+        List<SaldoNombradaIntVO> resultadosPorPagina = paginaVO.getRegistros();
+        if (resultadosPorPagina != null && !resultadosPorPagina.isEmpty()){
 
-            BigDecimal totalIdSaldo = BigDecimal.ZERO;
-            BigDecimal totalSaldoDisponible = BigDecimal.ZERO;
-            BigDecimal totalSaldoNoDisponible = BigDecimal.ZERO;
+            BigDecimal totalPageIdSaldo = BigDecimal.ZERO;
+            BigDecimal totalPageSaldoDisponible = BigDecimal.ZERO;
+            BigDecimal totalPageSaldoNoDisponible = BigDecimal.ZERO;
 
-            for (SaldoNombradaIntVO saldo : resultados) {
-                totalIdSaldo = totalIdSaldo.add(saldo.getIdSaldo());
-                totalSaldoDisponible = totalSaldoDisponible.add(saldo.getSaldoDisponible());
-                totalSaldoNoDisponible = totalSaldoNoDisponible.add(saldo.getSaldoNoDisponible());
+            for (SaldoNombradaIntVO saldo : resultadosPorPagina) {
+                totalPageIdSaldo = totalPageIdSaldo.add(saldo.getIdSaldo());
+                totalPageSaldoDisponible = totalPageSaldoDisponible.add(saldo.getSaldoDisponible());
+                totalPageSaldoNoDisponible = totalPageSaldoNoDisponible.add(saldo.getSaldoNoDisponible());
             }
 
             ConsultaSaldoCustodiosTotalesInDTO consultaSaldoCustodiosTotalesInDTO = new ConsultaSaldoCustodiosTotalesInDTO();
-            consultaSaldoCustodiosTotalesInDTO.setTotalSaldo(totalIdSaldo);
-            consultaSaldoCustodiosTotalesInDTO.setTotalDisponible(totalSaldoDisponible);
-            consultaSaldoCustodiosTotalesInDTO.setTotalNoDisponible(totalSaldoNoDisponible);
-            consultaSaldoCustodiosTotalesInDTO.setTitle("Total de Página");
+            consultaSaldoCustodiosTotalesInDTO.setTotalSaldo(totalPageIdSaldo);
+            consultaSaldoCustodiosTotalesInDTO.setTotalDisponible(totalPageSaldoDisponible);
+            consultaSaldoCustodiosTotalesInDTO.setTotalNoDisponible(totalPageSaldoNoDisponible);
+            consultaSaldoCustodiosTotalesInDTO.setTitle(TituloPagina.PAGINA);
             consultaSaldoCustodiosTotales.add(consultaSaldoCustodiosTotalesInDTO);
-            //if (!this.consultaEjecutada){
-                consultaSaldoCustodiosTotalesInDTO = consultaSaldoCustodiosService.consultaSaldoCustodioTotales(consultaSaldoCustodiosInDTO);
-                consultaSaldoCustodiosTotalesInDTO.setTotalSaldo(consultaSaldoCustodiosTotalesInDTO.getTotalSaldo());
-                consultaSaldoCustodiosTotalesInDTO.setTotalDisponible(consultaSaldoCustodiosTotalesInDTO.getTotalDisponible());
-                consultaSaldoCustodiosTotalesInDTO.setTotalNoDisponible(consultaSaldoCustodiosTotalesInDTO.getTotalNoDisponible());
-                consultaSaldoCustodiosTotales.add(consultaSaldoCustodiosTotalesInDTO);
-                consultaSaldoCustodiosTotalesInDTO.setTitle("Total de Consulta");
-           // }
 
+
+            consultaSaldoCustodiosTotalesInDTO = new ConsultaSaldoCustodiosTotalesInDTO();
+            consultaSaldoCustodiosTotalesInDTO.setTotalSaldo(totalConsulta.getTotalSaldo());
+            consultaSaldoCustodiosTotalesInDTO.setTotalDisponible(totalConsulta.getTotalDisponible());
+            consultaSaldoCustodiosTotalesInDTO.setTotalNoDisponible(totalConsulta.getTotalNoDisponible());
+            consultaSaldoCustodiosTotales.add(consultaSaldoCustodiosTotalesInDTO);
+            consultaSaldoCustodiosTotalesInDTO.setTitle(TituloPagina.CONSULTA);
         }
 
 
@@ -153,6 +151,8 @@ public class ConsultaCustodiosController  extends ControllerBase {
         }
 
         FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+
+
         ejecutarConsultaPopUp();
         return null;
     }
@@ -194,9 +194,9 @@ public class ConsultaCustodiosController  extends ControllerBase {
             totalPaginas = (totalPaginas <= 0) ? 1 : totalPaginas;
         }
 
-
-//        Seteamos los totales
-         consultaSaldoCustodiosTotales();
+        ConsultaSaldoCustodiosTotalesInDTO consultaTotal = consultaSaldoCustodiosService.consultaSaldoCustodioTotales(consultaSaldoCustodiosInDTO);
+//        Seteamos los totales por pagina
+         consultaSaldoCustodiosTotalMetodo(consultaTotal);
 
         setConsultaEjecutada(true);
         return null;

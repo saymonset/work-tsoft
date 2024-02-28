@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class ConsultaSaldoCustodiosTotalesInDTO {
 
-    private String title;
+    private TituloPagina title;
     private BigDecimal totalSaldo = new BigDecimal(0);
     private BigDecimal totalDisponible = new BigDecimal(0);
     private BigDecimal totalNoDisponible = new BigDecimal(0);
@@ -33,11 +33,11 @@ public class ConsultaSaldoCustodiosTotalesInDTO {
         this.totalNoDisponible = totalNoDisponible;
     }
 
-    public String getTitle() {
+    public TituloPagina getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(TituloPagina title) {
         this.title = title;
     }
 }

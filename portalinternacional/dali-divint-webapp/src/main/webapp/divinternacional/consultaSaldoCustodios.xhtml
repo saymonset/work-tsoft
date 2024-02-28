@@ -379,17 +379,14 @@
 						<!-- Footer -->
 						<f:facet name="footer">
 							<rich:dataTable value="#{consultaSaldoCustodiosBean.consultaSaldoCustodiosTotales}" var="totales" rows="2"
-											styleClass="tablaGeneral centrado" headerClass="tituloTabla" width="100%"
+											styleClass="tablaGeneralsinborde centrado" headerClass="tituloTabla" width="100%"
 											footerClass="tituloTabla" border="0" cellpadding="3px"
 											cellspacing="0px" columnClasses="everyColumn"
 											rowClasses="renglonTablaUno, renglonTablaDos">
-									<rich:column styleClass="everyColumn tituloTabla">
-										<h:outputText styleClass="texto textoPeque12 alineacionIzquierda" value="#{totales.title}"/>
-									</rich:column>
-								    <rich:column styleClass="everyColumn tituloTabla">
-										<h:outputText styleClass="texto textoPeque12" value="                 "/>
-									</rich:column>
-							   	   <rich:column styleClass="everyColumn tituloTabla">
+								<rich:column styleClass="tituloTabla everyColumn " colspan="2">
+									<h:outputText styleClass="texto textoPeque12 alineacionIzquierda" value="#{totales.title.equals(TituloPagina.CONSULTA)  ? 'Total de consulta' : 'Total de pagina'}"/>
+								</rich:column>
+							   	   <rich:column styleClass=" tituloTabla everyColumn">
 									   <f:facet name="header">
 										   <h:outputText styleClass="texto textoPeque12" value="Saldo" />
 									   </f:facet>
@@ -397,7 +394,7 @@
 											<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
 										</h:outputText>
 									</rich:column>
-							    	<rich:column styleClass="everyColumn tituloTabla">
+							    	<rich:column styleClass=" tituloTabla everyColumn">
 										<f:facet name="header">
 											<h:outputText styleClass="texto textoPeque12" value="Disponible" />
 										</f:facet>
@@ -405,7 +402,7 @@
 											<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
 										</h:outputText>
 									</rich:column>
-								     <rich:column styleClass="everyColumn tituloTabla">
+								     <rich:column styleClass=" tituloTabla everyColumn">
 										 <f:facet name="header">
 											 <h:outputText styleClass="texto textoPeque12" value="No Disponible" />
 										 </f:facet>
