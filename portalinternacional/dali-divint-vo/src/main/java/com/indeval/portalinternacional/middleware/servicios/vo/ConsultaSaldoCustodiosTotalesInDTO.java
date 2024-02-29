@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public class ConsultaSaldoCustodiosTotalesInDTO {
 
+    private boolean isConsultaPorPagina;
     private TituloPagina title;
     private BigDecimal totalSaldo = new BigDecimal(0);
     private BigDecimal totalDisponible = new BigDecimal(0);
@@ -39,5 +40,13 @@ public class ConsultaSaldoCustodiosTotalesInDTO {
 
     public void setTitle(TituloPagina title) {
         this.title = title;
+    }
+
+    public boolean isConsultaPorPagina() {
+        return isConsultaPorPagina;
+    }
+
+    public void setConsultaPorPagina(boolean consultaPorPagina) {
+        isConsultaPorPagina = consultaPorPagina;
     }
 }

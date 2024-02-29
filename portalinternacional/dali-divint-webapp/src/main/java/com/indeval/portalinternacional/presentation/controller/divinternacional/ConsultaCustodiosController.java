@@ -36,8 +36,8 @@ public class ConsultaCustodiosController  extends ControllerBase {
 
 
 
-    private String bovedaDali;
-    private String divisaDali;
+    private String bovedaDali ="-1";
+    private String divisaDali="-1";
 
     private PaginaVO resultados = null;
 
@@ -102,6 +102,7 @@ public class ConsultaCustodiosController  extends ControllerBase {
             consultaSaldoCustodiosTotalesInDTO.setTotalNoDisponible(totalConsulta.getTotalNoDisponible());
             consultaSaldoCustodiosTotales.add(consultaSaldoCustodiosTotalesInDTO);
             consultaSaldoCustodiosTotalesInDTO.setTitle(TituloPagina.CONSULTA);
+            consultaSaldoCustodiosTotalesInDTO.setConsultaPorPagina(true);
         }
 
 
@@ -183,9 +184,6 @@ public class ConsultaCustodiosController  extends ControllerBase {
 
         setParams();
         paginaVO = consultaSaldoCustodiosService.consultaSaldoCustodio(consultaSaldoCustodiosInDTO, paginaVO);
-
-
-
         if ( paginaVO.getRegistrosXPag() !=0){
             totalPaginas = paginaVO.getTotalRegistros() / paginaVO.getRegistrosXPag();
 
@@ -193,7 +191,6 @@ public class ConsultaCustodiosController  extends ControllerBase {
                 totalPaginas++;
             totalPaginas = (totalPaginas <= 0) ? 1 : totalPaginas;
         }
-
         ConsultaSaldoCustodiosTotalesInDTO consultaTotal = consultaSaldoCustodiosService.consultaSaldoCustodioTotales(consultaSaldoCustodiosInDTO);
 //        Seteamos los totales por pagina
          consultaSaldoCustodiosTotalMetodo(consultaTotal);
@@ -278,13 +275,21 @@ public class ConsultaCustodiosController  extends ControllerBase {
      * Buscar las emisiones
      * @param evt
      */
-    public void buscarConciliaciones(ActionEvent evt)
+    public void buscar(ActionEvent evt)
     {
-        paginaVO.setRegistrosXPag(50);
-        paginaVO.setOffset(0);
-        getPaginaVO().setRegistros(null);
-        setIdCuentaPopup(null);
-        ejecutarConsulta();
+
+        if (bovedaDali.equals("-1")) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Debe seleccionar una boveda, por favor revisar.", "Debe seleccionar una boveda, por favor revisar."));
+        }else if (divisaDali.equals("-1")) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Debe seleccionar una divisa, por favor revisar.", "Debe seleccionar una divisa, por favor revisar."));
+        } else {
+            paginaVO.setRegistrosXPag(50);
+            paginaVO.setOffset(0);
+            getPaginaVO().setRegistros(null);
+            setIdCuentaPopup(null);
+            ejecutarConsulta();
+        }
+
 
     }
 

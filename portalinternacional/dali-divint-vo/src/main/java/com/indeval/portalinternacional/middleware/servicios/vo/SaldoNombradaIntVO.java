@@ -9,10 +9,19 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 public class SaldoNombradaIntVO implements Serializable{
+
+    private String idIns;
+    private String folioIns;
+    private BigDecimal idCuenta;
+    private String cuenta;
+    private String idDivisa;
     private String divisa;
     private String boveda;
-    private BigDecimal idCuenta;
+    private String idBov;
+
+    private BigDecimal saldoCalculado;
     private BigDecimal idSaldo;
+
     private BigDecimal saldoDisponible;
     private BigDecimal saldoNoDisponible;
 
@@ -22,6 +31,8 @@ public class SaldoNombradaIntVO implements Serializable{
     private BigDecimal totalSaldoPage = new BigDecimal(0);
     private BigDecimal totalDisponiblePage = new BigDecimal(0);
     private BigDecimal totalNoDisponiblePage = new BigDecimal(0);
+
+
 
     public String getDivisa() {
         return divisa;
@@ -117,5 +128,53 @@ public class SaldoNombradaIntVO implements Serializable{
 
     public void setTotalNoDisponiblePage(BigDecimal totalNoDisponiblePage) {
         this.totalNoDisponiblePage = totalNoDisponiblePage;
+    }
+
+    public String getIdIns() {
+        return idIns;
+    }
+
+    public void setIdIns(String idIns) {
+        this.idIns = idIns;
+    }
+
+    public String getFolioIns() {
+        return folioIns;
+    }
+
+    public void setFolioIns(String folioIns) {
+        this.folioIns = folioIns;
+    }
+
+    public String getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(String cuenta) {
+        this.cuenta = cuenta;
+    }
+
+    public String getIdDivisa() {
+        return idDivisa;
+    }
+
+    public void setIdDivisa(String idDivisa) {
+        this.idDivisa = idDivisa;
+    }
+
+    public String getIdBov() {
+        return idBov;
+    }
+
+    public void setIdBov(String idBov) {
+        this.idBov = idBov;
+    }
+
+    public BigDecimal getSaldoCalculado() {
+        return saldoCalculado;
+    }
+
+    public void setSaldoCalculado(BigDecimal saldoCalculado) {
+        this.saldoCalculado = saldoCalculado;
     }
 }

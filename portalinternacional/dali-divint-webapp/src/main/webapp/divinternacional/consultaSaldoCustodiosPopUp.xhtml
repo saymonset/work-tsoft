@@ -134,6 +134,7 @@
 												  styleClass="textoResumen" />
 									<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
 													 value="#{consultaSaldoCustodiosBean.paginaVO.registrosXPag}">
+										<f:selectItem itemLabel="" itemValue="" />
 										<f:selectItem itemLabel="1" itemValue="1" />
 										<f:selectItem itemLabel="2" itemValue="2" />
 										<f:selectItem itemLabel="5" itemValue="5" />
@@ -162,7 +163,35 @@
 							footerClass="tituloTabla" border="0" cellpadding="3px"
 							cellspacing="0px" columnClasses="everyColumn"
 							rowClasses="renglonTablaUno, renglonTablaDos">
-							<!-- Custodio  -->
+							<!-- idIns  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="ID_INS" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.idIns}" />
+							</h:column>
+							<!-- folioIns  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="FOLIO_INS" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.folioIns}" />
+							</h:column>
+							<!-- cuenta  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="CUENTA" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.cuenta}" />
+							</h:column>
+							<!-- ID_DIVISA  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="ID_DIVISA" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.idDivisa}" />
+							</h:column>
+							<!-- Divisa  -->
 							<h:column>
 								<f:facet name="header">
 									<h:outputText styleClass="texto textoPeque12" value="Divisa" />
@@ -176,6 +205,13 @@
 									<h:outputText styleClass="texto textoPeque12" value="#{etq.bovedaMinus}" />
 								</f:facet>
 								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.boveda}" rendered="#{not empty conciliacion.boveda}" />
+							</h:column>
+							<!-- Boveda DALI  -->
+							<h:column>
+								<f:facet name="header">
+									<h:outputText styleClass="texto textoPeque12" value="ID_BOV" />
+								</f:facet>
+								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.boveda}" rendered="#{not empty conciliacion.idBov}" />
 							</h:column>
 							<!-- Saldo  -->
 							<h:column >
@@ -227,7 +263,8 @@
 												cellspacing="0px" columnClasses="everyColumn"
 												rowClasses="renglonTablaUno, renglonTablaDos">
 									<rich:column styleClass="tituloTabla everyColumn " colspan="2">
-										<h:outputText styleClass="texto textoPeque12 alineacionIzquierda" value="#{totales.title.equals(TituloPagina.CONSULTA)  ? 'Total de consulta' : 'Total de pagina'}"/>
+										<h:outputText styleClass="texto textoPeque12 alineacionIzquierda" rendered="#{totales.consultaPorPagina}"  value="#{etq.totalConsulta}"/>
+										<h:outputText styleClass="texto textoPeque12 alineacionIzquierda" rendered="#{!totales.consultaPorPagina}"  value="#{etq.totalPagina}"/>
 									</rich:column>
 									<rich:column styleClass=" tituloTabla everyColumn">
 										<f:facet name="header">

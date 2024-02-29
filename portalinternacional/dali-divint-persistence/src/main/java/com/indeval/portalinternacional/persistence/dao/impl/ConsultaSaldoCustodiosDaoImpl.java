@@ -81,7 +81,7 @@ public class ConsultaSaldoCustodiosDaoImpl extends BaseDaoHibernateImpl implemen
     public PaginaVO consultaSaldoCustodio(final ConsultaSaldoCustodiosInDTO criteriosConsulta,final PaginaVO paginaVO) throws BusinessException {
 
         PaginaVO newpaginaVO =null;
-        if(criteriosConsulta.getIdCuentaPopup() != null ){
+        if(criteriosConsulta.getIdCuentaPopup() != null && !criteriosConsulta.getIdCuentaPopup().isEmpty()){
             //Se genera en el popup
             newpaginaVO = vSaldo_por_razon_social( criteriosConsulta, paginaVO);
         }else{
@@ -166,19 +166,31 @@ public class ConsultaSaldoCustodiosDaoImpl extends BaseDaoHibernateImpl implemen
         return paginaVO;
     }
 
-    private  PaginaVO vSaldo_por_razon_social(final ConsultaSaldoCustodiosInDTO criteriosConsulta,final PaginaVO paginaVO) throws BusinessException {
-
+    private String getQuery(){
         final StringBuilder sb = new StringBuilder();
-        sb.append(" SELECT v.cuenta AS idCuenta,\n" +
+        sb.append(" SELECT" +
+                "       v.id_ins AS idIns, \n" +
+                "       v.folio_ins AS folioIns, \n" +
+                "       v.cuenta AS cuenta, \n" +
+                "       v.cuenta AS idCuenta, \n" +
+                "       v.id_divisa AS idDivisa, \n" +
                 "       v.divisa AS divisa,\n" +
-                "       v.boveda AS boveda,\n" +
-                "        v.saldo_calculado AS idSaldo,\n" +
+                "       v.boveda AS boveda, \n" +
+                "       v.id_bov AS idBov, \n" +
+                "       v.saldo_calculado AS idSaldo, \n" +
+                "       v.saldo_calculado AS saldoCalculado, \n" +
                 "       v.saldo_disponible AS saldoDisponible,\n" +
                 "       v.saldo_no_disponible AS saldoNoDisponible \n" +
-
                 "FROM v_saldo_por_razon_social v   \n" +
                 "                          WHERE  1 =1 \n" +
                 "                               ");
+        return sb.toString();
+    }
+
+    private  PaginaVO vSaldo_por_razon_social(final ConsultaSaldoCustodiosInDTO criteriosConsulta,final PaginaVO paginaVO) throws BusinessException {
+
+        final StringBuilder sb = new StringBuilder(getQuery());
+
 
 
         if(criteriosConsulta.getDivisaDali() != null  && !"-1".equalsIgnoreCase(criteriosConsulta.getDivisaDali()) ){
@@ -210,15 +222,18 @@ public class ConsultaSaldoCustodiosDaoImpl extends BaseDaoHibernateImpl implemen
                 StringType st = new StringType();
 
 
-
+                query.addScalar("idIns", st);
+                query.addScalar("folioIns", st);
+                query.addScalar("cuenta", st);
+                query.addScalar("idCuenta", bi);
+                query.addScalar("idDivisa", st);
                 query.addScalar("divisa", st);
                 query.addScalar("boveda", st);
-                query.addScalar("idCuenta", bi);
+                query.addScalar("idBov", st);
                 query.addScalar("idSaldo", bi);
+                query.addScalar("saldoCalculado", bi);
                 query.addScalar("saldoDisponible", bi);
                 query.addScalar("saldoNoDisponible", bi);
-
-
 
                 log.debug(query.toString());
                 query.setResultTransformer(Transformers.aliasToBean(SaldoNombradaIntVO.class));

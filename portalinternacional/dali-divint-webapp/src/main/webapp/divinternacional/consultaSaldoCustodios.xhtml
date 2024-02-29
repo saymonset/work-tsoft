@@ -164,7 +164,7 @@
 				<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
 								   styleClass="submit"
 								   oncomplete='javascript:presentarResumen();limpiarTodos()'
-								   actionListener="#{consultaSaldoCustodiosBean.buscarConciliaciones}"
+								   actionListener="#{consultaSaldoCustodiosBean.buscar}"
 								   reRender="containerResultados,totalesConsultas,tablaResultados,botones,mensajeUsuario,panelResumen"
 								   tabindex="7">
 					<f:setPropertyActionListener value="true"
@@ -384,7 +384,8 @@
 											cellspacing="0px" columnClasses="everyColumn"
 											rowClasses="renglonTablaUno, renglonTablaDos">
 								<rich:column styleClass="tituloTabla everyColumn " colspan="2">
-									<h:outputText styleClass="texto textoPeque12 alineacionIzquierda" value="#{totales.title.equals(TituloPagina.CONSULTA)  ? 'Total de consulta' : 'Total de pagina'}"/>
+									<h:outputText styleClass="texto textoPeque12 alineacionIzquierda" rendered="#{totales.consultaPorPagina}"  value="#{etq.totalConsulta}"/>
+									<h:outputText styleClass="texto textoPeque12 alineacionIzquierda" rendered="#{!totales.consultaPorPagina}"  value="#{etq.totalPagina}"/>
 								</rich:column>
 							   	   <rich:column styleClass=" tituloTabla everyColumn">
 									   <f:facet name="header">
