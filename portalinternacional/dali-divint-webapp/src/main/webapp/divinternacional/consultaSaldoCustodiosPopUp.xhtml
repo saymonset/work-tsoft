@@ -134,7 +134,7 @@
 												  styleClass="textoResumen" />
 									<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
 													 value="#{consultaSaldoCustodiosBean.paginaVO.registrosXPag}">
-										<f:selectItem itemLabel="" itemValue="" />
+										<f:selectItem itemLabel="" itemValue="100" />
 										<f:selectItem itemLabel="1" itemValue="1" />
 										<f:selectItem itemLabel="2" itemValue="2" />
 										<f:selectItem itemLabel="5" itemValue="5" />
@@ -166,35 +166,35 @@
 							<!-- idIns  -->
 							<h:column>
 								<f:facet name="header">
-									<h:outputText styleClass="texto textoPeque12" value="ID_INS" />
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.idIns}" />
 								</f:facet>
 								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.idIns}" />
 							</h:column>
 							<!-- folioIns  -->
 							<h:column>
 								<f:facet name="header">
-									<h:outputText styleClass="texto textoPeque12" value="FOLIO_INS" />
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.folioIns}" />
 								</f:facet>
 								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.folioIns}" />
 							</h:column>
 							<!-- cuenta  -->
 							<h:column>
 								<f:facet name="header">
-									<h:outputText styleClass="texto textoPeque12" value="CUENTA" />
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.cuenta}" />
 								</f:facet>
 								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.cuenta}" />
 							</h:column>
 							<!-- ID_DIVISA  -->
 							<h:column>
 								<f:facet name="header">
-									<h:outputText styleClass="texto textoPeque12" value="ID_DIVISA" />
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.idDivisa}" />
 								</f:facet>
 								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.idDivisa}" />
 							</h:column>
 							<!-- Divisa  -->
 							<h:column>
 								<f:facet name="header">
-									<h:outputText styleClass="texto textoPeque12" value="Divisa" />
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.divisaMinus}" />
 								</f:facet>
 								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.divisa}" />
 							</h:column>
@@ -209,7 +209,7 @@
 							<!-- Boveda DALI  -->
 							<h:column>
 								<f:facet name="header">
-									<h:outputText styleClass="texto textoPeque12" value="ID_BOV" />
+									<h:outputText styleClass="texto textoPeque12" value="#{etq.idBov}" />
 								</f:facet>
 								<h:outputText styleClass="texto textoPeque12" value="#{conciliacion.boveda}" rendered="#{not empty conciliacion.idBov}" />
 							</h:column>

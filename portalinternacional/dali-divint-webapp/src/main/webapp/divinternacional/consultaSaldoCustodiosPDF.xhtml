@@ -28,19 +28,22 @@
 	<pdf:table value="#{consultaSaldoCustodiosBean.paginaReportes.registros}" currentBean="conciliacion">
 		<pdf:row>
 
+			<pdf:col header="#{etq.idIns}" value="#{conciliacion.idIns}" align="center" rendered="#{ conciliacion.idIns != null and  !empty conciliacion.idIns}"/>
+			<pdf:col header="#{etq.folioIns}" value="#{conciliacion.folioIns}" align="center" rendered="#{conciliacion.folioIns != null and !empty conciliacion.folioIns}"/>
+			<pdf:col header="#{etq.cuenta}" value="#{conciliacion.cuenta}" align="center" rendered="#{conciliacion.cuenta != null and !empty conciliacion.cuenta}"/>
+			<pdf:col header="#{etq.idDivisa}" value="#{conciliacion.idDivisa}" align="center" rendered="#{conciliacion.idDivisa != null and !empty conciliacion.idDivisa}"/>
 			<pdf:col header="#{etq.divisaMinus}" value="#{conciliacion.divisa}" align="center" />
 			<pdf:col header="#{etq.bovedaMinus}" value="#{conciliacion.boveda}" align="center"/>
+			<pdf:col header="#{etq.idBov}" value="#{conciliacion.idBov}" align="center" rendered="#{conciliacion.idBov != null and !empty conciliacion.idBov}"/>
 
-
-
-			<pdf:col header="Saldo" value="#{conciliacion.idSaldo}" align="center" rendered="#{!empty conciliacion.idSaldo}">
+			<pdf:col header="Saldo" value="#{conciliacion.idSaldo}" align="center" rendered="#{conciliacion.idSaldo != null and !empty conciliacion.idSaldo}">
 				<f:convertNumber pattern="###,###,###,###,###,##0.######" />
 			</pdf:col>
 
-			<pdf:col header="Disponible" value="#{conciliacion.saldoDisponible}" align="right" rendered="#{!empty conciliacion.saldoDisponible}">
+			<pdf:col header="Disponible" value="#{conciliacion.saldoDisponible}" align="right" rendered="#{conciliacion.saldoDisponible != null and !empty conciliacion.saldoDisponible}">
 				<f:convertNumber pattern="###,###,###,###,###,##0.######" />
 			</pdf:col>
-			<pdf:col header="No Disponible" value="#{conciliacion.saldoNoDisponible}" align="right" rendered="#{!empty conciliacion.saldoNoDisponible}">
+			<pdf:col header="No Disponible" value="#{conciliacion.saldoNoDisponible}" align="right" rendered="#{conciliacion.saldoNoDisponible != null and !empty conciliacion.saldoNoDisponible}">
 				<f:convertNumber pattern="###,###,###,###,###,##0.######" />
 			</pdf:col>
 

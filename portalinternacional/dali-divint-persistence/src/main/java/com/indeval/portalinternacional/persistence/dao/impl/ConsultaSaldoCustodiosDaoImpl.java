@@ -106,6 +106,8 @@ public class ConsultaSaldoCustodiosDaoImpl extends BaseDaoHibernateImpl implemen
                 "                                  FROM v_saldo_custodios v  WHERE 1 = 1 ");
 
 
+
+
         if(criteriosConsulta.getDivisaDali() != null  && !"-1".equalsIgnoreCase(criteriosConsulta.getDivisaDali()) ){
             sb.append("  AND v.id_div = :idDivisa");
         }

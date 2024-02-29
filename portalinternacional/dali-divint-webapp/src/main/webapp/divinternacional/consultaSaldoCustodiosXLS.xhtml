@@ -20,16 +20,16 @@
 	<xls:table value="#{consultaSaldoCustodiosBean.paginaReportes.registros}" var="conciliacion">
 		<xls:row>
 
-
-			<xls:col header="#{etq.divisaMinus}" value="#{conciliacion.divisa}" align="center" />
-			<xls:col header="#{etq.bovedaMinus}" value="#{conciliacion.boveda}" align="center"/>
-
-
-
-			<xls:col header="Saldo" value="#{conciliacion.idSaldo}" align="center"  pattern="###,###,###,###,###,##0.######"/>
-
-			<xls:col header="Disponible" value="#{conciliacion.saldoDisponible}" align="right"  pattern="###,###,###,###,###,##0.######"/>
-			<xls:col header="No Disponible" value="#{conciliacion.saldoNoDisponible}" align="right" pattern="###,###,###,###,###,##0.######"/>
+			<xls:col header="#{etq.idIns}" value="#{conciliacion.idIns != null and !empty conciliacion.idIns ? conciliacion.idIns : ''}" align="center" />
+			<xls:col header="#{etq.folioIns}" value="#{conciliacion.folioIns != null and !empty conciliacion.folioIns ? conciliacion.folioIns : ''}" align="center" />
+			<xls:col header="#{etq.cuenta}" value="#{conciliacion.cuenta != null and !empty conciliacion.cuenta ? conciliacion.cuenta : ''}" align="center" />
+			<xls:col header="#{etq.idDivisa}" value="#{conciliacion.idDivisa != null and !empty conciliacion.idDivisa ? conciliacion.idDivisa : ''}" align="center" />
+			<xls:col header="#{etq.divisaMinus}" value="#{conciliacion.divisa != null and !empty conciliacion.divisa ? conciliacion.divisa : ''}" align="center" />
+			<xls:col header="#{etq.bovedaMinus}" value="#{conciliacion.boveda != null and !empty conciliacion.boveda ? conciliacion.boveda : ''}" align="center" />
+			<xls:col header="#{etq.idBov}" value="#{conciliacion.idBov != null and !empty conciliacion.idBov ? conciliacion.idBov : ''}" align="center" />
+			<xls:col header="#{etq.saldo}" value="#{conciliacion.idBov != null and !empty conciliacion.idSaldo ? conciliacion.idSaldo : 0}" align="center"  pattern="###,###,###,###,###,##0.######"/>
+			<xls:col header="#{etq.disponible}" value="#{conciliacion.saldoDisponible != null and !empty conciliacion.saldoDisponible ? conciliacion.saldoDisponible : 0}" align="right"  pattern="###,###,###,###,###,##0.######"/>
+			<xls:col header="#{etq.noDisponible}" value="#{conciliacion.saldoNoDisponible != null and !empty conciliacion.saldoNoDisponible ? conciliacion.saldoNoDisponible : 0}" align="right" pattern="###,###,###,###,###,##0.######"/>
 		</xls:row>
 	</xls:table>
 
