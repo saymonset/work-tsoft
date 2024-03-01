@@ -26,6 +26,7 @@ import com.indeval.portalinternacional.middleware.servicios.modelo.Multidivisa.T
 import com.indeval.portalinternacional.middleware.servicios.vo.CriteriosConsultaMovEfeDivExtVO;
 import com.indeval.portalinternacional.middleware.servicios.vo.MovimientoEfectivoInternacionalVO;
 import com.indeval.portalinternacional.presentation.controller.common.ControllerBase;
+import com.indeval.portalinternacional.presentation.util.TipoOperacionChecker;
 import com.indeval.sidv.bitacoraauditoria.middleware.service.BitacoraService;
 import org.apache.commons.lang.SerializationUtils;
 import org.apache.commons.lang.StringUtils;
@@ -38,8 +39,8 @@ import javax.faces.model.SelectItem;
 import java.util.*;
 
 import static com.indeval.portalinternacional.middleware.servicios.constantes.Constantes.*;
-import static com.indeval.portalinternacional.middleware.servicios.constantes.Constantes.TIPO_MOVIMIENTO_EFECTIVO_CANCELA;
-import static com.indeval.portalinternacional.presentation.controller.movimientoInternacional.TipoMovimientoEfectivo.*;
+import static com.indeval.portalinternacional.middleware.servicios.constantes.Constantes.TIPO_OPERACION_CANCELA;
+import static com.indeval.portalinternacional.presentation.util.TipoOperacionChecker.*;
 
 
 public class MovimientoEfectivoInternacionalController extends ControllerBase {
@@ -70,7 +71,7 @@ public class MovimientoEfectivoInternacionalController extends ControllerBase {
     private String tipoMovimiento;
     private String folioControl;
     private String esTipo;
-    private TipoMovimientoEfectivo tipoMovimientoEfectivo;
+    private TipoOperacionChecker tipoOperacionMovimientoEfectivo;
     private String idMovimientoStrSelected;
 
     private Date fechaInicio;
@@ -677,20 +678,20 @@ public class MovimientoEfectivoInternacionalController extends ControllerBase {
      * Ejecuta las operaciones de movimiento desde front
      */
     private void ejecutarOperacion() {
-        LOG.debug("ejecutarOperacion :: " + tipoMovimientoEfectivo.name() + " :: " + tipoMovimientoEfectivo.toString());
+        LOG.debug("ejecutarOperacion :: " + tipoOperacionMovimientoEfectivo.name() + " :: " + tipoOperacionMovimientoEfectivo.toString());
         LOG.error("validationErrors :: " + validationErrors);
         if (!validationErrors) {
             try {
                 String posibleError = this.validarOperaciones();
                 if (posibleError == null) {
-                    LOG.debug("Es posible continuar ejecutando la operacion :: " + tipoMovimientoEfectivo.name());
-                    switch (tipoMovimientoEfectivo.getTipo()) {
-                        case TIPO_MOVIMIENTO_EFECTIVO_LIBERAR_SELECCION:
-                        case TIPO_MOVIMIENTO_EFECTIVO_LIBERA:
+                    LOG.debug("Es posible continuar ejecutando la operacion :: " + tipoOperacionMovimientoEfectivo.name());
+                    switch (tipoOperacionMovimientoEfectivo.getTipo()) {
+                        case TIPO_OPERACION_LIBERAR_SELECCION:
+                        case TIPO_OPERACION_LIBERA:
                             this.liberaMovimientos();
                             break;
-                        case TIPO_MOVIMIENTO_EFECTIVO_CANCELAR_SELECCION:
-                        case TIPO_MOVIMIENTO_EFECTIVO_CANCELA:
+                        case TIPO_OPERACION_CANCELAR_SELECCION:
+                        case TIPO_OPERACION_CANCELA:
                             this.cancelarMovimientos();
                             break;
                     }
@@ -756,11 +757,11 @@ public class MovimientoEfectivoInternacionalController extends ControllerBase {
      * ValidarOperaciones
      * CargaFirmas
      */
-    private void cargaFirmaMovimientos(TipoMovimientoEfectivo tipoMovimientoEfectivo) {
+    private void cargaFirmaMovimientos(TipoOperacionChecker tipoMovimientoEfectivo) {
         LOG.info("firmarMovimientos para :: " + tipoMovimientoEfectivo.name() + " :: " + tipoMovimientoEfectivo.toString());
         if (this.validarFacultadFirmar()) {
-            this.tipoMovimientoEfectivo = tipoMovimientoEfectivo;
-            this.esTipo = tipoMovimientoEfectivo.getMovimiento();
+            this.tipoOperacionMovimientoEfectivo = tipoMovimientoEfectivo;
+            this.esTipo = tipoMovimientoEfectivo.getOperacion();
             LOG.debug(tipoMovimientoEfectivo.name() + " :: " + tipoMovimientoEfectivo.toString());
             movimientos = this.cargarMovimientos();
             if (movimientos == null || movimientos.isEmpty()) {
@@ -798,25 +799,25 @@ public class MovimientoEfectivoInternacionalController extends ControllerBase {
      * Carga Movimientos de Efectivo a procesar
      */
     private List<MovimientoEfectivoInternacionalVO> cargarMovimientos() {
-        LOG.info("Cargar Movimientos a procesar :: " + tipoMovimientoEfectivo.name());
+        LOG.info("Cargar Movimientos a procesar :: " + tipoOperacionMovimientoEfectivo.name());
 
         List<MovimientoEfectivoInternacionalVO> cargaMovmientos = new ArrayList<MovimientoEfectivoInternacionalVO>();
-        if (tipoMovimientoEfectivo.getTipo().equals(TIPO_MOVIMIENTO_EFECTIVO_LIBERA)
-                || tipoMovimientoEfectivo.getTipo().equals(TIPO_MOVIMIENTO_EFECTIVO_CANCELA)) {
+        if (tipoOperacionMovimientoEfectivo.getTipo().equals(TIPO_OPERACION_LIBERA)
+                || tipoOperacionMovimientoEfectivo.getTipo().equals(TIPO_OPERACION_CANCELA)) {
             Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
             this.idMovimientoStrSelected = params.get(ID_MOVIMIENTOS_STR);
             LOG.debug("Cargar solo un movimiento [" + idMovimientoStrSelected + "]"
-                    + " para :: " + tipoMovimientoEfectivo.getMovimiento());
+                    + " para :: " + tipoOperacionMovimientoEfectivo.getOperacion());
             cargaMovmientos.add(getMovimientoByIdStr(this.idMovimientoStrSelected));
         } else {
             for (Object objMovimiento : this.paginaVO.getRegistros()) {
                 MovimientoEfectivoInternacionalVO movimiento = (MovimientoEfectivoInternacionalVO) objMovimiento;
                 if ((movimiento.isSeleccionadoLiberar()
-                        && tipoMovimientoEfectivo.getTipo().equals(TIPO_MOVIMIENTO_EFECTIVO_LIBERAR_SELECCION))
+                        && tipoOperacionMovimientoEfectivo.getTipo().equals(TIPO_OPERACION_LIBERAR_SELECCION))
                         || (movimiento.isSeleccionadoCancelar()
-                        && tipoMovimientoEfectivo.getTipo().equals(TIPO_MOVIMIENTO_EFECTIVO_CANCELAR_SELECCION))) {
+                        && tipoOperacionMovimientoEfectivo.getTipo().equals(TIPO_OPERACION_CANCELAR_SELECCION))) {
                     LOG.debug("Cargar movimiento [" + movimiento.getIdMovimiento() + "]"
-                            + " para :: " + tipoMovimientoEfectivo.getMovimiento());
+                            + " para :: " + tipoOperacionMovimientoEfectivo.getOperacion());
                     cargaMovmientos.add(movimiento);
                 }
             }
@@ -848,13 +849,13 @@ public class MovimientoEfectivoInternacionalController extends ControllerBase {
      * Validación de Operaciones para Movimientos de Efectivo a Firmar
      */
     private String validarOperaciones() {
-        LOG.debug("ValidarOperaciones para :: " + tipoMovimientoEfectivo.name() + " :: " + tipoMovimientoEfectivo.toString());
-        switch (tipoMovimientoEfectivo.getTipo()) {
-            case TIPO_MOVIMIENTO_EFECTIVO_LIBERAR_SELECCION:
-            case TIPO_MOVIMIENTO_EFECTIVO_LIBERA:
+        LOG.debug("ValidarOperaciones para :: " + tipoOperacionMovimientoEfectivo.name() + " :: " + tipoOperacionMovimientoEfectivo.toString());
+        switch (tipoOperacionMovimientoEfectivo.getTipo()) {
+            case TIPO_OPERACION_LIBERAR_SELECCION:
+            case TIPO_OPERACION_LIBERA:
                 return this.validaUsuarioPermitidoLiberar();
-            case TIPO_MOVIMIENTO_EFECTIVO_CANCELAR_SELECCION:
-            case TIPO_MOVIMIENTO_EFECTIVO_CANCELA:
+            case TIPO_OPERACION_CANCELAR_SELECCION:
+            case TIPO_OPERACION_CANCELA:
                 return this.validaUsuarioPermitidoCancelar();
             default:
                 return this.operacionDesconocida();

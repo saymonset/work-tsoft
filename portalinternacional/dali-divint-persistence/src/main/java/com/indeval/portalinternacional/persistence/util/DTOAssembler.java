@@ -4,6 +4,7 @@ package com.indeval.portalinternacional.persistence.util;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.indeval.portaldali.persistence.modelo.Boveda;
@@ -13,8 +14,16 @@ import com.indeval.portaldali.persistence.modelo.Institucion;
 import com.indeval.portaldali.persistence.modelo.TipoBoveda;
 import com.indeval.portaldali.persistence.modelo.TipoCuenta;
 import com.indeval.portaldali.persistence.modelo.TipoInstitucion;
+import com.indeval.portalinternacional.middleware.servicios.constantes.EstatusDB;
 import com.indeval.portalinternacional.middleware.servicios.dto.*;
+import com.indeval.portalinternacional.middleware.servicios.dto.diasIhabilesDivisas.HistoricoDiasInhabilesDivisasDTO;
 import com.indeval.portalinternacional.middleware.servicios.modelo.*;
+
+import javax.persistence.Column;
+import javax.persistence.Id;
+
+import static com.indeval.portalinternacional.middleware.servicios.constantes.EstatusDB.AUTORIZADO;
+import static com.indeval.portalinternacional.middleware.servicios.constantes.EstatusDB.REGISTRADO;
 
 public class DTOAssembler {
 
@@ -211,6 +220,37 @@ public class DTOAssembler {
             dto.setUsuarioChecker(horariosCustodios.getUsuarioChecker());
         }
         return dto;
+    }
+
+    /**
+     * Multidivisas
+     * <p>
+     * Crea un objeto del tipo {@link HistoricoDiasInhabilesDivisasDTO } a partir de un objeto de hibernate
+     * del tipo {@link HistoricoDiasInhabilesDivisas}
+     *
+     * @param entity Objeto de hibernate con los valores a setear
+     * @return DTO con los datos del objeto hibernate
+     */
+    public static HistoricoDiasInhabilesDivisasDTO crearHistoricoDiasInhabilesDivisasDTO(
+            HistoricoDiasInhabilesDivisas entity) {
+        if (entity != null) {
+            HistoricoDiasInhabilesDivisasDTO dto = new HistoricoDiasInhabilesDivisasDTO();
+            dto.setIdHistorico(entity.getIdHistorico());
+            dto.setCreador(entity.getCreador());
+            dto.setFechaCreacion(entity.getFechaCreacion());
+            dto.setFechaUltModificacion(entity.getFechaUltModificacion());
+            dto.setRegistrosCorrectos(entity.getRegistrosCorrectos());
+            dto.setRegistrosError(entity.getRegistrosError());
+            dto.setRegistrosTotal(entity.getRegistrosTotal());
+            dto.setUsuarioChecker(entity.getUsuarioChecker());
+            dto.setNombreArchivo(entity.getNombreArchivo());
+            dto.setEstatus(entity.getEstatus());
+            dto.setEstadoDB(EstatusDB.obtenerEstado(dto.getEstatus()));
+            dto.setPuedeAutorizar(dto.getEstadoDB() == REGISTRADO);
+            dto.setPuedeCancelar(dto.getEstadoDB() == REGISTRADO || dto.getEstadoDB() == AUTORIZADO);
+            return dto;
+        }
+        return null;
     }
 
     public static TipoBovedaDto crearTipoBovedaDTO(TipoBoveda tipoBoveda) {

@@ -4,6 +4,7 @@
 package com.indeval.portalinternacional.middleware.servicios.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.validation.Errors;
 
@@ -26,7 +27,7 @@ public class ResumenVO extends AbstractBaseDTO {
     private Integer totalError;
 
     private Integer totalRegistros;
-    
+
     private Integer totalProtocolo;
 
     private String nombreUsuario;
@@ -34,13 +35,16 @@ public class ResumenVO extends AbstractBaseDTO {
     private AgenteVO agenteFirmado;
 
     private String tipoProceso;
-    
-    
-    
+
+    /**
+     * Multidivisas: Resumen de tipos de errores
+     */
+    private List<String> tiposErrores;
+
 
     /**
      * @see org.springframework.validation.Validator#validate(java.lang.Object,
-     *      org.springframework.validation.Errors)
+     * org.springframework.validation.Errors)
      */
     public void validate(Object target, Errors errors) {
     }
@@ -164,5 +168,16 @@ public class ResumenVO extends AbstractBaseDTO {
     public void setTotalProtocolo(Integer totalProtocolo) {
         this.totalProtocolo = totalProtocolo;
     }
-    
+
+    public List<String> getTiposErrores() {
+        return tiposErrores;
+    }
+
+    public void setTiposErrores(List<String> tiposErrores) {
+        this.tiposErrores = tiposErrores;
+    }
+
+    public boolean isEmpty() {
+        return totalCargados == null && totalError == null && totalRegistros == null;
+    }
 }

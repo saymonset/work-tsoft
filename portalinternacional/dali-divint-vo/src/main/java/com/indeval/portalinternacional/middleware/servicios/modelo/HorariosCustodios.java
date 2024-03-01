@@ -9,28 +9,14 @@ import java.util.Date;
 
 @Entity
 @Table(name = "C_HORARIOS_CUSTODIOS")
-//@SequenceGenerator(name = "foliador", sequenceName = "SEQ_HORARIOS_CUSTODIOS", allocationSize = 1, initialValue = 1)
 public class HorariosCustodios implements Serializable {
-
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "foliador")
-    @Column(name = "ID_HORARIOS_CUSTODIO")
-    private Long idHorariosCustodios;*/
 
     @Id
     @Column(name = "ID_HORARIOS_CUSTODIO", unique = true, nullable = false)
     private Integer idHorariosCustodios;
 
-    /*@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ID_DIVISA")
-    private Divisa idDivisa;*/
-
     @Column(name = "ID_DIVISA", unique = true, nullable = false)
     private Integer idDivisa;
-
-    /*@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ID_CUSTODIO")
-    private Custodio idCustodio;*/
 
     @Column(name = "ID_CUSTODIO", unique = true, nullable = false)
     private Integer idCustodio;

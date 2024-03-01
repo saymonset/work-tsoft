@@ -505,6 +505,7 @@ public class ConsultaOperacionesController extends ControllerBase {
 
 		
 		for (OperacionSic operacionSic : operaciones) {
+
 		    operacionSic.setConMensaje(conMensaje);
 		    if (operacionSic.getCambioBoveda() != null && operacionSic.getCambioBoveda().equals(BigInteger.ONE)) {
 		        validaMovimientosPermitidosCambioBoveda(operacionSic, listaOperaciones);

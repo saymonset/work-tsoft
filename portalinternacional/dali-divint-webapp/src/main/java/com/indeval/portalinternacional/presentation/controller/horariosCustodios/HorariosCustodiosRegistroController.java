@@ -5,12 +5,12 @@
 package com.indeval.portalinternacional.presentation.controller.horariosCustodios;
 
 import com.indeval.portaldali.middleware.servicios.modelo.BusinessException;
-import com.indeval.portaldali.middleware.servicios.modelo.vo.PaginaVO;
 import com.indeval.portaldali.persistence.dao.common.DivisaDao;
 import com.indeval.portalinternacional.middleware.services.divisioninternacional.CustodioService;
 import com.indeval.portalinternacional.middleware.services.divisioninternacional.HorariosCustodiosService;
 import com.indeval.portalinternacional.middleware.servicios.dto.HorariosCustodiosDto;
 import com.indeval.portalinternacional.presentation.controller.common.CapturaOperacionesController;
+import com.indeval.portalinternacional.middleware.servicios.constantes.EstatusDB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,8 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.indeval.portalinternacional.middleware.servicios.constantes.Constantes.ID_ESTADO_HORARIO_CUSTODIO_REGISTRADO;
-import static com.indeval.portalinternacional.presentation.controller.horariosCustodios.EstatusHorario.REGISTRADO;
+import static com.indeval.portalinternacional.middleware.servicios.constantes.Constantes.ID_ESTADO_REGISTRADO;
 import static com.indeval.portalinternacional.presentation.controller.horariosCustodios.UtilHorariosCustodioController.*;
 
 /**
@@ -94,7 +93,7 @@ public class HorariosCustodiosRegistroController extends CapturaOperacionesContr
             horarioCustodio.setHorarioFinal(horarioFinal);
             horarioCustodio.setFechaCreacion(new Date());
             horarioCustodio.setFechaUltModificacion(horarioCustodio.getFechaCreacion());
-            horarioCustodio.setEstatus(ID_ESTADO_HORARIO_CUSTODIO_REGISTRADO);
+            horarioCustodio.setEstatus(ID_ESTADO_REGISTRADO);
             horarioCustodio.setCreador(getNombreUsuarioSesion());
 
             LOG.debug("Salvar :: " + horarioCustodio);
@@ -131,7 +130,7 @@ public class HorariosCustodiosRegistroController extends CapturaOperacionesContr
      * @param estatus Estado del horario
      */
     public String obtenerDescripcionEstatus(int estatus) {
-        return EstatusHorario.obtenerDescripcion(estatus);
+        return EstatusDB.obtenerDescripcion(estatus);
     }
 
 

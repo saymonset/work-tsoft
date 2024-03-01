@@ -13,9 +13,12 @@ import com.indeval.portaldali.persistence.dao.common.DivisaDao;
 import com.indeval.portalinternacional.common.util.CifradorDescifradorBlowfish;
 import com.indeval.portalinternacional.middleware.services.divisioninternacional.CustodioService;
 import com.indeval.portalinternacional.middleware.services.divisioninternacional.HorariosCustodiosService;
+import com.indeval.portalinternacional.middleware.servicios.constantes.Constantes;
 import com.indeval.portalinternacional.middleware.servicios.vo.CriteriosConsultaHorariosCustodiosVO;
 import com.indeval.portalinternacional.middleware.servicios.vo.HorariosCustodiosVO;
 import com.indeval.portalinternacional.presentation.controller.common.CapturaOperacionesController;
+import com.indeval.portalinternacional.middleware.servicios.constantes.EstatusDB;
+import com.indeval.portalinternacional.presentation.util.TipoOperacionChecker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,10 +32,9 @@ import java.util.List;
 import java.util.Map;
 
 import static com.indeval.portalinternacional.middleware.servicios.constantes.Constantes.*;
-import static com.indeval.portalinternacional.presentation.controller.horariosCustodios.EstatusHorario.AUTORIZADO;
-import static com.indeval.portalinternacional.presentation.controller.horariosCustodios.EstatusHorario.REGISTRADO;
-import static com.indeval.portalinternacional.presentation.controller.horariosCustodios.TipoOperacionHorarioCustodio.*;
 import static com.indeval.portalinternacional.presentation.controller.horariosCustodios.UtilHorariosCustodioController.*;
+import static com.indeval.portalinternacional.middleware.servicios.constantes.EstatusDB.*;
+import static com.indeval.portalinternacional.presentation.util.TipoOperacionChecker.*;
 
 public class HorariosCustodiosConsultaController extends CapturaOperacionesController {
 
@@ -71,7 +73,7 @@ public class HorariosCustodiosConsultaController extends CapturaOperacionesContr
     private boolean checkAllCancela;
 
     private String esTipo;
-    private TipoOperacionHorarioCustodio tipoOperacionHorarioCustodio;
+    private TipoOperacionChecker tipoOperacionHorarioCustodio;
 
     private List<HorariosCustodiosVO> horariosCustodiosOperacion;
 
@@ -206,7 +208,7 @@ public class HorariosCustodiosConsultaController extends CapturaOperacionesContr
         } else {
             for (SelectItem item : listaDivisas) {
                 if (((String) item.getValue()).equals(idDivisa.toString())) {
-                    divisaSeleccionada = (String) item.getValue();
+                    divisaSeleccionada = (String) item.getLabel();
                     break;
                 }
             }
@@ -215,7 +217,7 @@ public class HorariosCustodiosConsultaController extends CapturaOperacionesContr
         if (estatus.equals(-1)) {
             estatusSeleccionado = "Todos";
         } else {
-            estatusSeleccionado = EstatusHorario.obtenerDescripcion(estatus);
+            estatusSeleccionado = EstatusDB.obtenerDescripcion(estatus);
         }
 
     }
@@ -250,7 +252,7 @@ public class HorariosCustodiosConsultaController extends CapturaOperacionesContr
      * @param estatus Estado del horario
      */
     public String obtenerDescripcionEstatus(int estatus) {
-        return EstatusHorario.obtenerDescripcion(estatus);
+        return EstatusDB.obtenerDescripcion(estatus);
     }
 
 
@@ -363,12 +365,14 @@ public class HorariosCustodiosConsultaController extends CapturaOperacionesContr
                 " :: " + tipoOperacionHorarioCustodio.toString());
         if (this.validarOperaciones()) {
             switch (tipoOperacionHorarioCustodio.getTipo()) {
-                case TIPO_AUTORIZA:
-                case TIPO_AUTORIZA_SELECCION:
+                case TIPO_OPERACION_AUTORIZA:
+                case TIPO_OPERACION_AUTORIZA_SELECCION:
                     this.autorizaHorariosCustodios();
-                case TIPO_CANCELA:
-                case TIPO_CANCELA_SELECCION:
+                    break;
+                case Constantes.TIPO_OPERACION_CANCELA:
+                case Constantes.TIPO_OPERACION_CANCELAR_SELECCION:
                     this.cancelaHorariosCustodios();
+                    break;
             }
         }
     }
@@ -378,7 +382,7 @@ public class HorariosCustodiosConsultaController extends CapturaOperacionesContr
      */
     private void autorizaHorariosCustodios() {
         LOG.debug("autorizaHorariosCustodios :: " + horariosCustodiosOperacion.size());
-        procesarMovimientos(ID_ESTADO_HORARIO_CUSTODIO_AUTORIZADO, DESC_ESTADO_HORARIO_CUSTODIO_AUTORIZADO);
+        procesarOperacion(AUTORIZADO);
     }
 
     /**
@@ -386,18 +390,17 @@ public class HorariosCustodiosConsultaController extends CapturaOperacionesContr
      */
     private void cancelaHorariosCustodios() {
         LOG.debug("cancelaHorariosCustodios :: " + horariosCustodiosOperacion.size());
-        procesarMovimientos(ID_ESTADO_HORARIO_CUSTODIO_CANCELADO, DESC_ESTADO_HORARIO_CUSTODIO_CANCELADO);
+        procesarOperacion(CANCELADO);
     }
 
     /**
      * Procesar Horarios Custodios seleccionados
      *
-     * @param estadoAsignar            ID_ESTADO_HORARIO_CUSTODIO_
-     * @param descripcionEstadoAsignar DESC_ESTADO_HORARIO_CUSTODIO_
+     * @param estadoAsignar nuevo estado a Asignar
      */
-    private void procesarMovimientos(Integer estadoAsignar, String descripcionEstadoAsignar) {
+    private void procesarOperacion(EstatusDB estadoAsignar) {
         LOG.debug("procesarHorariosCustodios" +
-                " :: " + estadoAsignar + ".- " + descripcionEstadoAsignar +
+                " :: " + estadoAsignar.toString() +
                 " :: " + horariosCustodiosOperacion.size() + " :: ");
 
         try {
@@ -409,16 +412,15 @@ public class HorariosCustodiosConsultaController extends CapturaOperacionesContr
             for (HorariosCustodiosVO horarioCustodioVO : horariosCustodiosOperacion) {
                 this.horariosCustodiosService.updateHorariosCustodios(
                         horarioCustodioVO.getIdHorariosCustodios(),
-                        estadoAsignar, usuarioChecker);
+                        estadoAsignar.getCodigo(), usuarioChecker);
             }
             totalOperaciones = isosSinFirmar.size();
 
             String proceso = (totalOperaciones > 1) ? (totalOperaciones + " Operaciones ") : "Operaci\u00f3n ";
 
-            if (ID_ESTADO_HORARIO_CUSTODIO_AUTORIZADO.equals(estadoAsignar)) {
-
+            if (ID_ESTADO_AUTORIZADO == estadoAsignar.getCodigo()) {
                 proceso += "de Autorizaci\u00f3n";
-            } else if (ID_ESTADO_HORARIO_CUSTODIO_CANCELADO.equals(estadoAsignar)) {
+            } else if (ID_ESTADO_CANCELADO == estadoAsignar.getCodigo()) {
                 proceso += "de Cancelaci\u00f3n";
             } else {
                 proceso += "unknown";
@@ -444,7 +446,7 @@ public class HorariosCustodiosConsultaController extends CapturaOperacionesContr
      * ValidarOperaciones
      * CargaFirmas
      */
-    private void cargaFirmaOperacion(TipoOperacionHorarioCustodio tipoOperacionHorarioCustodio) {
+    private void cargaFirmaOperacion(TipoOperacionChecker tipoOperacionHorarioCustodio) {
         LOG.info("firmarOperacion para :: " + tipoOperacionHorarioCustodio.name() + " :: " + tipoOperacionHorarioCustodio.toString());
         try {
             if (this.validarFacultadFirmar()) {
@@ -473,8 +475,8 @@ public class HorariosCustodiosConsultaController extends CapturaOperacionesContr
         LOG.info("Cargar HorariosCustodios a procesar :: " + tipoOperacionHorarioCustodio.name());
         List<HorariosCustodiosVO> cargaHorariosCustodios = new ArrayList<>();
 
-        if (tipoOperacionHorarioCustodio.getTipo().equals(TIPO_AUTORIZA)
-                || tipoOperacionHorarioCustodio.getTipo().equals(TIPO_CANCELA)) {
+        if (tipoOperacionHorarioCustodio.getTipo().equals(TIPO_OPERACION_AUTORIZA)
+                || tipoOperacionHorarioCustodio.getTipo().equals(Constantes.TIPO_OPERACION_CANCELA)) {
             Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
             this.idMovimientoStrSelected = Integer.parseInt(params.get(ID_MOVIMIENTOS_STR));
             LOG.debug("Cargar solo un Horario Custodio [" + idMovimientoStrSelected + "]" +
@@ -487,17 +489,17 @@ public class HorariosCustodiosConsultaController extends CapturaOperacionesContr
                 LOG.debug(horariosCustodiosVO.toString());
 
                 LOG.debug(horariosCustodiosVO.isSeleccionadoAutorizar()
-                        + " :: " + tipoOperacionHorarioCustodio.getTipo() + " VS. " + TIPO_AUTORIZA_SELECCION
-                        + " :: " + tipoOperacionHorarioCustodio.equals(TIPO_AUTORIZA_SELECCION));
+                        + " :: " + tipoOperacionHorarioCustodio.getTipo() + " VS. " + TIPO_OPERACION_AUTORIZA_SELECCION
+                        + " :: " + tipoOperacionHorarioCustodio.equals(TIPO_OPERACION_AUTORIZA_SELECCION));
 
                 LOG.debug(horariosCustodiosVO.isSeleccionadoCancelar()
-                        + " :: " + tipoOperacionHorarioCustodio.getTipo() + " VS. " + TIPO_CANCELA_SELECCION
-                        + " :: " + tipoOperacionHorarioCustodio.equals(TIPO_CANCELA_SELECCION));
+                        + " :: " + tipoOperacionHorarioCustodio.getTipo() + " VS. " + Constantes.TIPO_OPERACION_CANCELAR_SELECCION
+                        + " :: " + tipoOperacionHorarioCustodio.equals(Constantes.TIPO_OPERACION_CANCELAR_SELECCION));
 
                 if ((horariosCustodiosVO.isSeleccionadoAutorizar()
-                        && tipoOperacionHorarioCustodio.equals(TIPO_AUTORIZA_SELECCION))
+                        && tipoOperacionHorarioCustodio.getTipo().equals(TIPO_OPERACION_AUTORIZA_SELECCION))
                         || (horariosCustodiosVO.isSeleccionadoCancelar()
-                        && tipoOperacionHorarioCustodio.equals(TIPO_CANCELA_SELECCION))) {
+                        && tipoOperacionHorarioCustodio.getTipo().equals(TIPO_OPERACION_CANCELAR_SELECCION))) {
                     LOG.debug("Cargar Horarios Custodios [" + horariosCustodiosVO.getIdHorariosCustodios() + "]" +
                             " para :: " + tipoOperacionHorarioCustodio.getOperacion());
                     cargaHorariosCustodios.add(horariosCustodiosVO);
@@ -534,11 +536,11 @@ public class HorariosCustodiosConsultaController extends CapturaOperacionesContr
     private boolean validarOperaciones() {
         LOG.debug("ValidarOperaciones para :: " + tipoOperacionHorarioCustodio.name() + " :: " + tipoOperacionHorarioCustodio.toString());
         switch (tipoOperacionHorarioCustodio.getTipo()) {
-            case TIPO_AUTORIZA:
-            case TIPO_AUTORIZA_SELECCION:
+            case TIPO_OPERACION_AUTORIZA:
+            case TIPO_OPERACION_AUTORIZA_SELECCION:
                 return this.usuarioPuedeAutorizar;
-            case TIPO_CANCELA:
-            case TIPO_CANCELA_SELECCION:
+            case Constantes.TIPO_OPERACION_CANCELA:
+            case Constantes.TIPO_OPERACION_CANCELAR_SELECCION:
                 return this.usuarioPuedeCancelar;
             default:
                 return this.operacionDesconocida();
@@ -617,7 +619,7 @@ public class HorariosCustodiosConsultaController extends CapturaOperacionesContr
         if (!this.paginaVO.getRegistros().isEmpty()) {
             for (Object objVO : this.paginaVO.getRegistros()) {
                 HorariosCustodiosVO vo = (HorariosCustodiosVO) objVO;
-                if (vo.getEstatus().equals(REGISTRADO.getCodigo())) {
+                if (vo.getEstatus().intValue() == REGISTRADO.getCodigo()) {
                     vo.setSeleccionadoAutorizar(false);
                 }
             }
@@ -633,7 +635,8 @@ public class HorariosCustodiosConsultaController extends CapturaOperacionesContr
         if (!this.paginaVO.getRegistros().isEmpty()) {
             for (Object objVO : this.paginaVO.getRegistros()) {
                 HorariosCustodiosVO vo = (HorariosCustodiosVO) objVO;
-                if (vo.getEstatus().equals(REGISTRADO.getCodigo()) || vo.getEstatus().equals(AUTORIZADO.getCodigo())) {
+                if (vo.getEstatus().intValue() == REGISTRADO.getCodigo()
+                        || vo.getEstatus().intValue() == AUTORIZADO.getCodigo()) {
                     vo.setSeleccionadoCancelar(false);
                 }
             }

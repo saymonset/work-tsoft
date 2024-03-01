@@ -6,6 +6,7 @@ import com.indeval.portalinternacional.middleware.servicios.dto.EstadoPaginacion
 import com.indeval.portalinternacional.middleware.servicios.modelo.CuentaCorresponsal;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -74,5 +75,15 @@ public interface ConsultaDivisaService {
 	 * @return Lista con las divisas encontradas
 	 */
 	List<DivisaDTO> consultarDivisasPorTipoInstruccion(EstadoPaginacionDTO estadoPaginacion, BigInteger idTipoInstruccion);
+
+	/**
+	 * Multidivisas
+	 *
+	 * Consulta y obtiene todas las divisas de la base de datos
+	 *
+	 * @return Lista con las divisas encontradas
+	 */
+	HashMap<String,DivisaDTO> consultarDivisas();
+
 
 }

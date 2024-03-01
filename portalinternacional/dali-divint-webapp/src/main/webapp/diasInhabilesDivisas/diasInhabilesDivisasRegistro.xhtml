@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!-- Multidivisas: Días Inhábiles por Divisas : REGISTRO -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en">
+
+<ui:composition template="/layoutCapturaMultiPartTSOFT.xhtml">
+    <ui:define name="head">
+        <script language="javascript" type="text/javascript"
+                src="#{facesContext.externalContext.requestContextPath}/js/diasInhabilesDivisas.js"/>
+    </ui:define>
+
+    <ui:define name="tituloEncabezado">
+        <h:outputText></h:outputText>
+    </ui:define>
+
+    <a4j:keepAlive beanName="diasInhabilesRegistroController"/>
+    <h:outputText value="#{diasInhabilesRegistroController.init}"/>
+
+    <ui:define name="seccionForma">
+        <a4j:keepAlive beanName="diasInhabilesRegistroController"/>
+        <h:outputText value="#{diasInhabilesRegistroController.init}"/>
+
+        <!-- Mensajes al usuario -->
+        <rich:messages id="mensajesConsulta" warnClass="warning" infoClass="info"
+                       errorClass="error" ajaxRendered="true" showDetail="false"
+                       showSummary="true" layout="list">
+            <f:facet name="infoMarker">
+                <h:panelGroup>
+                    <h:graphicImage url="/images/accept.png"/>&#160;</h:panelGroup>
+            </f:facet>
+            <f:facet name="errorMarker">
+                <h:panelGroup>
+                    <h:graphicImage url="/images/warning.gif"/>&#160;</h:panelGroup>
+            </f:facet>
+        </rich:messages>
+
+        <h:panelGroup id="general">
+            <h:outputText style="color:red" value="#{diasInhabilesRegistroController.mensajeError}"/>
+
+            <div id="loaderBuscarConsulta" style="display: none;">
+                <h:graphicImage value="/images/ajax-loader.gif"/>
+                &#160;&#160;
+                <h:outputText value="#{etq.actualizando}"/>
+            </div>
+
+            <h:panelGroup id="panelHistoricosRegistro"
+                          rendered="#{not empty diasInhabilesRegistroController.historicos}">
+                <table class="tablaGeneral" width="90%" cellspacing="0px">
+                    <tr>
+                        <th class="tituloTabla" style="text-align: center">
+                            <h:outputText styleClass="texto" value="#{etq.ID}"/>
+                        </th>
+                        <th class="tituloTabla" style="text-align: center">
+                            <h:outputText styleClass="texto" value="#{etq.fechaCarga}"/>
+                        </th>
+                        <th class="tituloTabla" style="text-align: center">
+                            <h:outputText styleClass="texto" value="#{etq.registrosCorrectos}"/>
+                        </th>
+                        <th class="tituloTabla" style="text-align: center">
+                            <h:outputText styleClass="texto" value="#{etq.registrosError}"/>
+                        </th>
+                        <th class="tituloTabla" style="text-align: center">
+                            <h:outputText styleClass="texto" value="#{etq.registrosTotales}"/>
+                        </th>
+                        <th class="tituloTabla" style="text-align: center">
+                            <h:outputText styleClass="texto" value="#{etq.usuario}"/>
+                        </th>
+                        <th class="tituloTabla" style="text-align: center">
+                            <h:outputText styleClass="texto" value="#{etq.usuario} #{etq.autorizar}"/>
+                        </th>
+                        <th class="tituloTabla" style="text-align: center">
+                            <h:outputText styleClass="texto" value="#{etq.estatus}"/>
+                        </th>
+                    </tr>
+                    <t:dataList var="historico" value="#{diasInhabilesRegistroController.historicos}"
+                                rowIndexVar="indice">
+                        <tr>
+                            <td style="text-align: center;"
+                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                <h:outputText styleClass="texto textoPeque12" value=" #{historico.idHistorico}"/>
+                            </td>
+                            <td style="text-align: center;"
+                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                <h:outputText styleClass="texto textoPeque12" value="#{historico.fechaCreacion}"
+                                              converter="formatoFechaCortaConverter"/>
+                            </td>
+                            <td style="text-align: center;"
+                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{historico.registrosCorrectos}"/>
+                            </td>
+                            <td style="text-align: center;"
+                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{historico.registrosError}"/>
+                            </td>
+                            <td style="text-align: center;"
+                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{historico.registrosTotal}"/>
+                            </td>
+                            <td style="text-align: center;"
+                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                <h:outputText styleClass="texto textoPeque12" value="#{historico.creador}"/>
+                            </td>
+                            <td style="text-align: center;"
+                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{historico.usuarioChecker}"/>
+                            </td>
+                            <td style="text-align: center;"
+                                class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{historico.estadoDB.descripcion}"/>
+                            </td>
+                        </tr>
+                    </t:dataList>
+                    <tr style="background: transparent; border: none;">
+                        <td colspan="4" style="background: transparent; border: none;">
+                            <br/>
+                        </td>
+                    </tr>
+                </table>
+            </h:panelGroup>
+
+            <h:panelGroup id="procesamientoGrid" rendered="#{diasInhabilesRegistroController.hayNombreArchivo}">
+                <div align="center">
+                    <h:outputText style="color:red" value="#{diasInhabilesRegistroController.mensajeError}"/>
+                    <br/>
+                    <br/>
+                    <h:panelGrid columns="1">
+                        <h:panelGroup>
+                            <b><h:outputText value="#{etq.archivo_usuario} " styleClass="texto"/></b>
+                            <h:outputText styleClass="texto"
+                                          value="#{diasInhabilesRegistroController.fileTransferVO.agenteFirmado.id}#{diasInhabilesRegistroController.fileTransferVO.agenteFirmado.folio}"/>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <b><h:outputText value="#{etq.nombreArchivo}: " styleClass="texto"/></b>
+                            <h:outputText styleClass="texto"
+                                          value="#{diasInhabilesRegistroController.objetosParaProcesar.nombreArchivo}"/>
+                        </h:panelGroup>
+                        <h:panelGroup id="estatusArchivo">
+                            <b><h:outputText value="#{etq.estatus}: " styleClass="texto"/></b>
+                            <h:outputText id="estadoArchivo" styleClass="texto"
+                                          value="#{diasInhabilesRegistroController.objetosParaProcesar.estadoCarga}"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+
+                </div>
+            </h:panelGroup>
+
+            <h:panelGroup id="loaderArchivos" style="display: none;">
+                <div id="loaderCargando" style="display: none;">
+                    <h:graphicImage value="/images/ajax-loader.gif"/>
+                    &#160;&#160;
+                    <h:outputText value="#{etq.cargando}"/>
+                </div>
+                <div id="loaderProcesando" style="display: none;">
+                    <h:graphicImage value="/images/ajax-loader.gif"/>
+                    &#160;&#160;
+                    <h:outputText value="#{etq.procesando}"/>
+                </div>
+            </h:panelGroup>
+
+            <h:panelGroup id="resumenCarga" rendered="#{diasInhabilesRegistroController.hayNombreArchivo}">
+                <h:panelGrid columns="1" id="presentarResumen">
+                    <h:outputText value="#{etq.resumenMinus}:" style="font-size: 13px; font-weight: bold;"/>
+                    <h:panelGrid columns="2" id="encabezadoResumen" style="margin-left: 40px;">
+                        <h:outputText styleClass="textoTotal" value="#{etq.registrosTotales}:"/>
+                        <t:outputText styleClass="textoTotal"
+                                      value="#{diasInhabilesRegistroController.objetosParaProcesar.totalRegistros}"/>
+                        <h:outputText styleClass="textoCarga" value="#{etq.registrosCargarMinus}:"/>
+                        <t:outputText styleClass="textoCarga"
+                                      value="#{diasInhabilesRegistroController.objetosParaProcesar.totalParaProcesar}"/>
+                        <h:outputText styleClass="textoError" value="#{etq.registrosError}:"/>
+                        <t:outputText styleClass="textoError"
+                                      value="#{diasInhabilesRegistroController.objetosParaProcesar.totalErrores}"/>
+                    </h:panelGrid>
+                    <t:dataList var="resumenErrores"
+                                value="#{diasInhabilesRegistroController.resumen.tiposErrores}">
+                        <tr>
+                            <td style="text-align: center;">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{resumenErrores}"/>
+                            </td>
+                        </tr>
+                    </t:dataList>
+                </h:panelGrid>
+                <br/>
+                <br/>
+                <h:panelGroup id="botonesPreview" rendered="true">
+                    <h:panelGrid id="panelBotonesParaProcesar"
+                                 width="30%" columns="2"
+                                 rendered="#{diasInhabilesRegistroController.puedeProcesarInfo}">
+
+                        <h:commandButton id="btnProcesar" value="#{etq.procesarMinus}"
+                                         actionListener="#{diasInhabilesRegistroController.procesar}"
+                                         onclick="mostrarLoaderProcesando();"
+                                         reRender="panelHistoricosRegistro,botonesPreview,procesamientoGrid,resumenCarga,presentarResumen,botonesPreview,panelBotonesParaProcesar,panelBotonTerminar"
+                                         oncomplete="ocultarLoaderProcesando();">
+                        </h:commandButton>
+
+                        <h:commandButton id="btnCancelar" value="#{etq.cancelarMinus}"
+                                         actionListener="#{diasInhabilesRegistroController.cancelar}"
+                                         onclick="mostrarLoaderBuscarConsulta();"
+                                         reRender="panelHistoricosRegistro,botonesPreview,procesamientoGrid,resumenCarga,presentarResumen,botonesPreview,panelBotonesParaProcesar,panelBotonTerminar"
+                                         oncomplete="ocultarLoaderBuscarConsulta();">
+                        </h:commandButton>
+                    </h:panelGrid>
+                    <h:panelGrid id="panelBotonTerminar"
+                                 width="30%" columns="1"
+                                 rendered="#{diasInhabilesRegistroController.puedeTerminar}">
+                        <h:commandButton id="btnTerminar" value="#{etq.terminarMinus}"
+                                         actionListener="#{diasInhabilesRegistroController.cancelar}"
+                                         onclick="mostrarLoaderBuscarConsulta();"
+                                         reRender="panelHistoricosRegistro,botonesPreview,procesamientoGrid,resumenCarga,presentarResumen,botonesPreview,panelBotonesParaProcesar,panelBotonTerminar"
+                                         oncomplete="ocultarLoaderBuscarConsulta();">
+                        </h:commandButton>
+                    </h:panelGrid>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <h:panelGroup id="containerResultados" rendered="#{diasInhabilesRegistroController.consultaEjecutada}">
+                <h:dataTable id="noExistenResultados"
+                             value="#{diasInhabilesRegistroController.paginaVO.registros}"
+                             styleClass="tablaGeneral" headerClass="tituloTabla" width="100%"
+                             footerClass="tituloTabla" border="0" cellpadding="3px"
+                             cellspacing="0px" columnClasses="everyColumn"
+                             rowClasses="renglonTablaUno, renglonTablaDos"
+                             rendered="#{empty diasInhabilesRegistroController.paginaVO.registros}">
+
+                    <t:column>
+                        <f:facet name="header">
+                            <h:outputText value="#{etq.sinResultados}"></h:outputText>
+                        </f:facet>
+
+                    </t:column>
+                </h:dataTable>
+                <h:panelGroup id="tablaResultados"
+                              rendered="#{not empty diasInhabilesRegistroController.paginaVO.registros}">
+                    <script type="text/javascript">
+                        checkElimina = new Array();
+                        iElimina = 0;
+                    </script>
+                    <h:graphicImage value="/images/blank.gif" width="80%" height="1px"/>
+                    <h:panelGroup id="controlPaginado"
+                                  rendered="#{not empty diasInhabilesRegistroController.paginaVO.registros}">
+                        <table width="900px" border="0" style="left:-150px;position:relative">
+                            <tr>
+                                <td align="left" class="textoEstadoCuenta">
+                                    <a4j:commandLink id="control_bitacora_primero"
+                                                     action="#{diasInhabilesRegistroController.irPrimeraPagina}"
+                                                     rendered="#{diasInhabilesRegistroController.irAlPrimero}"
+                                                     reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,containerResultados">
+                                        <img alt=""
+                                             src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+                                             border="0"/>
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_atras_fast"
+                                                     action="#{diasInhabilesRegistroController.retrocederPaginasRapido}"
+                                                     rendered="#{diasInhabilesRegistroController.retrocederRapido}"
+                                                     reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados">
+                                        <img alt=""
+                                             src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+                                             border="0"/>
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_atras"
+                                                     action="#{diasInhabilesRegistroController.retrocederPagina}"
+                                                     rendered="#{diasInhabilesRegistroController.retroceder}"
+                                                     reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados">
+                                        <img alt=""
+                                             src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+                                             border="0"/>
+                                    </a4j:commandLink>
+                                    <a4j:commandLink id="control_bitacora_adelante"
+                                                     action="#{diasInhabilesRegistroController.avanzarPagina}"
+                                                     rendered="#{diasInhabilesRegistroController.avanzar}"
+                                                     reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados">
+                                        <img alt=""
+                                             src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+                                             border="0"/>
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_adelante_fast"
+                                                     action="#{diasInhabilesRegistroController.avanzarPaginasRapido}"
+                                                     rendered="#{diasInhabilesRegistroController.avanzarRapido}"
+                                                     reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados">
+                                        <img alt=""
+                                             src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+                                             border="0"/>
+
+                                    </a4j:commandLink>
+
+                                    <a4j:commandLink id="control_bitacora_ultimo"
+                                                     action="#{diasInhabilesRegistroController.irUltimaPagina}"
+                                                     rendered="#{diasInhabilesRegistroController.irAlUltimo}"
+                                                     reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados">
+                                        <img alt=""
+                                             src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+                                             border="0"/>
+                                    </a4j:commandLink>
+
+                                    <br/>
+                                    <h:outputText value="#{etq.mostrando}"
+                                                  styleClass="textoResumen"/>
+                                    <h:outputText value="#{diasInhabilesRegistroController.numeroPagina}"
+                                                  styleClass="textoResumen"/>
+                                    <h:outputText value="#{etq.de}" styleClass="textoResumen"/>
+                                    <h:outputText value="#{diasInhabilesRegistroController.totalPaginas}"
+                                                  styleClass="textoResumen"/>
+                                    <h:outputText value="#{etq.cierre}"
+                                                  styleClass="textoResumen"></h:outputText>
+                                    &#160;&#160;&#160;
+                                    <h:outputText
+                                            value="#{diasInhabilesRegistroController.paginaVO.totalRegistros}"
+                                            styleClass="textoResumen"
+                                            converter="formatoEnteroConverter"></h:outputText>
+                                    &#160;
+                                    <h:outputText styleClass="textoResumen"
+                                                  value="#{etq.registrosEncontrados}"/>
+                                </td>
+                                <td align="right" class="textoEstadoCuenta">
+                                    <h:outputText escape="false" value="#{etq.registrosPorPagina}"
+                                                  styleClass="textoResumen"/>
+                                    <h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+                                                     value="#{diasInhabilesRegistroController.paginaVO.registrosXPag}">
+                                        <f:selectItem itemLabel="1" itemValue="1"/>
+                                        <f:selectItem itemLabel="2" itemValue="2"/>
+                                        <f:selectItem itemLabel="5" itemValue="5"/>
+                                        <f:selectItem itemLabel="10" itemValue="10"/>
+                                        <f:selectItem itemLabel="20" itemValue="20"/>
+                                        <f:selectItem itemLabel="50" itemValue="50"/>
+                                        <f:selectItem itemLabel="100" itemValue="100"/>
+                                        <a4j:support event="onchange"
+                                                     reRender="containerResultados,totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,mensajeUsuario"
+                                                     action="#{diasInhabilesRegistroController.irPrimeraPagina}">
+                                        </a4j:support>
+                                    </h:selectOneMenu>
+                                </td>
+                            </tr>
+                        </table>
+                    </h:panelGroup>
+                    <h:dataTable id="resultados"
+                                 value="#{diasInhabilesRegistroController.paginaVO.registros}"
+                                 var="diaInhabil"
+                                 rendered="#{not empty diasInhabilesRegistroController.paginaVO.registros}"
+                                 styleClass="tablaGeneral tableLarge" headerClass="tituloTabla" width="100%"
+                                 footerClass="tituloTabla" border="0" cellpadding="3px"
+                                 cellspacing="0px" columnClasses="everyColumn"
+                                 rowClasses="renglonTablaUno, renglonTablaDos">
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.fechaDiaInhabil}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{diaInhabil.diaInhabil}"
+                                              converter="formatoFechaCortaConverter"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.divisaMinus}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{diaInhabil.divisaClave}"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{etq.usuarioQue} #{etq.usuarioRegistra}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{diaInhabil.creador}"/>
+                            </div>
+                        </h:column>
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.fechaDeAlta}"/>
+                            </f:facet>
+                            <div align="center">
+                                <h:outputText styleClass="texto textoPeque12"
+                                              value="#{diaInhabil.fechaCreacion}"
+                                              converter="formatoFechaLargaConverter"/>
+                            </div>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+            </h:panelGroup>
+
+        </h:panelGroup>
+
+
+    </ui:define>
+
+
+    <ui:define name="botones">
+        <h:panelGroup id="botones"
+                      rendered="#{diasInhabilesRegistroController.puedeCargarArchivo}">
+            <h:panelGrid columns="3">
+                <h:panelGroup>
+                    <h:outputText value="#{etq.archivo}"/>
+                </h:panelGroup>
+                <t:inputFileUpload id="archivoOperaciones" storage="memory"
+                                   value="#{diasInhabilesRegistroController.archivo}" size="50"
+                                   required="false"/>
+                <h:commandButton id="iniciarProceso" value="Iniciar Proceso"
+                                 actionListener="#{diasInhabilesRegistroController.uploadFile}"
+                                 onclick="mostrarLoaderCargando();"
+                                 reRender="botones,procesamientoGrid,resumenCarga,presentarResumen,botonesPreview,panelBotonesParaProcesar,panelBotonTerminar"
+                                 oncomplete="ocultarLoaderCargando();">
+                </h:commandButton>
+            </h:panelGrid>
+        </h:panelGroup>
+    </ui:define>
+
+
+</ui:composition>
+</html>

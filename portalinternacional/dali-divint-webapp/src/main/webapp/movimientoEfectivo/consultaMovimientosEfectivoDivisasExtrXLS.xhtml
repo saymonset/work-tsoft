@@ -17,10 +17,10 @@
                 <xls:col header="#{etq.estatus} #{etq.movimientoMinus}" value="#{!empty movimientoEfectivoInt.descEstatusMovimiento ? movimientoEfectivoInt.descEstatusMovimiento : 'TODOS'}" align="center" />
                 <xls:col header="#{etq.divisaMinus}" value="#{!empty movimientoEfectivoInt.descDivisa ? movimientoEfectivoInt.descDivisa : 'TODAS'}" align="center" />
                 <xls:col header="#{etq.bovedaMinus}" value="#{!empty movimientoEfectivoInt.descBoveda ? movimientoEfectivoInt.descBoveda : 'TODAS'}" align="center" />
-                <xls:col header="#{etq.fechaRegInicial}" value="#{movimientoEfectivoInt.fechaInicioStr}" align="center" />
-                <xls:col header="#{etq.fechaRegFinal}" value="#{movimientoEfectivoInt.fechaFinStr}" align="center"/>
-                <xls:col header="#{etq.fechaLiqInicial}" value="#{movimientoEfectivoInt.fechaLiqInicioStr}" align="center" />
-                <xls:col header="#{etq.fechaLiqFinal}" value="#{movimientoEfectivoInt.fechaLiqFinStr}" align="center"/>
+                <xls:col header="#{etq.fechaRegistroMinus}  #{etq.inicial}" value="#{movimientoEfectivoInt.fechaInicioStr}" align="center" />
+                <xls:col header="#{etq.fechaRegistroMinus} #{etq.final}"  value="#{movimientoEfectivoInt.fechaFinStr}" align="center"/>
+                <xls:col header="#{etq.fechaLiquidacionMinus} #{etq.inicial}" value="#{movimientoEfectivoInt.fechaLiqInicioStr}" align="center" />
+                <xls:col header="#{etq.fechaLiquidacionMinus} #{etq.final}" value="#{movimientoEfectivoInt.fechaLiqFinStr}" align="center"/>
             </xls:row>
         </xls:table>
 

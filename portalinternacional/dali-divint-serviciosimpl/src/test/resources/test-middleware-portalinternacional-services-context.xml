@@ -797,7 +797,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="custodioDao" ref="custodioDao" />
     </bean>
 
-    <bean id="diasInhabilesDivisasService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.DiasInhabilesDivisasServiceImpl" lazy-init="true">
+    <bean id="diasInhabilesDivisasService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.diasInhabilesDivisas.DiasInhabilesDivisasServiceImpl" lazy-init="true">
         <property name="diasInhabilesDivisasDao" ref="diasInhabilesDivisasDao" />
     </bean>
 

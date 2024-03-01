@@ -1202,10 +1202,37 @@ public interface Constantes extends com.indeval.portaldali.middleware.servicios.
     String ROL_INT_SIC_MILA_ADMIN = "INT_SIC_MILA_ADMIN";
     String ROL_INT_SIC = "INT_AUTORIZA_SIC_RCP";
 
-    String ROL_INT_LIBERA_MOV_EFEC = "INDEVAL";//"INT_LIBERA_MOV_EFE"; //Libera Movimientos de Efectivo
-    String ROL_INT_CANCELA_MOV_EFEC = "INDEVAL";// "INT_CANCELA_MOV_EFEC";  //Cancela Movimientos de Efectivo en Divisas
+    /**
+     * Multidivisas: Permisos Pantalla de Consulta de movimientos
+     * Libera Movimientos de Efectivo
+     */
+    String ROL_INT_LIBERA_MOV_EFEC = "INDEVAL";//"INT_LIBERA_MOV_EFE";
 
-    String ROL_INT_AUTORIZA_HORA_CUST = "INDEVAL";//"INT_AUTORIZA_HORA_CUST"; //Permite las operaciones en horarios de Custodios
+    /**
+     * Multidivisas: Permisos Pantalla Consulta de movimientos
+     * Cancela Movimientos de Efectivo en Divisas
+     */
+    String ROL_INT_CANCELA_MOV_EFEC = "INDEVAL";// "INT_CANCELA_MOV_EFEC";
+
+    /**
+     * Multidivisas: Permisos Pantalla de Horarios de Custodios
+     * Permite las operaciones en horarios de Custodios
+     */
+    String ROL_INT_AUTORIZA_HORA_CUST = "INDEVAL";//"INT_AUTORIZA_HORA_CUST";
+
+    /**
+     * Multidivisas: Permisos Pantalla de Días Inhábiles por Divisa
+     * Permite las operaciones de  Autorizar y Cancelar Historicos de Días Inhábiles por Divisa
+     * Permite la operación de Eliminar Día Inhábil de Divisa
+     */
+    String ROL_INT_AUTORIZA_DIAS_DIVISA = "INDEVAL";// "INT_AUTORIZA_DIAS_DIVISA";
+
+    /**
+     * Multidivisas: Permisos Pantalla de Días Inhábiles por Divisa
+     * Permite la operació al Alta de Historicos de Días Inhábiles por Divisas
+     */
+    String ROL_INT_OPERADOR_DIAS_DIVISA = "INDEVAL"; //INT_OPERADOR_DIAS_DIVISA
+
     String TO_CONSULTA_TABLA_RETENCION = "consultaTablaRetencion";
     String ID_BENEFICIARIO_DERECHO = "idBeneficiarioDerecho";
     String KEY_ID_DERECHO = "idDerecho";
@@ -1704,24 +1731,37 @@ public interface Constantes extends com.indeval.portaldali.middleware.servicios.
     int ID_ESTADO_MOVIMIENTO_EFECTIVO_LIBERADO_INT = 4;
     int ID_ESTADO_MOVIMIENTO_EFECTIVO_CANCELADO_INT = 6;
 
-    int TIPO_MOVIMIENTO_EFECTIVO_LIBERAR_SELECCION = 10;
-    int TIPO_MOVIMIENTO_EFECTIVO_LIBERA = 11;
-    int TIPO_MOVIMIENTO_EFECTIVO_CANCELAR_SELECCION = 20;
-    int TIPO_MOVIMIENTO_EFECTIVO_CANCELA = 21;
+    int TIPO_OPERACION_DESCONOCIDA = 0;
+    int TIPO_OPERACION_LIBERAR_SELECCION = 10;
+    int TIPO_OPERACION_LIBERA = 11;
+    int TIPO_OPERACION_CANCELAR_SELECCION = 20;
+    int TIPO_OPERACION_CANCELA = 21;
+    int TIPO_OPERACION_AUTORIZA_SELECCION = 30;
+    int TIPO_OPERACION_AUTORIZA = 31;
+    int TIPO_OPERACION_ELIMINA_SELECCION = 40;
+    int TIPO_OPERACION_ELIMINA = 41;
 
+    String DESC_TIPO_OPERACION_DESCONOCIDA = "desconocido";
+    String DESC_TIPO_OPERACION_LIBERAR_SELECCION = "liberaSeleccion";
+    String DESC_TIPO_OPERACION_LIBERA = "libera";
+    String DESC_TIPO_OPERACION_CANCELAR_SELECCION = "cancelaSeleccion";
+    String DESC_TIPO_OPERACION_CANCELA = "cancela";
+    String DESC_TIPO_OPERACION_AUTORIZA_SELECCION = "autorizaSeleccion";
+    String DESC_TIPO_OPERACION_AUTORIZA = "autoriza";
+    String DESC_TIPO_OPERACION_ELIMINA_SELECCION = "eliminaSeleccion";
+    String DESC_TIPO_OPERACION_ELIMINA = "elimina";
 
-    int TIPO_CANCELA_SELECCION = 20;
-    int TIPO_CANCELA = 21;
-    int TIPO_AUTORIZA_SELECCION = 30;
-    int TIPO_AUTORIZA = 31;
+    int ID_ESTADO_REGISTRADO = 1;
+    int ID_ESTADO_AUTORIZADO = 2;
+    int ID_ESTADO_CANCELADO = 3;
+    int ID_ESTADO_ELIMINADO = 4;
+    int ID_ESTADO_DESCONOCIDO = 0;
 
-    Integer ID_ESTADO_HORARIO_CUSTODIO_REGISTRADO = 1;
-    Integer ID_ESTADO_HORARIO_CUSTODIO_AUTORIZADO = 2;
-    Integer ID_ESTADO_HORARIO_CUSTODIO_CANCELADO = 3;
-
-    String DESC_ESTADO_HORARIO_CUSTODIO_REGISTRADO = "REGISTRADO";
-    String DESC_ESTADO_HORARIO_CUSTODIO_AUTORIZADO = "AUTORIZADO";
-    String DESC_ESTADO_HORARIO_CUSTODIO_CANCELADO = "CANCELADO";
+    String DESC_ESTADO_REGISTRADO = "REGISTRADO";
+    String DESC_ESTADO_AUTORIZADO = "AUTORIZADO";
+    String DESC_ESTADO_CANCELADO = "CANCELADO";
+    String DESC_ESTADO_ELIMINADO = "ELIMINADO";
+    String DESC_ESTADO_DESCONOCIDO = "UNKNOWN";
 
 
     String DESC_ESTADO_MOVIMIENTO_EFECTIVO_AUTORIZADO = "AUTORIZADO";
@@ -1742,11 +1782,11 @@ public interface Constantes extends com.indeval.portaldali.middleware.servicios.
     String MENSAJE_USUARIO_INVALIDO_AUTORIZACION = "Usted Registr\u00F3 el movimiento con folio control %d por lo que No tiene facultad para Autorizarlo.";
     String MENSAJE_USUARIO_INVALIDO_LIBERACION = "Usted Registr\u00F3 o Autoriz\u00F3 el movimiento con folio control %d por lo que No tiene facultad para Liberarlo.";
     String MENSAJE_USUARIO_INVALIDO_REGISTRO = "Usted No tiene facultad para registrar el movimiento con folio control ";
-
     String MENSAJE_OPERACION_INVALIDA = "La operaci\u00F3n que desea realizar es desconocida";
 
     String MENSAJE_MOVIMIENTO_INVALIDO_CANCELACION = "El movimiento con folio control %d no puede ser Cancelarlo.";
     String MENSAJE_MOVIMIENTO_INVALIDO_LIBERACION = "El movimiento con folio control %d no puede ser Liberado.";
+
     // ##### Constantes para uso de BitacoraService
     String USUARIO_DECONOCIDO = "Desconocido";
     Integer ID_MODULO_MOV_EFE_DIV_EXT = 11;
@@ -1779,5 +1819,6 @@ public interface Constantes extends com.indeval.portaldali.middleware.servicios.
     public static final Long FILE_TRANSFER_AUTORIZADO = 1L;
 
     public static final String FILE_TRANSFER_TIPO_PROCESO = "MD";
+
 
 }

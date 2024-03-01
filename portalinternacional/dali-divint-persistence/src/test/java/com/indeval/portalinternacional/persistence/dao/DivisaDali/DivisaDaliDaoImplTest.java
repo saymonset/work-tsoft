@@ -7,6 +7,7 @@ import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
 import com.indeval.portalinternacional.middleware.servicios.modelo.ConciliacionInt;
 import com.indeval.portalinternacional.middleware.servicios.modelo.SaldoNombradaInt;
 import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaSaldoCustodiosInDTO;
+import com.indeval.portalinternacional.middleware.servicios.modelo.DivisaInt;
 import com.indeval.portalinternacional.persistence.dao.DivisaDaliDao;
 
 import java.text.ParseException;
@@ -69,4 +70,14 @@ public class DivisaDaliDaoImplTest extends BaseDaoTestCase {
     }
 
 
+
+    public void testConsultarDivisas() {
+        List<DivisaInt> divisas = dao.consultarDivisas();
+        for (DivisaInt divisaInt : divisas) {
+            System.out.println(
+                    divisaInt.getIdDivisa() + ", " +
+                            divisaInt.getClaveAlfabetica() + ", " +
+                            divisaInt.getDescripcion());
+        }
+    }
 }

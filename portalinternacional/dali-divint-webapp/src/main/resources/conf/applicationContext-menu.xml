@@ -1134,6 +1134,23 @@
                                 </property>
                             </bean>
 
+                            <!-- Multidivisas - Inicio de menu Días Inhábiles Divisas-->
+                            <bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+                                <property name="id" value="diasInhabilesDivisas"></property>
+                                <property name="etiqueta" value="D\u00EDas Inh\u00E1biles de Divisas"></property>
+                                <property name="url"
+                                          value="/dali-divint/diasInhabilesDivisas/diasInhabilesDivisas.faces"></property>
+                                <property name="roles">
+                                    <list>
+                                        <value>INT_OPERADOR_DIAS_DIVISA</value>
+                                        <value>INT_AUTORIZA_DIAS_DIVISA</value>
+                                        <value>INT_CONSULTA_DIAS_DIVISA</value>
+                                        <value>DEV_MODE_DALI</value>
+                                    </list>
+                                </property>
+                            </bean>
+                            <!-- FIN menu Días Inhábiles Divisas -->
+
                             <!-- Multidivisas - Inicio de menu Horario Operacion Custodios-->
                             <bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
                                 <property name="id" value="horarioCustodio"></property>
@@ -1158,7 +1175,6 @@
                                                 <list>
                                                     <value>INT_OPERADOR_HORA_CUST</value>
                                                     <value>DEV_MODE_DALI</value>
-                                                    <value>INT_AUTORIZA_HORA_CUST</value>
                                                 </list>
                                             </property>
                                         </bean>
@@ -1171,8 +1187,9 @@
                                             <property name="roles">
                                                 <list>
                                                     <value>INT_OPERADOR_HORA_CUST</value>
-                                                    <value>DEV_MODE_DALI</value>
+                                                    <value>INT_AUTORIZA_HORA_CUST</value>
                                                     <value>INT_CONSULTA_HORA_CUST</value>
+                                                    <value>DEV_MODE_DALI</value>
                                                 </list>
                                             </property>
                                         </bean>
@@ -1180,7 +1197,6 @@
                                 </property>
                             </bean>
                             <!-- FIN menu Horario de Operacion de Custodios-->
-
 
                             <bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
                                 <property name="id" value="sic"></property>
@@ -1704,19 +1720,20 @@
                                             </property>
                                         </bean>
 
-										<!-- Cuentas de Tesorería de Efectivo -->
-										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
-											<property name="id" value="cuentasTransitoriasEfectivo" />
-											<property name="etiqueta" value="Cuentas de Tesorer\u00EDa de Efectivo" />
-											<property name="url"
-                                                      value="/dali-divint/cuentasTransitoriasEfectivo/consultaCuentaTransitoriaEfectivo.faces" />
-											<property name="roles">
-												<list>
-													<value>INDEVAL</value>
-													<value>DEV_MODE_DALI</value>
-												</list>
-											</property>
-										</bean>
+                                        <!-- Multidivisas: Inicio Cuentas de Tesorería de Efectivo -->
+                                        <bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+                                            <property name="id" value="cuentasTransitoriasEfectivo"/>
+                                            <property name="etiqueta" value="Cuenta de Tesorer\u00EDa de Efectivo"/>
+                                            <property name="url"
+                                                      value="/dali-divint/cuentasTransitoriasEfectivo/consultaCuentaTransitoriaEfectivo.faces"/>
+                                            <property name="roles">
+                                                <list>
+                                                    <value>INT_OPERADOR_TESORERIA</value>
+                                                    <value>DEV_MODE_DALI</value>
+                                                </list>
+                                            </property>
+                                        </bean>
+                                        <!-- Multidivisas: Fin Cuentas de Tesorería de Efectivo -->
 
 										<!-- File Transfer Cuenta Tesoreria Efectivo -->
 										<bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
@@ -2407,7 +2424,7 @@
                                                       value="/dali-divint/movimientosEfectivo/movimientosEfectivo.faces"></property>
                                             <property name="roles">
                                                 <list>
-                                                    <value>INT_BEN_INDEVAL</value>
+                                                    <value>INT_CAPTURA_MOV_EFEC</value>
                                                     <value>DEV_MODE_DALI</value>
                                                 </list>
                                             </property>
@@ -2420,11 +2437,9 @@
                                                       value="/dali-divint/movimientoEfectivo/capturaMovimientos.faces"></property>
                                             <property name="roles">
                                                 <list>
-                                                    <value>INT_BEN_INDEVAL</value>
-                                                    <value>DEV_MODE_DALI</value>
-                                                    <value>AUTORIZADOR</value>
                                                     <value>INT_LIBERA_MOV_EFEC</value>
-                                                    <value>INT_CANCELA_MOV_EFEC</value>
+                                                    <value>INT_CONSULTA_MOV_EFEC</value>
+                                                    <value>DEV_MODE_DALI</value>
                                                 </list>
                                             </property>
                                         </bean>

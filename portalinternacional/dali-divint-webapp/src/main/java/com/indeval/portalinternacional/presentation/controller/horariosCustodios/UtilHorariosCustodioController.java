@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.indeval.portalinternacional.presentation.controller.horariosCustodios.EstatusHorario.*;
-import static com.indeval.portalinternacional.presentation.controller.horariosCustodios.EstatusHorario.CANCELADO;
+import static com.indeval.portalinternacional.middleware.servicios.constantes.EstatusDB.*;
+import static com.indeval.portalinternacional.middleware.servicios.constantes.EstatusDB.CANCELADO;
 
 public class UtilHorariosCustodioController {
 

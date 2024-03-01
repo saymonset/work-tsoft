@@ -13,200 +13,232 @@ import java.util.Map;
 
 /**
  * @author <a href="mailto:david.rengifo@itbrain.com.mx">David A. Rengifo R.</a>
- *
  */
 @SuppressWarnings({"unchecked"})
 public class FileTransferVO extends AbstractBaseDTO {
 
-	/**
-	 * Constante de Serializacion
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * Constante de Serializacion
+     */
+    private static final long serialVersionUID = 1L;
 
-	/** objeto con los datos de la intitucion firmada */
-	private AgenteVO agenteFirmado;
-	
-	/** Nombre del usuario u operador de la institucion */
-	private String nombreUsuario;
+    /**
+     * objeto con los datos de la intitucion firmada
+     */
+    private AgenteVO agenteFirmado;
 
-	private String tipoProceso;
+    /**
+     * Nombre del usuario u operador de la institucion
+     */
+    private String nombreUsuario;
 
-	private Map consecProtocolo;
+    private String tipoProceso;
 
-	private boolean soloErrores;
+    private Map consecProtocolo;
 
-	/** Objeto de paginacion para el resumen */
-	private PaginaVO paginaVO;
+    private boolean soloErrores;
 
-	/** Es para manejar la interrupcion por tiempo */
-	private Integer offset;
-	
-	private String[] informacionArchivo;
+    /**
+     * Objeto de paginacion para el resumen
+     */
+    private PaginaVO paginaVO;
 
-	 /**
-		* Genner - Para FileTransfer de multidivisas
-		* @return
-		*/
-	private List<RegistroExcelMultiDivVO> rowsArchivo;
+    /**
+     * Es para manejar la interrupcion por tiempo
+     */
+    private Integer offset;
 
-	private String clvUsuario;
-	@Override
-	public String toString() {
-		return super.toString();
-	}
-	
-	/**
-	 * Recorre la informacion del archivo y retorna un String con ella
-	 * @return String
-	 */
-	public String toStringInformacionArchivo() {
-		StringBuffer sb = new StringBuffer("[");
-		if(this.getInformacionArchivo() != null) {
-			for (int i = 0; i < this.getInformacionArchivo().length; i++) {
-				sb.append("[" + this.getInformacionArchivo()[i] + "]");
-				if(i < this.getInformacionArchivo().length) {
-					sb.append(" : ");
-				}
-			}			
-		}
-		sb.append("]");
-		return sb.toString();
-	}
+    /**
+     * Multidivisas: Nombre del archivo para registrar
+     */
+    private String nombreArchivo;
+    private String[] informacionArchivo;
 
-	/* Setters y Getters */
+    private Object objetoReferenciaFinal;
 
-	/**
-	 * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
-	 */
-	public void validate(Object arg0, Errors arg1) {
+    /**
+     * Genner - Para FileTransfer de multidivisas
+     *
+     * @return
+     */
+    private List<RegistroExcelMultiDivVO> rowsArchivo;
 
-	}
+    private String clvUsuario;
 
-	/**
-	 * @return the agenteFirmado
-	 */
-	public AgenteVO getAgenteFirmado() {
-		return agenteFirmado;
-	}
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 
-	/**
-	 * @param agenteFirmado the agenteFirmado to set
-	 */
-	public void setAgenteFirmado(AgenteVO agenteFirmado) {
-		this.agenteFirmado = agenteFirmado;
-	}
+    /**
+     * Recorre la informacion del archivo y retorna un String con ella
+     *
+     * @return String
+     */
+    public String toStringInformacionArchivo() {
+        StringBuffer sb = new StringBuffer("[");
+        if (this.getInformacionArchivo() != null) {
+            for (int i = 0; i < this.getInformacionArchivo().length; i++) {
+                sb.append("[" + this.getInformacionArchivo()[i] + "]");
+                if (i < this.getInformacionArchivo().length) {
+                    sb.append(" : ");
+                }
+            }
+        }
+        sb.append("]");
+        return sb.toString();
+    }
 
-	/**
-	 * @return the tipoProceso
-	 */
-	public String getTipoProceso() {
-		return tipoProceso;
-	}
+    /* Setters y Getters */
 
-	/**
-	 * @param tipoProceso the tipoProceso to set
-	 */
-	public void setTipoProceso(String tipoProceso) {
-		this.tipoProceso = tipoProceso;
-	}
+    /**
+     * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
+     */
+    public void validate(Object arg0, Errors arg1) {
 
-	/**
-	 * @return the consecProtocolo
-	 */
-	public Map getConsecProtocolo() {
-		return consecProtocolo;
-	}
+    }
 
-	/**
-	 * @param consecProtocolo the consecProtocolo to set
-	 */
-	public void setConsecProtocolo(Map consecProtocolo) {
-		this.consecProtocolo = consecProtocolo;
-	}
+    /**
+     * @return the agenteFirmado
+     */
+    public AgenteVO getAgenteFirmado() {
+        return agenteFirmado;
+    }
 
-	/**
-	 * @return the soloErrores
-	 */
-	public boolean isSoloErrores() {
-		return soloErrores;
-	}
+    /**
+     * @param agenteFirmado the agenteFirmado to set
+     */
+    public void setAgenteFirmado(AgenteVO agenteFirmado) {
+        this.agenteFirmado = agenteFirmado;
+    }
 
-	/**
-	 * @param soloErrores the soloErrores to set
-	 */
-	public void setSoloErrores(boolean soloErrores) {
-		this.soloErrores = soloErrores;
-	}
+    /**
+     * @return the tipoProceso
+     */
+    public String getTipoProceso() {
+        return tipoProceso;
+    }
 
-	/**
-	 * @return the paginaVO
-	 */
-	public PaginaVO getPaginaVO() {
-		return paginaVO;
-	}
+    /**
+     * @param tipoProceso the tipoProceso to set
+     */
+    public void setTipoProceso(String tipoProceso) {
+        this.tipoProceso = tipoProceso;
+    }
 
-	/**
-	 * @param paginaVO the paginaVO to set
-	 */
-	public void setPaginaVO(PaginaVO paginaVO) {
-		this.paginaVO = paginaVO;
-	}
+    /**
+     * @return the consecProtocolo
+     */
+    public Map getConsecProtocolo() {
+        return consecProtocolo;
+    }
 
-	/**
-	 * @return the informacionArchivo
-	 */
-	public String[] getInformacionArchivo() {
-		return informacionArchivo;
-	}
+    /**
+     * @param consecProtocolo the consecProtocolo to set
+     */
+    public void setConsecProtocolo(Map consecProtocolo) {
+        this.consecProtocolo = consecProtocolo;
+    }
 
-	/**
-	 * @param informacionArchivo the informacionArchivo to set
-	 */
-	public void setInformacionArchivo(String[] informacionArchivo) {
-		this.informacionArchivo = informacionArchivo;
-	}
+    /**
+     * @return the soloErrores
+     */
+    public boolean isSoloErrores() {
+        return soloErrores;
+    }
 
-	/**
-	 * @return the offset
-	 */
-	public Integer getOffset() {
-		return offset;
-	}
+    /**
+     * @param soloErrores the soloErrores to set
+     */
+    public void setSoloErrores(boolean soloErrores) {
+        this.soloErrores = soloErrores;
+    }
 
-	/**
-	 * @param offset the offset to set
-	 */
-	public void setOffset(Integer offset) {
-		this.offset = offset;
-	}
+    /**
+     * @return the paginaVO
+     */
+    public PaginaVO getPaginaVO() {
+        return paginaVO;
+    }
 
-	/**
-	 * @return the nombreUsuario
-	 */
-	public String getNombreUsuario() {
-		return nombreUsuario;
-	}
+    /**
+     * @param paginaVO the paginaVO to set
+     */
+    public void setPaginaVO(PaginaVO paginaVO) {
+        this.paginaVO = paginaVO;
+    }
 
-	/**
-	 * @param nombreUsuario the nombreUsuario to set
-	 */
-	public void setNombreUsuario(String nombreUsuario) {
-		this.nombreUsuario = nombreUsuario;
-	}
+    /**
+     * @return the informacionArchivo
+     */
+    public String[] getInformacionArchivo() {
+        return informacionArchivo;
+    }
 
-	public List<RegistroExcelMultiDivVO> getRowsArchivo() {
-		return rowsArchivo;
-	}
+    /**
+     * @param informacionArchivo the informacionArchivo to set
+     */
+    public void setInformacionArchivo(String[] informacionArchivo) {
+        this.informacionArchivo = informacionArchivo;
+    }
 
-	public void setRowsArchivo(List<RegistroExcelMultiDivVO> rowsArchivo) {
-		this.rowsArchivo = rowsArchivo;
-	}
+    /**
+     * @return the offset
+     */
+    public Integer getOffset() {
+        return offset;
+    }
 
-	public String getClvUsuario() {
-		return clvUsuario;
-	}
+    /**
+     * @param offset the offset to set
+     */
+    public void setOffset(Integer offset) {
+        this.offset = offset;
+    }
 
-	public void setClvUsuario(String clvUsuario) {
-		this.clvUsuario = clvUsuario;
-	}
+    /**
+     * @return the nombreUsuario
+     */
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    /**
+     * @param nombreUsuario the nombreUsuario to set
+     */
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public List<RegistroExcelMultiDivVO> getRowsArchivo() {
+        return rowsArchivo;
+    }
+
+    public void setRowsArchivo(List<RegistroExcelMultiDivVO> rowsArchivo) {
+        this.rowsArchivo = rowsArchivo;
+    }
+
+    public String getClvUsuario() {
+        return clvUsuario;
+    }
+
+    public void setClvUsuario(String clvUsuario) {
+        this.clvUsuario = clvUsuario;
+    }
+
+    public String getNombreArchivo() {
+        return nombreArchivo;
+    }
+
+    public void setNombreArchivo(String nombreArchivo) {
+        this.nombreArchivo = nombreArchivo;
+    }
+
+    public Object getObjetoReferenciaFinal() {
+        return objetoReferenciaFinal;
+    }
+
+    public void setObjetoReferenciaFinal(Object objetoReferenciaFinal) {
+        this.objetoReferenciaFinal = objetoReferenciaFinal;
+    }
 }

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!-- Multidivisas: Días Inhábiles por Divisas : PRINCIPAL-->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:t="http://myfaces.apache.org/tomahawk"
+      xmlns:indeval="http://indeval.com/indeval">
+
+<ui:composition template="/layoutConsultas.xhtml">
+
+    <ui:define name="head">
+        <script language="javascript" type="text/javascript"
+                src="#{facesContext.externalContext.requestContextPath}/js/diasInhabilesDivisas.js"/>
+
+        <script type="text/javascript">
+
+            function cargarContenidoInicio() {
+                console.log("cargarContenidoInicio");
+                cargarContenido('diasInhabilesDivisasInicio.faces');
+            }
+
+            function cargarContenidoRegistro() {
+                console.log("cargarContenidoRegistro");
+                cargarContenido('diasInhabilesDivisasRegistro.faces');
+            }
+
+            function cargarContenidoConsulta() {
+                console.log("cargarContenidoConsulta");
+                cargarContenido('diasInhabilesDivisasConsulta.faces');
+            }
+
+            function cargarContenidoConsultaAnio() {
+                var anio = document.getElementById('daliForm:lstAnios');
+                console.log("cargarContenidoConsulta :: AÑO [" + anio + "]");
+                cargarContenido('diasInhabilesDivisasConsulta.faces?anio=' + anio.value);
+            }
+
+            function cargarContenido(paginaSeleccionada) {
+                console.log(paginaSeleccionada);
+                console.log(contextPath);
+                url = contextPath + '/diasInhabilesDivisas/' + paginaSeleccionada;
+                console.log(url);
+                document.getElementById("operacionSeleccionada").src = encodeURI(url);
+                ocultarLoaderBuscar();
+            }
+        </script>
+    </ui:define>
+    <ui:define name="initPantalla">
+        <a4j:keepAlive beanName="diasInhabilesDivisasController"/>
+        <h:outputText value="#{diasInhabilesDivisasController.init}"/>
+    </ui:define>
+
+    <ui:define name="tituloEncabezado"></ui:define>
+
+    <ui:define name="tituloSeccion">
+        <h:outputText value="#{etq.diasInhabilesDivisas}"/>
+    </ui:define>
+
+    <ui:define name="criterios">
+        <h:panelGrid id="operacionesCriterios"
+                     styleClass="recuadroTabla" columns="4"
+                     width="900px" border="0" cellpadding="0px" cellspacing="5px">
+            <h:panelGrid id="tipOp" columns="2" styleClass="tablaCriterios"
+                         style="max-width: 200px;!important;">
+                <h:outputText styleClass="texto" value="#{etq.tipoOp}"/>
+                <h:selectOneMenu id="lstTiposOperacion"
+                                 value="#{diasInhabilesDivisasController.operacionSeleccionada}"
+                                 onchange="mostrarLoaderBuscar();modificarAnio();cambiaOperacion();"
+                                 styleClass="textoControles" tabindex="3">
+                    <f:selectItems
+                            value="#{diasInhabilesDivisasController.listaOperaciones}"/>
+                </h:selectOneMenu>
+            </h:panelGrid>
+            <h:panelGrid id="anio" columns="2" styleClass="tablaCriterios"
+                         style="max-width: 200px;!important;">
+                <h:outputText id="etiquetaAnios" styleClass="texto" value="#{etq.anio}" style="visibility:hidden;"/>
+                <h:selectOneMenu id="lstAnios" style="visibility:hidden;"
+                                 value="#{diasInhabilesDivisasController.anioSeleccionado}"
+                                 onchange="mostrarLoaderBuscar();cambiaAnio();"
+                                 styleClass="textoControles" tabindex="3">
+                    <f:selectItems
+                            value="#{diasInhabilesDivisasController.listaAnios}"/>
+
+                </h:selectOneMenu>
+            </h:panelGrid>
+        </h:panelGrid>
+
+        <a4j:commandButton id="btnActualizarOperacionRegistro"
+                           style="display: none;"
+                           styleClass="btnActualizarOperacionRegistro"
+                           actionListener="#{diasInhabilesDivisasController.actualizarPaginaSeleccion}"
+                           oncomplete="cargarContenidoRegistro(); return false;"
+                           reRender="panelMostrar">
+        </a4j:commandButton>
+        <a4j:commandButton id="btnActualizarOperacionConsulta"
+                           style="display: none;"
+                           styleClass="btnActualizarOperacionConsulta"
+                           actionListener="#{diasInhabilesDivisasController.actualizarPaginaSeleccion}"
+                           oncomplete="cargarContenidoConsulta(); return false;"
+                           reRender="panelMostrar">
+        </a4j:commandButton>
+        <a4j:commandButton id="btnActualizarOperacionInicio"
+                           style="display: none;"
+                           styleClass="btnActualizarOperacionInicio"
+                           actionListener="#{diasInhabilesDivisasController.actualizarPaginaSeleccion}"
+                           oncomplete="cargarContenidoInicio(); return false;"
+                           reRender="panelMostrar">
+        </a4j:commandButton>
+
+        <a4j:commandButton id="btnActualizarAnio"
+                           style="display: none;"
+                           styleClass="btnActualizarAnio"
+                           actionListener="#{diasInhabilesDivisasController.actualizarPaginaSeleccion}"
+                           oncomplete="cargarContenidoConsultaAnio(); return false;"
+                           reRender="panelMostrar">
+        </a4j:commandButton>
+
+        <div id="loaderBuscar" style="display: none;">
+            <h:graphicImage value="/images/ajax-loader.gif"/>
+            &#160;&#160;
+            <h:outputText value="#{etq.buscando}"/>
+        </div>
+    </ui:define>
+
+
+    <ui:define name="seccionContenido">
+        <h:panelGroup id="panelMostrar">
+            <iframe id="operacionSeleccionada" frameborder="0" scrolling="no"
+                    style="width: 100%; height: 100vh; border: none; "></iframe>
+        </h:panelGroup>
+    </ui:define>
+
+
+</ui:composition>
+
+</html>

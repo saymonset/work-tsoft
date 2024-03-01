@@ -523,7 +523,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         </property>
     </bean>
 
-
     <bean id="fileTransferInversionExtranjeraService"
           class="com.indeval.portalinternacional.middleware.services.divisioninternacional.FileTransferInversionExtranjeraServiceImpl"
           lazy-init="true">
@@ -568,6 +567,22 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         </property>
     </bean>
 
+    <!-- INICIO: Multidivisas: Carga de archivo de Días Inhábiles por Divisas -->
+    <bean id="fileTransferDiasInhabilesDivisasService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.diasInhabilesDivisas.FileTransferDiasInhabilesDivisasServiceImpl"
+          lazy-init="true">
+        <description>
+            Bean de Acceso a servicios del FileTransfer de Division Internacional para la carga de archivo de Días
+            Inhábiles por divisas
+        </description>
+        <property name="consultaDivisaService">
+            <ref bean="consultaDivisaService"/>
+        </property>
+        <property name="diasInhabilesDivisasService">
+            <ref bean="diasInhabilesDivisasService"/>
+        </property>
+    </bean>
+    <!-- FIN: Multidivisas: Carga de archivo de Días Inhábiles por Divisas -->
 
     <bean id="mailService"
           class="com.indeval.portalinternacional.middleware.services.divisioninternacional.MailServiceImpl">
@@ -1659,7 +1674,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     </bean>
 
     <bean id="bitacoraService" class="com.indeval.sidv.bitacoraauditoria.middleware.service.impl.BitacoraServiceImpl">
-        <property name="bitacoraDao" ref="bitacoraDao" />
+        <property name="bitacoraDao" ref="bitacoraDao"/>
     </bean>
 
     <bean id="horariosCustodiosService"
@@ -1673,8 +1688,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     </bean>
 
     <bean id="diasInhabilesDivisasService"
-          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.DiasInhabilesDivisasServiceImpl">
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.diasInhabilesDivisas.DiasInhabilesDivisasServiceImpl">
         <property name="diasInhabilesDivisasDao" ref="diasInhabilesDivisasDao"/>
+        <property name="historicoDiasInhabilesDivisasDao" ref="historicoDiasInhabilesDivisasDao"/>
     </bean>
 
     <!-- SERVICIOS PARA EL FILE TRANSFER DE CAMBIO DE BOVEDA -->
@@ -1877,8 +1893,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="retiroEfectivoIntPendientesDao" ref="retiroEfectivoIntPendientesDao"/>
     </bean>
 
-    <bean id="bitacoraFileTransferService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.BitacoraFileTransferServiceImpl">
-    	<property name="validatorService">
+    <bean id="bitacoraFileTransferService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.BitacoraFileTransferServiceImpl">
+        <property name="validatorService">
             <ref bean="validatorService"/>
         </property>
         <property name="bitacoraFileTransferDao" ref="bitacoraFileTransferDao"></property>

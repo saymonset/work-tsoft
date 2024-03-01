@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+              version="1.2">
+    <!--Multidivisas: Descriptor :: Pantalla de Días Inhábiles de Divisas-->
+    <managed-bean>
+        <managed-bean-name>diasInhabilesDivisasController</managed-bean-name>
+        <managed-bean-class>
+            com.indeval.portalinternacional.presentation.controller.diasInhabilesDivisas.DiasInhabilesDivisasController
+        </managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>diasInhabilesDivisasService</property-name>
+            <value>#{diasInhabilesDivisasService}</value>
+        </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>diasInhabilesRegistroController</managed-bean-name>
+        <managed-bean-class>
+            com.indeval.portalinternacional.presentation.controller.diasInhabilesDivisas.DiasInhabilesRegistroController
+        </managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>diasInhabilesDivisasService</property-name>
+            <value>#{diasInhabilesDivisasService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>fileTransferService</property-name>
+            <value>#{fileTransferDiasInhabilesDivisasService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>process</property-name>
+            <property-class>java.lang.String</property-class>
+            <value>DID</value>
+        </managed-property>
+    </managed-bean>
+
+    <managed-bean>
+        <managed-bean-name>diasInhabilesConsultaController</managed-bean-name>
+        <managed-bean-class>
+            com.indeval.portalinternacional.presentation.controller.diasInhabilesDivisas.DiasInhabilesConsultaController
+        </managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>diasInhabilesDivisasService</property-name>
+            <value>#{diasInhabilesDivisasService}</value>
+        </managed-property>
+    </managed-bean>
+</faces-config>

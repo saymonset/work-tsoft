@@ -221,10 +221,6 @@ public class HorariosCustodiosDaoImpl extends BaseDaoHibernateImpl implements Ho
             }
         });
 
-        for (HorariosCustodiosVO horariosCustodiosVO : resultados) {
-            log.debug(horariosCustodiosVO.toString());
-        }
-
         paginaVO.setRegistros(resultados);
 
         return paginaVO;

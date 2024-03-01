@@ -3,6 +3,7 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <!--Multidivisas:  Consulta de horarios de custodios-->
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -18,8 +19,6 @@
                 src="#{facesContext.externalContext.requestContextPath}/js/horarioCustodios.js"></script>
         <script language="javascript" type="text/javascript"
                 src="#{facesContext.externalContext.requestContextPath}/js/mostrarFirmaDigital.js"></script>
-        <script language="javascript" type="text/javascript"
-                src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js"></script>
     </ui:define>
 
     <ui:define name="tituloSeccion">
@@ -373,8 +372,6 @@
                             </tr>
                         </table>
                     </h:panelGroup>
-
-
                     <h:dataTable id="resultados"
                                  value="#{horariosCustodiosConsultaController.paginaVO.registros}"
                                  var="horarioCustodio"

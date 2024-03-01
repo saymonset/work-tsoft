@@ -191,6 +191,9 @@
                     com.indeval.portalinternacional.middleware.servicios.modelo.DiasInhabilesDivisas
                 </value>
                 <value>
+                    com.indeval.portalinternacional.middleware.servicios.modelo.HistoricoDiasInhabilesDivisas
+                </value>
+                <value>
                     com.indeval.portalinternacional.middleware.servicios.modelo.DivisaBoveda
                 </value>
                 <value>
@@ -1261,6 +1264,14 @@
 
     <bean id="diasInhabilesDivisasDao"
           class="com.indeval.portalinternacional.persistence.dao.impl.DiasInhabilesDivisasDaoImpl"
+          lazy-init="true">
+        <property name="sessionFactory">
+            <ref local="sessionFactoryInternacional"/>
+        </property>
+    </bean>
+
+    <bean id="historicoDiasInhabilesDivisasDao"
+          class="com.indeval.portalinternacional.persistence.dao.impl.HistoricoDiasInhabilesDivisasDaoImpl"
           lazy-init="true">
         <property name="sessionFactory">
             <ref local="sessionFactoryInternacional"/>

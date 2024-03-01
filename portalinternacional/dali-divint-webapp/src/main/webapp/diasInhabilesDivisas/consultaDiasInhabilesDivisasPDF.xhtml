@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--Multidivisas: Reporte PDF: Consulta de Días Hinhábiles por Divisa-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cvt="http://indeval.com/jsf/converters">
+
+<pdf:document documentName="consultaDiasInhabilesDivisas" documentTitle="Días Inhábiles por Divisas"
+              institucion="#{diasInhabilesConsultaController.agenteFirmado.id} #{diasInhabilesConsultaController.agenteFirmado.folio} #{diasInhabilesConsultaController.agenteFirmado.razon}"
+              landscape="true" fecha="#{diasInhabilesConsultaController.fechaActual}"
+              imageResource="/images/indeval.jpg">
+    <pdf:table value="diasInhabilesConsultaController" currentBean="dia" widthPercentage="100">
+        <pdf:row>
+            <pdf:col header="HISTORICO DE CONSULTA" value="" align="center"/>
+        </pdf:row>
+    </pdf:table>
+    <pdf:table value="#{diasInhabilesConsultaController.historicoSelected}" currentBean="historicoSelected" widthPercentage="100">
+        <pdf:row>
+            <pdf:col header="#{etq.idHistorico}"
+                     value="#{!empty historicoSelected? historicoSelected.idHistorico : ''}"
+                     align="center"/>
+            <pdf:col header="#{etq.fechaRegistroMinus}"
+                     value="#{!empty historicoSelected ? historicoSelected.fechaCreacion : ''}"
+                     align="center">
+                <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+            </pdf:col>
+            <pdf:col header="#{etq.usuarioQue} #{etq.usuarioRegistra}"
+                     value="#{!empty historicoSelected ? historicoSelected.creador : ''}"
+                     align="center"/>
+            <pdf:col header="#{etq.fechaActualizacion}"
+                     value="#{!empty historicoSelected ? historicoSelected.fechaUltModificacion : ''}"
+                     align="center">
+                <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+            </pdf:col>
+            <pdf:col header="#{etq.usuarioQue} #{etq.usuarioAutoriza}"
+                     value="#{!empty historicoSelected ? historicoSelected.usuarioChecker : ''}"
+                     align="center"/>
+            <pdf:col header="#{etq.totalRegistros}"
+                     value="#{!empty historicoSelected ? historicoSelected.registrosTotal : ''}"
+                     align="center"/>
+            <pdf:col header="#{etq.registrosCorrectos}"
+                     value="#{!empty historicoSelected ? historicoSelected.registrosCorrectos : ''}"
+                     align="center"/>
+            <pdf:col header="#{etq.registrosError}"
+                     value="#{!empty historicoSelected ? historicoSelected.registrosError : ''}"
+                     align="center"/>
+            <pdf:col header="#{etq.estatus}"
+                     value="#{!empty historicoSelected ? diasInhabilesConsultaController.obtenerEstado(historicoSelected.estatus) : ''}"
+                     align="center"/>
+            <pdf:col header="#{etq.nombreArchivo}"
+                     value="#{!empty historicoSelected ? historicoSelected.nombreArchivo : ''}"
+                     align="center"/>
+        </pdf:row>
+    </pdf:table>
+
+    <pdf:br/>
+    <pdf:text align="center"
+              value="#{etq.registrosEncontrados}: #{diasInhabilesConsultaController.resultados.totalRegistros}"/>
+    <pdf:br/>
+
+    <pdf:table value="#{diasInhabilesConsultaController.resultados.registros}" currentBean="diaInhabil">
+        <pdf:row>
+            <pdf:col header="#{etq.id}" value="#{diaInhabil.idDiasInhabiles}" align="center"/>
+            <pdf:col header="#{etq.divisaMinus}" value="#{diaInhabil.divisaClave}" align="center"/>
+            <pdf:col header="#{etq.diaInhabi}" value="#{diaInhabil.diaInhabil}" align="center">
+                <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+            </pdf:col>
+            <pdf:col header="#{etq.usuarioQue} #{etq.usuarioRegistra}" value="#{diaInhabil.creador}" align="center"/>
+            <pdf:col header="#{etq.fechaCreacion}" value="#{diaInhabil.fechaCreacion}" align="center">
+                <cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss"/>
+            </pdf:col>
+            <pdf:col header="#{etq.fechaActualizacion}" value="#{diaInhabil.fechaUltModificacion}" align="center">
+                <cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss"/>
+            </pdf:col>
+            <pdf:col header="#{etq.estatus}" value="#{diasInhabilesConsultaController.obtenerEstado(diaInhabil.estatus)}"
+                     align="center"/>
+        </pdf:row>
+    </pdf:table>
+
+</pdf:document>
+</html>

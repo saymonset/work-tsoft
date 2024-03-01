@@ -21,10 +21,10 @@
                 <pdf:col header="#{etq.estatus} #{etq.movimientoMinus}" value="#{!empty movimientoEfectivoInt.descEstatusMovimiento ? movimientoEfectivoInt.descEstatusMovimiento : 'TODOS'}" align="center" />
                 <pdf:col header="#{etq.divisaMinus}" value="#{!empty movimientoEfectivoInt.descDivisa ? movimientoEfectivoInt.descDivisa : 'TODAS'}" align="center" />
                 <pdf:col header="#{etq.bovedaMinus}" value="#{!empty movimientoEfectivoInt.descBoveda ? movimientoEfectivoInt.descBoveda : 'TODAS'}" align="center" />
-                <pdf:col header="#{etq.fechaRegInicial}" value="#{movimientoEfectivoInt.fechaInicioStr}" align="center" />
-                <pdf:col header="#{etq.fechaRegFinal}" value="#{movimientoEfectivoInt.fechaFinStr}" align="center"/>
-                <pdf:col header="#{etq.fechaLiqInicial}" value="#{movimientoEfectivoInt.fechaLiqInicioStr}" align="center" />
-                <pdf:col header="#{etq.fechaLiqFinal}" value="#{movimientoEfectivoInt.fechaLiqFinStr}" align="center"/>
+                <pdf:col header="#{etq.fechaRegistroMinus}  #{etq.inicial}" value="#{movimientoEfectivoInt.fechaInicioStr}" align="center" />
+                <pdf:col header="#{etq.fechaRegistroMinus} #{etq.final}" value="#{movimientoEfectivoInt.fechaFinStr}" align="center"/>
+                <pdf:col header="#{etq.fechaLiquidacionMinus} #{etq.inicial}" value="#{movimientoEfectivoInt.fechaLiqInicioStr}" align="center" />
+                <pdf:col header="#{etq.fechaLiquidacionMinus} #{etq.final}" value="#{movimientoEfectivoInt.fechaLiqFinStr}" align="center"/>
             </pdf:row>
         </pdf:table>
         
