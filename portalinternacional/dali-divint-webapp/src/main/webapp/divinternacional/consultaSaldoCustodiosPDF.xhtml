@@ -50,5 +50,15 @@
 		</pdf:row>
 	</pdf:table>
 
+	<pdf:table value="#{consultaSaldoCustodiosBean.consultaSaldoCustodiosTotales}" currentBean="totales">
+		<pdf:row>
+			<pdf:col header="#{etq.totalConsulta}"  rendered="#{totales.consultaPorPagina}" align="center" />
+			<pdf:col header="#{etq.totalPagina}"  rendered="#{!totales.consultaPorPagina}" align="center" />
+			<pdf:col header="#{etq.saldo}" value="#{totales.totalSaldo}" rendered="#{totales.totalSaldo != null and !empty totales.totalSaldo}" align="center"  pattern="###,###,###,###,###,##0.######"/>
+			<pdf:col header="#{etq.disponible}" value="#{totales.totalDisponible}" rendered="#{totales.totalDisponible != null and !empty totales.totalDisponible}" align="right"  pattern="###,###,###,###,###,##0.######"/>
+			<pdf:col header="#{etq.noDisponible}"  value="#{totales.totalNoDisponible}" rendered="#{totales.totalNoDisponible != null and !empty totales.totalNoDisponible}" align="right" pattern="###,###,###,###,###,##0.######"/>
+		</pdf:row>
+	</pdf:table>
+
 </pdf:document>
 </html>
