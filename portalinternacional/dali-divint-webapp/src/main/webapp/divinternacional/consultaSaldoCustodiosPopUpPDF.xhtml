@@ -28,8 +28,14 @@
 	<pdf:table value="#{consultaSaldoCustodiosBean.paginaReportes.registros}" currentBean="conciliacion">
 		<pdf:row>
 
+			<pdf:col header="#{etq.idIns}" value="#{conciliacion.idIns}" align="center"/>
+			<pdf:col header="#{etq.folioIns}" value="#{conciliacion.folioIns}" align="center" />
+			<pdf:col header="#{etq.cuenta}" value="#{conciliacion.cuenta}" align="center" />
+			<pdf:col header="#{etq.idDivisa}" value="#{conciliacion.idDivisa}" align="center"/>
 			<pdf:col header="#{etq.divisaMinus}" value="#{conciliacion.divisa}" align="center" />
 			<pdf:col header="#{etq.bovedaMinus}" value="#{conciliacion.boveda}" align="center"/>
+			<pdf:col header="#{etq.idBov}" value="#{conciliacion.idBov}" align="center" />
+
 			<pdf:col header="Saldo" value="#{conciliacion.idSaldo}" align="center">
 				<f:convertNumber pattern="###,###,###,###,###,##0.######" />
 			</pdf:col>
@@ -37,13 +43,12 @@
 			<pdf:col header="Disponible" value="#{conciliacion.saldoDisponible}" align="right">
 				<f:convertNumber pattern="###,###,###,###,###,##0.######" />
 			</pdf:col>
-			<pdf:col header="No Disponible" value="#{conciliacion.saldoNoDisponible}" >
+			<pdf:col header="No Disponible" value="#{conciliacion.saldoNoDisponible}" align="right">
 				<f:convertNumber pattern="###,###,###,###,###,##0.######" />
 			</pdf:col>
 
 		</pdf:row>
 	</pdf:table>
-
 
 <!--	<pdf:table value="#{consultaSaldoCustodiosBean.consultaSaldoCustodiosTotales}" currentBean="totales">-->
 <!--		<pdf:row>-->
