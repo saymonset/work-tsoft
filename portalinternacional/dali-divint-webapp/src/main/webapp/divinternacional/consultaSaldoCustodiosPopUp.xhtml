@@ -268,7 +268,7 @@
 									</rich:column>
 									<rich:column styleClass=" tituloTabla everyColumn">
 										<f:facet name="header">
-											<h:outputText styleClass="texto textoPeque12" value="Saldo" />
+											<h:outputText styleClass="texto textoPeque12" value="#{etq.saldo}" />
 										</f:facet>
 										<h:outputText styleClass="texto textoPeque12 derecha" value="#{totales.totalSaldo}"  >
 											<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
@@ -276,7 +276,7 @@
 									</rich:column>
 									<rich:column styleClass=" tituloTabla everyColumn">
 										<f:facet name="header">
-											<h:outputText styleClass="texto textoPeque12" value="Disponible" />
+											<h:outputText styleClass="texto textoPeque12" value="#{etq.disponible}" />
 										</f:facet>
 										<h:outputText styleClass="texto textoPeque12 derecha" value="#{totales.totalDisponible}"  >
 											<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
@@ -284,7 +284,7 @@
 									</rich:column>
 									<rich:column styleClass=" tituloTabla everyColumn">
 										<f:facet name="header">
-											<h:outputText styleClass="texto textoPeque12" value="No Disponible" />
+											<h:outputText styleClass="texto textoPeque12" value="#{etq.noDisponible}" />
 										</f:facet>
 										<h:outputText styleClass="texto textoPeque12 derecha" value="#{totales.totalNoDisponible}"  >
 											<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
@@ -309,14 +309,14 @@
 										<h:outputText value="Exportar los paginaVO"></h:outputText>
 										
 										<h:commandButton actionListener="#{consultaSaldoCustodiosBean.generarReportes}"
-											action="consultaSaldoCustodiosPDF"
+											action="consultaSaldoCustodiosPopUpPDF"
 											image="/images/pdf.gif"
 											title="Exportar a PDF todos los paginaVO de la consulta"
 											id="generarPdf"/>
                            				&#160;&#160;
 
                           				<h:commandButton actionListener="#{consultaSaldoCustodiosBean.generarReportes}"
-                          					action="consultaSaldoCustodiosXLS"
+                          					action="consultaSaldoCustodiosPopUpXLS"
                           					image="/images/excel-file.gif"
                           					title="Exportar a Excel todos los paginaVO de la consulta"
                             				id="generarExcel">

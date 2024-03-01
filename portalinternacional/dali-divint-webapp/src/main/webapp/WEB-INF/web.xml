@@ -59,7 +59,9 @@
 			/WEB-INF/descriptors/jsf/horariosCustodioConsulta.xml,
 			/WEB-INF/descriptors/jsf/horariosCustodioRegistro.xml,
 			<!-- Multidivisas: Dias Inhabiles por Divisas -->
-			/WEB-INF/descriptors/jsf/diasInhabilesDivisas.xml
+			/WEB-INF/descriptors/jsf/diasInhabilesDivisas.xml,
+			/WEB-INF/descriptors/jsf/consultaSaldoCustodios.xml
+
 
 		</param-value>
 	</context-param>
