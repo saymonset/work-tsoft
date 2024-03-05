@@ -1,0 +1,313 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+	version="1.2">
+	
+	
+
+	<managed-bean>
+		<managed-bean-name>consultaPosicionesBean</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portaldali.presentation.controller.estadocuenta.ConsultaPosicionesValorBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>consultaPosiciones</property-name>
+			<value>#{consultaPosiciones}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaInstitucionService</property-name>
+			<value>#{consultaInstitucionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaTipoInstitucionService</property-name>
+			<value>#{consultaTipoInstitucionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaCatalogos</property-name>
+			<value>#{consultaCatalogosFacade}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>validadorTraspasoLibrePago</property-name>
+			<value>#{validadorCapturaOperacionesTraspasoLibrePago}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaCatalogosFacade</property-name>
+			<value>#{consultaCatalogosFacade}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>servicesCapturaOperacionViewHelper</property-name>
+			<value>#{servicesCapturaOperacionViewHelper}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>mercadoCapitalesService</property-name>
+			<value>#{mercadoCapitalesEJB}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>mercadoDineroService</property-name>
+			<value>#{mercadoDineroEJB}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>utilService</property-name>
+			<value>#{utilServices}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>isoHelper</property-name>
+			<value>#{isoHelper}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>envioOperacionesService</property-name>
+			<value>#{envioOperacionesEJB}</value>
+		</managed-property>		
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>consultaPosicionesExportacionBean</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portaldali.presentation.controller.estadocuenta.ConsultaPosicionesValorExportacionBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	
+	<!-- Bean de consulta detalle CFI -->
+	<managed-bean>
+		<managed-bean-name>consultaDetalleCfiBean</managed-bean-name>
+		<managed-bean-class>com.indeval.portaldali.presentation.controller.estadocuenta.ConsultaDetalleCfiBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>cfiService</property-name>
+			<value>#{cfiService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>consultaSaldosEfectivoBean</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portaldali.presentation.controller.estadocuenta.ConsultaSaldosEfectivoBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>consultaSaldos</property-name>
+			<value>#{consultaSaldos}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaInstitucionService</property-name>
+			<value>#{consultaInstitucionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaCatalogos</property-name>
+			<value>#{consultaCatalogosFacade}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaTipoInstitucionService</property-name>
+			<value>#{consultaTipoInstitucionService}</value>
+		</managed-property>
+
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>elegirInstitucionBean</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portaldali.presentation.controller.estadocuenta.ElegirInstitucionBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>consultaInstitucionService</property-name>
+			<value>#{consultaInstitucionService}</value>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>utilService</property-name>
+			<value>#{utilServices}</value>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>elementoMenuRaiz</property-name>
+			<value>#{menuNavegacion}</value>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>indevalCacheService</property-name>
+			<value>#{distCacheServiceEJB}</value>
+		</managed-property>
+		
+		
+		
+	</managed-bean>
+	
+	
+	<managed-bean>
+		<managed-bean-name>consultaEstadoCuentaSaldoEfectivoBean</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portaldali.presentation.controller.estadocuenta.ConsultaEstadoCuentaSaldoEfectivoBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>consultaEstadoCuentaEfectivo</property-name>
+			<value>#{consultaEstadoCuentaSaldos}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaInstitucionService</property-name>
+			<value>#{consultaInstitucionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>definicionDetallesMovimientosHelper</property-name>
+			<value>#{definicionDetallesMovimientosHelperEfectivo}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaCatalogos</property-name>
+			<value>#{consultaCatalogosFacade}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaTipoInstitucionService</property-name>
+			<value>#{consultaTipoInstitucionService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>consultaEstadoCuentaPosicionesBean</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portaldali.presentation.controller.estadocuenta.ConsultaEstadoCuentaPosicionesBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>consultaEstadoCuentaPosiciones</property-name>
+			<value>#{consultaEstadoCuentaPosiciones}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaInstitucionService</property-name>
+			<value>#{consultaInstitucionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>definicionDetallesMovimientosHelper</property-name>
+			<value>#{definicionDetallesMovimientosHelperValor}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaTipoInstitucionService</property-name>
+			<value>#{consultaTipoInstitucionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaCatalogos</property-name>
+			<value>#{consultaCatalogosFacade}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>consultaMovimientosValorBean</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portaldali.presentation.controller.estadocuenta.ConsultaMovimientosDeValoresBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>consultaMovimientos</property-name>
+			<value>#{consultaMovimientosValor}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaInstitucionService</property-name>
+			<value>#{consultaInstitucionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaTipoInstitucionService</property-name>
+			<value>#{consultaTipoInstitucionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>definicionDetallesMovimientosHelper</property-name>
+			<value>#{definicionDetallesMovimientosHelperValor}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaCatalogos</property-name>
+			<value>#{consultaCatalogosFacade}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>tipoInstruccionDAO</property-name>
+			<value>#{tipoInstruccionDAO}</value>
+		</managed-property>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>consultaMovimientosEfectivoBean</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portaldali.presentation.controller.estadocuenta.ConsultaMovimientosSaldoEfectivoBean
+		</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>consultaMovimientos</property-name>
+			<value>#{consultaMovimientosEfectivo}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaInstitucionService</property-name>
+			<value>#{consultaInstitucionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>definicionDetallesMovimientosHelper</property-name>
+			<value>#{definicionDetallesMovimientosHelperEfectivo}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaCatalogos</property-name>
+			<value>#{consultaCatalogosFacade}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaTipoInstitucionService</property-name>
+			<value>#{consultaTipoInstitucionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>tipoInstruccionDAO</property-name>
+			<value>#{tipoInstruccionDAO}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>opcionesTipoRetiro</property-name>
+			<list-entries>
+		    	<value>SPEI</value>
+		    	<value>SIAC</value>
+		    </list-entries>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>consultaDetalleMovimientoPosicionBean</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portaldali.presentation.controller.estadocuenta.ConsultaDetalleMovimientoPosicionBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>consultaDetalleMovimientoPosicionService</property-name>
+			<value>#{consultaDetalleMovimientoPosicionService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaDetalleMovimientoEfectivoService</property-name>
+			<value>#{consultaDetalleMovimientoEfectivoService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>consultaTipoInstitucionService</property-name>
+			<value>#{consultaTipoInstitucionService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>consultaDetalleMovimientoEfectivoBean</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portaldali.presentation.controller.estadocuenta.ConsultaDetalleMovimientoEfectivoBean
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>consultaDetalleMovimientoEfectivoService</property-name>
+			<value>#{consultaDetalleMovimientoEfectivoService}</value>
+		</managed-property>
+	</managed-bean>	
+	
+	
+	<navigation-rule>
+    <from-view-id>*</from-view-id>
+    <navigation-case>
+      <from-action>#{consultaDetalleMovimientoPosicionDvpBean.consultaMovimiento}</from-action>
+      <from-outcome>detalleDVP</from-outcome> 
+      <to-view-id>/consultaDetalleMovimientoPosicion/consultaDetalleMovimientoDvp.xhtml</to-view-id>
+    </navigation-case>
+   
+  </navigation-rule>
+  
+  
+
+	
+</faces-config>

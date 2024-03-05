@@ -1,0 +1,3 @@
+idFolioTraspasante,cuentaTraspasante,idFolioReceptor,cuentaReceptor,tv,emisora,serie,cupon,plazoRepDias,tasaPremio,cantidadOperada,precioTitulo,comprador,tipoOperacion,plazoLiquidacion,mensajeEsperado
+01003,0307,01006,0703,91,ABCD,ABCD,0000,1,1.5,10,1,false,MD,," La operación se llevó a cabo exitosamente. Folio de la operación "
+01003,0307,01006,0703,91,ABCD,ABCD,0000,1,1.5,10,1,true,MD,," La operación se llevó a cabo exitosamente. Folio usuario "

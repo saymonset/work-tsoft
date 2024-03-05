@@ -1,0 +1,2 @@
+# Desinstalar los componentes (2 de 2)
+undeploy dali.war --server-groups=grupo-portal-dali

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:pdf="http://indeval.com/jsf/pdf"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="consultaPagosReferenciadosExportacion"
+    	documentTitle="Consulta de Pagos Referenciados"
+        institucion="#{consultaPagosReferenciadosExportacion.institucionActual.idFolio} #{consultaPagosReferenciadosExportacion.institucionActual.razonSocial}"
+        landscape="true" fecha="#{consultaPagosReferenciadosExportacion.fechaActual}"
+        imageResource="/images/indeval.jpg">
+
+		<pdf:table value="#{consultaPagosReferenciadosExportacion.parametrosBusqueda}" currentBean="parametrosBusqueda" maxColums="7">
+			<pdf:row>
+				<pdf:col header="#{etq.folioPreliquidador}" value="#{consultaPagosReferenciadosExportacion.descParamFolioPreliquidador}" align="center" />
+             	<pdf:col header="#{etq.folioInstruccion}" value="#{consultaPagosReferenciadosExportacion.descParamFolioInstruccion}" align="center" />
+				<pdf:col header="#{etq.importe}" value="#{consultaPagosReferenciadosExportacion.descParamImporte}" align="center" />
+				<pdf:col header="#{etq.claveRastreo}" value="#{consultaPagosReferenciadosExportacion.descParamClaveRastreo}" align="center" />
+              	<pdf:col header="#{etq.fechaRegistroInicial}" value="#{consultaPagosReferenciadosExportacion.descParamFechaRegistroInicial}" align="center">
+              		<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+              	</pdf:col>
+              	<pdf:col header="#{etq.fechaRegistroFinal}" value="#{consultaPagosReferenciadosExportacion.descParamFechaRegistroFinal}" align="center">
+              		<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+              	</pdf:col>
+				<pdf:col header="#{etq.estatus}" value="#{consultaPagosReferenciadosExportacion.descParamEstatus}" align="center"/>
+			</pdf:row>
+		</pdf:table>
+
+		<pdf:table value="#{consultaPagosReferenciadosExportacion.parametrosBusqueda}" currentBean="parametrosBusqueda">
+			<pdf:row>
+				<pdf:col header="#{etq.registrosEncontrados}" value="#{consultaPagosReferenciadosExportacion.paginaVO.totalRegistros}" align="center" />
+			</pdf:row>
+		</pdf:table>
+		
+		<pdf:table value="#{consultaPagosReferenciadosExportacion.resultados}" currentBean="registro" maxColums="20">
+            <pdf:row>
+            	<pdf:col header="#{etq.traspasante}" value="#{registro.traspasante}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.receptor}" value="#{registro.receptor}" align="center" oddColorDark="true" />
+            	<pdf:col header="#{etq.folioPreliquidador}" value="#{registro.folioPreliquidador}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.folioInstruccion}" value="#{registro.folioInstruccion}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.importe}" value="#{registro.importe}" align="center" oddColorDark="true">
+                	<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                </pdf:col>
+            	<pdf:col header="#{etq.boveda}" value="#{registro.boveda}" align="center" oddColorDark="true" />                         
+                <pdf:col header="#{etq.divisa}" value="#{registro.divisa}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.concepto}" value="#{registro.concepto}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.claveRastreo}" value="#{registro.claveRastreo}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.referenciaNumerica}" value="#{registro.referenciaNumerica}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.fechaRegistro}" value="#{registro.fechaRegistro}" align="center" oddColorDark="true" >
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+                </pdf:col>
+                <pdf:col header="#{etq.estatus}" value="#{registro.estatus}" align="center" oddColorDark="true" />
+                <pdf:col header="#{etq.pagoMinus}" value="#{registro.pago}" align="center" oddColorDark="true">
+                	<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                </pdf:col>
+                <pdf:col header="#{etq.importeRemanente}" value="#{registro.remanente}" align="center" oddColorDark="true">
+                	<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                </pdf:col>
+           </pdf:row>
+        </pdf:table>
+    </pdf:document>
+</html>

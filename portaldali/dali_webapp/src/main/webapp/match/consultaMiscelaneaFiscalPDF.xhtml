@@ -1,0 +1,86 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+
+    <pdf:document documentName="consultaMiscelaneaFiscal" documentTitle="Consulta Miscelánea Fiscal"        
+        fecha="#{elegirInstitucionBean.fechaActual}"
+        imageResource="/images/indeval.png">
+        
+        
+        <pdf:text align="left" value="#{elegirInstitucionBean.descripcionInstitucion}" />
+        
+        <pdf:table value="consultaMiscelaneaFiscalBean" currentBean="resultado" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{consultaMiscelaneaFiscalBean}" currentBean="resultado" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.participanteMinus}" value="#{!empty consultaMiscelaneaFiscalBean.idFolioTraspasante ? consultaMiscelaneaFiscalBean.idFolioTraspasante : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.cuentaParticipante}" value="#{!empty consultaMiscelaneaFiscalBean.criterio.cuentaParticipante.cuenta ? consultaMiscelaneaFiscalBean.criterio.cuentaParticipante.cuenta : 'TODAS'}" align="center" />
+                <pdf:col header="#{etq.nombreCuenta}" value="#{!empty consultaMiscelaneaFiscalBean.criterio.cuentaParticipante.nombreCuenta ? consultaMiscelaneaFiscalBean.criterio.cuentaParticipante.nombreCuenta : 'TODAS'}" align="center" />
+                
+                <pdf:col header="#{etq.contraparteMinus}" value="#{!empty consultaMiscelaneaFiscalBean.idFolioContraparte ? consultaMiscelaneaFiscalBean.idFolioContraparte : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.cuentaContraparte}" value="#{!empty consultaMiscelaneaFiscalBean.criterio.cuentaContraparte.cuenta ? consultaMiscelaneaFiscalBean.criterio.cuentaContraparte.cuenta : 'TODAS'}" align="center" />
+                <pdf:col header="#{etq.nombreCuenta}" value="#{!empty consultaMiscelaneaFiscalBean.criterio.cuentaContraparte.nombreCuenta ? consultaMiscelaneaFiscalBean.criterio.cuentaContraparte.nombreCuenta : 'TODAS'}" align="center" />
+                
+                <pdf:col header="#{etq.tv}" value="#{!empty consultaMiscelaneaFiscalBean.criterio.emision.tipoValor.claveTipoValor ? consultaMiscelaneaFiscalBean.criterio.emision.tipoValor.claveTipoValor : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.emisoraMinus}" value="#{!empty consultaMiscelaneaFiscalBean.criterio.emision.emisora.descripcion ? consultaMiscelaneaFiscalBean.criterio.emision.emisora.descripcion : 'TODAS'}" align="center" />
+                <pdf:col header="#{etq.serieMinus}" value="#{!empty consultaMiscelaneaFiscalBean.criterio.emision.serie.serie ? consultaMiscelaneaFiscalBean.criterio.emision.serie.serie : 'TODAS'}" align="center" />
+                <pdf:col header="#{etq.bovedaMinus}" value="#{empty consultaMiscelaneaFiscalBean.criterio.bovedaValores.nombreCorto ? 'TODAS' : consultaMiscelaneaFiscalBean.criterio.bovedaValores.nombreCorto }" align="center"/>
+                <pdf:col header="#{etq.mercadoMinus}" value="#{consultaMiscelaneaFiscalBean.descripcionPapelMercado}" align="center" />
+                
+                <pdf:col header="#{etq.estatus}" value="#{!empty consultaMiscelaneaFiscalBean.criterio.estadoInstruccion.claveEstadoInstruccion ? consultaMiscelaneaFiscalBean.criterio.estadoInstruccion.claveEstadoInstruccion : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.rol}" value="#{!empty consultaMiscelaneaFiscalBean.SRol ? consultaMiscelaneaFiscalBean.SRol : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.fechaTraspaso} #{etq.inicial}" value="#{consultaMiscelaneaFiscalBean.criterio.fechaInicioPeriodo}" align="center">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+               	</pdf:col>
+				<pdf:col header="#{etq.fechaTraspaso} #{etq.final}" value="#{consultaMiscelaneaFiscalBean.criterio.fechaFinPeriodo}" align="center">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+               	</pdf:col>
+            </pdf:row>
+        </pdf:table>
+        
+        <pdf:br/>
+        
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{consultaMiscelaneaFiscalBean.totalRegistros}"/>
+        
+        <pdf:br/>
+
+        <pdf:table value="#{consultaMiscelaneaFiscalBean.listaMiscelaneaFiscalReportes}" widthPercentage="100" currentBean="lmf" maxColums="12">
+            <pdf:row>
+                <pdf:col header="#{etq.fechaTraspaso}" value="#{lmf.fechaConcertacion}" align="center" collspan="1">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss"/>
+                </pdf:col>
+                <pdf:col header="#{etq.folioControl}" value="#{lmf.folioControl}" align="center" collspan="1"/>
+                <pdf:col header="#{etq.tv}" value="#{lmf.emision.tipoValor.claveTipoValor}" align="center" collspan="1"/>
+                <pdf:col header="#{etq.emisora}" value="#{lmf.emision.emisora.descripcion}" align="center" collspan="1"/>
+                <pdf:col header="#{etq.serie}" value="#{lmf.emision.serie.serie}" align="center" collspan="1"/>
+                <pdf:col header="#{etq.cupon}" value="#{lmf.cupon.claveCupon}" align="center" collspan="1"/>
+                <pdf:col header="#{etq.isin}" value="#{lmf.emision.isin}" align="center" collspan="1"/>
+                <pdf:col header="#{etq.bovedaMinus}" value="#{lmf.boveda}" align="center" collspan="1"/>
+                <pdf:col header="#{etq.estatus}" value="#{lmf.estadoInstruccionEnvio.claveEstadoInstruccion}" align="center" collspan="1"/>
+                <pdf:col header="#{etq.cantidadOperada}" value="#{lmf.cantidadTitulos}" align="center" collspan="1">
+                	<f:convertNumber pattern="###,###,###,###,###,##0" />
+                </pdf:col>
+                <pdf:col header="#{etq.precioAdquisicionMinus}" value="#{lmf.miscelaneaFiscal.precioAdquisicion}" align="center" collspan="1">
+                	<f:convertNumber pattern="$###,###,###,###,###,###.00000000" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaAdquisicionMinus}" value="#{lmf.fechaAdquisicion}" align="center" collspan="1">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+               	</pdf:col>
+               	<pdf:col header="#{etq.costoPromedio}" value="#{lmf.miscelaneaFiscal.costoPromedio}" align="center" collspan="1">
+                	<f:convertNumber pattern="$###,###,###,###,###,###.00000000" />
+                </pdf:col>
+                <pdf:col header="#{etq.clienteMinus}" value="#{lmf.miscelaneaFiscal.cliente}" align="center" collspan="2"/>
+                <pdf:col header="#{etq.mercadoMinus}" value="#{lmf.emision.tipoValor.mercado.descripcion}" align="center" collspan="1"/>
+                <pdf:col header="#{etq.rfcCurp}" value="#{lmf.miscelaneaFiscal.curpRfc}" align="center" collspan="2"/>
+                <pdf:col header="#{etq.instTraspasante}" value="#{lmf.institucionTraspasante.claveTipoInstitucion}#{lmf.institucionTraspasante.folioInstitucion} - #{lmf.institucionTraspasante.nombreCorto}" align="center" collspan="2"/>
+                <pdf:col header="#{etq.cuentaTraspasante}" value="#{lmf.cuentaNombradaTraspasante.cuenta}" align="center" collspan="1"/>
+                <pdf:col header="#{etq.instReceptor}" value="#{lmf.institucionReceptora.claveTipoInstitucion}#{lmf.institucionReceptora.folioInstitucion} - #{lmf.institucionReceptora.nombreCorto}" align="center" collspan="2"/>
+                <pdf:col header="#{etq.cuentaReceptor}" value="#{lmf.cuentaNombradaReceptora.cuenta}" align="center" collspan="1"/>
+            </pdf:row>
+        </pdf:table>
+
+    </pdf:document>
+</html>

@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich" xmlns:t="http://myfaces.apache.org/tomahawk"
+    xmlns:indeval="http://indeval.com/indeval">
+
+    <ui:composition template="/layoutConsultas.xhtml">  
+		
+        <ui:define name="head">
+        	<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/consultaBitacoraEnvOp.js"></script>
+            <script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/consultaEmisiones.js"></script>
+			<script language="javascript" type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js"></script>			
+        </ui:define>
+        
+        <ui:define name="tituloSeccion">
+            <h:outputText value="#{etq.bitacoraPagosReferenciados}" />
+        </ui:define>
+       
+		<ui:define name="initPantalla">		
+            <a4j:keepAlive beanName="consultaPagosReferenciados"/>
+           	<h:outputText value="#{consultaPagosReferenciados.init}"/>
+		</ui:define>
+       
+        <ui:define name="criterios">
+            <h:panelGroup id="panelCriterios">
+                <div id="divCriterios" style="display: inline;">
+                    <table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+                        <tr>
+                            <td class="recuadroTabla" width="100%">
+                                <table class="tablaCriterios" align="center">
+                                    <tr>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.folioPreliquidador}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.folioInstruccion}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.importe}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.claveRastreo}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.fechaRegistroInicial}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.fechaRegistroFinal}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.estatus}" />
+                                        </td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td align="center">
+											<h:inputText id="folioPreliquidador"
+		    									value="#{consultaPagosReferenciados.parametrosBusqueda.folioPreliquidador}"
+		    									styleClass="textoControles campoNumerico textoMayusculas"
+		    									size="14" maxlength="14"
+		    									autocomplete="off" />
+                                        </td>
+                                        <td align="center">
+											<h:inputText id="folioInstruccion"
+		    									value="#{consultaPagosReferenciados.parametrosBusqueda.folioInstruccion}"
+		    									styleClass="textoControles campoNumerico textoMayusculas"
+		    									size="22" maxlength="22"
+		    									autocomplete="off" />
+                                        </td>
+                                        <td align="center">
+											<h:inputText id="importe"
+		    									value="#{consultaPagosReferenciados.parametrosBusqueda.importe}"
+		    									styleClass="textoControles campoNumericoDecimalDosDecimales textoMayusculas"
+		    									size="33" maxlength="33"
+		    									autocomplete="off" />
+                                        </td>
+                                        <td align="center">
+			    							<h:inputText id="claveRastreo"
+			    								value="#{consultaPagosReferenciados.parametrosBusqueda.claveRastreo}"
+			    								styleClass="textoControles campoAlphaNumerico textoMayusculas"
+			    								size="30" maxlength="30"
+			    								autocomplete="off" />
+                                        </td>
+                                        <td align="center">
+	    									<rich:calendar id="fechaRegistroInicial" 
+												value="#{consultaPagosReferenciados.parametrosBusqueda.fechaRegistroInicial}"
+												datePattern="dd/MM/yyyy"
+												inputSize="11"
+												inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;"
+												isDayEnabled="isDayEnabled" />
+                                        </td>
+                                        <td align="center">
+	    									<rich:calendar id="fechaRegistroFinal" 
+												value="#{consultaPagosReferenciados.parametrosBusqueda.fechaRegistroFinal}"
+												datePattern="dd/MM/yyyy"
+												inputSize="11"
+												inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;"
+												isDayEnabled="isDayEnabled" />
+                                        </td>
+                                        <td align="center">
+                                            <h:selectOneMenu id="estatus"
+                                                value="#{consultaPagosReferenciados.parametrosBusqueda.estatus}"
+                                                styleClass="textoControles">
+                                                <f:selectItems value="#{consultaPagosReferenciados.catalogoEstatusPagoReferenciado}"/>
+                                            </h:selectOneMenu>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </h:panelGroup>
+            
+            <h:panelGroup id="panelResumenCriterios">
+            	<div id="divResumen" style="display: none;">
+					<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+                        <tr>
+                            <td class="recuadroTabla" width="100%">
+                                <table class="tablaCriterios" align="center">
+                                    <tr>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.folioPreliquidador}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.folioInstruccion}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.importe}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.claveRastreo}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.fechaRegistroInicial}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.fechaRegistroFinal}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.estatus}" />
+                                        </td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td align="center">
+											<h:outputText styleClass="texto" value="#{consultaPagosReferenciados.parametrosBusqueda.folioPreliquidador}"
+												rendered="#{!empty consultaPagosReferenciados.parametrosBusqueda.folioPreliquidador}"/>
+	                                        <h:outputText styleClass="texto" value="#{etq.todoMayusculas}"
+	                                        	rendered="#{empty consultaPagosReferenciados.parametrosBusqueda.folioPreliquidador}"/>
+                                        </td>
+                                        <td align="center">
+											<h:outputText styleClass="texto" value="#{consultaPagosReferenciados.parametrosBusqueda.folioInstruccion}"
+												rendered="#{!empty consultaPagosReferenciados.parametrosBusqueda.folioInstruccion}"/>
+	                                        <h:outputText styleClass="texto" value="#{etq.todoMayusculas}"
+	                                        	rendered="#{empty consultaPagosReferenciados.parametrosBusqueda.folioInstruccion}"/>
+                                        </td>
+                                        <td align="center">
+											<h:outputText styleClass="texto" value="#{consultaPagosReferenciados.parametrosBusqueda.importe}"
+												rendered="#{!empty consultaPagosReferenciados.parametrosBusqueda.importe}"/>
+	                                        <h:outputText styleClass="texto" value="#{etq.todoMayusculas}"
+	                                        	rendered="#{empty consultaPagosReferenciados.parametrosBusqueda.importe}"/>
+                                        </td>
+                                        <td align="center">
+											<h:outputText styleClass="texto" value="#{consultaPagosReferenciados.parametrosBusqueda.claveRastreo}"
+												rendered="#{!empty consultaPagosReferenciados.parametrosBusqueda.claveRastreo}"/>
+	                                        <h:outputText styleClass="texto" value="#{etq.todoMayusculas}"
+	                                        	rendered="#{empty consultaPagosReferenciados.parametrosBusqueda.claveRastreo}"/>
+                                        </td>
+                                        <td align="center">
+											<h:outputText styleClass="texto" value="#{consultaPagosReferenciados.parametrosBusqueda.fechaRegistroInicial}"
+												rendered="#{!empty consultaPagosReferenciados.parametrosBusqueda.fechaRegistroInicial}"/>
+	                                        <h:outputText styleClass="texto" value="#{etq.todoMayusculas}"
+	                                        	rendered="#{empty consultaPagosReferenciados.parametrosBusqueda.fechaRegistroInicial}"/>
+                                        </td>
+                                        <td align="center">
+											<h:outputText styleClass="texto" value="#{consultaPagosReferenciados.parametrosBusqueda.fechaRegistroFinal}"
+												rendered="#{!empty consultaPagosReferenciados.parametrosBusqueda.fechaRegistroFinal}"/>
+	                                        <h:outputText styleClass="texto" value="#{etq.todoMayusculas}"
+	                                        	rendered="#{empty consultaPagosReferenciados.parametrosBusqueda.fechaRegistroFinal}"/>
+                                        </td>
+                                        <td align="center">
+											<h:outputText styleClass="texto" value="#{consultaPagosReferenciados.parametrosBusqueda.estatus}"
+												rendered="#{!empty consultaPagosReferenciados.parametrosBusqueda.estatus}"/>
+	                                        <h:outputText styleClass="texto" value="#{etq.todoMayusculas}"
+	                                        	rendered="#{empty consultaPagosReferenciados.parametrosBusqueda.estatus}"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+            	</div>
+			</h:panelGroup>
+        </ui:define>
+        <!-- criterios -->
+		<ui:define name="seccionContenido">
+			<h:panelGroup id="panelContenido">
+				<h:panelGroup rendered="#{consultaPagosReferenciados.consultaEjecutada and not consultaPagosReferenciados.consultaConResultados}">
+					<table width="100%" border="0" cellpadding="0px" cellspacing="0px">
+						<tr>
+							<td class="tituloTabla" width="100%">
+		                    	<h:outputText value="#{etq.sinResultados}" /> 
+							</td>
+						</tr>
+					</table>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{consultaPagosReferenciados.consultaEjecutada and consultaPagosReferenciados.consultaConResultados}">
+					<h:panelGroup id="panelPaginacion">
+						<table width="100%" border="0" cellpadding="0px" cellspacing="0px">
+							<tr>
+								<td align="left" class="textoEstadoCuenta">
+									<a4j:commandLink id="control_bitacora_primero"
+										action="#{consultaPagosReferenciados.irPrimeraPagina}"
+										rendered="#{consultaPagosReferenciados.irAlPrimero}"
+										reRender="panelContenido">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png" border="0" />
+									</a4j:commandLink>
+									<a4j:commandLink id="control_bitacora_atras_fast"
+										action="#{consultaPagosReferenciados.retrocederPaginasRapido}"
+										rendered="#{consultaPagosReferenciados.retrocederRapido}"
+										reRender="panelContenido">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png" border="0" />
+									</a4j:commandLink>
+									<a4j:commandLink id="control_bitacora_atras"
+										action="#{consultaPagosReferenciados.retrocederPagina}"
+										rendered="#{consultaPagosReferenciados.retroceder}"
+										reRender="panelContenido">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png" border="0" />
+									</a4j:commandLink>
+									<a4j:commandLink id="control_bitacora_adelante"
+										action="#{consultaPagosReferenciados.avanzarPagina}"
+										rendered="#{consultaPagosReferenciados.avanzar}"
+										reRender="panelContenido">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png" border="0" />
+									</a4j:commandLink>
+									<a4j:commandLink id="control_bitacora_adelante_fast"
+										action="#{consultaPagosReferenciados.avanzarPaginasRapido}"
+										rendered="#{consultaPagosReferenciados.avanzarRapido}"
+										reRender="panelContenido">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png" border="0" />
+									</a4j:commandLink>
+									<a4j:commandLink id="control_bitacora_ultimo"
+										action="#{consultaPagosReferenciados.irUltimaPagina}"
+										rendered="#{consultaPagosReferenciados.irAlUltimo}"
+										reRender="panelContenido">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png" border="0" />
+									</a4j:commandLink>
+									<br />
+									<h:outputText value="#{etq.mostrando}" styleClass="textoResumen" />
+									<h:outputText value="#{consultaPagosReferenciados.numeroPagina}" styleClass="textoResumen" />
+									<h:outputText value="#{etq.de}" styleClass="textoResumen" />
+									<h:outputText value="#{consultaPagosReferenciados.totalPaginas}" styleClass="textoResumen" />
+									<h:outputText value="#{etq.cierre}" styleClass="textoResumen" />
+									&#160;&#160;&#160;
+									<h:outputText value="#{consultaPagosReferenciados.paginaVO.totalRegistros}" styleClass="textoResumen" converter="formatoEnteroConverter" />
+									&#160;
+									<h:outputText styleClass="textoResumen" value="#{etq.registrosEncontrados}" />
+								</td>
+								<td style="text-align: right;"  class="textoEstadoCuenta">
+									<h:outputText escape="false" value="#{etq.registrosPorPagina}" styleClass="textoResumen" />
+									<h:selectOneMenu id="tamanioPagina" styleClass="textoResumen"
+										value="#{consultaPagosReferenciados.paginaVO.registrosXPag}">
+										<f:selectItem itemLabel="1" itemValue="1" />
+										<f:selectItem itemLabel="2" itemValue="2" />
+										<f:selectItem itemLabel="5" itemValue="5" />
+										<f:selectItem itemLabel="10" itemValue="10" />
+										<f:selectItem itemLabel="20" itemValue="20" />
+										<f:selectItem itemLabel="50" itemValue="50" />
+										<a4j:support event="onchange" reRender="panelContenido" actionListener="#{consultaPagosReferenciados.paginarResultados}" />
+									</h:selectOneMenu>
+								</td>
+							</tr>
+						</table>
+					</h:panelGroup>
+					
+					<h:panelGroup id="panelResultados">
+						<table width="100%" border="0" cellpadding="0px" cellspacing="0px">
+							<tr>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.traspasante}" />
+								</th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.receptor}" />
+                                </th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.folioPreliquidador}" />
+                                </th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.folioInstruccion}" />
+                                </th>
+                                <th class="tituloTabla wordWrap">
+                                    <h:outputText value="#{etq.importe}" />
+                                </th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.boveda}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.divisa}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.concepto}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.claveRastreo}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.referenciaNumerica}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+								 <h:outputText value="#{etq.fechaRegistro}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.estatus}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.pagoMinus}" />
+								</th>
+								<th class="tituloTabla wordWrap">
+									<h:outputText value="#{etq.importeRemanente}" />
+								</th>
+							</tr>
+							<t:dataList value="#{consultaPagosReferenciados.resultados}" var="resultado" rowIndexVar="indice">
+								<tr>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+										<h:outputText value="#{resultado.traspasante}" />
+									</td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}  centrado">
+                                        <h:outputText value="#{resultado.receptor}" />
+                                    </td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}  centrado">
+                                        <h:outputText value="#{resultado.folioPreliquidador}" />
+                                    </td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}  centrado">
+                                        <h:outputText value="#{resultado.folioInstruccion}" />
+                                    </td>
+                                    <td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}  centrado">
+                                        <h:outputText value="#{resultado.importe}" />
+                                    </td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" >
+										<h:outputText value="#{resultado.boveda}" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{resultado.divisa}" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<h:outputText value="#{resultado.concepto}" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno wordWrap':'renglonTablaDos wordWrap'} centrado">
+										<h:outputText value="#{resultado.claveRastreo}" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}  centrado">
+										<h:outputText value="#{resultado.referenciaNumerica}" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}  centrado">
+										<h:outputText value="#{resultado.fechaRegistro}" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno wordWrap':'renglonTablaDos wordWrap'}  centrado">
+										<h:outputText value="#{resultado.estatus}" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno wordWrap':'renglonTablaDos wordWrap'}  centrado">
+										<h:outputText value="#{resultado.pago}" />
+									</td>
+									<td class="#{indice%2 == 0 ?'renglonTablaUno wordWrap':'renglonTablaDos wordWrap'}  centrado">
+										<h:outputText value="#{resultado.remanente}" />
+									</td>
+								</tr>
+							</t:dataList>
+						</table>
+						<br />
+						<table width="100%" border="0" cellpadding="0px" cellspacing="0px">
+							<tr>
+								<td align="right" width="100%">
+				                    <h:commandButton actionListener="#{consultaPagosReferenciadosExportacion.generarExportacionPDF}"
+										action="consultaPagosReferenciadosPDF"
+										image="/images/pdf.gif"
+										title="Exportar a PDF todos los resultados de la consulta"
+										id="generarPdf"
+										onclick="bloquearBotonesReportes(['generarXls', 'generarPdf']);" />
+									&#160;&#160;
+			                        <h:commandButton actionListener="#{consultaPagosReferenciadosExportacion.generarExportacionXLS}"
+										action="consultaPagosReferenciadosXLS"
+										image="/images/excel-file.gif"
+										title="Exportar a XLS todos los resultados de la consulta"
+										id="generarXls"
+										onclick="bloquearBotonesReportes(['generarXls', 'generarPdf']);" />
+										
+									<div id="monitorPeticionReporte" style="display: none;">
+										<h:panelGroup id="panelMonitorPeticionReporte">
+											<h:graphicImage value="/images/ajax-loader.gif" />
+											&#160;&#160;
+											<h:outputText value="#{etq.reporteEnProceso}" />
+											<a4j:commandButton id="btnActualizarEstadoPeticion"
+												image="/images/transparent.gif"
+												styleClass="submit"
+												actionListener="#{consultaPagosReferenciadosExportacion.actualizarEstadoPeticion}"
+												reRender="panelMonitorPeticionReporte"
+												oncomplete="desbloquearBotonesReportes(#{consultaPagosReferenciadosExportacion.peticionReporteCompleta}, ['generarXls', 'generarPdf']);"/>
+										</h:panelGroup>
+									</div>
+										
+								</td>
+							</tr>
+						</table>
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		
+		
+		
+		
+			
+            
+            
+            
+            <a4j:outputPanel ajaxRendered="true">
+                <script languaje="javascript">
+                    restringirCapturasNumericas();
+                    restringirCapturasNumericasDecimales();
+                    restringirCapturasAlphaNumericas();
+                    restringirCapturasNumericasAsterisco();
+                    restringirCapturasAlphaNumericasAsterisco();
+                    restringirCapturasAlphaNumericasEmisora();
+                    restringirCapturasAlphaNumericasSerie();
+                    restringirCapturasAlphaAsterisco(); 
+                    setMaxLengths();
+                </script>
+            </a4j:outputPanel>
+		</ui:define>
+        
+        <!-- Seccion de botones -->
+        <ui:define name="botones">        
+        	<h:panelGroup id="panelBotones">
+	        	<div class="refrescar" style="float: left;">
+					<a4j:status id="commonStatus">
+						<f:facet name="start">
+							<h:panelGroup>
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								<h:outputText value="#{etq.buscando}"></h:outputText>
+							</h:panelGroup>
+						</f:facet>
+					</a4j:status>
+				</div>
+	            <div class="limpiar">
+	                <h:commandButton id="botonLimpiar" image="/images/transparent.gif"
+	                	styleClass="submit"
+	                    actionListener="#{consultaPagosReferenciados.limpiar}" />
+	            </div>
+	            <div class="buscar" style="float: center">
+	                <a4j:commandButton id="botonBuscar" image="/images/transparent.gif" styleClass="submit" tabindex="130"
+	                	onclick="javascript:presentarResumen();"
+	                    actionListener="#{consultaPagosReferenciados.consultar}"
+	                    reRender="panelMensajes, panelResumenCriterios, panelContenido"
+	                    oncomplete="mostrarResumenCriteriosBusqueda();" />
+	            </div>
+	            <div id="botonEditarCriterios" class="editar" style="display: none; float:right;" >            
+	            	<input type="image" class="submit"
+						src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+						alt="Editar Criterios"
+						title="Editar Criterios"
+						onclick="mostrarCriteriosBusqueda();return false;" />                      	
+            	</div>
+			</h:panelGroup>
+        </ui:define>
+
+    </ui:composition>
+</html>
+

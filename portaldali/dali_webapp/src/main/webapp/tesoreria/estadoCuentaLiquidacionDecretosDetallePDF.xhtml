@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:pdf="http://indeval.com/jsf/pdf"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+	
+	<pdf:document documentName="liquidacionDecretosDetalle"
+		documentTitle="Detalle Estado de Cuenta Liquidaci&#243;n Por Decretos"
+		fecha="#{elegirInstitucionBean.fechaActual}"
+		institucion="#{elegirInstitucionBean.descripcionInstitucion}"
+		imageResource="/images/indeval.png" landscape="true">
+		<pdf:subtitle value="Detalle de Cobros" />
+
+		<pdf:table id="tablaDetalles"
+			value="#{consultaEstadoCuentaLiqDecretosController.detalles}"
+			currentBean="detalle"
+			borraLista="false">
+			<pdf:row id="rowDetalle">
+				<pdf:col collspan="1" header="#{etq.participante}" value="#{detalle.idInstitucion}#{detalle.folioInstitucion}" align="center" />
+				<pdf:col collspan="1" header="#{etq.cuentaMinus}" value="#{detalle.cuenta}" align="center" />
+				<pdf:col collspan="1" header="#{etq.tv}" value="#{detalle.emision.idTipoValor}" align="center" />
+				<pdf:col collspan="1" header="#{etq.emisora}" value="#{detalle.emision.emisora}" align="center" />
+				<pdf:col collspan="1" header="#{etq.serie}" value="#{detalle.emision.serie}" align="center" />
+				<pdf:col collspan="1" header="#{etq.cupon}" value="#{detalle.emision.cupon}" align="center" />
+				<pdf:col collspan="1" header="#{etq.isin}" value="#{detalle.emision.isin}" align="center" />
+				<pdf:col collspan="1" header="#{etq.fechaLiquidacionMinus}" value="#{detalle.fechaLiquidacion}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col collspan="1" header="#{etq.valorNominalMinus}" value="#{detalle.valorNominal}" align="center">
+					<f:converter converterId="formatoEnteroConverter" />
+				</pdf:col>
+				<pdf:col header="#{etq.divisa}" value="#{detalle.divisa}" align="center" />
+				<pdf:col header="#{etq.boveda}" value="#{detalle.nombreCorto}" align="center" />	
+				<pdf:col header="#{etq.tasaInteres}" value="#{detalle.tasaInteres}" align="center">
+					<f:converter converterId="formatoDecimalConverter" />
+				</pdf:col>
+				<pdf:col header="#{etq.tasaRendimiento}" value="#{detalle.tasaRendimiento}" align="center">
+					<f:converter converterId="formatoDecimalConverter" />
+				</pdf:col>
+				<pdf:col header="#{etq.tasaDescuento}" value="#{detalle.tasaDescuento}" align="center">
+					<f:converter converterId="formatoDecimalConverter" />
+				</pdf:col>
+				<pdf:col header="#{etq.plazo}" value="#{detalle.plazo}" align="center">
+					<f:converter converterId="formatoEnteroConverter" />
+				</pdf:col>
+			</pdf:row>
+		</pdf:table>
+		<pdf:br />
+		<pdf:br />
+		<pdf:grid widthPercentage="24" align="left" border="1" bordercolor="#FFFFFF">
+			<pdf:gridRow>
+				<pdf:gridCol align="left" bgcolor="#99B3CC">
+					<pdf:text value="#{etq.tipoEjercicio}" />
+				</pdf:gridCol>
+				<pdf:gridCol align="right">
+					<pdf:text value="#{consultaEstadoCuentaLiqDecretosController.detalle[0].descTipoEjercicio}"/>
+				</pdf:gridCol>
+			</pdf:gridRow>
+
+			<pdf:gridRow>
+				<pdf:gridCol align="left" bgcolor="#99B3CC">
+					<pdf:text value="#{etq.saldoTitulos}" />
+				</pdf:gridCol>
+				<pdf:gridCol align="right">
+					<pdf:text value="#{consultaEstadoCuentaLiqDecretosController.detalle[0].saldoTitulos}">
+						<f:converter converterId="formatoEnteroConverter" />
+					</pdf:text>
+				</pdf:gridCol>
+			</pdf:gridRow>
+
+			<pdf:gridRow>
+				<pdf:gridCol align="left" bgcolor="#99B3CC">
+					<pdf:text value="#{etq.importeDecretos}" />
+				</pdf:gridCol>
+				<pdf:gridCol align="right">
+					<pdf:text value="#{consultaEstadoCuentaLiqDecretosController.detalle[0].importeDecreto}">
+						<f:converter converterId="formatoMonedaConverter" />
+					</pdf:text>
+				</pdf:gridCol>
+			</pdf:gridRow>
+
+			<pdf:gridRow>
+				<pdf:gridCol align="left" bgcolor="#99B3CC">
+					<pdf:text value="#{etq.intereses}" />
+				</pdf:gridCol>
+				<pdf:gridCol align="right">
+					<pdf:text value="#{consultaEstadoCuentaLiqDecretosController.detalle[0].intereses}">
+						<f:converter converterId="formatoMonedaConverter" />
+					</pdf:text>
+				</pdf:gridCol>
+			</pdf:gridRow>
+
+			<pdf:gridRow>
+				<pdf:gridCol align="left" bgcolor="#99B3CC">
+					<pdf:text value="#{etq.importeACobrar}" />
+				</pdf:gridCol>
+				<pdf:gridCol align="right">
+					<pdf:text value="#{consultaEstadoCuentaLiqDecretosController.detalle[0].importeCobrar}">
+						<f:converter converterId="formatoMonedaConverter" />
+					</pdf:text>
+				</pdf:gridCol>
+			</pdf:gridRow>
+		</pdf:grid>
+
+	</pdf:document>
+</html>

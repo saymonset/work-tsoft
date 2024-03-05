@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:cvt="http://indeval.com/jsf/converters"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:indeval="http://indeval.com/indeval">
+
+	<ui:composition template="/layoutCaptura.xhtml">
+		
+		<ui:define name="headCaptura">
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/reportos.js"></script>
+		</ui:define>
+	
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.modalConsultaSolicitud}" />
+		</ui:define>
+		<!-- <ui:define name="subtitulo"></ui:define>-->
+		
+		<ui:define name="seccionForma">
+				<a4j:keepAlive beanName="detalleVencimientoController"/>
+				<h:outputText value="#{detalleVencimientoController.init}" />
+				<h:inputHidden id="validationErrors" value="#{detalleVencimientoController.validationErrors}"></h:inputHidden>
+				
+				
+				<h:panelGroup id="panelConfirmar">
+					<f:facet name="header">
+						<h:outputText value="#{etq.modalSolicitudPendiente}" />
+					</f:facet>
+						
+					<table>
+						<!-- plazo -->
+						<tr>
+							<td>
+								<b><h:outputText value="#{etq.plazoActual}" styleClass="texto" />:</b>
+							</td>
+							<td><h:outputText value="#{detalleVencimientoController.solicitud.plazoVigente}" styleClass="texto" /></td>
+						</tr>
+						
+						<!-- Fecha Reporto -->
+						<tr>
+							<td>
+								<b><h:outputText value="#{etq.fechaReportoActual}" styleClass="texto" />:</b>
+							</td>
+							<td>
+								<h:outputText value="#{detalleVencimientoController.solicitud.fechaVencimientoVigente}" styleClass="texto" >
+									<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</td>
+						</tr>
+						<!-- Plazo Solicitud -->
+						<tr>
+							<td>
+								<b><h:outputText value="#{etq.plazoSolicitud}" styleClass="texto" />:</b>
+							</td>
+							<td><h:outputText value="#{detalleVencimientoController.solicitud.plazoSolicitud}" styleClass="texto" /></td>
+						</tr>
+						<!-- Fecha Solicitud -->
+						<tr>
+							<td>
+								<b><h:outputText value="#{etq.fechaReportoSolicitud}" styleClass="texto" />:</b>
+							</td>
+							<td>
+								<h:outputText value="#{detalleVencimientoController.solicitud.fechaVencimientoSolicitud}" styleClass="texto" >
+									<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</td>
+						</tr>
+					</table>
+					
+				</h:panelGroup>
+			
+			<!-- La facultad debe reflejar el valor de SeguridadConstants.FACULTAD_FIRMA_OPERACION -->
+			<indeval:authorizeFaculty userInFaculty="CON_CERTIFICADO">
+				<h:panelGroup id="panelFirma">
+					<div style="display:none">
+						<textarea  id ="isoSinFirmar" name="isoSinFirmar" >#{detalleVencimientoController.isoSinFirmar}</textarea>
+						<textarea id="numeroSerie" name="numeroSerie" ></textarea>
+						<textarea  id="numeroSerieUsuario" name="numeroSerieUsuario">#{sessionScope.usuario.numeroSerieCertificado}</textarea>
+						<textarea id="isoFirmado" name="isoFirmado"></textarea>
+						<textarea  id="hashIso" name="hashIso">#{detalleVencimientoController.hashIso}</textarea>
+						<h:inputHidden id="userAction" value="#{detalleVencimientoController.userAction}"></h:inputHidden>
+					</div>
+					<h:panelGroup rendered="#{not empty detalleVencimientoController.isoSinFirmar}">
+						<script>
+							function firmarOperacion(){
+								var userAction = $j("input[id$='userAction']")[0];
+								
+								$j("input[id$='btnRechazar2']").prop("disabled",false);
+								$j("input[id$='btnAutorizar2']").prop("disabled",false);
+								//$j("input[id$='btnLimpiar']").prop("disabled",false);
+								
+								if(userAction.value == 'AUTORIZA'){
+									$j("input[id$='btnAutorizar2']").click();
+								}else if(userAction.value == 'RECHAZA'){
+									$j("input[id$='btnRechazar2']").click();
+								}else{
+									alert('Hay algo mal> ' + userAction.value );
+								}
+							}
+						</script>
+						<ui:decorate template="/firmaDigitalSimple.xhtml">
+							<ui:define name="isoSinFirmar"><h:outputText value="#{detalleVencimientoController.isoSinFirmar}"/></ui:define>
+						</ui:decorate>
+					</h:panelGroup>
+				</h:panelGroup>
+			</indeval:authorizeFaculty>
+			
+		</ui:define>
+		
+		<ui:define name="botones">
+			<h:panelGroup>
+				<table>
+					<tr>
+						<!-- CERRAR -->
+						<td>
+							<a4j:commandButton id="btnCancelar" value="Cancelar" 
+								action="#{detalleVencimientoController.toConsultaSolicitud}">
+								<f:param name="reload" value="true" ></f:param>
+							</a4j:commandButton>
+						</td>
+						<!-- RECHAZAR -->
+						<td>
+							<a4j:commandButton id="btnRechazar" value="Rechazar"
+								rendered="#{ detalleVencimientoController.facultadEscritura and not detalleVencimientoController.consulta}" 
+								reRender="panelConfirmar, validationErrors, mensajes, panelFirma, userAction" limitToList="true" style="margin-right:10px"
+								action="#{detalleVencimientoController.rechazarVencimientoAnticipado}"  
+								onclick="if (! window.confirm('#{mensajes.msgConfirmaRechazoSolicitud}') ) {return false;}"
+								oncomplete="if(hasErrors()){ return false; }">
+								<f:param name="reload" value="true" ></f:param>
+								<f:param name="modMessage" value="#{mensajes.msgRechazaSolicitud}" ></f:param>
+							</a4j:commandButton>
+						</td>
+						<!-- AUTORIZAR -->
+						<td>
+							<a4j:commandButton id="btnAutorizar" value="Autorizar" 
+								rendered="#{ detalleVencimientoController.facultadEscritura and not detalleVencimientoController.consulta }"
+								reRender="panelConfirmar, validationErrors, mensajes, panelFirma, userAction" limitToList="true" style="margin-right:10px"
+								action="#{detalleVencimientoController.autorizarVencimientoAnticipado}" 
+								onclick="if (hasErrors() || !window.confirm('#{mensajes.msgConfirmaAutorizarSolicitud}') ) {return false;}"
+								oncomplete="if(hasErrors()){ return false;}">
+								<f:param name="reload" value="true" ></f:param>
+								<f:param name="modMessage" value="#{mensajes.msgAutorizaSolicitud}" ></f:param>
+							</a4j:commandButton>
+						</td>
+					</tr>
+					<tr class="hidden">
+						<td>
+							<a4j:commandButton id="btnRechazar2" styleClass="hidden"
+								action="#{detalleVencimientoController.rechazarVencimientoAnticipado}">
+								<f:param name="reload" value="true" ></f:param>
+								<f:param name="modMessage" value="#{mensajes.msgRechazaSolicitud}" ></f:param>
+							</a4j:commandButton>
+						</td>
+						<td>
+							<a4j:commandButton id="btnAutorizar2"  styleClass="hidden"
+								action="#{detalleVencimientoController.autorizarVencimientoAnticipado}">
+								<f:param name="reload" value="true" ></f:param>
+								<f:param name="modMessage" value="#{mensajes.msgAutorizaSolicitud}" ></f:param>
+							</a4j:commandButton>
+						</td>
+					</tr>
+				</table>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</html>

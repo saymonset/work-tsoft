@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:cvt="http://indeval.com/jsf/converters"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+	
+	<ui:composition template="/layoutPopUp.xhtml">
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/tareas-modal.js"></script>
+		</ui:define>
+		
+		<ui:define name="titulo">
+			<h:outputText value="#{etq.tituloSolicitudAutorizacion}" />
+		</ui:define>
+		<ui:define name="subtitulo"></ui:define>
+		
+		<ui:define name="body">
+			<h:form id="detalleTareaForm">
+				<a4j:keepAlive beanName="detalleTareaBean"/>
+				
+				<h:outputText value="#{detalleTareaBean.init}" />
+				
+				<h:inputHidden id="validationErrors" value="#{detalleTareaBean.validationErrors}"></h:inputHidden>
+				
+				<f:facet name="header">
+					<h:outputText value="#{etq.headerSolicitudAutorizacion}" />
+				</f:facet>
+				
+				<rich:messages id="messagesSolicitud" warnClass="warning"
+					infoClass="info" errorClass="error" ajaxRendered="true"
+					showDetail="false" showSummary="true" layout="list">
+					<f:facet name="infoMarker">
+						<h:panelGroup>
+							<h:graphicImage url="/images/accept.png" />&#160;
+						</h:panelGroup>
+					</f:facet>
+					<f:facet name="errorMarker">
+						<h:panelGroup>
+							<h:graphicImage url="/images/warning.gif" />&#160;
+						</h:panelGroup>
+					</f:facet>
+				</rich:messages>
+				
+				<table>
+					<!--  NOMBRE -->
+					<tr>
+						<td align="left">
+							<b><h:outputText value="#{etq.nombreTarea}" styleClass="texto" />:</b>
+						</td>
+						<td align="left">
+							<h:outputText value="#{detalleTareaBean.tareaForm.nombreTarea }" styleClass="texto" />
+						</td>
+					</tr>
+					<!-- DESCRIPCION -->
+					<tr>
+						<td align="left">
+							<b><h:outputText value="#{etq.descripcionTarea}" styleClass="texto" />:</b>
+						</td>
+						<td align="left">
+							<h:outputText value="#{detalleTareaBean.tareaForm.descripcionTarea }" styleClass="texto" />
+						</td>
+					</tr>
+					<!-- MODULO -->
+					<tr>
+						<td align="left">
+							<b><h:outputText value="#{etq.moduloSolicitud}" styleClass="texto" />:</b>
+						</td>
+						<td align="left">
+							<h:outputText value="#{detalleTareaBean.tareaForm.aplicacion }" styleClass="texto" />
+						</td>
+					</tr>
+					<!-- FLUJO OPERATIVO -->
+					<tr>
+						<td align="left">
+							<b><h:outputText value="#{etq.flujoOperativo}" styleClass="texto" />:</b>
+						</td>
+						<td align="left">
+							<h:outputText value="#{detalleTareaBean.tareaForm.flujoOperativo }" styleClass="texto" />
+						</td>
+					</tr>
+					<!-- SOLICITANTE -->
+					<tr>
+						<td align="left">
+							<b><h:outputText value="#{etq.solicitante}" styleClass="texto" />:</b>
+						</td>
+						<td align="left">
+							<h:outputText value="#{detalleTareaBean.tareaForm.solicitante }" styleClass="texto" />
+						</td>
+					</tr>
+					<!-- DETALLES -->
+					<tr>
+						<td align="left" colspan="2">
+							<b><h:outputText value="#{etq.detalleTarea}" styleClass="texto" />:</b>
+						</td>
+					</tr>
+					<tr>
+						<td align="left" colspan="2">
+							<h:inputTextarea cols="30" rows="20" id="detalleTarea" styleClass="readonly" 
+								value="#{detalleTareaBean.tareaForm.detalle}" readonly="true"/>
+						</td>
+					</tr>
+				</table>
+				
+				<h:panelGroup>
+					<table>
+						<tr>
+							<!-- CANCELAR -->
+							<td>
+								<a4j:commandButton id="btnCancelar" value="Cancelar" 
+									onclick="window.parent.closeIframe();" style="margin-left:10px"/>
+							</td>
+							<!-- RECHAZAR TAREA -->
+							<td>
+								<a4j:commandButton id="btnRechazar" value="Rechazar" 
+									reRender="validationErrors, messagesSolicitud" limitToList="true" style="margin-right:10px"
+									action="#{detalleTareaBean.rechazarTarea}" 
+									onclick="if(hasErrors()) return false; if (! window.confirm('#{mensajes.mensajeConfirmarRechazo}') ) {return false;} deshabilitarBoton('btnRechazar');"
+									oncomplete="habilitarBoton('btnRechazar'); if(hasErrors()){ return false; }else{ window.parent.actualizarGrid();}" >
+								</a4j:commandButton>
+							</td>
+							<!-- AUTORIZAR TAREA -->
+							<td>
+								<a4j:commandButton id="btnAceptar" value="Aceptar" 
+									reRender="validationErrors, messagesSolicitud" limitToList="true" style="margin-right:10px"
+									action="#{detalleTareaBean.autorizarTarea}" 
+									onclick="if(hasErrors()) return false; if (! window.confirm('#{mensajes.mensajeConfirmarAutorizacion}') ) {return false;} deshabilitarBoton('btnAceptar');"
+									oncomplete="habilitarBoton('btnAceptar'); if(hasErrors()){ return false; }else{ window.parent.actualizarGrid();}" >
+								</a4j:commandButton>
+							</td>
+						</tr>
+					</table>
+				</h:panelGroup>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</html>

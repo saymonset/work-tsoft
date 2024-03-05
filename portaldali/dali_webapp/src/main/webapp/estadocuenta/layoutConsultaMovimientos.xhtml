@@ -1,0 +1,529 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:indeval="http://indeval.com/indeval"
+	 xml:lang="es" lang="es">
+	<f:view>
+		<ui:composition template="/layoutGeneral.xhtml">
+			<ui:define name="head">
+				<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+				<link rel="stylesheet" type="text/css" media="all" href="#{facesContext.externalContext.requestContextPath}/css/consulta_edo_cta_valores.css" />
+				<link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/edo_cta_ie7.css" type="text/css" media="screen, projection" charset="utf-8" />
+				<link rel="stylesheet" type="text/css" media="all"
+					href="#{facesContext.externalContext.requestContextPath}/css/calendar-blue.css" />
+				<!--[if IE 6]>
+				<link rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/css/edo_cta_ie6.css" type="text/css" media="screen, projection" charset="utf-8" />
+				<![endif]-->
+				<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/reporteSinInst.js" />
+				<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/movimientosValores.js" />
+				<script  languaje="javascript">
+					 autorizado = false;
+				</script>
+			</ui:define>
+			
+			<ui:define name="body">
+
+				
+				
+				<table width="900px" cellpadding="0px" cellspacing="0px">
+					<tr>
+						<td>
+							<div style="min-height: 21px;">
+								<rich:messages id="mensajesConsulta" warnClass="warning" infoClass="info"
+									errorClass="error" ajaxRendered="true" showDetail="false"
+									showSummary="true" layout="list">
+									<f:facet name="infoMarker">
+										<h:panelGroup>
+											<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+									</f:facet>
+	
+									<f:facet name="errorMarker">
+										<h:panelGroup>
+											<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+									</f:facet>
+								</rich:messages>
+								<div id="divWarnings" class="warning" style="display:none;">
+									<p id="textoWarning">
+										
+									</p>
+								</div>
+							</div>
+						</td>
+					</tr>
+
+				</table>
+			
+			
+			
+
+				<form jsfc="a4j:form" name="consultaEstadoCuenta" id="consultaEstadoCuenta" >
+					<div id="divCriterios">
+						<table width="900px" border="0" cellpadding="0px" cellspacing="5px">
+							<tr>
+								<td class="recuadroTabla" colspan="4">
+									<table class="tablaCriterios">
+										<tr>
+											<td align="right" width="21%" class="textoEstadoCuenta">
+			                                	<strong> <h:outputText value="#{etq.fechaInicial}"/> </strong>
+				                            </td>
+			                             	<td align="right" width="11%">
+				                             	<ui:insert name="criterioFechaInicial">
+					                             
+					                            </ui:insert>
+				                             </td>
+				                             <td align="right" width="3%">
+					             				
+											</td>
+				                             <td width="21%" align="right" class="textoEstadoCuenta">
+				                                 <strong> <h:outputText value="#{etq.fechaFinal}"/> </strong>
+				                             </td>
+				                             <td align="right" width="11%">
+					                             <ui:insert name="criterioFechaFinal">
+					                             
+					                             </ui:insert>
+				                             </td>
+				                             <td align="right" width="3%">
+												
+											</td>
+											 <td width="12%" align="right" valign="middle">
+											
+											 	<label class="textoEstadoCuenta">
+											 		<strong> <h:outputText value="#{etq.fechaConcertacionMinus}"/> </strong>
+											    </label>
+											 </td>
+											 <td width="3%" align="right" valign="middle" class="tituloBlanco">
+												<ui:insert name="opcionFechaConcertacion">
+													
+												</ui:insert>
+											 </td>
+											 <td align="right" width="5%">&#160;</td>
+											 <td width="12%" align="right">
+												<label class="textoEstadoCuenta">
+											  		<strong> <h:outputText value="#{etq.fechaAplicacionMinus}"/> </strong>
+											  	</label>
+											 </td>
+											 <td width="3%" align="right" class="tituloBlanco">
+												<ui:insert name="opcionFechaAplicacion">
+													
+												</ui:insert>
+											 </td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td class="recuadroTabla" width="25%">
+									<table class="tablaCriterios">
+										<tr>
+											<td align="right">
+												<b>
+													<ui:insert name="tituloColumnaUno">
+													
+													</ui:insert>
+												</b>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<ui:insert name="criterioUno">
+																	
+												</ui:insert>
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td class="recuadroTabla" width="25%">
+									<table class="tablaCriterios">
+										<tr>
+											<td align="right">
+												<b>
+													<ui:insert name="tituloColumnaDos">
+													
+													</ui:insert>
+												</b>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<ui:insert name="criterioDos">
+																	
+												</ui:insert>
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td class="recuadroTabla" width="25%">
+									<table class="tablaCriterios">
+										<tr>
+											<td align="right">
+												<b>
+													<ui:insert name="tituloColumnaTres">
+													
+													</ui:insert>
+												</b>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<ui:insert name="criterioTres">
+										
+												</ui:insert>
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td class="recuadroTabla" width="25%">
+									<table class="tablaCriterios">
+										<tr>
+											<td align="right">
+												<b>
+													<ui:insert name="tituloColumnaCinco">
+													
+													</ui:insert>
+												</b>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<ui:insert name="criterioCinco">
+										
+												</ui:insert>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td class="recuadroTabla" colspan="4">
+									<table class="tablaCriterios">
+										<tr>
+											<td align="right">
+												<b>
+													<ui:insert name="tituloColumnaCuatro">
+													
+													</ui:insert>
+												</b>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<ui:insert name="criterioCuatro">
+										
+												</ui:insert>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div id="divResumen">
+					<iframe class="divModal"  id="detalleMovimiento"  frameborder="0"  scrolling="no" aling="top"></iframe>
+						<table width="900px" border="0" cellpadding="0px" cellspacing="5px">
+							<tr>
+								<td class="recuadroTabla" colspan="4">
+									<table class="tablaCriterios">
+										<tr>
+											<td align="right" width="28%" class="textoEstadoCuenta">
+			                                	<strong> <h:outputText value="#{etq.fechaInicial}"/> </strong>
+				                            </td>
+			                             	<td align="right" width="7%">
+				                             	<ui:insert name="resumenFechaInicio">
+					                             
+					                            </ui:insert>
+				                             </td>
+				                             <td width="28%" align="right" class="textoEstadoCuenta">
+				                                 <strong> <h:outputText value="#{etq.fechaFinal}"/> </strong>
+				                             </td>
+				                             <td align="right" width="7%">
+					                             <ui:insert name="resumenFechaFin">
+					                             
+					                            </ui:insert>
+				                             </td>
+				                             <td width="12%" align="right" valign="middle">
+											
+											 	<label class="textoEstadoCuenta">
+											 		<strong> <h:outputText value="#{etq.fechaConcertacionMinus}"/> </strong>
+											    </label>
+											 </td>
+											 <td width="3%" align="right" valign="middle" class="tituloBlanco">
+												<ui:insert name="resumenFechaConcertacion">
+													
+												</ui:insert>
+											 </td>
+											 <td align="right" width="5%">&#160;</td>
+											 <td width="12%" align="right">
+												<label class="textoEstadoCuenta">
+											  		<strong> <h:outputText value="#{etq.fechaAplicacionMinus}"/> </strong>
+											  	</label>
+											 </td>
+											 <td width="3%" align="right" class="tituloBlanco">
+												<ui:insert name="resumenFechaAplicacion">
+													
+												</ui:insert>
+											 </td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td class="recuadroTabla" width="25%">
+									<table class="tablaCriterios">
+										<tr>
+											<td colspan="2" align="right">
+												<b>
+													<ui:insert name="tituloColumnaUno">
+													
+													</ui:insert>
+												</b>
+											</td>
+										</tr>
+										<tr>
+											<td width="70%">&#160;
+												<ui:insert name="controlesCuenta">
+																									
+												</ui:insert>
+											</td>
+											<td width="30%">
+												&#160;
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<ui:insert name="resumenCriterioUno">
+													
+												</ui:insert>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<ui:insert name="infoPaginacionCuenta">
+	
+												</ui:insert>
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td class="recuadroTabla" width="25%">
+									<table class="tablaCriterios">
+										<tr>
+											<td colspan="2" align="right">
+												<b>
+													<ui:insert name="tituloColumnaDos">
+													
+													</ui:insert>
+												</b>
+											</td>
+										</tr>
+										<tr>
+											<td width="70%">
+												&#160;												
+											</td>
+											<td width="30%">
+												&#160;
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<ui:insert name="resumenCriterioDos">
+													
+												</ui:insert>
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td class="recuadroTabla" width="25%">
+									<table class="tablaCriterios">
+										<tr>
+											<td colspan="2" align="right">
+												<b>
+													<ui:insert name="tituloColumnaTres">
+													
+													</ui:insert>
+												</b>
+											</td>
+										</tr>
+										<tr>
+											<td width="70%">
+												&#160;
+											</td>
+											<td width="30%">
+												&#160;
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<ui:insert name="resumenCriterioTres">
+													
+												</ui:insert>
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td class="recuadroTabla" width="25%">
+									<table class="tablaCriterios">
+										<tr>
+											<td colspan="2" align="right">
+												<b>
+													<ui:insert name="tituloColumnaCinco">
+													
+													</ui:insert>
+												</b>
+											</td>
+										</tr>
+										<tr>
+											<td width="70%">
+												&#160;
+											</td>
+											<td width="30%">
+												&#160;
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<ui:insert name="resumenCriterioCinco">
+													
+												</ui:insert>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td class="recuadroTabla" colspan="4">
+									<table class="tablaCriterios">
+										<tr>
+											<td colspan="2" align="right">
+												<b>
+													<ui:insert name="tituloColumnaCuatro">
+													
+													</ui:insert>
+												</b>
+											</td>
+										</tr>
+										<tr>
+											<td width="70%">
+												&#160;
+											</td>
+											<td width="30%">
+												&#160;
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<ui:insert name="resumenCriterioCuatro">
+													
+												</ui:insert>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</div>
+			        <table width="900px" cellpadding="1px" cellspacing="1px">			           
+			            
+			            <tr>
+			            	<td>
+			            		<table align="left" cellspacing="0" width="50%" >
+			            			<tr>
+										<td width="100%" align="right">
+											<div align="right">
+												<ui:insert name="linkGenerarReportes1" />
+											</div>
+										</td>
+									</tr>
+			            		</table>
+			            	
+			                	<table align="right" cellspacing="0" width="50%">			                		
+									<tr height="26px" align="right">
+										<td align="right" width="73%">
+											<div class="refrescar" style="float: left;">
+												<a4j:status id="commonStatus">
+													<f:facet name="start">
+														<h:panelGroup>
+															<h:graphicImage value="/images/ajax-loader.gif" />
+															<h:outputText value="#{etq.buscando}"></h:outputText>
+														</h:panelGroup>
+													</f:facet>
+												</a4j:status>
+											</div>
+											<h:messages></h:messages>
+										</td>
+										<td align="center" width="7%">
+											<ui:insert name="botonEditar">
+											
+											</ui:insert>
+										</td>
+										
+										<td align="center" width="7%">
+											<ui:insert name="botonBuscar">
+												
+											</ui:insert>
+										</td>
+										<td align="center" width="7%">
+											<ui:insert name="botonLimpiar">
+												
+											</ui:insert>
+										</td>
+									</tr>
+								</table>
+			                </td>
+			            </tr>
+			            <tr>
+			                <td>
+			                <ui:insert name="seccionPaginacion">
+			                                 	
+			                </ui:insert>
+			                </td>
+			            </tr>
+			            <tr>
+			            	<td>
+			                	<div id="contenido" style="display: none;">
+			                    	<table width="100%" border="0" cellpadding="0px">
+			                        	<tr>
+			                            	<td>
+			                            	
+			                                </td>
+			                            </tr>
+			                        	<tr>
+			                            	<td>
+			                            	<ui:insert name="seccionResultados">
+			                                	
+			                                    
+			                                 </ui:insert>
+			                           	  </td>
+			                            </tr>
+			                            <tr>
+			                            	<td>
+			                                	<table width="100%" border="0" cellspacing="2" cellpadding="0">
+			                                        <tr>
+														<td width="100%" align="right">
+															<div>
+																<ui:insert name="linkGenerarHtml" />
+															</div>
+															<div>
+																<ui:insert name="linkGenerarReportes" />
+															</div>
+														</td>
+			                                        </tr>
+			                                    </table>
+			                                </td>
+			                            </tr>
+									</table>
+			                	</div>
+			                	<ui:insert name="seccionPaginacion2">
+			                                        		
+			                    </ui:insert>
+			               	</td>
+			            </tr>
+			        </table>
+			      </form>
+			</ui:define>
+		</ui:composition>
+	</f:view>
+</html>

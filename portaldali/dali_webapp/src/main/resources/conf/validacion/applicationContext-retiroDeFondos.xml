@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="validadorRetiroDeFondos"
+		class="com.indeval.portaldali.presentation.validation.impl.DTOValidatorImpl">
+		<property name="nombreBundle"
+			value="mensajes.validacionesCapturaOperaciones" />
+		<property name="criteriosValidacion">
+			<list>
+
+				<!-- Requeridos -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="TIPO_RETIRO_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="tipoRetiro" />
+						</map>
+					</property>
+				</bean>
+				<bean
+                    class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+                    <property name="llaveMensaje"
+                        value="BOVEDA_REQUERIDA" />
+                    <property name="parametros">
+                        <map>
+                            <entry key="campo"
+                                value="saldoUsuario.boveda" />
+                        </map>
+                    </property>
+                </bean>
+                <bean
+                    class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+                    <property name="llaveMensaje"
+                        value="BOVEDA_REQUERIDA" />
+                    <property name="parametros">
+                        <map>
+                            <entry key="campo"
+                                value="saldoUsuario.boveda.id" />
+                        </map>
+                    </property>
+                </bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumericoRequerido">
+					<property name="llaveMensaje"
+						value="IMPORTE_RETIRO_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="importeRetiro" />
+						</map>
+					</property>
+				</bean>
+				<!-- Longitud -->
+				<!-- Formato -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumerico">
+					<property name="llaveMensaje"
+						value="FORMATO_IMPORTE_RETIRO_INVALIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="importeRetiro" />
+						</map>
+					</property>
+				</bean>
+				<!-- Valor mayor igual a cero  -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+					<property name="llaveMensaje"
+						value="IMPORTE_RETIRO_MAYOR_CERO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="importeRetiro" />
+						</map>
+					</property>
+				</bean>
+
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="validadorRetiroBancaComercial"
+		class="com.indeval.portaldali.presentation.validation.impl.DTOValidatorImpl">
+		<property name="nombreBundle"
+			value="mensajes.validacionesCapturaOperaciones" />
+		<property name="criteriosValidacion">
+			<list>
+
+				<!-- Requeridos -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="TIPO_RETIRO_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="tipoRetiro" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="ID_TRASPASANTE_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="idFolioUsuario" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="NOMCTO_TRASPASANTE_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="saldoUsuario.cuenta.institucion.nombreCorto" />
+						</map>
+					</property>
+				</bean>				
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="ID_RECEPTOR_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="idFolioReceptor" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="NOMCTO_RECEPTOR_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="saldoUsuario.cuenta.institucion.nombreCorto" />
+						</map>
+					</property>
+				</bean>	
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="NOMBRE_BENEFICIARIO_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="nombreBeneficiario" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="CUENTA_BENEFICIARIO_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="cuentaBeneficiario.cuentaBeneficiario" />
+						</map>
+					</property>
+				</bean>	
+				<bean
+                    class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+                    <property name="llaveMensaje"
+                        value="BOVEDA_REQUERIDA" />
+                    <property name="parametros">
+                        <map>
+                            <entry key="campo"
+                                value="saldoUsuario.boveda" />
+                        </map>
+                    </property>
+                </bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumericoRequerido">
+					<property name="llaveMensaje"
+						value="IMPORTE_RETIRO_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="importeRetiro" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="REFERENCIA_NUMERICA_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="referenciaNumerica" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionExpresionRegular">
+					<property name="llaveMensaje" value="REFERENCIA_NUMERICA_FORMATO_INVALIDO" />
+					<property name="expresionRegular" value="^[0-9]+$" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="referenciaNumerica" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="CONCEPTO_PAGO_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="conceptoPago" />
+						</map>
+					</property>
+				</bean>
+				<!-- Longitud -->
+				<!-- Formato -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumerico">
+					<property name="llaveMensaje"
+						value="FORMATO_IMPORTE_RETIRO_INVALIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="importeRetiro" />
+						</map>
+					</property>
+				</bean>
+				<!-- Valor mayor igual a cero  -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+					<property name="llaveMensaje"
+						value="IMPORTE_RETIRO_MAYOR_CERO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="importeRetiro" />
+						</map>
+					</property>
+				</bean>
+
+			</list>
+		</property>
+	</bean>
+</beans>

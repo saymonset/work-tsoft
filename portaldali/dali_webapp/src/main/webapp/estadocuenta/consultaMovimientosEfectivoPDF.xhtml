@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:pdf="http://indeval.com/jsf/pdf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:indeval="http://indeval.com/indeval" xml:lang="es"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+	<pdf:document documentName="consultaMovimientosEfectivo"
+		documentTitle="Consulta de Movimientos de Efectivo"
+		institucion="#{consultaSaldosEfectivoBean.institucionActual.claveTipoInstitucion} #{consultaSaldosEfectivoBean.institucionActual.folioInstitucion} #{consultaSaldosEfectivoBean.institucionActual.razonSocial}"
+		fecha="#{consultaSaldosEfectivoBean.fechaActual}"
+		imageResource="/images/indeval.png" landscape="true">
+
+		<!-- Criterios de consulta -->
+		<pdf:table
+			value="#{consultaMovimientosEfectivoBean.consultaMovimientos}"
+			currentBean="consulta">
+			<pdf:row>
+				<pdf:col header="#{etq.participanteMinus}" value="#{consultaMovimientosEfectivoBean.folioClaveInstitucion}"/>
+				<pdf:col header="#{etq.naturalezaMinus}"
+					value="#{consulta.cuentaSeleccionada.tipoNaturaleza.descripcion}" />
+				<pdf:col header="#{etq.tipoCuentaMinus}"
+					value="#{consulta.cuentaSeleccionada.tipoCuenta.descripcion}" />
+				<pdf:col header="#{etq.cuentaMinus}"
+					value="#{consulta.cuentaSeleccionada.descripcion}" />
+				<pdf:col header="#{etq.rol}"
+					value="#{consulta.descripcionRolParticipante}" />
+				<pdf:col header="#{etq.divisa}" collspan="2"
+					value="#{consultaMovimientosEfectivoBean.consultaMovimientos.criterioDivisa.opcionSeleccionada.descripcion}" />
+				<pdf:col header="#{etq.boveda}" collspan="2"
+					value="#{consultaMovimientosEfectivoBean.consultaMovimientos.criterioBoveda.opcionSeleccionada.descripcion}" />
+		
+				<pdf:col header="#{etq.tipoInstruccion}"
+					value="#{consulta.criterioTipoInstruccion.opcionSeleccionada.nombreCorto}" />
+				<pdf:col header="#{etq.tipoOperacion}"
+					value="#{consulta.criterioTipoOperacion.opcionSeleccionada.claveTipoOperacion}" />
+				<pdf:col header="#{etq.folioInstruccion}"
+					value="#{consulta.criterioFolioInstruccion}" collspan="2" />
+					<pdf:col header="#{etq.registrosEncontrados}" value="#{consultaMovimientosEfectivoBean.totalResultados}"/>
+			</pdf:row>
+			
+		</pdf:table>
+	
+
+		<!-- Fin de los criterios de consulta -->
+
+		<pdf:iterator
+			value="#{consultaMovimientosEfectivoBean.resultadosMovimientosSaldoEfectivo}"
+			var="estadoCuentaEfectivoPorDivisa">
+			<pdf:table value="#{estadoCuentaEfectivoPorDivisa}"
+				currentBean="dummy">
+				<pdf:row>
+					<pdf:col header="#{etq.divisa} #{etq.dosPuntos}" value="" />
+					<pdf:col
+						header="#{estadoCuentaEfectivoPorDivisa.divisa.descripcion}"
+						collspan="3" />
+				</pdf:row>
+			</pdf:table>
+
+			<pdf:iterator
+				value="#{estadoCuentaEfectivoPorDivisa.registrosContablesPorBoveda}"
+				var="estadoCuentaEfectivoPorBoveda">
+				<pdf:table value="#{estadoCuentaEfectivoPorBoveda}"
+					currentBean="dummy">
+					<pdf:row>
+						<pdf:col header="#{etq.boveda} #{etq.dosPuntos}" value="" />
+						<pdf:col
+							header="#{estadoCuentaEfectivoPorBoveda.boveda.descripcion}"
+							collspan="3" />
+					</pdf:row>
+				</pdf:table>
+
+				<pdf:table
+					value="#{estadoCuentaEfectivoPorBoveda.registrosContablesControladas}"
+					currentBean="registroContable"
+					rendered="#{consultaMovimientosEfectivoBean.consultaMovimientos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}">
+						<pdf:row>
+						<pdf:col header="#{etq.fechaLiquidacion}" value="#{registroContable.fechaLiquidacion}">
+							<cvt:simpleDateConverter pattern="dd/MM/yyyy kk:mm:ss" />
+						</pdf:col>
+						<pdf:col header="#{etq.descripcion}"
+							value="#{registroContable.descripcion}" />
+						<pdf:col header="#{etq.contraparte}"
+							value="#{registroContable.contraparte} #{registroContable.cuentaContraparte}" />
+						<pdf:col header="#{etq.folioInstruccion}"
+							value="#{registroContable.folioInstruccion}" />
+						<pdf:col header="#{etq.abonoMinus}"
+							footer="#{consultaMovimientosEfectivoBean.totalAbono}"
+							value="#{empty registroContable.cantidadRecepcion ? 0 : registroContable.cantidadRecepcion}" align="right">
+							<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+						</pdf:col>
+						<pdf:col header="#{etq.cargoMinus}"
+							footer="#{consultaMovimientosEfectivoBean.totalCargo}"
+							value="#{empty registroContable.cantidadEntrega ? 0 : registroContable.cantidadEntrega}" align="right">
+							<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+						</pdf:col>
+						<pdf:col header="#{etq.tipoInstruccionMinus}" value="#{registroContable.operacion.instruccionLiquidacion.tipoInstruccion.nombreCorto}" />
+				
+				<pdf:col header="#{etq.tv}|#{etq.emisora}|#{etq.serie}|#{etq.cupon}" value="#{registroContable.operacion.posicion.datosPipes}"/>
+				<pdf:col header="#{etq.tipoMercado}" value="#{registroContable.operacion.posicion.cupon.emision.tipoValor.mercado.claveMercado}" />
+				<pdf:col header="#{etq.cantidad}" value="#{registroContable.operacion.numeroTitulos}" pattern="###,###,###,###,###,##0" align="right"/>
+				<pdf:col header="#{etq.precio}" value="#{registroContable.operacion.precio}" pattern="$###,###,###,###,###,##0.00000000" />
+				<pdf:col header="#{etq.cuentaReceptor}" value="#{registroContable.operacion.cuentaReceptora.numeroCuenta}" />
+				<pdf:col header="#{etq.cuentaTraspasante}" value="#{registroContable.operacion.cuentaTraspasante.numeroCuenta}" />
+					</pdf:row>
+				</pdf:table>
+
+				<pdf:table
+					value="#{estadoCuentaEfectivoPorBoveda.registrosContablesNombradas}"
+					currentBean="registroContable"
+					rendered="#{consultaMovimientosEfectivoBean.consultaMovimientos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}">
+					<pdf:row>
+						<pdf:col header="#{etq.fechaLiquidacion}" value="#{registroContable.fechaLiquidacion}">
+							<cvt:simpleDateConverter pattern="dd/MM/yyyy kk:mm:ss" />
+						</pdf:col>
+						<pdf:col header="#{etq.descripcion}"
+							value="#{registroContable.descripcion}" />
+						<pdf:col header="#{etq.contraparte}"
+							value="#{registroContable.contraparte} #{registroContable.cuentaContraparte}" />
+						<pdf:col header="#{etq.folioInstruccion}"
+							value="#{registroContable.folioInstruccion}" align="center"/>
+						<pdf:col header="#{etq.abonoMinus}"
+							footer="#{consultaMovimientosEfectivoBean.totalAbono}"
+							value="#{empty registroContable.cantidadRecepcion ? 0 : registroContable.cantidadRecepcion}" align="right">
+							<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+						</pdf:col>
+						<pdf:col header="#{etq.cargoMinus}"
+							footer="#{consultaMovimientosEfectivoBean.totalCargo}"
+							value="#{empty registroContable.cantidadEntrega ? 0 : registroContable.cantidadEntrega}" align="right">
+							<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+						</pdf:col>
+						<pdf:col header="#{etq.tipoInstruccionMinus}" value="#{registroContable.operacion.instruccionLiquidacion.tipoInstruccion.nombreCorto}" align="center"/>
+				<pdf:col header="#{etq.tipoDoR}" value="#{registroContable.operacion.instruccionLiquidacion.instruccionEfectivo.tipoRetiro}" align="center"/>
+				<pdf:col header="#{etq.plazo}" value="#{registroContable.operacion.instruccionLiquidacion.plazoReporto}" align="center"/>
+				<pdf:col header="#{etq.tasaPorcentaje}" value="#{registroContable.operacion.instruccionLiquidacion.tasaNegociada}" align="center">
+					<f:convertNumber pattern="###,###,###,###,###,##0.000000" />	
+				</pdf:col>
+				
+				<pdf:col header="#{etq.tv}|#{etq.emisora}|#{etq.serie}|#{etq.cupon}" value="#{registroContable.operacion.posicion.datosPipes}" />
+				<pdf:col header="#{etq.tipoMercado}" value="#{registroContable.operacion.posicion.cupon.emision.tipoValor.mercado.claveMercado}" align="center"/>
+				<pdf:col header="#{etq.cantidad}" value="#{registroContable.operacion.numeroTitulos}" align="right">
+					<f:convertNumber pattern="###,###,###,###,###,##0" />
+				</pdf:col>
+				<pdf:col header="#{etq.precio}" value="#{registroContable.operacion.precio}" align="right">
+					<f:convertNumber pattern="$###,###,###,###,###,##0.00000000" />
+				</pdf:col>
+				<pdf:col header="#{etq.cuentaReceptor}" value="#{registroContable.operacion.cuentaReceptora.numeroCuenta}"  align="center"/>
+				<pdf:col header="#{etq.cuentaTraspasante}" value="#{registroContable.operacion.cuentaTraspasante.numeroCuenta}"  align="center"/>
+					</pdf:row>
+				</pdf:table>
+			</pdf:iterator>
+		</pdf:iterator>
+		<pdf:br />
+	</pdf:document>
+</html>
+

@@ -1,0 +1,1592 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:indeval="http://indeval.com/indeval"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="es" lang="es">
+	
+	<f:view>
+	
+	<ui:composition template="layoutConsultaMovimientos.xhtml">
+		
+		
+		
+		<ui:define name="titulo">
+			<h:outputText value="#{etq.consultaMovValores}"></h:outputText>
+			
+		</ui:define>
+		
+		<ui:define name="tituloSeccion"><h:outputText value="#{etq.consultaMovValores}"></h:outputText></ui:define>
+		
+		<ui:define name="barraTitulo">
+			<h:outputText value="#{etq.consultaMovValores}"></h:outputText>
+			
+		</ui:define>
+				
+		<ui:define name="tituloColumnaUno">
+			<h:outputText value="#{etq.participanteMinus}"></h:outputText>
+		</ui:define>
+		<ui:define name="tituloColumnaDos">
+			<h:outputText value="#{etq.emisionMinus}"></h:outputText>
+		</ui:define>
+		<ui:define name="tituloColumnaTres">
+			<h:outputText value="#{etq.bovedaMinus}"></h:outputText>
+		</ui:define>
+		<ui:define name="tituloColumnaCuatro">
+				<h:outputText value="#{etq.instruccionMinus}"/>
+		</ui:define>
+		<ui:define name="tituloColumnaCinco">
+			<h:outputText value="#{etq.contraparteMinus}"></h:outputText>
+		</ui:define>
+		
+		<ui:define name="criterioFechaInicial">
+			<script type="text" languaje="javascript" src="#{facesContext.externalContext.requestContextPath}/dwr/engine.js"/>
+			<h:outputText value="#{consultaMovimientosValorBean.initParticipante}"></h:outputText>
+			<h:panelGroup id="init">
+					
+				<h:outputText value="#{consultaMovimientosValorBean.init}"/>
+			</h:panelGroup>
+
+			<rich:calendar id="fechaInicial" 
+				value="#{consultaMovimientosValorBean.consultaMovimientos.criterioFechaInicial}"
+				datePattern="dd/MM/yyyy"
+				inputSize="11"
+				inputClass="textoControles"
+				inputStyle="background-color: #ffffe6;"
+				isDayEnabled="isDayEnabled" />
+		</ui:define>
+		
+		<ui:define name="criterioFechaFinal">
+			<rich:calendar id="fechaFinal" 
+				value="#{consultaMovimientosValorBean.consultaMovimientos.criterioFechaFinal}"
+				datePattern="dd/MM/yyyy"
+				inputSize="11"
+				inputClass="textoControles"
+				inputStyle="background-color: #ffffe6;"
+				isDayEnabled="isDayEnabled" />
+		</ui:define>
+		
+		<ui:define name="resumenFechaInicio">
+			<h:panelGroup id="resumenFechaInicial">
+				<h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.criterioFechaInicial}"></h:outputText>
+			</h:panelGroup>
+		</ui:define>
+		<ui:define name="resumenFechaFin">
+			<h:panelGroup id="resumenFechaFinal">
+				<h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.criterioFechaFinal}"></h:outputText>
+			</h:panelGroup>
+		</ui:define>
+		<ui:define name="resumenFechaConcertacion">
+			<h:panelGroup id="resumenFechaConcertacion">
+				<h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.busquedaFechaConcertacion}">
+					<f:converter converterId="booleanConverter"/>
+				</h:outputText>
+			</h:panelGroup>
+		</ui:define>
+		<ui:define name="resumenFechaAplicacion">
+			<h:panelGroup id="resumenFechaAplicacion">
+				<h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.busquedaFechaAplicacion}">
+					<f:converter converterId="booleanConverter"/>
+				</h:outputText>
+			</h:panelGroup>
+		</ui:define>
+			
+		<ui:define name="opcionFechaConcertacion">
+			
+			<h:selectBooleanCheckbox id="chkFechaConcertacion" value="#{consultaMovimientosValorBean.consultaMovimientos.busquedaFechaConcertacion}">
+			</h:selectBooleanCheckbox>
+			
+		</ui:define>
+		<ui:define name="opcionFechaAplicacion">
+			<h:selectBooleanCheckbox   id="chkFechaAplicacion"
+				
+				value="#{consultaMovimientosValorBean.consultaMovimientos.busquedaFechaAplicacion}">
+			</h:selectBooleanCheckbox>
+			
+		</ui:define>
+		<ui:define name="botonEditar">
+			<div class="editar" style="display:#{consultaMovimientosValorBean.consultaEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios" >
+				<input type="image" class="submit" id="botonEditar"
+					src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+					alt="Editar Criterios" title="Editar Criterios"
+					onclick='javascript:presentarCriterios();return false;' />
+			</div>
+		</ui:define>
+			
+		<ui:define name="botonLimpiar">
+			<div class="limpiar">
+				<input type="button" jsfc="h:commandButton" id="botonLimpiar" image="/images/transparent.gif" styleClass="submit"
+					actionListener="#{consultaMovimientosValorBean.limpiar}" onclick=" deshabilitarBoton('botonBuscar');"
+					/>
+			</div>
+		</ui:define>
+			<ui:define name="botonBuscar">
+				<div class="buscar">
+					<a4j:commandButton id="botonBuscar" image="/images/transparent.gif" styleClass="submit"
+						reRender="mensajesError, containerResumenEmision, containerInfoPaginacionEmision, containerInfoPaginacionEmision2,
+							containerResumenCuenta, containerResumenBoveda, resumenFechaInicial, resumenFechaFinal,resumenOrdenamientoTipoOperacion,
+							resumenFechaConcertacion, resumenFechaAplicacion, containerControlesCuenta, containerInfoPaginacionCuenta,
+							etiquetaIndiqueCriterios,containerResultados,containerResumenInstruccion,containerResumenCuentaContraparte"
+						action="#{consultaMovimientosValorBean.buscarMovimientos}"
+						onclick="if(!buscarRegistros()){return false;}else{deshabilitarBoton('botonLimpiar'); deshabilitarBoton('botonBuscar');}"
+						oncomplete="presentarResultados(); habilitarBoton('botonLimpiar'); habilitarBoton('botonBuscar');">
+						 <a4j:actionparam name="navCuentaiDebeBitacorear" value="true"
+						 	assignTo="#{consultaMovimientosValorBean.consultaMovimientos.debeDejarBitacora}" />
+					</a4j:commandButton>
+				</div>
+
+			</ui:define>
+			<ui:define name="indiqueCriterios">
+				<h:panelGroup id="etiquetaIndiqueCriterios" >
+					<h:panelGroup rendered="#{!consultaMovimientosValorBean.consultaEjecutada}" >
+					<span class="textoEstadoCuenta"><h:outputText value="#{etq.indicarCriteriosMinus}"></h:outputText></span>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			
+			
+			<ui:define name="linkGenerarReportes">
+				<h:commandButton id="generarTXT"
+					actionListener="#{consultaMovimientosValorBean.generarReportes}"
+                	action="consultaMovimientosValorTxt"
+                	image="/images/TXT.gif"
+                	title="Exportar a texto todos los resultados de la consulta"
+					onclick="return validarInstitucionBloquearBotonesReportes(['generarTXT', 'generarExcel', 'generarPdf']);" >
+                	<f:attribute name="reporte" value="consultaMovimientosValorTxt"/>
+                </h:commandButton>
+                &#160;
+				<h:commandButton id="generarExcel" 
+					actionListener="#{consultaMovimientosValorBean.generarReportes}"
+                	action="consultaMovimientosValorXls"
+                	image="/images/excel-file.gif"
+                	title="Exportar a Excel todos los resultados de la consulta"
+					onclick="return validarInstitucionBloquearBotonesReportes(['generarTXT', 'generarExcel', 'generarPdf']);" >
+                	<f:attribute name="reporte" value="consultaMovimientosValorXls"/>
+                </h:commandButton>               
+                &#160;
+                <h:commandButton id="generarPdf"
+                	actionListener="#{consultaMovimientosValorBean.generarReportes}"
+                	action="consultaMovimientosValorPdf"
+                	image="/images/pdf.gif"
+                	title="Exportar a PDF todos los resultados de la consulta"                                        
+                	onclick="return validarInstitucionBloquearBotonesReportes(['generarTXT', 'generarExcel', 'generarPdf']);" >
+                </h:commandButton>
+                &#160;
+				<div id="monitorPeticionReporte" style="display: none;">
+					<h:panelGroup id="panelMonitorPeticionReporte">
+					<h:graphicImage value="/images/ajax-loader.gif" />
+					&#160;&#160;
+					<h:outputText value="#{etq.reporteEnProceso}" />
+					<a4j:commandButton id="btnActualizarEstadoPeticion"
+						image="/images/transparent.gif"
+						styleClass="submit"
+						actionListener="#{consultaMovimientosValorBean.actualizarEstadoPeticion}"
+						reRender="panelMonitorPeticionReporte"
+						oncomplete="desbloquearBotonesReportes(#{consultaMovimientosValorBean.peticionReporteCompleta}, ['generarTXT', 'generarExcel', 'generarPdf']);"/>
+					</h:panelGroup>
+				</div>
+			</ui:define>
+			<ui:define name="linkGenerarHtml" />
+			
+			<ui:define name="controlesCuenta">
+				<h:panelGroup id="containerControlesCuenta">
+					<h:panelGroup rendered="#{consultaMovimientosValorBean.consultaEjecutada}">
+						<h:panelGroup rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.debePaginar}">
+							<h:panelGroup rendered="#{!consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.todos}">
+								<a4j:commandLink action="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.irAlPrincipio}" id="control_cuenta_primero" rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.irAlPrimero}" reRender="init,containerResultados, containerControlesCuenta, containerResumenCuenta,  containerInfoPaginacionCuenta,containerInfoPaginacionEmision,containerInfoPaginacionEmision2" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+									<a4j:actionparam name="navCuentaiDebeBitacorear" value="true"
+						 				assignTo="#{consultaMovimientosValorBean.consultaMovimientos.debeDejarBitacora}" />
+									<img src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png" />
+								</a4j:commandLink>
+								<a4j:commandLink action="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.retrocederPaginasRapido}" id="control_cuenta_atras_fast" rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.retrocederRapido}" reRender="init,containerResultados, containerControlesCuenta, containerResumenCuenta, containerInfoPaginacionCuenta,containerInfoPaginacionEmision,containerInfoPaginacionEmision2" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+									<a4j:actionparam name="navCuentaiDebeBitacorear" value="true"
+						 				assignTo="#{consultaMovimientosValorBean.consultaMovimientos.debeDejarBitacora}" />
+									<img src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"/>
+								</a4j:commandLink>
+								<a4j:commandLink action="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.retrocederPagina}" id="control_cuenta_atras" rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.retroceder}" reRender="init,containerResultados, containerControlesCuenta, containerResumenCuenta, containerInfoPaginacionCuenta,containerInfoPaginacionEmision,containerInfoPaginacionEmision2" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+									<a4j:actionparam name="navCuentaiDebeBitacorear" value="true"
+						 				assignTo="#{consultaMovimientosValorBean.consultaMovimientos.debeDejarBitacora}" />
+									<img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png" />
+								</a4j:commandLink>
+								<a4j:commandLink action="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.avanzarPagina}" id="control_cuenta_adelante" rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.avanzar}" reRender="init,containerResultados, containerControlesCuenta, containerResumenCuenta,  containerInfoPaginacionCuenta,containerInfoPaginacionEmision,containerInfoPaginacionEmision2" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+									<a4j:actionparam name="navCuentaiDebeBitacorear" value="true"
+						 				assignTo="#{consultaMovimientosValorBean.consultaMovimientos.debeDejarBitacora}" />
+									<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png" />
+								</a4j:commandLink>
+								<a4j:commandLink action="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.avanzarPaginasRapido}" id="control_cuenta_adelante_fast" rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.avanzarRapido}" reRender="init,containerResultados, containerControlesCuenta, containerResumenCuenta,  containerInfoPaginacionCuenta,containerInfoPaginacionEmision,containerInfoPaginacionEmision2" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+									<a4j:actionparam name="navCuentaiDebeBitacorear" value="true"
+						 				assignTo="#{consultaMovimientosValorBean.consultaMovimientos.debeDejarBitacora}" />
+									<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png" />
+								</a4j:commandLink>
+								<a4j:commandLink action="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.irAlUltimo}" id="control_cuenta_ultimo" rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.irAlUltimo}" reRender="init,containerResultados, containerControlesCuenta, containerResumenCuenta, containerInfoPaginacionCuenta,containerInfoPaginacionEmision,containerInfoPaginacionEmision2" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+									<a4j:actionparam name="navCuentaiDebeBitacorear" value="true"
+						 				assignTo="#{consultaMovimientosValorBean.consultaMovimientos.debeDejarBitacora}" />
+									<img src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png" />
+								</a4j:commandLink>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			
+						
+			
+			<ui:define name="resumenCriterioUno">
+				
+				<h:panelGroup id="containerResumenCuenta">
+					<h:panelGroup id="resumenCuentaConConsulta" rendered="#{consultaMovimientosValorBean.consultaEjecutada}">
+						 <table width="100%" cellpadding="0" cellspacing="0">
+                                 <tr>
+									<td width="40%">
+										<div align="right" >
+											<div align="left" class="texto">
+												<h:outputText value="#{etq.naturalezaMinus}"></h:outputText>
+											</div>
+										</div>
+									</td>
+									<td width="4%" align="center" class="texto">
+										<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+									</td>
+									<td width="56%">
+										<span class="textoResumen"><h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.cuentaSeleccionada.tipoTenencia.tipoNaturaleza.descripcion}"></h:outputText></span>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText value="#{etq.institucionMinus}"></h:outputText>
+									</td>
+									<td>
+                                		<h:outputText value="#{etq.dosPuntos}" styleClass="textoResumen"/>
+                                	</td>
+									<td>
+										<h:outputText value="#{consultaMovimientosValorBean.nombreInstitucion}" styleClass="textoResumen"/>		
+									</td>
+							</tr>
+							<tr>
+									<td >
+										<div align="right" >
+											<div align="left" class="texto">
+												<h:outputText value="#{etq.cuentaMinus}"/>
+											</div>
+										</div>
+									</td>
+									<td  align="center" class="texto">
+										<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+									</td>
+									<td >
+										<span class="textoResumen"><h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.cuentaSeleccionada.descripcion}"/></span>
+									</td>
+							 </tr>
+							<tr>
+									<td >
+										<div align="right" >
+											<div align="left" class="texto">
+												<h:outputText value="#{etq.tipoCuentaMinus}"/>
+											</div>
+										</div>
+									</td>
+									<td  align="center" class="texto">
+										<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+									</td>
+									<td >
+										<span class="textoResumen"><h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.cuentaSeleccionada.tipoTenencia.tipoCuenta.descripcion}"/></span>
+									</td>
+							 </tr>
+                              
+                              
+                              <tr>
+									<td >
+										<div align="right" >
+											<div align="left" class="texto">
+												<h:outputText value="#{etq.tipoTenenciaMinus}"/>
+											</div>
+										</div>
+									</td>
+									<td  align="center" class="texto">
+										<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+									</td>
+									<td >
+										<span class="textoResumen"><h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.cuentaSeleccionada.tipoTenencia.descripcion}"/></span>
+									</td>
+							 </tr>
+                             <tr>
+									<td >
+										<div align="right" >
+											<div align="left" class="texto">
+												<h:outputText value="#{etq.rolMinus}"/>
+											</div>
+										</div>
+									</td>
+									<td  align="center" class="texto">
+										<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+									</td>
+									<td >
+										<h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.descripcionRolParticipante}" styleClass="textoResumen"/>
+									</td>
+							 </tr>
+                             
+                            
+                               
+                            
+                          </table>
+							
+			
+					</h:panelGroup>
+				
+				</h:panelGroup>
+			</ui:define>
+			
+			<ui:define name="infoPaginacionCuenta">
+				<h:panelGroup id="containerInfoPaginacionCuenta">
+					<h:panelGroup rendered="#{consultaMovimientosValorBean.consultaEjecutada}">
+						<h:panelGroup rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.debePaginar}">
+							<h:panelGroup rendered="#{!consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.todos}">
+							<h:outputText value="#{etq.mostrando}"></h:outputText><h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.estadoPaginacion.numeroPagina}"></h:outputText><h:outputText value="#{etq.de}"></h:outputText><h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.estadoPaginacion.totalPaginas}"></h:outputText><h:outputText value="#{etq.cierre}"></h:outputText>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+
+			<ui:define name="criterioTres">
+				<table width="100%" border="0" cellspacing="0" cellpadding="5">
+					<tr>
+						<td class="textoEstadoCuenta">
+							<h:outputText value="#{etq.bovedaMinus}"></h:outputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+
+							<h:selectOneMenu styleClass="textoControles"
+								value="#{consultaMovimientosValorBean.consultaMovimientos.criterioBoveda.opcionSeleccionada}"
+								id="selectBoveda" converter="bovedaConverter">
+								<f:selectItems
+									value="#{consultaMovimientosValorBean.opcionesComboBoveda}" />
+								<f:converter converterId="bovedaConverter" />
+							</h:selectOneMenu>
+						</td>
+					</tr>
+				</table>
+			</ui:define>
+
+			<ui:define name="criterioUno">
+				<table width="100%" border="0" cellspacing="0" cellpadding="5">
+					<h:panelGroup rendered="#{consultaMovimientosValorBean.usuarioIndeval}">
+						<tr>
+							<td>
+								<div class="textoEstadoCuenta"><h:outputText value="#{etq.naturalezaMinus}"></h:outputText></div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:selectOneMenu
+									value="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.criterioTipoTenencia.criterioNaturaleza.opcionSeleccionada}"
+									id="selectNaturaleza" converter="tipoNaturalezaConverter" styleClass="textoControles">
+									<f:selectItems
+										value="#{consultaMovimientosValorBean.opcionesComboNaturaleza}" />
+									<a4j:support event="onchange"
+										reRender="selectTipoTenencia,containerSuggestCuenta,containerCriteriosContraparte"
+										actionListener="#{consultaMovimientosValorBean.cambioSelectNaturaleza}"
+									 />
+								</h:selectOneMenu>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText value="#{etq.institucionMinus}"></h:outputText>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:inputText autocomplete="off" id="suggestInstitucion" maxlength="5"
+									value="#{consultaMovimientosValorBean.folioClaveInstitucion}"
+									styleClass="campoNumericoAsterisco textoControles">
+								</h:inputText>
+								<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="suggestInstitucion" suggestionAction="#{consultaMovimientosValorBean.buscarInstitucionesPorPrefijo}" var="coincidenciaInstitucion" fetchValue="#{coincidenciaInstitucion.claveTipoInstitucion}#{coincidenciaInstitucion.folioInstitucion}"
+									id="sInstitucionParticipante" 
+									nothingLabel="Sin coincidencias"
+									eventsQueue="institucionQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+									minChars="#{ (consultaMovimientosValorBean.usuarioIndeval) ? '2' : '1'}" 
+									onsubmit="addLoader('suggestInstitucion');return true;" 
+									oncomplete="removeLoader('suggestInstitucion');">
+								<h:column>
+									<h:outputText value="#{coincidenciaInstitucion.claveTipoInstitucion}#{coincidenciaInstitucion.folioInstitucion} - #{coincidenciaInstitucion.nombreCorto}"/>
+								</h:column>
+								<a4j:support event="onselect"  limitToList="true" ajaxSingle="true"  >
+									<t:updateActionListener property="#{consultaMovimientosValorBean.folioClaveInstitucion}" value="" />
+								</a4j:support>
+								</rich:suggestionbox>
+							</td>
+						</tr>
+					</h:panelGroup>
+					<tr>
+						<td class="textoEstadoCuenta">
+							<h:outputText value="#{etq.cuentaMinus}"></h:outputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label>
+								<h:selectOneMenu
+									value="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.opcionSeleccionada}"
+									id="selectCuenta" converter="cuentaConverter" styleClass="textoControles" rendered="false">
+									<f:selectItems
+										value="#{consultaMovimientosValorBean.opcionesComboCuenta}" />
+								</h:selectOneMenu>
+								<h:panelGroup id="containerSuggestCuenta">
+								
+									<h:inputText autocomplete="off" value="#{consultaMovimientosValorBean.cuentaSeleccionada}" id="suggestCuenta" maxlength="4" styleClass="campoNumericoAsterisco textoControles"></h:inputText>
+									<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="suggestCuenta" suggestionAction="#{consultaMovimientosValorBean.buscarCuentasPorPrefijo}" var="coincidenciaCuenta" fetchValue="#{coincidenciaCuenta.descripcion}"
+									nothingLabel="Sin coincidencias"
+									eventsQueue="cuentaQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}" 
+									onsubmit="addLoader('suggestCuenta');return true;" oncomplete="removeLoader('suggestCuenta'); return true;">
+										<h:column>
+											<h:outputText value="#{coincidenciaCuenta.descripcion}"/>
+										</h:column>
+										<a4j:support event="onselect"  limitToList="true" ajaxSingle="true">
+											<t:updateActionListener property="#{consultaMovimientosValorBean.cuentaSeleccionada}" value="" />
+										</a4j:support>
+									</rich:suggestionbox>
+								</h:panelGroup>
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label class="textoEstadoCuenta">
+								<h:outputText value="#{etq.tipoCuentaMinus}"></h:outputText>
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label>
+								<h:selectOneMenu
+									value="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.criterioTipoTenencia.criterioTipoCuenta.opcionSeleccionada}"
+									id="selectTipoCuenta" converter="tipoCuentaConverter" styleClass="textoControles">
+									<f:selectItems
+										value="#{consultaMovimientosValorBean.opcionesComboTipoCuenta}" />
+
+									<a4j:support event="onchange"
+										reRender="selectTipoTenencia,selectTipoTenenciaContraparte,containerSuggestCuenta,containerCriteriosContraparte,
+										containerCriterioTipoOperacion,
+										containerOrdenamiento,
+										containerEtiquetaOrdenamiento,
+										containerCriterioTipoInstruccion,
+										containerEtiquetaInstruccion,
+										containerEtiquetaTipoInstruccion,
+										containerEtiquetaTipoOperacion,
+										containerEtiquetaFolio,containerCriterioFolio"
+										actionListener="#{consultaMovimientosValorBean.cambioSelectTipoCuenta}"
+										   />
+								</h:selectOneMenu>
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td class="textoEstadoCuenta">
+							<h:outputText value="#{etq.tipoTenenciaMinus}"></h:outputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label>
+								<h:selectOneMenu
+									value="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.criterioTipoTenencia.opcionSeleccionada}"
+									id="selectTipoTenencia" converter="tipoTenenciaConverter"
+									styleClass="textoControles"
+									 >
+									<f:selectItems
+										value="#{consultaMovimientosValorBean.opcionesComboTipoTenencia}" />
+									
+									<a4j:support event="onchange" reRender="containerSuggestCuenta,mensajesError"  limitToList="true"
+										actionListener="#{consultaMovimientosValorBean.cambioSelectTipoTenencia}"
+										 />
+
+								</h:selectOneMenu>
+							</label>
+						</td>
+					</tr>
+					<tr>
+                    	<td class="textoEstadoCuenta"><h:outputText value="#{etq.rolMinus}"></h:outputText></td>
+                  </tr>
+                  <tr>
+                    <td>
+                    <h:selectOneMenu
+									value="#{consultaMovimientosValorBean.consultaMovimientos.criterioRolParticipante}"
+									id="selectCriterioRolParticipante" styleClass="textoControles">
+									<f:selectItem itemLabel="AMBOS" itemValue="-1"/>
+									<f:selectItem itemLabel="RECEPTOR" itemValue="1"/>
+									<f:selectItem itemLabel="TRASPASANTE" itemValue="2"/>
+					</h:selectOneMenu>
+                  </td>
+                  </tr>
+					<tr>
+						<td>
+							&#160;
+						</td>
+					</tr>
+
+				</table>
+			</ui:define>
+			
+			
+			<ui:define name="criterioCinco">
+				<h:panelGroup id="containerCriteriosContraparte">
+				<table width="100%" border="0" cellspacing="0" cellpadding="5" 
+				style="display:#{(consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.opcionSeleccionada.tipoTenencia.tipoCuenta.id == 'N')?'inline':'none'}"> 
+			                         <tr>
+			                         	<td><span class="textoEstadoCuenta"><h:outputText value="#{etq.institucionMinus}"></h:outputText></span></td>
+			                         </tr>
+			                         <tr>
+			                         	<td>
+			                         	
+			                         	
+			                         	<h:inputText autocomplete="off" value="#{consultaMovimientosValorBean.institucionContraparteSeleccionada}" 
+			                         	id="suggestInstitucionContraparte" styleClass="campoNumericoAsterisco textoControles" maxlength="5"
+			                         	disabled="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.opcionSeleccionada.tipoTenencia.tipoCuenta.id == 'C'}"
+			                         	></h:inputText>
+			                         	<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="suggestInstitucionContraparte" suggestionAction="#{consultaMovimientosValorBean.buscarInstitucionesPorPrefijo}" var="coincidenciaInstitucion" fetchValue="#{coincidenciaInstitucion.claveTipoInstitucion}#{coincidenciaInstitucion.folioInstitucion}"
+											id="sInstitucion" 
+											nothingLabel="Sin coincidencias"
+											minChars="1"
+											eventsQueue="institucionContraparteQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}" 
+											onsubmit="addLoader('suggestInstitucionContraparte');return true;" 
+											oncomplete="removeLoader('suggestInstitucionContraparte');"   
+											reRender="mensajesError"  
+											>
+												<h:column>
+													<h:outputText value="#{coincidenciaInstitucion.claveTipoInstitucion}#{coincidenciaInstitucion.folioInstitucion} - #{coincidenciaInstitucion.nombreCorto}"/>
+												</h:column>
+												<a4j:support event="onselect"  limitToList="true" ajaxSingle="true"  >
+													<t:updateActionListener property="#{consultaMovimientosValorBean.institucionContraparteSeleccionada}" value="" />
+												</a4j:support>
+											</rich:suggestionbox>
+										
+											
+			                         	</td>
+			                         </tr>
+			                                                          
+			                         <tr>
+			                             <td><span class="textoEstadoCuenta"><h:outputText value="#{etq.tipoTenenciaMinus}"></h:outputText></span></td>
+			                         </tr>
+			                         <tr>
+			                             <td>
+			                                 <h:selectOneMenu
+												value="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuentaContraparte.criterioTipoTenencia.opcionSeleccionada}"
+												id="selectTipoTenenciaContraparte" converter="tipoTenenciaConverter"
+												styleClass="textoControles" disabled="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.opcionSeleccionada.tipoTenencia.tipoCuenta.id == 'C'}"
+												 >
+												<f:selectItems
+													value="#{consultaMovimientosValorBean.opcionesComboTipoTenenciaContraparte}" />
+												
+												<a4j:support event="onchange" 
+												reRender="containerCuentaContraparte,mensajesError"  
+													actionListener="#{consultaMovimientosValorBean.cambioSelectTipoTenenciaContraparte}"
+													 />
+			
+											</h:selectOneMenu>
+											 
+								                                                                </td>
+			                         </tr>
+			                         <tr>
+			                             <td><span class="textoEstadoCuenta"><h:outputText value="#{etq.cuentaMinus}"></h:outputText></span></td>
+			                         </tr>
+			                         <tr>
+			                             <td>
+												<h:panelGroup id="containerCuentaContraparte">
+												<h:inputText autocomplete="off" value="#{consultaMovimientosValorBean.cuentaContraparteSeleccionada}" id="suggestCuentaContraparte" styleClass="campoNumericoAsterisco textoControles"
+												disabled="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.opcionSeleccionada.tipoTenencia.tipoCuenta.id == 'C'}" maxlength="4"
+												></h:inputText>
+												<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="suggestCuentaContraparte" suggestionAction="#{consultaMovimientosValorBean.buscarCuentasContrapartePorPrefijo}" var="coincidenciaCuenta" fetchValue="#{coincidenciaCuenta.numeroCuenta}"
+													id="sCuentaContraparte" 
+													nothingLabel="Sin coincidencias"
+													eventsQueue="cuentaContraparteQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}" 
+													onsubmit="addLoader('suggestCuentaContraparte');return true;"
+													 oncomplete="removeLoader('suggestCuentaContraparte'); return true;" minChars="1" width="80">
+														<h:column>
+															<h:outputText value="#{coincidenciaCuenta.cuenta}"/>
+														</h:column>
+														<a4j:support event="onselect"  limitToList="true" ajaxSingle="true">
+															<t:updateActionListener property="#{consultaMovimientosValorBean.cuentaContraparteSeleccionada}" value="" />
+														</a4j:support>
+													</rich:suggestionbox>
+												</h:panelGroup>
+								        </td>
+			                         </tr>
+			                         <tr>
+			                           <td class="textoEstadoCuenta"><h:outputText value="#{etq.rolMinus}"></h:outputText></td>
+			                         </tr>
+			                         <tr>
+			                           <td>
+								       <h:selectOneMenu disabled="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.opcionSeleccionada.tipoTenencia.tipoCuenta.id == 'C'}"
+														value="#{consultaMovimientosValorBean.consultaMovimientos.criterioRolContraparte}"
+														id="selectCriterioRolContraparte" styleClass="textoControles">
+														<f:selectItem itemLabel="AMBOS" itemValue="-1"/>
+														<f:selectItem itemLabel="RECEPTOR" itemValue="1"/>
+														<f:selectItem itemLabel="TRASPASANTE" itemValue="2"/>
+										</h:selectOneMenu>
+			                                                                                                                                                                                                                                         
+			                          </td>
+			                         </tr>
+			                     </table>
+			               </h:panelGroup>
+			
+			</ui:define>
+			
+			
+			<ui:define name="criterioDos">
+				<table width="100%" border="0"  cellspacing="0" cellpadding="5">
+					
+					<tr>
+						<td>
+							<span class="textoEstadoCuenta"><h:outputText
+									value="#{etq.mercadoMinus}"></h:outputText>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							
+							<h:selectOneMenu value="#{consultaMovimientosValorBean.papelMercado}" styleClass="textoControles" id="selectPapelMercado">
+								<f:selectItems value="#{consultaMovimientosValorBean.consultaCatalogos.selectItemsPapelMercado}"/>
+								<a4j:support event="onchange" reRender="selectMercado, selectTipoValor, selectSerie" actionListener="#{consultaMovimientosValorBean.cambioSelectPapelMercado}"/>
+							</h:selectOneMenu>
+						</td>
+					</tr>
+					<tr>
+						<td class="textoEstadoCuenta">
+							<h:outputText value="#{etq.papelMinus}"></h:outputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							
+							<h:selectOneMenu
+										value="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.criterioTipoValor.criterioMercado.opcionSeleccionada}"
+										id="selectMercado" converter="mercadoConverter"  styleClass="textoControles">
+										
+											<f:selectItems value="#{consultaMovimientosValorBean.opcionesComboMercado}" />
+
+											<a4j:support event="onchange" reRender="mensajesError,selectTipoValor,selectSerie"
+											actionListener="#{consultaMovimientosValorBean.cambioSelectMercado}" 
+											  />
+									</h:selectOneMenu>
+							
+						</td>
+					</tr>
+					<tr>
+						<td class="textoEstadoCuenta">
+							<h:outputText value="#{etq.tv}"></h:outputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:inputText autocomplete="off" id="tv" size="5" maxlength="2"
+									value="#{consultaMovimientosValorBean.instrumentoSeleccionado}"
+									converter="tipoValorClaveTipoValorConverter"
+									styleClass="textoControles campoAlphaNumericoAsterisco" />
+							<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="tv"
+								suggestionAction="#{consultaMovimientosValorBean.buscarTiposValorPorPrefijo}"
+								var="coincidencia"
+								fetchValue="#{coincidencia.claveTipoValor}" minChars="0"
+								width="300" immediate="false"
+								nothingLabel="Sin coincidencias" eventsQueue="tvQueue" ignoreDupResponses="true" requestDelay="300"
+								>
+								<h:column>
+									<h:outputText value="#{coincidencia.claveTipoValor}" /> - <h:outputText
+										value="#{coincidencia.descripcion}" />
+								</h:column>
+								<a4j:support event="onselect" reRender="selectSerie"
+									actionListener="#{consultaMovimientosValorBean.cambioSelectTipoValor}" />
+							</rich:suggestionbox>
+						</td>
+					</tr>
+					<tr>
+						<td class="textoEstadoCuenta">
+							<h:outputText value="#{etq.emisoraMinus}"></h:outputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:inputText autocomplete="off" value="#{consultaMovimientosValorBean.emisoraSeleccionada}" id="suggest" maxlength="7" styleClass="campoAlphaNumericoEmisora textoControles"></h:inputText>
+							<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="suggest" suggestionAction="#{consultaMovimientosValorBean.buscarEmisorasPorPrefijo}" var="coincidencia" fetchValue="#{coincidencia.descripcion}"
+							nothingLabel="Sin coincidencias"
+							eventsQueue="emisoraQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}" 
+							onsubmit="addLoader('suggest');return true;" oncomplete="removeLoader('suggest'); return true;"
+							reRender="selectSerie">
+								<h:column>
+									<h:outputText value="#{coincidencia.descripcion}"/>
+								</h:column>
+								<a4j:support event="onselect"  >
+									<t:updateActionListener property="#{consultaMovimientosValorBean.emisoraSeleccionada}" value="" />
+								</a4j:support>
+							</rich:suggestionbox>
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="textoEstadoCuenta">
+							<h:outputText value="#{etq.serieMinus}"></h:outputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:inputText autocomplete="off" id="serie" size="6" maxlength="6" styleClass="textoControles campoAlphaNumericoSerie" value="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.criterioSerie.opcionSeleccionada}" converter="serieConverter"/>
+						</td>
+					</tr>
+					<tr>
+						<td class="textoEstadoCuenta">
+							<h:outputText value="#{etq.isin}"></h:outputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							
+							<h:inputText autocomplete="off" id="isin"  styleClass="campoAlphaNumerico textoControles" maxlength="12" value="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.isin}"/>
+							
+						</td>
+					</tr>
+					
+				</table>
+			</ui:define>
+
+
+
+			<ui:define name="criterioCuatro">
+				<table width="100%" cellpadding="5px" cellspacing="0px">
+					<tr>
+						<td width="3%">
+							<h:panelGroup id="containerEtiquetaOrdenamiento">
+								<h:panelGroup rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.opcionSeleccionada.tipoTenencia.tipoCuenta.id != 'C'}">
+									<h:selectBooleanCheckbox id="chkOrdenarPorTipoInstitucion"
+										value="#{consultaMovimientosValorBean.consultaMovimientos.ordenarPorTipoDeInstruccion}">
+									</h:selectBooleanCheckbox>
+								</h:panelGroup>
+							</h:panelGroup>
+						</td>
+						<td colspan="4" width="11%">
+							<h:panelGroup id="containerOrdenamiento">
+								<h:panelGroup rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.opcionSeleccionada.tipoTenencia.tipoCuenta.id != 'C'}">
+									<h:outputText value="#{etq.ordenamientoTipoInstruccion}" styleClass="textoEstadoCuenta"></h:outputText>
+								</h:panelGroup>
+							</h:panelGroup>
+						</td>
+						<td colspan="7">
+							<span class="textoEstadoCuenta"> <h:panelGroup
+									id="containerEtiquetaInstruccion">
+									<h:panelGroup
+										rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.opcionSeleccionada.tipoTenencia.tipoCuenta.id != 'C'}">
+										
+									</h:panelGroup>
+								</h:panelGroup> </span>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							
+						</td>
+						<td width="1%">
+							
+						</td>
+						<td width="24%">
+							
+						</td>
+						<td width="1%">
+							
+						</td>
+						<td width="12%">
+							
+						</td>
+						<td width="1%">
+							
+						</td>
+						<td width="19%">
+							
+						</td>
+						<td width="4%">
+							
+						</td>
+						<td width="4%">
+							
+						</td>
+						<td width="1%">
+							
+						</td>
+						<td width="19%">
+							
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" nowrap="true">
+							<div align="left">
+								<span class="textoEstadoCuenta"> <h:panelGroup
+										id="containerEtiquetaTipoInstruccion">
+										<h:panelGroup
+											rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.opcionSeleccionada.tipoTenencia.tipoCuenta.id != 'C'}">
+											<h:outputText value="#{etq.tipoInstruccionMinus}"></h:outputText>
+										</h:panelGroup>
+									</h:panelGroup> </span>
+							</div>
+						</td>
+						<td>
+							&#160;
+						</td>
+						<td>
+							<h:panelGroup id="containerCriterioTipoInstruccion">
+								<h:panelGroup
+									rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.opcionSeleccionada.tipoTenencia.tipoCuenta.id != 'C'}">
+									<h:inputText autocomplete="off" id="tipoOp" size="10" maxlength="10"
+												styleClass="campoAlphaAsterisco textoControles"
+												alt="#{consultaMovimientosValorBean.consultaMovimientos.criterioTipoInstruccion.opcionSeleccionada.descripcion}"
+												value="#{consultaMovimientosValorBean.consultaMovimientos.criterioTipoInstruccion.opcionSeleccionada}"
+												converter="tipoInstruccionNombreCortoConverter"></h:inputText>
+									<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="tipoOp"
+												suggestionAction="#{consultaMovimientosValorBean.buscarTipoInstruccionPorPrefijo}"
+												var="coincidencia" fetchValue="#{coincidencia.nombreCorto}"
+												minChars="0" width="450" nothingLabel="Sin coincidencias"
+												eventsQueue="tipoOpQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+												onsubmit="addLoader('tipoOp');return true;"
+												oncomplete="removeLoader('tipoOp'); return true;">
+												<h:column>
+													<h:outputText value="#{coincidencia.nombreCorto}" /> - <h:outputText
+														value="#{coincidencia.instruccion}" />
+												</h:column>
+											</rich:suggestionbox>
+								</h:panelGroup>
+							</h:panelGroup>
+						</td>
+						<td>
+							&#160;
+						</td>
+						<td nowrap="true">
+							<div align="left">
+								<span class="textoEstadoCuenta"> <h:panelGroup
+										id="containerEtiquetaTipoOperacion">
+										<h:panelGroup
+											rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.opcionSeleccionada.tipoTenencia.tipoCuenta.id != 'C'}">
+											<h:outputText value="#{etq.tipoOp}"></h:outputText>
+										</h:panelGroup>
+									</h:panelGroup> </span>
+							</div>
+						</td>
+						<td>
+							&#160;
+						</td>
+						<td>
+							<h:panelGroup id="containerCriterioTipoOperacion">
+								<h:panelGroup
+									rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.opcionSeleccionada.tipoTenencia.tipoCuenta.id != 'C'}">
+									<h:selectOneMenu
+										value="#{consultaMovimientosValorBean.consultaMovimientos.criterioTipoOperacion.opcionSeleccionada}"
+										id="selectTipoOperacion" converter="tipoOperacionConverter"
+										styleClass="textoControles">
+
+										<f:selectItems
+											value="#{consultaMovimientosValorBean.opcionesComboTipoOperacion}" />
+
+
+									</h:selectOneMenu>
+								</h:panelGroup>
+							</h:panelGroup>
+						</td>
+						<td>
+							&#160;
+						</td>
+						<td nowrap="true">
+							<div align="left">
+								<span class="textoEstadoCuenta"> <h:panelGroup
+										id="containerEtiquetaFolio">
+										<h:panelGroup
+											rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.opcionSeleccionada.tipoTenencia.tipoCuenta.id != 'C'}">
+											<h:outputText value="#{etq.folioInstruccionMinus}"></h:outputText>
+										</h:panelGroup>
+									</h:panelGroup> </span>
+							</div>
+						</td>
+						<td>
+							&#160;
+						</td>
+						<td>
+							<h:panelGroup id="containerCriterioFolio">
+								<h:panelGroup
+									rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.opcionSeleccionada.tipoTenencia.tipoCuenta.id != 'C'}">
+									<h:inputText autocomplete="off" id="folio" styleClass="campoNumerico textoControles"
+										maxlength="25"
+										value="#{consultaMovimientosValorBean.consultaMovimientos.criterioFolioInstruccion}" />
+
+								</h:panelGroup>
+							</h:panelGroup>
+						</td>
+					</tr>
+				</table>
+
+			</ui:define>
+
+
+			<ui:define name="resumenCriterioDos">
+				<h:panelGroup id="containerResumenEmision">
+					<h:panelGroup id="resumenEmisionConConsulta" rendered="#{consultaMovimientosValorBean.consultaEjecutada}">
+						<table width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td width="41%" class="texto">
+									<span class="texto"><h:outputText
+											value="#{etq.tipoMercadoMinus}"></h:outputText>
+									</span>
+								</td>
+								<td width="3%" class="textoEstadoCuenta">
+									<div align="center">
+										<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+									</div>
+								</td>
+								<td width="56%" colspan="4" class="textoResumen">
+									<h:outputText
+										value="#{consultaMovimientosValorBean.descripcionPapelMercado}"></h:outputText>
+								</td>
+							</tr>
+							<tr>
+	                           <td width="41%">
+	                                <h:outputText value="#{etq.papelMinus}" styleClass="texto"/>
+	                           </td>
+	                           <td width="4%">
+	                           		<h:outputText value="#{etq.dosPuntos}" styleClass="texto"/>
+	                           </td>
+	                           <td width="56%">
+	                           		<h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.opcionSeleccionada.tipoValor.mercado.descripcion}" styleClass="textoResumen"/>
+	                           </td>
+	                       </tr>
+	                      <tr>
+	                           <td width="41%">
+	                                <h:outputText value="#{etq.isin}" styleClass="texto"/>
+	                           </td>
+	                           <td width="4%">
+	                           		<h:outputText value="#{etq.dosPuntos}" styleClass="texto"/>
+	                           </td>
+	                           <td width="56%">
+	                           		<h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.opcionSeleccionada.isin}"  styleClass="textoResumen"/>
+	                           </td>
+	                       </tr>
+	                                           
+	                      
+	                       <tr>
+	                           <td colspan="3">
+	                               <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	                                   <tr>
+	                                       <td width="15%" align="center">
+	                                           <span class="texto"><h:outputText value="#{etq.tv}"></h:outputText></span>
+	                                       </td>
+	                                       <td width="36%" align="center">
+	                                           <span class="texto">
+	                                               <h:outputText value="#{etq.emisoraMinus}"></h:outputText>
+	                                           </span>
+	                                       </td>
+	                                       <td width="23%" align="center">
+	                                           <span class="texto">
+	                                               <h:outputText value="#{etq.serieMinus}"></h:outputText>
+	                                           </span>
+	                                       </td>
+	                                       
+	                                   </tr>
+	                                   <tr>
+	                                       <td align="center">
+	                                       	<span class="textoResumen"><h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.opcionSeleccionada.tipoValor.claveTipoValor}"></h:outputText></span>
+	                                       </td>
+	                                       <td align="center">
+	                                           <span class="textoResumen"><h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.opcionSeleccionada.emisora.descripcion}"></h:outputText></span>
+	                                       </td>
+	                                       <td align="center">
+	                                           <span class="textoResumen"><h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.opcionSeleccionada.serie.descripcion}"></h:outputText></span>
+	                                       </td>
+	                                       
+	                                   </tr>
+	                               </table>
+	                           </td>
+	                       </tr>
+	                       
+							
+                               
+                           </table>
+					
+					</h:panelGroup>
+					
+				</h:panelGroup>
+			</ui:define>
+			<ui:define name="resumenCriterioTres">
+				<h:panelGroup id="containerResumenBoveda">
+					<h:panelGroup id="resumenBovedaConConsulta" rendered="#{consultaMovimientosValorBean.consultaEjecutada}">
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+			                    <td width="40%">
+			                       
+			                                <h:outputText value="#{etq.bovedaMinus}" styleClass="texto"/>
+			                        
+			                    </td>
+			                    <td width="4%">
+			                    			<h:outputText value="#{etq.dosPuntos}" styleClass="textoResumen"/>
+			                    </td> 
+			                    <td width="56%">
+			                    			<h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.bovedaSeleccionada.descripcion}" styleClass="textoResumen"/>
+			                    </td>
+		                    </tr>
+		                    
+		                </table>
+		            </h:panelGroup>
+                </h:panelGroup>
+			</ui:define>
+			<ui:define name="resumenCriterioCuatro">
+				<h:panelGroup id="containerResumenInstruccion">
+					<h:panelGroup id="resumenInstruccionConConsulta" rendered="#{consultaMovimientosValorBean.consultaEjecutada and 
+																						consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.opcionSeleccionada.tipoTenencia.tipoCuenta.id != 'C'}">
+						<table width="100%" cellpadding="0" cellspacing="0">
+							
+		                    <tr style="padding-top:3px;">
+		                        <td width="25%">
+		                            <div align="right" class="texto">
+		                                <div align="left">
+		                                    <h:outputText value="#{etq.tipoInstruccionMinus}"></h:outputText>
+		                                </div>
+		                            </div>
+		                        </td>
+		                        <td width="25%">
+		                            <div align="right" class="texto">
+		                                <div align="left">
+		                                    <h:outputText value="#{etq.tipoOp}"></h:outputText>
+		                                </div>
+		                            </div>
+		                        </td>
+		                        
+		                        <td width="25%">
+		                            <div align="right" class="texto">
+		                                <div align="left">
+		                                    <h:outputText value="#{etq.folioInstruccionMinus}"></h:outputText>
+		                                </div>
+		                            </div>
+		                        </td>
+		                        <td width="25%">
+		                            <div align="right" class="texto">
+		                                <div align="left">
+		                                    <h:outputText value="#{etq.ordenamientoTipoInstruccion}"></h:outputText>
+		                                </div>
+		                            </div>
+		                        </td>
+		                    </tr>
+		                    <tr>
+		                        <td>
+		                            <span class="textoResumen">
+		                            <h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.criterioTipoInstruccion.opcionSeleccionada.nombreCorto}"/>
+		                            </span>
+		                        </td>
+		                        
+		                        <td >
+		                            <span class="textoResumen"><h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.criterioTipoOperacion.opcionSeleccionada.claveTipoOperacion}"/></span>
+		                        </td>
+		                        
+		                        <td>
+		                            <span class="textoResumen"><h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.criterioFolioInstruccion}"/></span>
+		                        </td>
+		                        <td>
+		                        	<h:panelGroup id="resumenOrdenamientoTipoOperacion">
+										
+										<h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.ordenarPorTipoDeInstruccion}">
+											<f:converter converterId="booleanConverter"/>
+										</h:outputText>
+									</h:panelGroup>
+		                        </td>
+		                    </tr>
+		                </table>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			
+			<ui:define name="resumenCriterioCinco">
+				<h:panelGroup id="containerResumenCuentaContraparte">
+					<h:panelGroup id="containerResumenCuentaContraparteInfo" rendered="#{consultaMovimientosValorBean.consultaEjecutada and 
+																						consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.opcionSeleccionada.tipoTenencia.tipoCuenta.id != 'C'}">
+						<table width="100%" cellpadding="0" cellspacing="0">
+                            
+                            <tr>
+                                <td width="40%" >
+                                    
+                                        <h:outputText value="#{etq.naturalezaMinus}" styleClass="texto"/>
+                                    
+                                </td>
+                                <td width="4%">
+                                		<h:outputText value="#{etq.dosPuntos}" styleClass="textoResumen"/>
+                                </td>
+                                <td width="56%">
+                                	<h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuentaContraparte.opcionSeleccionada.tipoTenencia.tipoNaturaleza.descripcion}" styleClass="textoResumen"/>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td width="40%" >
+                                    
+                                        <h:outputText value="#{etq.tipoCuentaMinus}" styleClass="texto"/>
+                                    
+                                </td>
+                                <td width="4%">
+                                		<h:outputText value="#{etq.dosPuntos}" styleClass="textoResumen"/>
+                                </td>
+                                <td width="56%">
+                                	<h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuentaContraparte.opcionSeleccionada.tipoTenencia.tipoCuenta.descripcion}" styleClass="textoResumen"/>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td width="40%" >
+                                    
+                                        <h:outputText value="#{etq.tipoTenenciaMinus}" styleClass="texto"/>
+                                    
+                                </td>
+                                <td width="4%">
+                                		<h:outputText value="#{etq.dosPuntos}" styleClass="textoResumen"/>
+                                </td>
+                                <td width="56%">
+                                	<h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuentaContraparte.opcionSeleccionada.tipoTenencia.descripcion}" styleClass="textoResumen"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="40%" >
+                                        <h:outputText value="#{etq.cuentaMinus}" styleClass="texto"/>
+                                    
+                                </td>
+                                <td width="4%">
+                                		<h:outputText value="#{etq.dosPuntos}" styleClass="textoResumen"/>
+                                </td>
+                                <td width="56%">
+                                	<h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuentaContraparte.opcionSeleccionada.descripcion}" styleClass="textoResumen"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="40%" >
+                                        <h:outputText value="#{etq.rolMinus}" styleClass="texto"/>
+                                    
+                                </td>
+                                <td width="4%">
+                                		<h:outputText value="#{etq.dosPuntos}" styleClass="textoResumen"/>
+                                </td>
+                                <td width="56%">
+                                	<h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.descripcionRolContraparte}" styleClass="textoResumen"/>
+                                </td>
+                            </tr>
+                            
+                       
+                     
+                        </table>
+					</h:panelGroup>
+				</h:panelGroup>
+						
+			
+			</ui:define>
+			
+			
+			<ui:define name="seccionPaginacion">
+				<h:panelGroup id="containerInfoPaginacionEmision">
+					<h:panelGroup rendered="#{consultaMovimientosValorBean.consultaEjecutada}">
+						<h:panelGroup >
+							<h:panelGroup >
+								<h:outputText value ="#{consultaMovimientosValorBean.initConsulta}"></h:outputText>
+								<table width="100%" border="0">
+									<tr>
+										<td align="left" class="textoEstadoCuenta">
+											<a4j:commandLink actionListener="#{consultaMovimientosValorBean.navegarPorResultados}" 
+										id="control_emision_primero" rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.irAlPrimero}" 
+										reRender="containerResultados,containerInfoPaginacionEmision,containerInfoPaginacionEmision2"
+										ajaxSingle="true" limitToList="true"
+										onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"
+										><img src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png" border="0"/>
+											<f:attribute name="navegacion" value="irAlPrincipio" /></a4j:commandLink>
+										<a4j:commandLink actionListener="#{consultaMovimientosValorBean.navegarPorResultados}" 
+										id="control_emision_atras_fast" rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.retrocederRapido}" 
+										reRender="containerResultados,containerInfoPaginacionEmision,containerInfoPaginacionEmision2"
+										ajaxSingle="true" limitToList="true"
+										onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png" border="0"/><f:attribute name="navegacion" value="retrocederPaginasRapido" /></a4j:commandLink>
+										
+										<a4j:commandLink actionListener="#{consultaMovimientosValorBean.navegarPorResultados}"  
+										id="control_emision_atras" rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.retroceder}" 
+										reRender="containerResultados,containerInfoPaginacionEmision,containerInfoPaginacionEmision2"
+										ajaxSingle="true" limitToList="true"
+										onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png" border="0"/>
+											<f:attribute name="navegacion" value="retrocederPagina" />
+										</a4j:commandLink>
+										<a4j:commandLink actionListener="#{consultaMovimientosValorBean.navegarPorResultados}" 
+										id="control_emision_adelante" rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.avanzar}" 
+										reRender="containerResultados,containerInfoPaginacionEmision,containerInfoPaginacionEmision2"
+										ajaxSingle="true" limitToList="true"
+										onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png" border="0"/>
+											<f:attribute name="navegacion" value="avanzarPagina" />
+										</a4j:commandLink>
+										<a4j:commandLink actionListener="#{consultaMovimientosValorBean.navegarPorResultados}" 
+										id="control_emision_adelante_fast" rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.avanzarRapido}" 
+										reRender="containerResultados,containerInfoPaginacionEmision,containerInfoPaginacionEmision2"
+										ajaxSingle="true" limitToList="true"
+										onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png" border="0"/>
+											<f:attribute name="navegacion" value="avanzarPaginasRapido" />
+										</a4j:commandLink>
+										<a4j:commandLink actionListener="#{consultaMovimientosValorBean.navegarPorResultados}" 
+										id="control_emision_ultimo" rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.irAlUltimo}" 
+										reRender="containerResultados,containerInfoPaginacionEmision,containerInfoPaginacionEmision2"
+										ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png" border="0"/>
+											<f:attribute name="navegacion" value="irAlUltimo" />
+										</a4j:commandLink>
+								
+								
+								
+											<br/>
+											<h:outputText value="#{etq.mostrando}" styleClass="textoResumen">
+											</h:outputText>
+											<h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.estadoPaginacion.numeroPagina}" styleClass="textoResumen">
+											</h:outputText>
+											<h:outputText value="#{etq.de}" styleClass="textoResumen"></h:outputText>
+											<h:outputText value="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.estadoPaginacion.totalPaginas}" styleClass="textoResumen">
+											</h:outputText>
+											<h:outputText value="#{etq.cierre}" styleClass="textoResumen"> </h:outputText>
+											&#160;
+											<h:outputText value="#{consultaMovimientosValorBean.totalResultados}" converter="formatoEnteroConverter" styleClass="textoResumen"></h:outputText>&#160;
+											<h:outputText  styleClass="textoResumen" value="#{etq.registrosEncontrados}"/>
+												
+											
+										</td>
+										<td align="right" class="textoEstadoCuenta">
+											<h:outputText escape="false" value="#{etq.emisionesPorPagina}" styleClass="textoResumen"/>
+												<h:selectOneMenu id="tamanioPagina" value="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.resultadosPorPagina}">
+													<f:selectItem itemLabel="2" itemValue="2"/>
+													<f:selectItem itemLabel="5" itemValue="5"/>
+													<f:selectItem itemLabel="10" itemValue="10"/>
+													<f:selectItem itemLabel="20" itemValue="20"/>
+													<a4j:support 
+													 reRender="init,containerResultados,containerInfoPaginacionEmision,containerInfoPaginacionEmision2" event="onchange" 
+													 ajaxSingle="true" limitToList="true"
+													 onchange="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"
+													 />
+												</h:selectOneMenu>
+										</td>
+									</tr>
+								</table>
+									
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			
+			
+			<ui:define name="seccionResultados">
+			
+				<h:panelGroup rendered="#{consultaMovimientosValorBean.consultaEjecutada}">
+					<script language="javascript">
+						$j("#divCriterios").css('display','none');
+						$j("#divResumen").css('display','inline');
+					</script>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{!consultaMovimientosValorBean.consultaEjecutada}">
+					<script language="javascript">
+						$j("#divCriterios").css('display','inline');
+						$j("#divResumen").css('display','none');
+					</script>
+				</h:panelGroup>
+				<h:panelGroup id="containerResultados">
+				
+					<h:panelGroup rendered="#{consultaMovimientosValorBean.consultaEjecutada}">
+					
+							
+							<t:dataTable id="noExistenResultados" 
+							value="#{consultaMovimientosValorBean.resultadosEstadoCuentaPosicion}" 
+							var="posicion"  styleClass="tablaGeneral" headerClass="tituloTabla" width="100%" footerClass="tituloTabla"
+							 border="0" cellpadding="3px" cellspacing="0px"
+							  columnClasses="everyColumn"
+							  rowClasses="renglonTablaDos, renglonTablaUno"
+							 rendered="#{empty consultaMovimientosValorBean.resultadosEstadoCuentaPosicion}"
+							  >
+							  <t:column>
+							  		<f:facet name="header" >
+							  		<h:outputText value="#{etq.sinResultados}"></h:outputText>
+							  		</f:facet>
+							  		
+							  </t:column>
+							</t:dataTable>
+							
+							<table id="tblResultadoConsultaMovimientosValor" width="100%" cellspacing="0px" cellpadding="0px" class="tablaGeneral">
+							
+							<t:dataList value ="#{consultaMovimientosValorBean.resultadosEstadoCuentaPosicion}"   var="estadoCuentaPosicionPorEmision"  rendered="#{not empty consultaMovimientosValorBean.resultadosEstadoCuentaPosicion}">
+							
+						
+		                                    	<tr>
+		                                        	<td width="6%" class="tituloTabla"><strong><h:outputText value="#{etq.emisionMinus}"></h:outputText></strong></td>
+		                                    	    <td width="94%" class="tituloTabla"><strong><h:outputText value="#{estadoCuentaPosicionPorEmision.emision.tipoValor.claveTipoValor}"/>&#160;&#160;&#160;<h:outputText value="#{estadoCuentaPosicionPorEmision.emision.emisora.descripcion}"/>
+		                                    	    &#160;&#160;&#160;<h:outputText value="#{estadoCuentaPosicionPorEmision.emision.serie.serie}"/>&#160;&#160;&#160;<h:outputText value="#{estadoCuentaPosicionPorEmision.emision.isin}"/></strong></td>
+		                                    	</tr>
+		                                    	
+		                                     <t:dataList value ="#{estadoCuentaPosicionPorEmision.detallesBoveda}"   var="estadoCuentaPosicionPorBoveda">	
+		                                    	<tr>
+                                        			<td colspan="2">
+                                            	<div>
+                                                	<table id="tblResultadoConsultaMovimientosValor_Boveda_#{estadoCuentaPosicionPorEmision.emision.id}_#{estadoCuentaPosicionPorBoveda.boveda.id}" width="100%" border="0" cellspacing="0" cellpadding="0">
+                                  
+                                                      <tr>
+                                                        <td width="3%" valign="top" class="tableCellSubHeader">
+	                                                       	<h:panelGroup rendered="#{not empty estadoCuentaPosicionPorBoveda.registrosContablesNombradas || not empty estadoCuentaPosicionPorBoveda.registrosContablesControladas}">
+	                                                        <a href="javascript:colapsar(#{estadoCuentaPosicionPorEmision.emision.id},#{estadoCuentaPosicionPorBoveda.boveda.id});"><img src="#{facesContext.externalContext.requestContextPath}/images/open.gif" border="0" style="display:none;" id="icon_open_#{estadoCuentaPosicionPorEmision.emision.id}_#{estadoCuentaPosicionPorBoveda.boveda.id}"/><img src="#{facesContext.externalContext.requestContextPath}/images/close.gif" border="0" id="icon_close_#{estadoCuentaPosicionPorEmision.emision.id}_#{estadoCuentaPosicionPorBoveda.boveda.id}"/></a>
+	                                                        </h:panelGroup>&#160;
+                                                        </td>
+                                                        <td width="8%" valign="middle" class="tableCellSubHeader"><div align="right"><h:outputText value="#{etq.bovedaMinus}"></h:outputText></div></td>
+                                                        <td width="2%" valign="middle" class="tableCellSubHeader"><div align="center">:</div></td>
+                                                        <td width="20%" valign="middle" class="tableCellSubHeader" nowrap="true"><span class="textoEstadoCuenta"><strong><h:outputText value="#{estadoCuentaPosicionPorBoveda.boveda.descripcion}"/></strong></span></td>
+                                                        <td width="4%" valign="middle" class="tableCellSubHeader">&#160;</td>
+                                                        <td width="11%" valign="middle" class="tableCellSubHeader">
+                                                        	&#160;
+                                       					</td>
+                                                        <td width="2%" valign="top" class="tableCellSubHeader">&#160;</td>
+                                                        <td width="7%" valign="top" class="tableCellSubHeader">&#160;
+                                                          </td>
+                                                        <td width="3%" valign="top" class="tableCellSubHeader">&#160;</td>
+                                                        <td width="13%" valign="top" class="tableCellSubHeader">
+                                                        	&#160;
+                                                        </td>
+                                                        <td width="2%" valign="top" class="tableCellSubHeader">
+                                                        	&#160;
+                                                        </td>
+                                                        	
+                                                        <td width="6%" valign="top" class="tableCellSubHeader" nowrap="true">
+                                                       &#160;
+                                                       	</td>
+                                                        <td width="3%" valign="top" class="tableCellSubHeader"><div align="right">&#160;</div></td>
+                                                        <td width="9%" valign="top" class="tableCellSubHeader"><div align="right">&#160;</div></td>
+                                                        <td width="2%" valign="top" class="tableCellSubHeader"><div align="center">&#160;</div></td>
+                                                        <td width="5%" valign="top" class="tableCellSubHeader" nowrap="true"><div align="center"><strong>
+                                                        	&#160;
+                                                        	</strong></div></td>
+                                                      </tr>
+                                                      
+                                                      <h:panelGroup rendered="#{not empty estadoCuentaPosicionPorBoveda.registrosContablesNombradas}">
+                                                     
+                                                      
+                                                      <tr id="renglon_#{estadoCuentaPosicionPorEmision.emision.id}_#{estadoCuentaPosicionPorBoveda.boveda.id}">
+                                                        <td colspan="16">
+                                                        
+                                                        	<div id="detalleEmision_#{estadoCuentaPosicionPorEmision.emision.id}_#{estadoCuentaPosicionPorBoveda.boveda.id}">
+                                                        	
+                                                        		<table id="tblResultadoConsultaMovimientosValor_detalle_nombrada_#{estadoCuentaPosicionPorEmision.emision.id}_#{estadoCuentaPosicionPorBoveda.boveda.id}" width="100%" border="0" cellpadding="0px" cellspacing="0px">
+                                                        		
+                                                              		<tr class="tituloTabla" valign="bottom">
+                                                                       
+                                                                        <th  align="center" class="tableHeadingAltHover">
+                                                                                <h:outputText value="#{etq.fechaLiquidacionMinus}"></h:outputText></th>
+                                                                        <th  align="center" class="tableHeadingAltHover">
+                                                                                <h:outputText value="#{etq.descripcionMinus}"></h:outputText></th>
+                                                                        <th  align="center" class="tableHeadingAltHover"
+                                                                        >
+                                                                                  <div style="display:#{(consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.criterioTipoTenencia.criterioNaturaleza.opcionSeleccionada.id == 'P')?'inline':'none'}"><h:outputText value="#{etq.contraparteMinus}"></h:outputText></div>
+                                                                                     	</th>
+                                                                        <th  align="center" class="tableHeadingAltHover">
+                                                                                        <h:outputText value="#{etq.cuponMinus}"></h:outputText></th>
+                                                                        <th  align="center" class="tableHeadingAltHover">
+                                                                                        <h:outputText value="#{etq.folioInstruccionMinus}"></h:outputText></th>
+                                                                        <th  align="center" class="tableHeadingAltHover">
+                                                                                        <h:outputText value="#{etq.tipoInstruccionMinus}"></h:outputText></th>
+                                                                        
+                                                                      <th class="tableHeadingAltHover"><h:outputText value="#{etq.recepcionMinus}"></h:outputText></th>
+                                                                      <th class="tableHeadingAltHover"><h:outputText value="#{etq.entregaMinus}"></h:outputText></th>
+                                                                       
+                                                                  	
+                                                                  </tr>
+                                                                <t:dataList value ="#{estadoCuentaPosicionPorBoveda.registrosContablesNombradas}"   var="registroContable"> 
+                                                                    <tr>
+                                                                        
+                                                                        <td class="renglonTablaUno" nowrap="true">
+                                                                        	<h:outputText value="#{registroContable.fecha}">
+                                                                        		<f:converter converterId="formatoFechaLargaConverter"/>
+                                                                        	</h:outputText>
+                                                                        </td>
+                                                                        <td class="renglonTablaUno">
+                                                                       <h:panelGroup rendered="#{not empty registroContable.rutaPantallaDetalle}">
+                                                                            <a title="#{registroContable.descripcionLarga}"   href="javascript:mostrarDetalle('Detalle del Movimiento','#{facesContext.externalContext.requestContextPath}/#{registroContable.rutaPantallaDetalle}?idRegistro=#{registroContable.idRegistroContable}&amp;isHistorico=#{registroContable.historico}&amp;height=#{registroContable.altoPantallaDetalle}&amp;width=#{registroContable.anchoPantallaDetalle}');" 
+	                                                                        >
+	                                                                       		<h:outputText value="#{registroContable.descripcion}"/> 
+	                                                                       </a>
+                                                                       </h:panelGroup>
+                                                                       <h:panelGroup rendered="#{empty registroContable.rutaPantallaDetalle}">
+                                                                           
+	                                                                       		<h:outputText value="#{registroContable.descripcion}" title="#{registroContable.descripcionLarga}"/> 
+	                                                                       
+                                                                       </h:panelGroup>
+                                                                       
+                                                                       
+                                                                       </td>
+                                                                        <td class="renglonTablaUno">
+                                                                        	<div style="display:#{(consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.criterioTipoTenencia.criterioNaturaleza.opcionSeleccionada.id == 'P')?'inline':'none'}"><h:outputText value="#{registroContable.contraparte}"/><br/><h:outputText value="#{registroContable.cuentaContraparte}"/>&#160;</div>
+                                                                        </td>
+                                                                        <td class="renglonTablaUno" align="left"><b><h:outputText value="#{registroContable.cupon.claveCupon}"/></b>&#160;</td>
+                                                                        <td class="renglonTablaUno" align="center"><h:outputText value="#{registroContable.operacion.instruccionLiquidacion.folioInstruccion}"/>&#160;</td>
+                                                                        <td class="renglonTablaUno" align="center" title="#{registroContable.operacion.instruccionLiquidacion.tipoInstruccion.descripcion}">
+                                                                        <h:outputText value="#{registroContable.operacion.instruccionLiquidacion.tipoInstruccion.nombreCorto}"/>&#160;</td>
+                                                                        <td class="renglonTablaUno" align="right">
+                                                                        	<h:outputText value="#{registroContable.cantidadRecepcion}">
+                                                                        		<f:converter converterId="formatoEnteroConverter"/>
+                                                                        	</h:outputText>
+                                                                        </td>
+                                                                        <td class="renglonTablaUno" align="right">
+                                                                        	<h:outputText value="#{registroContable.cantidadEntrega}">
+                                                                        		<f:converter converterId="formatoEnteroConverter"/>
+                                                                        	</h:outputText>
+                                                                        </td>
+                                                                        
+                                                                       
+                                                                    </tr>
+                                                                 </t:dataList> 
+                                                                 
+                                                                </table>
+                                                        	</div>
+                                                        </td>
+                                                      </tr>
+                                                      </h:panelGroup>
+                                                      
+                                                      
+                                                      
+                                                      <h:panelGroup rendered="#{not empty estadoCuentaPosicionPorBoveda.registrosContablesControladas}">
+                                                     
+                                                      
+                                                      <tr id="renglon_#{estadoCuentaPosicionPorEmision.emision.id}_#{estadoCuentaPosicionPorBoveda.boveda.id}">
+                                                        <td colspan="16">
+                                                        
+                                                        	<div id="detalleEmision_#{estadoCuentaPosicionPorEmision.emision.id}_#{estadoCuentaPosicionPorBoveda.boveda.id}">
+                                                        	
+                                                        		<table id="tableResultadoControlada" border="0" width="100%"  cellpadding="0px" cellspacing="0px">
+                                                        		
+                                                              		<tr class="tituloTabla" valign="bottom">
+                                                                        
+                                                                        <th align="left" class="tableHeadingAltHover">
+                                                                                <h:outputText value="#{etq.fechaLiquidacionMinus}"></h:outputText></th>
+                                                                        <th  align="left" class="tableHeadingAltHover">
+                                                                                <h:outputText value="#{etq.descripcionMinus}"></h:outputText></th>
+                                                                       <th  align="left" class="tableHeadingAltHover">
+                                                                                <h:outputText value="#{etq.cuponMinus}"></h:outputText></th>
+                                                                        <th class="tableHeadingAltHover"><h:outputText value="#{etq.recepcionMinus}"></h:outputText></th>
+                                                                      <th class="tableHeadingAltHover"><h:outputText value="#{etq.entregaMinus}"></h:outputText></th>
+                                                                        
+                                                                       
+                                                                  	</tr>
+                                                                    
+                                                                  
+                                                                <t:dataList value ="#{estadoCuentaPosicionPorBoveda.registrosContablesControladas}"   var="registroContable"> 
+                                                                    <tr>
+                                                                        
+                                                                        <td class="renglonTablaUno" nowrap="true">
+                                                                        	<h:outputText value="#{registroContable.fecha}">
+                                                                        		<f:converter converterId="formatoFechaLargaConverter"/>
+                                                                        	</h:outputText>
+                                                                        </td>
+                                                                        <td class="renglonTablaUno">
+                                                                        	<h:outputText value="#{registroContable.descripcion}"/>
+                                                                         </td>
+                                                                         <td class="renglonTablaUno" align="left">
+                                                                          <h:outputText value="#{registroContable.cupon.claveCupon}"/>&#160;
+                                                                        </td>
+                                                                        <td class="renglonTablaUno" align="right">
+                                                                        	<h:outputText value="#{registroContable.cantidadRecepcion}">
+                                                                        		<f:converter converterId="formatoEnteroConverter"/>
+                                                                        	</h:outputText>
+                                                                        </td>
+                                                                        <td class="renglonTablaUno" align="right">
+                                                                        	<h:outputText value="#{registroContable.cantidadEntrega}">
+                                                                        		<f:converter converterId="formatoEnteroConverter"/>
+                                                                        	</h:outputText>
+                                                                        </td>
+                                                                        
+                                                                        
+                                                                    </tr>
+                                                                 </t:dataList> 
+                                                                 
+                                                                </table>
+                                                        	</div>
+                                                        </td>
+                                                      </tr>
+                                                      </h:panelGroup>
+                                                      
+                                                      
+                                                      
+                                                      
+                                                      
+                                                      
+                                                      
+                                                    </table>
+                                            	</div>
+                                            </td>
+                                       </tr>
+									</t:dataList>
+							</t:dataList>
+						</table>
+						
+					</h:panelGroup>
+				</h:panelGroup>
+			
+			</ui:define>
+			<ui:define name="seccionPaginacion2">
+				<h:panelGroup id="containerInfoPaginacionEmision2">
+					<h:panelGroup rendered="#{consultaMovimientosValorBean.consultaEjecutada}">
+						<table width="100%" border="0">
+									<tr>
+										<td align="left" class="textoEstadoCuenta">
+											<a4j:commandLink actionListener="#{consultaMovimientosValorBean.navegarPorResultados}" 
+										id="control_emision_primero2" rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.irAlPrimero}" 
+										reRender="containerResultados,containerInfoPaginacionEmision,containerInfoPaginacionEmision2"
+										ajaxSingle="true" limitToList="true"
+										onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"
+										><img src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png" border="0"/>
+											<f:attribute name="navegacion" value="irAlPrincipio" /></a4j:commandLink>
+										<a4j:commandLink actionListener="#{consultaMovimientosValorBean.navegarPorResultados}" 
+										id="control_emision_atras_fast2" rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.retrocederRapido}" 
+										reRender="containerResultados,containerInfoPaginacionEmision,containerInfoPaginacionEmision2"
+										ajaxSingle="true" limitToList="true"
+										onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png" border="0"/><f:attribute name="navegacion" value="retrocederPaginasRapido" /></a4j:commandLink>
+										
+										<a4j:commandLink actionListener="#{consultaMovimientosValorBean.navegarPorResultados}"  
+										id="control_emision_atras2" rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.retroceder}" 
+										reRender="containerResultados,containerInfoPaginacionEmision,containerInfoPaginacionEmision2"
+										ajaxSingle="true" limitToList="true"
+										onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png" border="0"/>
+											<f:attribute name="navegacion" value="retrocederPagina" />
+										</a4j:commandLink>
+										<a4j:commandLink actionListener="#{consultaMovimientosValorBean.navegarPorResultados}" 
+										id="control_emision_adelante2" rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.avanzar}" 
+										reRender="containerResultados,containerInfoPaginacionEmision,containerInfoPaginacionEmision2"
+										ajaxSingle="true" limitToList="true"
+										onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png" border="0"/>
+											<f:attribute name="navegacion" value="avanzarPagina" />
+										</a4j:commandLink>
+										<a4j:commandLink actionListener="#{consultaMovimientosValorBean.navegarPorResultados}" 
+										id="control_emision_adelante_fast2" rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.avanzarRapido}" 
+										reRender="containerResultados,containerInfoPaginacionEmision,containerInfoPaginacionEmision2"
+										ajaxSingle="true" limitToList="true"
+										onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png" border="0"/>
+											<f:attribute name="navegacion" value="avanzarPaginasRapido" />
+										</a4j:commandLink>
+										<a4j:commandLink actionListener="#{consultaMovimientosValorBean.navegarPorResultados}" 
+										id="control_emision_ultimo2" rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.irAlUltimo}" 
+										reRender="containerResultados,containerInfoPaginacionEmision,containerInfoPaginacionEmision2"
+										ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+										<img src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png" border="0"/>
+											<f:attribute name="navegacion" value="irAlUltimo" />
+										</a4j:commandLink>
+
+									</td>
+									</tr>
+						</table>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+	</ui:composition>
+	</f:view>
+</html>

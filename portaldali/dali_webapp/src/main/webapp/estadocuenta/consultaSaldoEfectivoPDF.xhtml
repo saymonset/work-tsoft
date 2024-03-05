@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:pdf="http://indeval.com/jsf/pdf"
+	xmlns:cvt="http://indeval.com/jsf/converters"
+	xmlns:f="http://java.sun.com/jsf/core">
+    
+    <pdf:document documentName="consultaEstadoCuentaOperacionEfectivo" documentTitle="Consulta de Saldos de Efectivo"
+        fecha="#{elegirInstitucionBean.fechaActual}" imageResource="/images/indeval.png" widthPercentage="100" >
+          
+          
+        <pdf:grid border="0" bordercolor="#FFFFFF" align="center" >
+            <pdf:gridRow>  
+            	<pdf:gridCol   align="center" widthPercentage="25">
+            	</pdf:gridCol>
+                <pdf:gridCol   align="right"  collspan="5" >
+                    <pdf:text  value="#{elegirInstitucionBean.descripcionInstitucion}" /> 
+                </pdf:gridCol> 
+                <pdf:gridCol   align="center" widthPercentage="25">
+            	</pdf:gridCol>
+            </pdf:gridRow> 
+            <pdf:gridRow>   
+            	<pdf:gridCol> </pdf:gridCol>
+                <pdf:gridCol> </pdf:gridCol>  
+                <pdf:gridCol> </pdf:gridCol>
+            </pdf:gridRow>  
+        </pdf:grid>   
+         
+        <pdf:table value="#{consultaSaldosEfectivoBean.consultaSaldos}" currentBean="saldos" widthPercentage="100" >
+            <pdf:row>
+            	<pdf:col header="#{etq.fecha}" value="#{saldos.criterioFecha}" align="center">
+            			<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+            	</pdf:col>
+                <pdf:col header="#{etq.naturalezaMinus}" value="#{saldos.cuentaSeleccionada.tipoNaturaleza.descripcion}" align="center" />
+                <pdf:col header="#{etq.tipoCuentaMinus}" value="#{saldos.cuentaSeleccionada.tipoCuenta.descripcion}" align="center" />
+                <pdf:col header="#{etq.institucionMinus}" value="#{consultaSaldosEfectivoBean.folioClaveInstitucion}" align="center" />
+                <pdf:col header="#{etq.cuentaMinus}" value="#{saldos.cuentaSeleccionada.descripcion}" align="center" />
+                <pdf:col header="#{etq.divisaMinus}" value="#{saldos.divisaSeleccionada.descripcion}" align="center" />
+                <pdf:col header="#{etq.bovedaMinus}" value="#{saldos.bovedaSeleccionada.descripcion}" align="center" />
+            </pdf:row>
+        </pdf:table> 
+        
+      
+        <pdf:table value="#{consultaSaldosEfectivoBean.consultaSaldos}" currentBean="saldos" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.registrosEncontrados}" value="#{consultaSaldosEfectivoBean.registrosEncontrados}" align="center" />
+            </pdf:row>
+        </pdf:table>
+       
+        <pdf:table value="#{consultaSaldosEfectivoBean.resultadosConsultaSaldo}" currentBean="saldo"
+            rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}">
+            <pdf:row>
+                <pdf:col header="#{etq.cuentaMinus}" value="#{saldo.cuenta.numeroCuenta}" align="center" footer="Total"/>
+                <pdf:col header="#{etq.divisaMinus}" value="#{saldo.divisa.descripcion}" align="center" />
+                <pdf:col header="#{etq.bovedaMinus}" value="#{saldo.boveda.descripcion}" align="center" />
+                <pdf:col header="#{etq.saldoMinus}" value="#{saldo.saldo}" align="right" footer="#{consultaSaldosEfectivoBean.resumenSaldo.saldo}">
+                    <f:convertNumber pattern="$ #,##0.00" />
+                </pdf:col>
+            </pdf:row>
+        </pdf:table>
+
+        <pdf:table value="#{consultaSaldosEfectivoBean.resultadosConsultaSaldo}" currentBean="saldo" widthPercentage="100" 
+            rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}">
+            <pdf:row>
+                <pdf:col header="#{etq.cuentaMinus}" value="#{saldo.cuenta.numeroCuenta}" align="center" footer="Total" />
+                <pdf:col header="#{etq.divisaMinus}" value="#{saldo.divisa.descripcion}" align="center" />
+                <pdf:col header="#{etq.bovedaMinus}" value="#{saldo.boveda.descripcion}" align="center" />
+                <pdf:col header="#{etq.saldoMinus}" value="#{saldo.saldo}" align="right" footer="#{consultaSaldosEfectivoBean.resumenSaldo.saldo}">
+                    <f:convertNumber pattern="$ #,##0.00" />
+                </pdf:col>
+                <pdf:col header="#{etq.disponibleMinus}" value="#{saldo.saldoDisponible}" align="right" footer="#{consultaSaldosEfectivoBean.resumenSaldo.saldoDisponible}">
+                    <f:convertNumber pattern="$ #,##0.00" />
+                </pdf:col>
+                <pdf:col header="#{etq.noDisponibleMinus}" value="#{saldo.saldoNoDisponible}" align="right" footer="#{consultaSaldosEfectivoBean.resumenSaldo.saldoNoDisponible}">
+                    <f:convertNumber pattern="$ #,##0.00" />
+                </pdf:col>
+            </pdf:row>
+        </pdf:table>
+        
+        <pdf:table value="#{consultaSaldosEfectivoBean.resultadosConsultaSaldo}" currentBean="saldo"
+            rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}">
+            <pdf:row>
+                <pdf:col header="#{etq.cuentaMinus}" value="#{saldo.cuenta.numeroCuenta}" align="center" footer="Total"/>
+                <pdf:col header="#{etq.divisaMinus}" value="#{saldo.divisa.descripcion}" align="center" />
+                <pdf:col header="#{etq.bovedaMinus}" value="#{saldo.boveda.descripcion}" align="center" />
+                <pdf:col header="#{etq.saldoMinus}" value="#{saldo.saldo}" align="right" footer="#{consultaSaldosEfectivoBean.resumenSaldo.saldo}">
+                    <f:convertNumber pattern="$ #,##0.00" />
+                </pdf:col>
+            </pdf:row>
+        </pdf:table>
+        
+        <pdf:grid border="0" bordercolor="#FFFFFF" align="center" >
+        	<pdf:gridRow>  
+            	<pdf:gridCol> </pdf:gridCol>
+                <pdf:gridCol><pdf:br /> </pdf:gridCol>  
+                <pdf:gridCol> </pdf:gridCol>
+            </pdf:gridRow>  
+            <pdf:gridRow>  
+            	<pdf:gridCol> </pdf:gridCol>
+                <pdf:gridCol> </pdf:gridCol>  
+                <pdf:gridCol> </pdf:gridCol>
+            </pdf:gridRow> 
+        </pdf:grid>
+        
+        <pdf:table value="" currentBean="saldo"  widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="" value="#{etq.totalConsultaMinus}" align="center"/>
+                <pdf:col header="" value="" align="center" />
+                <pdf:col header="" value="" align="center" />
+                <pdf:col header="" value="#{consultaSaldosEfectivoBean.resumenConsulta['saldoTotal']}" align="right" > 
+                    <f:convertNumber pattern="$ #,##0.00" />
+                </pdf:col>
+                <pdf:col header="" value="#{consultaSaldosEfectivoBean.resumenConsulta['saldoTotalDisponible']}" align="right">
+                    <f:convertNumber pattern="$ #,##0.00" />
+                </pdf:col>
+                <pdf:col header="" value="#{consultaSaldosEfectivoBean.resumenConsulta['saldoTotalNoDisponible']}" align="right">
+                    <f:convertNumber pattern="$ #,##0.00" />
+                </pdf:col>
+            </pdf:row>
+        </pdf:table>
+        
+         
+    </pdf:document>
+</html>

@@ -1,0 +1,127 @@
+@charset "utf-8";
+.fondo {
+	background-color: #434363;
+	margin: 0px;
+	text-align: left;
+	vertical-align: top;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #FFFFFF;
+}
+
+.warning {
+	font-weight: bold;
+	color: #000000;
+	font-size: 14;
+	background-color: #CCCCCC;
+	
+}
+
+.tabla_head {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #FFFFFF;
+	background-image: url(../imgs_login/fondo_head_login.gif);
+	width: 100%;
+	height: 147px;
+}
+.tabla_login {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	color: #FFFFFF;
+	
+	height: 379px;
+}
+.tabla_campos {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	color: #CCCCCC;
+	width: 100%;
+	background-position: center;
+}
+
+.tabla_login_izq {
+	background-image: url(../imgs_login/edificio.gif);
+	background-repeat: no-repeat;
+	
+}
+
+.tabla_login_der {
+	background-image: url(../imgs_login/malla_cuadritos.gif);
+	background-repeat: no-repeat;
+	background-position: 0px 19px
+	
+}
+
+
+.btn_login{
+	margin: 0;
+    padding: 0;
+    
+    background-image: url(../imgs_login/ingresar.gif);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+    width: 98px;
+    height: 44px;
+
+
+}
+.btn_login:hover{
+	margin: 0;
+    padding: 0;
+    background-image: url(../imgs_login/ingresar.gif);
+	background-repeat: no-repeat;
+	background-position: -98px 0;
+    width: 98px;
+    height: 44px;
+}
+
+.btn_cambiar{
+	margin: 0;
+    padding: 0;
+    background-image: url(../imgs_login/cambiar.gif);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+    width: 85px;
+    height: 28px;
+
+
+}
+.btn_cambiar:hover{
+	margin: 0;
+    padding: 0;
+    background-image: url(../imgs_login/cambiar.gif);
+	background-repeat: no-repeat;
+	background-position: -85px 0;
+    width: 85px;
+    height: 28px;
+}
+
+.btn_regresar{
+	margin: 0;
+    padding: 0;
+    background-image: url(../imgs_login/regresar.gif);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+    width: 85px;
+    height: 28px;
+
+
+}
+.btn_regresar:hover{
+	margin: 0;
+    padding: 0;
+    background-image: url(../imgs_login/regresar.gif);
+	background-repeat: no-repeat;
+	background-position: -85px 0;
+    width: 85px;
+    height: 28px;
+}
+
+.tituloMensaje{
+	background-image: url(../imgs_login/llamada.gif);
+	background-repeat: repeat-x;
+	
+}

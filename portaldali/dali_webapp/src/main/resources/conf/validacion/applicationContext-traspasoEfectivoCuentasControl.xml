@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+    <!-- VALIDACION MISMA INSTITUCION -->
+    <bean id="validacionTraspasoEfectivo" class="com.indeval.portaldali.presentation.validation.impl.DTOValidatorImpl">
+        <property name="nombreBundle" value="mensajes.validacionesCapturaOperaciones" />
+        <property name="criteriosValidacion">
+            <list>
+                <!-- Valida que todos los campos requeridos 
+                    @return boolean true si encontró un error o false en caso contrario -->
+
+                <!-- FOLIO RECEPTOR -->
+                <bean class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+                    <property name="llaveMensaje" value="FOLIO_RECEPTOR_REQUERIDO" />
+                    <property name="parametros">
+                        <map>
+                            <entry key="campo" value="idFolioReceptor" />
+                        </map>
+                    </property>
+                </bean>               
+                
+
+                <!-- BOVEDA -->
+                <bean
+                    class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+                    <property name="llaveMensaje"
+                        value="BOVEDA_REQUERIDA" />
+                    <property name="parametros">
+                        <map>
+                            <entry key="campo"
+                                value="boveda" />
+                        </map>
+                    </property>
+                </bean>
+                <bean
+                    class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+                    <property name="llaveMensaje"
+                        value="BOVEDA_REQUERIDA" />
+                    <property name="parametros">
+                        <map>
+                            <entry key="campo"
+                                value="boveda.id" />
+                        </map>
+                    </property>
+                </bean>
+
+                <!-- IMPORTE A TRASPASAR -->
+                <bean class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+                    <property name="llaveMensaje" value="IMPORTE_TRASPASO_REQUERIDO" />
+                    <property name="parametros">
+                        <map>
+                            <entry key="campo" value="importeATraspasar" />
+                        </map>
+                    </property>
+                </bean>
+                 <bean class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumerico">
+                    <property name="llaveMensaje" value="FORMATO_IMPORTE_TRASPASO_INVALIDO" />
+                    <property name="parametros">
+                        <map>
+                            <entry key="campo" value="importeATraspasar" />
+                        </map>
+                    </property>
+                </bean>
+               
+            </list>
+        </property>
+    </bean>
+
+</beans>

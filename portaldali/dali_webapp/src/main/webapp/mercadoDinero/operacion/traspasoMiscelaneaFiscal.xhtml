@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en" xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:indeval="http://indeval.com/indeval"
+    xmlns:t="http://myfaces.apache.org/tomahawk" 
+    xmlns:rich="http://richfaces.org/rich">
+
+   <ui:composition
+		template="/mercadoDinero/operacion/layoutCapturaOperacion.xhtml">
+        <ui:define name="headCaptura">
+        <script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/consultaPosiciones.js"></script>
+            <script language="javascript" type="text/javascript"
+                src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js"></script>
+        </ui:define>
+        <ui:define name="tituloEncabezado">
+            <h:outputText value="#{etq.miscelaneaFiscal}" />
+
+        </ui:define>
+
+        <ui:define name="seccionFormaOperacion">
+        	<h:outputText  value="#{traspasoMiscelaneaFiscalBean.initForm}"></h:outputText>
+            <h:outputText id="init" value="#{traspasoMiscelaneaFiscalBean.init}"></h:outputText>
+            <a4j:keepAlive beanName="traspasoMiscelaneaFiscalBean" />
+            <h:panelGroup id="general">
+                <table width="100%" cellpadding="0px" cellspacing="0px" align="center">
+                    <tr>
+                        <td colspan="2" align="center">
+                            <h:panelGrid columns="2">
+                                <h:outputText value="#{etq.recepcionMinus}" styleClass="texto" />
+                                <h:selectBooleanCheckbox id="recepcion"
+                                    value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.recepcion}" tabindex="10">
+                                    <a4j:support event="onclick"
+                                        reRender="seleccionCuentaTraspasante,seleccionCuentaReceptor, datosPosicionTraspasante, seleccionCuentaReceptor, panelMensajes"
+                                        actionListener="#{traspasoMiscelaneaFiscalBean.cambioRecepcion}">
+                                    </a4j:support>
+                                </h:selectBooleanCheckbox>
+                            </h:panelGrid>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="50%">
+                            <h:panelGrid columns="4" width="100%" id="seleccionCuentaTraspasante">
+                                <f:facet name="header">
+                                    <h:outputText value="#{etq.traspasanteMinus}" styleClass="texto" />
+                                </f:facet>
+                                <h:outputText value="#{etq.participanteMinus}" styleClass="texto" />
+                                <h:outputText value="#{etq.cuentaMinus}" styleClass="texto" />
+                                <!-- h:outputText value="#{etq.tenencia}" styleClass="texto" /-->
+                                <h:outputText value="#{etq.nombreCuenta}" styleClass="texto" />
+
+                                <h:panelGroup id="folioTraspasante">
+                                    <h:inputText autocomplete="off" id="idFolioTraspasante" size="5" maxlength="5"
+                                        value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.idFolioTraspasante}"
+                                        styleClass="#{!traspasoMiscelaneaFiscalBean.editarTraspasante ? 'readonly' : 'campoNumericoAsterisco'}" tabindex="20">
+                                        <a4j:support event="onchange" reRender="init, nombreInstitucionTraspasante" oncomplete="establecerFoco('cuentaTraspasante')"/>
+                                    </h:inputText>   
+                                       
+                                    <rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="idFolioTraspasante"
+                                        suggestionAction="#{seleccionarCuentaBean.buscarParticipante}" var="coincidencia"
+                                        eventsQueue="folioTraspQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+                                        fetchValue="#{coincidencia.claveTipoInstitucion}#{coincidencia.folioInstitucion}"
+                                        minChars="1" width="200" immediate="false" nothingLabel="Sin coincidencias">
+                                        <h:column>
+                                            <h:outputText
+                                                value="#{coincidencia.claveTipoInstitucion}#{coincidencia.folioInstitucion}"
+                                                styleClass="texto" /> - <h:outputText value="#{coincidencia.nombreCorto}"
+                                                styleClass="texto" />
+                                        </h:column>
+                                        <a4j:support event="onselect" reRender="init,nombreInstitucionTraspasante" />
+                                    </rich:suggestionbox>
+                                </h:panelGroup>
+                                <h:panelGroup id="ctaTraspasante">
+                                	<h:panelGroup id="panelCuentaTraspasante">
+	                                    <h:inputText autocomplete="off" id="cuentaTraspasante" size="4" 
+	                                    	styleClass="#{colocacionPrimariaBean.compraEnDirecto?'readonly campoNumericoAsterisco':'campoNumericoAsterisco'} textoCuenta" readonly="false"
+	                                        value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.posicionTraspasante.cuenta.cuenta}"
+	                                        tabindex="30" >
+	                                        <a4j:support event="onchange" reRender="init,tenenciaTraspasante,panelSerie,panelEmisora,cupon,boveda,isin,diasVigentes,saldoDisponible,nombreInstitucionTraspasante" oncomplete="establecerFoco('tipoValor')"/>
+	                                    </h:inputText>
+	                                    <input type="hidden" id="nombre_id_folio_traspasante" name="nombre_id_folio_traspasante"
+	                                        value="daliForm:idFolioTraspasante" />
+	                                    <rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="cuentaTraspasante"
+	                                        suggestionAction="#{seleccionarCuentaBean.buscarCuentaTraspasante}" var="coincidencia"
+	                                        eventsQueue="cuentaTraspQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+	                                        fetchValue="#{coincidencia.cuenta}" minChars="1" width="80"
+	                                        nothingLabel="Sin coincidencias">
+	                                        <h:column>
+	                                            <h:outputText value="#{coincidencia.cuenta}" styleClass="texto" />
+	                                        </h:column>
+	                                        <a4j:support event="onselect" actionListener="#{traspasoMiscelaneaFiscalBean.validarCuenta}" reRender="init,tenenciaTraspasante,nombreInstitucionTraspasante" />
+	                                    </rich:suggestionbox>
+	                              	</h:panelGroup>
+                                </h:panelGroup>
+
+                                <!--  h:inputText id="tenenciaTraspasante" size="8"
+                                
+                                    value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.posicionTraspasante.cuenta.tipoTenencia.claveTipoCuenta}"
+                                    styleClass="readonly" /-->
+                                <h:inputText autocomplete="off" id="nombreInstitucionTraspasante" size="40"
+                                    value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.posicionTraspasante.cuenta.nombreCuenta}"
+                                    styleClass="readonly" />
+                            </h:panelGrid>
+                        </td>
+                        <td width="50%">
+                            <h:panelGrid columns="4" width="100%" id="seleccionCuentaReceptor">
+                                <f:facet name="header">
+                                    <h:outputText value="#{etq.receptorMinus}" styleClass="texto" />
+                                </f:facet>
+                                <h:outputText value="#{etq.participanteMinus}" styleClass="texto" />
+                                <h:outputText value="#{etq.cuentaMinus}" styleClass="texto" />
+                                <!-- h:outputText value="#{etq.tenencia}" styleClass="texto" /-->
+                                <h:outputText value="#{etq.nombreCuenta}" styleClass="texto" />
+
+                                <h:panelGroup id="folioReceptor">
+                                    <h:inputText autocomplete="off" id="idFolioReceptor" size="5"
+                                        value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.idFolioReceptor}"
+                                        styleClass="#{traspasoMiscelaneaFiscalBean.editarReceptor ? 'campoNumericoAsterisco' : 'readonly'} campoNumerico textoParticipante" tabindex="80">
+                                        <a4j:support event="onchange" reRender="init, nombreInstitucionReceptor" oncomplete="establecerFoco('cuentaReceptor');"/>
+                                    </h:inputText>
+                                        
+                                    <rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="idFolioReceptor" id="suggest_institucionReceptora"
+                                        suggestionAction="#{seleccionarCuentaBean.buscarParticipante}" var="coincidencia_i"
+                                        eventsQueue="folioRecepQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+                                        fetchValue="#{coincidencia_i.claveTipoInstitucion}#{coincidencia_i.folioInstitucion}"
+                                        minChars="1" width="200" nothingLabel="Sin coincidencias">
+                                        <h:column>
+                                            <h:outputText
+                                                value="#{coincidencia_i.claveTipoInstitucion}#{coincidencia_i.folioInstitucion}"
+                                                styleClass="texto" /> - <h:outputText value="#{coincidencia_i.nombreCorto}"
+                                                styleClass="texto" />
+                                        </h:column>
+                                        <a4j:support event="onselect" reRender="init,nombreInstitucionReceptor" />
+                                    </rich:suggestionbox>
+                                </h:panelGroup>
+                                <h:panelGroup id="ctaReceptor">
+                                    <h:inputText autocomplete="off" id="cuentaReceptor" size="4"
+                                    	styleClass="#{colocacionPrimariaBean.compraEnDirecto?'readonly campoNumericoAsterisco':'campoNumericoAsterisco'} textoCuenta" readonly="false"
+                                        value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.cuentaReceptor.cuenta}" tabindex="90">
+                                        <a4j:support event="onchange" reRender="init,tenenciaReceptor,nombreInstitucionReceptor" oncomplete="establecerFoco('cantidad')"/>
+                                    </h:inputText>
+                                    <input type="hidden" id="nombre_id_folio_receptor" name="nombre_id_folio_receptor"
+                                        value="daliForm:idFolioReceptor" />
+                                    <rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="cuentaReceptor"
+                                        suggestionAction="#{seleccionarCuentaBean.buscarCuentaReceptor}" var="coincidencia"
+                                        eventsQueue="cuentaRecepQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+                                        fetchValue="#{coincidencia.cuenta}" minChars="1" width="80" immediate="false"
+                                        nothingLabel="Sin coincidencias">
+                                        <h:column>
+                                            <h:outputText value="#{coincidencia.cuenta}" styleClass="texto" />
+                                        </h:column>
+                                        <a4j:support event="onselect" actionListener="#{traspasoMiscelaneaFiscalBean.validarCuenta}"  reRender="init,tenenciaReceptor,nombreInstitucionReceptor" />
+                                    </rich:suggestionbox>
+                                </h:panelGroup>
+
+                                <!-- h:inputText id="tenenciaReceptor" size="15" styleClass="readonly"
+                                    value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.cuentaReceptor.tipoTenencia.claveTipoCuenta}" /-->
+                                <h:inputText autocomplete="off" id="nombreInstitucionReceptor" size="33" styleClass="readonly"
+                                    value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.cuentaReceptor.nombreCuenta}" />
+                            </h:panelGrid>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top;">
+                            <h:panelGroup id="datosPosicionTraspasante" style="position:relative;">
+                                <table width="100%" cellpadding="0px" cellspacing="5px">
+                                    <tr>
+                                        <td width="25%">
+                                            <h:panelGroup>
+                                                <h:outputText value="#{etq.tv}" styleClass="texto" />
+                                                <h:outputText value="#{etq.asterisco}" styleClass="required" />
+                                            </h:panelGroup>
+                                        </td>
+                                        <td width="75%">
+                                            <h:panelGroup id="panelTipoValor">
+                                                <h:inputText autocomplete="off" id="tipoValor" size="7" 
+                                                    value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.posicionTraspasante.emision.tipoValor.claveTipoValor}"
+                                                	styleClass="textoTipoValor campoAlphaNumericoAsterisco"
+                                                    tabindex="40" >
+                                                    <a4j:support event="onchange" reRender="init,panelCuentaTraspasante,panelSerie,cupon,boveda,isin,diasVigentes,saldoDisponible" oncomplete="establecerFoco('emisora');"/>
+                                                </h:inputText>
+                                                <rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="tipoValor"
+                                                    suggestionAction="#{seleccionarEmisionBean.buscarTiposValorPorPrefijo}"
+                                                    eventsQueue="tipoValQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+                                                    var="coincidencia" fetchValue="#{coincidencia.claveTipoValor}" minChars="1"
+                                                    width="300" immediate="false" nothingLabel="Sin coincidencias">
+                                                    <h:column>
+                                                        <h:outputText value="#{coincidencia.claveTipoValor}" styleClass="texto" /> - <h:outputText
+                                                            value="#{coincidencia.descripcion}" styleClass="texto" />
+                                                    </h:column>
+                                                </rich:suggestionbox>
+                                            </h:panelGroup>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:outputText value="#{etq.emisoraMinus}" styleClass="texto" />
+                                                <h:outputText value="#{etq.asterisco}" styleClass="required" />
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                            <h:panelGroup id="panelEmisora">
+                                                <h:inputText autocomplete="off" id="emisora" size="7" maxlength="7"
+                                                    value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.posicionTraspasante.emision.emisora.descripcion}"
+                                                    styleClass="campoAlphaNumericoEmisora"
+                                                    readonly="false" required="false" tabindex="50" >
+                                                    <a4j:support event="onchange" reRender="init,panelTipoValor,panelCuentaTraspasante,cupon,boveda,isin,diasVigentes,saldoDisponible" oncomplete="establecerFoco('serie');"/>
+                                                </h:inputText>
+                                                <rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="emisora"
+                                                    suggestionAction="#{seleccionarEmisionBean.buscarEmisorasPorPrefijo}"
+                                                    eventsQueue="emisoraQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+                                                    var="coincidencia" fetchValue="#{coincidencia.descripcion}" minChars="1"
+                                                    width="300" immediate="false" nothingLabel="Sin coincidencias">
+                                                    <h:column>
+                                                        <h:outputText value="#{coincidencia.descripcion}" styleClass="texto" />
+                                                    </h:column>
+                                                </rich:suggestionbox>
+                                            </h:panelGroup>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:outputText value="#{etq.serieMinus}" styleClass="texto" />
+                                                <h:outputText value="#{etq.asterisco}" styleClass="required" />
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                        	<h:panelGroup id="panelSerie">
+	                                            <h:inputText autocomplete="off" id="serie" size="7" maxlength="6"
+	                                                value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.posicionTraspasante.emision.serie.serie}"
+	                                                			styleClass="campoAlphaNumericoSerie" 
+	                                                tabindex="60" >
+	                                              	<a4j:support event="onchange" reRender="init,panelTipoValor,panelCuentaTraspasante,panelEmisora,cupon,boveda,isin,diasVigentes,saldoDisponible" oncomplete="establecerFoco('cupon');"/>
+	                                           	</h:inputText>
+                                           	</h:panelGroup>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:outputText value="#{etq.cuponMinus}" styleClass="texto" />
+                                                <h:outputText value="#{etq.asterisco}" styleClass="required" />
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                            <h:panelGrid columns="2" width="100%" cellpadding="0px" cellspacing="0px">
+                                                <h:inputText autocomplete="off" id="cupon" size="7" maxlength="4"
+                                                    value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.posicionTraspasante.emision.cupon}"
+                                                    	styleClass="campoNumerico textoCupon"
+                                                    tabindex="70" />
+                                                <h:panelGroup>
+                                                    <a id="buscarPosicionLink" href="javascript: mostrarPosiciones('Dinero');"> <h:graphicImage
+                                                            value="/images/search.png">
+                                                        </h:graphicImage> <h:outputText value="#{etq.buscarPosicionMinus}" styleClass="texto" /> </a>
+												&#160;&#160;&#160;
+                                                <a id="limpiarPosicionLink" href="javascript:limpiarDatosPosicion('');"> <h:graphicImage
+                                                            value="/images/page_refresh.png">
+                                                        </h:graphicImage> <h:outputText value="#{etq.limpiarPosicionMinus}" styleClass="texto" />
+                                                    </a>
+                                                </h:panelGroup>
+                                            </h:panelGrid>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:panelGroup >
+                                                <h:outputText value="#{etq.isin}" styleClass="texto" />
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                            <h:inputText autocomplete="off" id="isin" size="30" maxlength="12"
+                                                value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.posicionTraspasante.emision.isin}"
+                                                styleClass="readonly"  />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:outputText value="#{etq.bovedaMinus}" styleClass="texto" />
+                                                <h:outputText value="#{etq.asterisco}" styleClass="required" />
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                            <h:selectOneMenu styleClass="readonly disabled"
+                                                value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.posicionTraspasante.boveda}"
+                                                id="boveda" converter="bovedaConverter" tabindex="75" >                                              
+                                                <f:selectItems value="#{seleccionarEmisionBean.bovedasValor}" />
+                                            </h:selectOneMenu>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:panelGroup rendered="#{!traspasoMiscelaneaFiscalBean.recepcion}">
+                                                <h:outputText value="#{etq.precioVector}" styleClass="texto" />
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                            <h:inputText autocomplete="off" id="precioVector" size="30" maxlength="30"
+                                                value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.precioVector}"
+                                                styleClass="readonly" converter="formatoMonedaConverter"
+                                                rendered="#{!traspasoMiscelaneaFiscalBean.recepcion}">
+                                            </h:inputText>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:panelGroup rendered="#{!traspasoMiscelaneaFiscalBean.recepcion}">
+                                                <h:outputText value="#{etq.saldoDisponibleMinus}" styleClass="texto" />
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                            <h:inputText autocomplete="off" id="saldoDisponible" size="30" maxlength="30"
+                                                value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.saldoDisponible}"
+                                                converter="formatoEnteroConverter" styleClass="readonly"
+                                                rendered="#{!traspasoMiscelaneaFiscalBean.recepcion}">
+                                            </h:inputText>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:panelGroup rendered="#{!traspasoMiscelaneaFiscalBean.recepcion}">
+                                                <h:outputText value="#{etq.saldoActual}" styleClass="texto" />
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                            <h:inputText autocomplete="off" id="saldoActual" size="30" maxlength="30"
+                                                value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.saldoActual}"
+                                                converter="formatoEnteroConverter" styleClass="readonly"
+                                                rendered="#{!traspasoMiscelaneaFiscalBean.recepcion}">
+                                            </h:inputText>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </h:panelGroup>
+                        </td>
+                        <td style="vertical-align: top;">
+                            <h:panelGroup id="datosOperacion">
+                                <table width="100%" cellpadding="0px" cellspacing="5px">
+                                    <tr>
+                                        <td width="25%">
+                                            <h:panelGroup>
+                                                <h:outputText value="#{etq.cantidadOperada}" styleClass="texto" />
+                                                <h:outputText value="#{etq.asterisco}" styleClass="required" />
+                                            </h:panelGroup>
+                                        </td>
+                                        <td width="75%">
+                                        	<h:panelGroup id="cantidadOperacion">
+                                            	<h:inputText autocomplete="off" id="cantidad" size="30" maxlength="14" converter="formatoEnteroConverter"
+                                                	value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.cantidadOperada}"
+                                                    	   styleClass="campoNumerico"
+                                                	tabindex="100">
+                                                	<a4j:support event="onchange" reRender="saldoActual, cantidad"
+                                                    	actionListener="#{traspasoMiscelaneaFiscalBean.realizaCalculoSaldoActual}" />
+                                            	</h:inputText>
+                                            </h:panelGroup>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:outputText value="#{etq.divisa}" styleClass="texto" />
+                                                <h:outputText value="#{etq.asterisco}" styleClass="required" />
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                        	<h:panelGroup id="divisa">
+                                            	<h:selectOneMenu id="valorEn"
+                                                	value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.valorEn}"
+                                                	converter="divisaConverter" tabindex="110">
+                                                	<f:selectItems value="#{catalogosBean.opcionesComboDivisa}" />
+                                            	</h:selectOneMenu>
+                                            </h:panelGroup>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:outputText value="#{etq.fechaHoraCierreOperMinus}" styleClass="texto" />
+                                            </h:panelGroup>
+
+                                        </td>
+                                        <td>
+											<rich:calendar id="fechaHoraCierreOper" 
+												value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.fechaHoraCierreOper}"
+												datePattern="dd/MM/yyyy HH:mm"
+												inputSize="20"
+												inputStyle="background-color: #ffffe6;"
+												isDayEnabled="isDayEnabled" 
+												/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:outputText value="#{etq.fechaAdquisicionMinus}" styleClass="texto" />
+                                                <h:outputText value="#{etq.asterisco}" styleClass="required" />
+                                            </h:panelGroup>
+
+                                        </td>
+                                        <td>
+											<rich:calendar id="fechaAdquisicion" 
+												value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.fechaAdquisicion}"
+												datePattern="dd/MM/yyyy"
+												inputSize="20"
+												inputStyle="background-color: #ffffe6;"
+												isDayEnabled="isDayEnabled" 
+												/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:outputText value="#{etq.precioAdquisicionMinus}" styleClass="texto" />
+                                                <h:outputText value="#{etq.asterisco}" styleClass="required" />
+                                            </h:panelGroup>
+
+                                        </td>
+                                        <td>
+                                        	<h:panelGroup id="precio">
+                                            	<h:inputText autocomplete="off" id="precioAdquisicion" size="30" maxlength="30"
+                                                	value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.precioAdquisicion}"
+                                                	converter="formatoLargoMonedaConverter" 
+                                                   	styleClass="campoNumericoDecimal campoNumericoDecimalOchoDecimales"
+                                                	tabindex="130">
+                                            	</h:inputText>
+                                            </h:panelGroup>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:outputText value="#{etq.clienteMinus}" styleClass="texto" />
+                                                <h:outputText value="#{etq.asterisco}" styleClass="required" />
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                        	<h:panelGroup id="clienteOperacion">
+                                            	<h:inputText autocomplete="off" id="cliente" size="35" maxlength="35"
+                                                	value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.cliente}"
+                                                	tabindex="140" styleClass="campoAlphaEspeciales"/>
+                                            </h:panelGroup>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:outputText value="#{etq.rfcCurp}" styleClass="texto" />
+                                                <h:outputText value="#{etq.asterisco}" styleClass="required" />
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                        	<h:panelGroup id="rfc">
+                                            	<h:inputText autocomplete="off" id="rfcCurp" size="20" maxlength="18" 
+                                                	value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.rfcCurp}"
+                                                	tabindex="150" styleClass="campoAlphaNumerico"/>
+                                            </h:panelGroup>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:outputText value="#{etq.extranjeroMinus}" styleClass="texto" />
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                        	<h:panelGroup id="ext">
+                                            	<h:selectBooleanCheckbox id="extranjero"
+                                                	value="#{traspasoMiscelaneaFiscalBean.traspasoMiscelaneaFiscal.aceptaCargo}"
+                                                	tabindex="160" onclick="validaExtranjero()" />
+                                            </h:panelGroup>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </h:panelGroup>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            &#160;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <h:outputText value="#{etq.asterisco}" styleClass="required" />
+                            <h:outputText value="#{etq.requeridos}" styleClass="texto" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            &#160;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            &#160;
+                        </td>
+                    </tr>
+                </table>
+                
+                <!-- La facultad debe reflejar el valor de SeguridadConstants.FACULTAD_FIRMA_OPERACION -->
+				<indeval:authorizeFaculty userInFaculty="CON_CERTIFICADO">
+	                <h:panelGroup id="panelFirma">
+	                    <div style="display: none">
+	                        <textarea id="isoSinFirmar" name="isoSinFirmar">#{traspasoMiscelaneaFiscalBean.isoSinFirmar}</textarea>
+	                         <textarea id="numeroSerie" name="numeroSerie" ></textarea>
+							<textarea id="isoFirmado" name="isoFirmado"></textarea>
+							<textarea  id="numeroSerieUsuario" name="numeroSerieUsuario">#{sessionScope.usuario.numeroSerieCertificado}</textarea>
+							<textarea  id="hashIso" name="hashIso">#{traspasoMiscelaneaFiscalBean.hashIso}</textarea>
+	                    </div>
+	
+	                    <h:panelGroup rendered="#{not empty traspasoMiscelaneaFiscalBean.isoSinFirmar}">
+	                        <script>                                                    
+	                            function firmarOperacion(){
+	                            	bloquearSeccionBotones('btnGuardar', 'btnLimpiar');
+	                                $j("input[id$='btnGuardar2']").prop("disabled",false);
+	                                $j("input[id$='btnGuardar2']").click();
+	                                $j("input[id$='btnGuardar2']").prop("disabled",true);
+	                            }
+	                        </script>
+	
+	                        <ui:decorate template="/firmaDigitalSimple.xhtml">
+	                            <ui:define name="isoSinFirmar">
+	                                <h:outputText value="#{traspasoMiscelaneaFiscalBean.isoSinFirmar}" />
+	                            </ui:define>
+	                        </ui:decorate>
+	                    </h:panelGroup>
+	                </h:panelGroup>
+				</indeval:authorizeFaculty>
+				
+            </h:panelGroup>
+        </ui:define>
+        
+        <ui:define name="botones">
+
+
+			<h:panelGrid width="25%">
+				<h:panelGroup id="botones">
+					<div class="limpiar">
+						<h:commandButton id="btnLimpiar" image="/images/transparent.gif"
+							styleClass="submit" 
+							actionListener="#{traspasoMiscelaneaFiscalBean.limpiar}"
+							tabindex="190">
+						</h:commandButton>
+					</div>
+					<div class="guardar">
+						<a4j:commandButton id="btnGuardar" image="/images/transparent.gif"
+							styleClass="submit" reRender="folioTraspasante, ctaTraspasante, tenenciaTraspasante, nombreInstitucionTraspasante, folioReceptor, ctaReceptor, 
+							tenenciaReceptor, nombreInstitucionReceptor, cantidadOperacion, divisa, precio, clienteOperacion, rfc, ext, botones, panelFirma, panelTipoValor, 
+							tipoValor, datosPosicionTraspasante"
+							actionListener="#{traspasoMiscelaneaFiscalBean.enviarOperacion}"
+							onclick="if(confirmarOperacionGeneral()){removeApplet();deshabilitarBoton('btnGuardar');deshabilitarBoton('btnLimpiar');} else return false"
+							tabindex="180"
+							oncomplete="establecerFoco('idFolioTraspasante'); habilitarBoton('btnGuardar');  habilitarBoton('btnLimpiar');">							
+						</a4j:commandButton>						
+					</div>
+					<div class="guardar">
+						<h:commandButton id="btnGuardar2" image="/images/transparent.gif"
+							styleClass="hidden" disabled="true"
+							actionListener="#{traspasoMiscelaneaFiscalBean.enviarOperacion2}" 
+							oncomplete="desbloquearSeccionBotones('btnGuardar', 'btnLimpiar');" tabindex="180">
+						</h:commandButton>
+					</div>
+				</h:panelGroup>
+			</h:panelGrid>
+
+		</ui:define>
+
+    </ui:composition>
+</html>

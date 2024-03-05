@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:t="http://myfaces.apache.org/tomahawk" xmlns:a4j="http://richfaces.org/a4j" xmlns:f="http://java.sun.com/jsf/core"
+    xml:lang="en" lang="en">
+    
+    <ui:decorate template="/layoutPopUp.xhtml">
+        <ui:define name="subtitulo">
+                <span>
+                	<h:outputText value="#{etq.fileTransferMiscFiscalCapital}"></h:outputText> - Errores
+                </span>
+        </ui:define>
+
+	    <ui:define name="body">
+	        <h:outputText value="#{fileTransferMisFiscalCapitalesBean.initDetalleErrores}"></h:outputText>
+	        <h:panelGroup>
+				<table width="100%" class="tablaGeneral" border="0">						
+					<t:dataList value="#{fileTransferMisFiscalCapitalesBean.registrosConError}" var="registro" rowIndexVar="indice">
+						<tr>
+							<td class="#{indice % 2 == 0 ? 'renglonTablaUno' : 'renglonTablaDos'}">
+								<table width="900px" cellpadding="3px" cellspacing="0px" border="0">
+									<tr class="tituloTabla">
+										<td width="20px">
+											<h:outputText value="#" />
+										</td>
+										<td width="80px">
+											<h:outputText value="#{etq.usuarioMinus}" />
+										</td>
+										<td width="120px">
+											<h:outputText value="#{etq.fechaMinus}" />
+										</td>
+										<td width="100px">
+											<h:outputText value="#{etq.estadoRegistroMinus}" />
+										</td>
+										<td width="580px">
+											<h:outputText value="#{etq.mensajeMinus}" />
+										</td>
+									</tr>
+									<tr>
+										<td align="center">
+											<h:outputText value="#{registro.consecutivo}" />
+										</td>
+										<td align="center">
+											<h:outputText value="#{registro.usuario}" escape="false" />
+										</td>
+										<td align="center">
+											<h:outputText value="#{registro.fechaProcesamiento}" converter="formatoFechaLargoConverter" />
+										</td>
+										<td align="center">
+											<h:outputText value="#{registro.edoRegistro}" />
+										</td>
+										<td align="center">
+											<t:dataList value="#{registro.mensajesRegistro}" style="text-align:left" var="mensaje" layout="unorderedList">
+												<t:outputText 
+													styleClass="#{registro.edoRegistro eq 'ER' ? 'fileError' : 'regFileUploadMsg'}"
+													value="#{mensaje}" />
+											</t:dataList>
+										</td>
+									</tr>
+									<tr class="tituloTabla">
+										<td colspan="5">
+											<h:outputText styleClass="tablaitem" value="#{etq.informacionMinus}" />
+										</td>
+									</tr>
+									
+									<tr>
+										<h:panelGroup rendered="#{empty registro.camposRegistro}">
+											<td colspan="5">
+												<h:outputText value="#{registro.cadenaRegistro}" />
+											</td>
+										</h:panelGroup>
+										<h:panelGroup rendered="#{not empty registro.camposRegistro}">
+											<td colspan="5">
+
+												<table cellpadding='0' cellspacing='0' align='left' width="900px">
+													<tr>
+														<t:dataList var="campo" value="#{registro.camposRegistro}" first="0" rows="9">
+															<td style="width: 81px;" class='tituloTabla'>
+																<t:outputText value="#{campo.etiquetaCampo}[#{campo.longitudCampo}]" />
+															</td>
+														</t:dataList>
+													</tr>
+													<tr>
+														<t:dataList var="campo" value="#{registro.camposRegistro}" first="0" rows="9">
+															<td style="width: 81px;" align="center">
+																<t:outputText value="#{campo.valorCampo}" 
+																	styleClass="#{campo.campoCorrecto ? 'regFileUpload' : 'fileError'}" escape="false" />
+															</td>
+														</t:dataList>
+													</tr>
+													<tr>
+														<t:dataList var="campo" value="#{registro.camposRegistro}" first="9" rows="18">
+															<td style="width: 81px;" class='tituloTabla'>
+																<t:outputText
+																	value="#{campo.etiquetaCampo}[#{campo.longitudCampo}]" />
+															</td>
+														</t:dataList>
+													</tr>
+													<tr>
+														<t:dataList var="campo" value="#{registro.camposRegistro}" first="9" rows="18">
+															<td style="width: 81px;" align="center">
+																<t:outputText value="#{campo.valorCampo}" 
+																	styleClass="#{campo.campoCorrecto ? 'regFileUpload' : 'fileError'}" escape="false" />
+															</td>
+														</t:dataList>
+													</tr>
+												</table>
+											</td>
+										</h:panelGroup>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td>&#160;</td>
+						</tr>
+					</t:dataList>
+				</table>
+	        </h:panelGroup>
+	    </ui:define>
+	</ui:decorate>
+</html>

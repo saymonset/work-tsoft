@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="configLocations"
+			value="classpath:com/indeval/portaldali/conf/common/hibernate.cfg.xml" />
+		<property name="schemaUpdate" value="false" />
+		<property name="exposeTransactionAwareSessionFactory"
+			value="false" />
+		<property name="dataSource">
+			<ref bean="dataSourceDali"></ref>
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.Oracle10gDialect
+				</prop>
+				<!-- <prop key="hibernate.query.factory_class">
+					org.hibernate.hql.ast.ASTQueryTranslatorFactory
+				</prop> -->
+			</props>
+		</property>
+	</bean>
+
+
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate" lazy-init="true">
+		<property name="dataSource">
+			<ref bean="dataSourceDali" />
+		</property>
+	</bean>
+
+	<bean id="mercadoDAO"
+		class="com.indeval.portaldali.persistence.dao.common.impl.MercadoDaliDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="errorLiquidacionDaliDAO"
+		class="com.indeval.portaldali.persistence.dao.common.impl.ErrorLiquidacionDaliDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="propiedadesDaliDAO"
+		class="com.indeval.portaldali.persistence.dao.common.impl.PropiedadesDaliDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="estadoInstruccionDAO"
+		class="com.indeval.portaldali.persistence.dao.common.impl.EstadoInstruccionDaliDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+		<property name="estadosInstruccion">
+			<list value-type="java.lang.Long">				
+				<value type="java.lang.Long">1</value>
+				<value type="java.lang.Long">2</value>
+				<value type="java.lang.Long">3</value>
+				<value type="java.lang.Long">6</value>
+				<value type="java.lang.Long">10</value>
+				<value type="java.lang.Long">18</value>				
+				<value type="java.lang.Long">19</value>
+				<value type="java.lang.Long">23</value>				
+			</list>
+		</property>
+	</bean>
+
+
+	<bean id="divisaDAO"
+		class="com.indeval.portaldali.persistence.dao.common.impl.DivisaDaliDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+		<property name="divisa">
+			<list value-type="java.lang.Long">				
+				<value type="java.lang.Long">1</value>
+				<value type="java.lang.Long">2</value>
+				<value type="java.lang.Long">3</value>
+				<value type="java.lang.Long">4</value>
+				<value type="java.lang.Long">5</value>
+				<value type="java.lang.Long">6</value>
+				<value type="java.lang.Long">7</value>
+				<value type="java.lang.Long">8</value>
+				<value type="java.lang.Long">9</value>
+				<value type="java.lang.Long">10</value>
+				<value type="java.lang.Long">11</value>
+				<value type="java.lang.Long">12</value>
+				<value type="java.lang.Long">13</value>
+				<value type="java.lang.Long">14</value>
+				<value type="java.lang.Long">15</value>
+				<value type="java.lang.Long">16</value>
+				<value type="java.lang.Long">17</value>
+				<value type="java.lang.Long">18</value>
+				<value type="java.lang.Long">19</value>
+				<value type="java.lang.Long">20</value>
+				<value type="java.lang.Long">21</value>
+				<value type="java.lang.Long">22</value>
+				<value type="java.lang.Long">23</value>
+				<value type="java.lang.Long">24</value>												
+				<value type="java.lang.Long">25</value>												
+				<value type="java.lang.Long">26</value>				
+				<value type="java.lang.Long">27</value>
+			</list>
+		</property>
+	</bean>
+
+
+	<bean id="bovedaDAO"
+		class="com.indeval.portaldali.persistence.dao.common.impl.BovedaDaliDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+				<property name="boveda">
+			<list value-type="java.lang.Long">				
+				<value type="java.lang.Long">1</value>
+				<value type="java.lang.Long">2</value>
+				<value type="java.lang.Long">3</value>
+				<value type="java.lang.Long">4</value>
+				<value type="java.lang.Long">5</value>
+				<value type="java.lang.Long">6</value>
+				<value type="java.lang.Long">7</value>
+				<value type="java.lang.Long">8</value>
+				<value type="java.lang.Long">9</value>
+				<value type="java.lang.Long">10</value>
+				<value type="java.lang.Long">11</value>
+				<value type="java.lang.Long">12</value>
+				<value type="java.lang.Long">13</value>
+				<value type="java.lang.Long">14</value>
+				<value type="java.lang.Long">15</value>
+				<value type="java.lang.Long">16</value>
+				<value type="java.lang.Long">17</value>
+				<value type="java.lang.Long">18</value>
+				<value type="java.lang.Long">19</value>
+				<value type="java.lang.Long">20</value>			
+			</list>
+		</property>
+	</bean>
+
+
+
+	<bean id="tipoOperacionDAO"
+		class="com.indeval.portaldali.persistence.dao.common.impl.TipoOperacionDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	
+
+	<bean id="tipoInstruccionDAO"
+		class="com.indeval.portaldali.persistence.dao.common.impl.TipoInstruccionDaliDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+		<property name="nombresIntruccionEfectivo">
+			<list value-type="java.lang.String">
+				<value type="java.lang.String">AMRT</value>
+				<value type="java.lang.String">CALL</value>
+				<value type="java.lang.String">INTR</value>
+				<value type="java.lang.String">DIVE</value>
+				<value type="java.lang.String">DEFV</value>
+				<value type="java.lang.String">ECPX</value>
+				<value type="java.lang.String">RCPX</value>
+				<value type="java.lang.String">REFV</value>
+				<value type="java.lang.String">TREX</value>
+				<value type="java.lang.String">VPFV</value>
+				<value type="java.lang.String">EPFV</value>
+				<value type="java.lang.String">ESCI</value>
+				<value type="java.lang.String">FUSN</value>
+				<value type="java.lang.String">REMA</value>
+				<value type="java.lang.String">SUSC</value>
+				<value type="java.lang.String">SUSX</value>
+				<value type="java.lang.String">TCEC</value>
+				<value type="java.lang.String">PAGC</value>
+				<value type="java.lang.String">RETE</value>
+				<value type="java.lang.String">TREF</value>
+				<value type="java.lang.String">DEPE</value>
+				<value type="java.lang.String">PLFD</value>
+				<value type="java.lang.String">RDPE</value>
+				<value type="java.lang.String">VREP</value>
+				<value type="java.lang.String">RSPP</value>
+				<value type="java.lang.String">RSPN</value>
+				<value type="java.lang.String">REPO</value>
+				<value type="java.lang.String">REEF</value>
+				<value type="java.lang.String">DVPC</value>
+				<value type="java.lang.String">COVE</value>
+				<value type="java.lang.String">CORE</value>
+				<!-- comentando TEFV -->
+				<!-- 
+				<value type="java.lang.String">TEFV</value>
+				 -->
+			</list>
+		</property>
+		<property name="nombresIntruccionValores">
+			<list value-type="java.lang.String">
+				<value type="java.lang.String">DEPO</value>
+				<value type="java.lang.String">RETV, WITH</value>
+				<value type="java.lang.String">FVFV</value>
+				<value type="java.lang.String">ELPX</value>
+				<value type="java.lang.String">TLPF</value>
+				<value type="java.lang.String">TRBX</value>
+				<value type="java.lang.String">VPFV</value>
+				<value type="java.lang.String">AMRT</value>
+				<value type="java.lang.String">CALL</value>
+				<value type="java.lang.String">CORT</value>
+				<value type="java.lang.String">CANJ</value>
+				<value type="java.lang.String">DIVA</value>
+				<value type="java.lang.String">EPFV</value>
+				<value type="java.lang.String">ESCI</value>
+				<value type="java.lang.String">FUSN</value>
+				<value type="java.lang.String">REST</value>
+				<value type="java.lang.String">REMA</value>
+				<value type="java.lang.String">SPLT</value>
+				<value type="java.lang.String">SUSC</value>
+				<value type="java.lang.String">SUSX</value>
+				<value type="java.lang.String">DVPC</value>
+				<value type="java.lang.String">REPO</value>
+				<value type="java.lang.String">RSPP</value>
+				<value type="java.lang.String">RSPN</value>
+				<value type="java.lang.String">VREP</value>
+				<value type="java.lang.String">COVE</value>
+				<value type="java.lang.String">CORE</value>
+				<value type="java.lang.String">TLPI</value>
+				<value type="java.lang.String">RSPL</value>
+				<value type="java.lang.String">TLPF</value>
+				<value type="java.lang.String">TLAT</value>
+				<value type="java.lang.String">TLAR</value>
+				<value type="java.lang.String">TRAA</value>
+				<value type="java.lang.String">ECPX</value>
+				<value type="java.lang.String">RCPX</value>
+				<value type="java.lang.String">RECX</value>
+				<value type="java.lang.String">RLPX</value>
+				<value type="java.lang.String">CONV</value>
+				<value type="java.lang.String">EVEX</value>
+				<value type="java.lang.String">RVEX</value>
+				<value type="java.lang.String">BREM</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="tipoLiquidacionDAO"
+		class="com.indeval.portaldali.persistence.dao.common.impl.TipoLiquidacionDaliDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+		<property name="nombresLiquidacionEfectivo">
+			<list value-type="java.lang.String">
+				<value type="java.lang.String">DALI</value>
+				<value type="java.lang.String">SPEI</value>
+				<value type="java.lang.String">REGISTRO</value>
+			</list>
+		</property>
+		<property name="estadosTipoLiquidacion">
+			<list value-type="java.lang.Long">
+				<value type="java.lang.Long">1</value>
+				<value type="java.lang.Long">2</value>
+				<value type="java.lang.Long">3</value>
+			</list>
+		</property>
+	</bean>
+
+
+
+
+	<bean id="cuentaDAO"
+		class="com.indeval.portaldali.persistence.dao.common.impl.CuentaDaliDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="mensajePortalDaliDao"
+		class="com.indeval.portaldali.persistence.dao.common.impl.MensajePortalDaliDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+
+	<bean id="tipoValorDAO"
+		class="com.indeval.portaldali.persistence.dao.common.impl.TipoValorDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+
+	<bean id="emisoraDAO"
+		class="com.indeval.portaldali.persistence.dao.common.impl.EmisoraDaliDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+
+	<bean id="tipoMensajeDAO"
+		class="com.indeval.portaldali.persistence.dao.common.impl.TipoMensajeDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+
+	<bean id="institucionDAO"
+		class="com.indeval.portaldali.persistence.dao.common.impl.InstitucionDaliDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+
+
+	<bean id="tipoInstitucionDAO"
+		class="com.indeval.portaldali.persistence.dao.common.impl.TipoInstitucionDaliDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+
+
+	<bean id="tipoTenenciaDAO"
+		class="com.indeval.portaldali.persistence.dao.common.impl.TipoTenenciaDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="emisionDAO"
+		class="com.indeval.portaldali.persistence.dao.common.impl.EmisionDaliDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="detalleMovimientoPosicionDAO"
+		class="com.indeval.portaldali.persistence.dao.estadocuenta.impl.DetalleMovimientoPosicionDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="schema" class="java.lang.String">
+		<constructor-arg>
+			<value>LIQVAL_USER2.</value>
+		</constructor-arg>
+	</bean>
+
+
+	<!-- DAOs, en orden alfabetico please -->
+
+	<bean id="bitacoraOperacionesDao"
+		class="com.indeval.portaldali.persistence.dao.common.impl.BitacoraOperacionesDaliDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="cInstrumentoDao"
+		class="com.indeval.portaldali.persistence.dao.common.impl.InstrumentoDaliDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="cCuentaNombradaDao"
+		class="com.indeval.portaldali.persistence.dao.common.impl.CuentaNombradaDaliDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="dateUtilsDao"
+		class="com.indeval.portaldali.persistence.dao.common.impl.DateUtilsDaoImpl"
+		lazy-init="true">
+		<property name="dualDao">
+			<ref bean="dualDao" />
+		</property>
+		<property name="jdbcTemplate">
+			<ref bean="jdbcTemplate" />
+		</property>
+	</bean>
+
+	<bean id="diaInhabilDao"
+		class="com.indeval.portaldali.persistence.dao.common.impl.DiaInhabilDaliDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="dualDao"
+		class="com.indeval.portaldali.persistence.dao.common.impl.DualDaliDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property name="jdbcTemplate">
+			<ref bean="jdbcTemplate" />
+		</property>
+	</bean>
+	
+	<bean id="estadoCuentaSocInvDao"
+		class="com.indeval.portaldali.persistence.dao.estadocuenta.impl.EstadoCuentaSocInvDAOImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="fileTransferDao"
+		class="com.indeval.portaldali.persistence.dao.filetransfer.impl.FileTransferDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="cuponDao"
+		class="com.indeval.portaldali.persistence.dao.util.impl.CuponDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+	</bean>
+
+	<bean id="fileTransferOperacionesDao"
+		class="com.indeval.portaldali.persistence.dao.filetransfer.impl.FileTransferOperacionesDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="fileUploadDao"
+        class="com.indeval.portaldali.persistence.dao.util.impl.FileUploadDaoImpl"
+        lazy-init="true">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+    </bean>
+
+    <bean id="operacionNombradaDao"
+        class="com.indeval.portaldali.persistence.dao.conciliacion.impl.OperacionNombradaDaoImpl"
+        lazy-init="true">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+    </bean>
+    
+    <bean id="regContValNombradaDao"
+        class="com.indeval.portaldali.persistence.dao.conciliacion.impl.RegContValNombradaDaoImpl"
+        lazy-init="true">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+    </bean>
+
+	<bean id="saldoNombradaDao"
+		class="com.indeval.portaldali.persistence.dao.common.impl.SaldoNombradaDaliDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="saldoControladaDao"
+		class="com.indeval.portaldali.persistence.dao.common.impl.SaldoControladaDaliDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="tPosicionNombradaDao"
+		class="com.indeval.portaldali.persistence.dao.common.impl.PosicionNombradaDaliDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		<property name="emisionExtranjera">
+			<list>
+				<value>CPOS</value>
+				<value>BCPO</value>
+				<value>ADR</value>
+				<value>ADCP</value>
+				<value>IADC</value>
+				<value>BADC</value>
+				<value>VIVI</value>
+				<value>LIBR</value>
+				<value>GADC</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="tPosicionControladaDao"
+		class="com.indeval.portaldali.persistence.dao.common.impl.PosicionControladaDaliDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref  bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="parametrosLiquidacionDao"
+		class="com.indeval.portaldali.persistence.dao.common.impl.ParametrosLiquidacionDaliDAOImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref  bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	<bean id="protocolofinanciero.RegistroInstruccionesMatch2Dao"
+		class="com.indeval.portaldali.persistence.dao.protocolofinanciero.impl.RegistroInstruccionesMatch2DaoImpl"
+		lazy-init="true">
+
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="ingresosDao"
+		class="com.indeval.portaldali.persistence.dao.ingresos.impl.IngresosDaoImpl"
+		lazy-init="true">
+
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="cuentasRetiroEfectivoDao" class="com.indeval.portaldali.persistence.dao.admoncuentas.impl.CuentasRetiroEfectivoDaoImpl" lazy-init="true">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="bitacoraCtasRetiroEfectivoDao" class="com.indeval.portaldali.persistence.dao.admoncuentas.impl.BitacoraEstadosCuentaDaoImpl" lazy-init="true">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="historicoCtasRetiroEfectivoDao" class="com.indeval.portaldali.persistence.dao.admoncuentas.impl.HistoricoAdmonCuentasRetiroDaoImpl" lazy-init="true">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="edosCuentasRetiroEfectivoDao" class="com.indeval.portaldali.persistence.dao.admoncuentas.impl.EstatusCuentaDaoImpl" lazy-init="true">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="retiroEfectivoDao" class="com.indeval.portaldali.persistence.dao.admonretiros.impl.RetiroEfectivoDaoImpl" lazy-init="true">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="paisDivisaDao" class="com.indeval.portaldali.persistence.dao.admonretiros.impl.PaisDivisaDaoImpl" lazy-init="true">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="parametrosDao" class="com.indeval.portaldali.persistence.dao.common.impl.ParametrosDaliDaoImpl" lazy-init="true">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="cfiDao" class="com.indeval.portaldali.persistence.dao.cfi.impl.CfiDaoImpl" lazy-init="true">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="conciliacionModulosDAO" class="com.indeval.portaldali.persistence.dao.conciliacionModulos.impl.ConciliacionModulosDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="bitacoraReenvioDAO" class="com.indeval.portaldali.persistence.dao.conciliacionModulos.impl.BitacoraReenvioDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+</beans>

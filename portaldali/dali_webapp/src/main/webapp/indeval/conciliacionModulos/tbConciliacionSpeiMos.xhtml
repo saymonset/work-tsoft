@@ -1,0 +1,125 @@
+<div xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" lang="en" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich" xmlns:t="http://myfaces.apache.org/tomahawk"
+    xmlns:indeval="http://indeval.com/indeval" xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+						<table class="tablaGeneral" border="0" cellspacing="0px" style="width:870px; float:none">
+							<thead>
+								<tr>
+									<ui:fragment rendered="#{bean.rolReenviarRete}">
+										<th rowspan="2" class="tituloTabla wordWrap">
+											<h:outputText value="#{etq.reenviar}"/><br/>
+											<h:selectBooleanCheckbox class="chkMaster" onchange="seleccionarTodosChk(this);" />
+										</th>
+									</ui:fragment>
+									<th class="tituloTabla wordWrap"><h:outputText value="#{etq.traspasanteMinus}"></h:outputText></th>
+									<th class="tituloTabla wordWrap"><h:outputText value="#{etq.referenciaOperacion}"></h:outputText></th>
+									<th class="tituloTabla wordWrap"><h:outputText value="#{etq.importe}"></h:outputText></th>
+									<th class="tituloTabla wordWrap"><h:outputText value="#{etq.fechaLiq}"></h:outputText></th>
+									<th class="tituloTabla wordWrap"><h:outputText value="#{etq.instruccionMinus}"></h:outputText></th>
+									<th class="tituloTabla wordWrap"><h:outputText value="#{etq.estatus}"></h:outputText></th>
+									<th class="tituloTabla wordWrap"><h:outputText value="#{etq.mensajeMinus}"></h:outputText></th>
+									<th class="tituloTabla wordWrap"><h:outputText value="#{etq.origen}"></h:outputText></th>
+									<th class="tituloTabla wordWrap"><h:outputText value="#{etq.concepto}"></h:outputText></th>
+									<th class="tituloTabla wordWrap"><h:outputText value="#{etq.referenciaNumerica}"></h:outputText></th>
+								</tr>
+								<tr>
+									<th class="tituloTabla wordWrap"><h:outputText value="#{etq.receptorMinus}"></h:outputText></th>
+									<th class="tituloTabla wordWrap"><h:outputText value="#{etq.folioInstruccion}"></h:outputText></th>
+									<th class="tituloTabla wordWrap"><h:outputText value="#{etq.divisaMinus} / #{etq.bovedaMinus}"></h:outputText></th>
+									<th class="tituloTabla wordWrap"><h:outputText value="#{etq.fechaAprobacion}"></h:outputText></th>
+									<th class="tituloTabla wordWrap"><h:outputText value="#{etq.claveRastreo}"></h:outputText></th>
+									<th class="tituloTabla wordWrap"><h:outputText value=""/></th>
+									<th class="tituloTabla wordWrap"><h:outputText value="#{etq.estatus} #{etq.tipoRetiroSPEI}"></h:outputText></th>
+									<th class="tituloTabla wordWrap"><h:outputText value="#{etq.cuentaBeneficiario}"></h:outputText></th>
+									<th class="tituloTabla wordWrap"><h:outputText value="#{etq.nombreBeneficiario}"></h:outputText></th>
+									<th class="tituloTabla wordWrap"><h:outputText value="#{etq.tipoRetiro}"></h:outputText></th>
+								</tr>
+							</thead>
+							<tbody>
+								<t:dataList id="dataListSpeiMos" value="#{bean.resultadosReteSiac}" var="registro" rowIndexVar="indice">
+									<tr>
+										<ui:fragment rendered="#{bean.rolReenviarRete}">
+											<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado" rowspan="2">
+												<h:selectBooleanCheckbox class="chk" onchange="onChangeChk();" value="#{registro.corregir}" />
+											</td>
+										</ui:fragment>
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+											<h:outputText
+												value="#{registro.institucionTraspasante.claveTipoInstitucion}#{registro.institucionTraspasante.folioInstitucion}"
+												title="#{registro.institucionTraspasante.claveTipoInstitucion}#{registro.institucionTraspasante.folioInstitucion}" />
+										</td>
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+											<h:outputText value="#{registro.referenciaOperacion}" />
+										</td>
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+											<h:outputText value="#{registro.monto}" converter="formatoMonedaConverter" />
+										</td>
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+											<h:outputText value="#{registro.fechaLiquidacion}" converter="formatoFechaLargoConverter" />
+										</td>
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+											<h:outputText
+												value="#{registro.tipoInstruccion.nombreCorto}"
+												title="#{registro.tipoInstruccion.descripcion}" />
+										</td>
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+											<h:outputText
+												value="#{registro.estadoInstruccion.claveEstadoInstruccion}"
+												title="#{registro.estadoInstruccion.descripcion}" />
+										</td>
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} derecha">
+											<h:outputText value="#{registro.tipoMensaje.claveTipoMensaje}" />
+										</td>
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+											<h:outputText value="#{registro.origen}" />
+										</td>
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+											<h:outputText value="#{registro.concepto}" />
+										</td>
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+											<h:outputText value="#{registro.referenciaNumerica}" />
+										</td>
+									</tr>
+									<tr class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+											<h:outputText
+												value="#{registro.institucionReceptora.claveTipoInstitucion}#{registro.institucionReceptora.folioInstitucion}"
+												title="#{registro.institucionReceptora.claveTipoInstitucion}#{registro.institucionReceptora.folioInstitucion}" />
+										</td>
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+											<h:outputText value="#{registro.folioInstruccion}" />
+										</td>
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+											<h:outputText value="#{registro.divisa}" /> &#160;/&#160;<h:outputText	value="#{registro.boveda}" />
+										</td>
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+											<h:outputText value="#{registro.fechaAplicacion}" converter="formatoFechaLargoConverter" />
+										</td>
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+											<h:outputText value="#{registro.claveRastreo}" />
+										</td>
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} derecha">
+										</td>
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} derecha">
+											<h:outputText value="#{registro.liqSpei == 1 ? 'Aplicado' : (registro.liqSpei==0 ?'Aprobado':'')}" />
+										</td>
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+											<h:outputText
+												value="#{registro.cuentaReceptora.cuenta} "
+												title="#{registro.cuentaReceptora.cuenta} "/>
+										</td>
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+											<h:outputText
+												value="#{registro.cuentaReceptora.nombreCuenta} "
+												title="#{registro.cuentaReceptora.nombreCuenta} " />
+										</td>
+										<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+											<h:outputText value="#{registro.tipoRetiro}" />
+										</td>
+									</tr>
+								</t:dataList>
+							</tbody>
+						</table>
+
+</div>

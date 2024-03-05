@@ -1,0 +1,149 @@
+<html xmlns:txt="http://indeval.com/jsf/txt" 
+	   xmlns:cvt="http://indeval.com/jsf/converters"
+	    xmlns:f="http://java.sun.com/jsf/core">
+      
+      
+    <txt:document documentName="consultaMovimientosValor" documentTitle="Consulta de Movimientos de Valores"
+        fecha="#{consultaMovimientosValorBean.fechaActual}" >
+        
+     	<txt:table value="#{consultaMovimientosValorBean}" var="bean">
+     		 <txt:row>
+                <txt:col align="left" size="13" header="" value="Institucion :"  />
+                <txt:col align="center" size="4" header="" value="#{consultaMovimientosValorBean.institucionActual.claveTipoInstitucion}"  >
+                	<f:convertNumber pattern="00" />
+                </txt:col>      	
+                <txt:col align="center" size="5" header="" value="#{consultaMovimientosValorBean.institucionActual.folioInstitucion}"  >
+                	<f:convertNumber pattern="000" />
+                </txt:col>     	
+                <txt:col align="left" size="200" header="" value="#{consultaMovimientosValorBean.institucionActual.razonSocial}"  />
+        	</txt:row>
+        	<txt:row>
+                <txt:col align="left" size="28" header="" value=""  />
+        	</txt:row>
+        </txt:table>
+	
+		<txt:table value="#{consultaMovimientosValorBean.consultaMovimientos}" var="consulta">
+			<txt:row>
+				<txt:col size="20" header="#{etq.naturalezaMinus}"
+					 value="#{consultaMovimientosValorBean.consultaMovimientos.cuentaSeleccionada.tipoTenencia.tipoNaturaleza.descripcion}" align="center" />
+				<txt:col size="20" header="#{etq.institucionMinus}"
+					 value="#{consultaMovimientosValorBean.folioClaveInstitucion}" align="center" />
+				<txt:col size="20" header="#{etq.cuentaMinus}"
+					 value="#{consultaMovimientosValorBean.consultaMovimientos.cuentaSeleccionada.descripcion}" align="center"  />
+				<txt:col size="20" header="#{etq.tipoCuentaMinus}"
+					 value="#{consultaMovimientosValorBean.consultaMovimientos.cuentaSeleccionada.tipoTenencia.tipoCuenta.descripcion}" align="center" />
+				<txt:col size="20" header="#{etq.tipoTenenciaMinus}"
+					 value="#{consultaMovimientosValorBean.consultaMovimientos.cuentaSeleccionada.tipoTenencia.descripcion}" align="center" />
+				<txt:col size="20" header="#{etq.rolMinus}"
+					 value="#{consultaMovimientosValorBean.consultaMovimientos.descripcionRolParticipante}" align="center" />
+				<txt:col size="20" header="#{etq.tipoMercadoMinus}"
+					 value="#{consultaMovimientosValorBean.descripcionPapelMercado}" align="center" />
+				<txt:col size="20" header="#{etq.papelMinus}"
+					 value="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.opcionSeleccionada.tipoValor.mercado.descripcion}" align="center" />
+				<txt:col size="20" header="#{etq.isin}"
+					 value="#{empty consultaMovimientosValorBean.consultaMovimientos.criterioEmision.opcionSeleccionada.isin ? 'TODOS' : consultaMovimientosValorBean.consultaMovimientos.criterioEmision.opcionSeleccionada.isin}" align="center" />
+				<txt:col size="20" header="#{etq.tv}"
+					 value="#{empty consultaMovimientosValorBean.consultaMovimientos.criterioEmision.opcionSeleccionada.tipoValor.claveTipoValor ? 'TODOS' : consultaMovimientosValorBean.consultaMovimientos.criterioEmision.opcionSeleccionada.tipoValor.claveTipoValor}" align="center" />
+				<txt:col size="20" header="#{etq.emisoraMinus}"
+					 value="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.opcionSeleccionada.emisora.descripcion}" align="center" />
+				<txt:col size="20" header="#{etq.serieMinus}"
+					 value="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.opcionSeleccionada.serie.descripcion}" align="center" />
+				<txt:col size="20" header="#{etq.bovedaMinus}"
+					 value="#{consultaMovimientosValorBean.consultaMovimientos.bovedaSeleccionada.descripcion}" align="center" />
+				<txt:col size="20" header="#{etq.naturalezaMinus}"
+					 value="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuentaContraparte.opcionSeleccionada.tipoTenencia.tipoNaturaleza.descripcion}" align="center" />
+				<txt:col size="20" header="#{etq.tipoCuentaMinus}"
+					 value="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuentaContraparte.opcionSeleccionada.tipoTenencia.tipoCuenta.descripcion}" align="center" />
+				<txt:col size="20" header="#{etq.tipoTenenciaMinus}"
+					 value="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuentaContraparte.opcionSeleccionada.tipoTenencia.descripcion}" align="center" />
+				<txt:col size="20" header="#{etq.cuentaMinus}"
+					 value="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuentaContraparte.opcionSeleccionada.descripcion}" align="center" />
+				<txt:col size="20" header="#{etq.rolMinus}"
+					 value="#{consultaMovimientosValorBean.consultaMovimientos.descripcionRolContraparte}" align="center" />				
+				<txt:col size="20" header="#{etq.tipoInstruccionMinus}"
+					 value="#{consultaMovimientosValorBean.consultaMovimientos.criterioTipoInstruccion.opcionSeleccionada.nombreCorto}" align="center" />
+				<txt:col size="20" header="#{etq.tipoOp}"
+					 value="#{consultaMovimientosValorBean.consultaMovimientos.criterioTipoOperacion.opcionSeleccionada.claveTipoOperacion}" align="center" />
+				<txt:col size="20" header="#{etq.folioInstruccionMinus}"
+					 value="#{empty consultaMovimientosValorBean.consultaMovimientos.criterioFolioInstruccion ?  'TODOS' : consultaMovimientosValorBean.consultaMovimientos.criterioFolioInstruccion}" align="center" />
+				<txt:col size="20" header="#{etq.ordenamientoTipoInstruccion}"
+					 value="#{consultaMovimientosValorBean.consultaMovimientos.ordenarPorTipoDeInstruccion?'SI':'NO'}" align="center" />
+			</txt:row>
+			<txt:row>
+				<txt:col size="28" align="center" header="" value="" />
+			</txt:row>
+		</txt:table >
+		
+       	<txt:table value="#{consultaMovimientosValorBean.consultaMovimientos}" var="header2">
+           <txt:row>
+           	<txt:col size="28" header="#{etq.registrosEncontrados}" value="#{consultaMovimientosValorBean.totalResultados}" align="center"/>
+           </txt:row>
+           <txt:row>
+				<txt:col size="28" align="center" header="" value="" />
+			</txt:row>
+		</txt:table>
+		
+		<txt:table
+			value="#{consultaMovimientosValorBean.resultadosControladasReporteXls}"
+			var="controlada"
+			rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.opcionSeleccionada.tipoTenencia.tipoCuenta.id eq 'C'}"> 
+	       	<txt:row>
+	       		<txt:col size="28" align="center" header="#{etq.fechaLiquidacion}"  value="#{consultaMovimientosValorBean.fechaActual}" pattern="dd/MM/yyyy HH:mm:ss" >  					
+  					<cvt:simpleDateConverter pattern="yyyy-MM-dd HH:mm:ss" />	
+   				</txt:col>
+	       		<txt:col size="28" align="center" header="#{etq.descripcion}" value="#{controlada.descripcion}" />
+				<txt:col size="28" align="center" header="#{etq.id}" value="#{controlada.posicion.cuenta.institucion.claveTipoInstitucion}" />
+				<txt:col size="28" align="center" header="#{etq.folio}" value="#{controlada.posicion.cuenta.institucion.folioInstitucion}" />
+				<txt:col size="28" align="center" header="#{etq.cuentaMinus}" value="#{controlada.posicion.cuenta.cuenta}" />
+				<txt:col size="28" align="center" header="#{etq.tv}" value="#{controlada.posicion.emision.tipoValor.descripcion}" />
+				<txt:col size="28" align="center" header="#{etq.emisora}" value="#{controlada.posicion.emision.emisora.descripcion}" />
+				<txt:col size="28" align="center" header="#{etq.serie}" value="#{controlada.posicion.emision.serie.serie}" />
+				<txt:col size="28" align="center" header="#{etq.cupon}" value="#{controlada.cupon.claveCupon}" />
+				<txt:col size="28" align="center" header="#{etq.isin}" value="#{controlada.posicion.emision.isin}" />
+				<txt:col size="28" align="center" header="#{etq.boveda}" value="#{controlada.posicion.boveda.descripcion}" />
+				<txt:col size="28" align="center" header="#{etq.recepcionMinus}" value="#{empty controlada.cantidadRecepcion ? 0 : controlada.cantidadRecepcion}">
+					<f:convertNumber pattern="#,###,###,###,###,###,###,##0"/>
+				</txt:col>
+				<txt:col size="28" align="center" header="#{etq.entregaMinus}" value="#{empty controlada.cantidadEntrega ? 0 : controlada.cantidadEntrega}" >
+					<f:convertNumber pattern="#,###,###,###,###,###,###,##0" />
+				</txt:col>
+			</txt:row>
+		</txt:table>
+	
+		<txt:table
+			value="#{consultaMovimientosValorBean.resultadosNombradasReporteXls}"
+			var="nombrada"
+			rendered="#{consultaMovimientosValorBean.consultaMovimientos.criterioCuenta.opcionSeleccionada.tipoTenencia.tipoCuenta.id eq 'N'}"> 
+	       	<txt:row>
+	       		<txt:col size="28" align="center" header="#{etq.fechaLiquidacion}" value="#{nombrada.fecha}" >
+					<cvt:simpleDateConverter pattern="yyyy-MM-dd HH:mm:ss" />
+				</txt:col>
+	       		<txt:col size="28" align="center" header="#{etq.descripcion}" value="#{nombrada.descripcion}" />
+	       		<txt:col size="28" align="center" header="#{etq.participanteId}" value="#{nombrada.claveTipoInstitucionParticipante}" />
+				<txt:col size="28" align="center" header="#{etq.participanteFolio}" value="#{nombrada.folioInstitucionParticipante}" />
+				<txt:col size="28" align="center" header="#{etq.participanteCuenta}" value="#{nombrada.numeroCuentaParticipante}" />
+				<txt:col size="28" align="center" header="#{etq.contraparteId}" value="#{nombrada.claveTipoInstitucionContraparte}" />
+				<txt:col size="28" align="center" header="#{etq.contraparteFolio}" value="#{nombrada.folioInstitucionContraparte}" />
+				<txt:col size="28" align="center" header="#{etq.contraparteCuenta}" value="#{nombrada.numeroCuentaContraparte}" />
+				<txt:col size="28" align="center" header="#{etq.recepcionMinus}" value="#{empty nombrada.cantidadRecepcion ? 0 : nombrada.cantidadRecepcion}" >
+					<f:convertNumber pattern="#,###,###,###,###,###,###,##0" />
+				</txt:col>
+				<txt:col size="28" align="center" header="#{etq.entregaMinus}" value="#{empty nombrada.cantidadEntrega ? 0 : nombrada.cantidadEntrega}" >
+					<f:convertNumber pattern="#,###,###,###,###,###,###,##0" />
+				</txt:col>
+				<txt:col size="28" align="center" header="#{etq.tv}" value="#{nombrada.posicion.emision.tipoValor.claveTipoValor}" />
+				<txt:col size="28" align="center" header="#{etq.emisora}" value="#{nombrada.posicion.emision.emisora.descripcion}" />
+				<txt:col size="28" align="center" header="#{etq.serie}" value="#{nombrada.posicion.emision.serie.descripcion}" />
+				<txt:col size="28" align="center" header="#{etq.cupon}" value="#{nombrada.cupon.claveCupon}" />
+				<txt:col size="28" align="center" header="#{etq.isin}" value="#{nombrada.posicion.emision.isin}" />
+		    	<txt:col size="28" align="center" header="#{etq.folioInstruccion}" value="#{nombrada.operacion.instruccionLiquidacion.folioInstruccion}" >
+		    		<f:convertNumber pattern="##############" />
+		    	</txt:col>
+				<txt:col size="28" align="center" header="#{etq.tipoInstruccion}" value="#{nombrada.operacion.instruccionLiquidacion.tipoInstruccion.nombreCorto}"/>
+				<txt:col size="28" align="center" header="#{etq.boveda}" value="#{nombrada.posicion.boveda.descripcion}" />
+			</txt:row>
+		</txt:table>
+	
+	
+	</txt:document>
+</html>

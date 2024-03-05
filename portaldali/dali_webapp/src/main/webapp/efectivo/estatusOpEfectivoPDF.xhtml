@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:pdf="http://indeval.com/jsf/pdf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:cvt="http://indeval.com/jsf/converters"
+	xmlns:cnvtr="http://indeval.com/jsf/converters">
+
+<pdf:document landscape="true" documentName="consultaEfectivo"
+	documentTitle="Operaciones de Efectivo"
+	fecha="#{estatusOpEfectivoBean.fechaActual}"
+	imageResource="/images/indeval.png">
+
+	<pdf:table value="#{estatusOpEfectivoBean.criterio}" currentBean="criterio3" widthPercentage="100">
+		<pdf:row>
+			<pdf:col
+				value="#{estatusOpEfectivoBean.institucionActual.claveTipoInstitucion} #{estatusOpEfectivoBean.institucionActual.folioInstitucion} #{estatusOpEfectivoBean.institucionActual.razonSocial}" />
+		</pdf:row>
+	</pdf:table>
+
+	<pdf:table value="#{estatusOpEfectivoBean.criterio}"
+		currentBean="criterio" widthPercentage="100" maxColums="12">
+		<pdf:row>
+			<pdf:col header="#{etq.divisa}" value="#{empty criterio.divisa ? 'TODAS' :  criterio.divisa.claveAlfabetica}" />
+			<pdf:col header="#{etq.participanteMinus}" value="#{empty criterio.cuentaParticipante.numeroCuenta ? 'TODAS' : criterio.cuentaParticipante.numeroCuenta}" align="center" />
+			<pdf:col header="#{etq.contraparteMinus}" value="#{empty criterio.cuentaContraparte.numeroCuenta  ? 'TODAS' : criterio.cuentaContraparte.numeroCuenta}" align="center" />
+			<pdf:col header="#{etq.fechaLiquidacionMinus}" value="#{empty  estatusOpEfectivoBean.criterio.fechaLiquidacion ? '' : estatusOpEfectivoBean.criterio.fechaLiquidacion }" align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+			</pdf:col>
+			<pdf:col header="#{etq.rolMinus}" value="#{empty criterio.descripcionRol ? '' : criterio.descripcionRol }" align="center" />
+			<pdf:col header="#{etq.estatus}" value="#{ empty estatusOpEfectivoBean.criterio.estadoInstruccion.descripcion ? '' : estatusOpEfectivoBean.criterio.estadoInstruccion.descripcion}" align="center" />
+			<pdf:col header="#{etq.referencia}" value="#{empty criterio.referenciaOperacion ? 'TODOS' : criterio.referenciaOperacion}" align="center" />
+			<pdf:col header="#{etq.boveda}" value="#{empty criterio.boveda ? 'TODAS': criterio.boveda.nombreCorto }" align="center" />
+			<pdf:col header="#{etq.instruccionMinus}" alue="#{empty criterio.tipoInstruccion.nombreCorto ? 'TODAS' : criterio.tipoInstruccion.nombreCorto}" align="center" />
+			<pdf:col header="#{etq.tipoRetiro}" value="#{empty criterio.tipoRetiro ? 'TODOS' : criterio.tipoRetiro}" align="center" />
+			<pdf:col header="#{etq.folioOrigen}" value="#{empty estatusOpEfectivoBean.criterio.referenciaPaquete ? 'TODOS' : estatusOpEfectivoBean.criterio.referenciaPaquete}" />
+			<pdf:col header="#{etq.monto}" value="#{estatusOpEfectivoBean.criterio.montoBd}" align="left">
+				<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+			</pdf:col>
+		</pdf:row>
+	</pdf:table>
+
+	<pdf:text value="#{estatusOpEfectivoBean.totalRegistros} #{etq.registrosEncontrados}" />
+
+	<pdf:table value="#{estatusOpEfectivoBean.resultados}"
+		currentBean="resultado" widthPercentage="100" maxColums="16">
+		<pdf:row>
+			<pdf:col header="#{etq.traspasanteMinus}"
+				value="#{resultado.cuentaTraspasante.numeroCuenta}" align="center" />
+			<pdf:col header="#{etq.referenciaOperacion}"
+				value="#{resultado.referenciaOperacion}" align="center" />
+			<pdf:col header="#{etq.folioInstruccion}"
+				value="#{resultado.folioInstruccion}" align="center" />
+			<pdf:col header="#{etq.importe}" value="#{resultado.monto}"
+				align="right" collspan="2">
+				<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+			</pdf:col>
+
+			<pdf:col header="#{etq.fechaLiquidacionMinus}"
+				value="#{resultado.fechaLiquidacion}" align="center" collspan="2">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy kk:mm:ss" />
+			</pdf:col>
+			<pdf:col header="#{etq.instruccionMinus}"
+				value="#{resultado.tipoInstruccion.nombreCorto}" align="center" />
+			<pdf:col header="#{etq.estatus}"
+				value="#{resultado.estadoInstruccion.claveEstadoInstruccion}"
+				align="center" />
+			<pdf:col header="#{etq.tipoMensaje}"
+				value="#{resultado.tipoMensaje.claveTipoMensaje}" align="center" />
+			<pdf:col header="#{etq.origen} / #{etq.cuentaBeneficiario} "
+				value="#{resultado.origen} / #{resultado.cuentaReceptora.cuenta}"
+				align="center" />
+			<pdf:col header="#{etq.tipoRetiro}" value="#{resultado.tipoRetiro}"
+				align="center" />
+			<pdf:col header="#{etq.concepto}" value="#{resultado.concepto}"
+				align="left" collspan="2" />
+			<pdf:col header="#{etq.referenciaNumerica}"
+				value="#{resultado.referenciaNumerica}" align="center" />
+			<pdf:col header="#{etq.fechaAutorizacion}"
+				value="#{resultado.fechaAutorizacion}" pattern="dd/MM/yyyy HH:mm:ss"
+				align="center" />
+
+
+			<pdf:col header="#{etq.receptorMinus}"
+				value="#{resultado.cuentaReceptora.numeroCuenta}" align="center" />
+			<pdf:col header=" " value="" />
+			<pdf:col header=" " value="" />
+			<pdf:col header="#{etq.divisaMinus} " value="#{resultado.divisa}"
+				align="center" />
+			<pdf:col header="#{etq.bovedaMinus}" value="#{resultado.boveda}"
+				align="center" />
+
+			<pdf:col header="#{etq.fechaAprobacion}"
+				value="#{(resultado.tipoInstruccion.idTipoInstruccion == 33 and resultado.divisa=='MXN')  ? resultado.fechaAplicacion :''}"
+				collspan="2" align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy kk:mm:ss" />
+			</pdf:col>
+
+			<pdf:col header=" " value="" />
+			<pdf:col header=" " value="" />
+			<pdf:col header="#{etq.estatus} #{etq.tipoRetiroSPEI}"
+				value="#{resultado.liqSpei == 1 ? 'Aplicado' : (resultado.liqSpei==0 ?'Aprobado':'')}"
+				align="center" />
+			<pdf:col header="#{etq.nombreBeneficiario}"
+				value="#{resultado.cuentaReceptora.nombreCuenta}" align="left"
+				collspan="2" />
+			<pdf:col header="#{etq.claveRastreo}"
+				value="#{resultado.porPaquete ? resultado.referenciaPaquete : resultado.claveRastreo}"
+				align="center" collspan="2" />
+			<pdf:col header=" " value="" />
+			<pdf:col header="#{etq.fechaLiberacion}" value="#{resultado.fechaLiberacion}" align="center">
+				<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+			</pdf:col>
+
+		</pdf:row>
+	</pdf:table>
+
+	<pdf:table value="" currentBean="no_se_usa" widthPercentage="100"
+		maxColums="16">
+		<pdf:row>
+			<pdf:col header="" collspan="3" value="" align="right" />
+			<pdf:col header="#{etq.totalImporte}"
+				value="#{estatusOpEfectivoBean.totalImporte}" align="right"
+				collspan="2">
+				<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+			</pdf:col>
+			<pdf:col header="" collspan="11" value="" />
+		</pdf:row>
+	</pdf:table>
+
+</pdf:document>
+</html>
+

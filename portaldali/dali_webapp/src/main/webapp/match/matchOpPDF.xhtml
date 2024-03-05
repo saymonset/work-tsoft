@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:pdf="http://indeval.com/jsf/pdf"
+	xmlns:cvt="http://indeval.com/jsf/converters"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<pdf:document documentName="matchOperaciones"
+		documentTitle="Match y Operaciones de Valores"
+		fecha="#{elegirInstitucionBean.fechaActual}" 
+   			 institucion = "#{elegirInstitucionBean.descripcionInstitucion}"
+		imageResource="/images/indeval.png" landscape="true">
+
+		<pdf:table
+			value="#{matchEstatusExportacion.criterio}"
+			currentBean="consulta" widthPercentage="100" maxColums="16">
+			<pdf:row>
+				<pdf:col header="#{etq.participanteMinus}" value="#{empty matchEstatusExportacion.criterio.institucionParticipante.idFolio ? 'TODAS' : matchEstatusExportacion.criterio.institucionParticipante.idFolio}"/>
+				<pdf:col header="#{etq.cuentaParticipante}" value="#{empty matchEstatusExportacion.criterio.cuentaParticipante.cuenta ? 'TODAS' : matchEstatusExportacion.criterio.cuentaParticipante.cuenta}"/>
+				<pdf:col header="#{etq.contraparteMinus}" value="#{empty matchEstatusExportacion.criterio.institucionContraparte.idFolio ? 'TODAS' : matchEstatusExportacion.criterio.institucionContraparte.idFolio}" />
+				<pdf:col header="#{etq.cuentaContraparte}" value="#{empty matchEstatusExportacion.criterio.cuentaContraparte.numeroCuenta? 'TODAS' : matchEstatusExportacion.criterio.cuentaContraparte.cuenta}"/>
+				<pdf:col header="#{etq.mercadoMinus}" value="#{empty matchEstatusExportacion.criterio.mercado.descripcion ? 'TODOS' : matchEstatusExportacion.criterio.mercado.descripcion}"/>
+				<pdf:col header="#{etq.papelMinus}" value="#{empty matchEstatusExportacion.criterio.mercado.claveMercado ? 'TODAS' : matchEstatusExportacion.criterio.mercado.claveMercado}"/>
+				<pdf:col header="#{etq.estatus}" value="#{empty matchEstatusExportacion.criterio.estadoInstruccion.claveEstadoInstruccion ? 'TODOS' : matchEstatusExportacion.criterio.estadoInstruccion.claveEstadoInstruccion}"/>
+				<pdf:col header="#{etq.tipoInstruccionMinus}" value="#{empty matchEstatusExportacion.criterio.tipoInstruccion.descripcion ? 'TODAS' : matchEstatusExportacion.criterio.tipoInstruccion.descripcion}"/>
+				<pdf:col header="#{etq.fechaRegistro}" value="#{matchEstatusExportacion.criterio.fechaConcertacion}">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaLiquidacionMinus}" value="#{matchEstatusExportacion.criterio.fechaLiquidacion}" >
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.rolMinus}" value="#{matchEstatusExportacion.criterio.descripcionRol}"/>
+				<pdf:col header="#{etq.claveValor} #{etq.tv}" value="#{empty matchEstatusExportacion.criterio.emision.tipoValor.claveTipoValor? 'TODAS' : matchEstatusExportacion.criterio.emision.tipoValor.claveTipoValor}"/>
+				<pdf:col header="#{etq.claveValor} #{ etq.emisoraMinus }" value="#{empty matchEstatusExportacion.criterio.emision.emisora.descripcion? 'TODAS' : matchEstatusExportacion.criterio.emision.emisora.descripcion}" />
+				<pdf:col header="#{etq.claveValor} #{ etq.serieMinus }" value="#{empty matchEstatusExportacion.criterio.emision.serie.serie? 'TODAS' : matchEstatusExportacion.criterio.emision.serie.serie}"/>
+				<pdf:col header="#{etq.bovedaMinus}" value="#{empty matchEstatusExportacion.criterio.bovedaValores.nombreCorto ? 'TODAS' : matchEstatusExportacion.criterio.bovedaValores.nombreCorto}"/>
+				<pdf:col header="#{etq.folioUsuario}" value="#{empty matchEstatusExportacion.criterio.emision.emisora.descripcion? 'TODAS' : matchEstatusExportacion.criterio.emision.emisora.descripcion}"/>
+				<pdf:col header="#{etq.tipoMensaje}" value="#{empty matchEstatusExportacion.criterio.emision.serie.serie? 'TODAS' : matchEstatusExportacion.criterio.emision.serie.serie}"/>
+				<pdf:col header="#{etq.remitente}" value="#{matchEstatusExportacion.criterio.remitente ? 'SI' : 'NO' }"/>
+				<pdf:col header="#{etq.origen}" value="#{empty matchEstatusExportacion.criterio.origen? 'TODOS': matchEstatusExportacion.criterio.origen}"/>
+				<pdf:col header="#{etq.error}" value="#{empty matchEstatusExportacion.criterio.error.claveError ? 'TODOS' : matchEstatusExportacion.criterio.error.claveError}"/>
+				<pdf:col header="#{etq.cantidadMinus}" value="#{empty matchEstatusExportacion.criterio.cantidad ? 'TODOS' : matchEstatusExportacion.criterio.cantidad}"/>
+				<pdf:col header="#{etq.monto}" value="#{empty matchEstatusExportacion.criterio.monto ? 'TODOS': matchEstatusExportacion.criterio.monto}"/>
+				<pdf:col header="#{etq.divisa}" value="#{empty matchEstatusExportacion.criterio.divisa.claveAlfabetica ? 'TODOS': matchEstatusExportacion.criterio.divisa.claveAlfabetica}"/>
+				<pdf:col header="#{etq.bovedaEfectivo}" value="#{empty matchEstatusExportacion.criterio.bovedaEfectivo.nombreCorto ? 'TODOS': matchEstatusExportacion.criterio.bovedaEfectivo.nombreCorto}"/>
+				<pdf:col header="#{etq.folioControl}" value="#{empty matchEstatusExportacion.criterio.folioControl ? 'TODOS' : matchEstatusExportacion.criterio.folioControl}"/>			
+				<pdf:col header="#{etq.folioOrigen}" value="#{empty matchEstatusExportacion.criterio.referenciaPaquete ? 'TODOS' : matchEstatusExportacion.criterio.referenciaPaquete}"/>
+				<pdf:col header=" " value=""/>
+				<pdf:col header=" " value=""/>
+				<pdf:col header=" " value=""/>
+				<pdf:col header=" " value=""/>
+				<pdf:col header=" " value=""/>
+				<pdf:col header=" " value=""/>				
+			</pdf:row>
+		</pdf:table>		
+		
+		<pdf:grid border="1" bordercolor="#FFFFFF">
+			<pdf:gridRow>
+				<pdf:gridCol bgcolor="#CCD9E6" align="center">
+					<pdf:text value="#{etq.registrosEncontrados}" />
+				</pdf:gridCol>
+				<pdf:gridCol bgcolor="#CCD9E6" align="center">
+					<pdf:text value="#{matchEstatusExportacion.registrosEncontrados}" >
+						<f:convertNumber pattern="###,###,###,###,###,##0" />
+					</pdf:text>
+				</pdf:gridCol>
+			</pdf:gridRow>
+		</pdf:grid>	 
+		<pdf:br/>		
+		
+		<pdf:table value="#{matchEstatusExportacion.resultados}" currentBean="operacion" widthPercentage="100" maxColums="16">
+			<pdf:row>
+				<pdf:col header="#{etq.folioControl}" value="#{operacion.strFolioControl}" align="center" />
+				<pdf:col header="#{etq.folioUsuario}" value="#{operacion.folioUsuario}" align="center" />
+				<pdf:col header="#{etq.folioOrigen}" value="#{operacion.porPaquete ? operacion.referenciaPaquete : operacion.folioOrigen}" align="center" />
+				<pdf:col header="#{etq.ti}" value="#{operacion.nombreCortoTipoInstruccion}" align="center" />
+				<pdf:col header="#{etq.oere}" value="#{operacion.origen}" align="center" />
+				<pdf:col header="#{etq.tv}" value="#{operacion.tv}" align="center" />
+				<pdf:col header="#{etq.emisoraMinus}" value="#{operacion.emisora}" align="center" />
+				<pdf:col header="#{etq.serieMinus}" value="#{operacion.serie}" align="center" />
+				<pdf:col header="#{etq.cuponMinus}" value="#{operacion.cupon}" align="center" />
+				<pdf:col header="#{etq.isin}" value="#{operacion.isin}" align="center" />
+				<pdf:col header="#{etq.bovedaMinus}" value="#{operacion.bovedaValores}" align="center" />
+				<pdf:col header="#{etq.estatus}" value="#{operacion.claveEstadoInstruccionCat}" align="center" />
+				<pdf:col header="#{etq.instVendedor}" value="#{operacion.idFolioInstitucionTraspasanteConEspacio}" align="center" />
+				<pdf:col header="#{etq.cuentaVendedor}" value="#{operacion.cuentaTraspasante}" align="center" />
+				<pdf:col header="#{etq.instComprador}" value="#{operacion.idFolioInstitucionReceptoraConEspacio}" align="center" />
+				<pdf:col header="#{etq.cuentaCompradora}" value="#{operacion.cuentaReceptora}" align="center" />
+				<pdf:col header="#{etq.institucionRemitente}" value="#{operacion.nombreCortoInstitReceptora}" align="center" />
+				<pdf:col header="#{etq.precioTitulo}" value="#{operacion.precioTitulo}" align="right">
+					<f:convertNumber pattern="$###,###,###,###,###,##0.00000000" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaReporto}" value="#{operacion.fechaReportoDate}" align="center">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.tipoMensaje}" value="#{operacion.claveTipoMensajeCat}" align="center" />
+				<pdf:col header="#{etq.fechaRegistro}" value="#{operacion.fechaConcertacion}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaLiquidacionMinus}" value="#{operacion.fechaLiquidacion}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+				</pdf:col>
+				<pdf:col header="#{etq.cantidadOperada}" value="#{operacion.cantidadTitulos}" align="right">
+					<f:convertNumber pattern="###,###,###,###,###,##0" />
+				</pdf:col>
+				<pdf:col header="#{etq.montoOperado}" value="#{operacion.importe}" align="right">
+					<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+				</pdf:col>
+				 <pdf:col header="#{etq.bovedaEfectivo}" align="center" value="#{empty operacion.bovedaEfectivo ? '' : operacion.bovedaEfectivo}" />  
+				<pdf:col header="#{etq.tasaPorcentaje}" value="#{operacion.tasaNegociada}" align="right">
+					<f:convertNumber pattern="###,###,###,###,###,##0.000000" />
+				</pdf:col>
+				<pdf:col header="#{etq.tasaVariable}" value="#{etq.nd}" align="center" />
+				<pdf:col header="#{etq.plazo}" value="#{operacion.plazoReporto}" align="right" />
+				<pdf:col header="#{etq.premio}" value="#{etq.nd}" align="center" />
+				<pdf:col header="#{etq.moneda}" value="#{operacion.claveDivisa}" align="center" />
+				<pdf:col header="#{etq.error}" value="#{ operacion.claveError}" align="center" />
+				<pdf:col header="#{etq.plazoFV}" value="#{etq.nd}" align="center" />
+				<pdf:col header="#{etq.fechaConcertacionVendedora}" value="#{operacion.fechaHoraCierreOperTra}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaConcertacionCompradora}" value="#{operacion.fechaHoraCierreOperRec}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaEncolamientoVendedora}" value="#{operacion.fechaHoraEncolamientoTra}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />	
+				</pdf:col>
+				<pdf:col header="#{etq.fechaEncolamientoCompradora}" value="#{operacion.fechaHoraEncolamientoRec}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+				</pdf:col>
+				<pdf:col header=" " value=" " align="center">
+				</pdf:col>
+				<pdf:col header=" " value=" " align="center">
+				</pdf:col>
+				<pdf:col header=" " value=" " align="center">
+				</pdf:col>
+				<pdf:col header=" " value=" " align="center">
+				</pdf:col>
+				<pdf:col header=" " value=" " align="center">
+				</pdf:col>
+				<pdf:col header=" " value=" " align="center">
+				</pdf:col>
+				<pdf:col header=" " value=" " align="center">
+				</pdf:col>
+				<pdf:col header=" " value=" " align="center">
+				</pdf:col>
+				<pdf:col header=" " value=" " align="center">
+				</pdf:col>
+				<pdf:col header=" " value=" " align="center">
+				</pdf:col>
+				<pdf:col header=" " value=" " align="center">
+				</pdf:col>
+				<pdf:col header=" " value=" " align="center">
+				</pdf:col>
+			</pdf:row>
+		</pdf:table>
+		<pdf:br />  
+
+		<pdf:table value="" currentBean="resumen2" widthPercentage="100" maxColums="16"> 
+			<pdf:row>
+				<pdf:col align="right" header="#{etq.titulosTraspasante}" value="#{matchEstatusExportacion.titulosTraspasante}" >
+					<f:convertNumber pattern="###,###,###,###,###,##0" />
+				</pdf:col> 
+				<pdf:col align="right" header="#{etq.titulosReceptor}" value="#{matchEstatusExportacion.titulosReceptor}" >
+					<f:convertNumber pattern="###,###,###,###,###,##0" /> 
+				</pdf:col>
+				<pdf:col align="right" header="#{etq.netoTitulos}" value="#{matchEstatusExportacion.netoTitulos}" />
+				<pdf:col align="right" header="#{etq.montoTraspasante}" value="#{matchEstatusExportacion.montoTraspasante}" >
+					<f:convertNumber pattern="$###,###,###,###,###,##0.00" /> 
+				</pdf:col>
+				<pdf:col align="right" header="#{etq.montoReceptor}" value="#{matchEstatusExportacion.montoReceptor}" >
+					<f:convertNumber pattern="$###,###,###,###,###,##0.00" /> 
+				</pdf:col>
+				<pdf:col align="right" header="#{etq.netoMonto}" value="#{matchEstatusExportacion.netoMonto}" >
+					<f:convertNumber pattern="$###,###,###,###,###,##0.00" /> 
+				</pdf:col> 
+			</pdf:row>
+		</pdf:table>
+	</pdf:document>
+</html>

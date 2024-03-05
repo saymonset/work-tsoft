@@ -1,0 +1,2 @@
+# Despliegue de componentes (1 de 2)
+deploy dali_services.ear --server-groups=grupo-portal-dali

@@ -1,0 +1,543 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" >
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk" xml:lang="es">
+    
+
+	<ui:composition template="templateConsultaDetalleMovimientoDvp.xhtml">
+		
+
+		<ui:define name="fechaActual"></ui:define>
+
+		<ui:define name="resumenMovimiento">
+			<h:outputText
+				value="#{consultaDetalleMovimientoPosicionBean.init}"></h:outputText>
+
+			<table width="100%" border="0" cellspacing="0px" cellpadding="0px">
+				<tr>
+					<td width="11%" valign="top" class="tableHeadingAltHover"
+						align="center">
+						<strong><h:outputText value="#{etq.fecha}"></h:outputText></strong>
+					</td>
+					<td width="17%" valign="top" class="tableHeadingAltHover"
+						align="center">
+						<strong><h:outputText value="#{etq.participante}"></h:outputText></strong>
+					</td>
+					<td width="18%" valign="top" class="tableHeadingAltHover"
+						align="center">
+						<strong><h:outputText value="#{etq.contraparte}"></h:outputText></strong>
+					</td>
+					<td width="28%" valign="top" class="tableHeadingAltHover"
+						align="center">
+						<strong><h:outputText value="#{etq.descripcion}"></h:outputText></strong>
+					</td>
+					<td width="16%" valign="top" class="tableHeadingAltHover"
+						align="center">
+						<strong><h:outputText value="#{etq.folioInstruccion}"></h:outputText></strong>
+					</td>
+					<td width="10%" valign="top" class="tableHeadingAltHover"
+						align="center">
+						<strong><h:outputText value="#{etq.entrega}"></h:outputText></strong>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" valign="top" class="tableCellThree">
+						<h:outputText
+							value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.fecha}">
+							<f:converter converterId="formatoFechaLargaConverter"/>
+						</h:outputText>
+					</td>
+					<td valign="top" class="tableCellThree" align="center">
+						<h:outputText
+							value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.participante}"></h:outputText>
+					</td>
+					<td valign="top" class="tableCellThree" align="center">
+						<h:outputText
+							value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.contraparte}"></h:outputText>
+					</td>
+					<td valign="top" class="tableCellThree" align="left">
+						<h:outputText
+							value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.descripcion}"></h:outputText>
+					</td>
+					<td valign="top" class="tableCellThree" align="center">
+						<h:outputText
+							value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.folioOperacion}"></h:outputText>
+					</td>
+					<td valign="top" class="tableCellThree" align="center">
+						<h:outputText
+							value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.entrega}"></h:outputText>
+					</td>
+				</tr>
+			</table>
+		</ui:define>
+
+		<ui:define name="resumenRol">
+			<h:panelGroup id="containerResumenRol">
+				<div id="resumenDetalleRol" class="textoAzulDetalle">
+					<table width="100%" align="left" cellpadding="0px"
+						cellspacing="0px">
+						<tr>
+							<td>
+								<table width="100%" border="0" cellspacing="0" cellpadding="0">
+									<tr>
+										<td>
+											<table width="100%" border="0" cellspacing="0"
+												cellpadding="0">
+												<td width="28%" align="left" valign="top"
+													class="tableCellFour">
+													<strong><h:outputText value="#{etq.traspasante}"></h:outputText></strong>
+												</td>
+												<td width="6%" align="left" valign="top"
+													class="tableCellFour">
+													<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+												</td>
+												<td width="66%" align="left" valign="top"
+													class="tableCellFour">
+													<h:outputText
+														value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.traspasante}"></h:outputText>
+												</td>
+											</table>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<table width="100%" border="0" cellspacing="0"
+												cellpadding="0">
+												<td width="28%" valign="top" class="tableCellFour" align="tableHeading">
+													<strong><h:outputText value="#{etq.receptor}"></h:outputText></strong>
+												</td>
+												<td width="6%" valign="top" class="tableCellFour" align="left">
+													<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+												</td>
+												<td width="66%" valign="top" class="tableCellFour" align="left">
+													<h:outputText
+														value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.receptor}"></h:outputText>
+												</td>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</h:panelGroup>
+		</ui:define>
+
+		<ui:define name="resumenEmision">
+			<h:panelGroup id="containerResumenEmision">
+				<div id="resumenDetalleEmision" class="textoAzulDetalle">
+					<table width="100%" align="left" cellpadding="0px"
+						cellspacing="0px">
+						<tr>
+							<td>
+								<table width="100%" border="0" cellspacing="0" cellpadding="0">
+									<tr>
+										<td width="27%" align="center" valign="middle"
+											class="tableHeadingAltHover">
+											<strong><h:outputText value="#{etq.tipoValor}"></h:outputText></strong>
+										</td>
+										<td width="28%" align="center" valign="middle"
+											class="tableHeadingAltHover">
+											<strong><h:outputText value="#{etq.emisora}"></h:outputText></strong>
+										</td>
+										<td width="16%" align="center" valign="middle"
+											class="tableHeadingAltHover">
+											<strong><h:outputText value="#{etq.serie}"></h:outputText></strong>
+										</td>
+										<td width="29%" align="center" valign="middle"
+											class="tableHeadingAltHover">
+											<strong><h:outputText value="#{etq.cupon}"></h:outputText></strong>
+										</td>
+									</tr>
+									<tr>
+										<td valign="middle" class="tableCellFour" align="center">
+											<h:outputText
+												value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.posicion.emision.tipoValor.claveTipoValor}"></h:outputText>
+										</td>
+										<td valign="middle" class="tableCellFour" align="center">
+											<h:outputText
+												value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.posicion.emision.emisora.descripcion}"></h:outputText>
+										</td>
+										<td valign="middle" class="tableCellFour" align="center">
+											<h:outputText
+												value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.posicion.emision.serie.serie}"></h:outputText>
+										</td>
+										<td valign="middle" class="tableCellFour" align="center">
+											<h:outputText
+												value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.posicion.emision.cupon}"></h:outputText>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2" align="center" valign="top"
+											class="tableHeadingAltHover">
+											<strong><h:outputText value="#{etq.tipoMercado}"></h:outputText></strong>
+										</td>
+										<td colspan="2" align="center" valign="middle"
+											class="tableHeadingAltHover">
+											<strong><h:outputText value="#{etq.isin}"></h:outputText></strong>
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2" align="center" valign="top"
+											class="tableCellFour">
+											<h:outputText
+												value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.posicion.emision.tipoValor.mercado.descripcion}"></h:outputText>
+										</td>
+										<td colspan="2" align="center" valign="middle"
+											class="tableCellFour">
+											<h:outputText
+												value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.posicion.emision.isin}"></h:outputText>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</h:panelGroup>
+		</ui:define>
+
+		<ui:define name="resumenBoveda">
+			<h:panelGroup id="containerResumenBoveda">
+				<div id="resumenDetalleBoveda" class="textoAzulDetalle">
+					<table width="100%" align="left" cellpadding="0px"
+						cellspacing="0px">
+						<tr>
+							<td>
+								<table width="100%" border="0" cellspacing="0" cellpadding="0">
+									<tr>
+										<td align="left" valign="top" class="tableCellFour">
+											<h:outputText
+												value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.posicion.boveda.descripcion}"></h:outputText>
+										</td>
+									</tr>
+									<tr>
+										<td class="tableCellThree" align="left">
+											&nbsp;
+										</td>
+									</tr>
+									<tr>
+										<td valign="top" class="tableCellThree" align="left">
+											&nbsp;
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</h:panelGroup>
+		</ui:define>
+
+		<ui:define name="resumenDetalleMovimiento">
+			<h:panelGroup id="containerDetalleMovimientoReceptor"
+				rendered="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.detalleGarantias}">
+				<table width="100%" cellspacing="0px" cellpadding="0px">
+					<tr colspan="3">
+						<table width="100%" align="left" cellpadding="0px"
+							cellspacing="0px">
+							<tr>
+								<td>
+									<table width="100%" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td width="10%" align="left" valign="top"
+												class="tableCellFour">
+												<strong><h:outputText value="#{etq.fechaConcertacion}"></h:outputText></strong>
+											</td>
+											<td width="1%" align="left" valign="center"
+												class="tableCellFour">
+												<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+											</td>
+											<td width="21%" align="left" valign="center"
+												class="tableCellFour">
+												<h:outputText
+													value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.fechaConcertacion}">
+													<f:converter converterId="formatoFechaLargaConverter" />
+												</h:outputText>
+											</td>
+											<td width="15%" align="left" valign="center"
+												class="tableCellFour">
+												<strong><h:outputText value="#{etq.fechaLiquidacion}"></h:outputText></strong>
+											</td>
+											<td width="1%" align="left" valign="center"
+												class="tableCellFour">
+												<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+											</td>
+											<td width="20%" align="left" valign="center"
+												class="tableCellFour">
+												<h:outputText
+													value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.fechaLiquidacion}">
+													<f:converter converterId="formatoFechaLargaConverter" />
+												</h:outputText>
+											</td>
+											<td width="15%" align="left" valign="center"
+												class="tableCellFour">
+												<strong><h:outputText value="#{etq.fechaAplicacion}"></h:outputText></strong>
+											</td>
+											<td width="1%" align="left" valign="center"
+												class="tableCellFour">
+												<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+											</td>
+											<td width="18%" align="left" valign="center"
+												class="tableCellFour">
+												<h:outputText
+													value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.fechaAplicacion}">
+													<f:converter converterId="formatoFechaLargaConverter" />
+												</h:outputText>
+											</td>
+										</tr>
+										<tr>
+											<td align="left" valign="center" class="tableCellThree">
+												<strong><h:outputText value="#{etq.cantidad}"></h:outputText></strong>
+											</td>
+											<td valign="center" class="tableCellThree" align="left">
+												<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+											</td>
+											<td valign="center" class="tableCellThree" align="left">
+												<h:outputText
+													value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.cantidad}">
+													<f:converter converterId="formatoEnteroConverter" />
+												</h:outputText>
+											</td>
+											<td align="left" valign="center" class="tableCellThree">
+												<strong><h:outputText value="#{etq.tipoOperacion}"></h:outputText></strong>
+											</td>
+											<td valign="center" class="tableCellThree" align="left">
+												<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+											</td>
+											<td valign="center" class="tableCellThree" align="left">
+												<h:outputText
+													value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.tipoOperacion.claveTipoOperacion}"></h:outputText>
+											</td>
+											<td align="left" valign="top" class="tableCellFour">
+												&#160;
+											</td>
+											<td valign="center" class="tableCellFour" align="left">
+												&#160;
+											</td>
+											<td valign="center" class="tableCellThree" align="left">
+												&#160;
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</tr>
+					<tr>
+						<td colspan="3" class="tableHeading">
+							<h:outputText value="#{etq.posicionesGarantiaEntregadas}" rendered="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.participanteReceptor}"></h:outputText>
+							<h:outputText value="#{etq.posicionesGarantiaRecibidas}" rendered="#{!consultaDetalleMovimientoPosicionBean.detalleMovimiento.participanteReceptor}"></h:outputText>
+						</td>
+					</tr>
+					<t:dataList value ="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.detallesGarantias}"   var="registroContable" >
+						<tr>
+							<td colspan="3">
+								<table width="100%" align="left" cellpadding="0px" cellspacing="0px">
+									<tr>
+										<td>
+											<table width="100%" border="0" cellspacing="0" cellpadding="0">
+												<tr>
+													<td align="center" valign="middle"
+														class="tableHeadingAltHover">
+														<strong><h:outputText value="#{etq.tipoValor}"></h:outputText></strong>
+													</td>
+													<td align="center" valign="middle"
+														class="tableHeadingAltHover">
+														<strong><h:outputText value="#{etq.emisora}"></h:outputText></strong>
+													</td>
+													<td align="center" valign="middle"
+														class="tableHeadingAltHover">
+														<strong><h:outputText value="#{etq.serie}"></h:outputText></strong>
+													</td>
+													<td align="center" valign="middle"
+														class="tableHeadingAltHover">
+														<strong><h:outputText value="#{etq.cupon}"></h:outputText></strong>
+													</td>
+													<td align="center" valign="middle"
+														class="tableHeadingAltHover">
+														<strong><h:outputText value="#{etq.tipoMercado}"></h:outputText></strong>
+													</td>
+													<td align="center" valign="middle"
+														class="tableHeadingAltHover">
+														<strong><h:outputText value="#{etq.isin}"></h:outputText></strong>
+													</td>
+													<td align="center" valign="middle"
+														class="tableHeadingAltHover">
+														<strong><h:outputText value="#{etq.boveda}"></h:outputText></strong>
+													</td>
+													<td align="center" valign="middle"
+														class="tableHeadingAltHover">
+														<strong><h:outputText value="#{etq.precio}"></h:outputText></strong>
+													</td>
+													<td align="center" valign="middle"
+														class="tableHeadingAltHover">
+														<strong><h:outputText value="#{etq.cantidad}"></h:outputText></strong>
+													</td>
+												</tr>
+												<tr>
+													<td valign="middle" class="tableCellFour" align="center">
+														<h:outputText
+															value="#{registroContable.posicion.emision.tipoValor.descripcion}"></h:outputText>
+													</td>
+													<td valign="middle" class="tableCellFour" align="center">
+														<h:outputText
+															value="#{registroContable.posicion.emision.emisora.descripcion}"></h:outputText>
+													</td>
+													<td valign="middle" class="tableCellFour" align="center">
+														<h:outputText
+															value="#{registroContable.posicion.emision.serie.serie}"></h:outputText>
+													</td>
+													<td valign="middle" class="tableCellFour" align="center">
+														<h:outputText
+															value="#{registroContable.posicion.emision.cupon}"></h:outputText>
+													</td>
+													<td align="center" valign="top"
+														class="tableCellFour">
+														<h:outputText
+															value="#{registroContable.posicion.emision.tipoValor.mercado.descripcion}"></h:outputText>
+													</td>
+													<td align="center" valign="middle"
+														class="tableCellFour">
+														<h:outputText
+															value="#{registroContable.posicion.emision.isin}"></h:outputText>
+													</td>
+													<td align="left" valign="top" class="tableCellFour">
+														<h:outputText
+															value="#{registroContable.posicion.boveda.descripcion}"></h:outputText>
+													</td>
+													<td align="center" valign="top" class="tableCellFour">
+														<h:outputText
+															value="#{registroContable.precio}" style="white-space: nowrap;">
+																<f:converter converterId="formatoMonedaConverter"/>
+														</h:outputText>
+													</td>
+													<td align="center" valign="top" class="tableCellFour">
+														<h:outputText
+															value="#{registroContable.cantidad}">
+															<f:converter converterId="formatoEnteroConverter"/>
+														</h:outputText>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</t:dataList>
+				</table>
+			</h:panelGroup>
+			<h:panelGroup id="containerDetalleMovimientoTraspasante"
+				rendered="#{!consultaDetalleMovimientoPosicionBean.detalleMovimiento.detalleGarantias}">
+				<table width="100%" cellspacing="0px" cellpadding="0px">
+					<tr>
+						<td colspan="3" class="tableHeading">
+							<h:outputText value="#{etq.posicionPrestamoRecibida}"></h:outputText>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<table width="100%" align="left" cellpadding="0px"
+								cellspacing="0px">
+								<tr>
+									<td>
+										<table width="100%" border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<td align="center" valign="middle"
+													class="tableHeadingAltHover">
+													<strong><h:outputText value="#{etq.tipoValor}"></h:outputText></strong>
+												</td>
+												<td align="center" valign="middle"
+													class="tableHeadingAltHover">
+													<strong><h:outputText value="#{etq.emisora}"></h:outputText></strong>
+												</td>
+												<td align="center" valign="middle"
+													class="tableHeadingAltHover">
+													<strong><h:outputText value="#{etq.serie}"></h:outputText></strong>
+												</td>
+												<td align="center" valign="middle"
+													class="tableHeadingAltHover">
+													<strong><h:outputText value="#{etq.cupon}"></h:outputText></strong>
+												</td>
+												<td align="center" valign="middle"
+													class="tableHeadingAltHover">
+													<strong><h:outputText value="#{etq.tipoMercado}"></h:outputText></strong>
+												</td>
+												<td align="center" valign="middle"
+													class="tableHeadingAltHover">
+													<strong><h:outputText value="#{etq.isin}"></h:outputText></strong>
+												</td>
+												<td align="center" valign="middle"
+													class="tableHeadingAltHover">
+													<strong><h:outputText value="#{etq.boveda}"></h:outputText></strong>
+												</td>
+												<td align="center" valign="middle"
+													class="tableHeadingAltHover">
+													<strong><h:outputText value="#{etq.precio}"></h:outputText></strong>
+												</td>
+												<td align="center" valign="middle"
+													class="tableHeadingAltHover">
+													<strong><h:outputText value="#{etq.cantidad}"></h:outputText></strong>
+												</td>
+											</tr>
+											<tr>
+												<td valign="middle" class="tableCellFour" align="center">
+													<h:outputText
+														value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.detallePrestamo.posicion.emision.tipoValor.descripcion}"></h:outputText>
+												</td>
+												<td valign="middle" class="tableCellFour" align="center">
+													<h:outputText
+														value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.detallePrestamo.posicion.emision.emisora.descripcion}"></h:outputText>
+												</td>
+												<td valign="middle" class="tableCellFour" align="center">
+													<h:outputText
+														value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.detallePrestamo.posicion.emision.serie.serie}"></h:outputText>
+												</td>
+												<td valign="middle" class="tableCellFour" align="center">
+													<h:outputText
+														value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.detallePrestamo.posicion.emision.cupon}"></h:outputText>
+												</td>
+												<td align="center" valign="middle" class="tableCellFour">
+													<h:outputText
+														value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.detallePrestamo.posicion.emision.tipoValor.mercado.descripcion}"></h:outputText>
+												</td>
+												<td align="center" valign="middle" class="tableCellFour">
+													<h:outputText
+														value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.detallePrestamo.posicion.emision.isin}"></h:outputText>
+												</td>
+												<td align="left" valign="top" class="tableCellFour">
+													<h:outputText
+														value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.detallePrestamo.posicion.boveda.descripcion}"></h:outputText>
+												</td>
+												<td align="center" valign="top" class="tableCellFour">
+													<h:outputText
+														value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.precio}" style="white-space: nowrap;">
+														<f:converter converterId="formatoMonedaConverter" />
+													</h:outputText>
+												</td>
+												<td align="center" valign="top" class="tableCellFour">
+													<h:outputText
+														value="#{consultaDetalleMovimientoPosicionBean.detalleMovimiento.detallePrestamo.cantidad}">
+														<f:converter converterId="formatoEnteroConverter" />
+													</h:outputText>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</h:panelGroup>
+		</ui:define>
+
+	</ui:composition>
+
+</html>

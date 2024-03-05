@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+
+	<bean id="listaEspecialValidacionesCapturaOperacionesVentaMismoDia"
+		class="java.util.ArrayList">
+		<constructor-arg index="0">
+			<list>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumericoRequerido">
+					<property name="llaveMensaje"
+						value="PRECIO_TITULO_REQUERIDO">
+					</property>
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="precioTitulo"></entry>
+						</map>
+					</property>
+				</bean>
+
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumerico">
+					<property name="llaveMensaje"
+						value="FORMATO_PRECIO_TITULO_INVALIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="precioTitulo" />
+						</map>
+					</property>
+				</bean>
+
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+					<property name="llaveMensaje"
+						value="PRECIO_TITUlO_MAYOR_CERO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="precioTitulo" />
+						</map>
+					</property>
+				</bean>
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<util:list id="listaValidadoresVentaMismoDia"
+		list-class="com.indeval.portaldali.presentation.util.MergeList">
+		<ref bean="listaValidacionesComunesCapturaOperacion" />
+		<ref bean="listaEspecialValidacionesCapturaOperacionesVentaMismoDia" />
+	</util:list>
+
+
+
+	<bean id="validadorCapturaOperacionesVentaMismoDia"
+		parent="validacionesComunesCO">
+		<property name="criteriosValidacion" ref="listaValidadoresVentaMismoDia" >
+			
+		</property>
+	</bean>
+
+
+	<util:list id="listaEspecialValidacionesVentaFechaValor">
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="PLAZO_LIQ_HRS_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="plazoLiquidacionHoras" />
+						</map>
+					</property>
+				</bean>
+
+
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumericoRequerido">
+					<property name="llaveMensaje"
+						value="PRECIO_TITULO_REQUERIDO">
+					</property>
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="precioTitulo"></entry>
+						</map>
+					</property>
+				</bean>
+
+			
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumerico">
+					<property name="llaveMensaje"
+						value="FORMATO_PRECIO_TITULO_INVALIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="precioTitulo" />
+						</map>
+					</property>
+				</bean>
+	
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+					<property name="llaveMensaje"
+						value="PRECIO_TITUlO_MAYOR_CERO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="precioTitulo" />
+						</map>
+					</property>
+				</bean>
+	</util:list>
+
+	
+	<util:list id="listaValidadoresVentaFechaValor"
+		list-class="com.indeval.portaldali.presentation.util.MergeList">
+		<ref bean="listaValidacionesComunesCapturaOperacion" />
+		<ref bean="listaEspecialValidacionesVentaFechaValor" />
+	</util:list>
+
+
+	<bean id="validadorCapturaOperacionesVentaFechaValor"
+		parent="validacionesComunesCO">
+	
+		<property name="criteriosValidacion" ref="listaValidadoresVentaFechaValor">
+			
+		</property>
+	</bean>
+
+	<util:list id="listaEspecialValidacionesVentaMismoDiaCompraDirecto">
+			<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumericoRequerido">
+					<property name="llaveMensaje"
+						value="PRECIO_TITULO_REQUERIDO">
+					</property>
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="precioTitulo"></entry>
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumerico">
+					<property name="llaveMensaje"
+						value="FORMATO_PRECIO_TITULO_INVALIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="precioTitulo" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+					<property name="llaveMensaje"
+						value="PRECIO_TITULO_MAYOR_CERO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="precioTitulo" />
+						</map>
+					</property>
+				</bean>
+				
+	</util:list>
+	
+
+	<util:list id="listaValidadoresVentaMismoDiaCompraDirecto"
+		list-class="com.indeval.portaldali.presentation.util.MergeList">
+		<ref bean="listaValidacionesComunesCapturaOperacion" />
+		<ref bean="listaEspecialValidacionesVentaMismoDiaCompraDirecto" />
+	</util:list>
+
+	<bean id="validadorCapturaOperacionesVentaMismoDiaCompraDirecto"
+		parent="validacionesComunesCO">
+		
+		<property name="criteriosValidacion" ref="listaValidadoresVentaMismoDiaCompraDirecto">
+			
+		</property>
+	</bean>
+	
+	
+	<util:list id="listaEspecialValidacionesVentaFechaValorCompraDirecto">
+			<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="PLAZO_LIQ_HRS_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="plazoLiquidacionHoras" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumericoRequerido">
+					<property name="llaveMensaje"
+						value="PRECIO_TITULO_REQUERIDO">
+					</property>
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="precioTitulo"></entry>
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumerico">
+					<property name="llaveMensaje"
+						value="FORMATO_PRECIO_TITULO_INVALIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="precioTitulo" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumerico">
+					<property name="llaveMensaje"
+						value="FORMATO_PRECIO_TITULO_INVALIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="precioTitulo" />
+						</map>
+					</property>
+				</bean>
+	</util:list>
+	<util:list id="listaValidadoresVentaFechaValorCompraDirecto"
+		list-class="com.indeval.portaldali.presentation.util.MergeList">
+		<ref bean="listaValidacionesComunesCapturaOperacion" />
+		<ref bean="listaEspecialValidacionesVentaFechaValorCompraDirecto" />
+	</util:list>
+
+	<bean id="validadorCapturaOperacionesVentaFechaValorCompraDirecto"
+		parent="validacionesComunesCO">
+	
+		<property name="criteriosValidacion" ref="listaValidadoresVentaFechaValorCompraDirecto">
+			
+		</property>
+	</bean>
+	
+	
+	
+	<!-- Validaciones para archivo -->
+	
+	<bean id="validadorCapturaOperacionesVentaMismoDiaArchivo"
+		parent="validacionesComunesArchivoCO">
+		<property name="criteriosValidacion" ref="listaValidadoresVentaMismoDia" >
+			
+		</property>
+	</bean>
+	<bean id="validadorCapturaOperacionesVentaFechaValorArchivo"
+		parent="validacionesComunesArchivoCO">
+	
+		<property name="criteriosValidacion" ref="listaValidadoresVentaFechaValor">
+			
+		</property>
+	</bean>
+		<bean id="validadorCapturaOperacionesVentaMismoDiaCompraDirectoArchivo"
+		parent="validacionesComunesArchivoCO">
+		
+		<property name="criteriosValidacion" ref="listaValidadoresVentaMismoDiaCompraDirecto">
+			
+		</property>
+	</bean>
+	
+	<bean id="validadorCapturaOperacionesVentaFechaValorCompraDirectoArchivo"
+		parent="validacionesComunesArchivoCO">
+	
+		<property name="criteriosValidacion" ref="listaValidadoresVentaFechaValorCompraDirecto">
+			
+		</property>
+	</bean>
+	
+	
+
+</beans>

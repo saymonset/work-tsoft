@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<description>
+		AplicationContext de configuracion de objetos de acceso a datos (pruebas EJB)
+	</description>
+	
+	<bean id="dataSourceDali"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url">
+			<value>
+				<![CDATA[jdbc:oracle:thin:@10.100.144.6:1521:homology]]>
+			</value>
+		</property>
+		<property name="username" value="dali_admin" />
+		<property name="password" value="dali08" />
+	</bean>
+	
+	<bean id="dataSourceDali_XXX"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+        destroy-method="close">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+        <property name="url">
+            <value>
+                <![CDATA[jdbc:oracle:thin:@10.100.144.6:1521:homology]]>
+            </value>
+        </property>
+        <property name="username" value="dali_admin" />
+        <property name="password" value="dali08" />
+    </bean>
+
+</beans>

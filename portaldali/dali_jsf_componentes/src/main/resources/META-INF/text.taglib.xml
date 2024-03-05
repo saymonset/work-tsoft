@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE facelet-taglib PUBLIC
+  "-//Sun Microsystems, Inc.//DTD Facelet Taglib 1.0//EN"
+  "http://java.sun.com/dtd/facelet-taglib_1_0.dtd">
+
+<facelet-taglib>
+    <namespace>http://indeval.com/jsf/txt</namespace>
+    <tag>
+        <tag-name>document</tag-name>
+        <component>
+            <component-type>indeval.TextDocument</component-type>
+            <renderer-type>indeval.TextDocument</renderer-type>
+        </component>
+    </tag>
+    
+    <tag>
+        <tag-name>col</tag-name>
+        <component>
+            <component-type>indeval.TextColumn</component-type>
+            <renderer-type>indeval.TextColumn</renderer-type>
+        </component>
+    </tag>
+    <tag>
+        <tag-name>row</tag-name>
+        <component>
+            <component-type>indeval.TextRow</component-type>
+            <renderer-type>indeval.TextRow</renderer-type>
+        </component>
+    </tag>
+    <tag>
+        <tag-name>table</tag-name>
+        <component>
+            <component-type>indeval.TextTable</component-type>
+            <renderer-type>indeval.TextTable</renderer-type>
+        </component>
+    </tag>
+    <tag>
+        <tag-name>iterator</tag-name>
+        <component>
+            <component-type>indeval.TextIterator</component-type>
+            <renderer-type>indeval.TextIterator</renderer-type>
+        </component>
+    </tag>
+    
+    
+</facelet-taglib>

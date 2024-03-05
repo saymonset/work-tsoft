@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+    
+    <bean id="consultaTipoOperacionService" class="com.indeval.portaldali.middleware.services.common.ConsultaTipoOperacionServiceImpl">
+		<property name="tipoOperacionDAO" ref="tipoOperacionDAO"></property>
+	</bean> 
+	<bean id="consultaMovimientosValorService" class="com.indeval.portaldali.middleware.services.estadocuenta.ConsultaMovimientosValorServiceV2Impl">
+		<property name="movimientosValorDAOV2" ref="movimientosValorDAOV2"></property>
+		<property name="utilServices" ref="utilServices"></property>
+	</bean>
+	<bean id="consultaTipoInstruccionService" class="com.indeval.portaldali.middleware.services.common.ConsultaTipoInstruccionServiceImpl" >
+		<property name="tipoInstruccionDAO" ref="tipoInstruccionDAO"></property>
+	</bean>
+	
+	<bean id="consultaTipoLiquidacionService" class="com.indeval.portaldali.middleware.services.common.ConsultaTipoLiquidacionServiceImpl" >
+		<property name="tipoLiquidacionDAO" ref="tipoLiquidacionDAO"></property>
+	</bean>
+    
+	<bean id="consultaEstadoCuentaService" class="com.indeval.portaldali.middleware.services.estadocuenta.ConsultaEstadoCuentaPosicionServiceV2Impl">
+		<property name="utilServices" ref="utilServices"></property>
+		<property name="estadoCuentaPosicionDAOV2" ref="estadoCuentaPosicionDAOV2"></property>
+		<property name="posicionDAO" ref="posicionDAO"></property>
+	</bean>
+    
+       
+    <!-- Definicion del servicio de consulta de saldos de cuentas -->
+    <bean id="consultaSaldosEfectivoService" class="com.indeval.portaldali.middleware.services.estadocuenta.ConsultaSaldosEfectivoServiceImpl">
+    	<property name="saldoDAO" ref="saldoV2DAO" />
+    	<property name="saldoNombradaDao" ref="saldoNombradaDao" />
+    	<property name="dateUtilsDao" ref="dateUtilsDao" />
+    </bean>
+    
+        
+	<bean id="consultaPosicionService" class="com.indeval.portaldali.middleware.services.estadocuenta.ConsultaPosicionServiceImpl">
+		<property name="posicionDAO" ref="posicionDAO"></property>
+		<property name="emisionDaliDAO" ref="emisionDAO"></property>
+	</bean>
+	
+	<bean id="consultaMovimientosEfectivoService" class="com.indeval.portaldali.middleware.services.estadocuenta.ConsultaMovimientosEfectivoV2ServiceImpl">
+		<property name="movimientosEfectivoDAO" ref="movimientosEfectivoDAOV2"></property>
+	</bean>
+	
+	        
+    <bean id="consultaDetalleMovimientoEfectivoService" class="com.indeval.portaldali.middleware.services.estadocuenta.ConsultaDetalleMovimientoEfectivoServiceImpl">
+    	<property name="detalleMovimientoEfectivoDAO" ref="detalleMovimientoEfectivoDAO" />
+    </bean>
+    
+    <bean id="consultaEstadoCuentaEfectivoService" class="com.indeval.portaldali.middleware.services.estadocuenta.ConsultaEstadoCuentaSaldoEfectivoV2ServiceImpl">
+		<property name="estadoCuentaSaldosEfectivoDAO" ref="consultaEstadoCuentaEfectivoDAOV2"></property>
+		<property name="saldoDAO" ref="saldoV2DAO"></property>
+		<property name="diaInhabilDao" ref="diaInhabilDao"></property>
+	</bean>
+    
+    <bean id="detalleLiquidacionPaqService" class="com.indeval.portaldali.middleware.services.liquidacionpaquetes.DetalleLiquidacionPaqServiceImpl" >
+    <property name="dateUtilsDao" ref="dateUtilsDao"/>
+		<property name="clientWSMop" ref="clientWSMop"></property>
+	</bean>
+    
+	
+    
+    <bean id="clientWSMop" class="com.indeval.mop.external.ws.service.WSMopService"
+          factory-bean="clientFactory" factory-method="create"/>
+    
+    <bean id="clientFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+        <property name="serviceClass" value="com.indeval.mop.external.ws.service.WSMopService"/>
+        <property name="address" value="${portalDali.mopURLWebService}"/>
+        
+    </bean>
+    
+</beans>

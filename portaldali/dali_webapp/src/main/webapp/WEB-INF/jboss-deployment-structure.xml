@@ -1,0 +1,46 @@
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.2">
+    <deployment>
+    
+    
+<!--     	<dependencies> -->
+            
+<!--             <module name="javax.api" />	 -->
+                        
+          
+            <!-- <system export="true">
+                <paths>
+                    <path name="com/sun/corba/se/spi/legacy/connection"/>
+                    <path name="com/sun/jndi/cosnaming"/>
+                    <path name="com/sun/corba"/>
+                    
+                </paths>
+            </system>  
+ 			-->
+<!-- 		</dependencies>		 -->
+		
+		
+		
+    	<exclusions>
+			<module name="javax.faces.api" slot="main"/>
+			<module name="com.sun.jsf-impl" slot="main"/>
+			<module name="org.apache.cxf" />
+			<module name="org.jboss.as.web"/>
+<!-- 			<module name="org.apache.log4j" /> -->
+
+			
+		</exclusions>
+		
+		<dependencies>
+        <!-- for packaged JSF -->
+        	<module name="org.jboss.as.web" services="none"/>
+      	</dependencies>
+
+		
+		<exclude-subsystems>
+		  <subsystem name="webservices" />
+		</exclude-subsystems>
+
+    </deployment>
+    
+        
+</jboss-deployment-structure>

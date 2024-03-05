@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:f="http://java.sun.com/jsf/core">
+    <xls:document documentName="consultaEdoCuentaOpEfectivo" documentTitle="Estado de Cuenta Operativo de Efectivo "
+        institucion="#{consultaEstadoCuentaSaldoEfectivoBean.institucionActual.claveTipoInstitucion} #{consultaEstadoCuentaSaldoEfectivoBean.institucionActual.folioInstitucion} #{consultaEstadoCuentaSaldoEfectivoBean.institucionActual.razonSocial}"
+        fecha="#{consultaEstadoCuentaSaldoEfectivoBean.fechaActual}">
+
+        <xls:table value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo}" var="consulta"
+            widthPercentage="100">
+            <xls:row>
+                <xls:col header="#{etq.cuentaMinus}" value="#{consulta.cuentaSeleccionada.descripcion}" />
+                <xls:col header="#{etq.naturalezaMinus}" value="#{consulta.cuentaSeleccionada.tipoNaturaleza.descripcion}" />
+                <xls:col header="#{etq.institucionMinus}" value="#{consultaEstadoCuentaSaldoEfectivoBean.folioClaveInstitucion}"/>
+                <xls:col header="#{etq.tipoCuentaMinus}" value="#{consulta.cuentaSeleccionada.tipoCuenta.descripcion}" />                
+                <xls:col header="#{etq.fechaInicialSinPuntos}" value="#{consulta.criterioFechaInicial}" pattern="dd/MM/yyyy" />
+                <xls:col header="#{etq.fechaFinalSinPuntos}" value="#{consulta.criterioFechaFinal}" pattern="dd/MM/yyyy" />
+                <xls:col header="#{etq.divisa}" value="#{consulta.criterioDivisa.opcionSeleccionada.descripcion}" />                
+                <xls:col header="#{etq.boveda}" value="#{consulta.criterioBoveda.opcionSeleccionada.descripcion}" />
+            </xls:row>
+        </xls:table>
+        
+        <xls:table value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo}" var="consulta"
+            widthPercentage="100">
+            <xls:row>
+                <xls:col header="#{etq.registrosEncontrados}#{etq.dosPuntos}" value="#{consultaEstadoCuentaSaldoEfectivoBean.totalResultados}" />
+            </xls:row>
+        </xls:table>
+
+        <xls:iterator value="#{consultaEstadoCuentaSaldoEfectivoBean.resultadosEstadoCuentaEfectivo}"
+            var="estadoCuentaEfectivoPorDivisa">
+
+
+            <xls:table value="#{estadoCuentaEfectivoPorDivisa}"
+                rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}"
+                var="dummy">
+                <xls:row>
+                    <xls:col header="#{etq.divisa}" />
+                    <xls:col header="#{estadoCuentaEfectivoPorDivisa.divisa.descripcion}" />
+
+                </xls:row>
+            </xls:table>
+            <xls:table value="#{estadoCuentaEfectivoPorDivisa}"
+                rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}"
+                var="dummy">
+                <xls:row>
+                    <xls:col header="#{etq.divisa}" />
+                    <xls:col header="#{estadoCuentaEfectivoPorDivisa.divisa.descripcion}" />
+                </xls:row>
+
+            </xls:table>
+            
+            <xls:iterator value="#{estadoCuentaEfectivoPorDivisa.registrosContablesPorBoveda}" var="estadoCuentaEfectivoPorBoveda">
+                <xls:table value="#{estadoCuentaEfectivoPorBoveda}" var="dummy"
+                    rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}">
+
+                    <xls:row>
+                        <xls:col header="#{etq.bovedaMinus}" value="" />
+                        <xls:col header="#{estadoCuentaEfectivoPorBoveda.boveda.descripcion}" />
+                        <xls:col header="#{etq.saldoInicialMinus}"
+                            value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoInicial.saldoInicial}"
+                            pattern="$ ###,###,###,###,###,##0.00" />
+                    </xls:row>
+
+                </xls:table>
+
+                <xls:table value="#{estadoCuentaEfectivoPorBoveda}" var="dummy"
+                    rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}">
+
+                    <xls:row>
+                        <xls:col header="#{etq.bovedaMinus}" value="#{estadoCuentaEfectivoPorBoveda.boveda.descripcion}" />
+                        <xls:col value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoInicial.saldoInicialDisponible}"
+                            header="#{etq.saldoDisponibleMinus}" pattern="$ ###,###,###,###,###,##0.00" />
+                        <xls:col value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoInicial.saldoInicialNoDisponible}"
+                            header="#{etq.saldoNoDisponibleMinus}" pattern="$ ###,###,###,###,###,##0.00" />
+                        <xls:col header="#{etq.saldoInicialMinus}"
+                            value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoInicial.saldoInicial}" pattern="$ #,##0.00" />
+                    </xls:row>
+
+                </xls:table>
+
+                <xls:table value="#{estadoCuentaEfectivoPorBoveda.registrosContablesControladas}" var="registroContable"
+                    rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}">
+                    <xls:row>
+                    
+                        <xls:col header="#{etq.fechaLiquidacionMinus}" value="#{registroContable.fechaLiquidacion}"
+                            pattern="dd/MM/yyyy HH:mm:ss" />
+                        <xls:col header="#{etq.descripcionMinus}" value="#{registroContable.descripcion}" />
+                       
+                        <xls:col header="#{etq.contraparteCuenta}" value="#{registroContable.cuentaContraparte}" />
+                        <xls:col header="#{etq.contraparteCuenta}" value="#{registroContable.cuentaContraparte}" />
+                         <xls:col header="#{etq.contraparteMinus}" value="#{registroContable.contraparte}" />
+                         <xls:col header="#{etq.folioInstruccionMinus}"  value="#{registroContable.folioInstruccion}" pattern="###"/>
+                         <xls:col header="#{etq.tipoInstruccionMinus}"  value="#{registroContable.operacion.instruccionLiquidacion.tipoInstruccion.nombreCorto}" pattern="###"/>
+                        <xls:col header="#{etq.cobroMinus}" value="#{registroContable.cantidadRecepcion}"
+                            pattern="$ ###,###,###,###,###,##0.00" />
+                        <xls:col header="#{etq.pago}" value="#{registroContable.cantidadEntrega}"
+                            pattern="$ ###,###,###,###,###,##0.00" />
+                        <xls:col header="#{etq.saldo}" value="#{registroContable.saldoTotal}"
+                            pattern="$ ###,###,###,###,###,##0.00" />
+                    </xls:row>
+                </xls:table>
+
+                <xls:table value="#{estadoCuentaEfectivoPorBoveda.registrosContablesNombradas}" var="registroContable"
+                    rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}">
+                    <xls:row>
+                        <xls:col header="#{etq.fechaLiquidacion}" value="#{registroContable.fechaLiquidacion}"
+                            pattern="dd/MM/yyyy HH:mm:ss" />
+                        <xls:col header="#{etq.descripcionMinus}" value="#{registroContable.descripcion}" />
+                     
+                         <xls:col header="#{etq.contraparteCuenta}" value="#{registroContable.cuentaContraparte}" />
+                             <xls:col header="#{etq.contraparteMinus}" value="#{registroContable.contraparte}" />
+                         <xls:col header="#{etq.folioInstruccionMinus}"  value="#{registroContable.folioInstruccion}" pattern="###"/>
+                         <xls:col header="#{etq.tipoInstruccionMinus}"  value="#{registroContable.operacion.instruccionLiquidacion.tipoInstruccion.nombreCorto}" pattern="###"/>
+                        <xls:col header="#{etq.cobroMinus}" value="#{registroContable.cantidadRecepcion}"
+                            pattern="$###,###,###,###,###,##0.00">
+                            <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                        </xls:col>
+                        <xls:col header="#{etq.pagoMinus}" value="#{registroContable.cantidadEntrega}"
+                            pattern="$ ###,###,###,###,###,##0.00" />
+                        <xls:col header="#{etq.disponibleMinus}" value="#{registroContable.saldoDisponible}"
+                            pattern="$ ###,###,###,###,###,##0.00" />
+                        <xls:col header="#{etq.noDisponibleMinus}" value="#{registroContable.saldoNoDisponible}"
+                            pattern="$ ###,###,###,###,###,##0.00" />
+                        <xls:col header="#{etq.saldoMinus}" value="#{registroContable.saldoTotal}"
+                            pattern="$ ###,###,###,###,###,###,###,##0.00">
+
+                        </xls:col>
+                    </xls:row>
+                </xls:table>
+
+                <xls:table value="#{estadoCuentaEfectivoPorBoveda}" var="dummy"
+                    rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}">
+                    <xls:row>
+                        <xls:col header="#{etq.saldoFinalMinus}" value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoFinal.saldoFinal}"
+                            pattern="$ ###,###,###,###,###,##0.00" />
+                    </xls:row>
+                </xls:table>
+
+                <xls:table value="#{estadoCuentaEfectivoPorBoveda}" var="dummy"
+                    rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}">
+                    <xls:row>
+                        <xls:col header="#{etq.saldoDisponibleMinus}"
+                            value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoFinal.saldoFinalDisponible}"
+                            pattern="$ ###,###,###,###,###,##0.00" />
+                        <xls:col header="#{etq.saldoNoDisponibleMinus}"
+                            value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoFinal.saldoFinalNoDisponible}"
+                            pattern="$ ###,###,###,###,###,##0.00" />
+                        <xls:col header="#{etq.saldoFinalMinus}" value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoFinal.saldoFinal}"
+                            pattern="$ ###,###,###,###,###,##0.00" />
+                    </xls:row>
+                </xls:table>
+
+            </xls:iterator>
+        </xls:iterator>
+
+    </xls:document>
+</html>

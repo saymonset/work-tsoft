@@ -1,0 +1,51 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:pdf="http://indeval.com/jsf/pdf"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="consultaEmisiones" documentTitle="Consulta Emisiones"
+        institucion="#{elegirInstitucionBean.descripcionInstitucion} #{elegirInstitucionBean.fechaActual}"
+        imageResource="/images/indeval.png">
+        <pdf:table value="consultaEmisionesBean" currentBean="emision" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="#{consultaEmisionesBean}" currentBean="emision" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.tv}" value="#{!empty consultaEmisionesBean.emision.tipoValor.claveTipoValor ? consultaEmisionesBean.emision.tipoValor.claveTipoValor : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.emisoraMinus}" value="#{!empty consultaEmisionesBean.emision.emisora.descripcion ? consultaEmisionesBean.emision.emisora.descripcion : 'TODAS'}" align="center" />
+                <pdf:col header="#{etq.serieMinus}" value="#{!empty consultaEmisionesBean.emision.serie.serie ? consultaEmisionesBean.emision.serie.serie : 'TODAS'}" align="center" />
+                <pdf:col header="#{etq.isin}" value="#{!empty consultaEmisionesBean.emision.isin ? consultaEmisionesBean.emision.isin : 'TODOS'}" align="center" />
+                <pdf:col header="#{etq.fechaInicial}" value="#{!empty consultaEmisionesBean.fechaIni ? consultaEmisionesBean.fechaIni : 'TODOS'}" align="center">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+                </pdf:col>
+                <pdf:col header="#{etq.fechaFinal}" value="#{!empty consultaEmisionesBean.fechaFin ? consultaEmisionesBean.fechaFin : 'TODOS'}" align="center">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+                </pdf:col>
+            </pdf:row>
+        </pdf:table>
+        
+        <pdf:br/>
+        
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{consultaEmisionesBean.totalRegistros}"/>
+        
+        <pdf:br/>
+
+        <pdf:table value="#{consultaEmisionesBean.listaEmisiones}" currentBean="emisiones">
+            <pdf:row>
+                <pdf:col header="#{etq.tv}" value="#{emisiones.tipoValor.claveTipoValor}" align="center" collspan="1"/>
+                <pdf:col header="#{etq.emisora}" value="#{emisiones.emisora.descripcion}" align="center" collspan="1"/>
+                <pdf:col header="#{etq.serie}" value="#{emisiones.serie.serie}" align="center" collspan="1"/>
+                <pdf:col header="#{etq.cupon}" value="#{emisiones.cupon}" align="center" collspan="1"/>
+                <pdf:col header="#{etq.isin}" value="#{emisiones.isin}" align="center" collspan="1"/>
+                <pdf:col header="#{etq.fechaVencimientoComp}" value="#{emisiones.fechaVencimiento}" align="center" collspan="1">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+               	</pdf:col>
+                <pdf:col header="#{etq.diasVigentes}" value="#{emisiones.diasVigentes}" align="center" collspan="1"/>
+
+            </pdf:row>
+        </pdf:table>
+
+    </pdf:document>
+</html>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="vencimientoReportosService" class="com.indeval.portaldali.middleware.services.reportos.VencimientoReportosServiceImpl">
+		<property name="reportosDao" ref="reportosDAO"></property>
+		<property name="vencimientoAnticipadoDao" ref="vencimientoAnticipadoDAO"></property>
+		<property name="instruccionOperacionValDao" ref="instruccionOperacionValDAO"></property>
+		<property name="diaInhabilDao" ref="diaInhabilDao"></property>
+		<property name="fechasUtilService" ref="fechasUtilService"></property>
+<!-- 		<property name="estatusOperacionesMatchDAO" ref="estatusOperacionesMatchDAO"></property> -->
+<!-- 		<property name="bitacoraOperacionesService" ref="bitacoraOperacionesService"></property> -->
+<!-- 		<property name="posicionDaliDao" ref="tPosicionNombradaDao"></property> -->
+<!-- 		<property name="institucionDAO" ref="institucionDAO"></property> -->
+<!-- 		<property name="propiedadesDaliService"	ref="propiedadesDaliService"/> -->
+	</bean>
+	
+</beans>

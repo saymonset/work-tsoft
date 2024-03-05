@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+               http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+               http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+               http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+    <import resource="classpath*:dataSourceContext.xml" />
+	<context:annotation-config/>
+
+
+	<bean id="cuentaNombradaDao"	class="com.indeval.dali.dao.impl.CuentaNombradaDaoImpl" lazy-init="true">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="institucionDao"	class="com.indeval.dali.dao.impl.InstitucionDaoImpl" lazy-init="true">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="posicionNombradaDao"	class="com.indeval.dali.dao.impl.PosicionNombradaDaoImpl" lazy-init="true">
+		<property name="dataSource" ref="dataSource" />
+	</bean>	
+	<bean id="bitacoraOperacionesDao"	class="com.indeval.dali.dao.impl.BitacoraOperacionesDaoImpl" lazy-init="true">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	
+	<bean id="bitacoraMatchDao"	class="com.indeval.dali.dao.impl.BitacoraMatchDaoImpl" lazy-init="true">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+</beans>    

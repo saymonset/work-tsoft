@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib>
+	<tlib-version>1.0</tlib-version> 
+ 	<short-name>xls</short-name>
+	<uri>http://indeval.com/jsf/xls</uri>
+	<tag>
+		<name>document</name>
+		<tag-class>com.indeval.portaldali.presentation.jsf.xls.XLSDocumentTag</tag-class>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>documentName</name>
+		</attribute>
+		<attribute>
+			<name>documentTitle</name>
+		</attribute>
+		<attribute>
+			<name>fecha</name>
+		</attribute>
+		<attribute>
+			<name>institucion</name>
+		</attribute>
+		<attribute>
+			<name>sheetName</name>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>subtitle</name>
+		<tag-class>com.indeval.portaldali.presentation.jsf.xls.XLSSubTitleTag</tag-class>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>value</name>
+		</attribute>
+		<attribute>
+			<name>pattern</name>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>col</name>
+		<tag-class>com.indeval.portaldali.presentation.jsf.xls.XLSColumnTag</tag-class>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>header</name>
+		</attribute>
+		<attribute>
+			<name>footer</name>
+		</attribute>
+		<attribute>
+			<name>value</name>
+		</attribute>
+        <attribute>
+            <name>rendered</name>
+        </attribute>
+        <attribute>
+			<name>pattern</name>
+		</attribute>
+		<attribute>
+			<name>bgcolor</name>
+		</attribute>
+		
+	</tag>
+	<tag>
+		<name>row</name>
+		<tag-class>com.indeval.portaldali.presentation.jsf.xls.XLSRowTag</tag-class>
+		<attribute>
+			<name>id</name>
+		</attribute>
+        <attribute>
+            <name>rendered</name>
+        </attribute>
+	</tag>
+	<tag>
+		<name>table</name>
+		<tag-class>com.indeval.portaldali.presentation.jsf.xls.XLSTableTag</tag-class>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>var</name>
+		</attribute>
+		<attribute>
+			<name>value</name>
+		</attribute>
+	</tag>
+	<tag>
+		<name>iterator</name>
+		<tag-class>com.indeval.portaldali.presentation.jsf.xls.XLSIteratorTag</tag-class>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>var</name>
+		</attribute>
+		<attribute>
+			<name>value</name>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>br</name>
+		<tag-class>com.indeval.portaldali.presentation.jsf.xls.XLSBRTag</tag-class>
+		<attribute>
+			<name>id</name>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>newSheet</name>
+		<tag-class>com.indeval.portaldali.presentation.jsf.xls.XLSNewSheetTag</tag-class>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>value</name>
+		</attribute>
+	</tag>
+	
+	<!-- tag>
+		<name>filter</name>
+		<tag-class>com.indeval.portaldali.presentation.jsf.pdf.PDFFilterTagDali</tag-class>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>label</name>
+		</attribute>
+		<attribute>
+			<name>value</name>
+		</attribute>
+	</tag>
+	
+	
+	
+     <tag>
+        <name>grid</name>
+        <tag-class>com.indeval.portaldali.presentation.jsf.pdf.PDFGTableTagDali</tag-class>
+        <attribute>
+            <name>id</name>
+        </attribute>
+        <attribute>
+            <name>widthPercentage</name>
+        </attribute>
+        <attribute>
+            <name>align</name>
+        </attribute>
+        <attribute>
+            <name>cellwidths</name>
+        </attribute>
+        <attribute>
+            <name>border</name>
+        </attribute>
+        <attribute>
+            <name>bordercolor</name>
+        </attribute>
+        
+    </tag>
+    
+    <tag>
+        <name>gridRow</name>
+        <tag-class>com.indeval.portaldali.presentation.jsf.pdf.PDFGRowTagDali</tag-class>
+        <attribute>
+            <name>id</name>
+        </attribute>
+    </tag>
+    
+    <tag>
+        <name>gridCol</name>
+        <tag-class>com.indeval.portaldali.presentation.jsf.pdf.PDFGColumnTagDali</tag-class>
+        <attribute>
+            <name>id</name>
+        </attribute>
+        <attribute>
+            <name>valign</name>
+        </attribute>
+        <attribute>
+            <name>align</name>
+        </attribute>
+        <attribute>
+            <name>collspan</name>
+        </attribute>
+        <attribute>
+            <name>bgcolor</name>
+        </attribute>
+    </tag -->
+	
+</taglib>
+

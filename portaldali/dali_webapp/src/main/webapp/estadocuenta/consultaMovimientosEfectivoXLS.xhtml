@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xls="http://indeval.com/jsf/xls"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<xls:document documentName="consultaMovimientosEfectivo"
+		documentTitle="Consulta de Movimientos de Efectivo"
+		institucion="#{consultaSaldosEfectivoBean.institucionActual.claveTipoInstitucion} #{consultaSaldosEfectivoBean.institucionActual.folioInstitucion} #{consultaSaldosEfectivoBean.institucionActual.razonSocial}"
+		fecha="#{consultaSaldosEfectivoBean.fechaActual}">
+
+		<!-- Criterios de busqueda -->
+		<xls:table
+			value="#{consultaMovimientosEfectivoBean.consultaMovimientos}"
+			var="consulta">
+			<xls:row>
+				<xls:col header="#{etq.naturalezaMinus}" value="#{consulta.cuentaSeleccionada.tipoNaturaleza.descripcion}" />
+				<xls:col header="#{etq.tipoCuentaMinus}" value="#{consulta.cuentaSeleccionada.tipoCuenta.descripcion}" />
+				<xls:col header="#{etq.cuentaMinus}" value="#{consulta.cuentaSeleccionada.descripcion}" />
+				<xls:col header="#{etq.rol}" value="#{consulta.descripcionRolParticipante}" />
+			</xls:row>
+		</xls:table>
+		<xls:table
+			value="#{consultaMovimientosEfectivoBean.consultaMovimientos}"
+			rendered="#{consultaMovimientosEfectivoBean.consultaMovimientos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}"
+			var="consulta">
+			<xls:row>
+				<xls:col header="#{etq.divisa}" value="#{consultaMovimientosEfectivoBean.consultaMovimientos.criterioDivisa.opcionSeleccionada.descripcion}" />
+				<xls:col header="#{etq.boveda}" value="#{consultaMovimientosEfectivoBean.consultaMovimientos.criterioBoveda.opcionSeleccionada.descripcion}" />
+				<xls:col header="#{etq.tipoInstruccion}" value="#{consulta.criterioTipoInstruccion.opcionSeleccionada.nombreCorto}" />
+				<xls:col header="#{etq.tipoOperacion}" value="#{consulta.criterioTipoOperacion.opcionSeleccionada.claveTipoOperacion}" />
+				<xls:col header="#{etq.folioInstruccion}" value="#{consulta.criterioFolioInstruccion}" />
+				<xls:col header="#{etq.contraparteCuenta}" value="#{consulta.criterioCuentaContraparte.numeroCuenta ne '-1' ? consulta.criterioCuentaContraparte.numeroCuenta : 'TODAS'}" />
+				<xls:col header="#{etq.rol}" value="#{consulta.descripcionRolContraparte}" />
+			</xls:row>
+		</xls:table>
+		<xls:table value="#{consultaMovimientosEfectivoBean.consultaMovimientos}"
+			var="consulta">
+			<xls:row>
+				<xls:col header="#{etq.registrosEncontrados}" />
+				<xls:col header="#{consultaMovimientosEfectivoBean.totalResultados}" />
+			</xls:row>
+		</xls:table>
+		<!-- FIN Criterios de busqueda -->
+		
+		<xls:table
+			value="#{consultaMovimientosEfectivoBean.resultadosNombradasReporteXls}"
+			var="nombrada"
+			rendered="#{consultaMovimientosEfectivoBean.consultaMovimientos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}">
+			
+			<xls:row>
+				<xls:col header="#{etq.fechaLiquidacionMinus}" value="#{nombrada.fechaLiquidacion}" pattern="dd/MM/yyyy HH:mm:ss" />
+				<xls:col header="#{etq.descripcionMinus}" value="#{nombrada.descripcion}" />
+				<xls:col header="#{etq.participanteId}" value="#{nombrada.claveTipoInstitucionParticipante}" />
+				<xls:col header="#{etq.participanteFolio}" value="#{nombrada.folioInstitucionParticipante}" />
+				<xls:col header="#{etq.participanteCuenta}" value="#{nombrada.numeroCuentaParticipante}" />
+				<xls:col header="#{etq.contraparteId}" value="#{nombrada.claveTipoInstitucionContraparte}" />
+				<xls:col header="#{etq.contraparteFolio}" value="#{nombrada.folioInstitucionContraparte}" />
+				<xls:col header="#{etq.contraparteCuenta}" value="#{nombrada.numeroCuentaContraparte}" />
+				<xls:col header="#{etq.folioInstruccion}" value="#{nombrada.folioInstruccion}" />
+				<xls:col header="#{etq.cobro}" value="#{empty nombrada.cantidadRecepcion ? 0 : nombrada.cantidadRecepcion}" footer="#{consultaMovimientosEfectivoBean.totalAbono}" pattern="$###,###,###,###,###,##0.00" />
+				<xls:col header="#{etq.pago}" value="#{empty nombrada.cantidadEntrega ? 0 : nombrada.cantidadEntrega}" footer="#{consultaMovimientosEfectivoBean.totalCargo}" pattern="$###,###,###,###,###,##0.00" />
+				<xls:col header="#{etq.tipoInstruccionMinus}" value="#{nombrada.operacion.instruccionLiquidacion.tipoInstruccion.nombreCorto}" />
+				<xls:col header="#{etq.tipoDoR}" value="#{nombrada.operacion.instruccionLiquidacion.instruccionEfectivo.tipoRetiro}"/>
+				<xls:col header="#{etq.plazo}" value="#{nombrada.operacion.instruccionLiquidacion.plazoReporto}"/>
+				<xls:col header="#{etq.tasaPorcentaje}" value="#{nombrada.operacion.instruccionLiquidacion.tasaNegociada}" pattern="###,###,###,###,###,##0.000000"/>
+				<xls:col header="#{etq.tv}" value="#{nombrada.operacion.posicion.emision.tipoValor.claveTipoValor}" />
+				<xls:col header="#{etq.emisora}" value="#{nombrada.operacion.posicion.emision.emisora.descripcion}" />
+				<xls:col header="#{etq.serie}" value="#{nombrada.operacion.posicion.emision.serie.serie}" />
+				<xls:col header="#{etq.cupon}" value="#{nombrada.operacion.posicion.cupon.claveCupon}" />
+				<xls:col header="#{etq.tipoMercado}" value="#{nombrada.operacion.posicion.cupon.emision.tipoValor.mercado.claveMercado}" />
+				<xls:col header="#{etq.cantidad}" value="#{nombrada.operacion.numeroTitulos}" pattern="###,###,###,###,###,##0" />
+				<xls:col header="#{etq.precio}" value="#{nombrada.operacion.precio}" pattern="$###,###,###,###,###,##0.00000000" />
+				<xls:col header="#{etq.cuentaReceptor}" value="#{nombrada.operacion.cuentaReceptora.numeroCuenta}" />
+				<xls:col header="#{etq.cuentaTraspasante}" value="#{nombrada.operacion.cuentaTraspasante.numeroCuenta}" />
+			</xls:row>
+		</xls:table>
+
+		<xls:table
+			value="#{consultaMovimientosEfectivoBean.resultadosControladasReporteXls}"
+			var="controlada"
+			rendered="#{consultaMovimientosEfectivoBean.consultaMovimientos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}">
+			<xls:row>	
+				<xls:col header="#{etq.registrosEncontrados}" value="#{consultaMovimientosEfectivoBean.totalResultados}"/>
+			</xls:row>
+			<xls:row>
+				<xls:col header="#{etq.divisa}" value="#{controlada.saldoEfectivo.divisa.descripcion}" />
+				<xls:col header="#{etq.boveda}" value="#{controlada.saldoEfectivo.boveda.descripcion}" />
+				<xls:col header="#{etq.fechaLiquidacionMinus}" value="#{controlada.fechaLiquidacion}" pattern="dd/MM/yyyy HH:mm:ss" />
+				<xls:col header="#{etq.descripcionMinus}" value="#{controlada.descripcion}" />
+				<xls:col header="#{etq.abonoMinus}" value="#{empty controlada.cantidadRecepcion ? 0 : controlada.cantidadRecepcion}" footer="#{consultaMovimientosEfectivoBean.totalAbono}" pattern="$###,###,###,###,###,##0.00" />
+				<xls:col header="#{etq.cargoMinus}" value="#{empty controlada.cantidadEntrega ? 0 : controlada.cantidadEntrega}" footer="#{consultaMovimientosEfectivoBean.totalCargo}" pattern="$###,###,###,###,###,##0.00" />
+			</xls:row>
+		</xls:table>
+
+	</xls:document>
+
+</html>
+

@@ -1,0 +1,20 @@
+<arquillian>
+
+	 <extension qualifier="webdriver">
+		<property name="browser">firefox</property>
+		<property name="dimensions">1300x1000</property>		
+<!-- 		<property name="firefoxUserPreferences">src/main/resources/prefs.js</property> -->
+<!-- 		<property name="acceptSslCerts">true</property> -->
+<!-- 		<property name="webStorageEnabled">true</property> -->
+<!-- 		<property name="loggingPrefs">driver=WARNING,profiling=INFO</property>	 -->
+<!-- 		<property name="ieDriverBinary">src/main/resources/IEDriverServer.exe</property> -->
+<!-- 		<property name="chromeDriverBinary">src/main/resources/chromedriverWindows32.exe</property> -->
+<!-- 		<property name="chromeDriverBinary">src/main/resources/chromedriverMac</property> -->
+<!-- 		<property name="chromeDriverBinary">${chromeDriverBinary}</property> -->
+	</extension>  
+	
+	<extension qualifier="graphene">
+	   <property name="waitGuardInterval">30</property>	   
+	</extension>
+	
+</arquillian>

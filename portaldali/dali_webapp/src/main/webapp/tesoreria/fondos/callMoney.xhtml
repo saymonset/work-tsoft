@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:indeval="http://indeval.com/indeval"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en">
+
+	<ui:composition
+		template="/layoutCaptura.xhtml">
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+                src="#{facesContext.externalContext.requestContextPath}/js/mostrarFirmaDigital.js"></script>
+			<script language="javascript" type="text/javascript"
+					src="#{facesContext.externalContext.requestContextPath}/js/consultaPosiciones.js"/>
+			<script language="javascript" type="text/javascript"
+					src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js"/>
+		</ui:define>
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.callMoney}" />				
+		</ui:define>
+
+
+		<ui:define name="seccionForma">
+			
+			<h:outputText id="miInit" value="#{callMoneyControl.init}" />
+			
+			<a4j:keepAlive beanName="callMoneyControl" />
+			<h:panelGroup id="general">
+				<table width="48%" border="0" cellspacing="5" align="center">
+								
+					<tr>
+						<td>
+							&#160;
+						</td>
+						<td align="center">
+							<b><h:outputText styleClass="texto" value="#{etq.participante}" /></b>
+						</td>
+						<td align="center">
+							<b><h:outputText styleClass="texto" value="#{etq.cuentaMinus}" /></b>
+						</td>
+						<td align="center">
+							<b><h:outputText styleClass="texto" value="#{etq.nombreInstitucion}" /></b>
+						</td>
+					</tr>
+					<tr>
+						<td align="left">
+							<h:outputText styleClass="texto" value="#{etq.traspasanteMinus}" />
+						</td>
+						<td align="center">
+							<h:inputText autocomplete="off" id="idTraspasante" size="4" maxlength="5" tabindex="10"
+								styleClass='#{!retiroFondosCtrl.usuarioIndeval ? "readonly" : "campoNumericoAsterisco" }'
+								value="#{callMoneyControl.traspaso.idFolioTraspasante}" >
+								<a4j:support event="onchange" actionListener="#{callMoneyControl.validarParticipante}" focus="idFolioReceptor"
+									reRender="miInit, cuentaDestino, nombreInstitucionTraspasante, saldoDisponible, boveda, idFolioReceptor, nombreInstitucionReceptor" />
+									
+								</h:inputText>
+							<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="idTraspasante"
+							ignoreDupResponses="true"
+								eventsQueue="folioTraspasanteQueue"
+								requestDelay ="#{inicioSesionBean.delay}"
+								suggestionAction="#{callMoneyControl.buscarParticipante}"
+								var="coincidencia" fetchValue="#{coincidencia.claveTipoInstitucion}#{coincidencia.folioInstitucion}"
+								minChars="1" width="450" nothingLabel="Sin coincidencias" >
+								<h:column>
+									<h:outputText value="#{coincidencia.claveTipoInstitucion}#{coincidencia.folioInstitucion}" /> - <h:outputText
+											value="#{coincidencia.nombreCorto}" />
+								</h:column>
+								<a4j:support event="onselect" actionListener="#{callMoneyControl.validarParticipante}"
+									reRender="miInit, cuentaDestino, nombreInstitucionTraspasante, saldoDisponible, boveda" />
+									
+							</rich:suggestionbox>
+							
+						</td>
+						<td align="center">
+							<h:inputText autocomplete="off" id="cuentaOrigen" size="6" maxlength="5"
+								styleClass="readonly"
+								value="#{callMoneyControl.traspaso.cuentaOrigen.cuenta}" />
+						</td>
+						<td align="center">
+							<h:inputText autocomplete="off" id="nombreInstitucionTraspasante" size="18"
+								maxlength="25" styleClass="readonly"
+								value="#{callMoneyControl.traspaso.cuentaOrigen.nombreCuenta}" />
+						</td>
+					</tr>
+					<tr>
+						<td align="left">
+							<h:outputText styleClass="texto" value="#{etq.receptorMinus}" />
+						</td>
+						<td align="center">
+							<h:inputText autocomplete="off" id="idFolioReceptor" size="4" maxlength="5"  tabindex="20"
+									styleClass="campoNumericoAsterisco" value="#{callMoneyControl.traspaso.idFolioReceptor}">
+									<a4j:support event="onchange" actionListener="#{callMoneyControl.validarParticipante}" focus="abono"
+									reRender="miInit, botones, cuentaDestino, nombreInstitucionReceptor, saldoDisponible" />
+							</h:inputText>
+							<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="idFolioReceptor"
+							ignoreDupResponses="true"
+								eventsQueue="folioReceptorQueue"
+								suggestionAction="#{seleccionarCuentaBean.buscarParticipante}"
+								var="coincidencia"
+								fetchValue="#{coincidencia.claveTipoInstitucion}#{coincidencia.folioInstitucion}"
+								minChars="1" width="200" immediate="false"
+								nothingLabel="Sin coincidencias">
+								<h:column>
+									<h:outputText
+										value="#{coincidencia.claveTipoInstitucion}#{coincidencia.folioInstitucion}" /> - <h:outputText
+										value="#{coincidencia.nombreCorto}" />
+								</h:column>
+								<a4j:support event="onselect" actionListener="#{callMoneyControl.validarParticipante}"
+									reRender="miInit, botones, cuentaDestino, nombreInstitucionReceptor, saldoDisponible" />
+							</rich:suggestionbox>
+						</td>
+						<td align="center">
+							<h:inputText autocomplete="off" id="cuentaDestino" size="6" maxlength="5"
+								value="#{callMoneyControl.traspaso.cuentaDestino.cuenta}"
+								styleClass="readonly" />
+						</td>
+						<td align="center">
+							<h:inputText autocomplete="off" id="nombreInstitucionReceptor" size="18"
+								maxlength="25" styleClass="readonly"
+								value="#{callMoneyControl.traspaso.cuentaDestino.nombreCuenta}" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							&#160;
+						</td>
+					</tr>
+					
+					<tr>
+						<td>
+							<h:outputText styleClass="texto" value="#{etq.abonoMinus}" />						
+						</td>
+						<td colspan="3">
+							<h:selectOneRadio id="abono" tabindex="22"
+								styleClass="texto" value="#{callMoneyControl.abono}">
+								<f:selectItem itemValue="0" itemLabel="DALI" />
+								<f:selectItem itemValue="1" itemLabel="SPEI" />
+								<f:selectItem itemValue="2" itemLabel="SOLO REGISTRO" />								
+							</h:selectOneRadio>
+						</td>
+					</tr>		
+					
+					<tr>
+						<td>
+							<h:panelGroup>
+								<h:outputText styleClass="texto" value="#{etq.bovedaMinus}" />
+								<h:outputText value="#{etq.asterisco}" styleClass="required" />
+							</h:panelGroup>
+						</td>
+						<td colspan="3">
+							&#160; &#160;
+							<h:panelGroup id="boveda">
+								<h:selectOneMenu
+									value="#{callMoneyControl.traspaso.boveda}"
+									converter="bovedaConverter"
+									styleClass="readonly" disabled="true">
+									<f:selectItems value="#{seleccionarEmisionBean.bovedasEfectivo}" />
+									<a4j:support event="onchange"
+									reRender="saldoDisponible"
+									actionListener="#{callMoneyControl.obtieneSaldoDisponibleBoveda}" />								
+								</h:selectOneMenu>
+							</h:panelGroup>
+						</td>
+					</tr>
+					<tr>
+						<td align="left">
+							<h:outputText styleClass="texto"
+								value="#{etq.saldoDisponibleMinus}" />
+						</td>
+						<td colspan="3" align="left">
+							&#160; &#160;
+							<h:inputText autocomplete="off" id="saldoDisponible" size="30" maxlength="30"
+								converter="formatoMonedaConverter"
+								value="#{callMoneyControl.traspaso.saldoDisponible}"
+								styleClass="readonly" />
+						</td>
+					</tr>
+					<tr>
+						<td align="left">
+							<h:outputText styleClass="texto" value="#{etq.importeATraspasar}" />
+							<h:outputText value="#{etq.asterisco}" styleClass="required" />
+						</td>
+						<td colspan="3" align="left">
+							&#160; &#160;
+							<h:inputText autocomplete="off" id="importeATraspasar" size="30" maxlength="16" tabindex="30"
+							styleClass="campoNumericoDecimal campoNumericoDecimalDosDecimales"
+								value="#{callMoneyControl.traspaso.importeATraspasar}"
+								converter="formatoMonedaConverter">
+								<a4j:support event="onchange"
+									reRender="importeATraspasar, saldoDeEfectivo, montoVencimiento"
+									actionListener="#{callMoneyControl.realizarCalculo}" />
+							</h:inputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:panelGroup>
+								<h:outputText styleClass="texto" value="#{etq.divisa}" />
+								<h:outputText value="#{etq.asterisco}" styleClass="required" />
+							</h:panelGroup>
+						</td>
+						<td colspan="3">
+							&#160; &#160;
+							<h:selectOneMenu id="valorEn"
+								value="#{callMoneyControl.traspaso.valorEn}" converter="divisaConverter"
+								styleClass="readonly" disabled="true" >								
+								<f:selectItems value="#{catalogosBean.opcionesComboDivisa}" />
+							</h:selectOneMenu>
+						</td>
+					</tr>
+					<tr>
+						<td align="left">
+							<h:outputText styleClass="texto" value="#{etq.saldoDeEfectivo}" />
+						</td>
+						<td colspan="3" align="left">
+							&#160; &#160;
+							<h:inputText autocomplete="off" id="saldoDeEfectivo" size="30" maxlength="30"
+								converter="formatoMonedaConverter"
+								value="#{callMoneyControl.traspaso.saldoDeEfectivo}"
+								styleClass="readonly"/>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							&#160;
+						</td>
+					</tr>
+					<tr>
+						<td colspan="1">
+							&#160;
+						</td>
+						<td colspan="1">
+							<h:outputText styleClass="texto" value="Tasa" />
+							&#160;
+							<h:inputText autocomplete="off" id="tasa" size="11" maxlength="10"	value="#{callMoneyControl.tasa}" 
+										 styleClass="campoNumericoDecimalSeisDecimales" tabindex="31">
+								<a4j:support event="onchange"  reRender="montoVencimiento" 
+								actionListener="#{callMoneyControl.calcularMontoVencimiento}"/>							
+							</h:inputText>
+						</td>
+						<td colspan="1">
+							<h:outputText styleClass="texto" value="Plazo" />
+							&#160;
+							<h:inputText autocomplete="off" id="plazo" size="10" maxlength="3"	 tabindex="32"
+										 value="#{callMoneyControl.plazo}" styleClass="campoNumerico">
+								<a4j:support event="onchange"  reRender="montoVencimiento" 
+									actionListener="#{callMoneyControl.calcularMontoVencimiento}"/>
+							</h:inputText>									
+						</td>
+						<td colspan="1">
+							&#160;
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							&#160;
+						</td>
+					</tr>
+					
+					<tr>	
+						<td colspan="2">
+							<h:outputText styleClass="texto" value="Monto al Vencimiento" />
+						</td>
+						
+						<td colspan="2">
+							&#160;<h:inputText autocomplete="off" id="montoVencimiento" size="25"  styleClass="readonly"  
+							value="#{callMoneyControl.montoVencimiento}" converter="formatoMonedaConverter"/>
+						</td>
+						
+					</tr>
+					
+					<tr>
+						<td>
+							<h:outputText styleClass="texto" value="Liquidacion al Vencimiento" />						
+						</td>
+						<td colspan="3">
+							<h:selectOneRadio id="liqVencimiento" tabindex="33"
+								styleClass="texto" value="#{callMoneyControl.liquidacionVencimiento}">
+								<f:selectItem itemValue="0" itemLabel="DALI" />
+								<f:selectItem itemValue="1" itemLabel="SPEI" />
+								<f:selectItem itemValue="2" itemLabel="SOLO REGISTRO" />								
+							</h:selectOneRadio>
+						</td>
+					</tr>		
+					
+					
+					<tr>
+						<td colspan="5" align="center">
+
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4" align="center">
+						
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							&#160;
+						</td>
+					</tr>
+				</table>
+
+                <!-- La facultad debe reflejar el valor de SeguridadConstants.FACULTAD_FIRMA_OPERACION -->
+				<indeval:authorizeFaculty userInFaculty="CON_CERTIFICADO">
+					<h:panelGroup id="panelFirma">
+						<div style="display: none">
+							<textarea id="isoSinFirmar" name="isoSinFirmar">#{callMoneyControl.isoSinFirmar}</textarea>
+							<textarea id="numeroSerie" name="numeroSerie" ></textarea>
+							<textarea  id="numeroSerieUsuario" name="numeroSerieUsuario">#{sessionScope.usuario.numeroSerieCertificado}</textarea>
+					   		  <textarea id="isoFirmado" name="isoFirmado"></textarea>
+					   		  <textarea  id="hashIso" name="hashIso">#{callMoneyControl.hashIso}</textarea>
+						</div>
+						<h:panelGroup rendered="#{not empty callMoneyControl.isoSinFirmar}">
+							<script>
+                    		function firmarOperacion(){
+                    		
+                    			$j("input[id$='btnGuardar2']").prop("disabled",false);
+                    			$j("input[id$='btnLimpiar']").prop("disabled",false);
+                    		    $j("input[id$='btnGuardar2']").click();
+                    		}
+                    		</script>
+							<ui:decorate template="/firmaDigitalSimple.xhtml">
+								<ui:define name="isoSinFirmar"><h:outputText value="#{callMoneyControl.isoSinFirmar}" /></ui:define>
+							</ui:decorate>
+						</h:panelGroup>
+					</h:panelGroup>	
+				</indeval:authorizeFaculty>
+				
+			</h:panelGroup>
+		</ui:define>
+
+		<ui:define name="botones">
+			<div class="refrescar" style="float: left;">
+				<a4j:status id="commonStatus">
+					<f:facet name="start">
+						<h:panelGroup>
+							<h:graphicImage value="/images/ajax-loader.gif" />
+							<h:outputText value="#{etq.buscando}"></h:outputText>
+						</h:panelGroup>
+					</f:facet>
+				</a4j:status>
+			</div>
+			<h:panelGrid width="25%">
+				<h:panelGroup id="botones">
+					<div class="limpiar">
+						<h:commandButton id="btnLimpiar" image="/images/transparent.gif"
+							styleClass="submit"
+							actionListener="#{callMoneyControl.limpiarCampos}"
+							tabindex="60"
+							>
+						</h:commandButton>
+					</div>
+					<div class="guardar">
+						<a4j:commandButton id="guardar" image="/images/transparent.gif"
+							styleClass="submit" reRender="panelFirma,general,botones"
+							rendered="#{!callMoneyControl.isoYaFirmado}"
+							actionListener="#{callMoneyControl.enviarOperacion}"
+							onclick="if(confirmarOperacionGeneral()){deshabilitarBoton('guardar');} else return false;"
+							oncomplete="habilitarBoton('guardar');" tabindex="50">
+						</a4j:commandButton>
+					</div>
+					<div class="guardar">
+						<h:commandButton id="btnGuardar2" image="/images/transparent.gif"
+							styleClass="submit"
+							rendered="#{callMoneyControl.isoYaFirmado}"
+							actionListener="#{callMoneyControl.enviarOperacion}" tabindex="50">
+						</h:commandButton>
+					</div>
+				</h:panelGroup>
+			</h:panelGrid>
+		</ui:define>
+
+	</ui:composition>
+</html>

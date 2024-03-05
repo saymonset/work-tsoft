@@ -1,0 +1,65 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:xls="http://indeval.com/jsf/xls" 
+	xmlns:f="http://java.sun.com/jsf/core">
+
+    <xls:document documentName="estadoCuentaSociedadesInversion" 
+    	documentTitle="Estado de Cuenta de Sociedades de Inversi&#243;n" 
+    	fecha="#{estadoCuentaSocInvBean.fechaActual}"
+		institucion="#{estadoCuentaSocInvBean.institucionActual.claveTipoInstitucion}#{estadoCuentaSocInvBean.institucionActual.folioInstitucion} #{estadoCuentaSocInvBean.institucionActual.razonSocial}">
+
+        <xls:table value="#{estadoCuentaSocInvBean}" var="dummy">
+            <xls:row>
+                <xls:col header="#{etq.tv}"
+					value="#{estadoCuentaSocInvBean.emision.idTipoValor}" />
+				<xls:col header="#{etq.emisoraMinus}"
+					value="#{estadoCuentaSocInvBean.emision.emisora}" />
+            </xls:row>
+        </xls:table>
+        
+        <xls:br />
+        <xls:subtitle value="Sociedades Encontradas: #{estadoCuentaSocInvBean.paginaVO.totalRegistros}" />
+        <xls:br />
+        
+        <xls:iterator value="#{estadoCuentaSocInvBean.listaSaldosReporte}" var="estadosItem">
+        	<xls:br />
+        	
+        	<xls:subtitle value="Emisiones Encontradas: #{estadosItem.tamanioSaldos}" />
+        	<xls:table value="#{estadoCuentaSocInvBean}" var="dummy">
+				<xls:row>
+					<xls:col  header="#{etq.sociedadInversion}"
+						value="#{estadosItem.emisora.razonSocial}">
+					</xls:col>
+				</xls:row>
+			</xls:table>
+			<xls:table value="#{estadosItem.saldos}" var="detalle">
+				<xls:row>
+					<xls:col  header="#{etq.tv}" 
+						value="#{detalle.idTipoValor}" />
+					<xls:col  header="#{etq.emisoraMinus}" 
+						value="#{detalle.emisora}" />
+					<xls:col  header="#{etq.serieMinus}"
+						value="#{detalle.serie}" />
+					<xls:col  header="#{etq.cuponMinus}" 
+						value="#{detalle.cupon}" />
+						
+					<xls:col  header="#{etq.saldoCirculacion}"
+						value="#{detalle.posicionDisponible}" 
+						pattern="###,###,###,###,###" />
+					<xls:col  header="#{etq.saldoTesoreria}"
+						value="#{detalle.posicionTesoreria}"
+						pattern="###,###,###,###,###" />
+					<xls:col  header="Saldo Total"
+						value="#{detalle.posicionTotal}"
+						pattern="###,###,###,###,###" />
+				</xls:row>
+			</xls:table>
+
+			<xls:br />
+        </xls:iterator>
+        
+        <xls:br />
+        <xls:subtitle value="Sociedades Encontradas: #{estadoCuentaSocInvBean.paginaVO.totalRegistros}" />
+        <xls:br />
+        
+    </xls:document>
+</html>

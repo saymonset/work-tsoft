@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls" xmlns:a4j="http://richfaces.org/a4j" xmlns:cvt="http://indeval.com/jsf/converters">
+    <xls:document documentName="matchOperaciones" documentTitle="Match y Operaciones de Valores"
+        institucion="#{matchEstatusExportacion.institucionActual.claveTipoInstitucion} #{matchEstatusExportacion.institucionActual.folioInstitucion} #{matchEstatusExportacion.institucionActual.razonSocial}"
+        fecha="#{matchEstatusExportacion.fechaActual}">
+        <xls:subtitle value="Criterios de Busqueda" />
+        <xls:table value="#{matchEstatusExportacion}" var="filtro">
+            <xls:row>
+                <xls:col header="#{etq.participanteMinus}" value="#{empty matchEstatusExportacion.criterio.institucionParticipante.idFolio ? 'TODAS' : matchEstatusExportacion.criterio.institucionParticipante.idFolio}" />
+                <xls:col header="#{etq.cuentaParticipante}" value="#{empty matchEstatusExportacion.criterio.cuentaParticipante.cuenta ? 'TODAS' : matchEstatusExportacion.criterio.cuentaParticipante.cuenta}" />
+                <xls:col header="#{etq.contraparteMinus}" value="#{empty matchEstatusExportacion.criterio.institucionContraparte.idFolio ? 'TODAS' : matchEstatusExportacion.criterio.institucionContraparte.idFolio}" />
+                <xls:col header="#{etq.cuentaContraparte}" value="#{empty matchEstatusExportacion.criterio.cuentaContraparte.numeroCuenta? 'TODAS' : matchEstatusExportacion.criterio.cuentaContraparte.cuenta}" />
+                <xls:col header="#{etq.mercadoMinus}" value="#{empty matchEstatusExportacion.criterio.mercado.descripcion ? 'TODOS' : matchEstatusExportacion.criterio.mercado.descripcion}" />
+                <xls:col header="#{etq.papelMinus}" value="#{empty matchEstatusExportacion.criterio.mercado.claveMercado ? 'TODAS' : matchEstatusExportacion.criterio.mercado.claveMercado}" />
+                <xls:col header="#{etq.estatus}" value="#{matchEstatusExportacion.criterio.estadoInstruccion.claveEstadoInstruccion}" />
+                <xls:col header="#{etq.tipoInstruccionMinus}" value="#{matchEstatusExportacion.criterio.tipoInstruccion.descripcion}" />
+                <xls:col header="#{etq.fechaConcertacionMinus}" value="#{matchEstatusExportacion.criterio.fechaConcertacion}" pattern="dd-MM-yyyy"/>
+                <xls:col header="#{etq.fechaLiquidacionMinus}" value="#{matchEstatusExportacion.criterio.fechaLiquidacion}" pattern="dd-MM-yyyy"/>
+                <xls:col header="#{etq.rolMinus}" value="#{matchEstatusExportacion.criterio.descripcionRol}" />
+                <xls:col header="#{etq.claveValor} #{etq.tv}" value="#{empty matchEstatusExportacion.criterio.emision.tipoValor.claveTipoValor? 'TODAS' : matchEstatusExportacion.criterio.emision.tipoValor.claveTipoValor}" />
+                <xls:col header="#{etq.claveValor} #{etq.emisoraMinus}" value="#{empty matchEstatusExportacion.criterio.emision.emisora.descripcion? 'TODAS' : matchEstatusExportacion.criterio.emision.emisora.descripcion}" />
+                <xls:col header="#{etq.claveValor} #{etq.serieMinus}" value="#{empty matchEstatusExportacion.criterio.emision.serie.serie? 'TODAS' : matchEstatusExportacion.criterio.emision.serie.serie}" />
+                <xls:col header="#{etq.bovedaMinus}" value="#{empty matchEstatusExportacion.criterio.bovedaValores.nombreCorto ? 'TODOS' : matchEstatusExportacion.criterio.bovedaValores.nombreCorto }" />
+                <xls:col header="#{etq.folioUsuario}" value="#{empty matchEstatusExportacion.criterio.folioUsuario ? 'TODOS' : matchEstatusExportacion.criterio.folioUsuario}" />
+                <xls:col header="#{etq.tipoMensaje}" value="#{empty matchEstatusExportacion.criterio.tipoMensaje.claveTipoMensaje ? 'TODOS' : matchEstatusExportacion.criterio.tipoMensaje.claveTipoMensaje}" />
+                <xls:col header="#{etq.remitente}" value="#{matchEstatusExportacion.criterio.remitente ? 'SI' : 'NO' }" />
+                <xls:col header="#{etq.origen}" value="#{empty matchEstatusExportacion.criterio.origen ? 'TODOS' : matchEstatusExportacion.criterio.origen}" />
+                <xls:col header="#{etq.error}" value="#{empty matchEstatusExportacion.criterio.error.claveError ? 'TODOS' : matchEstatusExportacion.criterio.error.claveError}" />
+                <xls:col header="#{etq.cantidadMinus}" value="#{empty matchEstatusExportacion.criterio.cantidad ? 'TODAS' : matchEstatusExportacion.criterio.cantidad}" />
+                <xls:col header="#{etq.monto}" value="#{empty matchEstatusExportacion.criterio.monto ? 'TODOS' : matchEstatusExportacion.criterio.monto}" pattern="###,###,###,###,###,##0.00" />
+				<xls:col header="#{etq.divisa}" value="#{empty matchEstatusExportacion.criterio.divisa.claveAlfabetica ? 'TODOS': matchEstatusExportacion.criterio.divisa.claveAlfabetica}"/>
+                <xls:col header="#{etq.bovedaEfectivo}" value="#{empty matchEstatusExportacion.criterio.bovedaEfectivo.nombreCorto ? 'TODOS' : matchEstatusExportacion.criterio.bovedaEfectivo.nombreCorto }" />
+                <xls:col header="#{etq.folioControl}" value="#{empty matchEstatusExportacion.criterio.folioControl ? 'TODOS' : matchEstatusExportacion.criterio.folioControl}" />
+                <xls:col header="#{etq.folioOrigen}" value="#{empty matchEstatusExportacion.criterio.referenciaPaquete ? 'TODOS' : matchEstatusExportacion.criterio.referenciaPaquete}"/>
+            </xls:row>
+        </xls:table>
+	
+		 <xls:table value="#{matchEstatusExportacion}" var="filtro">
+            <xls:row>
+                <xls:col header="#{etq.registrosEncontrados}" value="#{matchEstatusExportacion.registrosEncontrados}" />
+            </xls:row>
+        </xls:table>
+	
+        <xls:table value="#{matchEstatusExportacion.resultados}" var="operacion">
+            <xls:row>
+                <xls:col header="#{etq.folioControl}" value="#{operacion.strFolioControl}" />
+                <xls:col header="#{etq.folioUsuario}" value="#{operacion.folioUsuario}" />
+                <xls:col header="#{etq.folioOrigen}" value="#{operacion.porPaquete ? operacion.referenciaPaquete : operacion.folioOrigen}" />
+                <xls:col header="#{etq.ti}" value="#{operacion.nombreCortoTipoInstruccion}" />
+                <xls:col header="#{etq.oere}" value="#{operacion.origen}" />
+                <xls:col header="#{etq.tv}" value="#{operacion.tv}" />
+                <xls:col header="#{etq.emisoraMinus}" value="#{operacion.emisora}" />
+                <xls:col header="#{etq.serieMinus}" value="#{operacion.serie}" />
+                <xls:col header="#{etq.cuponMinus}" value="#{operacion.cupon}" />
+                <xls:col header="#{etq.isin}" value="#{operacion.isin}" />
+                <xls:col header="#{etq.boveda}" value="#{operacion.bovedaValores}" />
+                <xls:col header="#{etq.estatus}" value="#{operacion.claveEstadoInstruccionCat}" />
+                <xls:col header="#{etq.instVendedor}" value="#{operacion.idFolioInstitucionTraspasanteConEspacio}" />
+                <xls:col header="#{etq.cuentaVendedor}" value="#{operacion.cuentaTraspasante}" />
+                <xls:col header="#{etq.instComprador}" value="#{operacion.idFolioInstitucionReceptoraConEspacio}" />
+                <xls:col header="#{etq.cuentaCompradora}" value="#{operacion.cuentaReceptora}" />
+                <xls:col header="#{etq.institucionRemitente}" value="#{operacion.nombreCortoInstitReceptora}" />
+                <xls:col header="#{etq.precioTitulo}" value="#{operacion.precioTitulo}" />
+                <xls:col header="#{etq.fechaReporto}" value="#{operacion.fechaReportoDate}" pattern="dd/MM/yyyy" />
+                <xls:col header="#{etq.tipoMensaje}" value="#{operacion.claveTipoMensajeCat}" />
+                <xls:col header="#{etq.fechaRegistro}" value="#{operacion.fechaConcertacion}" pattern="dd-MM-yyyy HH:mm:ss"/>
+                <xls:col header="#{etq.fechaLiquidacionMinus}" value="#{operacion.fechaLiquidacion}" pattern="dd-MM-yyyy HH:mm:ss"/>                	
+                <xls:col header="#{etq.cantidadOperada}" value="#{operacion.cantidadTitulos}" pattern="###,###,###,###,###,##0"/>
+                <xls:col header="#{etq.montoOperado}" value="#{operacion.importe}" pattern="$ ###,###,###,###,###,##0.00"/>
+                <xls:col header="#{etq.bovedaEfectivo}" value="#{operacion.bovedaEfectivo}" />
+                <xls:col header="#{etq.tasaPorcentaje}" value="#{operacion.tasaNegociada}" pattern="###,###,###,###,###,##0.000000"/>
+                <xls:col header="#{etq.tasaVariable}" value="#{etq.nd}" />
+                <xls:col header="#{etq.plazo}" value="#{operacion.plazoReporto}" />
+                <xls:col header="#{etq.premio}" value="#{etq.nd}" />
+                <xls:col header="#{etq.moneda}" value="#{operacion.claveDivisa}" />
+                <xls:col header="#{etq.error}" value="#{operacion.claveError}" />
+                <xls:col header="#{etq.plazoFV}" value="#{etq.nd}" />
+                <xls:col header="#{etq.fechaConcertacionVendedora}" value="#{operacion.fechaHoraCierreOperTra}" pattern="dd-MM-yyyy HH:mm:ss"/>
+                <xls:col header="#{etq.fechaConcertacionCompradora}" value="#{operacion.fechaHoraCierreOperRec}" pattern="dd-MM-yyyy HH:mm:ss"/>
+                <xls:col header="#{etq.fechaEncolamientoVendedora}" value="#{operacion.fechaHoraEncolamientoTra}" pattern="dd-MM-yyyy HH:mm:ss"/>
+                <xls:col header="#{etq.fechaEncolamientoCompradora}" value="#{operacion.fechaHoraEncolamientoRec}" pattern="dd-MM-yyyy HH:mm:ss"/>
+            </xls:row>
+        </xls:table>
+        <xls:br />
+        <xls:br />
+        <xls:table value="#{matchEstatusExportacion}" var="reg">
+            <xls:row>
+                <xls:col header="#{etq.titulosTraspasante}" value="#{matchEstatusExportacion.titulosTraspasante}" pattern="###,###,###,###,###,##0"/>
+                <xls:col header="#{etq.titulosReceptor}" value="#{matchEstatusExportacion.titulosReceptor}" pattern="###,###,###,###,###,##0"/>
+                <xls:col header="#{etq.netoTitulos}" value="#{matchEstatusExportacion.netoTitulos}" pattern="###,###,###,###,###,##0"/>
+                <xls:col header="#{etq.montoTraspasante}" value="#{matchEstatusExportacion.montoTraspasante}"
+                    pattern="$###,###,###,###,###,##0.00" />
+                <xls:col header="#{etq.montoReceptor}" value="#{matchEstatusExportacion.montoReceptor}"
+                    pattern="$###,###,###,###,###,##0.00" />
+                <xls:col header="#{etq.netoMonto}" value="#{matchEstatusExportacion.netoMonto}" pattern="$###,###,###,###,###,##0.00" />
+
+            </xls:row>
+        </xls:table>
+    </xls:document>
+</html>

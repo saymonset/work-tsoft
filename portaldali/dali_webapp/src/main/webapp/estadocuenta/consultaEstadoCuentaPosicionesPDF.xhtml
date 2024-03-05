@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:pdf="http://indeval.com/jsf/pdf"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:cvt="http://indeval.com/jsf/converters"
+	xmlns:indeval="http://indeval.com/indeval" xml:lang="es">
+
+	<pdf:document documentName="consultaEstadoCuentaPosiciones1"
+		documentTitle="Estado de Cuenta Operativo de Valores"
+		institucion="#{consultaEstadoCuentaPosicionesBean.institucionActual.claveTipoInstitucion} #{consultaEstadoCuentaPosicionesBean.institucionActual.folioInstitucion} #{consultaEstadoCuentaPosicionesBean.institucionActual.razonSocial}"
+		fecha="#{consultaEstadoCuentaPosicionesBean.fechaActual}"
+		imageResource="/images/indeval.png">
+
+		<!-- Criterios de consulta -->
+		<pdf:table
+			value="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones}"
+			currentBean="consulta">
+			<pdf:row>
+				<pdf:col header="#{etq.fechaInicialSinPuntos}"
+					value="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones.criterioFechaInicial}">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaFinalSinPuntos}"
+					value="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones.criterioFechaFinal}">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.institucionMinus}"
+					value="#{empty consultaEstadoCuentaPosicionesBean.nombreInstitucion ? 'TODAS' : consultaEstadoCuentaPosicionesBean.nombreInstitucion}" />
+				<pdf:col header="#{etq.naturalezaMinus}"
+					value="#{consulta.cuentaSeleccionada.tipoTenencia.tipoNaturaleza.descripcion}" />
+				<pdf:col header="#{etq.tipoCuentaMinus}"
+					value="#{consulta.cuentaSeleccionada.tipoTenencia.tipoCuenta.descripcion}" />
+				<pdf:col header="#{etq.tipoTenenciaMinus}"
+					value="#{consulta.cuentaSeleccionada.tipoTenencia.descripcion}" />
+				<pdf:col header="#{etq.cuentaMinus}"
+					value="#{consulta.cuentaSeleccionada.descripcion}" />
+			</pdf:row>
+		</pdf:table>
+		<pdf:table
+			value="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones}"
+			currentBean="consulta">
+			<pdf:row>
+				<pdf:col header="#{etq.tipoMercado}"
+					value="#{consultaMovimientosValorBean.descripcionPapelMercado}" />
+				<pdf:col header="#{etq.papelMinus}"
+					 value="#{consultaMovimientosValorBean.consultaMovimientos.criterioEmision.opcionSeleccionada.tipoValor.mercado.descripcion}" align="center" />
+				<pdf:col header="#{etq.tv}"
+					value="#{consulta.criterioEmision.opcionSeleccionada.tipoValor.claveTipoValor}" />
+				<pdf:col header="#{etq.emisora}"
+					value="#{consulta.criterioEmision.opcionSeleccionada.emisora.descripcion}" />
+				<pdf:col header="#{etq.isin}"
+					value="#{consulta.criterioEmision.opcionSeleccionada.isin}" />
+				<pdf:col header="#{etq.serie}"
+					value="#{consulta.criterioEmision.opcionSeleccionada.serie.descripcion}"  />
+			</pdf:row>
+		</pdf:table>
+		<pdf:table
+			value="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones}"
+			currentBean="consulta">
+			<pdf:row>
+				<pdf:col header="#{etq.boveda}" collspan="2"
+					value="#{consulta.criterioBoveda.opcionSeleccionada.descripcion}" />
+			</pdf:row>
+		</pdf:table>
+		
+		<pdf:table
+			value="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones}"
+			currentBean="consulta">
+			<pdf:row>
+				<pdf:col header="#{etq.registrosEncontrados}"
+					value="#{consultaEstadoCuentaPosicionesBean.totalResultados}" />
+			</pdf:row>
+		</pdf:table>
+
+		<!-- Fin de los criterios de consulta -->
+
+		<pdf:iterator
+			value="#{consultaEstadoCuentaPosicionesBean.resultadosEstadoCuentaPosicion}"
+			var="estadoCuentaPosicionPorEmision">
+			
+			
+			<pdf:table value="#{estadoCuentaPosicionPorEmision}"
+				currentBean="dummy">
+				<pdf:row>
+					<pdf:col header="#{etq.emision} #{etq.dosPuntos}" value="" />
+					<pdf:col
+						header="#{estadoCuentaPosicionPorEmision.emision.tipoValor.claveTipoValor}  #{estadoCuentaPosicionPorEmision.emision.emisora.descripcion}   #{estadoCuentaPosicionPorEmision.emision.serie.serie}   #{estadoCuentaPosicionPorEmision.emision.isin}"
+						value="" collspan="4" />
+				</pdf:row>
+			</pdf:table>
+
+
+			<pdf:iterator
+				value="#{estadoCuentaPosicionPorEmision.detallesBoveda}"
+				var="estadoCuentaPosicionPorBoveda" >
+				
+				<pdf:table value="#{estadoCuentaPosicionPorBoveda}"
+				 rendered="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones.criterioCuenta.criterioTipoTenencia.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}"
+					currentBean="dummy">
+					<pdf:row>
+						<pdf:col header="#{etq.boveda} #{etq.dosPuntos}" value="" />
+						<pdf:col
+							header="#{estadoCuentaPosicionPorBoveda.boveda.descripcion}"
+							value=""  collspan="2" />
+						
+						<pdf:col header=""/>
+						<pdf:col header="#{etq.posicionInicialMinus}" value="#{estadoCuentaPosicionPorBoveda.estadoPosicionInicial.posicionInicial}" align="right">
+							<f:convertNumber pattern="###,###,###,###,###,##0" />
+                 		</pdf:col>
+					</pdf:row>
+				</pdf:table>
+				
+				<pdf:table value="#{estadoCuentaPosicionPorBoveda}"
+				 rendered="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones.criterioCuenta.criterioTipoTenencia.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}"
+					currentBean="dummy">
+					<pdf:row>
+						<pdf:col header="#{etq.boveda} #{etq.dosPuntos}" value="" />
+						<pdf:col
+							header="#{estadoCuentaPosicionPorBoveda.boveda.descripcion}"
+							value=""  collspan="2" />
+						
+						<pdf:col header="" collspan="2"/>
+						
+						<pdf:col header="#{etq.posicionDisponibleMinus}" 
+						value="#{estadoCuentaPosicionPorBoveda.estadoPosicionInicial.posicionInicialDisponible}" align="right">
+							<f:convertNumber pattern="###,###,###,###,###,###" />
+                 		</pdf:col>
+                 		
+                 		
+                 		
+						<pdf:col header="#{etq.posicionNoDisponibleMinus}" value="#{estadoCuentaPosicionPorBoveda.estadoPosicionInicial.posicionInicialNoDisponible}" align="right">
+							<f:convertNumber pattern="###,###,###,###,###,###" />
+                 		</pdf:col>
+                 		
+                 		
+                 		
+						<pdf:col header="#{etq.posicionInicialMinus}" value="#{estadoCuentaPosicionPorBoveda.estadoPosicionInicial.posicionInicial}" align="right">
+							<f:convertNumber pattern="###,###,###,###,###,###" />
+                 		</pdf:col>
+                 		
+                 	
+					</pdf:row>
+				</pdf:table>
+
+				<pdf:table
+					value="#{estadoCuentaPosicionPorBoveda.registrosContablesControladas}"
+					currentBean="registroContable"
+					rendered="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones.criterioCuenta.criterioTipoTenencia.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}">
+					<pdf:row>
+						<pdf:col header="#{etq.fechaLiquidacion}"
+							value="#{registroContable.fecha}" >
+							<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+						</pdf:col>
+						<pdf:col header="#{etq.descripcion}"
+							value="#{registroContable.descripcion}" />
+						<pdf:col header="#{etq.cupon}"
+							value="#{registroContable.cupon.claveCupon}" />
+						<pdf:col header="#{etq.entrega}"
+							value="#{empty registroContable.cantidadRecepcion ? 0 : registroContable.cantidadRecepcion}" align="right">
+							<f:convertNumber pattern="###,###,###,###,###,###" />
+                 		</pdf:col>
+						<pdf:col header="#{etq.recepcionMinus}"
+							value="#{empty registroContable.cantidadEntrega ? 0 : registroContable.cantidadEntrega}" align="right">
+							<f:convertNumber pattern="###,###,###,###,###,###" />
+                 		</pdf:col>
+						<pdf:col header="#{etq.posicionMinus}"
+							value="#{registroContable.posicionTotal}" align="right">
+							<f:convertNumber pattern="###,###,###,###,###,###" />
+                 		</pdf:col>
+							
+						</pdf:row>
+				</pdf:table>
+
+				<pdf:table
+					value="#{estadoCuentaPosicionPorBoveda.registrosContablesNombradas}"
+					currentBean="registroContable"
+					rendered="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones.criterioCuenta.criterioTipoTenencia.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}">
+					<pdf:row>
+						<pdf:col header="#{etq.fechaLiquidacion}"
+							value="#{registroContable.fecha}" >
+							<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+						</pdf:col>
+						<pdf:col header="#{etq.descripcion}"
+							value="#{registroContable.descripcion}" />
+						<pdf:col header="#{etq.participanteId}"
+							 value="#{registroContable.claveTipoInstitucionParticipante}" />
+						<pdf:col header="#{etq.participanteFolio}"
+							 value="#{registroContable.folioInstitucionParticipante}" />
+						<pdf:col header="#{etq.participanteCuenta}"
+							 value="#{registroContable.numeroCuentaParticipante}" />
+						<pdf:col header="#{etq.contraparteId}"
+							 value="#{registroContable.claveTipoInstitucionContraparte}" />
+						<pdf:col header="#{etq.contraparteFolio}"
+							 value="#{registroContable.folioInstitucionContraparte}" />
+						<pdf:col header="#{etq.contraparteCuenta}"
+							 value="#{registroContable.numeroCuentaContraparte}" />
+						<pdf:col header="#{etq.cupon}"
+							value="#{registroContable.cupon.claveCupon}" />
+						<pdf:col header="#{etq.folioInstruccion}"
+							value="#{registroContable.operacion.instruccionLiquidacion.folioInstruccion}" />
+						<pdf:col header="#{etq.recepcionMinus}"
+							value="#{empty registroContable.cantidadRecepcion ? 0 : registroContable.cantidadRecepcion}" align="right">
+								<f:convertNumber pattern="###,###,###,###,###,###" />
+						</pdf:col>
+						<pdf:col header="#{etq.entregaMinus}"
+							value="#{empty registroContable.cantidadEntrega ? 0 : registroContable.cantidadEntrega}" align="right">
+								<f:convertNumber pattern="###,###,###,###,###,###" />
+						</pdf:col>
+						<pdf:col header="#{etq.disponibleMinus}"
+							value="#{registroContable.posicionDisponible}" align="right">
+							<f:convertNumber pattern="###,###,###,###,###,###" />
+	                 	</pdf:col>
+						<pdf:col header="#{etq.noDisponibleMinus}"
+							value="#{registroContable.posicionNoDisponible}" align="right">
+							<f:convertNumber pattern="###,###,###,###,###,###" />
+                 		</pdf:col>
+						<pdf:col header="#{etq.posicionMinus}"
+							value="#{registroContable.posicionTotal}" align="right">
+							<f:convertNumber pattern="###,###,###,###,###,###" />
+	                 	</pdf:col>
+					</pdf:row>
+				</pdf:table>
+				
+				<pdf:table value="#{estadoCuentaPosicionPorBoveda}"
+				rendered="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones.criterioCuenta.criterioTipoTenencia.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}"
+					currentBean="dummy">
+					<pdf:row>
+						<pdf:col header="" collspan="2" /> 
+						
+						<pdf:col header="" /> 
+						<pdf:col header="#{etq.posicionFinalMinus}" value="#{estadoCuentaPosicionPorBoveda.estadoPosicionFinal.posicionFinal}" align="right">
+							<f:convertNumber pattern="###,###,###,###,###,###" />
+						</pdf:col>
+					</pdf:row>
+				</pdf:table>
+				
+				<pdf:table value="#{estadoCuentaPosicionPorBoveda}"
+				rendered="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones.criterioCuenta.criterioTipoTenencia.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}"
+					currentBean="dummy">
+					<pdf:row>
+						<pdf:col header="" collspan="5" /> 
+						
+						
+						<pdf:col header="#{etq.posicionDisponibleMinus}" value="#{estadoCuentaPosicionPorBoveda.estadoPosicionFinal.posicionFinalDisponible}" align="right">
+							<f:convertNumber pattern="###,###,###,###,###,###" />
+						</pdf:col>
+					
+						<pdf:col header="#{etq.posicionNoDisponibleMinus}" value="#{estadoCuentaPosicionPorBoveda.estadoPosicionFinal.posicionFinalNoDisponible}" align="right">
+							<f:convertNumber pattern="###,###,###,###,###,###" />
+						</pdf:col>
+						
+						<pdf:col header="#{etq.posicionFinalMinus}" value="#{estadoCuentaPosicionPorBoveda.estadoPosicionFinal.posicionFinal}" align="right">
+							<f:convertNumber pattern="###,###,###,###,###,###" />
+						</pdf:col>
+						
+					</pdf:row>
+				</pdf:table>
+				
+			</pdf:iterator>
+		</pdf:iterator>
+		
+		<pdf:br />
+	</pdf:document>
+</html>
+

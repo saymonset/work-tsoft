@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xml:lang="es" lang="es">
+	
+	<ui:composition template="/layoutConsultas.xhtml">
+		
+		<ui:define name="tituloSeccion">
+			<h:outputText value="#{etq.tesoreria}" />
+		</ui:define>
+		
+		<ui:define name="subtituloSeccion">
+			<h:outputText value="#{etq.consultaVencimientosPendientes}" />
+		</ui:define>
+		
+		<ui:define name="head">
+            <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js" />
+            <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/estadoCuentaLiqDecretos.js" />
+        </ui:define>
+        
+        <ui:define name="criterios">
+        
+        	<h:outputText value="#{consultaVencimientosPendientesController.initForm}" />
+        	 
+        	<h:panelGroup id="init">
+                <h:outputText value="#{consultaVencimientosPendientesController.init}" />
+            </h:panelGroup>
+        	<a4j:keepAlive beanName="consultaVencimientosPendientesController"/>
+        	
+        	<h:panelGroup id="panelCriterios">
+				<h:panelGroup rendered="#{not consultaVencimientosPendientesController.consultaEjecutada}">
+					<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+						<tr>
+							<td class="recuadroTabla">
+								<table class="tablaCriterios" border="0" style="text-align: center">
+									<tr>
+										<td align="center"><h:outputText styleClass="texto" value="#{etq.participante}" /></td>
+										<td align="center"><h:outputText styleClass="texto" value="#{etq.institucionMinus}" /></td>
+										<td align="center"><h:outputText styleClass="texto" value="#{etq.fecha}" /></td>
+										<td align="center"><h:outputText styleClass="texto" value="#{etq.boveda}" /></td>
+									</tr>
+									<tr>
+										<td align="center">
+											<h:inputText autocomplete="off" id="claveFolioInstitucon"
+												readonly="false"
+												value="#{consultaVencimientosPendientesController.claveFolioInstitucion}"
+												size="4"
+												styleClass="#{consultaVencimientosPendientesController.usuarioIndeval ? 'campoNumericoAsterisco' : 'readonly'}"
+												maxlength="5">
+												<a4j:support event="onchange" reRender="init, institucion" />
+											</h:inputText>
+											<rich:suggestionbox
+												selectValueClass="autoCompleteSeleccionado"
+												for="claveFolioInstitucon" id="suggest_institucion"
+												suggestionAction="#{seleccionarCuentaBean.buscarParticipante}"
+												var="coincidencia"
+												fetchValue="#{coincidencia.claveTipoInstitucion}#{coincidencia.folioInstitucion}"
+												eventsQueue="folioTraspQueue" ignoreDupResponses="true"
+												requestDelay="#{inicioSesionBean.delay}" minChars="1"
+												width="200" nothingLabel="Sin coincidencias">
+												<h:column>
+													<h:outputText
+														value="#{coincidencia.claveTipoInstitucion}#{coincidencia.folioInstitucion}" /> - <h:outputText
+														value="#{coincidencia.nombreCorto}" />
+												</h:column>
+												<a4j:support event="onselect" reRender="init, institucion" />
+											</rich:suggestionbox>
+										</td>
+										<td align="center">
+											<h:inputText autocomplete="off" id="institucion"
+												styleClass="textoControles" readonly="true"
+												value="#{consultaVencimientosPendientesController.institucion}"
+												size="15"/>
+										</td>
+										<td align="center">
+											<rich:calendar id="fecha"
+												value="#{consultaVencimientosPendientesController.fecha}"
+												datePattern="dd/MM/yyyy" inputSize="11"
+												inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;"
+												isDayEnabled="isDayEnabled" />
+										</td>
+										<td align="center">
+											<h:selectOneMenu
+												value="#{consultaVencimientosPendientesController.bovedaValorDTO}"
+												styleClass="textoControles" id="bovedaValor"
+												converter="bovedaConverter" tabindex="75">
+												<f:selectItems value="#{catalogosBean.bovedasValor}" />
+											</h:selectOneMenu>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</h:panelGroup>
+        	</h:panelGroup>
+        	
+       		<h:panelGroup id="panelResumen">
+				<h:panelGroup
+					rendered="#{consultaVencimientosPendientesController.consultaEjecutada}">					
+					<div
+						style='display: #{consultaVencimientosPendientesController.consultaEjecutada?"inline":"none"}'
+						id="divResumen">
+						<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+							<tr>
+								<td class="recuadroTabla">
+									<table class="tablaCriterios texto" border="0"
+										style="text-align: center">
+										<tr>
+											<td  align="left">
+												<h:outputText styleClass="texto"
+													value="#{etq.participante}" />
+											</td>
+											<td  align="left">
+												<h:outputText styleClass="texto"
+													value="#{etq.institucionMinus}" />
+											</td>
+											<td  align="left">
+												<h:outputText styleClass="texto"
+													value="#{etq.fecha}">
+												</h:outputText>
+											</td>
+											<td  align="left">
+												<h:outputText styleClass="texto"
+													value="#{etq.boveda}">
+												</h:outputText>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="4">
+											</td>
+
+										</tr>
+										<tr>
+											<td align="left">
+												<h:outputText value="#{consultaVencimientosPendientesController.claveFolioInstitucion}"></h:outputText>											
+											</td>
+											<td align="left">
+												<h:outputText value="#{consultaVencimientosPendientesController.institucion}"></h:outputText>
+											</td>
+											<td align="left">
+												<h:outputText value="#{consultaVencimientosPendientesController.fecha}">
+													<f:converter converterId="formatoFechaCortoConverter" />
+												</h:outputText>
+											</td>
+											<td align="left">
+												<h:outputText value="#{empty consultaVencimientosPendientesController.bovedaSeleccionada.nombreCorto ? 'TODAS' : consultaVencimientosPendientesController.bovedaSeleccionada.nombreCorto}" />
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+        
+        <ui:define name="botones">
+			<h:panelGroup id="panelBotones">
+				<div class="refrescar" style="float: left;">
+					<a4j:status id="commonStatus">
+						<f:facet name="start">
+							<h:panelGroup>
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								<h:outputText value="#{etq.buscando}"></h:outputText>
+							</h:panelGroup>
+						</f:facet>
+					</a4j:status>
+				</div>				
+				<div class="limpiar">
+	                <h:commandButton id="btnLimpiar" image="/images/transparent.gif" styleClass="submit"
+						actionListener="#{consultaVencimientosPendientesController.limpiar}"  tabindex="250" >
+					</h:commandButton>
+                </div>
+                
+				<div class="buscar" style="float: right;">
+					<a4j:commandButton type="image" value="Buscar"
+						action="#{consultaVencimientosPendientesController.buscar}"
+						styleClass="submit"
+						reRender="panelCriterios, panelResumen,panelBotones,panelResultados"
+						src="/images/transparent.gif" alt="Buscar" title="Buscar" >
+						<a4j:actionparam name="navCuentaiDebeBitacorear" value="true" 
+							assignTo="#{consultaVencimientosPendientesController.debeDejarBitacora}" />
+					</a4j:commandButton>
+					
+				</div>
+				
+				<div class="editar" style="float:right;" id="botonEditarCriterios" >
+					<h:commandButton id="btnEditar"
+						actionListener="#{consultaVencimientosPendientesController.editarCriterios}"
+						image="/images/transparent.gif"
+						styleClass="submit"
+						rendered="#{consultaVencimientosPendientesController.consultaEjecutada}"
+						alt="Editar Criterios" title="Editar Criterios"
+						tabindex="250" />
+				</div>
+			</h:panelGroup>
+		</ui:define>
+		
+		<ui:define name="seccionContenido">
+		
+			<h:panelGroup id="panelResultados">
+			
+				<h:panelGroup rendered="#{consultaVencimientosPendientesController.consultaEjecutada and empty consultaVencimientosPendientesController.paginaVO.registros}">
+					<br/>
+					<table border="0" class="tablaGeneral" cellspacing="0px" width="900px" >
+						<tr>
+							<td colspan="20" ><img src="#{facesContext.externalContext.requestContextPath}/images/blank.gif" width="900px" height="0px"  style="height: 1px"/></td>
+						</tr>
+						<tr>
+							<th class="tituloTabla" width="900px">
+								<h:outputText value="#{etq.sinResultados}" />
+							</th>
+						</tr>
+					</table>
+				</h:panelGroup>
+						
+				<h:panelGroup  >
+					<br />
+					<table cellpadding="0" cellspacing="0" border="0" align="left"
+						width="900px"
+						style="display:#{ empty consultaVencimientosPendientesController.paginaVO.registros ? 'none' : 'inline'}">
+						<tr>
+							<td colspan="2">
+								<div
+									style="display:#{consultaVencimientosPendientesController.irAlPrimero ? 'inline' : 'none'}" onmousemove="ate">
+									<a4j:commandLink
+									actionListener="#{consultaVencimientosPendientesController.irPrimeraPagina}"
+									id="control_posicion_primero" reRender="panelResultados, pagination"
+									onclick="buscarRegistros();"
+									oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);" limitToList="true">
+									<img
+										src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+										border="0" />
+									</a4j:commandLink>
+								</div>
+								<div
+									style="display:#{consultaVencimientosPendientesController.retrocederRapido ? 'inline' : 'none'}">
+									<a4j:commandLink
+										actionListener="#{consultaVencimientosPendientesController.retrocederPaginasRapido}"
+										id="control_consulta_atras_fast" reRender="panelResultados, pagination"
+										onclick="buscarRegistros();"
+										oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);" limitToList="true">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+											border="0" />
+									</a4j:commandLink>
+								</div>
+								<div
+									style="display:#{consultaVencimientosPendientesController.retroceder ? 'inline' : 'none'}">
+									<a4j:commandLink
+										actionListener="#{consultaVencimientosPendientesController.retrocederPagina}"
+										id="control_consulta_atras" reRender="panelResultados, pagination"
+										onclick="buscarRegistros();"
+										oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);" limitToList="true">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+											border="0" />
+									</a4j:commandLink>
+								</div>
+								<div
+									style="display:#{consultaVencimientosPendientesController.avanzar ? 'inline' : 'none'}">
+									<a4j:commandLink
+										actionListener="#{consultaVencimientosPendientesController.avanzarPagina}"
+										id="control_consulta_adelante" reRender="panelResultados, pagination"
+										onclick="buscarRegistros();"
+										oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);" limitToList="true">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+											border="0" />
+											
+									</a4j:commandLink>
+								</div>
+								<div style="display:#{consultaVencimientosPendientesController.avanzarRapido ? 'inline' : 'none'}">
+									<a4j:commandLink
+										actionListener="#{consultaVencimientosPendientesController.avanzarPaginasRapido}"
+										id="control_consulta_adelante_fast" reRender="panelResultados, pagination"
+										onclick="buscarRegistros();"
+										oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);" limitToList="true">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+											border="0" />
+									</a4j:commandLink>
+								</div>
+								<div
+									style="display:#{consultaVencimientosPendientesController.irAlUltimo ? 'inline' : 'none'}">
+									<a4j:commandLink
+										actionListener="#{consultaVencimientosPendientesController.irUltimaPagina}"
+										id="control_consulta_ultimo" reRender="panelResultados, pagination"
+										onclick="buscarRegistros();"
+										oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);" limitToList="true">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+											border="0" />
+									</a4j:commandLink>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td align="left" width="450px">
+								<h:outputText escape="false" styleClass="textoResumen"
+									value="#{etq.mostrandoPagina}"></h:outputText>
+								<h:outputText escape="false" styleClass="textoResumen"
+									value="#{etq.abrir}"></h:outputText>
+								<h:outputText escape="false" styleClass="textoResumen"
+									value="#{consultaVencimientosPendientesController.numeroPagina}"></h:outputText>
+								<h:outputText escape="false" styleClass="textoResumen"
+									value="#{etq.de}"></h:outputText>
+								<h:outputText escape="false" styleClass="textoResumen"
+									value="#{consultaVencimientosPendientesController.totalPaginas}"></h:outputText>
+								<h:outputText escape="false" styleClass="textoResumen"
+									value="#{etq.entre}"></h:outputText>
+								<h:outputText escape="false" styleClass="textoResumen"
+									value="#{consultaVencimientosPendientesController.paginaVO.totalRegistros}"></h:outputText>
+								&#160;
+								<h:outputText escape="false" styleClass="textoResumen"
+									value="#{etq.registrosEncontrados}" />
+							</td>
+							<td align="right" width="450px">
+								<h:outputText escape="false" styleClass="textoResumen"
+									value="#{etq.registrosPorPagina}" />
+								<h:selectOneMenu
+									value="#{consultaVencimientosPendientesController.paginaVO.registrosXPag}"
+									styleClass="textoControles">
+									<f:selectItem itemValue="1" itemLabel="1" />
+									<f:selectItem itemValue="5" itemLabel="5" />
+									<f:selectItem itemValue="10" itemLabel="10" />
+									<f:selectItem itemValue="20" itemLabel="20" />
+									<f:selectItem itemValue="50" itemLabel="50" />
+									<f:selectItem itemValue="100" itemLabel="100" />
+									<a4j:support reRender="panelResultados, pagination" event="onchange"
+										limitToList="true"
+										actionListener="#{consultaVencimientosPendientesController.cambiarTamanioPagina}"
+										 />
+								</h:selectOneMenu>
+								<h:inputHidden
+									value="#{consultaVencimientosPendientesController.paginacion.numeroPagina}" />
+								<h:inputHidden
+									value="#{consultaVencimientosPendientesController.paginacion.totalResultados}" />
+								<h:inputHidden
+									value="#{consultaVencimientosPendientesController.paginacion.totalPaginas}" />
+							</td>
+						</tr>
+					</table>
+					
+					<h:dataTable id="tablaResultados"  rendered="#{consultaVencimientosPendientesController.consultaEjecutada and not empty consultaVencimientosPendientesController.paginaVO.registros}"
+									value="#{consultaVencimientosPendientesController.paginaVO.registros}"
+									var="resultado" styleClass="tablaGeneral"
+					     			headerClass="tituloTabla" width="900px"
+									footerClass="tituloTabla" border="0" cellpadding="3px"
+									cellspacing="0px" columnClasses="columnaTexto, columnaTexto, columnaTexto, columnaTexto, columnaTexto, columnaMoneda"
+									rowClasses="renglonTablaUno, renglonTablaDos"  >
+									
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.tv}"/>
+							</f:facet>
+								<h:outputText value="#{resultado.idTipoValor}"/>
+						</h:column>
+									
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.emisora}"/>
+							</f:facet>
+							<h:outputText value="#{resultado.emisora}"/>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.serie}"/>
+							</f:facet>
+							<h:outputText value="#{resultado.serie}"/>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.cupon}"/>
+							</f:facet>
+							<h:outputText value="#{resultado.cupon}"/>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{etq.boveda}"/>
+							</f:facet>
+							<h:outputText value="#{resultado.nombreCortoBoveda}"/>
+						</h:column>
+						<h:column >
+							<f:facet name="header">
+								<h:outputText value="#{etq.saldoDisponibleGlobal}"/>
+							</f:facet>
+							<h:outputText value="#{resultado.saldoDisponible}">
+								<f:convertNumber pattern="###,###"/>
+							</h:outputText>
+						</h:column>
+					</h:dataTable>
+					<table cellpadding="0" cellspacing="0" border="0" align="left"
+						width="900px"
+						style="display: #{ empty consultaVencimientosPendientesController.paginaVO.registros ? 'none' : 'inline'}">
+						<tr>
+							<td colspan="2">
+								<div
+									style="display:#{consultaVencimientosPendientesController.paginacion.irAlPrimero ? 'inline' : 'none'}" onmousemove="ate">
+									<a4j:commandLink
+									actionListener="#{consultaVencimientosPendientesController.irPrimeraPagina}"
+									id="control_posicion_primero2" reRender="panelResultados, pagination"
+									onclick="buscarRegistros();"
+									oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);" limitToList="true">
+									<img
+										src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+										border="0" />
+									</a4j:commandLink>
+								</div>
+								<div
+									style="display: #{consultaVencimientosPendientesController.paginacion.retrocederRapido ? 'inline' : 'none'}">
+									<a4j:commandLink
+										actionListener="#{ consultaVencimientosPendientesController.retrocederPaginasRapido}"
+										id="control_consulta_atras_fast2" reRender="panelResultados, pagination"
+										onclick="buscarRegistros();"
+										oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);" limitToList="true">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+											border="0" />
+									</a4j:commandLink>
+								</div>
+								<div
+									style="display: #{consultaVencimientosPendientesController.paginacion.retroceder ? 'inline' : 'none'}">
+									<a4j:commandLink
+										actionListener="#{consultaVencimientosPendientesController.retrocederPagina}"
+										id="control_consulta_atras2" reRender="panelResultados, pagination"
+										onclick="buscarRegistros();"
+										oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);" limitToList="true">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+											border="0" />
+									</a4j:commandLink>
+								</div>
+								<div
+									style="display: #{consultaVencimientosPendientesController.paginacion.avanzar ? 'inline' : 'none'}">
+									<a4j:commandLink
+										actionListener="#{consultaVencimientosPendientesController.avanzarPagina}"
+										id="control_consulta_adelante2" reRender="panelResultados, pagination"
+										onclick="buscarRegistros();"
+										oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);" limitToList="true">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+											border="0" />
+									</a4j:commandLink>
+								</div>
+								<div style="display: #{consultaVencimientosPendientesController.paginacion.avanzarRapido ? 'inline' : 'none'}">
+									<a4j:commandLink
+										actionListener="#{consultaVencimientosPendientesController.avanzarPaginasRapido}"
+										id="control_consulta_adelante_fast2" reRender="panelResultados, pagination"
+										onclick="buscarRegistros();"
+										oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);" limitToList="true">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+											border="0" />
+									</a4j:commandLink>
+								</div>
+								<div
+									style="display: #{consultaVencimientosPendientesController.paginacion.irAlUltimo ? 'inline' : 'none'}">
+									<a4j:commandLink
+										actionListener="#{consultaVencimientosPendientesController.irUltimaPagina}"
+										id="control_consulta_ultimo2" reRender="panelResultados, pagination"
+										onclick="buscarRegistros();"
+										oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);" limitToList="true">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+											border="0" />
+									</a4j:commandLink>
+								</div>
+							</td>
+							<td align="right">
+								<div style="display:#{empty consultaVencimientosPendientesController.paginaVO.registros ? 'none' : 'inline'}">
+									<h:commandButton actionListener="#{consultaVencimientosPendientesController.generarReportes}"
+										action="consultaVencimientosPendientesXls"
+										image="/images/excel-file.gif"
+										title="Exportar a Excel todos los resultados de la consulta"
+										id="generarExcel"
+										onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);" />									
+									&#160;
+									<h:commandButton actionListener="#{consultaVencimientosPendientesController.generarReportes}"
+										action="consultaVencimientosPendientesPdf"
+										image="/images/pdf.gif"
+										title="Exportar a PDF todos los resultados de la consulta" 														   
+										id="generarPdf"
+										onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);" />										
+								</div>
+								
+								<div id="monitorPeticionReporte" style="display: none;">
+									<h:panelGroup id="panelMonitorPeticionReporte">
+									<h:graphicImage value="/images/ajax-loader.gif" />
+									&#160;&#160;
+									<h:outputText value="#{etq.reporteEnProceso}" />
+									<a4j:commandButton id="btnActualizarEstadoPeticion"
+										image="/images/transparent.gif"
+										styleClass="submit"
+										actionListener="#{consultaVencimientosPendientesController.actualizarEstadoPeticion}"
+										reRender="panelMonitorPeticionReporte"
+										oncomplete="desbloquearBotonesReportes(#{consultaVencimientosPendientesController.peticionReporteCompleta}, ['generarExcel', 'generarPdf']);"/>
+									</h:panelGroup>
+								</div>
+								
+							</td>
+						</tr>
+					</table>
+				</h:panelGroup>
+			
+			</h:panelGroup>
+		</ui:define>
+    </ui:composition>
+</html>

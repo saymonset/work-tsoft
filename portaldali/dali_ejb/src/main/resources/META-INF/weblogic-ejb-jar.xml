@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<weblogic-ejb-jar xmlns="http://www.bea.com/ns/weblogic/10.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bea.com/ns/weblogic/10.0 http://www.bea.com/ns/weblogic/10.0/weblogic-ejb-jar.xsd">
+	<weblogic-enterprise-bean>
+		<ejb-name>ReceiverBitacoraConsultaServiceBean</ejb-name>
+		<message-driven-descriptor>
+			<pool>
+				<max-beans-in-free-pool>1</max-beans-in-free-pool>
+				<initial-beans-in-free-pool>1</initial-beans-in-free-pool>
+			</pool>
+			<destination-jndi-name>${ingresos.queueSend.name}</destination-jndi-name>
+			<connection-factory-jndi-name>${ingresos.connectionFactoryNonXA.jndiName}</connection-factory-jndi-name>
+		</message-driven-descriptor>
+		<transaction-descriptor>
+			<trans-timeout-seconds>60</trans-timeout-seconds>
+		</transaction-descriptor>
+		<enable-call-by-reference>true</enable-call-by-reference>
+	</weblogic-enterprise-bean>
+</weblogic-ejb-jar>

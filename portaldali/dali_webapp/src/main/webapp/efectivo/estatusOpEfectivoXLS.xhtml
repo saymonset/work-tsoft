@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:xls="http://indeval.com/jsf/xls"
+	  xmlns:a4j="http://richfaces.org/a4j"
+	  xmlns:f="http://java.sun.com/jsf/core">
+
+    <xls:document documentName="operacionesEfectivo" documentTitle="Operaciones de Efectivo"
+        institucion="#{estatusOpEfectivoBean.institucionActual.claveTipoInstitucion} #{estatusOpEfectivoBean.institucionActual.folioInstitucion} #{estatusOpEfectivoBean.institucionActual.razonSocial}"
+        fecha="#{estatusOpEfectivoBean.fechaActual}">
+       
+        <xls:table value="#{estatusOpEfectivoBean.criterio}" var="criterio">
+            <xls:row>
+                <xls:col header="#{etq.divisa}" value="#{empty criterio.divisa ? '' :  criterio.divisa.claveAlfabetica}"/>
+                <xls:col header="#{etq.participanteMinus}"
+                    value="#{empty criterio.cuentaParticipante.numeroCuenta ? 'TODAS' : criterio.cuentaParticipante.numeroCuenta}" />
+                <xls:col header="#{etq.contraparteMinus}"
+                    value="#{empty criterio.cuentaContraparte.numeroCuenta  ? 'TODAS' : criterio.cuentaContraparte.numeroCuenta}" />
+                <xls:col header="#{etq.fechaLiquidacionMinus}" value="#{criterio.fechaLiquidacion}" pattern="dd/MM/yyyy" />
+                <xls:col header="#{etq.rolMinus}" value="#{criterio.descripcionRol}" />
+                <xls:col header="#{etq.estatus}" value="#{criterio.estadoInstruccion.descripcion}" />
+                <xls:col header="#{etq.referencia}" value="#{empty criterio.referenciaOperacion ? 'TODOS' : criterio.referenciaOperacion}" />
+                <xls:col header="#{etq.bovedaMinus}" value="#{empty  criterio.boveda ? '' : criterio.boveda.nombreCorto }" />
+                <xls:col header="#{etq.instruccionMinus}"
+                    value="#{empty criterio.tipoInstruccion.nombreCorto ? 'TODAS' : criterio.tipoInstruccion.nombreCorto}" />
+            	<xls:col header="#{etq.tipoRetiro}"
+            		value="#{empty criterio.tipoRetiro ? 'TODOS' : criterio.tipoRetiro}"/>
+				<xls:col header="#{etq.tipoAbono}"
+            		value="#{estatusOpEfectivoBean.mapaTipoAbono[estatusOpEfectivoBean.tipoLiquidacion]}"/>							
+				<xls:col header="#{etq.plazo}" value="#{estatusOpEfectivoBean.criterio.plazo}">
+					<f:convertNumber pattern="###,##0" />
+				</xls:col>
+				<xls:col header="#{etq.fechaVencimiento}" value="#{estatusOpEfectivoBean.criterio.fechaVencimiento}" pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.liquidacionVencimiento}" value="#{estatusOpEfectivoBean.mapaTipoAbono[estatusOpEfectivoBean.liquidacionVencimiento]}" />
+				<xls:col header="#{etq.montoVencimiento}" value="#{estatusOpEfectivoBean.criterio.montoVencimiento}" >
+					<f:convertNumber pattern="$ ###,##0.00" />
+				</xls:col>
+				<xls:col header="#{etq.folioOrigen}" value="#{empty estatusOpEfectivoBean.criterio.referenciaPaquete ? 'TODOS' : estatusOpEfectivoBean.criterio.referenciaPaquete}"/>
+				<xls:col header="#{etq.monto}" value="#{estatusOpEfectivoBean.criterio.montoBd}" pattern="$###,###,###,###,###,##0.00" align="right" />
+            </xls:row>
+        </xls:table>
+        <xls:table value="#{estatusOpEfectivoBean.totalRegistros}" var="totalRegistros">
+            <xls:row>
+                <xls:col colspan="2" header="#{etq.totalRegistrosencontrados}" value="#{totalRegistros}" pattern="###,###,###,###,###,##0"/>
+            </xls:row>
+        </xls:table>
+        
+          <xls:table value="#{estatusOpEfectivoBean.resultados}" var="resultado">
+            <xls:row>
+                <xls:col header="#{etq.traspasanteMinus}" value="#{resultado.cuentaTraspasante.numeroCuenta}" />
+                <xls:col header="#{etq.receptorMinus}" value="#{resultado.cuentaReceptora.numeroCuenta}" />
+                <xls:col header="#{etq.referenciaOperacion}" value="#{resultado.referenciaOperacion}" footer="#{etq.totalImporte}"/>
+                <xls:col header="#{etq.folioInstruccion}" value="#{resultado.folioInstruccion}"/>
+                <xls:col header="#{etq.importe}" value="#{resultado.monto}" pattern="$###,###,###,###,###,##0.00" footer="#{estatusOpEfectivoBean.totalImporte}"/>
+                <xls:col header="#{etq.divisaMinus}" value="#{resultado.divisa}" align="center" />
+                <xls:col header="#{etq.bovedaMinus}" value="#{resultado.boveda}" align="center" />
+                <xls:col header="#{etq.fechaLiquidacionMinus}" value="#{resultado.fechaLiquidacion}"  pattern="dd/MM/yyyy HH:mm:ss"/>
+                <xls:col header="#{etq.fechaAprobacion}" value="#{(resultado.tipoInstruccion.idTipoInstruccion==33 and resultado.divisa=='MXN') ? resultado.fechaAplicacion:''}"  pattern="dd/MM/yyyy HH:mm:ss"/>                
+                <xls:col header="#{etq.instruccionMinus}" value="#{resultado.tipoInstruccion.nombreCorto}" />
+                <xls:col header="#{etq.estatus}" value="#{resultado.estadoInstruccion.claveEstadoInstruccion}" />
+                <xls:col header="#{etq.tipoMensaje}" value="#{resultado.tipoMensaje.claveTipoMensaje}" />
+                <xls:col header="#{etq.origen}" value="#{resultado.origen}" />
+                <xls:col header="#{etq.tipoRetiro}" value="#{resultado.tipoRetiro}" />
+				 <xls:col header="#{etq.concepto}" value="#{resultado.concepto}" />
+				 <xls:col header="#{etq.referenciaNumerica}" value="#{resultado.referenciaNumerica}" />
+				 <xls:col header="#{etq.claveRastreo}" value="#{resultado.porPaquete ? resultado.referenciaPaquete : resultado.claveRastreo}" />
+				 <xls:col header="#{etq.tipoAbono}" value="#{resultado.tipoLiquidacion.nombreCorto}" />
+				 <xls:col header="#{etq.plazo}" value="#{resultado.plazo}" />
+				 <xls:col header="#{etq.fechaVencimiento}" value="#{resultado.fechaVencimiento}" pattern="dd/MM/yyyy HH:mm:ss"/>
+				 <xls:col header="#{etq.tasa}" value="#{resultado.tasa}" />
+				 <xls:col header="#{etq.liquidacionVencimiento}" value="#{resultado.liquidacionVencimiento.nombreCorto}" />
+				 <xls:col header="#{etq.montoVencimiento}" value="#{resultado.montoVencimiento}" pattern="$###,###,###,###,###,##0.00"/>
+				 <xls:col header="#{etq.cuentaBeneficiario}" value="#{resultado.cuentaReceptora.cuenta}" />
+				 <xls:col header="#{etq.nombreBeneficiario}" value="#{resultado.cuentaReceptora.nombreCuenta}" />
+				 <xls:col header="#{etq.fechaAutorizacion}" value="#{resultado.fechaAutorizacion}" pattern="dd/MM/yyyy HH:mm:ss"/>
+				 <xls:col header="#{etq.fechaLiberacion}" value="#{resultado.fechaLiberacion}" pattern="dd/MM/yyyy HH:mm:ss"/>
+				 <xls:col header="#{etq.estatus} #{etq.tipoRetiroSPEI}" value="#{resultado.liqSpei == 1 ? 'Aplicado' : (resultado.liqSpei==0 ?'Aprobado':'')}"/> 
+				 
+            </xls:row>
+         </xls:table>
+	</xls:document>
+</html>

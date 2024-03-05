@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+  <bean id="indeval.dali.factory"
+    class="org.springframework.context.support.ClassPathXmlApplicationContext">
+    <constructor-arg>
+    	<list>			    
+                <value>data-source-dali-context.xml</value>
+				<value>persistence-dali-dao-context.xml</value>
+				<value>applicationContext-dali-external-services.xml</value>				
+				<value>applicationContext-dali-services.xml</value>				
+				<value>applicationContext-sign.xml</value>	
+			 </list>
+    	</constructor-arg>
+	</bean>
+
+</beans>

@@ -1,0 +1,119 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:pdf="http://indeval.com/jsf/pdf" 
+	xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <pdf:document documentName="estadoCuentaSociedadesInversion" 
+    	documentTitle="Estado de Cuenta de Sociedades de Inversi&#243;n" 
+    	landscape="false" imageResource="/images/indeval.png" 
+    	fecha="#{estadoCuentaSocInvBean.fechaActual}">
+
+		 <pdf:grid border="0" bordercolor="#FFFFFF" align="center" >
+            <pdf:gridRow>  
+            	<pdf:gridCol   align="center" widthPercentage="25">
+            	</pdf:gridCol>
+                <pdf:gridCol   align="right"  collspan="5" >
+                    <pdf:text  value="#{estadoCuentaSocInvBean.institucionActual.claveTipoInstitucion}#{estadoCuentaSocInvBean.institucionActual.folioInstitucion} #{estadoCuentaSocInvBean.institucionActual.razonSocial}" /> 
+                </pdf:gridCol> 
+                <pdf:gridCol   align="center" widthPercentage="25">
+            	</pdf:gridCol>
+            </pdf:gridRow> 
+            <pdf:gridRow>   
+            	<pdf:gridCol> </pdf:gridCol>
+                <pdf:gridCol> </pdf:gridCol>  
+                <pdf:gridCol> </pdf:gridCol>
+            </pdf:gridRow>  
+        </pdf:grid>
+        
+		<pdf:table id="filtros" align="center" value="#{estadoCuentaSocInvBean}" 
+			currentBean="noSeUsa" widthPercentage="100">
+			<pdf:row>
+				<pdf:col collspan="1" header="#{etq.tv}" align="CENTER" 
+					value="#{estadoCuentaSocInvBean.emision.idTipoValor}" />
+				<pdf:col collspan="1" header="#{etq.emisoraMinus}" 
+					align="CENTER" value="#{estadoCuentaSocInvBean.emision.emisora}" />
+			</pdf:row>
+		</pdf:table> 
+		
+		<pdf:grid border="0" bordercolor="#FFFFFF" align="center" >
+        	<pdf:gridRow>  
+            	<pdf:gridCol> </pdf:gridCol>
+                <pdf:gridCol> </pdf:gridCol>  
+                <pdf:gridCol> </pdf:gridCol>
+            </pdf:gridRow> 
+            <pdf:gridRow>           	
+                <pdf:gridCol   align="left"  collspan="5" >
+                    <pdf:subtitle  value="Sociedades Encontradas:  #{estadoCuentaSocInvBean.paginaVO.totalRegistros}" /> 
+                </pdf:gridCol>                
+            </pdf:gridRow> 
+            <pdf:gridRow>  
+            	<pdf:gridCol> </pdf:gridCol>
+                <pdf:gridCol> </pdf:gridCol>  
+                <pdf:gridCol> </pdf:gridCol>
+            </pdf:gridRow> 
+        </pdf:grid> 
+
+		<pdf:iterator id="Resultados" value="#{estadoCuentaSocInvBean.listaSaldosReporte}" var="estadosItem">
+			<pdf:br />
+			<pdf:br />
+
+			<pdf:grid border="0" bordercolor="#FFFFFF" align="center" >
+        	<pdf:gridRow>  
+            	<pdf:gridCol> </pdf:gridCol>
+                <pdf:gridCol> </pdf:gridCol>  
+                <pdf:gridCol> </pdf:gridCol>
+            </pdf:gridRow> 
+            <pdf:gridRow>           
+                <pdf:gridCol   align="left"  collspan="5" >
+                    <pdf:text  value="Emisiones Encontradas :     #{estadosItem.tamanioSaldos}" /> 
+                </pdf:gridCol>                
+            </pdf:gridRow> 
+            <pdf:gridRow>  
+            	<pdf:gridCol> </pdf:gridCol>
+                <pdf:gridCol> </pdf:gridCol>  
+                <pdf:gridCol> </pdf:gridCol>
+            </pdf:gridRow> 
+        </pdf:grid> 
+			<pdf:br />
+			<pdf:table align="center" value="#{estadoCuentaSocInvBean}" currentBean="noSeUsa" widthPercentage="100">
+				<pdf:row>
+					<pdf:col collspan="1" header="#{etq.sociedadInversion}" align="CENTER" 
+						value="#{estadosItem.emisora.razonSocial}">
+					</pdf:col>
+				</pdf:row>
+			</pdf:table>
+			<pdf:table value="#{estadosItem.saldos}" currentBean="detalle" widthPercentage="100">
+				<pdf:row>
+					<pdf:col collspan="1" header="#{etq.tv}" align="CENTER" 
+						value="#{detalle.idTipoValor}" />
+					<pdf:col collspan="1" header="#{etq.emisoraMinus}" align="CENTER" 
+						value="#{detalle.emisora}" />
+					<pdf:col collspan="1" header="#{etq.serieMinus}" align="CENTER" 
+						value="#{detalle.serie}" />
+					<pdf:col collspan="1" header="#{etq.cuponMinus}" align="CENTER" 
+						value="#{detalle.cupon}" />
+						
+					<pdf:col collspan="1" header="#{etq.saldoCirculacion}" align="RIGHT" 
+						value="#{detalle.posicionDisponible}">
+						<f:convertNumber pattern="###,###,###,###,###" />
+					</pdf:col>
+					<pdf:col collspan="1" header="#{etq.saldoTesoreria}" align="RIGHT" 
+						value="#{detalle.posicionTesoreria}">
+						<f:convertNumber pattern="###,###,###,###,###" />
+					</pdf:col>
+					<pdf:col collspan="1" header="Saldo Total" align="RIGHT" 
+						value="#{detalle.posicionTotal}">
+						<f:convertNumber pattern="###,###,###,###,###" />
+					</pdf:col>
+				</pdf:row>
+			</pdf:table>
+
+			<pdf:br />
+		</pdf:iterator>
+		
+		<pdf:br />
+		<pdf:subtitle value="Sociedades Encontradas: #{estadoCuentaSocInvBean.paginaVO.totalRegistros}" />
+		<pdf:br />
+
+	</pdf:document>
+</html>

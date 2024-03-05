@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:indeval="http://indeval.com/indeval"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en">
+
+	<ui:decorate template="/layoutCapturaMultiPart.xhtml">
+
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.fileTransferEfectivo}"/>
+		</ui:define>
+
+
+		<ui:define name="seccionForma">
+			<h:outputText id="validaFacultadFirma" value="#{fileTransferTrefBean.validaFacultadFirma}" />
+			
+			<a4j:keepAlive beanName="fileTransferTrefBean" />
+			<h:outputText value="#{fileTransferTrefBean.init}" />
+			
+			<!-- Mensajes al usuario -->
+			<rich:messages id="mensajesConsulta" warnClass="warning" infoClass="info"
+				errorClass="error" ajaxRendered="true" showDetail="false"
+				showSummary="true" layout="list">
+				<f:facet name="infoMarker">
+					<h:panelGroup>
+						<h:graphicImage url="/images/accept.png" />&#160;</h:panelGroup>
+				</f:facet>
+				<f:facet name="errorMarker">
+					<h:panelGroup>
+						<h:graphicImage url="/images/warning.gif" />&#160;</h:panelGroup>
+				</f:facet>
+			</rich:messages>
+			
+			<h:panelGroup id="general">
+				<h:outputText style="color:red" value="#{fileTransferTrefBean.mensajeError}" />
+				<h:panelGroup
+					rendered="#{!fileTransferTrefBean.polling and !fileTransferTrefBean.esperaConfirmacion}">
+					<table cellpadding="0" cellspacing="0" border="0" width="100%" class="recuadroTabla">
+						<tr>
+							<td align="center"><h:outputText value="#{etq.participanteMinus}" styleClass="texto" /></td>
+							<td align="center"><h:outputText value="#{etq.fechaMinus}" styleClass="texto" /></td>
+							<td align="center"><h:outputText value="#{etq.hora}" styleClass="texto" /></td>
+							<td align="center"><h:outputText value="#{etq.registrosEnviadosProtocolo}" styleClass="texto" /></td>
+							<td align="center"><h:outputText value="#{etq.registrosCargados}" styleClass="texto" /></td>
+							<td align="center"><h:outputText value="#{etq.registrosError}" styleClass="texto" /></td>
+							<td align="center"><h:outputText value="#{etq.totalRegistros}" styleClass="texto" /></td>
+							<td align="center"><h:outputText value="#{etq.usuarioResponsable}" styleClass="texto" /></td>
+						</tr>
+						<tr>
+							<td align="center">
+								<h:outputText id="IdAgenteFirmado" value="#{fileTransferTrefBean.institucionActual.claveTipoInstitucion}
+								#{fileTransferTrefBean.institucionActual.folioInstitucion}" />
+							</td>
+							<td align="center">
+								<h:outputText id="fechaCarga"
+									value="#{fileTransferTrefBean.resumen.fechaCarga}"
+									converter="formatoFechaCortaConverter" />
+							</td>
+							<td align="center">
+								<h:outputText id="horaCarga"
+									value="#{fileTransferTrefBean.resumen.horaCarga}" />
+							</td>
+							<td align="center">
+								<h:outputText id="registrosEnviados"
+									value="#{fileTransferTrefBean.resumen.totalProtocolo}" />
+							</td>
+							<td align="center">
+								<h:outputText id="registrosCargados"
+									value="#{fileTransferTrefBean.resumen.totalCargados}" />
+							</td>
+							<td align="center">
+								<h:outputLink rendered="#{fileTransferTrefBean.showLink}"
+										value="javascript:mostrardetalleFileTransfer('#{etq.fileTransferEfectivo} - Errores','#{facesContext.externalContext.requestContextPath}/tesoreria/fileTransfer/fileTransferTrefDetalleErrores.faces?height=400&amp;width=950');">
+									<h:outputText value="#{fileTransferTrefBean.resumen.totalError}" />
+								</h:outputLink>
+								<h:outputText value="#{fileTransferTrefBean.resumen.totalError}" rendered="#{!fileTransferTrefBean.showLink}" />
+							</td>
+							<td align="center">
+								<h:outputText id="totalRegistros"
+									value="#{fileTransferTrefBean.resumen.totalRegistros}" />
+							</td>
+							<td align="center">
+								<h:outputText id="usuarioResponsable"
+									value="#{fileTransferTrefBean.resumen.nombreUsuario}" />
+							</td>
+						</tr>
+					</table>
+					<h:outputText value="#{fileTransferTrefBean.detenerPoll}" />
+				</h:panelGroup>
+
+
+
+				<h:panelGroup id="pollGrid">
+					<h:panelGroup
+						rendered="#{fileTransferTrefBean.polling and !fileTransferTrefBean.esperaConfirmacion}">
+
+						<div align="center">
+							<h:outputText style="color:red" value="#{fileTransferTrefBean.mensajeError}" />
+							<b><h:outputText value="#{etq.archivo_usuario}"
+									styleClass="texto" /> </b>
+							<h:outputText
+								value="#{fileTransferTrefBean.institucionActual.claveTipoInstitucion}#{fileTransferTrefBean.institucionActual.folioInstitucion}"
+								styleClass="texto" />
+							<br />
+							<br />
+							<h:outputText value="#{etq.estatus}: " styleClass="texto" />
+							<h:outputText
+								value="#{fileTransferTrefBean.processInfo.status}"
+								styleClass="texto"></h:outputText>
+							<br />
+							<br />
+							<h:outputText
+								value="#{fileTransferTrefBean.processInfo.porcentajeTerminado}">
+									<f:convertNumber maxFractionDigits="2" pattern="###.##"/>
+							</h:outputText>
+							<br />
+							<a4j:commandButton
+								actionListener="#{fileTransferTrefBean.abortProcess}"
+								rendered="#{fileTransferTrefBean.mostrarBotonDetenerProceso}"
+								reRender="general,botones,panelPoll"
+								value="#{etq.detener_proceso}"
+								onclick="this.disabled=true"
+								oncomplete="this.disabled=false">
+							</a4j:commandButton>
+						</div>
+					</h:panelGroup>
+				</h:panelGroup>
+
+
+				<h:panelGroup id="resumenCarga">
+					<h:panelGroup
+						rendered="#{!fileTransferTrefBean.polling and fileTransferTrefBean.esperaConfirmacion}">
+
+						<h:outputText value="#{fileTransferTrefBean.detenerPoll}" />
+
+						<t:commandButton id="resumenPrevio"
+							action="#{fileTransferTrefBean.getResumenPrevioCarga}"
+							style="display:none" />
+
+						<h:panelGrid columns="5" id="encabezadoResumen">
+							<h:outputText value="#{etq.resumenMinus}:" />
+							<h:outputText value="#{etq.registrosCargarMinus}:"
+								style="color: #00FF80" />
+							<t:outputText
+								value="#{fileTransferTrefBean.resumenPrevio.registrosACargar}" />
+							<h:outputText value="#{etq.registrosError}:"
+								style="color: #FF0000" />
+							<t:outputText
+								value="#{fileTransferTrefBean.resumenPrevio.registrosConError}" />
+						</h:panelGrid>
+
+						<h:panelGroup id="panelResultados">
+							<table cellpadding="0" cellspacing="0" border="0" align="left"
+								width="100%">
+								<tr>
+									<td colspan="2">
+										<div class="refrescar" style="float: left;">
+											<a4j:status id="commonStatus">
+												<f:facet name="start">
+													<h:panelGroup>
+														<h:graphicImage value="/images/ajax-loader.gif" />
+														<h:outputText value="#{etq.buscando}"></h:outputText>
+													</h:panelGroup>
+												</f:facet>
+											</a4j:status>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<a4j:commandLink
+											actionListener="#{fileTransferTrefBean.navegarPorResultados}"
+											id="control_posicion_primero" reRender="panelResultados"
+											limitToList="true"
+											rendered="#{fileTransferTrefBean.paginacion.irAlPrimero}">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+												border="0" />
+											<f:attribute name="navegacion" value="irAlPrincipio" />
+										</a4j:commandLink>
+										<a4j:commandLink
+											actionListener="#{fileTransferTrefBean.navegarPorResultados}"
+											id="control_consulta_atras_fast" reRender="panelResultados"
+											limitToList="true"
+											rendered="#{fileTransferTrefBean.paginacion.retrocederRapido}">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+												border="0" />
+											<f:attribute name="navegacion"
+												value="retrocederPaginasRapido" />
+										</a4j:commandLink>
+										<a4j:commandLink
+											actionListener="#{fileTransferTrefBean.navegarPorResultados}"
+											id="control_consulta_atras" reRender="panelResultados"
+											limitToList="true"
+											rendered="#{fileTransferTrefBean.paginacion.retroceder}">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+												border="0" />
+											<f:attribute name="navegacion" value="retrocederPagina" />
+										</a4j:commandLink>
+										<a4j:commandLink
+											actionListener="#{fileTransferTrefBean.navegarPorResultados}"
+											id="control_consulta_adelante" reRender="panelResultados"
+											limitToList="true"
+											rendered="#{fileTransferTrefBean.paginacion.avanzar}">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+												border="0" />
+											<f:attribute name="navegacion" value="avanzarPagina" />
+										</a4j:commandLink>
+										<a4j:commandLink
+											actionListener="#{fileTransferTrefBean.navegarPorResultados}"
+											id="control_consulta_adelante_fast"
+											reRender="panelResultados" limitToList="true"
+											rendered="#{fileTransferTrefBean.paginacion.avanzarRapido}">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+												border="0" />
+											<f:attribute name="navegacion" value="avanzarPaginasRapido" />
+										</a4j:commandLink>
+										<a4j:commandLink
+											actionListener="#{fileTransferTrefBean.navegarPorResultados}"
+											id="control_consulta_ultimo" reRender="panelResultados"
+											limitToList="true"
+											rendered="#{fileTransferTrefBean.paginacion.irAlUltimo}">
+											<img
+												src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+												border="0" />
+											<f:attribute name="navegacion" value="irAlUltimo" />
+										</a4j:commandLink>
+									</td>
+								</tr>
+								<tr>
+									<td align="left" width="450px">
+										<h:outputText escape="false" styleClass="textoResumen"
+											value="#{etq.mostrandoPagina}"></h:outputText>
+										<h:outputText escape="false" styleClass="textoResumen"
+											value="#{etq.abrir}"></h:outputText>
+										<h:outputText escape="false" styleClass="textoResumen"
+											value="#{fileTransferTrefBean.paginacion.numeroPagina}"></h:outputText>
+										<h:outputText escape="false" styleClass="textoResumen"
+											value="#{etq.de}"></h:outputText>
+										<h:outputText escape="false" styleClass="textoResumen"
+											value="#{fileTransferTrefBean.paginacion.totalPaginas}"></h:outputText>
+										<h:outputText escape="false" styleClass="textoResumen"
+											value="#{etq.entre}"></h:outputText>
+										<h:outputText escape="false" styleClass="textoResumen"
+											value="#{fileTransferTrefBean.paginacion.totalResultados}"></h:outputText>
+										&#160;
+										<h:outputText escape="false" styleClass="textoResumen"
+											value="#{etq.registrosEncontrados}" />
+									</td>
+									<td align="right" width="450px">
+										<h:outputText escape="false" styleClass="textoResumen"
+											value="#{etq.registrosPorPagina}" />
+										<t:selectOneMenu
+											value="#{fileTransferTrefBean.paginacion.registrosPorPagina}"
+											styleClass="textoControles">
+											<f:selectItem itemValue="1" itemLabel="1" />
+											<f:selectItem itemValue="5" itemLabel="5" />
+											<f:selectItem itemValue="10" itemLabel="10" />
+											<f:selectItem itemValue="20" itemLabel="20" />
+											<f:selectItem itemValue="50" itemLabel="50" />
+											<f:selectItem itemValue="100" itemLabel="100" />
+											<a4j:support reRender="panelResultados" event="onchange"
+												limitToList="true"
+												actionListener="#{fileTransferTrefBean.actualizarPaginacionRegistro}" />
+										</t:selectOneMenu>
+									</td>
+								</tr>
+							</table>
+
+							<br />
+
+							<table width="900px" class="tablaGeneral" border="0">
+								<t:dataList value="#{fileTransferTrefBean.pagina.registros}"
+									var="item" rowIndexVar="indice">
+									<tr>
+										<td
+											class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
+											<table width="900px" cellpadding="3px" cellspacing="0px"
+												border="0">
+												<tr class="tituloTabla">
+													<td width="180px" >
+														<h:outputText value="#"  />
+													</td>
+													<td width="180px" >
+														<h:outputText value="#{etq.usuarioMinus}" />
+													</td>
+													<td width="180px" >
+														<h:outputText value="#{etq.fechaMinus}" />
+													</td>
+													<td width="180px" >
+														<h:outputText value="#{etq.estadoRegistroMinus}" />
+													</td>
+													<td width="180px" >
+														<h:outputText value="#{etq.mensajeMinus}" />
+													</td>
+												</tr>
+												<tr>
+													<td align="center">
+														<h:outputText value="#{item.consec}" />
+													</td>
+													<td align="center">
+														<h:outputText value="#{item.nombreUsuario}" escape="false" />
+													</td>
+													<td align="center">
+														<h:outputText value="#{item.fechaRegistro}"
+															converter="formatoFechaLargoConverter" />
+													</td>
+													<td align="center">
+														<h:outputText value="#{item.estado}" />
+													</td>
+													<td align="center">
+														<t:dataList value="#{item.mensajesError}"
+															style="text-align:left" var="variable"
+															layout="unorderedList">
+															<t:outputText
+																styleClass="#{item.estado == 'ER' ? 'fileError' : 'regFileUploadMsg'}"
+																value="#{variable}" />
+														</t:dataList>
+													</td>
+												</tr>
+												<tr class="tituloTabla">
+													<td colspan="5">
+														<h:outputText styleClass="tablaitem"
+															value="#{etq.informacionMinus}" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="5">
+														<h:panelGroup rendered="#{not empty item.datos}">
+															<table cellpadding='0' cellspacing='0' align='left'
+																width="900px">
+
+																<tr>
+																	<t:dataList var="campo" value="#{item.datos}" rows="11">
+																		<td style="width: 225px;" class='tituloTabla'>
+																			<t:outputText
+																				value="#{campo.nombre}[#{campo.longitud}]" />
+																		</td>
+																	</t:dataList>
+																</tr>
+																<tr>
+																	<t:dataList var="campo" value="#{item.datos}" rows="11">
+																		<td style="width: 225px;" align="center">
+																			<t:outputText value="#{campo.valor}"
+																				styleClass="#{campo.tieneError?'fileError':'regFileUpload'}"
+																				escape="false" />
+																		</td>
+																	</t:dataList>
+																</tr>
+																<tr>
+																	<t:dataList var="campo" value="#{item.datos}"
+																		first="11" rows="22">
+																		<td style="width: 225px;" class='tituloTabla'>
+																			<t:outputText
+																				value="#{campo.nombre}[#{campo.longitud}]" />
+																		</td>
+																	</t:dataList>
+																</tr>
+																<tr>
+																	<t:dataList var="campo" value="#{item.datos}"
+																		first="11" rows="22">
+																		<td style="width: 225px;" align="center">
+																			<t:outputText value="#{campo.valor}"
+																				styleClass="#{campo.tieneError?'fileError':'regFileUpload'}"
+																				escape="false" />
+																		</td>
+																	</t:dataList>
+																</tr>
+															</table>
+														</h:panelGroup>
+														<h:panelGroup rendered="#{empty item.datos}">
+															<t:outputText style="text-align:left"
+																value="#{item.cadena}" />
+														</h:panelGroup>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<tr><td>&#160;</td></tr>
+								</t:dataList>
+							</table>
+						</h:panelGroup>
+
+						<h:panelGroup id="botonesPreview">
+							<div style="float: left" >
+							<h:panelGrid width="100%">
+								<a4j:commandButton id="btnProcesar"
+									value="#{etq.procesarMinus}"
+									actionListener="#{fileTransferTrefBean.procesar}"
+									rendered="#{fileTransferTrefBean.isThisMyProcess}"
+									reRender="general,botones,panelPoll,panelFirma"
+									onclick="deshabilitarBoton('btnProcesar'); deshabilitarBoton('btnCancelar');"
+									oncomplete="habilitarBoton('btnProcesar');habilitarBoton('btnCancelar');window.scrollTo(0,0);" />
+									
+								<t:commandButton id="btnProcesar2" value="#{etq.procesarMinus}"
+									styleClass="hidden" disabled="true"
+									actionListener="#{fileTransferTrefBean.procesar}">
+								</t:commandButton>
+
+								<t:commandButton id="btnCancelar" value="#{etq.cancelarMinus}"
+									actionListener="#{fileTransferTrefBean.cancelar}"
+									rendered="#{fileTransferTrefBean.isThisMyProcess}" />
+							</h:panelGrid>
+							</div>
+						</h:panelGroup>		
+						
+						<!-- La facultad debe reflejar el valor de SeguridadConstants.FACULTAD_FIRMA_OPERACION -->
+						<indeval:authorizeFaculty userInFaculty="CON_CERTIFICADO">
+							<h:panelGroup id="panelFirma">
+								<h:panelGroup
+									rendered="#{not empty fileTransferTrefBean.isosSinFirmar}">
+									<div style="display: none">
+										<t:dataList value="#{fileTransferTrefBean.isosSinFirmar}"
+											rowIndexVar="indice" var="iso">
+				
+											<textarea id="isoSinFirmar#{indice+1}"
+												name="isoSinFirmar#{indice+1}">#{fileTransferTrefBean.isosSinFirmar[indice]}</textarea>
+				
+<!-- 											<textarea id="isoFirmado#{indice+1}" -->
+<!-- 												name="isoFirmado#{indice+1}"></textarea> -->
+				
+<!-- 											<textarea id="hashIso#{indice+1}" name="hashIso#{indice+1}">#{fileTransferTrefBean.hashIso[indice]}</textarea> -->
+				
+										</t:dataList>
+										<textarea id="numeroSerie" name="numeroSerie"></textarea>
+										<textarea  id="numeroSerieUsuario" name="numeroSerieUsuario">#{sessionScope.usuario.numeroSerieCertificado}</textarea>
+										<textarea name="totalOperaciones"
+											id="totalOperaciones">#{fileTransferTrefBean.totalOperaciones}</textarea>
+									</div>
+				
+									<script>
+				                       function firmarOperacion(){ 
+			                    		    $j("input[id$='btnProcesar']").prop("disabled", true);
+			                    		    $j("input[id$='btnCancelar']").prop("disabled",true);
+			                    		    $j("input[id$='btnProcesar2']").prop("disabled",false);
+			                    		    $j("input[id$='btnProcesar2']").click();
+			                    		    $j("input[id$='btnProcesar2']").prop("disabled",true);
+				                       }
+				                    </script>
+				
+									<ui:decorate template="/firmaDigitalMultipleCompress.xhtml"></ui:decorate>
+								</h:panelGroup>
+							</h:panelGroup>
+						</indeval:authorizeFaculty>
+						 
+					</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+
+
+		<ui:define name="botones">
+			<h:panelGroup id="botones">
+				<h:panelGrid columns="3"
+					rendered="#{!fileTransferTrefBean.polling and !fileTransferTrefBean.esperaConfirmacion}">
+					<h:panelGroup>
+						<h:outputText value="#{etq.archivo}" />
+					</h:panelGroup>
+					<t:inputFileUpload id="archivoOperaciones" storage="memory"
+						value="#{fileTransferTrefBean.archivo}" size="50"
+						required="false" />
+					<h:commandButton id="iniciarProceso" value="Iniciar Proceso"
+						actionListener="#{fileTransferTrefBean.uploadFile}"></h:commandButton>
+				</h:panelGrid>
+			</h:panelGroup>
+		</ui:define>
+
+	</ui:decorate>
+
+
+	<a4j:region>
+		<h:form>
+			<h:panelGroup id="panelPoll">
+				<h:panelGroup>
+					<a4j:poll id="poll" interval="500"
+						enabled="#{fileTransferTrefBean.pollHabilitado}"
+						actionListener="#{fileTransferTrefBean.pollEstado}"
+						reRender="general,botones,panelPoll" />
+				</h:panelGroup>
+			</h:panelGroup>
+		</h:form>
+	</a4j:region>
+
+</html>

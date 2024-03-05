@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+	
+	<bean id="webAdvice"
+		class="com.indeval.portaldali.presentation.advice.AfterThrowingWebAspect">
+	</bean>
+	
+	<bean id="consultaServiceAdvice"
+		class="com.indeval.portaldali.presentation.advice.AfterConsultaServiceAspect">
+		<property name="bitacoraConsultaService" ref="bitacoraConsultaService" />
+		
+		<property name="mapaProyecciones">
+			<map key-type="java.lang.String" value-type="java.lang.String">
+				<entry key="obtenerProyeccionDeConsultaDePosiciones" value="CONSULTA_POSICION_VALORES" />
+				<entry key="obtenerProyeccionConsultaSaldosEfectivo" value="CONSULTA_SALDO_EFECTIVO" />
+				<entry key="buscarEmisionesDePosicionesNombradas" value="CONSULTA_ESTADO_CUENTA_VALORES" />
+				<entry key="buscarEmisionesDePosicionesControladas" value="CONSULTA_ESTADO_CUENTA_VALORES" />
+				<entry key="buscarDivisasDeSaldosNombrados" value="CONSULTA_ESTADO_CUENTA_EFECTIVO" />
+				<entry key="buscarDivisasDeSaldosControlados" value="CONSULTA_ESTADO_CUENTA_EFECTIVO" />
+				<entry key="obtenerProyeccionConsultaOperacionesValor" value="CONSULTA_ESTATUS_VALORES_MATCH" />
+				<entry key="consultarOperacionesMiscelaneaFiscal" value="CONSULTA_MISCELANEA_FISCAL" />
+				<entry key="obtenerProyeccionConsultaInstruccionesEfectivo" value="CONSULTA_ESTATUS_EFECTIVO" />
+				<entry key="obtenerProyeccionDeMovimientosDeValor" value="CONSULTA_MOVIMIENTOS_VALORES" />
+				<entry key="consultarMovimientosDeEfectivo" value="CONSULTA_MOVIMIENTOS_EFECTIVO" />
+				<entry key="archivoConciliacion" value="CONSULTA_ARCHIVO_CONCILIACION" />
+				<entry key="consultarMovimientosArchivoConciliacion" value="CONSULTA_ARCHIVO_CONCILIACION" />
+				<entry key="getVencimientosPendientesByInstitucionFechaVencimientoAgurpadosPorEmision" value="CONSULTA_TESORERIA_VENCIMIENTOS_PENDIENTES" />
+				<entry key="getSaldoEmisionSociedadesInversionRazonSocial" value="CONSULTA_SOCIEDADES_INVERSION" />
+				<entry key="getLiquidacionDecretos" value="CONSULTA_LIQUIDACION_DECRETOS" />
+			</map>
+		</property>
+		
+	</bean>
+	
+	<aop:aspectj-autoproxy/>
+
+	<bean id="stringDaliEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+		<property name="algorithm">
+			<value>PBEWithMD5AndDES</value>
+		</property>
+		<property name="password">
+			<value>Rumpelstiltskin</value>
+		</property>
+	</bean>
+	
+<!-- 	 <bean id="propHabilitaCaptcha" class="java.lang.String" > -->
+<!--      		<constructor-arg value="${portalDali.habilitaCaptcha}"/> -->
+<!--     </bean> -->
+    
+    <bean id="propHabilitaCaptcha" class="java.lang.Boolean">
+	   		<constructor-arg value="${portalDali.habilitaCaptcha}"/>
+	</bean>
+
+</beans>

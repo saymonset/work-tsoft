@@ -1,0 +1,65 @@
+
+.textoBarraTitulo {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.tableHeading {
+    font-size: 11px;
+    font-weight: bold;
+    color: #fff;
+    padding: 7px 6px 7px 6px;
+    background: #006699;
+}
+
+.tableHeading a {
+    font-size: 11px;
+    font-weight: bold;
+    color: #fff;
+    padding: 7px 6px 7px 6px;
+    background: #006699;
+}
+.tableCellThree,.tableCellThreeBold {
+    color: #333;
+    padding: 6px 10px 6px 6px;
+    border-bottom: 1px solid #CAD0D5;
+    background-color: #cdd5dd;
+    font-size: 11px;
+}
+
+.tableCellFour,.tableCellFourBold {
+    color: #333;
+    padding: 6px 10px 6px 6px;
+    border-bottom: 1px solid #CAD0D5;
+    background-color: #cdd5dd;
+    font-size: 11px;
+}
+
+.tableHeadingAltHover {
+    font-size: 11px;
+    font-weight: bold;
+    color: #000;
+    padding: 5px 6px 5px 6px;
+    background-color: #A1B1BB;
+}
+
+.tableHeadingAltHover a {
+    color: #696F92;
+    text-decoration: none;
+}
+
+.tableCellOne,.tableCellOneBold {
+    color: #333;
+    padding: 6px 10px 6px 6px;
+    border-bottom: 1px solid #CAD0D5;
+    background-color: #ebebeb;
+    font-size: 11px;
+}
+
+.everyColumn {
+    
+    padding: 6px;
+    border-bottom: 1px solid #acd0de;
+    color: #303030;
+}

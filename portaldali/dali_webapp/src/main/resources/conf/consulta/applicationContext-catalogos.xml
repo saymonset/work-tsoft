@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<bean id="consultaCatalogosFacade"
+		class="com.indeval.portaldali.presentation.util.ConsultaCatalogosFacade">
+
+		<property name="consultaMercadoService"
+			ref="consultaMercadoService">
+		</property>
+		<property name="consultaEstadoInstruccionService"
+			ref="consultaEstadoInstruccionService">
+		</property>
+		<property name="consultaTipoInstruccionService"
+			ref="consultaTipoInstruccionService">
+		</property>
+		<property name="consultaTipoLiquidacionService"
+			ref="consultaTipoLiquidacionService">
+		</property>
+		<property name="consultaCuentaService"
+			ref="consultaCuentaService">
+		</property>
+		<property name="consultaTipoValorService"
+			ref="consultaTipoValorService">
+		</property>
+		<property name="consultaEmisoraService"
+			ref="consultaEmisoraService">
+		</property>
+		<property name="consultaTipoMensajeService"
+			ref="consultaTipoMensajeService">
+		</property>
+		<property name="consultaDivisaService"
+			ref="consultaDivisaService">
+		</property>
+		<property name="consultaInstitucionService"
+			ref="consultaInstitucionService">
+		</property>
+		<property name="consultaTipoInstitucionService"
+			ref="consultaTipoInstitucionService">
+		</property>
+		<property name="consultaSaldoEfectivoService"
+			ref="consultaSaldosEfectivoService">
+		</property>
+		<property name="consultaBovedaService"
+			ref="consultaBovedaService">
+		</property>
+		<property name="consultaErroresLiquidacionService"
+			ref="consultaErroresLiquidacionService">
+		</property>
+		<property name="consultaEmisionService"
+			ref="consultaEmisionService">
+		</property>
+	</bean>
+
+</beans>

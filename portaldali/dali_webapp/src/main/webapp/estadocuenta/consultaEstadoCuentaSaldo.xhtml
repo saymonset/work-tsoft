@@ -1,0 +1,1301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="es" lang="es"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:indeval="http://indeval.com/indeval"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<f:view>
+	
+		<ui:composition template="layoutConsultaEstadoCuenta.xhtml">
+			<ui:define name="titulo">
+				<h:outputText value="#{etq.consultaEdoCuentaEfectivo}"></h:outputText>
+			</ui:define>
+			<ui:define name="tituloColumnaUno">
+				<h:outputText value="#{etq.cuentaMinus}"/>
+			</ui:define>
+			<ui:define name="tituloColumnaDos">
+				<h:outputText value="#{etq.divisaMinus}"/>
+			</ui:define>
+			<ui:define name="tituloColumnaTres">
+				<h:outputText value="#{etq.bovedaMinus}"/>
+			</ui:define>
+			<ui:define name="tituloSeccion">
+				<h:outputText value="#{etq.consultaEdoCuentaEfectivo}"></h:outputText>
+			</ui:define>
+			<ui:define name="barraTitulo">
+				<h:outputText value="#{etq.edoCuentaEfectivo}"></h:outputText>
+			</ui:define>
+			<ui:define name="resumenFechaInicio">
+				<h:panelGroup id="resumenFechaInicial">
+					<h:outputText value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioFechaInicial}"></h:outputText>
+				</h:panelGroup>
+			</ui:define>
+			<ui:define name="resumenFechaFin">
+				<h:panelGroup id="resumenFechaFinal">
+					<h:outputText value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioFechaFinal}"></h:outputText>
+				</h:panelGroup>
+			</ui:define>
+			<ui:define name="criterioFechaInicio">
+				<h:panelGroup id="init">
+					<h:outputText value="#{consultaEstadoCuentaSaldoEfectivoBean.init}" />
+				</h:panelGroup>
+				<rich:calendar id="fechaInicial" 
+					value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioFechaInicial}"
+					datePattern="dd/MM/yyyy"
+					inputSize="11"
+					inputClass="textoControles"
+					inputStyle="background-color: #ffffe6;"
+					isDayEnabled="isDayEnabled" />
+				<div id="container_tooltip">
+					<div id="tooltip" align="center">
+						<h5>
+							<h:outputText value="#{etq.fechaInicio}"></h:outputText>
+						</h5>
+						<h:outputText value="#{etq.captureFechaInicio}"></h:outputText>
+						<br />
+						<h:outputText value="#{etq.aConsultar}"></h:outputText>
+					</div>
+				</div>
+			</ui:define>
+			<ui:define name="criterioFechaFinal">
+				<rich:calendar id="fechaFinal" 
+					value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioFechaFinal}"
+					datePattern="dd/MM/yyyy"
+					inputSize="11"
+					inputClass="textoControles"
+					inputStyle="background-color: #ffffe6;"
+					isDayEnabled="isDayEnabled" />
+			</ui:define>
+			<ui:define name="botonEditar">
+				<div class="editar" style="display:#{consultaEstadoCuentaSaldoEfectivoBean.consultaEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios" >
+					<input type="image" class="submit"
+						src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+						alt="Editar Criterios" title="Editar Criterios"
+						onclick='javascript:presentarCriterios();return false;' />
+				</div>
+			</ui:define>
+			<ui:define name="botonLimpiar">
+				<div class="limpiar">
+					<input type="button" jsfc="h:commandButton" id="botonLimpiar" image="/images/transparent.gif"
+						styleClass="submit" onclick="deshabilitarBoton('botonBuscar');"
+						actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.limpiar}"/>
+				</div>
+			</ui:define>
+			<ui:define name="botonBuscar">
+				<div class="buscar">
+					<a4j:commandButton id="botonBuscar" image="/images/transparent.gif"
+						styleClass="submit"
+						reRender="containerResultados,containerResumenCuenta, containerControlesCuenta, containerInfoPaginacionCuenta, 
+						containerResumenDivisa, resumenFechaInicial, resumenFechaFinal,
+						containerResumenBoveda, containerInfoPaginacionDivisa,containerInfoPaginacionDivisa2,
+						mensajesError"
+						actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.buscarEstadoCuentaEfectivo}"
+						onclick="if(!buscarRegistros()){return false;}else{deshabilitarBoton('botonLimpiar'); deshabilitarBoton('botonBuscar');}"
+						oncomplete="presentarResultados(); habilitarBoton('botonLimpiar'); habilitarBoton('botonBuscar');">
+					</a4j:commandButton>
+				</div>
+			</ui:define>
+			
+			<ui:define name="linkGenerarReportes">
+               <h:commandButton id="generarTxt"
+                    actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.generarReportes}"
+                    action="consultaEstadoCuentaSaldoEfectivoTxt"
+                    title="Exportar a Texto todos los resultados de la consulta"
+                    image="/images/TXT.gif"
+                    onclick="bloquearBotonesReportes(['generarTxt', 'generarExcel', 'generarPdf']);" />
+				&#160;
+                <h:commandButton id="generarExcel"
+                    actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.generarReportes}"
+                    action="consultaEstadoCuentaSaldoEfectivoXls"
+                    title="Exportar a Excel todos los resultados de la consulta"
+                    image="/images/excel-file.gif"
+                    onclick="bloquearBotonesReportes(['generarTxt', 'generarExcel', 'generarPdf']);" />
+				&#160;
+                <h:commandButton id="generarPdf"
+                    actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.generarReportes}"
+                    action="consultaEstadoCuentaSaldoEfectivoPdf"
+                    image="/images/pdf.gif"
+                    title="Exportar a PDF todos los resultados de la consulta"
+                    onclick="bloquearBotonesReportes(['generarTxt', 'generarExcel', 'generarPdf']);" />
+				&#160;
+				<div id="monitorPeticionReporte" style="display: none;">
+					<h:panelGroup id="panelMonitorPeticionReporte">
+					<h:graphicImage value="/images/ajax-loader.gif" />
+					&#160;&#160;
+					<h:outputText value="#{etq.reporteEnProceso}" />
+					<a4j:commandButton id="btnActualizarEstadoPeticion"
+						image="/images/transparent.gif"
+						styleClass="submit"
+						actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.actualizarEstadoPeticion}"
+						reRender="panelMonitorPeticionReporte"
+						oncomplete="desbloquearBotonesReportes(#{consultaEstadoCuentaSaldoEfectivoBean.peticionReporteCompleta}, ['generarTxt', 'generarExcel', 'generarPdf']);"/>
+					</h:panelGroup>
+				</div>
+			</ui:define>
+			
+			<ui:define name="linkGenerarPdf">				                                
+			</ui:define>
+			<ui:define name="linkGenerarExcel">			
+			</ui:define>
+			<ui:define name="linkGenerarWord">
+				
+			</ui:define>
+			<ui:define name="linkGenerarHtml">
+				
+			</ui:define>
+			<ui:define name="criterioUno">
+				<table width="100%" border="0" cellspacing="0" cellpadding="5">
+					<h:panelGroup rendered="#{consultaEstadoCuentaSaldoEfectivoBean.usuarioIndeval}">
+						<tr>
+							<td class="textoEstadoCuenta">
+								<h:outputText value="#{etq.naturalezaMinus}"></h:outputText>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:selectOneMenu
+									value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoNaturaleza.opcionSeleccionada}"
+									id="selectNaturaleza" converter="tipoNaturalezaConverter"
+									styleClass="textoControles">
+									<f:selectItems
+										value="#{consultaEstadoCuentaSaldoEfectivoBean.opcionesComboNaturaleza}" />
+
+									<a4j:support event="onchange" reRender="containerSuggestCuenta"
+										actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.cambioSelectNaturaleza}" />
+								</h:selectOneMenu>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText value="#{etq.institucionMinus}" styleClass="textoEstadoCuenta"></h:outputText>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:inputText autocomplete="off" id="suggestInstitucion" maxlength="5"
+									value="#{consultaEstadoCuentaSaldoEfectivoBean.folioClaveInstitucion}"
+									styleClass="campoNumericoAsterisco textoControles">
+								</h:inputText>
+								<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="suggestInstitucion" suggestionAction="#{consultaEstadoCuentaSaldoEfectivoBean.buscarInstitucionesPorPrefijo}" var="coincidenciaInstitucion" fetchValue="#{coincidenciaInstitucion.claveTipoInstitucion}#{coincidenciaInstitucion.folioInstitucion}"
+									id="sInstitucionParticipante" 
+									nothingLabel="Sin coincidencias"
+									eventsQueue="institucionQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+									minChars="#{ (consultaEstadoCuentaSaldoEfectivoBean.usuarioIndeval) ? '2' : '1'}" 
+									onsubmit="addLoader('suggestInstitucion');return true;" 
+									oncomplete="removeLoader('suggestInstitucion');">
+								<h:column>
+									<h:outputText value="#{coincidenciaInstitucion.claveTipoInstitucion}#{coincidenciaInstitucion.folioInstitucion} - #{coincidenciaInstitucion.nombreCorto}"/>
+								</h:column>
+								<a4j:support event="onselect"  limitToList="true" ajaxSingle="true"  >
+									<t:updateActionListener property="#{consultaEstadoCuentaSaldoEfectivoBean.folioClaveInstitucion}" value="" />
+								</a4j:support>
+								</rich:suggestionbox>
+							</td>
+						</tr>
+					</h:panelGroup>
+					<tr>
+						<td class="textoEstadoCuenta">
+							<h:outputText value="#{etq.cuentaMinus}"></h:outputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label>
+								<h:selectOneMenu
+									value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.opcionSeleccionada}"
+									id="selectCuenta" converter="cuentaEfectivoConverter"
+									rendered="false" styleClass="campoNumericoAsterisco textoControles">
+									<f:selectItems
+										value="#{consultaEstadoCuentaSaldoEfectivoBean.opcionesComboCuenta}" />
+								</h:selectOneMenu>
+								<h:panelGroup id="containerSuggestCuenta">
+									<h:inputText autocomplete="off" maxlength="4"
+										value="#{consultaEstadoCuentaSaldoEfectivoBean.cuentaSeleccionada}"
+										id="suggestCuenta" styleClass="campoNumericoAsterisco textoControles"></h:inputText>
+									<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="suggestCuenta"
+										suggestionAction="#{consultaEstadoCuentaSaldoEfectivoBean.buscarCuentasPorPrefijo}"
+										var="coincidenciaCuenta"
+										fetchValue="#{coincidenciaCuenta.descripcion}"
+										nothingLabel="Sin coincidencias"
+										eventsQueue="cuentaQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+										onsubmit="addLoader('suggestCuenta');return true;"
+										oncomplete="removeLoader('suggestCuenta'); return true;">
+										<h:column>
+											<h:outputText value="#{coincidenciaCuenta.descripcion}" />
+										</h:column>
+										<a4j:support event="onselect" limitToList="true"
+											ajaxSingle="true">
+											<t:updateActionListener
+												property="#{consultaEstadoCuentaSaldoEfectivoBean.cuentaSeleccionada}"
+												value="" />
+										</a4j:support>
+									</rich:suggestionbox>
+								</h:panelGroup>
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td class="textoEstadoCuenta">
+								<h:outputText value="#{etq.tipoCuentaMinus}"></h:outputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label>
+								<h:selectOneMenu
+									value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada}"
+									id="selectTipoCuenta" converter="tipoCuentaConverter"
+									styleClass="textoControles">
+									<f:selectItems
+										value="#{consultaEstadoCuentaSaldoEfectivoBean.opcionesComboTipoCuenta}" />
+									<a4j:support event="onchange" reRender="containerSuggestCuenta"
+										actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.cambioSelectTipoCuenta}" />
+								</h:selectOneMenu>
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							&#160;
+						</td>
+					</tr>
+					<tr>
+						<td>
+							&#160;
+						</td>
+					</tr>
+				</table>
+			</ui:define>
+
+			<ui:define name="criterioDos">
+				<h:outputText value="#{etq.divisaMinus}" styleClass="textoEstadoCuenta"/>
+				<br/>
+				<br/>
+				<h:selectOneMenu
+					value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioDivisa.opcionSeleccionada}"
+					id="selectDivisa" converter="divisaConverter"
+					styleClass="textoControles">
+					<f:selectItems
+						value="#{consultaEstadoCuentaSaldoEfectivoBean.opcionesComboDivisa}" />
+					<f:converter converterId="divisaConverter" />
+				</h:selectOneMenu>
+			</ui:define>
+			<ui:define name="criterioTres">
+				<table width="100%" border="0" cellspacing="0" cellpadding="5">
+					<tr>
+						<td>
+							<h:outputText value="#{etq.bovedaMinus}" styleClass="textoEstadoCuenta"></h:outputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:selectOneMenu
+								value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioBoveda.opcionSeleccionada}"
+								id="selectBoveda" converter="bovedaConverter"
+								styleClass="textoControles">
+								<f:selectItems
+									value="#{consultaEstadoCuentaSaldoEfectivoBean.opcionesComboBoveda}" />
+							</h:selectOneMenu>		
+						</td>
+					</tr>
+				</table>
+			</ui:define>
+			<ui:define name="controlesCuenta">
+				<h:panelGroup id="containerControlesCuenta">
+					<h:panelGroup
+						rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEjecutada}">
+						<h:panelGroup
+							rendered="#{!consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.todos}">
+							<a4j:commandLink
+								action="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.irAlPrincipio}"
+								id="control_cuenta_primero"
+								rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.irAlPrimero}"
+								reRender="init,containerResultados, containerControlesCuenta, containerResumenCuenta, containerTodosCuenta, containerInfoPaginacionCuenta,containerInfoPaginacionDivisa,containerInfoPaginacionDivisa2"
+								ajaxSingle="true" limitToList="true"
+								onclick="buscarRegistros();"
+								oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+								<a4j:actionparam name="navCuentaiDebeBitacorear" assignTo="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.debeDejarBitacora}" value="true" />
+								<img
+									src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png" />
+							</a4j:commandLink>
+							<a4j:commandLink
+								action="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.retrocederPaginasRapido}"
+								id="control_cuenta_atras_fast"
+								rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.retrocederRapido}"
+								reRender="init,containerResultados, containerControlesCuenta, containerResumenCuenta, containerTodosCuenta, containerInfoPaginacionCuenta,containerInfoPaginacionDivisa,containerInfoPaginacionDivisa2"
+								ajaxSingle="true" limitToList="true"
+								onclick="buscarRegistros();"
+								oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+								<a4j:actionparam name="navCuentaiDebeBitacorear" assignTo="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.debeDejarBitacora}" value="true" />
+								<img
+									src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png" />
+							</a4j:commandLink>
+							<a4j:commandLink
+								action="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.retrocederPagina}"
+								id="control_cuenta_atras"
+								rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.retroceder}"
+								reRender="init,containerResultados, containerControlesCuenta, containerResumenCuenta, containerTodosCuenta, containerInfoPaginacionCuenta,containerInfoPaginacionDivisa,containerInfoPaginacionDivisa2"
+								ajaxSingle="true" limitToList="true"
+								onclick="buscarRegistros();"
+								oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+								<a4j:actionparam name="navCuentaiDebeBitacorear" assignTo="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.debeDejarBitacora}" value="true" />
+								<img
+									src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png" />
+							</a4j:commandLink>
+							<a4j:commandLink
+								action="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.avanzarPagina}"
+								id="control_cuenta_adelante"
+								rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.avanzar}"
+								reRender="init,containerResultados, containerControlesCuenta, containerResumenCuenta, containerTodosCuenta, containerInfoPaginacionCuenta,containerInfoPaginacionDivisa,containerInfoPaginacionDivisa2"
+								ajaxSingle="true" limitToList="true"
+								onclick="buscarRegistros();"
+								oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+								<a4j:actionparam name="navCuentaiDebeBitacorear" assignTo="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.debeDejarBitacora}" value="true" />
+								<img
+									src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png" />
+							</a4j:commandLink>
+							<a4j:commandLink
+								action="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.avanzarPaginasRapido}"
+								id="control_cuenta_adelante_fast"
+								rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.avanzarRapido}"
+								reRender="init,containerResultados, containerControlesCuenta, containerResumenCuenta, containerTodosCuenta, containerInfoPaginacionCuenta,containerInfoPaginacionDivisa,containerInfoPaginacionDivisa2"
+								ajaxSingle="true" limitToList="true"
+								onclick="buscarRegistros();"
+								oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+								<a4j:actionparam name="navCuentaiDebeBitacorear" assignTo="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.debeDejarBitacora}" value="true" />
+								<img
+									src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png" />
+							</a4j:commandLink>
+							<a4j:commandLink
+								action="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.irAlUltimo}"
+								id="control_cuenta_ultimo"
+								rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.irAlUltimo}"
+								reRender="init,containerResultados, containerControlesCuenta, containerResumenCuenta, containerTodosCuenta, containerInfoPaginacionCuenta,containerInfoPaginacionDivisa,containerInfoPaginacionDivisa2"
+								ajaxSingle="true" limitToList="true"
+								onclick="buscarRegistros();"
+								oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+								<a4j:actionparam name="navCuentaiDebeBitacorear" assignTo="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.debeDejarBitacora}" value="true" />
+								<img
+									src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png" />
+							</a4j:commandLink>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			<ui:define name="resumenCriterioDos">
+				<h:panelGroup id="containerResumenDivisa">
+					<h:panelGroup id="resumenDivisaConConsulta"
+						rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEjecutada}">
+						<table width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td width="15%" class="texto">
+									<h:outputText value="#{etq.divisaMinus}"></h:outputText>
+								</td>
+								<td width="4%">
+									<div align="center" class="textoEstadoCuenta">
+										<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+									</div>
+								</td>
+								<td width="81%" colspan="4" class="textoResumen">
+									<h:outputText
+										value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioDivisa.opcionSeleccionada.descripcion}"></h:outputText>
+								</td>
+							</tr>
+						</table>
+					</h:panelGroup>
+					<h:panelGroup id="resumenDivisaSinConsulta"
+						rendered="#{!consultaEstadoCuentaSaldoEfectivoBean.consultaEjecutada}">
+						<span class="texto"><h:outputText
+								value="#{etq.indicarCriteriosMinus}"></h:outputText>
+						</span>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			<ui:define name="resumenCriterioTres">
+				<h:panelGroup id="containerResumenBoveda">
+					<h:panelGroup id="resumenBovedaConConsulta"
+						rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEjecutada}">
+						<div id="resumenConsultaCuenta" class="texto">
+							<table width="100%" cellpadding="0" cellspacing="0">
+								<tr>
+									<td width="15%">
+										<div align="right" class="texto">
+											<div align="left">
+												<h:outputText value="#{etq.bovedaMinus}"></h:outputText>
+											</div>
+										</div>
+									</td>
+									<td width="4%" align="center" class="textoEstadoCuenta">
+										<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+									</td>
+									<td width="81%">
+										<span class="textoResumen"><h:outputText
+												value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.bovedaSeleccionada.descripcion}"></h:outputText>
+										</span>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</h:panelGroup>
+					<h:panelGroup id="resumenBovedaSinConsulta"
+						rendered="#{!consultaEstadoCuentaSaldoEfectivoBean.consultaEjecutada}">
+						<span class="texto"><h:outputText
+								value="#{etq.indicarCriteriosMinus}" />
+						</span>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			<ui:define name="resumenCriterioUno">
+				<h:panelGroup id="containerResumenCuenta">
+					<h:panelGroup id="resumenCuentaConConsulta"
+						rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEjecutada}">
+						<div id="resumenConsultaCuenta" class="texto">
+							<table width="100%" cellpadding="0" cellspacing="0">
+								<tr>
+									<td>
+										<div align="right" class="texto">
+											<div align="left">
+												<h:outputText value="#{etq.naturalezaMinus}"></h:outputText>
+											</div>
+										</div>
+									</td>
+									<td align="center" class="texto">
+										<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+									</td>
+									<td class="textoResumen">
+										<h:outputText
+											value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.cuentaSeleccionada.tipoNaturaleza.descripcion}"></h:outputText>
+									</td>
+								</tr>
+								<tr>
+									<td width="40%">
+										<div align="right" >
+											<div align="left" class="texto">
+												<h:outputText value="#{etq.institucionMinus}"></h:outputText>
+											</div>
+										</div>
+									</td>
+									<td width="4%" align="center" class="texto">
+										<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+									</td>
+									<td width="56%">
+										<span class="textoResumen"><h:outputText value="#{consultaEstadoCuentaSaldoEfectivoBean.folioClaveInstitucion}"></h:outputText></span>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div align="right" class="texto">
+											<div align="left">
+												<h:outputText value="#{etq.cuentaMinus}"></h:outputText>
+											</div>
+										</div>
+									</td>
+									<td align="center" class="texto">
+										<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+									</td>
+									<td class="textoResumen">
+										<h:outputText
+											value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.cuentaSeleccionada.descripcion}"></h:outputText>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div align="right" class="texto">
+											<div align="left">
+												<h:outputText value="#{etq.tipoCuentaMinus}"></h:outputText>
+											</div>
+										</div>
+									</td>
+									<td align="center" class="texto">
+										<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+									</td>
+									<td class="textoResumen">
+										<h:outputText
+											value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.cuentaSeleccionada.tipoCuenta.descripcion}"></h:outputText>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</h:panelGroup>
+					<h:panelGroup id="resumenCuentaSinConsulta"
+						rendered="#{!consultaEstadoCuentaSaldoEfectivoBean.consultaEjecutada}">
+						<span class="texto"><h:outputText
+								value="#{etq.indicarCriteriosMinus}" />
+						</span>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			<ui:define name="infoPaginacionCuenta">
+				<h:panelGroup id="containerInfoPaginacionCuenta">
+					<h:panelGroup
+						rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEjecutada}">
+						<h:panelGroup
+							rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.debePaginar}">
+							<h:panelGroup
+								rendered="#{!consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.todos}">
+								<span class="textoEstadoCuenta"><h:outputText
+										value="#{etq.mostrando}"></h:outputText>
+									<h:outputText
+										value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.estadoPaginacion.numeroPagina}"></h:outputText>
+									<h:outputText value="#{etq.de}"></h:outputText>
+									<h:outputText
+										value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.estadoPaginacion.totalPaginas}"></h:outputText>
+									<h:outputText value="#{etq.cierre}"></h:outputText>
+								</span>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			<ui:define name="seccionPaginacion">
+				<h:panelGroup id="containerInfoPaginacionDivisa">
+					<h:panelGroup
+						rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEjecutada}">
+						<h:panelGroup>
+							<h:panelGroup>
+								
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			<ui:define name="seccionResultados">
+				<h:panelGroup rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEjecutada}">
+					<script language="javascript">
+						$j("#divCriterios").css('display','none');
+						$j("#divResumen").css('display','inline');
+					</script>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{!consultaEstadoCuentaSaldoEfectivoBean.consultaEjecutada}">
+					<script language="javascript">
+						$j("#divCriterios").css('display','inline');
+						$j("#divResumen").css('display','none');
+					</script>
+				</h:panelGroup>
+				<h:panelGroup id="containerResultados">
+					<h:panelGroup
+						rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEjecutada}">
+						<h:outputText
+							value="#{consultaEstadoCuentaSaldoEfectivoBean.initConsulta}" />
+							<h:panelGroup rendered="#{not empty consultaEstadoCuentaSaldoEfectivoBean.resultadosEstadoCuentaEfectivo}">
+							
+									<table width="100%" border="0">
+												<tr>
+													<td align="left" class="textoEstadoCuenta">
+														<a4j:commandLink
+															actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.navegarPorResultados}"
+															id="control_emision_primero"
+															rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioDivisa.irAlPrimero}"
+															reRender="containerResultados,containerInfoPaginacionDivisa,containerInfoPaginacionDivisa2"
+															ajaxSingle="true" limitToList="true"
+															onclick="buscarRegistros();"
+															oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+															<img
+																src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+																border="0" />
+															<f:attribute name="navegacion" value="irAlPrincipio" />
+														</a4j:commandLink>
+														<a4j:commandLink
+															actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.navegarPorResultados}"
+															id="control_emision_atras_fast"
+															rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioDivisa.retrocederRapido}"
+															reRender="containerResultados,containerInfoPaginacionDivisa,containerInfoPaginacionDivisa2"
+															ajaxSingle="true" limitToList="true"
+															onclick="buscarRegistros();"
+															oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+															<img
+																src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+																border="0" />
+															<f:attribute name="navegacion"
+																value="retrocederPaginasRapido" />
+														</a4j:commandLink>
+														<a4j:commandLink
+															actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.navegarPorResultados}"
+															id="control_emision_atras"
+															rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioDivisa.retroceder}"
+															reRender="containerResultados,containerInfoPaginacionDivisa,containerInfoPaginacionDivisa2"
+															ajaxSingle="true" limitToList="true"
+															onclick="buscarRegistros();"
+															oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+															<img
+																src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+																border="0" />
+															<f:attribute name="navegacion" value="retrocederPagina" />
+														</a4j:commandLink>
+														<a4j:commandLink
+															actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.navegarPorResultados}"
+															id="control_emision_adelante"
+															rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioDivisa.avanzar}"
+															reRender="containerResultados,containerInfoPaginacionDivisa,containerInfoPaginacionDivisa2"
+															ajaxSingle="true" limitToList="true"
+															onclick="buscarRegistros();"
+															oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+															<img
+																src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+																border="0" />
+															<f:attribute name="navegacion" value="avanzarPagina" />
+														</a4j:commandLink>
+														<a4j:commandLink
+															actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.navegarPorResultados}"
+															id="control_emision_adelante_fast"
+															rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioDivisa.avanzarRapido}"
+															reRender="containerResultados,containerInfoPaginacionDivisa,containerInfoPaginacionDivisa2"
+															ajaxSingle="true" limitToList="true"
+															onclick="buscarRegistros();"
+															oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+															<img
+																src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+																border="0" />
+															<f:attribute name="navegacion" value="avanzarPaginasRapido" />
+														</a4j:commandLink>
+														<a4j:commandLink
+															actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.navegarPorResultados}"
+															id="control_emision_ultimo"
+															rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioDivisa.irAlUltimo}"
+															reRender="containerResultados,containerInfoPaginacionEmision"
+															ajaxSingle="true" limitToList="true"
+															onclick="buscarRegistros();"
+															oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+															<img
+																src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+																border="0" />
+															<f:attribute name="navegacion" value="irAlUltimo" />
+														</a4j:commandLink>
+														<br />
+														<h:outputText styleClass="textoResumen" value="#{etq.mostrando}"></h:outputText>
+														<h:outputText styleClass="textoResumen"
+															value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioDivisa.estadoPaginacion.numeroPagina}"></h:outputText>
+														<h:outputText styleClass="textoResumen" value="#{etq.de}"></h:outputText>
+														<h:outputText styleClass="textoResumen"
+															value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioDivisa.estadoPaginacion.totalPaginas}"></h:outputText>
+														<h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+														&#160;
+														<h:outputText value="#{consultaEstadoCuentaSaldoEfectivoBean.totalResultados}" converter="formatoEnteroConverter" styleClass="textoResumen"/>&#160;
+														<h:outputText  styleClass="textoResumen" value="#{etq.registrosEncontrados}"/>
+			
+													</td>
+													<td align="right" class="textoEstadoCuenta">
+														<h:outputText escape="false" styleClass="textoResumen" value="#{etq.divisasPorPagina}" />
+														<h:selectOneMenu id="tamanioPagina"
+															value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioDivisa.resultadosPorPagina}">
+															<f:selectItem itemLabel="1" itemValue="1" />
+															<f:selectItem itemLabel="2" itemValue="2" />
+															<f:selectItem itemLabel="5" itemValue="5" />
+															<f:selectItem itemLabel="10" itemValue="10" />
+															<f:selectItem itemLabel="20" itemValue="20" />
+															<a4j:support
+																reRender="init,containerResultados,containerInfoPaginacionDivisa,containerInfoPaginacionDivisa2"
+																event="onchange" ajaxSingle="true" limitToList="true"
+																onchange="buscarRegistros();"
+																oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"
+																styleClass="textoControles" />
+														</h:selectOneMenu>
+													</td>
+												</tr>
+											</table>
+						</h:panelGroup>
+						<t:dataTable id="noExistenResultados"
+							value="#{consultaEstadoCuentaSaldoEfectivoBean.resultadosEstadoCuentaEfectivo}"
+							var="posicion" styleClass="tablaGeneral"
+							headerClass="tituloTabla" width="100%" footerClass="tituloTabla"
+							border="0" cellpadding="3px" cellspacing="0px"
+							columnClasses="everyColumn"
+							rowClasses="renglonTablaDos, renglonTablaUno"
+							rendered="#{empty consultaEstadoCuentaSaldoEfectivoBean.resultadosEstadoCuentaEfectivo}">
+							<t:column>
+								<f:facet name="header">
+									<h:outputText value="#{etq.sinResultados}"></h:outputText>
+								</f:facet>
+							</t:column>
+						</t:dataTable>
+						<table id="tblResultadoEstadoCuentaPorDivisa" width="100%" cellspacing="0px" cellpadding="0px"
+							class="tablaGeneral">
+							<t:dataList
+								value="#{consultaEstadoCuentaSaldoEfectivoBean.resultadosEstadoCuentaEfectivo}"
+								var="estadoCuentaEfectivoPorDivisa">
+								<tr>
+									<td width="6%" class="tituloTabla">
+										<strong><h:outputText value="#{etq.divisaMinus}"></h:outputText>
+										</strong>
+									</td>
+									<td width="15%" class="tituloTabla">
+										<div align="right">
+											<h:outputText
+												value="#{estadoCuentaEfectivoPorDivisa.divisa.descripcion}" />
+										</div>
+									</td>
+									<td class="tituloTabla" colspan="11">
+										&#160;
+									</td>
+								</tr>
+								<t:dataList
+									value="#{estadoCuentaEfectivoPorDivisa.registrosContablesPorBoveda}"
+									var="estadoCuentaEfectivoPorBoveda">
+									<tr>
+										<td colspan="13">
+											<div>
+												<table id="tblResultadoEstadoCuentaPorBoveda_#{estadoCuentaEfectivoPorBoveda.boveda.id}" width="100%" border="0" cellspacing="0"
+													cellpadding="0">
+
+													<tr>
+														<td width="3%" valign="middle" class="tableCellSubHeader">
+															<h:panelGroup
+																rendered="#{not empty estadoCuentaEfectivoPorBoveda.registrosContablesNombradas || not empty estadoCuentaEfectivoPorBoveda.registrosContablesControladas}">
+																<a
+																	href="javascript:colapsar(#{estadoCuentaEfectivoPorDivisa.divisa.id},#{estadoCuentaEfectivoPorBoveda.boveda.id});">
+																	<img
+																		src="#{facesContext.externalContext.requestContextPath}/images/open.gif"
+																		border="0" style="display: none;"
+																		id="icon_open_#{estadoCuentaEfectivoPorDivisa.divisa.id}_#{estadoCuentaEfectivoPorBoveda.boveda.id}" />
+																	<img
+																		src="#{facesContext.externalContext.requestContextPath}/images/close.gif"
+																		border="0"
+																		id="icon_close_#{estadoCuentaEfectivoPorDivisa.divisa.id}_#{estadoCuentaEfectivoPorBoveda.boveda.id}" />
+																</a>
+															</h:panelGroup>
+															&#160;
+														</td>
+														<td width="8%" valign="middle" class="tableCellSubHeader">
+															<div align="right">
+																<h:outputText value="#{etq.bovedaMinus}" styleClass="textoEstadoCuenta"></h:outputText>
+															</div>
+														</td>
+														<td width="2%" valign="middle" class="tableCellSubHeader">
+															<div align="center">
+																<h:outputText value="#{etq.dosPuntos}" styleClass="textoEstadoCuenta"></h:outputText>
+															</div>
+														</td>
+														<td width="20%" valign="middle" class="tableCellSubHeader"
+															nowrap="true">
+															<span class="textoEstadoCuenta"><strong><h:outputText
+																		value="#{estadoCuentaEfectivoPorBoveda.boveda.descripcion}"  styleClass="textoEstadoCuenta"/>
+															</strong>
+															</span>
+														</td>
+														<td width="4%" valign="middle" class="tableCellSubHeader">
+															&#160;
+														</td>
+														<td width="11%" valign="middle" class="tableCellSubHeader"
+															nowrap="true">
+															<div align="right">
+																<h:panelGroup
+																	rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id == 'N'}">
+                                       							<h:outputText value="#{etq.saldoDisponibleMinus}" styleClass="textoEstadoCuenta"></h:outputText>
+                                       						</h:panelGroup>
+																&#160;
+															</div>
+														</td>
+														<td width="2%" valign="middle" class="tableCellSubHeader">
+															<div align="center">
+																<h:panelGroup
+																	rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id == 'N'}">
+																	<h:outputText value="#{etq.dosPuntos}" styleClass="textoEstadoCuenta"></h:outputText>
+																</h:panelGroup>
+																
+															</div>
+														</td>
+														<td width="7%" valign="middle" class="tableCellSubHeader"
+															nowrap="true">
+															<div align="right">
+																<strong> <h:panelGroup
+																		rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id == 'N'}">
+																		<h:outputText
+																			value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoInicial.saldoInicialDisponible}" styleClass="textoEstadoCuenta">
+																			<f:converter converterId="formatoMonedaConverter" />
+																		</h:outputText>
+																	</h:panelGroup>&#160; </strong>
+															</div>
+														</td>
+														<td width="3%" valign="middle" class="tableCellSubHeader">
+															&#160;
+														</td>
+														<td width="13%" valign="middle" class="tableCellSubHeader"
+															nowrap="true">
+															<div align="right">
+																<h:panelGroup
+																	rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id == 'N'}">
+	                                                        	<h:outputText value="#{etq.saldoNoDisponibleMinus}" styleClass="textoEstadoCuenta"></h:outputText>
+	                                                        	</h:panelGroup>
+																&#160;
+															</div>
+														</td>
+														<td width="2%" valign="middle" class="tableCellSubHeader">
+															<div align="center">
+																<h:panelGroup
+																	rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id == 'N'}">
+	                                                        	<h:outputText value="#{etq.dosPuntos}" styleClass="textoEstadoCuenta"></h:outputText>
+	                                                        	</h:panelGroup>
+																
+															</div>
+														</td>
+														<td width="6%" valign="middle" class="tableCellSubHeader"
+															nowrap="true">
+															<div align="right">
+																<strong> <h:panelGroup
+																		rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id == 'N'}">
+																		<h:outputText
+																			value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoInicial.saldoInicialNoDisponible}" styleClass="textoEstadoCuenta">
+																			<f:converter converterId="formatoMonedaConverter" />
+																		</h:outputText>
+																	</h:panelGroup>&#160; </strong>
+															</div>
+														</td>
+														<td width="3%" valign="middle" class="tableCellSubHeader">
+															<div align="right">
+																&#160;
+															</div>
+														</td>
+														<td width="9%" valign="middle" class="tableCellSubHeader">
+															<div align="right" nowrap="true">
+																<h:outputText value="#{etq.saldoInicialMinus}" styleClass="textoEstadoCuenta"></h:outputText>
+															</div>
+														</td>
+														<td width="2%" valign="middle" class="tableCellSubHeader">
+															<div align="center">
+																<h:outputText value="#{etq.dosPuntos}" styleClass="textoEstadoCuenta"></h:outputText>
+															</div>
+														</td>
+														<td width="5%" valign="middle" class="tableCellSubHeader"
+															nowrap="true">
+															<div align="right">
+																<strong> <h:outputText
+																		value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoInicial.saldoInicial}" styleClass="textoEstadoCuenta">
+																		<f:converter converterId="formatoMonedaConverter" />
+																	</h:outputText> </strong>
+															</div>
+														</td>
+													</tr>
+													<h:panelGroup
+														rendered="#{not empty estadoCuentaEfectivoPorBoveda.registrosContablesNombradas}">
+														<tr
+															id="renglon_#{estadoCuentaEfectivoPorDivisa.divisa.id}_#{estadoCuentaEfectivoPorBoveda.boveda.id}">
+															<td colspan="16">
+																<div
+																	id="detalleEmision_#{estadoCuentaEfectivoPorDivisa.divisa.id}_#{estadoCuentaEfectivoPorBoveda.boveda.id}">
+																	<table id="detalleMovimientosNombradas_#{estadoCuentaEfectivoPorDivisa.divisa.id}_#{estadoCuentaEfectivoPorBoveda.boveda.id}" border="0" cellpadding="0px" cellspacing="0px"
+																		width="100%">
+																		<tr class="tituloTabla" valign="bottom">
+																			
+																			<th align="center" class="tableHeadingAltHover">
+																				<h:outputText value="#{etq.fechaLiquidacionMinus}"></h:outputText>
+																			</th>
+																			<th align="center" class="tableHeadingAltHover">
+																				<h:outputText value="#{etq.descripcionMinus}"></h:outputText>
+																			</th>
+																			<th align="center" class="tableHeadingAltHover">
+																				<div style="display:#{(consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoNaturaleza.opcionSeleccionada.id == 'P')?'inline':'none'}">
+																					<h:outputText value="#{etq.contraparteMinus}"></h:outputText> 
+																				</div>
+																			</th>
+																			<th align="center" class="tableHeadingAltHover">
+																				<h:outputText value="#{etq.folioInstruccion}"></h:outputText> 
+																			</th>
+																			<th  align="center" class="tableHeadingAltHover">
+																				<h:outputText value="#{etq.tipoInstruccionMinus}"></h:outputText>
+																			</th>
+																			<th class="tableHeadingAltHover">
+																				<h:outputText value="#{etq.abonoMinus}"></h:outputText> 
+																			</th>
+																			<th class="tableHeadingAltHover">
+																				<h:outputText value="#{etq.cargoMinus}"></h:outputText> 
+																			</th>
+																			<th align="center" class="tableHeadingAltHover">
+																				<h:outputText value="#{etq.disponibleMinus}"></h:outputText> 
+																			</th>
+																			<th align="center" class="tableHeadingAltHover">
+																				<h:outputText value="#{etq.noDisponibleMinus}"></h:outputText> 
+																			</th>
+																			<th align="center" class="tableHeadingAltHover">
+																				<h:outputText value="#{etq.saldoMinus}"></h:outputText> 
+																			</th>
+																		</tr>
+																		<t:dataList
+																			value="#{estadoCuentaEfectivoPorBoveda.registrosContablesNombradas}"
+																			var="registroContable">
+																			<tr>
+																				
+																				<td class="renglonTablaUno" nowrap="true">
+																					<h:outputText
+																						value="#{registroContable.fechaLiquidacion}">
+																						<f:converter
+																							converterId="formatoFechaLargaConverter" />
+																					</h:outputText>
+																				</td>
+																				<td class="renglonTablaUno">
+																					<h:panelGroup
+																						rendered="#{not empty registroContable.rutaPantallaDetalle}">
+																						<a title="#{registroContable.descripcionLarga}"
+																							href="javascript:mostrarDetalle('Detalle del Movimiento','#{facesContext.externalContext.requestContextPath}/#{registroContable.rutaPantallaDetalle}?idRegistro=#{registroContable.idRegistroContable}&amp;isHistorico=#{registroContable.historico}&amp;efectivo=true&amp;height=#{registroContable.altoPantallaDetalle}&amp;width=#{registroContable.anchoPantallaDetalle}');">
+																							<h:outputText
+																								value="#{registroContable.descripcion}" /> </a>
+																					</h:panelGroup>
+																					<h:panelGroup
+																						rendered="#{empty registroContable.rutaPantallaDetalle}">
+																						<h:outputText
+																							title="#{registroContable.descripcionLarga}"
+																							value="#{registroContable.descripcion}" />
+																					</h:panelGroup>
+																					&#160;
+																				</td>
+																				<td class="renglonTablaUno">
+																					&#160;
+																					<div style="display:#{(consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoNaturaleza.opcionSeleccionada.id == 'P')?'inline':'none'}">
+																						<h:outputText
+																							value="#{registroContable.contraparte}" />
+																						<br />
+																						<h:outputText
+																							value="#{registroContable.cuentaContraparte}" />
+																						&#160;
+																					</div>
+																				</td>
+																				 <td class="renglonTablaUno" align="center" nowrap="true">
+                                                                        			<h:outputText value="#{registroContable.folioInstruccion}">
+                                                                        		
+                                                                        			</h:outputText>
+                                                                        		</td>
+                                                                        		<td class="renglonTablaUno centrado" title="#{registroContable.operacion.instruccionLiquidacion.tipoInstruccion.descripcion}">
+		                                                                            &#160;<h:outputText value="#{registroContable.operacion.instruccionLiquidacion.tipoInstruccion.nombreCorto}"/>
+		                                                                        </td>
+																				<td class="renglonTablaUno" align="right"
+																					nowrap="true">
+																					<h:outputText
+																						value="#{registroContable.cantidadRecepcion}">
+																						<f:converter converterId="formatoMonedaConverter" />
+																					</h:outputText>&#160;
+																				</td>
+																				<td class="renglonTablaUno" align="right"
+																					nowrap="true">
+																					<h:outputText
+																						value="#{registroContable.cantidadEntrega}">
+																						<f:converter converterId="formatoMonedaConverter" />
+																					</h:outputText>&#160;
+																				</td>
+																				<td class="renglonTablaUno" align="right"
+																					nowrap="true">
+																					<h:outputText
+																						value="#{registroContable.saldoDisponible}">
+																						<f:converter converterId="formatoMonedaConverter" />
+																					</h:outputText>&#160;
+																				</td>
+																				<td class="renglonTablaUno" align="right"
+																					nowrap="true">
+																					<h:outputText
+																						value="#{registroContable.saldoNoDisponible}">
+																						<f:converter converterId="formatoMonedaConverter" />
+																					</h:outputText>&#160;
+																				</td>
+																				<td class="renglonTablaUno" align="right"
+																					nowrap="true">
+																					<h:outputText
+																						value="#{registroContable.saldoTotal}">
+																						<f:converter converterId="formatoMonedaConverter" />
+																					</h:outputText>&#160;
+																				</td>
+																			</tr>
+																		</t:dataList>
+																	</table>
+																</div>
+															</td>
+														</tr>
+													</h:panelGroup>
+													<h:panelGroup
+														rendered="#{not empty estadoCuentaEfectivoPorBoveda.registrosContablesControladas}">
+														<tr
+															id="renglon_#{estadoCuentaEfectivoPorDivisa.divisa.id}_#{estadoCuentaEfectivoPorBoveda.boveda.id}">
+															<td colspan="16">
+																<div
+																	id="detalleEmision_#{estadoCuentaEfectivoPorDivisa.divisa.id}_#{estadoCuentaEfectivoPorBoveda.boveda.id}">
+																	<table id="detalleMovimientosControladas_#{estadoCuentaEfectivoPorDivisa.divisa.id}_#{estadoCuentaEfectivoPorBoveda.boveda.id}" border="0" width="100%" cellpadding="0px"
+																		cellspacing="0px">
+																		<tr class="tituloTabla" valign="bottom">
+																			
+																			<th align="left" class="tableHeadingAltHover">
+																				<h:outputText value="#{etq.fechaLiquidacionMinus}"></h:outputText> 
+																			</th>
+																			<th align="left" class="tableHeadingAltHover">
+																				<h:outputText value="#{etq.descripcionMinus}"></h:outputText> 
+																			</th>
+																			<th class="tableHeadingAltHover">
+																				<h:outputText value="#{etq.abonoMinus}"></h:outputText> 
+																			</th>
+																			<th class="tableHeadingAltHover">
+																				<h:outputText value="#{etq.cargoMinus}"></h:outputText> 
+																			</th>
+																			<th align="center" class="tableHeadingAltHover">
+																				<h:outputText value="#{etq.saldoMinus}"></h:outputText> 
+																			</th>
+																		</tr>
+																		<t:dataList
+																			value="#{estadoCuentaEfectivoPorBoveda.registrosContablesControladas}"
+																			var="registroContable">
+																			<tr>
+																			
+																				<td class="renglonTablaUno" nowrap="true">
+																					<h:outputText
+																						value="#{registroContable.fechaLiquidacion}">
+																						<f:converter
+																							converterId="formatoFechaLargaConverter" />
+																					</h:outputText>
+																				</td>
+																				<td class="renglonTablaUno">
+																					<h:outputText
+																						value="#{registroContable.descripcion}" />
+																				</td>
+																				<td class="renglonTablaUno" align="right">
+																					<h:outputText
+																						value="#{registroContable.cantidadRecepcion}">
+																						<f:converter converterId="formatoMonedaConverter" />
+																					</h:outputText>
+																				</td>
+																				<td class="renglonTablaUno" align="right">
+																					<h:outputText
+																						value="#{registroContable.cantidadEntrega}">
+																						<f:converter converterId="formatoMonedaConverter" />
+																					</h:outputText>
+																				</td>
+																				<td class="renglonTablaUno" align="right">
+																					<h:outputText
+																						value="#{registroContable.saldoTotal}">
+																						<f:converter converterId="formatoMonedaConverter" />
+																					</h:outputText>
+																				</td>
+																			</tr>
+																		</t:dataList>
+																	</table>
+																</div>
+															</td>
+														</tr>
+													</h:panelGroup>
+													<tr>
+														<td valign="top" class="tableCellSubHeader">
+															&#160;&#160;
+														</td>
+														<td valign="top" class="tableCellSubHeader">
+															&#160;
+														</td>
+														<td valign="top" class="tableCellSubHeader">
+															&#160;
+														</td>
+														<td valign="top" class="tableCellSubHeader">
+															&#160;
+														</td>
+														<td valign="top" class="tableCellSubHeader">
+															&#160;
+														</td>
+														<td valign="top" class="tableCellSubHeader" nowrap="true">
+															<div align="right">
+																<h:panelGroup
+																	rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id == 'N'}">
+	                                                        &#160;&#160; <h:outputText value="#{etq.saldoDisponibleMinus}" styleClass="textoEstadoCuenta"></h:outputText> 
+	                                                       	</h:panelGroup>
+																&#160;
+															</div>
+														</td>
+														<td valign="top" class="tableCellSubHeader">
+															<div align="center">
+																<h:panelGroup
+																	rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id == 'N'}">
+	                                                        			<h:outputText value="#{etq.dosPuntos}" styleClass="textoEstadoCuenta"></h:outputText> 
+	                                                        </h:panelGroup>
+																
+															</div>
+														</td>
+														<td valign="top" class="tableCellSubHeader" nowrap="true">
+															<div align="right" nowrap="true">
+																<strong> <h:panelGroup
+																		rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id == 'N'}">
+
+																		<h:outputText
+																			value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoFinal.saldoFinalDisponible}" styleClass="textoEstadoCuenta">
+																			<f:converter converterId="formatoMonedaConverter" />
+																		</h:outputText>
+
+																	</h:panelGroup>&#160; </strong>
+															</div>
+														</td>
+														<td valign="top" class="tableCellSubHeader">
+															&#160;
+														</td>
+														<td valign="top" class="tableCellSubHeader" nowrap="true">
+															<div align="right">
+																<h:panelGroup
+																	rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id == 'N'}">
+	                                                        <h:outputText value="#{etq.saldoNoDisponibleMinus}" styleClass="textoEstadoCuenta"></h:outputText> 
+	                                                        </h:panelGroup>
+																&#160;
+															</div>
+														</td>
+														<td valign="top" class="tableCellSubHeader">
+															<div align="center">
+																<h:panelGroup
+																	rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id == 'N'}">
+	                                                        <h:outputText value="#{etq.dosPuntos}" styleClass="textoEstadoCuenta"></h:outputText> 
+	                                                        </h:panelGroup>
+																
+															</div>
+														</td>
+														<td valign="top" class="tableCellSubHeader" nowrap="true">
+															<div align="right" nowrap="true">
+																<strong> <h:panelGroup
+																		rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id == 'N'}">
+																		<h:outputText
+																			value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoFinal.saldoFinalNoDisponible}" styleClass="textoEstadoCuenta">
+																			<f:converter converterId="formatoMonedaConverter" />
+																		</h:outputText>
+																	</h:panelGroup>&#160; </strong>
+															</div>
+														</td>
+														<td valign="top" class="tableCellSubHeader">
+															&#160;
+														</td>
+														<td valign="top" class="tableCellSubHeader" nowrap="true">
+															<div align="right">
+																<h:outputText value="#{etq.saldoFinalMinus}" styleClass="textoEstadoCuenta"></h:outputText>
+															</div>
+														</td>
+														<td valign="top" class="tableCellSubHeader">
+															<div align="center">
+																<h:outputText value="#{etq.dosPuntos}" styleClass="textoEstadoCuenta"></h:outputText>
+															</div>
+														</td>
+														<td valign="top" class="tableCellSubHeader" nowrap="true">
+															<div align="right" nowrap="true">
+																<strong> <h:outputText
+																		value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoFinal.saldoFinal}" styleClass="textoEstadoCuenta">
+																		<f:converter converterId="formatoMonedaConverter" />
+																	</h:outputText> </strong>
+															</div>
+														</td>
+													</tr>
+												</table>
+											</div>
+										</td>
+									</tr>
+								</t:dataList>
+							</t:dataList>
+						</table>
+						<h:outputText
+							value="#{consultaEstadoCuentaSaldoEfectivoBean.limpiarConsulta}" />
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			<ui:define name="seccionPaginacion2">
+				<h:panelGroup id="containerInfoPaginacionDivisa2">
+					<h:panelGroup
+						rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEjecutada}">
+						<table width="100%" border="0">
+							<tr>
+								<td align="left" class="textoEstadoCuenta">
+									<a4j:commandLink
+										actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.navegarPorResultados}"
+										id="control_emision_primero2"
+										rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioDivisa.irAlPrimero}"
+										reRender="containerResultados,containerInfoPaginacionDivisa,containerInfoPaginacionDivisa2"
+										ajaxSingle="true" limitToList="true"
+										onclick="buscarRegistros();"
+										oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+											border="0" />
+										<f:attribute name="navegacion" value="irAlPrincipio" />
+									</a4j:commandLink>
+									<a4j:commandLink
+										actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.navegarPorResultados}"
+										id="control_emision_atras_fast2"
+										rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioDivisa.retrocederRapido}"
+										reRender="containerResultados,containerInfoPaginacionDivisa,containerInfoPaginacionDivisa2"
+										ajaxSingle="true" limitToList="true"
+										onclick="buscarRegistros();"
+										oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+											border="0" />
+										<f:attribute name="navegacion" value="retrocederPaginasRapido" />
+									</a4j:commandLink>
+									<a4j:commandLink
+										actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.navegarPorResultados}"
+										id="control_emision_atras2"
+										rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioDivisa.retroceder}"
+										reRender="containerResultados,containerInfoPaginacionDivisa,containerInfoPaginacionDivisa2"
+										ajaxSingle="true" limitToList="true"
+										onclick="buscarRegistros();"
+										oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+											border="0" />
+										<f:attribute name="navegacion" value="retrocederPagina" />
+									</a4j:commandLink>
+									<a4j:commandLink
+										actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.navegarPorResultados}"
+										id="control_emision_adelante2"
+										rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioDivisa.avanzar}"
+										reRender="containerResultados,containerInfoPaginacionDivisa,containerInfoPaginacionDivisa2"
+										ajaxSingle="true" limitToList="true"
+										onclick="buscarRegistros();"
+										oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+											border="0" />
+										<f:attribute name="navegacion" value="avanzarPagina" />
+									</a4j:commandLink>
+									<a4j:commandLink
+										actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.navegarPorResultados}"
+										id="control_emision_adelante_fast2"
+										rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioDivisa.avanzarRapido}"
+										reRender="containerResultados,containerInfoPaginacionDivisa,containerInfoPaginacionDivisa2"
+										ajaxSingle="true" limitToList="true"
+										onclick="buscarRegistros();"
+										oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+											border="0" />
+										<f:attribute name="navegacion" value="avanzarPaginasRapido" />
+									</a4j:commandLink>
+									<a4j:commandLink
+										actionListener="#{consultaEstadoCuentaSaldoEfectivoBean.navegarPorResultados}"
+										id="control_emision_ultimo2"
+										rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioDivisa.irAlUltimo}"
+										reRender="containerResultados,containerInfoPaginacionDivisa,containerInfoPaginacionDivisa2"
+										ajaxSingle="true" limitToList="true"
+										onclick="buscarRegistros();"
+										oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+										<img
+											src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+											border="0" />
+										<f:attribute name="navegacion" value="irAlUltimo" />
+									</a4j:commandLink>
+								</td>
+							</tr>
+						</table>
+					</h:panelGroup>
+				</h:panelGroup>
+				
+				<h:panelGroup
+					rendered="#{consultaEstadoCuentaSaldoEfectivoBean.navegacionPosicion}">
+					<script language="javascript">
+				        	/*$j(document).ready(function() {
+								$j('#tooltip').show();
+								setTimeout(function() {
+									$j('#tooltip').animate({
+										opacity:0
+									}, 1000);
+								}, 4000);
+							});*/
+							
+						   $j("input[id$='botonBuscar']").click();
+							
+							
+	        		</script>
+				</h:panelGroup>
+				
+				
+			</ui:define>
+		</ui:composition>
+	</f:view>
+</html>

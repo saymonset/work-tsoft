@@ -1,0 +1,189 @@
+<html xmlns:txt="http://indeval.com/jsf/txt"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <txt:document documentName="consultaEdoCuentaOpEfectivo" documentTitle="Estado de Cuenta Operativo de Efectivo"
+        fecha="#{elegirInstitucionBean.fechaActual}" >
+        
+     	<txt:table value="#{consultaEstadoCuentaSaldoEfectivoBean}" var="bean">
+     		 <txt:row>
+                <txt:col align="left" size="13" header="" value="Institucion :"  />
+                <txt:col align="center" size="4" header="" value="#{consultaEstadoCuentaSaldoEfectivoBean.institucionActual.claveTipoInstitucion}"  >
+                	<f:convertNumber pattern="00" />
+                </txt:col>      	
+                <txt:col align="center" size="5" header="" value="#{consultaEstadoCuentaSaldoEfectivoBean.institucionActual.folioInstitucion}"  >
+                	<f:convertNumber pattern="000" />
+                </txt:col>     	
+                <txt:col align="left" size="200" header="" value="#{consultaEstadoCuentaSaldoEfectivoBean.institucionActual.razonSocial}"  />
+        	</txt:row>
+        	<txt:row>
+                <txt:col align="left" size="28" header="" value=""  />
+        	</txt:row>
+        </txt:table>
+
+        <txt:table value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo}" var="consulta"
+            widthPercentage="100">
+            <txt:row>
+                <txt:col header="#{etq.cuentaMinus}" value="#{consulta.cuentaSeleccionada.descripcion}" size="18" align="center"/>
+                <txt:col header="#{etq.naturalezaMinus}" value="#{consulta.cuentaSeleccionada.tipoNaturaleza.descripcion}" size="18" align="center" />
+                <txt:col header="#{etq.institucionMinus}" value="#{consultaEstadoCuentaSaldoEfectivoBean.folioClaveInstitucion}" size="18" align="center"/>
+                <txt:col header="#{etq.tipoCuentaMinus}" value="#{consulta.cuentaSeleccionada.tipoCuenta.descripcion}" size="18" align="center" />                
+                <txt:col header="#{etq.fechaInicialSinPuntos}" value="#{consulta.criterioFechaInicial}" size="18" align="center" >
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+                </txt:col>
+                <txt:col header="#{etq.fechaFinalSinPuntos}" value="#{consulta.criterioFechaFinal}" size="18" align="center" >
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+                </txt:col>
+                <txt:col header="#{etq.divisa}" value="#{consulta.criterioDivisa.opcionSeleccionada.descripcion}" size="18" align="center" />                
+                <txt:col header="#{etq.boveda}" value="#{consulta.criterioBoveda.opcionSeleccionada.descripcion}" size="18" align="center" />
+            </txt:row>
+        </txt:table>
+        
+        <txt:table value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo}" var="consulta"
+            widthPercentage="100">
+            <txt:row>
+                <txt:col header="#{etq.registrosEncontrados}#{etq.dosPuntos}" value="#{consultaEstadoCuentaSaldoEfectivoBean.totalResultados}" size="18" align="center" />
+            </txt:row>
+        </txt:table>
+
+        <txt:iterator value="#{consultaEstadoCuentaSaldoEfectivoBean.resultadosEstadoCuentaEfectivo}"
+            var="estadoCuentaEfectivoPorDivisa">
+
+
+            <txt:table value="#{estadoCuentaEfectivoPorDivisa}"
+                rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}"
+                var="dummy">
+                <txt:row>
+                    <txt:col header="#{etq.divisa}" size="18" align="center" />
+                    <txt:col header="#{estadoCuentaEfectivoPorDivisa.divisa.descripcion}" size="18" align="center" />
+
+                </txt:row>
+            </txt:table>
+            <txt:table value="#{estadoCuentaEfectivoPorDivisa}"
+                rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}"
+                var="dummy">
+                <txt:row>
+                    <txt:col header="#{etq.divisa}" size="18" align="center" />
+                    <txt:col header="#{estadoCuentaEfectivoPorDivisa.divisa.descripcion}" size="18" align="center" />
+                </txt:row>
+
+            </txt:table>
+            
+            <txt:iterator value="#{estadoCuentaEfectivoPorDivisa.registrosContablesPorBoveda}" var="estadoCuentaEfectivoPorBoveda">
+                <txt:table value="#{estadoCuentaEfectivoPorBoveda}" var="dummy"
+                    rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}">
+
+                    <txt:row>
+                        <txt:col header="#{etq.bovedaMinus}" value="" size="18" align="center" />
+                        <txt:col header="#{estadoCuentaEfectivoPorBoveda.boveda.descripcion}" size="35" align="center" />
+                        <txt:col header="#{etq.saldoInicialMinus}"
+                            value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoInicial.saldoInicial}" size="18" align="center" >
+                			<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                		</txt:col>
+                    </txt:row>
+
+                </txt:table>
+
+                <txt:table value="#{estadoCuentaEfectivoPorBoveda}" var="dummy"
+                    rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}">
+                    <txt:row>
+                        <txt:col header="#{etq.bovedaMinus}" value="#{estadoCuentaEfectivoPorBoveda.boveda.descripcion}" size="35" align="center" />
+                        <txt:col value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoInicial.saldoInicialDisponible}"
+                            header="#{etq.saldoDisponibleMinus}" size="18" align="center" >
+                			<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                		</txt:col>
+                        <txt:col value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoInicial.saldoInicialNoDisponible}"
+                            header="#{etq.saldoNoDisponibleMinus}" size="18" align="center" >
+                			<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                		</txt:col>
+                        <txt:col header="#{etq.saldoInicialMinus}"
+                            value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoInicial.saldoInicial}" size="18" align="center" >
+                			<f:convertNumber pattern="$ #,##0.00" />
+                		</txt:col>
+                    </txt:row>
+                </txt:table>
+
+                <txt:table value="#{estadoCuentaEfectivoPorBoveda.registrosContablesControladas}" var="registroContable"
+                    rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}">
+                    <txt:row>
+                        <txt:col header="#{etq.fechaLiquidacionMinus}" value="#{registroContable.fechaLiquidacion}" size="28" align="center" >
+                        	<f:convertDateTime  pattern="   yyyy-MM-dd HH:mm:ss.000  " timeZone="Etc/GMT+6" />
+                        </txt:col>
+                        <txt:col header="#{etq.descripcionMinus}" value="#{registroContable.descripcion}" size="50" align="center" />
+                        <txt:col header="#{etq.abonoMinus}" value="#{registroContable.cantidadRecepcion}" size="24" align="center" >
+                			<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                		</txt:col>
+                        <txt:col header="#{etq.cargoMinus}" value="#{registroContable.cantidadEntrega}" size="24" align="center" >
+                			<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                		</txt:col>
+                        <txt:col header="#{etq.saldoMinus}" value="#{registroContable.saldoTotal}" size="24" align="center" >
+                			<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                		</txt:col>
+                    </txt:row>
+                </txt:table>
+
+                <txt:table value="#{estadoCuentaEfectivoPorBoveda.registrosContablesNombradas}" var="registroContable"
+                    rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}">
+                    <txt:row>
+                        <txt:col header="#{etq.fechaLiquidacion}" value="#{registroContable.fechaLiquidacion}" size="28" align="center" >
+                        	<f:convertDateTime  pattern="   yyyy-MM-dd HH:mm:ss.000  " timeZone="Etc/GMT+6" />
+                        </txt:col>
+                        <txt:col header="#{etq.descripcionMinus}" value="#{registroContable.descripcion}" size="50" align="center" />
+                        <txt:col header="#{etq.contraparteCuenta}" value="#{registroContable.cuentaContraparte}" size="18" align="center" />
+                     	<txt:col header="#{etq.contraparteMinus}" value="#{registroContable.contraparte}" size="18" align="center" />
+                        <txt:col header="#{etq.folioInstruccionMinus}"  value="#{registroContable.folioInstruccion}" size="18" align="center" >
+                			<f:convertNumber pattern="###"/>
+                		</txt:col>
+                        <txt:col header="#{etq.tipoInstruccionMinus}"  value="#{registroContable.operacion.instruccionLiquidacion.tipoInstruccion.nombreCorto}" size="18" align="center" >
+                			<f:convertNumber pattern="###"/>
+                		</txt:col>
+                        <txt:col header="#{etq.cobroMinus}" value="#{registroContable.cantidadRecepcion}" size="24" align="right" >
+                            <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                        </txt:col>
+                        <txt:col header="#{etq.pagoMinus}" value="#{registroContable.cantidadEntrega}" size="24" align="right" >
+                			<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                		</txt:col>
+                        <txt:col header="#{etq.disponibleMinus}" value="#{registroContable.saldoDisponible}" size="24" align="right" >
+                			<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                		</txt:col>
+                        <txt:col header="#{etq.noDisponibleMinus}" value="#{registroContable.saldoNoDisponible}" size="24" align="right" >
+                			<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                		</txt:col>
+                        <txt:col header="#{etq.saldoMinus}" value="#{registroContable.saldoTotal}" size="24" align="right" >
+                			<f:convertNumber pattern="$ ###,###,###,###,###,###,###,##0.00"/>
+
+                        </txt:col>
+                    </txt:row>
+                </txt:table>
+
+                <txt:table value="#{estadoCuentaEfectivoPorBoveda}" var="dummy"
+                    rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}">
+                    <txt:row>
+                        <txt:col header="#{etq.saldoFinalMinus}" value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoFinal.saldoFinal}" size="24" align="center" >
+                			<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                		</txt:col>
+                    </txt:row>
+                </txt:table>
+
+                <txt:table value="#{estadoCuentaEfectivoPorBoveda}" var="dummy"
+                    rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}">
+                    <txt:row>
+                        <txt:col header="#{etq.saldoDisponibleMinus}"
+                            value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoFinal.saldoFinalDisponible}" size="18" align="center" >
+                			<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                		</txt:col>
+                        <txt:col header="#{etq.saldoNoDisponibleMinus}"
+                            value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoFinal.saldoFinalNoDisponible}" size="18" align="center" >
+                			<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                		</txt:col>
+                        <txt:col header="#{etq.saldoFinalMinus}" value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoFinal.saldoFinal}" size="24" align="center" >
+                			<f:convertNumber pattern="$ ###,###,###,###,###,##0.00" />
+                		</txt:col>
+                    </txt:row>
+                </txt:table>
+
+            </txt:iterator>
+        </txt:iterator>
+        
+  	</txt:document>
+</html>

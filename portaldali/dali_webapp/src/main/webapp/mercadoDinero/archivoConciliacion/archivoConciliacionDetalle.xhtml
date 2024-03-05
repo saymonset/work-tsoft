@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en">
+
+<ui:composition template="/layoutDetalle.xhtml">
+	<ui:define name="tituloEncabezado">
+		<h:outputText value="#{etq.detalleArchivoConciliacion}"></h:outputText>
+	</ui:define>
+
+
+	<ui:define name="seccionForma">
+		<a4j:keepAlive beanName="archivoConciliacionBean" />
+		<h:panelGroup id="general">
+			<h:panelGroup rendered="#{!empty archivoConciliacionBean.listaDetalle}">
+				<a4j:region>
+					<h:commandButton actionListener="#{archivoConciliacionBean.recuperaDetalleTxt}" 
+						action="generaArchivoConciliacionDetalleTxt"
+						image="/images/TXT.gif"
+						title="Crear el archivo de conciliacion de todos los resultados"
+						id="generarTXT" />
+				</a4j:region>
+				<br />
+				<!-- h:outputText value="#{archivoConciliacionBean.posicionInicialDetalle}" >
+					<f:convertNumber pattern="###,###,##0" />
+				</h:outputText>
+				<br />
+				<h:outputText value="#{archivoConciliacionBean.posicionFinalDetalle}" >
+					<f:convertNumber pattern="###,###,##0" />
+				</h:outputText-->
+				<br />
+				<table border="0" class="tablaGeneral" width="900px"
+					cellspacing="0px">
+					
+					<tr>
+						<td colspan="20">
+							<img src="#{facesContext.externalContext.requestContextPath}/images/blank.gif"
+								width="900px" height="0px" style="height: 1px" />
+						</td>
+					</tr>
+					<tr>
+						<th colspan="4" class="tituloTabla">
+							<h:outputText value="#{etq.traspasanteMayus}" />
+						</th>
+						<th colspan="6" class="tituloTabla">
+							<h:outputText value="#{etq.emisionMayus}" />
+						</th>
+						<th colspan="4" class="tituloTabla">
+							<h:outputText value="#{etq.receptorMayus}" />
+						</th>
+						<th colspan="5" class="tituloTabla">
+							&#160;
+						</th>
+					</tr>
+					<tr>
+						<th class="tituloTabla">
+							<h:outputText value="#{etq.idMinus}" />
+						</th>
+						<th class="tituloTabla">
+							<h:outputText value="#{etq.folioMinus}" />
+						</th>
+						<th class="tituloTabla">
+							<h:outputText value="#{etq.cuentaMinus}" />
+						</th>
+						<th class="tituloTabla">
+							<h:outputText value="#{etq.nombreMinus}" />
+						</th>
+						<th class="tituloTabla">
+							<h:outputText value="#{etq.tv}" />
+						</th>
+						<th class="tituloTabla">
+							<h:outputText value="#{etq.emisoraMinus}" />
+						</th>
+						<th class="tituloTabla">
+							<h:outputText value="#{etq.serieMinus}" />
+						</th>
+						<th class="tituloTabla">
+							<h:outputText value="#{etq.cuponMinus}" />
+						</th>
+						<th class="tituloTabla">
+							<h:outputText value="#{etq.isin}" />
+						</th>
+						<th class="tituloTabla">
+							<h:outputText value="#{etq.bovedaMinus}" />
+						</th>
+						<th class="tituloTabla">
+							<h:outputText value="#{etq.idMinus}" />
+						</th>
+						<th class="tituloTabla">
+							<h:outputText value="#{etq.folioMinus}" />
+						</th>
+						<th class="tituloTabla">
+							<h:outputText value="#{etq.cuentaMinus}" />
+						</th>
+						<th class="tituloTabla">
+							<h:outputText value="#{etq.nombreMinus}" />
+						</th>
+						<th class="tituloTabla">
+							<h:outputText value="#{etq.posicionInicialMinus}" />
+						</th>
+						<th class="tituloTabla">
+							<h:outputText value="#{etq.cantidadMinus}" />
+						</th>
+						<th class="tituloTabla">
+							<h:outputText value="#{etq.posicionFinalMinus}" />
+						</th>
+						<th class="tituloTabla">
+							<h:outputText value="#{etq.to}" />
+						</th>
+						<th class="tituloTabla">
+							<h:outputText value="#{etq.folioControl}" />
+						</th>
+					</tr>
+	
+					<t:dataList
+						value="#{archivoConciliacionBean.listaDetalle}"
+						var="item" rowIndexVar="indice">
+						<tr>
+							<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+								<h:outputText value="#{item.operacion.cuentaTraspasante.institucion.claveTipoInstitucion}" />
+							</td>
+							<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+								<h:outputText value="#{item.operacion.cuentaTraspasante.institucion.folioInstitucion}" />
+							</td>
+							<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+								<h:outputText value="#{item.operacion.cuentaTraspasante.cuenta}" />
+							</td>
+							<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+								<h:outputText value="#{item.operacion.cuentaTraspasante.nombreCuenta}" />
+							</td>
+							<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+								<h:outputText value="#{item.posicion.emision.tipoValor.claveTipoValor}" />
+							</td>
+							<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+								<h:outputText value="#{item.posicion.emision.emisora.descripcion}" />
+							</td>
+							<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+								<h:outputText value="#{item.posicion.emision.serie.serie}" />
+							</td>
+							<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+								<h:outputText value="#{item.posicion.cupon.claveCupon}" />
+							</td>
+							<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+								<h:outputText value="#{item.posicion.emision.isin}" />
+							</td>
+							<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+								<h:outputText value="#{item.posicion.boveda.descripcion}" />
+							</td>
+							<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+								<h:outputText value="#{item.operacion.cuentaReceptora.institucion.claveTipoInstitucion}" />
+							</td>
+							<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+								<h:outputText value="#{item.operacion.cuentaReceptora.institucion.folioInstitucion}" />
+							</td>
+							<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+								<h:outputText value="#{item.operacion.cuentaReceptora.cuenta}" />
+							</td>
+							<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+								<h:outputText value="#{item.operacion.cuentaReceptora.nombreCuenta}" />
+							</td>
+							<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+								<h:outputText value="#{item.posicionInicial}">
+									<f:convertNumber pattern="###,###,##0" />
+								</h:outputText>
+							</td>
+							<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+								<h:outputText value="#{item.cantidad}">
+									<f:convertNumber pattern="###,###,##0" />
+								</h:outputText>
+							</td>
+							<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+								<h:outputText value="#{item.posicionFinal}">
+									<f:convertNumber pattern="###,###,##0" />
+								</h:outputText>
+							</td>
+							<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+								<h:outputText value="#{item.operacion.instruccionLiquidacion.tipoInstruccion.nombreCorto}" />
+							</td>
+							<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado">
+								<h:outputText value="#{item.operacion.instruccionLiquidacion.folioInstruccion}" />
+							</td>
+						</tr>
+					</t:dataList>
+				</table>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{empty archivoConciliacionBean.listaDetalle}" 
+				style="width: 100%; text-align: center">
+				<br />
+				<table border="0" class="tablaGeneral" cellspacing="0px"
+					width="900px">
+					<tr>
+						<td colspan="20"><img
+							src="#{facesContext.externalContext.requestContextPath}/images/blank.gif"
+							width="900px" height="0px" style="height: 1px" /></td>
+					</tr>
+					<tr>
+						<th class="tituloTabla" width="900px"><h:outputText
+							value="#{etq.sinResultados}" /></th>
+					</tr>
+				</table>
+			</h:panelGroup>
+		</h:panelGroup>
+	</ui:define>
+	
+	<ui:define name="botones">
+		<br />
+		<br />
+		<h:panelGrid width="25%">
+			<h:commandLink id="lnkRegresar" value="Regresar a la consulta" action="regresarConsultaArchivoConciliacion"/>
+		</h:panelGrid>
+	</ui:define>
+
+</ui:composition>
+</html>

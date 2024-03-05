@@ -1,0 +1,34 @@
+<html xmlns:txt="http://indeval.com/jsf/txt"
+	xmlns:f="http://java.sun.com/jsf/core">
+<txt:document documentName="movimientosConciliacionTXT">
+        <txt:table value="#{archivoConciliacionBean.listaDetalle}" var="item" >
+           <txt:row>
+                <txt:col size="2" align="left" value="#{item.operacion.cuentaTraspasante.institucion.claveTipoInstitucion}"/>
+                <txt:col size="3" align="left" value="#{item.operacion.cuentaTraspasante.institucion.folioInstitucion}"/>
+                <txt:col size="4" align="left" value="#{item.operacion.cuentaTraspasante.cuenta}"/>
+                <txt:col size="50" align="left" value="#{item.operacion.cuentaTraspasante.nombreCuenta}"/>
+                <txt:col size="4" align="left" value="#{item.posicion.emision.tipoValor.claveTipoValor}"/>
+                <txt:col size="7" align="left" value="#{item.posicion.emision.emisora.descripcion}"/>
+                <txt:col size="6" align="left" value="#{item.posicion.emision.serie.serie}"/>
+                <txt:col size="4" align="left" value="#{item.posicion.cupon.claveCupon}"/>
+                <txt:col size="2" align="left" value="#{item.operacion.cuentaReceptora.institucion.claveTipoInstitucion}"/>
+                <txt:col size="3" align="left" value="#{item.operacion.cuentaReceptora.institucion.folioInstitucion}"/>
+                <txt:col size="4" align="left" value="#{item.operacion.cuentaReceptora.cuenta}"/>
+                <txt:col size="50" align="left" value="#{item.operacion.cuentaReceptora.nombreCuenta}"/>
+                <txt:col size="20" align="right" value="#{item.posicionInicial}">
+                    <f:convertNumber pattern="00000000000000000000" />
+                </txt:col>
+                <txt:col size="20" align="right" value="#{item.cantidad}">
+                    <f:convertNumber pattern="00000000000000000000" />
+                </txt:col>
+                <txt:col size="20" align="right" value="#{item.posicionFinal}">
+                    <f:convertNumber pattern="00000000000000000000" />
+                </txt:col>
+                <txt:col size="4" align="left" value="#{item.operacion.instruccionLiquidacion.tipoInstruccion.nombreCorto}"/>
+                <txt:col size="10" align="left" value="#{item.operacion.instruccionLiquidacion.folioInstruccion}">
+                    <f:convertNumber pattern="0000000000" />
+                </txt:col>
+            </txt:row>
+        </txt:table>
+    </txt:document>
+</html>

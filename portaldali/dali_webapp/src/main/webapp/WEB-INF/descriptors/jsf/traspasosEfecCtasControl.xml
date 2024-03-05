@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+    version="1.2">
+    
+    <managed-bean>
+        <managed-bean-name>callMoneyControl</managed-bean-name>
+        <managed-bean-class>com.indeval.portaldali.presentation.controller.tesoreria.CallMoneyController</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+
+        <managed-property>
+            <property-name>envioOperacionesService</property-name>
+            <value>#{envioOperacionesEJB}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>servicesCapturaOperacionViewHelper</property-name>
+            <value>#{servicesCapturaOperacionViewHelper}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>configuracion</property-name>
+            <value>#{captOpConf}</value>
+        </managed-property> 
+        <managed-property>
+            <property-name>consultaCatalogosFacade</property-name>
+            <value>#{consultaCatalogosFacade}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>tesoreriaService</property-name>
+            <value>#{tesoreriaServiceEJB}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>validadorTraspasoEfect</property-name>
+            <value>#{validacionTraspasoEfectivo}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>isoHelper</property-name>
+            <value>#{isoHelper}</value>
+        </managed-property>
+		<managed-property>
+			<property-name>utilService</property-name>
+			<value>#{utilServices}</value>
+		</managed-property>
+        
+    </managed-bean> 
+    
+    
+
+    <managed-bean>
+        <managed-bean-name>traspasosEfecCtasControl</managed-bean-name>
+        <managed-bean-class>com.indeval.portaldali.presentation.controller.tesoreria.fondos.TraspasosEfecCtasControlController</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+
+        <managed-property>
+            <property-name>movimientosEfectivoService</property-name>
+            <value>#{movimientosEfectivoService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>servicesCapturaOperacionViewHelper</property-name>
+            <value>#{servicesCapturaOperacionViewHelper}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>configuracion</property-name>
+            <value>#{captOpConf}</value>
+        </managed-property> 
+        <managed-property>
+            <property-name>consultaCatalogosFacade</property-name>
+            <value>#{consultaCatalogosFacade}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>tesoreriaService</property-name>
+            <value>#{tesoreriaServiceEJB}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>validadorTraspasoEfect</property-name>
+            <value>#{validacionTraspasoEfectivo}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>isoHelper</property-name>
+            <value>#{isoHelper}</value>
+        </managed-property>
+		<managed-property>
+			<property-name>utilService</property-name>
+			<value>#{utilServices}</value>
+		</managed-property>
+        
+    </managed-bean> 
+
+</faces-config>
+

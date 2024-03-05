@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:pdf="http://indeval.com/jsf/pdf"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+    <pdf:document documentName="consultaEstadoCuentaOperacionEfectivo" documentTitle="Estado de Cuenta Operativo de Efectivo "
+        institucion="#{consultaEstadoCuentaSaldoEfectivoBean.institucionActual.claveTipoInstitucion} #{consultaEstadoCuentaSaldoEfectivoBean.institucionActual.folioInstitucion} #{consultaEstadoCuentaSaldoEfectivoBean.institucionActual.razonSocial}"
+        fecha="#{consultaEstadoCuentaSaldoEfectivoBean.fechaActual}" imageResource="/images/indeval.png">
+
+        <pdf:table value="#{consultaEstadoCuentaSaldoEfectivoBean}" currentBean="resultado" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="Criterios de Consulta" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+
+        <pdf:table value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo}" currentBean="consulta"
+            widthPercentage="100">
+            <pdf:row>
+            	<pdf:col header="#{etq.participanteMinus}" value="#{consultaEstadoCuentaSaldoEfectivoBean.folioClaveInstitucion}" align="center" />
+                <pdf:col header="#{etq.cuentaMinus}" value="#{consulta.cuentaSeleccionada.descripcion}" align="center" />
+                <pdf:col header="#{etq.naturalezaMinus}" value="#{consulta.cuentaSeleccionada.tipoNaturaleza.descripcion}" align="center" />
+                <pdf:col header="#{etq.tipoCuentaMinus}" value="#{consulta.cuentaSeleccionada.tipoCuenta.descripcion}" align="center" />
+                <pdf:col header="#{etq.fechaInicial}" value="#{consulta.criterioFechaInicial}" align="center">
+               		 <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+                </pdf:col>
+                <pdf:col header="#{etq.fechaFinal}" value="#{consulta.criterioFechaFinal}" align="center">
+               		 <cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+                </pdf:col>
+                <pdf:col header="#{etq.boveda}" value="#{consulta.criterioBoveda.opcionSeleccionada.descripcion}" align="center" />
+                <pdf:col header="#{etq.divisa}" value="#{consulta.criterioDivisa.opcionSeleccionada.descripcion}" align="center" />
+            </pdf:row>
+		</pdf:table>
+        
+        <pdf:table value="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo}" currentBean="consulta"
+            widthPercentage="100">
+            <pdf:row>
+            	<pdf:col header="#{etq.registrosEncontrados}#{etq.dosPuntos}" value="#{consultaEstadoCuentaSaldoEfectivoBean.totalResultados}" align="center" />
+            </pdf:row>
+		</pdf:table>
+
+        <pdf:iterator value="#{consultaEstadoCuentaSaldoEfectivoBean.resultadosEstadoCuentaEfectivo}"
+            var="estadoCuentaEfectivoPorDivisa">
+            <pdf:table value="#{estadoCuentaEfectivoPorDivisa}"
+                rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}"
+                currentBean="dummy">
+            </pdf:table>
+            <pdf:iterator value="#{estadoCuentaEfectivoPorDivisa.registrosContablesPorBoveda}" var="estadoCuentaEfectivoPorBoveda">
+                <pdf:table value="#{estadoCuentaEfectivoPorBoveda}" currentBean="dummy"
+                    rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}">
+
+                    <pdf:row>
+	                    <pdf:col header="#{etq.divisa}" value="#{estadoCuentaEfectivoPorDivisa.divisa.descripcion}" />
+                        <pdf:col header="#{etq.boveda}" value="#{estadoCuentaEfectivoPorBoveda.boveda.descripcion}" />
+                     
+                        <pdf:col header="#{etq.saldoInicial}"
+                            value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoInicial.saldoInicial}"  align="right">
+                            <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                        </pdf:col>
+                    </pdf:row>
+
+                </pdf:table>
+
+                <pdf:table value="#{estadoCuentaEfectivoPorBoveda}" currentBean="dummy"
+                    rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}">
+
+                    <pdf:row>
+	                    <pdf:col header="#{etq.divisa}" value="#{estadoCuentaEfectivoPorDivisa.divisa.descripcion}" />
+                        <pdf:col header="#{etq.boveda}" value="#{estadoCuentaEfectivoPorBoveda.boveda.descripcion}"/>
+                    
+                        <pdf:col value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoInicial.saldoInicialDisponible}"
+                            header="#{etq.saldoDisponibleMinus}" align="right">
+                            <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                        </pdf:col>
+                        <pdf:col value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoInicial.saldoInicialNoDisponible}"
+                            header="#{etq.saldoNoDisponibleMinus}" align="right">
+                            <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                        </pdf:col>
+                        <pdf:col header="#{etq.saldoInicialMinus}"
+                            value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoInicial.saldoInicial}" align="right">
+                            <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                        </pdf:col>
+                    </pdf:row>
+
+                </pdf:table>
+
+                <pdf:table value="#{estadoCuentaEfectivoPorBoveda.registrosContablesControladas}" currentBean="registroContable"
+                    rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}">
+                    <pdf:row>
+                        <pdf:col header="#{etq.fechaLiquidacionMinus}" value="#{registroContable.fechaLiquidacion}" >
+                        	<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+                        </pdf:col>
+                        <pdf:col header="#{etq.descripcion}" value="#{registroContable.descripcion}" />
+                        <pdf:col header="#{etq.abonoMinus}" value="#{registroContable.cantidadRecepcion}" align="right">
+                            <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                        </pdf:col>
+                        <pdf:col header="#{etq.cargoMinus}" value="#{registroContable.cantidadEntrega}" align="right">
+                            <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                        </pdf:col>
+                        <pdf:col header="#{etq.saldoMinus}" value="#{registroContable.saldoTotal}" align="right">
+                            <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                        </pdf:col>
+                    </pdf:row>
+                </pdf:table>
+
+                <pdf:table value="#{estadoCuentaEfectivoPorBoveda.registrosContablesNombradas}" currentBean="registroContable"
+                    rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}">
+                    <pdf:row>
+                        <pdf:col header="#{etq.fechaLiquidacion}" value="#{registroContable.fechaLiquidacion}" >
+                        	<cvt:simpleDateConverter pattern="dd/MM/yyyy HH:mm:ss" />
+                        </pdf:col>
+                        <pdf:col header="#{etq.descripcion}" value="#{registroContable.descripcion}" />
+                        <pdf:col header="#{etq.contraparte}" value="#{registroContable.contraparte} #{registroContable.cuentaContraparte}" />
+                        <pdf:col header="#{etq.folioInst}"   value="#{registroContable.folioInstruccion}" align="center"/>
+                        <pdf:col header="#{etq.tipoInst}"	 value="#{registroContable.operacion.instruccionLiquidacion.tipoInstruccion.nombreCorto}" align="center" />
+                        <pdf:col header="#{etq.abonoMinus}"  value="#{registroContable.cantidadRecepcion}" align="right">
+                            <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                        </pdf:col>
+                        <pdf:col header="#{etq.cargoMinus}" value="#{registroContable.cantidadEntrega}" align="right">
+                            <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                        </pdf:col>
+                        <pdf:col header="#{etq.disponibleMinus}" value="#{registroContable.saldoDisponible}" align="right">
+                            <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                        </pdf:col>
+                        <pdf:col header="#{etq.noDisponibleMinus}" value="#{registroContable.saldoNoDisponible}" align="right">
+                            <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                        </pdf:col>
+                        <pdf:col header="#{etq.saldoMinus}" value="#{registroContable.saldoTotal}" align="right">
+                            <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                        </pdf:col>
+                    </pdf:row>
+                </pdf:table>
+
+                <pdf:table value="#{estadoCuentaEfectivoPorBoveda}" currentBean="dummy"
+                    rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}">
+                    <pdf:row>
+                 
+                        <pdf:col header="#{etq.saldoFinalMinus}" value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoFinal.saldoFinal}" align="right"
+                            pattern="$ #,##0.00">
+                            <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                        </pdf:col>
+                    </pdf:row>
+                </pdf:table>
+
+                <pdf:table value="#{estadoCuentaEfectivoPorBoveda}" currentBean="dummy"
+                    rendered="#{consultaEstadoCuentaSaldoEfectivoBean.consultaEstadoCuentaEfectivo.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}">
+                    <pdf:row>
+
+                        <pdf:col header="#{etq.saldoDisponibleMinus}"
+                            value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoFinal.saldoFinalDisponible}" align="right">
+                            <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                        </pdf:col>
+                        <pdf:col header="#{etq.saldoNoDisponibleMinus}"
+                            value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoFinal.saldoFinalNoDisponible}" align="right">
+                            <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                        </pdf:col>
+                        <pdf:col header="#{etq.saldoFinalMinus}" value="#{estadoCuentaEfectivoPorBoveda.estadoSaldoFinal.saldoFinal}" align="right">
+                            <f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                        </pdf:col>
+                    </pdf:row>
+                </pdf:table>
+
+            </pdf:iterator>
+        </pdf:iterator>
+
+    </pdf:document>
+</html>

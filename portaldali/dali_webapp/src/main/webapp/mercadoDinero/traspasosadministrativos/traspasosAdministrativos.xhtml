@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:indeval="http://indeval.com/indeval"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:composition
+		template="/mercadoDinero/operacion/layoutCapturaOperacion.xhtml">
+
+		<ui:define name="headCaptura">
+		<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/consultaPosiciones.js"></script>
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js"></script>
+		</ui:define>
+
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.traspasosAdministrativos}" />
+
+		</ui:define>
+
+		<ui:define name="seccionForma">
+			<h:outputText value="#{traspasosAdministrativosBean.initForm}" />
+			<h:outputText id="init" value="#{traspasosAdministrativosBean.init}" />
+			<a4j:keepAlive beanName="traspasosAdministrativosBean" />
+
+
+			<h:panelGroup id="general">
+				<table width="100%">
+					<tr>
+						<td>
+							<table width="100%">
+								<tr>
+									<td align="center" colspan="4">
+										<b><h:outputText value="#{etq.traspasanteMinus}"
+												styleClass="texto" /> </b>
+									</td>
+									<td align="center" colspan="4">
+										<b> <h:outputText value="#{etq.receptorMinus}"
+												styleClass="texto" /> </b>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="texto"
+											value="#{etq.participanteMinus}" />
+									</td>
+									<td>
+										<h:outputText styleClass="texto" value="#{etq.cuentaMinus}" />
+									</td>
+									<!-- td>
+										<h:outputText styleClass="texto" value="#{etq.tenencia}" />
+									</td-->
+									<td>
+										<h:outputText styleClass="texto"
+											value="#{etq.nombreCuenta}" />
+									</td>
+									<td>
+										<h:outputText styleClass="texto"
+											value="#{etq.participanteMinus}" />
+									</td>
+									<td>
+										<h:outputText styleClass="texto" value="#{etq.cuentaMinus}" />
+									</td>
+									<!-- td>
+										<h:outputText styleClass="texto" value="#{etq.tenencia}" />
+									</td-->
+									<td>
+										<h:outputText styleClass="texto"
+											value="#{etq.nombreCuenta}" />
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:inputText autocomplete="off" id="idFolioTraspasante" size="4" maxlength="5" styleClass='#{!seleccionarCuentaBean.usuarioIndeval ? "readonly" : "campoNumericoAsterisco" }' 
+											readonly="false" value="#{traspasosAdministrativosBean.traspasos.idFolioTraspasante}" tabindex="10">
+											<a4j:support event="onchange" reRender="init, nombreInstitucionTraspasante" oncomplete="establecerFoco('cuentaTraspasante');"/>
+										</h:inputText>
+										
+										<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="idFolioTraspasante"
+											id="suggest_institucion"
+											suggestionAction="#{seleccionarCuentaBean.buscarParticipante}"
+											var="coincidencia_i"
+											eventsQueue="folioTraspQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+											fetchValue="#{coincidencia_i.claveTipoInstitucion}#{coincidencia_i.folioInstitucion}"
+											minChars="1" width="200" nothingLabel="Sin coincidencias">
+											<h:column>
+												<h:outputText
+													value="#{coincidencia_i.claveTipoInstitucion}#{coincidencia_i.folioInstitucion}" /> - <h:outputText
+													value="#{coincidencia_i.nombreCorto}" />
+											</h:column>
+											<a4j:support event="onselect" reRender="init, nombreInstitucionTraspasante" />
+										</rich:suggestionbox>
+									</td>
+									<td>
+										<h:panelGroup>
+											<h:panelGroup id="panelCuentaTraspasante">
+												<h:inputText autocomplete="off" id="cuentaTraspasante" size="4" 
+													styleClass="#{colocacionPrimariaBean.compraEnDirecto?'readonly campoNumericoAsterisco':'campoNumericoAsterisco'} textoCuenta"
+													readonly="false"
+													value="#{traspasosAdministrativosBean.traspasos.posicionTraspasante.cuenta.cuenta}"
+													tabindex="20" >
+													<a4j:support event="onchange" reRender="init,panelTipoValor,tenenciaTraspasante,panelSerie,panelEmisora,cupon,boveda,isin,diasVigentes,saldoDisponible, nombreInstitucionTraspasante" oncomplete="establecerFoco('tipoValor');"/>
+												</h:inputText>
+												<input type="hidden" id="nombre_id_folio_traspasante"
+													name="nombre_id_folio_traspasante"
+													value="daliForm:idFolioTraspasante" />
+	
+												<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="cuentaTraspasante"
+													suggestionAction="#{seleccionarCuentaBean.buscarCuentaTraspasante}"
+													eventsQueue="cuentaTraspQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+													var="coincidencia" fetchValue="#{coincidencia.cuenta}"
+													minChars="1" width="80" nothingLabel="Sin coincidencias">
+													<h:column>
+														<h:outputText value="#{coincidencia.cuenta}" />
+													</h:column>
+													<a4j:support event="onselect" actionListener="#{traspasosAdministrativosBean.validarCuenta}"
+														reRender="init,tenenciaTraspasante, nombreInstitucionTraspasante" />
+												</rich:suggestionbox>
+											</h:panelGroup>
+										</h:panelGroup>
+									</td>
+									<!-- td>
+										<h:inputText autocomplete="off" id="tenenciaTraspasante" size="8"
+											value="#{traspasosAdministrativosBean.traspasos.posicionTraspasante.cuenta.tipoTenencia.claveTipoCuenta}"
+											styleClass="readonly" />									</td-->
+									<td>
+										<h:inputText autocomplete="off" id="nombreInstitucionTraspasante" size="40"
+											value="#{traspasosAdministrativosBean.traspasos.posicionTraspasante.cuenta.nombreCuenta}"
+											styleClass="readonly" />
+									</td>
+									<td>
+										<h:inputText autocomplete="off" id="idFolioReceptor" size="5" maxlength="5"
+											styleClass="campoNumericoAsterisco"
+											readonly="false"
+											value="#{traspasosAdministrativosBean.traspasos.idFolioReceptor}"
+											tabindex="70">
+											<a4j:support event="onchange" reRender="init, nombreInstitucionReceptor" oncomplete="establecerFoco('cuentaReceptor');"/>
+										</h:inputText>
+
+
+										<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="idFolioReceptor"
+											id="suggest_institucionReceptora"
+											suggestionAction="#{seleccionarCuentaBean.buscarParticipante}"
+											var="coincidencia_i"
+											eventsQueue="folioRecepQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+											fetchValue="#{coincidencia_i.claveTipoInstitucion}#{coincidencia_i.folioInstitucion}"
+											minChars="1" width="200" nothingLabel="Sin coincidencias">
+											<h:column>
+												<h:outputText
+													value="#{coincidencia_i.claveTipoInstitucion}#{coincidencia_i.folioInstitucion}" /> - <h:outputText
+													value="#{coincidencia_i.nombreCorto}" />
+											</h:column>
+											<a4j:support event="onselect"
+												reRender="init,nombreInstitucionReceptor" />
+										</rich:suggestionbox>
+									</td>
+									<td>
+										<h:panelGroup id="panelCuentaReceptor">
+											<h:inputText autocomplete="off" id="cuentaReceptor" size="4" 
+												styleClass="#{colocacionPrimariaBean.compraEnDirecto?'readonly campoNumericoAsterisco':'campoNumericoAsterisco'} textoCuenta"
+												readonly="false"
+												value="#{traspasosAdministrativosBean.traspasos.cuentaReceptor.cuenta}"
+												tabindex="80" >
+												<a4j:support event="onchange"  reRender="init, tenenciaReceptor, nombreInstitucionReceptor" oncomplete="establecerFoco('cantidadOperada');"/>
+											</h:inputText>
+											<input type="hidden" id="nombre_id_folio_receptor"
+												name="nombre_id_folio_receptor"
+												value="daliForm:idFolioReceptor" />
+											<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="cuentaReceptor"
+												suggestionAction="#{seleccionarCuentaBean.buscarCuentaReceptor}"
+												var="coincidencia" fetchValue="#{coincidencia.cuenta}"
+												eventsQueue="cuentaRecepQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+												minChars="1" width="80" immediate="false"
+												nothingLabel="Sin coincidencias">
+												<h:column>
+													<h:outputText value="#{coincidencia.cuenta}" />
+												</h:column>
+												<a4j:support event="onselect" actionListener="#{traspasosAdministrativosBean.validarCuenta}"
+													reRender="init,tenenciaReceptor, nombreInstitucionReceptor" />
+											</rich:suggestionbox>
+										</h:panelGroup>
+									</td>
+									<!-- td>
+										<h:inputText autocomplete="off" id="tenenciaReceptor" size="12"
+											value="#{traspasosAdministrativosBean.traspasos.cuentaReceptor.tipoTenencia.claveTipoCuenta}"
+											styleClass="readonly" />
+									</td-->
+									<td>
+										<h:inputText autocomplete="off" id="nombreInstitucionReceptor" size="33"
+											value="#{traspasosAdministrativosBean.traspasos.cuentaReceptor.nombreCuenta}"
+											styleClass="readonly" />
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<table width="100%">
+					<tr>
+						<td valign="top">
+							<table width="100%">
+								<tr>
+									<td>
+										<h:panelGroup>
+											<h:outputText styleClass="texto"
+												value="#{etq.tipoValorMinus}" />
+											<h:outputText value="#{etq.asterisco}" styleClass="required" />
+										</h:panelGroup>
+									</td>
+									<td>
+										<h:panelGroup id="panelTipoValor">
+											<h:inputText autocomplete="off" id="tipoValor" size="7" 
+												value="#{traspasosAdministrativosBean.traspasos.posicionTraspasante.emision.tipoValor.claveTipoValor}"
+														styleClass="textoTipoValor campoAlphaNumericoAsterisco"
+												tabindex="30" >
+												<a4j:support event="onchange" reRender="init,panelCuentaTraspasante,panelSerie,cupon,boveda,isin,cupon, diasVigentes,saldoDisponible" oncomplete="establecerFoco('emisora');"/>
+											</h:inputText>
+											<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="tipoValor"
+												suggestionAction="#{seleccionarEmisionBean.buscarTiposValorPorPrefijo}"
+												var="coincidencia"
+												eventsQueue="tipoValQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+												fetchValue="#{coincidencia.claveTipoValor}" minChars="1"
+												width="300" immediate="false"
+												nothingLabel="Sin coincidencias" style="height: 22px; ">
+												<h:column>
+													<h:outputText value="#{coincidencia.claveTipoValor}" /> - <h:outputText
+														value="#{coincidencia.descripcion}" />
+												</h:column>
+											</rich:suggestionbox>
+										</h:panelGroup>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:panelGroup>
+											<h:outputText styleClass="texto" value="#{etq.emisoraMinus}" />
+											<h:outputText value="#{etq.asterisco}" styleClass="required" />
+										</h:panelGroup>
+									</td>
+									<td>
+										<h:panelGroup id="panelEmisora">
+											<h:inputText autocomplete="off" id="emisora" size="7" 
+												value="#{traspasosAdministrativosBean.traspasos.posicionTraspasante.emision.emisora.descripcion}"
+												    	styleClass="campoAlphaNumericoEmisora"
+												required="false" tabindex="40" >
+												<a4j:support event="onchange" reRender="init,panelTipoValor,panelCuentaTraspasante,cupon,boveda,isin,cupon,diasVigentes,saldoDisponible" oncomplete="establecerFoco('serie');"/>
+											</h:inputText>
+											<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="emisora"
+												suggestionAction="#{seleccionarEmisionBean.buscarEmisorasPorPrefijo}"
+												var="coincidencia" fetchValue="#{coincidencia.descripcion}"
+												eventsQueue="emisoraQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+												minChars="1" width="300" immediate="false"
+												nothingLabel="Sin coincidencias">
+												<h:column>
+													<h:outputText value="#{coincidencia.descripcion}" />
+												</h:column>
+											</rich:suggestionbox>
+										</h:panelGroup>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:panelGroup>
+											<h:outputText styleClass="texto" value="#{etq.serieMinus}" />
+											<h:outputText value="#{etq.asterisco}" styleClass="required" />
+										</h:panelGroup>
+									</td>
+									<td>
+										<h:panelGroup id="panelSerie">
+											<h:inputText autocomplete="off" id="serie" size="7" 
+												value="#{traspasosAdministrativosBean.traspasos.posicionTraspasante.emision.serie.serie}"
+														styleClass="campoAlphaNumericoSerie" 
+												tabindex="50" >
+												<a4j:support event="onchange" reRender="init,panelTipoValor,panelCuentaTraspasante,panelEmisora,cupon,boveda,isin,diasVigentes,saldoDisponible" oncomplete="establecerFoco('cupon');"/>
+											</h:inputText>
+										</h:panelGroup>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:panelGroup>
+											<h:outputText styleClass="texto" value="#{etq.cuponMinus}" />
+											<h:outputText value="#{etq.asterisco}" styleClass="required" />
+										</h:panelGroup>
+									</td>
+									<td>
+										<h:inputText autocomplete="off" id="cupon" size="7" maxlength="4"
+											value="#{traspasosAdministrativosBean.traspasos.posicionTraspasante.emision.cupon}"
+											 	styleClass="campoNumerico textoCupon"
+											tabindex="60" />
+										<h:panelGroup>
+
+											<a href="javascript: mostrarPosiciones('Dinero');" >
+												<h:graphicImage value="/images/search.png"></h:graphicImage>
+												<h:outputText value="#{etq.buscarPosicionMinus}"
+													styleClass="texto" /> </a>&#160;&#160;&#160;
+                                    <a id="limpiarPosicionLink"
+												href="javascript: limpiarDatosPosicion('');" >
+												<h:graphicImage value="/images/page_refresh.png"></h:graphicImage>
+												<h:outputText value="#{etq.limpiarPosicionMinus}"
+													styleClass="texto" /> </a>
+
+										</h:panelGroup>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:outputText styleClass="texto" value="#{etq.bovedaMinus}" />
+										<h:outputText value="#{etq.asterisco}" styleClass="required" />
+									</td>
+									<td>
+										<h:selectOneMenu styleClass="readonly disabled"
+											value="#{traspasosAdministrativosBean.traspasos.posicionTraspasante.boveda}"
+											id="boveda" converter="bovedaConverter" tabindex="65" >											
+											<f:selectItems value="#{seleccionarEmisionBean.bovedasValor}" />
+										</h:selectOneMenu>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:panelGroup>
+											<h:outputText styleClass="texto" value="#{etq.isin}" />
+										</h:panelGroup>
+									</td>
+									<td>
+										<h:panelGroup>
+											<h:inputText autocomplete="off" id="isin" size="30" maxlength="11"
+												value="#{traspasosAdministrativosBean.traspasos.posicionTraspasante.emision.isin}"
+												styleClass="readonly" />
+										</h:panelGroup>
+									</td>
+								</tr>
+								<!--  Este campo no es usado por el momento tr>
+									<td>
+										<h:panelGroup>
+											<h:outputText styleClass="texto" value="#{etq.precioVector}" />
+										</h:panelGroup>
+									</td>
+									<td>
+										<h:panelGroup>
+											<h:inputText autocomplete="off" id="precioVector" size="30" maxlength="26"
+												value="#{traspasosAdministrativosBean.traspasos.precioVector}"
+												converter="formatoMonedaConverter" styleClass="readonly" />
+										</h:panelGroup>
+									</td>
+								</tr-->
+								<tr>
+									<td>
+										<h:panelGroup>
+											<h:outputText styleClass="texto"
+												value="#{etq.saldoDisponibleMinus}" />
+										</h:panelGroup>
+									</td>
+									<td>
+										<h:panelGroup>
+											<h:inputText autocomplete="off" id="saldoDisponible" size="30" maxlength="30"
+												value="#{traspasosAdministrativosBean.traspasos.saldoDisponible}"
+												converter="formatoEnteroConverter" styleClass="readonly" />
+										</h:panelGroup>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:panelGroup>
+											<h:outputText styleClass="texto" value="#{etq.saldoActual}" />
+										</h:panelGroup>
+									</td>
+									<td>
+										<h:panelGroup>
+											<h:inputText autocomplete="off" id="saldoActual" size="30" maxlength="30"
+												value="#{traspasosAdministrativosBean.saldoActual}"
+												converter="formatoEnteroConverter" styleClass="readonly" />
+										</h:panelGroup>
+									</td>
+								</tr>
+							</table>
+						</td>
+						<td valign="top">
+							<table width="100%">
+								<tr>
+									<td>
+										<h:panelGroup rendered="true">
+											<h:outputText styleClass="texto"
+												value="#{etq.cantidadOperada}" />
+											<h:outputText value="#{etq.asterisco}" styleClass="required" />
+										</h:panelGroup>
+									</td>
+									<td>
+										<h:inputText autocomplete="off" id="cantidadOperada" size="20" maxlength="14"
+										 styleClass="campoNumericoCantidad"
+											value="#{traspasosAdministrativosBean.traspasos.cantidadOperada}"
+											tabindex="90" converter="formatoEnteroConverter">
+											<a4j:support event="onchange" limiToList="false"
+												reRender="saldoActual"
+												oncomplete="establecerFoco('btnGuardar');"
+												actionListener="#{traspasosAdministrativosBean.realizaCalculoSaldoActual}" />
+										</h:inputText>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										 <h:panelGroup rendered="true">
+		                                    <h:outputText value="#{etq.fechaHoraCierreOperMinus}" styleClass="texto" />
+		                                </h:panelGroup>
+									</td>
+									<td>
+										<rich:calendar id="fechaHoraCierreOper" 
+												value="#{traspasosAdministrativosBean.traspasos.fechaHoraCierreOper}"
+												datePattern="dd/MM/yyyy HH:mm"
+												inputSize="20"
+												inputStyle="background-color: #ffffe6;"
+												isDayEnabled="isDayEnabled" />
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="8">
+							&#160;
+						</td>
+					</tr>
+					<tr>
+						<td colspan="8" align="left">
+
+							<h:outputText value="#{etq.asterisco}" styleClass="required" />
+							<h:outputText value="#{etq.requeridos}" styleClass="texto" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="8">
+							&#160;
+						</td>
+					</tr>
+				</table>
+                
+                <!-- La facultad debe reflejar el valor de SeguridadConstants.FACULTAD_FIRMA_OPERACION -->
+				<indeval:authorizeFaculty userInFaculty="CON_CERTIFICADO">
+					<h:panelGroup id="panelFirma">
+						<div style="display: none">
+							<textarea id="isoSinFirmar" name="isoSinFirmar">#{traspasosAdministrativosBean.isoSinFirmar}</textarea>
+							<textarea id="numeroSerie" name="numeroSerie"></textarea>
+							<textarea  id="numeroSerieUsuario" name="numeroSerieUsuario">#{sessionScope.usuario.numeroSerieCertificado}</textarea>
+							<textarea id="isoFirmado" name="isoFirmado"></textarea>
+							<textarea id="hashIso" name="hashIso">#{traspasosAdministrativosBean.hashIso}</textarea>
+						</div>
+	
+						<h:panelGroup
+							rendered="#{not empty traspasosAdministrativosBean.isoSinFirmar}">
+							<script>                                                    
+	                            function firmarOperacion(){
+	                            	bloquearSeccionBotones('btnGuardar', 'btnLimpiar');
+	                                $j("input[id$='btnGuardar2']").prop("disabled",false);
+	                                $j("input[id$='btnGuardar2']").click();
+	                                $j("input[id$='btnGuardar2']").prop("disabled",true);
+	                            }
+	                        </script>
+							
+							
+							<ui:decorate template="/firmaDigitalSimple.xhtml">
+								<ui:define name="isoSinFirmar">
+									<h:outputText
+										value="#{traspasosAdministrativosBean.isoSinFirmar}" />
+								</ui:define>
+							</ui:decorate>
+							
+						</h:panelGroup>
+					</h:panelGroup>
+				</indeval:authorizeFaculty>
+				
+			</h:panelGroup>
+
+		</ui:define>
+		<ui:define name="botones">
+			<div class="refrescar" style="float: left;">
+				<a4j:status id="commonStatus">
+					<f:facet name="start">
+						<h:panelGroup>
+							<h:graphicImage value="/images/ajax-loader.gif" />
+							<h:outputText value="#{etq.buscando}"></h:outputText>
+						</h:panelGroup>
+					</f:facet>
+				</a4j:status>
+       		</div>
+			<h:panelGrid width="25%">				
+				<h:panelGroup id="botones">					
+					<div class="limpiar">
+						<h:commandButton id="btnLimpiar" image="/images/transparent.gif"
+							styleClass="submit" 
+							actionListener="#{traspasosAdministrativosBean.limpiarCampos}"
+							tabindex="130">
+						</h:commandButton>
+					</div>
+					<div class="guardar">
+						<a4j:commandButton id="btnGuardar" image="/images/transparent.gif"
+							styleClass="submit" reRender="init,general,botones"
+							actionListener="#{traspasosAdministrativosBean.enviarOperacion}"
+							onclick="if(confirmarOperacionGeneral()){removeApplet(); deshabilitarBoton('btnGuardar'); deshabilitarBoton('btnLimpiar');} else return false"
+							tabindex="120"
+							oncomplete="establecerFoco('idFolioTraspasante'); habilitarBoton('btnGuardar'); habilitarBoton('btnLimpiar');">							
+						</a4j:commandButton>
+					</div>
+					<div class="guardar">
+						<h:commandButton id="btnGuardar2" image="/images/transparent.gif"
+							styleClass="hidden" disabled="true"
+							actionListener="#{traspasosAdministrativosBean.enviarOperacion2}" 
+							oncomplete="desbloquearSeccionBotones('btnGuardar', 'btnLimpiar');" tabindex="120">
+						</h:commandButton>
+					</div>
+				</h:panelGroup>
+			</h:panelGrid>
+
+
+
+		</ui:define>
+
+	</ui:composition>
+
+
+</html>

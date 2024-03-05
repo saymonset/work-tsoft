@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich" xmlns:t="http://myfaces.apache.org/tomahawk"
+    xmlns:indeval="http://indeval.com/indeval">
+    <!-- DECORATE -->
+
+    <ui:composition
+		template="/layoutConsultas.xhtml">  
+		
+        <ui:define name="head">
+        	<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/consultaBitacoraEnvOp.js"></script>
+            <script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/consultaEmisiones.js"></script>
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js"></script>			
+        </ui:define>
+        <ui:define name="tituloSeccion">
+            <h:outputText value="Consulta de Emisiones" />
+        </ui:define>
+       
+        <ui:define name="criterios">
+            <a4j:keepAlive beanName="consultaEmisionesBean"/>
+            <h:panelGroup id="init">
+            	<h:outputText value="#{consultaEmisionesBean.init}"/>
+            </h:panelGroup>
+            <h:panelGroup id="panelCriterios">
+                <div style="display: 'inline'" id="divCriterios">
+                    <table width="900px" border="0" cellpadding="0px" cellspacing="0px" align="center">
+                        <tr>
+                            <td class="recuadroTabla" align="center">
+                                <table class="tablaCriterios" align="center">
+                                    <tr>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.tv}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.emisoraMinus}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.serieMinus}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.isin}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.fechaInicial}" />
+                                        </td>
+                                        <td align="center">
+                                            <h:outputText styleClass="texto" value="#{etq.fechaFinal}" />
+                                        </td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:inputText autocomplete="off" id="tipoValor" value="#{consultaEmisionesBean.emision.tipoValor.claveTipoValor}"
+													size="14" maxlength="4"
+                                                    styleClass="textoControles textoTipoValor campoAlphaNumericoAsterisco"
+                                                    tabindex="30" />
+                                                <rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="tipoValor"
+                                                    suggestionAction="#{seleccionarEmisionAmbosBean.buscarTiposValorPorPrefijo}"
+                                                    var="coincidencia" fetchValue="#{coincidencia.claveTipoValor}" minChars="1"
+                                                    width="300" immediate="false" nothingLabel="Sin coincidencias">
+                                                    <h:column>
+                                                        <h:outputText value="#{coincidencia.claveTipoValor}" /> - <h:outputText
+                                                            value="#{coincidencia.descripcion}" />
+                                                    </h:column>
+                                                </rich:suggestionbox>
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:inputText autocomplete="off" id="emisora" value="#{consultaEmisionesBean.emision.emisora.descripcion}"
+                                                    size="14" maxlength="7" 
+                                                    styleClass="textoControles campoAlphaNumericoEmisora" />
+                                                <rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="emisora"
+                                                    suggestionAction="#{seleccionarEmisionAmbosBean.buscarEmisorasPorPrefijo}"
+                                                    var="coincidencia" fetchValue="#{coincidencia.descripcion}" minChars="1"
+                                                    width="300" immediate="false" nothingLabel="Sin coincidencias">
+                                                    <h:column>
+                                                        <h:outputText value="#{coincidencia.descripcion}" />
+                                                    </h:column>
+                                                </rich:suggestionbox>
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                            <h:panelGroup>
+                                                <h:inputText autocomplete="off" id="serie" value="#{consultaEmisionesBean.emision.serie.serie}" size="14"
+                                                    maxlength="6" styleClass="textoControles campoAlphaNumericoSerie" />
+                                            </h:panelGroup>
+                                        </td>
+                                        <td>
+                                            <h:inputText autocomplete="off" id="isin" value="#{consultaEmisionesBean.emision.isin}" size="14"
+                                                maxlength="12" styleClass="textoControles campoAlphaNumericoSerie" />
+                                        </td>
+                                        <td>
+											<rich:calendar id="fechaIni" 
+												value="#{consultaEmisionesBean.fechaIni}"
+												datePattern="dd/MM/yyyy"
+												inputSize="11"
+												inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;"
+												isDayEnabled="isDayEnabled" />
+                                        </td>
+                                        <td>
+											<rich:calendar id="fechaFin" 
+												value="#{consultaEmisionesBean.fechaFin}"
+												datePattern="dd/MM/yyyy"
+												inputSize="11"
+												inputClass="textoControles"
+												inputStyle="background-color: #ffffe6;"
+												isDayEnabled="isDayEnabled" />
+                                        </td>
+                                    </tr>
+                                    <!--tr>
+                                        <td colspan="4">
+                                            <h:panelGroup>
+                                               <a href="javascript: mostrarPosiciones('Ambos');"> 
+													<h:graphicImage value="/images/search.png"></h:graphicImage> 
+													<h:outputText value="#{etq.buscarPosicionMinus}" styleClass="texto" /> 
+												</a>&#160;&#160;&#160;
+			                                   <a href="javascript:limpiarDatosPosicion();"> 
+							                       	<h:graphicImage value="/images/page_refresh.png"></h:graphicImage> 
+							                       	<h:outputText value="#{etq.limpiarPosicionMinus}" styleClass="texto" />
+												</a>
+                                            </h:panelGroup>
+                                        </td>
+                                    </tr-->
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </h:panelGroup>
+            
+            <h:panelGroup id="panelResumenCriterios">
+            <h:panelGroup rendered="#{consultaEmisionesBean.consultaEjecutada}">
+            		<div id="divResumen" style="display: #{consultaEmisionesBean.consultaEjecutada ? 'inline' : 'none'}">
+            			<table width="100%" border="0" cellpadding="0px" cellspacing="5px">
+            				<tr>
+           						<td class="recuadroTabla">
+            						<table class="tablaCriterios texto" border="0" style="text-align: center">
+            							<tr align="center">
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{etq.tv}" />
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{etq.emisoraMinus}" />
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{etq.serieMinus}" />
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{etq.isin}" />
+	                                        </td>
+	                                       	<td>
+	                                            <h:outputText styleClass="texto" value="#{etq.fechaInicial}" />
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{etq.fechaFinal}" />
+	                                        </td>
+                                    	</tr>
+                                    	<tr align="center">
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaEmisionesBean.emision.tipoValor.claveTipoValor}" rendered="#{!empty consultaEmisionesBean.emision.tipoValor.claveTipoValor}"/>
+	                                            <h:outputText styleClass="texto" value="TODOS" rendered="#{empty consultaEmisionesBean.emision.tipoValor.claveTipoValor}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaEmisionesBean.emision.emisora.descripcion}" rendered="#{!empty consultaEmisionesBean.emision.emisora.descripcion}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty consultaEmisionesBean.emision.emisora.descripcion}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaEmisionesBean.emision.serie.serie}" rendered="#{!empty consultaEmisionesBean.emision.serie.serie}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty consultaEmisionesBean.emision.serie.serie}"/>
+	                                        </td>
+	                                        <td>
+	                                            <h:outputText styleClass="texto" value="#{consultaEmisionesBean.emision.isin}" rendered="#{!empty consultaEmisionesBean.emision.isin}"/>
+	                                            <h:outputText styleClass="texto" value="TODAS" rendered="#{empty consultaEmisionesBean.emision.isin}"/>
+	                                        </td>
+	                                        <td>
+	                                        	<h:outputText styleClass="texto" value="#{consultaEmisionesBean.fechaIni}" rendered="#{!empty consultaEmisionesBean.fechaIni}"/>
+	                                        </td>
+	                                        <td>
+	                                        	<h:outputText styleClass="texto" value="#{consultaEmisionesBean.fechaFin}" rendered="#{!empty consultaEmisionesBean.fechaFin}"/>
+	                                        </td>
+                                    	</tr>                                    	
+									</table>
+            					</td>		
+            				</tr>
+            			</table>
+            		</div>
+            	</h:panelGroup>
+            	</h:panelGroup>
+        </ui:define> <!-- criterios -->
+
+		<ui:define name="seccionContenido">
+			<h:panelGroup id="containerInfoPaginacionBitacora">
+                <h:panelGroup
+                    rendered="#{consultaEmisionesBean.consultaEjecutada and not empty consultaEmisionesBean.listaEmisiones}">
+                    <table width="900" border="0">
+                        <tr>
+                            <td align="left" class="textoEstadoCuenta">
+                                <a4j:commandLink id="control_bitacora_primero"
+                                    action="#{consultaEmisionesBean.irPrimeraPagina}"
+                                    rendered="#{consultaEmisionesBean.estadoPaginacion.irAlPrimero}"
+                                    reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar,panelResumen">
+                                    <img src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+                                        border="0" />
+                                </a4j:commandLink>
+
+                                <a4j:commandLink id="control_bitacora_atras_fast"
+                                    action="#{consultaEmisionesBean.retrocederPaginasRapido}"
+                                    rendered="#{consultaEmisionesBean.estadoPaginacion.retrocederRapido}"
+                                    reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar, panelResumen">
+                                    <img src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+                                        border="0" />
+                                </a4j:commandLink>
+
+                                <a4j:commandLink id="control_bitacora_atras"
+                                    action="#{consultaEmisionesBean.retrocederPagina}"
+                                    rendered="#{consultaEmisionesBean.estadoPaginacion.retroceder}"
+                                    reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar, panelResumen">
+                                    <img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+                                        border="0" />
+                                </a4j:commandLink>
+                                <a4j:commandLink id="control_bitacora_adelante"
+                                    action="#{consultaEmisionesBean.avanzarPagina}"
+                                    rendered="#{consultaEmisionesBean.estadoPaginacion.avanzar}"
+                                    reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar, panelResumen">
+                                    <img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+                                        border="0" />
+                                </a4j:commandLink>
+
+                                <a4j:commandLink id="control_bitacora_adelante_fast"
+                                    action="#{consultaEmisionesBean.avanzarPaginasRapido}"
+                                    rendered="#{consultaEmisionesBean.estadoPaginacion.avanzarRapido}"
+                                    reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar, panelResumen">
+                                    <img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+                                        border="0" />
+
+                                </a4j:commandLink>
+
+                                <a4j:commandLink id="control_bitacora_ultimo" action="#{consultaEmisionesBean.irUltimaPagina}"
+                                    rendered="#{consultaEmisionesBean.estadoPaginacion.irAlUltimo}"
+                                    reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar, panelResumen">
+                                    <img src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+                                        border="0" />
+                                </a4j:commandLink>
+
+
+                                <br />
+                                <h:outputText styleClass="textoResumen" value="#{etq.mostrando}" />
+                                <h:outputText styleClass="textoResumen" value="#{consultaEmisionesBean.estadoPaginacion.numeroPagina}" />
+                                <h:outputText styleClass="textoResumen" value="#{etq.de}" />
+                                <h:outputText styleClass="textoResumen" value="#{consultaEmisionesBean.estadoPaginacion.totalPaginas}" />
+                                <h:outputText styleClass="textoResumen" value="#{etq.cierre}" />
+                                &#160;&#160;
+                                <h:outputText styleClass="textoResumen" value="#{consultaEmisionesBean.estadoPaginacion.totalResultados}" />
+                                &#160;
+                                <h:outputText styleClass="textoResumen" value="#{etq.registrosEncontrados}"/>
+                            </td>
+                            <td align="right" class="textoEstadoCuenta">
+                                <h:outputText escape="false" value="#{etq.registrosPorPagina}" styleClass="texto" />
+                                <h:selectOneMenu id="tamanioPagina" styleClass="texto"
+                                    value="#{consultaEmisionesBean.estadoPaginacion.registrosPorPagina}">
+                                    <f:selectItem itemLabel="1" itemValue="1" />
+                                    <f:selectItem itemLabel="2" itemValue="2" />
+                                    <f:selectItem itemLabel="5" itemValue="5" />
+                                    <f:selectItem itemLabel="10" itemValue="10" />
+                                    <f:selectItem itemLabel="20" itemValue="20" />
+                                    <f:selectItem itemLabel="50" itemValue="50" />
+                                    <a4j:support event="onchange"
+                                        reRender="totalesConsultas,containerInfoPaginacionBitacora,tablaResultados,botonesExportar, panelResumen"
+                                        actionListener="#{consultaEmisionesBean.buscarEmisiones}" />
+                                </h:selectOneMenu>
+                            </td>
+                        </tr>
+                    </table>
+                </h:panelGroup>
+            </h:panelGroup>
+            
+            <h:panelGroup id="panelResumen">
+	            <div style="display:#{(consultaEmisionesBean.consultaEjecutada)?'inline':'none'};width:100%">
+	            	<div style="display:#{(empty consultaEmisionesBean.resultadosEmisiones)?'inline':'none'};width:100%">
+		            	<t:dataTable id="noExistenResultados"
+							value="#{consultaEmisionesBean.resultadosEmisiones}"
+							var="posicion" styleClass="tablaGeneral"
+							headerClass="tituloTabla" width="100%" footerClass="tituloTabla"
+							border="0" cellpadding="3px" cellspacing="0px"
+							columnClasses="everyColumn"
+							rowClasses="renglonTablaUno, renglonTablaDos">
+							<t:column>
+								<f:facet name="header">
+									<h:outputText value="#{etq.sinResultados}"></h:outputText>
+								</f:facet>
+							</t:column>
+						</t:dataTable>
+					</div>
+	            	<div style="display:#{(not empty consultaEmisionesBean.resultadosEmisiones)?'inline':'none'};width:100%">
+						<t:dataTable id="tablaResultadosEmisiones" 
+							value="#{consultaEmisionesBean.listaEmisiones}"
+							var="emision" styleClass="tablaGeneral"
+							headerClass="tituloTabla" width="100%"
+							footerClass="tituloTabla" border="0" cellpadding="3px"
+							cellspacing="0px" columnClasses="everyColumn"
+							rowClasses="renglonTablaUno, renglonTablaDos">
+							<t:column style="text-align:center">
+								<f:facet name="header">
+									<h:panelGroup>
+										<a4j:commandLink>
+											<h:outputText value="#{etq.tv}" />
+										</a4j:commandLink>
+									</h:panelGroup>
+								</f:facet>
+								<h:outputText value="#{emision.tipoValor.claveTipoValor}" />
+							</t:column>
+							<t:column style="text-align:center">
+								<f:facet name="header">
+									<h:panelGroup>
+										<a4j:commandLink>
+											<h:outputText value="#{etq.emisoraMinus}" />
+										</a4j:commandLink>
+									</h:panelGroup>
+								</f:facet>
+								<h:outputText value="#{emision.emisora.descripcion}" />
+							</t:column>
+							<t:column style="text-align:center">
+								<f:facet name="header">
+									<h:panelGroup>
+										<a4j:commandLink>
+											<h:outputText value="#{etq.serieMinus}" />
+										</a4j:commandLink>
+									</h:panelGroup>
+								</f:facet>
+								<h:outputText value="#{emision.serie.serie}" />
+							</t:column>
+							<t:column style="text-align:center">
+								<f:facet name="header">
+									<h:panelGroup>
+										<a4j:commandLink>
+											<h:outputText value="#{etq.cuponMinus}" />
+										</a4j:commandLink>
+									</h:panelGroup>
+								</f:facet>
+								<h:outputText value="#{emision.cupon}" />
+							</t:column>
+							<t:column style="text-align:center">
+								<f:facet name="header">
+									<h:panelGroup>
+										<a4j:commandLink>
+											<h:outputText value="#{etq.isin}" />
+										</a4j:commandLink>
+									</h:panelGroup>
+								</f:facet>
+								<h:outputText value="#{emision.isin}" />
+							</t:column>
+							<t:column style="text-align:center">
+								<f:facet name="header">
+									<h:panelGroup>
+										<a4j:commandLink>
+											<h:outputText value="#{etq.fechaVencimientoComp}" />
+										</a4j:commandLink>
+									</h:panelGroup>
+								</f:facet>
+								<h:outputText value="#{emision.fechaVencimiento}" />
+							</t:column>
+							<t:column style="text-align:center">
+								<f:facet name="header">
+									<h:panelGroup>
+										<a4j:commandLink>
+											<h:outputText value="#{etq.diasVigentes}" />
+										</a4j:commandLink>
+									</h:panelGroup>
+								</f:facet>
+								<h:outputText value="#{emision.diasVigentes}" />
+							</t:column>
+						</t:dataTable>
+					</div>
+				</div>
+            </h:panelGroup>
+            <table cellpadding="0" cellspacing="0" border="0" align="center" width="900">
+                <tr align="right">
+                    <td align="right">
+                        <h:panelGroup id="botonesExportar">
+                            <h:panelGroup
+                                rendered="#{consultaEmisionesBean.consultaEjecutada and not empty consultaEmisionesBean.listaEmisiones}">
+                                <h:commandButton actionListener="#{consultaEmisionesBean.generarReportes}"
+                                	action="consultaEmisionesPdf"
+                                	image="/images/pdf.gif"
+                                	title="Exportar a PDF todos los resultados de la consulta"
+                             		id="generarPdf"/>                                    
+                            &#160;&#160;
+                            	<h:commandButton actionListener="#{consultaEmisionesBean.generarReportes}"
+                            		action="consultaEmisionesXls"
+                            		image="/images/excel-file.gif"
+                            		title="Exportar a Excel todos los resultados de la consulta"
+                            		id="generarExcel" />                                    
+                            </h:panelGroup>
+                        </h:panelGroup>
+
+                    </td>
+                </tr>
+            </table>
+            <a4j:outputPanel ajaxRendered="true">
+                <script languaje="javascript">
+                    restringirCapturasNumericas();
+                    restringirCapturasNumericasDecimales();
+                    restringirCapturasAlphaNumericas();
+                    restringirCapturasNumericasAsterisco();
+                    restringirCapturasAlphaNumericasAsterisco();
+                    restringirCapturasAlphaNumericasEmisora();
+                    restringirCapturasAlphaNumericasSerie();
+                    restringirCapturasAlphaAsterisco(); 
+                    setMaxLengths();
+                </script>
+            </a4j:outputPanel>
+		</ui:define>
+        
+
+        <ui:define name="botones">        
+        	<h:panelGroup id="panelBotones">
+	        	<div class="refrescar" style="float: left;">
+					<a4j:status id="commonStatus">
+						<f:facet name="start">
+							<h:panelGroup>
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								<h:outputText value="#{etq.buscando}"></h:outputText>
+							</h:panelGroup>
+						</f:facet>
+					</a4j:status>
+				</div>
+		            <div class="limpiar" style="float: center">
+		                <h:commandButton id="botonLimpiar" image="/images/transparent.gif" styleClass="submit" tabindex="140"
+		                    actionListener="#{consultaEmisionesBean.limpiar}">
+		                </h:commandButton>
+		            </div>
+		            
+		            <div class="buscar" style="float: center">
+		                <a4j:commandButton id="botonBuscar" image="/images/transparent.gif" styleClass="submit" tabindex="130"
+		                	onclick="javascript:presentarResumen();"
+		                    actionListener="#{consultaEmisionesBean.buscarEmisiones}"
+		                    reRender="containerResultados,totalesConsultas,tablaResultados,containerInfoPaginacionBitacora,botonesExportar,panelBotones,panelResumen, panelResumenCriterios" />
+		            </div>
+		            <div class="editar" style="display:#{consultaEmisionesBean.consultaEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios">            
+		            	<input type="image" class="submit"
+							src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+							alt="Editar Criterios" title="Editar Criterios"
+							onclick='javascript:presentarCriterios();return false;' />                      	
+	            	</div>
+			</h:panelGroup>
+        </ui:define>
+    </ui:composition>
+
+
+    <!-- FIN DEL DECORATE -->
+</html>
+

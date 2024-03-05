@@ -1,0 +1,878 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:indeval="http://indeval.com/indeval"
+	xml:lang="es">
+	
+
+	<f:view >
+		<ui:composition template="layoutTresCriterios.xhtml">
+		
+			<ui:define name="titulo"><h:outputText value="#{etq.consultaSaldoEfectivo}"></h:outputText> </ui:define>
+			<ui:define name="tituloSeccion"><h:outputText value="#{etq.consultaSaldoEfectivo}"></h:outputText></ui:define>
+			<ui:define name="tituloCriterioUno">
+				<h:outputText value="#{etq.cuentaMinus}"/>
+			</ui:define>
+			<ui:define name="tituloCriterioDos">
+				<h:outputText value="#{etq.divisaMinus}"/>
+			</ui:define>
+			<ui:define name="tituloCriterioTres">
+				<h:outputText value="#{etq.bovedaMinus}"/>
+			</ui:define>
+			
+			<ui:define name="criterioFecha">
+				<h:panelGroup id="init">
+					<a4j:keepAlive beanName="consultaSaldosEfectivoBean"/>
+					<h:outputText value="#{consultaSaldosEfectivoBean.init}"/>
+				</h:panelGroup>
+				<rich:calendar id="fecha" 
+					value="#{consultaSaldosEfectivoBean.consultaSaldos.criterioFecha}"
+					datePattern="dd/MM/yyyy"
+					inputSize="11"
+					inputClass="textoControles"
+					inputStyle="background-color: #ffffe6;"
+					isDayEnabled="isDayEnabled" />
+			</ui:define>
+			
+			<ui:define name="resumenFecha">
+				<h:panelGroup id="panelResumenFecha">
+					<h:outputText value="#{consultaSaldosEfectivoBean.consultaSaldos.criterioFecha}">
+					</h:outputText>
+				</h:panelGroup>
+			</ui:define>
+			<ui:define name="botonEditar">
+				<div class="editar" style="display:#{consultaSaldosEfectivoBean.consultaEjecutada?'inline':'none'};float:right;" id="botonEditarCriterios" >
+					<input type="image" class="submit"
+						src="#{facesContext.externalContext.requestContextPath}/images/transparent.gif"
+						alt="Editar Criterios" title="Editar Criterios"
+						onclick='javascript:presentarCriterios();return false;' />
+				</div>
+			</ui:define>
+			<ui:define name="botonLimpiar">
+				<div class="limpiar">
+					<input type="button" jsfc="h:commandButton" id="botonLimpiar"  image="/images/transparent.gif" styleClass="submit"
+						actionListener="#{consultaSaldosEfectivoBean.limpiar}" onclick=" deshabilitarBoton('botonBuscar');"
+						/>
+					
+				</div>
+			</ui:define>
+			<ui:define name="botonBuscar">
+			
+				<div class="buscar">
+					<a4j:commandButton id="botonBuscar" image="/images/transparent.gif" styleClass="submit"
+						reRender="containerResultados, 
+						containerResumenCuenta, containerControlesCuenta, containerTodosCuenta, containerInfoPaginacionCuenta, 
+						containerResumenDivisa, containerControlesDivisa, containerTodosDivisa, containerInfoPaginacionDivisa,
+						containerResumenBoveda, containerControlesBoveda, containerTodosBoveda,  containerInfoPaginacionBoveda,
+						mensajesError, panelResumenFecha"
+						actionListener="#{consultaSaldosEfectivoBean.buscarSaldosEfectivo}"
+						 onclick="if(!buscarRegistros()){return false;}else{deshabilitarBoton('botonLimpiar'); deshabilitarBoton('botonBuscar');}" 
+						 oncomplete="presentarResultados();habilitarBoton('botonLimpiar'); habilitarBoton('botonBuscar');">
+					</a4j:commandButton>
+				</div>
+				<h:panelGroup id="mensajesError">
+				</h:panelGroup>
+			</ui:define>
+
+			<ui:define name="linkGenerarReportes">
+				<h:commandButton
+					id="generarTXT"
+					action="consultaSaldosEfectivoTxt"
+					actionListener="#{consultaSaldosEfectivoBean.generarReportes}" 
+					image="/images/TXT.gif"
+					title="Crear el archivo de consulta de saldos"
+					onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf', 'generarTXT']);" />
+				&#160;
+				<h:commandButton
+                	id="generarExcel"
+                	action="consultaSaldosEfectivoXls"
+					actionListener="#{consultaSaldosEfectivoBean.generarReportes}" 
+                	title="Exportar a Excel todos los resultados de la consulta"
+                	image="/images/excel-file.gif"
+                	onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf', 'generarTXT']);" />
+				&#160;
+				<h:commandButton
+                	id="generarPdf"
+                	action="consultaSaldosEfectivoPdf"
+					actionListener="#{consultaSaldosEfectivoBean.generarReportes}" 
+                	title="Exportar a PDF todos los resultados de la consulta"
+                	image="/images/pdf.gif"
+                	onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf', 'generarTXT']);" />
+                &#160;
+				<div id="monitorPeticionReporte" style="display: none;">
+					<h:panelGroup id="panelMonitorPeticionReporte">
+					<h:graphicImage value="/images/ajax-loader.gif" />
+					&#160;&#160;
+					<h:outputText value="#{etq.reporteEnProceso}" />
+					<a4j:commandButton id="btnActualizarEstadoPeticion"
+						image="/images/transparent.gif"
+						styleClass="submit"
+						actionListener="#{consultaSaldosEfectivoBean.actualizarEstadoPeticion}"
+						reRender="panelMonitorPeticionReporte"
+						oncomplete="desbloquearBotonesReportes(#{consultaSaldosEfectivoBean.peticionReporteCompleta}, ['generarTXT', 'generarExcel', 'generarPdf']);"/>
+					</h:panelGroup>
+				</div>
+			</ui:define>
+			<ui:define name="linkGenerarHtml"/>
+			
+			<ui:define name="criterioUno">
+				<table width="100%" border="0" cellspacing="0" cellpadding="5">
+					<h:panelGroup rendered="#{consultaSaldosEfectivoBean.usuarioIndeval}">
+						<tr>
+							<td>
+								<h:outputText value="#{etq.naturalezaMinus}"></h:outputText>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:selectOneMenu
+									value="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.criterioTipoNaturaleza.opcionSeleccionada}"
+									id="selectNaturaleza" converter="tipoNaturalezaConverter" styleClass="textoControles">
+									<f:selectItems
+										value="#{consultaSaldosEfectivoBean.opcionesComboNaturaleza}" />
+
+									<a4j:support event="onchange"
+										reRender="containerSuggestCuenta"
+										actionListener="#{consultaSaldosEfectivoBean.cambioSelectNaturaleza}"
+										 />
+								</h:selectOneMenu>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText value="#{etq.tipoCuentaMinus}"></h:outputText>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:selectOneMenu
+									value="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada}"
+									id="selectTipoCuenta" converter="tipoCuentaConverter" styleClass="textoControles">
+									<f:selectItems
+										value="#{consultaSaldosEfectivoBean.opcionesComboTipoCuenta}" />
+
+									<a4j:support event="onchange"
+										reRender="containerSuggestCuenta"
+										actionListener="#{consultaSaldosEfectivoBean.cambioSelectTipoCuenta}"
+										 />
+								</h:selectOneMenu>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText value="#{etq.institucionMinus}"></h:outputText>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:inputText autocomplete="off" id="suggestInstitucion" maxlength="5"
+								value="#{consultaSaldosEfectivoBean.folioClaveInstitucion}"
+								styleClass="campoNumericoAsterisco textoControles">
+								</h:inputText>
+								<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="suggestInstitucion" suggestionAction="#{consultaSaldosEfectivoBean.buscarInstitucionesPorPrefijo}" var="coincidenciaInstitucion" fetchValue="#{coincidenciaInstitucion.claveTipoInstitucion}#{coincidenciaInstitucion.folioInstitucion}"
+									id="sInstitucion" 
+									nothingLabel="Sin coincidencias"
+									eventsQueue="institucionQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+									minChars="#{ (consultaSaldosEfectivoBean.usuarioIndeval) ? '2' : '1'}" 
+									onsubmit="addLoader('suggestInstitucion');return true;" 
+									oncomplete="removeLoader('suggestInstitucion');">
+									<h:column>
+										<h:outputText value="#{coincidenciaInstitucion.claveTipoInstitucion}#{coincidenciaInstitucion.folioInstitucion} - #{coincidenciaInstitucion.nombreCorto}"/>
+									</h:column>
+									<a4j:support event="onselect"  limitToList="true" ajaxSingle="true"  >
+										<t:updateActionListener property="#{consultaSaldosEfectivoBean.folioClaveInstitucion}" value="" />
+									</a4j:support>
+								</rich:suggestionbox>
+							</td>
+						</tr>
+					</h:panelGroup>
+					<tr>
+						<td class="textoEstadoCuenta">
+							<h:outputText value="#{etq.cuentaMinus}"></h:outputText>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label>
+								<h:selectOneMenu
+									value="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.opcionSeleccionada}"
+									id="selectCuenta" converter="cuentaEfectivoConverter" rendered="false" styleClass="textoControles">
+									<f:selectItems
+										value="#{consultaSaldosEfectivoBean.opcionesComboCuenta}" />
+								</h:selectOneMenu>
+								<h:panelGroup id="containerSuggestCuenta">
+									<h:inputText autocomplete="off" value="#{consultaSaldosEfectivoBean.cuentaSeleccionada}" maxlength="4" id="suggestCuenta" styleClass="campoNumericoAsterisco textoControles"></h:inputText>
+									<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="suggestCuenta" suggestionAction="#{consultaSaldosEfectivoBean.buscarCuentasPorPrefijo}" var="coincidenciaCuenta" fetchValue="#{coincidenciaCuenta.descripcion}"
+									nothingLabel="Sin coincidencias"
+									eventsQueue="cuentaQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}" 
+									onsubmit="addLoader('suggestCuenta');return true;" oncomplete="removeLoader('suggestCuenta'); return true;">
+										<h:column>
+											<h:outputText value="#{coincidenciaCuenta.descripcion}"/>
+										</h:column>
+										<a4j:support event="onselect"  limitToList="true" ajaxSingle="true">
+											<t:updateActionListener property="#{consultaSaldosEfectivoBean.cuentaSeleccionada}" value="" />
+										</a4j:support>
+									</rich:suggestionbox>
+								</h:panelGroup>
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							&nbsp;
+						</td>
+					</tr>
+					<tr>
+						<td>
+							&nbsp;
+						</td>
+					</tr>
+				</table>
+			</ui:define>
+			
+			<ui:define name="criterioTres">
+				<table width="100%" border="0"  cellspacing="0" cellpadding="5">
+					<tr>
+						<td>
+							<span class="textoEstadoCuenta"><h:outputText value="#{etq.bovedaMinus}"></h:outputText></span>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:selectOneMenu
+								value="#{consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.opcionSeleccionada}"
+								id="selectBoveda" converter="bovedaConverter" styleClass="textoControles">
+								<f:selectItems
+									value="#{consultaSaldosEfectivoBean.opcionesComboBoveda}" />
+							
+							</h:selectOneMenu>
+						</td>
+					</tr>
+				</table>
+			</ui:define>
+			
+			<ui:define name="criterioDos">
+				<table width="100%" border="0"  cellspacing="0" cellpadding="5">
+					<tr>
+						<td>
+							<span class="textoEstadoCuenta"><h:outputText value="#{etq.divisaMinus}"></h:outputText></span>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:selectOneMenu
+								value="#{consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.opcionSeleccionada}"
+								id="selectDivisa" converter="divisaConverter" styleClass="textoControles">
+									<f:selectItems value="#{consultaSaldosEfectivoBean.opcionesComboDivisa}" />
+									<f:converter converterId="divisaConverter" />
+							</h:selectOneMenu>
+						</td>
+					</tr>
+				</table>
+			</ui:define>
+			
+			<ui:define name="controlesCriterioDos">
+				<h:panelGroup id="containerControlesDivisa">
+					<h:panelGroup rendered="#{consultaSaldosEfectivoBean.consultaEjecutada}">
+						<h:panelGroup rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.debePaginar}">
+							<h:panelGroup rendered="#{!consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.todos}">
+								<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.irAlPrincipio}" id="control_emision_primero" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.irAlPrimero}" reRender="init,containerResultados, containerControlesDivisa, containerResumenDivisa, containerTodosDivisa, containerInfoPaginacionDivisa" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png" /></a4j:commandLink>
+								<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.retrocederPaginasRapido}" id="control_emision_atras_fast" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.retrocederRapido}" reRender="init,containerResultados, containerControlesDivisa, containerResumenDivisa, containerTodosDivisa, containerInfoPaginacionDivisa" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"/></a4j:commandLink>
+								<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.retrocederPagina}" id="control_emision_atras" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.retroceder}"  reRender="init,containerResultados, containerControlesDivisa, containerResumenDivisa, containerTodosDivisa, containerInfoPaginacionDivisa" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png" /></a4j:commandLink>
+								<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.avanzarPagina}" id="control_emision_adelante" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.avanzar}"  reRender="init,containerResultados, containerControlesDivisa, containerResumenDivisa, containerTodosDivisa, containerInfoPaginacionDivisa" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png" /></a4j:commandLink>
+								<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.avanzarPaginasRapido}" id="control_emision_adelante_fast" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.avanzarRapido}"  reRender="init,containerResultados, containerControlesDivisa, containerResumenDivisa, containerTodosDivisa, containerInfoPaginacionDivisa" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png" /></a4j:commandLink>
+								<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.irAlUltimo}" id="control_emision_ultimo" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.irAlUltimo}"  reRender="init,containerResultados, containerControlesDivisa, containerResumenDivisa, containerTodosDivisa, containerInfoPaginacionDivisa" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png" /></a4j:commandLink>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			
+			<ui:define name="todosCriterioDos">
+				<h:panelGroup id="containerTodosDivisa">
+					<h:panelGroup rendered="#{consultaSaldosEfectivoBean.consultaEjecutada}">
+						<h:panelGroup rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.debePaginar}">
+							<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.toggleTodos}" id="control_todos_emision" 
+							onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"
+							reRender="init,containerResultados, containerControlesDivisa, containerResumenDivisa, containerInfoPaginacionDivisa" ajaxSingle="true" limitToList="true"><img src="#{facesContext.externalContext.requestContextPath}/images/control_todos.png" style="width: 59px;"/></a4j:commandLink>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			
+			<ui:define name="infoPaginacionCriterioDos">
+				<h:panelGroup id="containerInfoPaginacionDivisa">
+					<h:panelGroup rendered="#{consultaSaldosEfectivoBean.consultaEjecutada}">
+						<h:panelGroup rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.debePaginar}">
+							<h:panelGroup rendered="#{!consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.todos}">
+								<h:outputText value="#{etq.mostrando}"></h:outputText><h:outputText value="#{consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.estadoPaginacion.numeroPagina}"></h:outputText><h:outputText value="#{etq.de}"></h:outputText><h:outputText value="#{consultaSaldosEfectivoBean.consultaSaldos.criterioDivisa.estadoPaginacion.totalPaginas}"></h:outputText><h:outputText value="#{etq.cierre}"></h:outputText>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			
+			<ui:define name="controlesCriterioTres">
+				<h:panelGroup id="containerControlesBoveda">
+					<h:panelGroup rendered="#{consultaSaldosEfectivoBean.consultaEjecutada}">
+						<h:panelGroup rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.debePaginar}">
+							<h:panelGroup rendered="#{!consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.todos}">
+								<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.irAlPrincipio}" id="control_boveda_primero" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.irAlPrimero}" reRender="init,containerResultados, containerControlesBoveda, containerResumenBoveda, containerTodosBoveda, containerInfoPaginacionBoveda" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png" /></a4j:commandLink>
+								<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.retrocederPaginasRapido}" id="control_boveda_atras_fast" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.retrocederRapido}" reRender="init,containerResultados, containerControlesBoveda, containerResumenBoveda, containerTodosBoveda, containerInfoPaginacionBoveda" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"/></a4j:commandLink>
+								<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.retrocederPagina}" id="control_boveda_atras" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.retroceder}" reRender="init,containerResultados, containerControlesBoveda, containerResumenBoveda, containerTodosBoveda, containerInfoPaginacionBoveda" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png" /></a4j:commandLink>
+								<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.avanzarPagina}" id="control_boveda_adelante" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.avanzar}" reRender="init,containerResultados, containerControlesBoveda, containerResumenBoveda, containerTodosBoveda, containerInfoPaginacionBoveda" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png" /></a4j:commandLink>
+								<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.avanzarPaginasRapido}" id="control_boveda_adelante_fast" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.avanzarRapido}" reRender="init,containerResultados, containerControlesBoveda, containerResumenBoveda, containerTodosBoveda, containerInfoPaginacionBoveda" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png" /></a4j:commandLink>
+								<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.irAlUltimo}" id="control_boveda_ultimo" styleClass="control_ultimo" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.irAlUltimo}" reRender="init,containerResultados, containerControlesBoveda, containerResumenBoveda, containerTodosBoveda, containerInfoPaginacionBoveda" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png" /></a4j:commandLink>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+
+			<ui:define name="todosCriterioTres">
+				<h:panelGroup id="containerTodosBoveda">
+					
+					<h:panelGroup rendered="#{consultaSaldosEfectivoBean.consultaEjecutada}">
+						<h:panelGroup rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.debePaginar}">
+							<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.toggleTodos}" 
+							onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"
+							id="control_todos_boveda" reRender="init,containerResultados, containerControlesBoveda, containerResumenBoveda, containerTodosBoveda, containerInfoPaginacionBoveda" ajaxSingle="true" limitToList="true"><img src="#{facesContext.externalContext.requestContextPath}/images/control_todos.png" style="width: 59px;"/></a4j:commandLink>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			
+			
+						
+			<ui:define name="infoPaginacionCriterioTres">
+				<h:panelGroup id="containerInfoPaginacionBoveda">
+					<h:panelGroup rendered="#{consultaSaldosEfectivoBean.consultaEjecutada}">
+						<h:panelGroup rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.debePaginar}">
+							<h:panelGroup rendered="#{!consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.todos}">
+								<h:outputText value="#{etq.mostrando}"></h:outputText><h:outputText value="#{consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.estadoPaginacion.numeroPagina}"></h:outputText><h:outputText value="#{etq.de}"></h:outputText><h:outputText value="#{consultaSaldosEfectivoBean.consultaSaldos.criterioBoveda.estadoPaginacion.totalPaginas}"></h:outputText><h:outputText value="#{etq.cierre}"></h:outputText>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+
+			<ui:define name="controlesCriterioUno">
+				<h:panelGroup id="containerControlesCuenta">
+					<h:panelGroup rendered="#{consultaSaldosEfectivoBean.consultaEjecutada}">
+						<h:panelGroup rendered="#{!consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.todos}">
+							<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.irAlPrincipio}" id="control_cuenta_primero" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.irAlPrimero}" reRender="init,containerResultados, containerControlesCuenta, containerResumenCuenta, containerTodosCuenta, containerInfoPaginacionCuenta" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png" /></a4j:commandLink>
+							<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.retrocederPaginasRapido}" id="control_cuenta_atras_fast" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.retrocederRapido}" reRender="init,containerResultados, containerControlesCuenta, containerResumenCuenta, containerTodosCuenta, containerInfoPaginacionCuenta" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"/></a4j:commandLink>
+							<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.retrocederPagina}" id="control_cuenta_atras" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.retroceder}" reRender="init,containerResultados, containerControlesCuenta, containerResumenCuenta, containerTodosCuenta, containerInfoPaginacionCuenta" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png" /></a4j:commandLink>
+							<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.avanzarPagina}" id="control_cuenta_adelante" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.avanzar}" reRender="init,containerResultados, containerControlesCuenta, containerResumenCuenta, containerTodosCuenta, containerInfoPaginacionCuenta" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png" /></a4j:commandLink>
+							<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.avanzarPaginasRapido}" id="control_cuenta_adelante_fast" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.avanzarRapido}" reRender="init,containerResultados, containerControlesCuenta, containerResumenCuenta, containerTodosCuenta, containerInfoPaginacionCuenta" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png" /></a4j:commandLink>
+							<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.irAlUltimo}" id="control_cuenta_ultimo" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.irAlUltimo}" reRender="init,containerResultados, containerControlesCuenta, containerResumenCuenta, containerTodosCuenta, containerInfoPaginacionCuenta" ajaxSingle="true" limitToList="true" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"><img src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png" /></a4j:commandLink>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			
+			<ui:define name="todosCriterioUno">
+				<h:panelGroup id="containerTodosCuenta">
+					<h:panelGroup rendered="#{consultaSaldosEfectivoBean.consultaEjecutada}">
+						<h:panelGroup rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.debePaginar}">
+							<a4j:commandLink action="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.toggleTodos}" 
+							onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"
+							id="control_todos_cuenta" reRender="init,containerResultados, containerControlesCuenta, containerResumenCuenta, containerTodosCuenta, containerInfoPaginacionCuenta" ajaxSingle="true" limitToList="true"><img src="#{facesContext.externalContext.requestContextPath}/images/control_todos.png" style="width: 59px;"/></a4j:commandLink>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			
+			<ui:define name="infoPaginacionCriterioUno">
+				<h:panelGroup id="containerInfoPaginacionCuenta">
+					<h:panelGroup rendered="#{consultaSaldosEfectivoBean.consultaEjecutada}">
+						<h:panelGroup rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.debePaginar}">
+							<h:panelGroup rendered="#{!consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.todos}">
+								<h:outputText value="#{etq.mostrando}"></h:outputText><h:outputText value="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.estadoPaginacion.numeroPagina}"></h:outputText><h:outputText value="#{etq.de}"></h:outputText><h:outputText value="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.estadoPaginacion.totalPaginas}"></h:outputText><h:outputText value="#{etq.cierre}"></h:outputText>
+							</h:panelGroup>
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			
+			<ui:define name="resumenCriterioDos">
+				<h:panelGroup id="containerResumenDivisa">
+					<h:panelGroup id="resumenDivisaConConsulta" rendered="#{consultaSaldosEfectivoBean.consultaEjecutada}">
+						<div id="resumenConsultaDivisa" >
+							<table width="100%" cellpadding="0" cellspacing="0">
+								<tr>
+									<td width="15%" class="texto">
+										<h:outputText value="#{etq.divisaMinus}"></h:outputText>
+									</td>
+									<td width="4%" class="textoEstadoCuenta">
+										<div align="center">
+											<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+										</div>
+									</td>
+									<td width="81%" colspan="4" class="textoResumen">
+										<h:outputText value="#{consultaSaldosEfectivoBean.consultaSaldos.divisaSeleccionada.descripcion}"></h:outputText>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</h:panelGroup>
+					<h:panelGroup id="resumenDivisaSinConsulta" rendered="#{!consultaSaldosEfectivoBean.consultaEjecutada}">
+						<span class="texto"><h:outputText value="#{etq.indicarCriteriosMinus}"></h:outputText></span>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			
+			<ui:define name="resumenCriterioTres">
+				
+				<h:panelGroup id="containerResumenBoveda">
+					<h:panelGroup id="resumenBovedaConConsulta" rendered="#{consultaSaldosEfectivoBean.consultaEjecutada}">
+						<div id="resumenConsultaCuenta" >
+							<table width="100%" cellpadding="0" cellspacing="0">
+								<tr>
+									<td width="15%">
+										<div align="right" class="texto">
+											<div align="left">
+												<h:outputText value="#{etq.bovedaMinus}"></h:outputText>
+											</div>
+										</div>
+									</td>
+									<td width="4%" align="center" class="textoEstadoCuenta">
+										<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+									</td>
+									<td width="81%" class="textoResumen">
+										<span ><h:outputText value="#{consultaSaldosEfectivoBean.consultaSaldos.bovedaSeleccionada.descripcion}"></h:outputText></span>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</h:panelGroup>
+					<h:panelGroup id="resumenBovedaSinConsulta" rendered="#{!consultaSaldosEfectivoBean.consultaEjecutada}">
+						<span class="texto"><h:outputText value="#{etq.indicarCriteriosMinus}"></h:outputText></span>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+			
+			<ui:define name="resumenCriterioUno">
+				<h:panelGroup id="containerResumenCuenta">
+					<h:panelGroup id="resumenCuentaConConsulta" rendered="#{consultaSaldosEfectivoBean.consultaEjecutada}">
+						<div id="resumenConsultaCuenta" >
+							<table width="100%" cellpadding="0" cellspacing="0">
+								<tr>
+									<td>
+										<div align="right" class="texto">
+											<div align="left" class="texto">
+												<h:outputText value="#{etq.naturalezaMinus}"></h:outputText>
+											</div>
+										</div>
+									</td>
+									<td align="center" class="textoEstadoCuenta">
+										<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+									</td>
+									<td class="textoResumen">
+										<h:outputText value="#{consultaSaldosEfectivoBean.consultaSaldos.cuentaSeleccionada.tipoNaturaleza.descripcion}"></h:outputText>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div align="right" class="texto">
+											<div align="left" class="texto">
+												<h:outputText value="#{etq.tipoCuentaMinus}"></h:outputText>
+											</div>
+										</div>
+									</td>
+									<td align="center" class="textoEstadoCuenta">
+										<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+									</td>
+									<td class="textoResumen">
+										<h:outputText value="#{consultaSaldosEfectivoBean.consultaSaldos.cuentaSeleccionada.tipoCuenta.descripcion}"></h:outputText>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div align="right" class="texto">
+											<div align="left" >
+												<h:outputText value="#{etq.institucionMinus}"></h:outputText>
+											</div>
+										</div>
+									</td>
+									<td align="center" class="textoEstadoCuenta">
+										<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+									</td>
+									<td class="textoResumen">
+										<h:outputText value="#{consultaSaldosEfectivoBean.folioClaveInstitucion}"></h:outputText>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div align="right" class="texto">
+											<div align="left">
+												<h:outputText value="#{etq.cuentaMinus}"></h:outputText>
+											</div>
+										</div>
+									</td>
+									<td align="center" class="textoEstadoCuenta">
+										<h:outputText value="#{etq.dosPuntos}"></h:outputText>
+									</td>
+									<td class="textoResumen">
+										<h:outputText value="#{consultaSaldosEfectivoBean.consultaSaldos.cuentaSeleccionada.descripcion}"></h:outputText>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</h:panelGroup>
+					<h:panelGroup id="resumenCuentaSinConsulta" rendered="#{!consultaSaldosEfectivoBean.consultaEjecutada}">
+						<span class="texto"><h:outputText value="#{etq.indicarCriteriosMinus}"></h:outputText></span>
+					</h:panelGroup>
+				</h:panelGroup>
+			</ui:define>
+
+			<ui:define name="seccionResultados">
+				<h:panelGroup rendered="#{consultaSaldosEfectivoBean.consultaEjecutada}">
+					<script language="javascript">
+						$j("#divCriterios").css('display','none');
+						$j("#divResumen").css('display','inline');
+					</script>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{!consultaSaldosEfectivoBean.consultaEjecutada}">
+					<script language="javascript">
+						$j("#divCriterios").css('display','inline');
+						$j("#divResumen").css('display','none');
+					</script>
+				</h:panelGroup>
+				<h:panelGroup id="containerResultados">
+					<h:panelGroup rendered="#{consultaSaldosEfectivoBean.consultaEjecutada}">
+					<h:outputText value="#{consultaSaldosEfectivoBean.restaurPaginacion}"/>
+					<table width="100%" border="0" >
+						<tr>	
+							<td align="left">
+								<a4j:commandLink actionListener="#{consultaSaldosEfectivoBean.navegarPorResultados}" 
+								id="control_saldo_primero" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.irAlPrimero}" 
+								reRender="containerResultados" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"
+								ajaxSingle="true" limitToList="true"><img src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png" border="0"/>
+									<f:attribute name="navegacion" value="irAlPrincipio" /></a4j:commandLink>
+							
+							
+						
+								<a4j:commandLink actionListener="#{consultaSaldosEfectivoBean.navegarPorResultados}" 
+								id="control_saldo_atras_fast" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"
+								 rendered="#{consultaSaldosEfectivoBean.consultaSaldos.retrocederRapido}" 
+								reRender="containerResultados" ajaxSingle="true" limitToList="true"><img src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png" border="0"/><f:attribute name="navegacion" value="retrocederPaginasRapido" /></a4j:commandLink>
+								
+								<a4j:commandLink actionListener="#{consultaSaldosEfectivoBean.navegarPorResultados}"  
+								id="control_saldo_atras" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"
+								rendered="#{consultaSaldosEfectivoBean.consultaSaldos.retroceder}" 
+								reRender="containerResultados" ajaxSingle="true" limitToList="true"><img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png" border="0"/>
+									<f:attribute name="navegacion" value="retrocederPagina" />
+								</a4j:commandLink>
+								<a4j:commandLink actionListener="#{consultaSaldosEfectivoBean.navegarPorResultados}" 
+								id="control_saldo_adelante" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);" 
+								rendered="#{consultaSaldosEfectivoBean.consultaSaldos.avanzar}" 
+								reRender="containerResultados" ajaxSingle="true" limitToList="true"><img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png" border="0"/>
+									<f:attribute name="navegacion" value="avanzarPagina" />
+								</a4j:commandLink>
+								<a4j:commandLink actionListener="#{consultaSaldosEfectivoBean.navegarPorResultados}" 
+								id="control_saldo_adelante_fast" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);" 
+								rendered="#{consultaSaldosEfectivoBean.consultaSaldos.avanzarRapido}" 
+								reRender="containerResultados" ajaxSingle="true" limitToList="true"><img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png" border="0"/>
+									<f:attribute name="navegacion" value="avanzarPaginasRapido" />
+								</a4j:commandLink>
+								<a4j:commandLink actionListener="#{consultaSaldosEfectivoBean.navegarPorResultados}" 
+								id="control_saldo_ultimo" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);" 
+								rendered="#{consultaSaldosEfectivoBean.consultaSaldos.irAlUltimo}" 
+								reRender="containerResultados" ajaxSingle="true" limitToList="true"><img src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png" border="0"/>
+									<f:attribute name="navegacion" value="irAlUltimo" />
+								</a4j:commandLink>
+									<br/>
+								<span class="textoResumen">
+								<h:outputText escape="false" value="#{etq.mostrandoPagina}"> </h:outputText>
+									<h:outputText value="#{etq.abrir}" styleClass="textoResumen"></h:outputText>
+									<h:outputText value="#{consultaSaldosEfectivoBean.consultaSaldos.estadoPaginacion.numeroPagina}" styleClass="textoResumen"></h:outputText>
+									<h:outputText value="#{etq.de}" styleClass="textoResumen"></h:outputText>
+									<h:outputText value="#{consultaSaldosEfectivoBean.consultaSaldos.estadoPaginacion.totalPaginas}" styleClass="textoResumen">
+									</h:outputText><h:outputText value="#{etq.cierre}" styleClass="textoResumen"></h:outputText>
+									&#160;
+									<h:outputText escape="false" styleClass="textoResumen"
+									value="#{consultaSaldosEfectivoBean.consultaSaldos.estadoPaginacion.totalResultados}" converter="formatoEnteroConverter"></h:outputText>&#160;
+									<h:outputText escape="false" styleClass="textoResumen" value="#{etq.registrosEncontrados}"/>
+								</span>
+				
+							</td>
+							<td align="right">
+								<h:outputText escape="false" value="#{etq.registrosPorPagina}" styleClass=""/>
+									<h:selectOneMenu id="tamanioPagina" value="#{consultaSaldosEfectivoBean.consultaSaldos.resultadosPorPagina}">
+										<f:selectItem itemLabel="2" itemValue="2"/>
+										<f:selectItem itemLabel="5" itemValue="5"/>
+										<f:selectItem itemLabel="10" itemValue="10"/>
+										<f:selectItem itemLabel="20" itemValue="20"/>
+										<f:selectItem itemLabel="25" itemValue="25"/>
+										<f:selectItem itemLabel="50" itemValue="50"/>
+										<f:selectItem itemLabel="100" itemValue="100"/>
+										<f:selectItem itemLabel="200" itemValue="200"/>
+										<a4j:support  reRender="containerResultados" event="onchange" ajaxSingle="true" limitToList="true"
+										onchange="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"
+										/>
+								</h:selectOneMenu>
+							</td>
+							
+						</tr>
+					</table>
+						
+					
+					
+					<div id="divTablaResultados">
+						<h:outputText value="#{consultaSaldosEfectivoBean.initConsulta}"></h:outputText>
+						<t:dataTable id="noExistenResultados"   
+							value="#{consultaSaldosEfectivoBean.resultadosConsultaSaldo}" 
+							var="posicion"  styleClass="tablaGeneral" headerClass="tituloTabla" width="100%" footerClass="tituloTabla"
+							 border="0" cellpadding="3px" cellspacing="0px"
+							  columnClasses="everyColumn"
+							  rowClasses="renglonTablaUno, renglonTablaDos"
+							  
+							 rendered="#{empty consultaSaldosEfectivoBean.resultadosConsultaSaldo}"
+							  >
+							  <t:column>
+							  		<f:facet name="header" >
+							  		<h:outputText value = "#{etq.sinResultados}"></h:outputText>
+							  		</f:facet>
+							  		
+							  </t:column>
+						</t:dataTable>
+						<div style="display:#{ (not empty consultaSaldosEfectivoBean.resultadosConsultaSaldo)?'inline':'none'}">
+						<t:dataTable id="tablaResultados"    
+						
+						
+							value="#{consultaSaldosEfectivoBean.resultadosConsultaSaldo}" 
+							var="saldo"  styleClass="tablaGeneral" headerClass="tituloTabla" width="100%" footerClass="tituloTabla"
+							 border="0" cellpadding="3px" cellspacing="0px"
+							  columnClasses="everyColumn"
+							  rowClasses="renglonTablaUno, renglonTablaDos"
+							
+							  >
+							  
+							<h:column id="colCuenta">
+							  	<f:facet name="header">
+							  		<h:panelGroup>
+						  				<a4j:commandLink actionListener="#{consultaSaldosEfectivoBean.ordenar}" id="sortCuenta"
+						  				  reRender="containerResultados" 
+						  				  ajaxSingle="false"
+						  				  onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+						  				 <h:outputText value="#{etq.cuentaMinus}" />
+						  				 
+						  				</a4j:commandLink>
+						  				<h:outputText value="&#8593;" 
+								  			rendered="#{consultaSaldosEfectivoBean.consultaSaldos.columnaOrdenada == 'sortCuenta' and  consultaSaldosEfectivoBean.consultaSaldos.ordenAscendente}"/>
+								  		<h:outputText value="&#8595;" 
+								  			rendered="#{consultaSaldosEfectivoBean.consultaSaldos.columnaOrdenada == 'sortCuenta' and  !consultaSaldosEfectivoBean.consultaSaldos.ordenAscendente}"/>
+									</h:panelGroup>
+								</f:facet>
+								
+									<h:outputText value="#{saldo.cuenta.numeroCuenta}" />
+								<f:facet name="footer">
+									<h:panelGroup>
+										<h:outputText value="#{etq.totalPaginaMinus}"/>
+														<br/>
+														<br/>
+										<h:outputText value="#{etq.totalConsultaMinus}"/>
+									</h:panelGroup>
+									
+								</f:facet>
+							</h:column>
+							  
+							<h:column id="colDivisa">
+								<f:facet name="header" >
+									<h:panelGroup>
+										<a4j:commandLink actionListener="#{consultaSaldosEfectivoBean.ordenar}" id="sortDivisa"
+								  				  ajaxSingle="false"
+								  				 reRender="containerResultados"
+								  				  onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+								  				 <h:outputText value="#{etq.divisaMinus}" />
+								  		</a4j:commandLink>
+								  		<h:outputText value="&#8593;" 
+									  		rendered="#{consultaSaldosEfectivoBean.consultaSaldos.columnaOrdenada == 'sortDivisa' and  consultaSaldosEfectivoBean.consultaSaldos.ordenAscendente}"/>
+									  	<h:outputText value="&#8595;" 
+									  		rendered="#{consultaSaldosEfectivoBean.consultaSaldos.columnaOrdenada == 'sortDivisa' and  !consultaSaldosEfectivoBean.consultaSaldos.ordenAscendente}"/>
+									</h:panelGroup>
+								</f:facet>
+								
+									<h:outputText value="#{saldo.divisa.descripcion}" />
+								
+							</h:column>
+							
+							<h:column id="colBoveda">
+								<f:facet name="header" >
+									<h:panelGroup>
+										<a4j:commandLink actionListener="#{consultaSaldosEfectivoBean.ordenar}" id="sortBoveda"
+							  				  ajaxSingle="false"
+							  				 reRender="containerResultados"
+							  				  onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+							  				 <h:outputText value="#{etq.bovedaMinus}" />
+							  			</a4j:commandLink>
+							  			<h:outputText value="&#8593;" 
+									  		rendered="#{consultaSaldosEfectivoBean.consultaSaldos.columnaOrdenada == 'sortBoveda' and  consultaSaldosEfectivoBean.consultaSaldos.ordenAscendente}"/>
+									  	<h:outputText value="&#8595;" 
+									  		rendered="#{consultaSaldosEfectivoBean.consultaSaldos.columnaOrdenada == 'sortBoveda' and  !consultaSaldosEfectivoBean.consultaSaldos.ordenAscendente}"/>
+									</h:panelGroup>
+								</f:facet>
+								<h:outputText value="#{saldo.boveda.descripcion}" />
+							</h:column>
+							
+							<h:column id="colSaldo">
+								<f:facet name="header" >
+									<h:panelGroup>
+											<a4j:commandLink actionListener="#{consultaSaldosEfectivoBean.ordenar}" id="sortSaldo"
+							  				  ajaxSingle="false"
+							  				 reRender="containerResultados"
+							  				  onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);">
+							  				 <h:outputText value="#{etq.saldoMinus}" />
+							  				</a4j:commandLink>
+							  				<h:outputText value="&#8593;" 
+									  		rendered="#{consultaSaldosEfectivoBean.consultaSaldos.columnaOrdenada == 'sortSaldo' and  consultaSaldosEfectivoBean.consultaSaldos.ordenAscendente}"/>
+									  		<h:outputText value="&#8595;" 
+									  		rendered="#{consultaSaldosEfectivoBean.consultaSaldos.columnaOrdenada == 'sortSaldo' and  !consultaSaldosEfectivoBean.consultaSaldos.ordenAscendente}"/>
+									</h:panelGroup>
+									
+								</f:facet>
+								<div align="right">
+									<h:outputLink value="#{facesContext.externalContext.requestContextPath}/estadocuenta/consultaEstadoCuentaSaldo.faces" title="Consultar Estado de Cuenta" >
+											<h:outputText value="#{saldo.saldo}" >
+											<f:converter converterId="formatoMonedaConverter"/>
+											</h:outputText>
+										<f:param name="idSaldo" value="#{saldo.idSaldo}" />
+										<f:param name="fechaFinal" value="#{consultaSaldosEfectivoBean.criterioFechaStr}"/>
+										<f:param name="tipoCuenta" value="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id}"/>
+											
+									</h:outputLink>
+								
+									
+								
+								</div>
+								<f:facet name="footer">
+									<h:panelGroup >
+										<div align="right">
+											<h:outputText value="#{consultaSaldosEfectivoBean.resumenSaldo.saldo}">
+														<f:converter converterId="formatoMonedaConverter"/>
+													</h:outputText>
+											<br/>
+											<br/>
+											<h:outputText value="#{consultaSaldosEfectivoBean.resumenConsulta['saldoTotal']}" converter="formatoMonedaConverter"/>
+										</div>		
+									</h:panelGroup>					
+								</f:facet>
+							</h:column>
+							
+							<h:column  id="colDisponible" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id == 'N'}">
+								<f:facet name="header" >
+									<h:outputText value="#{etq.disponibleMinus}" />
+								</f:facet>
+								<div align="right">
+								<h:outputText value="#{saldo.saldoDisponible}" >
+									<f:converter converterId="formatoMonedaConverter"/>
+									
+								</h:outputText>
+								</div>
+								<f:facet name="footer">
+									<h:panelGroup >
+										<div align="right">
+											<h:outputText value="#{consultaSaldosEfectivoBean.resumenSaldo.saldoDisponible}">
+														<f:converter converterId="formatoMonedaConverter"/>
+													</h:outputText>
+											<br/>
+											<br/>
+											<h:outputText value="#{consultaSaldosEfectivoBean.resumenConsulta['saldoTotalDisponible']}" converter="formatoMonedaConverter"/>
+										</div>		
+										
+									</h:panelGroup>					
+								</f:facet>
+							</h:column>
+							
+							<t:column id="colNoDisponible"	rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id == 'N'}">
+								
+									<f:facet name="header"   >
+										<h:outputText value="#{etq.noDisponibleMinus}"  />
+									</f:facet>
+									<div align="right">
+									<h:outputText value="#{saldo.saldoNoDisponible}"  >
+									<f:converter converterId="formatoMonedaConverter"/>
+									</h:outputText>
+									</div>
+									<f:facet name="footer">
+									<h:panelGroup >
+										<div align="right">
+											<h:outputText value="#{consultaSaldosEfectivoBean.resumenSaldo.saldoNoDisponible}">
+														<f:converter converterId="formatoMonedaConverter"/>
+													</h:outputText>
+											<br/>
+											<br/>
+											<h:outputText value="#{consultaSaldosEfectivoBean.resumenConsulta['saldoTotalNoDisponible']}" converter="formatoMonedaConverter"/>
+										</div>		
+									</h:panelGroup>					
+								</f:facet>
+								
+							</t:column>
+							
+							
+							
+						</t:dataTable>
+						</div>
+						<h:outputText value="#{consultaSaldosEfectivoBean.limpiarConsulta}"></h:outputText>
+						</div>
+						&#160;
+						<table width="100%" border="0" >
+						<tr>	
+							<td align="left">
+								<a4j:commandLink actionListener="#{consultaSaldosEfectivoBean.navegarPorResultados}" 
+								id="control_saldo_primero2" rendered="#{consultaSaldosEfectivoBean.consultaSaldos.irAlPrimero}" 
+								reRender="containerResultados" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"
+								ajaxSingle="true" limitToList="true"><img src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png" border="0"/>
+									<f:attribute name="navegacion" value="irAlPrincipio" /></a4j:commandLink>
+							
+							
+						
+								<a4j:commandLink actionListener="#{consultaSaldosEfectivoBean.navegarPorResultados}" 
+								id="control_saldo_atras_fast2" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"
+								 rendered="#{consultaSaldosEfectivoBean.consultaSaldos.retrocederRapido}" 
+								reRender="containerResultados" ajaxSingle="true" limitToList="true"><img src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png" border="0"/><f:attribute name="navegacion" value="retrocederPaginasRapido" /></a4j:commandLink>
+								
+								<a4j:commandLink actionListener="#{consultaSaldosEfectivoBean.navegarPorResultados}"  
+								id="control_saldo_atras2" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);"
+								rendered="#{consultaSaldosEfectivoBean.consultaSaldos.retroceder}" 
+								reRender="containerResultados" ajaxSingle="true" limitToList="true"><img src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png" border="0"/>
+									<f:attribute name="navegacion" value="retrocederPagina" />
+								</a4j:commandLink>
+								<a4j:commandLink actionListener="#{consultaSaldosEfectivoBean.navegarPorResultados}" 
+								id="control_saldo_adelante2" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);" 
+								rendered="#{consultaSaldosEfectivoBean.consultaSaldos.avanzar}" 
+								reRender="containerResultados" ajaxSingle="true" limitToList="true"><img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png" border="0"/>
+									<f:attribute name="navegacion" value="avanzarPagina" />
+								</a4j:commandLink>
+								<a4j:commandLink actionListener="#{consultaSaldosEfectivoBean.navegarPorResultados}" 
+								id="control_saldo_adelante_fast2" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);" 
+								rendered="#{consultaSaldosEfectivoBean.consultaSaldos.avanzarRapido}" 
+								reRender="containerResultados" ajaxSingle="true" limitToList="true"><img src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png" border="0"/>
+									<f:attribute name="navegacion" value="avanzarPaginasRapido" />
+								</a4j:commandLink>
+								<a4j:commandLink actionListener="#{consultaSaldosEfectivoBean.navegarPorResultados}" 
+								id="control_saldo_ultimo2" onclick="buscarRegistros();" oncomplete="presentarResultados(); javascript:window.scrollTo(0,0);" 
+								rendered="#{consultaSaldosEfectivoBean.consultaSaldos.irAlUltimo}" 
+								reRender="containerResultados" ajaxSingle="true" limitToList="true"><img src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png" border="0"/>
+									<f:attribute name="navegacion" value="irAlUltimo" />
+								</a4j:commandLink>
+								
+				
+							</td>
+							
+							
+						</tr>
+					</table>
+					</h:panelGroup>
+				</h:panelGroup>
+				
+			</ui:define>
+		</ui:composition>
+	</f:view>
+</html>

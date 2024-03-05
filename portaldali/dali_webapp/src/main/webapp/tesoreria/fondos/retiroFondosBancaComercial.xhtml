@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:indeval="http://indeval.com/indeval"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en">
+
+	<ui:composition template="/layoutCaptura.xhtml">
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+                src="#{facesContext.externalContext.requestContextPath}/js/mostrarFirmaDigital.js"></script>
+			<script language="javascript" type="text/javascript">
+				function mostrar(seleccionado){
+					if(seleccionado!=1){
+						window.location='#{facesContext.externalContext.requestContextPath}/tesoreria/fondos/retiroFondosInternacional.faces?cveDivisa='+seleccionado; 
+					}
+				}
+
+				function cambiaRetiro(seleccionado){
+					if(seleccionado!=11){
+						window.location='#{facesContext.externalContext.requestContextPath}/tesoreria/fondos/retiroFondos.faces?esBancaComercial=false&amp;tipoRetiro='+seleccionado;
+					}
+				}
+			</script>
+		</ui:define>
+
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.retiroFondosBancaComercial}"></h:outputText>
+		</ui:define>
+
+		<ui:define name="seccionForma">
+			<h:outputText id="miInit" value="#{retiroFondosCtrl.init}" />
+			<a4j:keepAlive beanName="retiroFondosCtrl" />
+			
+			<h:panelGroup id="general">
+				<table width="60%" align="center" cellpadding="1" cellspacing="2" border="0">
+					<tr>
+						<td width="29%">
+							<h:outputText styleClass="texto" value="#{etq.divisa}" />
+							<h:outputText value="#{etq.asterisco}" styleClass="required" />
+						</td>
+						<td colspan="2">
+							<h:selectOneMenu id="valorEn"
+								value="#{retiroFondosCtrl.retiro.valorEn}"
+								converter="divisaConverter"
+								disabled="true" onchange="javascript:mostrar(this.options[this.selectedIndex].value);"
+								>
+								<f:selectItems value="#{catalogosBean.opcionesComboDivisa}" />
+							</h:selectOneMenu>
+						</td>
+					</tr>
+					<tr><td><br/><br/>&#160;</td></tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="texto" value="#{etq.tipoRetiro}"></h:outputText>
+							<h:outputText value="#{etq.asterisco}" styleClass="required" />
+						</td>
+						<td align="left" colspan="2">
+							<h:selectOneRadio id="tipoRetiro" 
+								styleClass="texto" value="#{retiroFondosCtrl.retiro.tipoRetiro}"
+								onclick="javascript:cambiaRetiro(this.value);" tabindex="1">
+								<f:selectItem itemValue="28" itemLabel="#{etq.tipoRetiroSPEI}&#160;&#160;&#160;" 
+									itemDisabled="#{retiroFondosCtrl.disabledSpei}"/>
+								<f:selectItem itemValue="21" itemLabel="#{etq.tipoRetiroSIAC}&#160;&#160;&#160;" 
+									itemDisabled="#{retiroFondosCtrl.disabledSiac}"/>
+								<f:selectItem itemValue="11" itemLabel="#{etq.tipoRetiroBC}" 
+											itemDisabled="#{retiroFondosCtrl.disabledBCom}" />
+							</h:selectOneRadio>
+						</td>
+					</tr>
+					<tr>
+						<td>
+						</td>
+						<td align="left">
+							<b><h:outputText styleClass="texto" value="#{etq.participante}" /></b>
+						</td>
+						<td align="left">
+							<b><h:outputText styleClass="texto" value="#{etq.institucionMinus}" /></b>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<h:outputText styleClass="texto" value="Traspasante" />
+							<h:outputText value="#{etq.asterisco}" styleClass="required" />
+						</td>
+						<td>
+							<h:inputText autocomplete="off" id="idTraspasante"
+								value="#{retiroFondosCtrl.retiro.idFolioUsuario}" size="4" maxlength="5"
+								styleClass='campoNumericoAsterisco readonly'
+								tabindex="2">
+								<a4j:support event="onchange" actionListener="#{retiroFondosCtrl.buscarInstitucionParticipante}"
+										reRender="nombreInstitucionTraspasante, saldoDisponible," />
+							</h:inputText>
+							<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="idTraspasante"
+								ignoreDupResponses="true"
+								eventsQueue="folioTraspasanteQueue"
+								requestDelay ="#{inicioSesionBean.delay}"
+								suggestionAction="#{retiroFondosCtrl.buscarParticipante}"
+								var="coincidencia" fetchValue="#{coincidencia.claveTipoInstitucion}#{coincidencia.folioInstitucion}"
+								minChars="1" width="450" nothingLabel="Sin coincidencias"
+							>
+								<h:column>
+									<h:outputText value="#{coincidencia.claveTipoInstitucion}#{coincidencia.folioInstitucion}" /> - <h:outputText
+											value="#{coincidencia.nombreCorto}" />
+								</h:column>
+								<a4j:support event="onselect" actionListener="#{retiroFondosCtrl.buscarInstitucionParticipante}"
+										reRender="nombreInstitucionTraspasante, saldoDisponible," />
+							</rich:suggestionbox>
+						</td>
+						<td align="left">
+							<h:inputText autocomplete="off" id="nombreInstitucionTraspasante" 
+								styleClass="readonly"
+								value="#{retiroFondosCtrl.retiro.saldoUsuario.cuenta.institucion.nombreCorto}"
+								size="16">
+							</h:inputText>
+						</td>
+					</tr>
+				</table>
+				<h:panelGroup id="todo">
+					<table width="45%" align="center" cellpadding="1" cellspacing="2" border="0">
+						<tr>
+							<td>
+								<h:panelGroup>
+									<h:outputText styleClass="texto" value="#{etq.bovedaMinus}" />
+									<h:outputText value="#{etq.asterisco}" styleClass="required" />
+								</h:panelGroup>
+							</td>
+							<td>
+								<h:selectOneMenu
+									value="#{retiroFondosCtrl.retiro.saldoUsuario.boveda}"
+									id="boveda" converter="bovedaConverter"
+									disabled="true" styleClass="readonly"
+									>
+									<f:selectItems
+										value="#{seleccionarEmisionBean.bovedasEfectivo}" />
+									<a4j:support event="onchange" actionListener="#{retiroFondosCtrl.obtieneSaldoDisponibleBoveda}" reRender="saldoDisponible" />
+								</h:selectOneMenu>
+							</td>
+						</tr>
+						<tr>
+							<td width="35%">
+								<h:outputText styleClass="texto"
+									value="#{etq.saldoDisponibleMinus}"></h:outputText>
+							</td>
+							<td>
+								<h:inputText autocomplete="off" id="saldoDisponible" styleClass="readonly" 
+									size="30" maxlength="30" converter="formatoMonedaConverter"
+									value="#{retiroFondosCtrl.retiro.saldoUsuario.saldoDisponible}">
+								</h:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.importe}"></h:outputText>
+								<h:outputText value="#{etq.asterisco}" styleClass="required" />
+							</td>
+							<td>
+								<h:inputText autocomplete="off" id="importeRetiro" size="30" maxlength="16"
+								 styleClass="campoNumericoDecimal campoNumericoDecimalDosDecimales"
+									 tabindex="6" onchange="deformater()" converter="formatoMonedaConverter"
+									value="#{retiroFondosCtrl.retiro.importeRetiro}"  >
+									<a4j:support event="onblur"
+										reRender="todo"
+										actionListener="#{retiroFondosCtrl.calculaSaldoActual}" />
+										<a4j:support event="onchange"
+										reRender="todo"
+										actionListener="#{retiroFondosCtrl.calculaSaldoActual}" />
+								</h:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.saldoActual}"></h:outputText>
+							</td>
+							<td>
+								<h:inputText autocomplete="off" id="saldoActual" styleClass="readonly" size="30" 
+									maxlength="30" converter="formatoMonedaConverter"
+									value="#{retiroFondosCtrl.retiro.saldoActual}">
+								</h:inputText>
+								<h:inputHidden value="#{retiroFondosCtrl.retiro.cuentaBeneficiaria}"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.referenciaNumerica}" />
+								<h:outputText value="#{etq.asterisco}" styleClass="required" />
+							</td>
+							<td>
+								<h:inputText autocomplete="off" id="idReferenciaNumerica" size="30" maxlength="7"
+									value="#{retiroFondosCtrl.retiro.referenciaNumerica}"
+									styleClass="campoNumerico" 
+									tabindex="7"/>
+								<h:message for="idReferenciaNumerica" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.conceptoPago}" />
+								<h:outputText value="#{etq.asterisco}" styleClass="required" />
+							</td>
+							<td>
+								<h:inputText autocomplete="off" id="idConceptoPago" size="30" maxlength="40"
+									value="#{retiroFondosCtrl.retiro.conceptoPago}"
+									styleClass="campoAlphaNumericoEspacio" 
+									tabindex="8"/>
+								<h:message for="idConceptoPago" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="refrescar" style="float: left">
+									<a4j:status id="commonStatus">
+										<f:facet name="start">
+											<h:panelGroup>
+												<h:graphicImage value="/images/ajax-loader.gif" />
+												<h:outputText value="#{etq.procesando}"></h:outputText>
+											</h:panelGroup>
+										</f:facet>
+									</a4j:status>
+								</div>
+							</td>
+						</tr>
+					</table>
+					<table width="35%" align="center" cellpadding="1" cellspacing="2">
+						<tr>
+							<td colspan="2" align="center">
+							</td>
+						</tr>
+					</table>
+
+	                <!-- La facultad debe reflejar el valor de SeguridadConstants.FACULTAD_FIRMA_OPERACION -->
+					<indeval:authorizeFaculty userInFaculty="CON_CERTIFICADO">
+						<h:panelGroup id="panelFirma">
+							<div style="display: none">
+								<textarea id="isoSinFirmar" name="isoSinFirmar">#{retiroFondosCtrl.isoSinFirmar}</textarea>
+								<textarea id="numeroSerie" name="numeroSerie" ></textarea>
+								<textarea  id="numeroSerieUsuario" name="numeroSerieUsuario">#{sessionScope.usuario.numeroSerieCertificado}</textarea>
+						   		  <textarea id="isoFirmado" name="isoFirmado"></textarea>
+						   		  <textarea  id="hashIso" name="hashIso">#{retiroFondosCtrl.hashIso}</textarea>
+							</div>
+							<h:panelGroup rendered="#{not empty retiroFondosCtrl.isoSinFirmar}">
+								<script>
+	                    		function firmarOperacion(){
+	                    			bloquearSeccionBotones('btnGuardar', 'btnLimpiar');
+	                    			
+	                    			$j("input[id$='btnGuardar2']").prop("disabled",false);
+	                    		    $j("input[id$='btnGuardar2']").click();
+	                    		    $j("input[id$='btnGuardar2']").prop("disabled",true);
+	                    		}
+	                    		</script>
+								<ui:decorate template="/firmaDigitalSimple.xhtml">
+									<ui:define name="isoSinFirmar"><h:outputText value="#{retiroFondosCtrl.isoSinFirmar}" /></ui:define>
+								</ui:decorate>
+							</h:panelGroup>
+						</h:panelGroup>	
+					</indeval:authorizeFaculty>
+						
+				</h:panelGroup>
+			</h:panelGroup>
+		</ui:define>
+		
+		<ui:define name="botones">
+			<h:panelGrid width="25%">
+	         	<h:panelGroup id="botones">
+					<div class="limpiar">
+						<h:commandButton id="btnLimpiar" image="/images/transparent.gif" styleClass="submit"
+						
+							actionListener="#{retiroFondosCtrl.limpiar}" tabindex="60">
+						</h:commandButton>
+					</div>
+					<div class="guardar">
+					
+						<a4j:commandButton id="btnGuardar" image="/images/transparent.gif"
+							styleClass="submit" reRender="panelFirma,general,botones"
+							actionListener="#{retiroFondosCtrl.guardarRetiroBancaComercial}"
+							onclick="if(confirmarOperacionTesoreria()){ deshabilitarBoton('btnGuardar'); deshabilitarBoton('btnLimpiar'); }else{ return false; }"
+							oncomplete="habilitarBoton('btnGuardar'); habilitarBoton('btnLimpiar');" tabindex="50">
+						</a4j:commandButton>
+					</div>
+					<div class="guardar">
+						<h:commandButton id="btnGuardar2" image="/images/transparent.gif"
+							styleClass="hidden" reRender="panelFirma,general,botones" disabled="true"
+							actionListener="#{retiroFondosCtrl.guardarRetiroBancaComercial2}" 
+							oncomplete="desbloquearSeccionBotones('btnGuardar', 'btnLimpiar');" tabindex="51">
+						</h:commandButton>
+					</div>
+				</h:panelGroup>
+            </h:panelGrid>
+		</ui:define>
+	</ui:composition>
+</html>

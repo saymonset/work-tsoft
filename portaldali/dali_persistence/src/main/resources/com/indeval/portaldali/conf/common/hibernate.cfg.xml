@@ -1,0 +1,144 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<!-- property name="default_schema">admin_segu</property -->
+		<property name="connection.release_mode">after_statement</property>
+
+		<property name="format_sql">true</property>
+		<property name="show_sql">false</property>
+
+		 <mapping class="com.indeval.portaldali.persistence.model.ParametrosLiquidacion"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.Boveda"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.Ciclo"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.CicloCompensacion"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.CreditoEspecial"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.CuentaControlada"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.CuentaNombrada"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.Cupon"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.Divisa"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.Emision"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.Emisora"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.EstadoCiclo"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.EstadoCuenta"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.EstadoInstruccion"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.EstadoInstitucion"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.EstadoPosicionControlada"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.EstadoPosicionNombrada"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.EstadoSaldoControlada"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.EstadoSaldoNombrada"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.FileTransfer"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.FileTransferOperaciones"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.FileTransferMiscelanea"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.FileUpload"/>
+<!-- 		 <mapping class="com.indeval.portaldali.persistence.model.HibernateSessionFactory"/> -->
+		 <mapping class="com.indeval.portaldali.persistence.model.Institucion"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.InstitucionPerfil"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.InstitucionPerfilEmision"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.InstruccionLiquidacion"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.Instrumento"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.MensajePortal"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.Mercado"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.ModuloNegocio"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.MovimientoFideicomiso"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.OperacionNombrada"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.ParametrosSlv"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.PosicionControlada"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.PosicionNombrada"/>
+		 <!-- mapping class="com.indeval.portaldali.persistence.model.PosicionOperacionNombrada"/-->
+		 <mapping class="com.indeval.portaldali.persistence.model.RegContEfecControlada"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.RegContEfecControladaHistorico"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.RegContEfecNombrada"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.RegContEfecNombradaHistorico"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.RegContValControlada"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.RegContValNombrada"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.RespuestaSaldoBanxico"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.SaldoBanxico"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.SaldoControlada"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.SaldoControladaHistorico"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.SaldoNombrada"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.SaldoNombradaHistorico"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.Sector"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.TipoAccion"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.TipoBoveda"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.TipoCuenta"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.TipoInstitucion"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.TipoInstruccion"/>
+		<mapping  class="com.indeval.portaldali.persistence.model.TipoInstruccionDivisa" />
+		 <mapping class="com.indeval.portaldali.persistence.model.TipoOperacion"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.TipoRegistroContableControlada"/>
+		 
+		 <mapping class="com.indeval.portaldali.persistence.model.EstadoInstruccionCat"/>
+		 
+		 <mapping class="com.indeval.portaldali.persistence.model.InstruccionMovPosicionNom"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.InstruccionOperacionVal"/>
+
+		 <mapping class="com.indeval.portaldali.persistence.model.TipoMensajeCat"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.MensajeBean"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.InternacionalEfectivo"/>
+		 
+		 <mapping class="com.indeval.portaldali.persistence.model.InstruccionEfectivo"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.InstruccionEfectivoSimple"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.MensajeSLV"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.protocolofinanciero.RegistroInstruccionesMatch2"/>
+		 
+		 <mapping class="com.indeval.portaldali.persistence.model.BitacoraReenvio"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.BitacoraEstadoReenvio"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.BitacoraOperaciones"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.DiaInhabil"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.EstatusCupones"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.LiquidacionParcialInstruccionMov"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.ErrorDali"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.PosicionControladaHistorico"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.PosicionNombradaHistorico"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.EmisionPendiente"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.EstadoEmision"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.OperacionMiscelaneaFiscal"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.TipoPago"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.TipoRetiro"/>		 
+		 <mapping class="com.indeval.portaldali.persistence.model.EstadoPosicionNombradaHistorico"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.RegContValNombradaHistorico"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.RegContValControladaHistorico"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.OperacionNombradaHistorico"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.InstruccionLiquidacionHistorico"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.BitacoraReenvioConfLiqRete"/>
+		 
+		 <mapping class="com.indeval.portaldali.persistence.model.Sistema"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.ConsultaIngresos"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.LogConsultaIngresos"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.InstitucionLibreConsultas"/>
+		 
+
+		 <mapping class="com.indeval.portaldali.persistence.model.DepositanteValidoBanxico"/>
+
+		 <mapping class="com.indeval.portaldali.persistence.model.TipoLiquidacion"/>
+
+		 <mapping class="com.indeval.portaldali.persistence.model.CuentaRetiro"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.CuentaRetiroNacional"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.CuentaRetiroInternacional"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.BitacoraEstadosCuentaRetiro"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.HistoricoAdmonCuentasRetiroNacional"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.HistoricoAdmonCuentasRetiroInternacional"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.PaisDivisa"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.Pais"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.RetiroEfectivoInternacional"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.RetiroEfectivo"/>
+		 <mapping class="com.indeval.portaldali.persistence.model.ParametrosDali"/>
+		<!-- <mapping class="com.indeval.portaldali.persistence.model.BitacoraRetiroChequera"/>-->
+		 <mapping class="com.indeval.portaldali.persistence.model.DivisaBoveda" />
+		 <mapping class="com.indeval.portaldali.persistence.model.DivisaBovedaPK" />
+		 <mapping class="com.indeval.portaldali.persistence.model.TipoInstruccionBoveda" />
+		 <mapping class="com.indeval.portaldali.persistence.model.TipoInstruccionBovedaPK" />
+		 <mapping class="com.indeval.portaldali.persistence.model.PropiedadesDali"/>
+		 
+		 <mapping class="com.indeval.portaldali.persistencia.posicion.VPosicionNombrada" />
+		 <mapping class="com.indeval.portaldali.persistencia.posicion.VPosicionNombradaH" />
+		 <mapping class="com.indeval.portaldali.persistencia.posicion.VPosicionControlada" />
+		 <mapping class="com.indeval.portaldali.persistencia.posicion.VPosicionControladaH" />
+		 <mapping class="com.indeval.portaldali.persistencia.fileTransfer.ArchivosFileTransfer" />
+		 <mapping class="com.indeval.portaldali.persistencia.pagosReferenciados.BitacoraPagosReferenciados" />
+		 <mapping class="com.indeval.portaldali.persistence.model.VencimientoAnticipado"/>
+    </session-factory>
+</hibernate-configuration>

@@ -1,0 +1,67 @@
+
+
+.contenedorGeneral {
+	position: absolute;
+	width: 300px;
+	font: 9px Arial, Helvetica, sans-serif;
+}
+
+.contenedor {
+	position: relative;
+	width: 300px;
+	font: 9px Arial, Helvetica, sans-serif;
+}
+
+.panelCriterios {
+	height: 400px;
+	font-size: 9px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.contenedorBotonPestana {
+	 position: absolute; 
+	 left: 0px; 
+	 top: -4px;
+}
+
+.tituloCriteriosConsulta {
+	height: 24px;
+	background-image: url(../images/fondoTituloCriterios.png);
+}
+
+#barraTitulo {
+	background-image: url(../images/fondo_titulo.png);
+	height: 30px;
+}
+
+#contenido {
+	z-index: 0;
+}
+
+.divResumenConsulta {
+	background-color: #FFFFFF;
+	width: 300px;
+	font: 9px Arial, Helvetica, sans-serif;
+}
+
+.divCriteriosConsulta {
+	width: 300px;
+	z-index: 99;
+	font: 9px Arial, Helvetica, sans-serif;
+}
+
+.textoGrisDetalle {
+	color: #666666;
+	font: 9px Arial, Helvetica, sans-serif;
+}
+
+.tituloBlanco {
+	color: #27343c;
+	font-weight: bold;
+	font: 9px Arial, Helvetica, sans-serif;
+}
+
+.textoAzulDetalle {
+	color: #0033CC;
+	font: 9px Arial, Helvetica, sans-serif;
+}

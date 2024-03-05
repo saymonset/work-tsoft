@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:a4j="http://richfaces.org/a4j" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="consultaEfectivo" documentTitle="Operaciones de Efectivo"
+        institucion="#{estatusOpEfectivoBean.institucionActual.claveTipoInstitucion} #{estatusOpEfectivoBean.institucionActual.folioInstitucion} #{estatusOpEfectivoBean.institucionActual.razonSocial}"
+        fecha="#{estatusOpEfectivoBean.fechaActual}" imageResource="/images/indeval.png">
+		<pdf:table value="#{estatusOpEfectivoBean.criterio}" currentBean="criterio" widthPercentage="100">
+			<pdf:row>
+				<pdf:col header="#{etq.participanteMinus}" value="#{empty criterio.cuentaParticipante.cuenta ? 'TODAS' : criterio.cuentaParticipante.numeroCuenta}" align="center" />
+				<pdf:col header="#{etq.referenciaOperacion}" value="#{criterio.descripcionRol}" align="center" />
+				<pdf:col header="#{etq.divisa}" value="#{criterio.divisa.descripcion}" align="center" />
+				<pdf:col header="#{etq.boveda}" value="#{criterio.boveda.nombreCorto}" align="center" />
+				<pdf:col header="#{etq.fechaValor}" value="#{criterio.fechaValor}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaEnvio}" value="#{criterio.fechaEnvio}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaAutorizacion}" value="#{criterio.fechaAutorizacion}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.fechaLiberacion}" value="#{operacion.fechaLiberacion}" align="center">
+					<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+				</pdf:col>
+				<pdf:col header="#{etq.estado}" value="#{criterio.estadoInstruccion.descripcion}" align="center" />
+			</pdf:row>
+		</pdf:table>
+
+	<pdf:text value="#{estatusOpEfectivoBean.totalRegistros} #{etq.registrosEncontrados}" />
+        <pdf:br />
+        <pdf:br />
+        <pdf:table value="#{estatusOpEfectivoBean.resultadosIntl}" currentBean="operacion" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.traspasanteMinus}" value="#{operacion.institucion.claveTipoInstitucion}#{operacion.institucion.folioInstitucion}" align="center" />
+                <pdf:col header="#{etq.referenciaOperacion}" value="#{operacion.referenciaOperacion}" align="center" />
+                <pdf:col header="#{etq.importe}" value="#{operacion.importeTraspaso}" align="right" >
+                	<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                </pdf:col>                
+                <pdf:col header="#{etq.referenciaOperacion}" value="#{operacion.divisa.descripcion}" align="center" />
+                <pdf:col header="#{etq.boveda}" value="#{operacion.boveda.nombreCorto}" align="center" />
+                <pdf:col header="#{etq.cuentaBeneficiario}" value="#{operacion.cuentaBeneficiarioDTO.nombreCorto}" align="center" />                
+                <pdf:col header="#{etq.fechaValor}" value="#{operacion.fechaValor}" align="center">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy kk:mm:ss" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaLiquidacion}" value="#{operacion.fechaLiquidacion}" align="center">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy kk:mm:ss" />
+                </pdf:col>
+                <pdf:col header="#{etq.fechaLiberacion}" value="#{operacion.fechaLiberacion}" align="center">
+                	<cvt:simpleDateConverter pattern="dd/MM/yyyy kk:mm:ss" />
+                </pdf:col>
+                <pdf:col header="#{etq.estado}" value="#{operacion.estado.descripcion}" align="center" />
+                
+            </pdf:row>
+        </pdf:table>
+        <pdf:br />
+        <pdf:br />
+        <pdf:grid border="1" bordercolor="#FFFFFF">
+            <pdf:gridRow>
+            	<pdf:gridCol bgcolor="#CCD9E6" align="center">
+                    <pdf:text value="" />
+                </pdf:gridCol>
+                
+                <pdf:gridCol bgcolor="#CCD9E6" align="center">
+                    <pdf:text align="center" value="#{etq.totalImporte}" />
+                </pdf:gridCol>
+                <pdf:gridCol bgcolor="#CCD9E6">
+                    <pdf:text value="#{estatusOpEfectivoBean.totalImporte}" align="center">
+                    	<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                    </pdf:text>
+                </pdf:gridCol>
+                <pdf:gridCol bgcolor="#CCD9E6" align="center">
+                    <pdf:text value="" />
+                </pdf:gridCol>
+                <pdf:gridCol bgcolor="#CCD9E6" align="center" collspan="6">
+                    <pdf:text value="" />
+                </pdf:gridCol>
+            </pdf:gridRow>
+        </pdf:grid>
+    </pdf:document>
+</html>
+

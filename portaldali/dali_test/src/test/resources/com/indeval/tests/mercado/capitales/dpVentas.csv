@@ -1,0 +1,5 @@
+idFolioTraspasante,tipoCuentaTraspasante,idFolioReceptor,tipoCuentaReceptor,cantidadOperada,precioTitulo,comprador,tipoOperacion,plazoLiquidacion,mensajeEsperado
+01003,TERC_NOM,01006,TERC_NOM,10,1,false,MD,," La operación se llevó a cabo exitosamente. Folio de la operación "
+01003,TERC_NOM,01006,TERC_NOM,10,1,true,MD,," La operación se llevó a cabo exitosamente. Folio usuario "
+01003,TERC_NOM,01006,TERC_NOM,10,1,false,FV,48 hrs.," La operación se llevó a cabo exitosamente. Folio de la operación "
+01003,TERC_NOM,01006,TERC_NOM,10,1,true,FV,48 hrs.," La operación se llevó a cabo exitosamente. Folio usuario "

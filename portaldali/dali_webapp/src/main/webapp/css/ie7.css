@@ -1,0 +1,76 @@
+
+
+/* Fixes #1 */
+#wrapperWit {
+clear: both;
+}
+
+/* Fixes #2 */
+div #gooey {
+width: 100%; 
+overflow: auto;
+}
+
+/* Fixes #3 */
+#footer {
+min-height: 1;
+}
+
+/* Fixes #3 (both needed) */
+#footer #elements {
+min-height: 1px; 
+}
+
+/* Fixes #6 */
+#siteNav {
+min-height: 1px;
+}
+
+/* Fixes #7 */
+#siteNav li {
+position: static;
+}
+
+/* Fixes #4 */
+#siteNav li:hover ul {
+width: 300px;
+}
+
+/* Fixes 5 */
+#login img {
+position: relative;
+top: -9px;
+left: 0;
+}
+
+/* Fixes 8 */
+#footer .four div.buttonLinkLarge {
+position: relative;
+top: -8px;
+left: 0;
+}
+
+/*Fixes Front page tabs */
+.wrapper_1,.wrapper_2,.wrapper_3,.wrapper_4,.wrapper_5 {
+height:277px;
+}
+
+/* Fixes 9 */
+#searchBox {
+	background:				#0c1216 url(../images/nav_bg.gif) top right no-repeat;
+height: 25px;
+}
+
+/* Fixes 11 */
+#sm_outer {
+min-height: 1px;
+}
+
+/* Fixes 11 */
+#sm_inner {
+min-height: 1px;
+}
+
+.codeblock {
+min-height: 40px;
+}

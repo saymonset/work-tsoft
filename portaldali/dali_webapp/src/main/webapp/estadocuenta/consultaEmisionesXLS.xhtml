@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+
+    <xls:document documentName="consultaEmisiones" documentTitle="Consulta Emisiones"
+        institucion="#{elegirInstitucionBean.descripcionInstitucion} #{elegirInstitucionBean.fechaActual}">
+        <xls:table value="consultaEmisionesBean" var="emision" widthPercentage="100">
+            <xls:row>
+                <xls:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </xls:row>
+        </xls:table>
+        <xls:table value="#{consultaEmisionesBean}" var="emision" widthPercentage="100">
+            <xls:row>
+                <xls:col header="#{etq.tv}" value="#{!empty consultaEmisionesBean.emision.tipoValor.claveTipoValor ? consultaEmisionesBean.emision.tipoValor.claveTipoValor : 'TODOS'}" align="center" />
+                <xls:col header="#{etq.emisoraMinus}" value="#{!empty consultaEmisionesBean.emision.emisora.descripcion ? consultaEmisionesBean.emision.emisora.descripcion : 'TODAS'}" align="center" />
+                <xls:col header="#{etq.serieMinus}" value="#{!empty consultaEmisionesBean.emision.serie.serie ? consultaEmisionesBean.emision.serie.serie : 'TODAS'}" align="center" />
+                <xls:col header="#{etq.isin}" value="#{!empty consultaEmisionesBean.emision.isin ? consultaEmisionesBean.emision.isin : 'TODOS'}" align="center" />
+                <xls:col header="#{etq.fechaInicial}" value="#{!empty consultaEmisionesBean.fechaIni ? consultaEmisionesBean.fechaIni : 'TODOS'}" align="center" pattern="dd/MM/yyyy"/>
+                <xls:col header="#{etq.fechaFinal}" value="#{!empty consultaEmisionesBean.fechaFin ? consultaEmisionesBean.fechaFin : 'TODOS'}" align="center" pattern="dd/MM/yyyy" />
+            </xls:row>
+        </xls:table>
+        
+        <xls:br/>
+        
+        <xls:table value="#{consultaEmisionesBean}" var="totales">
+        	<xls:row>
+        		<xls:col header="#{etq.registrosEncontrados}" value="#{etq.registrosEncontrados}: #{consultaEmisionesBean.totalRegistros}"/>
+        	</xls:row>
+        </xls:table>
+        
+        <xls:table value="#{consultaEmisionesBean.listaEmisiones}" var="emisiones">
+            <xls:row>
+                <xls:col header="#{etq.tv}" value="#{emisiones.tipoValor.claveTipoValor}" align="center" />
+                <xls:col header="#{etq.emisora}" value="#{emisiones.emisora.descripcion}" align="center" />
+                <xls:col header="#{etq.serie}" value="#{emisiones.serie.serie}" align="center" />
+                <xls:col header="#{etq.cupon}" value="#{emisiones.cupon}" align="center" />
+                <xls:col header="#{etq.isin}" value="#{emisiones.isin}" align="center" />
+                <xls:col header="#{etq.fechaVencimientoComp}" value="#{emisiones.fechaVencimiento}" align="center" pattern="dd/MM/yyyy"/>
+                <xls:col header="#{etq.diasVigentes}" value="#{emisiones.diasVigentes}" align="center" />
+
+            </xls:row>
+        </xls:table>
+
+    </xls:document>
+</html>

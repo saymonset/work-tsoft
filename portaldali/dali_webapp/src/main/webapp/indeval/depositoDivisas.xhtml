@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:indeval="http://indeval.com/indeval"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en">
+
+<ui:composition template="/layoutCaptura.xhtml">
+
+	<ui:define name="head">
+		<script language="javascript" type="text/javascript"
+                src="#{facesContext.externalContext.requestContextPath}/js/mostrarFirmaDigital.js"></script>		
+	</ui:define>
+	
+	<ui:define name="tituloEncabezado">
+		<h:outputText value="#{etq.depositoDivisas}"></h:outputText>
+	</ui:define> 
+
+	<ui:define name="seccionForma">
+	
+	 	<h:panelGroup id="init">
+                <h:outputText value="#{depositoDivisaController.init}"></h:outputText>
+        </h:panelGroup>
+	
+	
+		<a4j:keepAlive beanName="depositoDivisaController" />
+		<h:panelGroup id="general">
+			<table width="50%" border="0" cellspacing="0" cellpadding="0" id="datosPaticipante">
+				<tr>
+					<td width="46%">
+						<h:outputText value="#{etq.participanteMinus}" styleClass="texto" />
+					</td>
+					<td width="8%">
+						<h:outputText value="" />
+					</td>
+					<td width="46%">
+						<h:outputText value="#{etq.nombreInstitucion}" styleClass="texto" />
+					</td>
+				</tr>
+				<tr>
+					<td height="15px" colspan="3">
+						<h:outputText value="" />
+					</td>
+				</tr>
+				<tr>
+					<td width="46%">
+						<h:inputText autocomplete="off" id="idFolioTraspasante" size="5" maxlength="5" 
+							value="#{depositoDivisaController.claveInstitucion}" tabindex="10" 
+							styleClass="campoNumericoAsterisco" >
+							<a4j:support event="onchange"
+								actionListener="#{depositoDivisaController.validaInstitucion}"
+								reRender="nombreInstitucionTraspasante,saldo,importe,total" />
+						</h:inputText> 
+						<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="idFolioTraspasante"
+							suggestionAction="#{seleccionarCuentaBean.buscarParticipante}"
+							var="coincidencia"
+							fetchValue="#{coincidencia.claveTipoInstitucion}#{coincidencia.folioInstitucion}"
+							eventsQueue="folioTraspQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+							minChars="1" width="200" immediate="false"
+							nothingLabel="Sin coincidencias">
+							<h:column>
+								<h:outputText
+									value="#{coincidencia.claveTipoInstitucion}#{coincidencia.folioInstitucion}" /> 
+								<h:outputText value=" - #{coincidencia.nombreCorto}" />
+							</h:column>
+							<a4j:support event="onselect" actionListener="#{depositoDivisaController.validaInstitucion}"
+								reRender="nombreInstitucionTraspasante,saldo,importe,total,boveda" />
+						</rich:suggestionbox>
+					</td>
+					<td width="8%">
+						<h:outputText value="" />
+					</td>
+					<td width="46%">
+						<h:inputText autocomplete="off" id="nombreInstitucionTraspasante" size="25"
+							 styleClass="readonly"
+							 value="#{depositoDivisaController.nombreCortoInstitucion}" />
+					</td>
+				</tr>
+				<tr>
+					<td height="15px" colspan="3">
+						<h:outputText value="" />
+					</td>
+				</tr>
+				<tr>
+					<td width="46%">
+						<h:outputText value="#{etq.bovedaMinus}" styleClass="texto" />
+					</td>
+					<td width="8%">
+						<h:outputText value="" />
+					</td>
+					<td width="46%">
+						<h:selectOneMenu styleClass="textoControles" 
+							value="#{depositoDivisaController.boveda}"
+							id="boveda" converter="bovedaConverter" tabindex="20">							
+							<f:selectItems value="#{seleccionarEmisionBean.bovedasEfectivo}" />
+							<a4j:support event="onchange"
+								actionListener="#{depositoDivisaController.obtieneSaldo}"
+								reRender="saldo,importe,total" />
+						</h:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td height="8px" colspan="3">
+						<h:outputText value="" />
+					</td>
+				</tr>
+				<tr>
+					<td width="46%">
+						<h:outputText value="#{etq.divisa}" styleClass="texto" />
+					</td>
+					<td width="8%">
+						<h:outputText value="" />
+					</td>
+					<td width="46%">
+						<h:selectOneMenu id="valorEn" styleClass="textoControles" 
+							value="#{depositoDivisaController.divisa}"
+							converter="divisaConverter" tabindex="30">
+							<f:selectItems value="#{catalogosBean.opcionesComboDivisa}" />
+							<a4j:support event="onchange"
+								actionListener="#{depositoDivisaController.obtieneSaldo}"
+								reRender="saldo,importe,total" />
+						</h:selectOneMenu>
+					</td>
+				</tr>
+				<tr>
+					<td height="8px" colspan="3">
+						<h:outputText value="" />
+					</td>
+				</tr>
+				<tr>
+					<td width="46%">
+						<h:outputText value="#{etq.saldoMinus}" styleClass="texto" />
+					</td>
+					<td width="8%">
+						<h:outputText value="" />
+					</td>
+					<td width="46%">
+						<h:inputText autocomplete="off" id="saldo" size="30" maxlength="30" 
+							value="#{depositoDivisaController.saldo}"
+							converter="formatoMonedaSinSignoConverter" readonly="true" />
+					</td>
+				</tr>
+				<tr>
+					<td height="8px" colspan="3">
+						<h:outputText value="" />
+					</td>
+				</tr>
+				<tr>
+					<td width="46%">
+						<h:outputText value="#{etq.importe}" styleClass="texto" />
+					</td>
+					<td width="8%">
+						<h:outputText value="" />
+					</td>
+					<td width="46%">
+						<h:inputText autocomplete="off" id="importe" size="30" maxlength="30" tabindex="40"
+							value="#{depositoDivisaController.importe}"   
+							converter="formatoMonedaSinSignoConverter" >
+							<a4j:support event="onchange"
+								actionListener="#{depositoDivisaController.pintaTotal}"
+								reRender="importe,total" />
+						</h:inputText>
+					</td>
+				</tr>
+				<tr>
+					<td height="8px" colspan="3">
+						<h:outputText value="" />
+					</td>
+				</tr>
+				<tr>
+					<td width="46%">
+						<h:outputText value="#{etq.importe}" styleClass="texto" />
+					</td>
+					<td width="8%">
+						<h:outputText value="" />
+					</td>
+					<td width="46%">
+						<h:inputText autocomplete="off" id="total" size="30" maxlength="30"
+							value="#{depositoDivisaController.total}"  
+							converter="formatoMonedaSinSignoConverter" readonly="true" />
+					</td>
+				</tr>
+			</table> 
+			
+			<!-- La facultad debe reflejar el valor de SeguridadConstants.FACULTAD_FIRMA_OPERACION -->
+			<indeval:authorizeFaculty userInFaculty="CON_CERTIFICADO">	
+		         <h:panelGroup id="panelFirma">
+		         	  <div style="display:none">
+						  <textarea  id ="isoSinFirmar" name="isoSinFirmar" >#{depositoDivisaController.isoSinFirmar}</textarea>
+						  <textarea id="numeroSerie" name="numeroSerie" ></textarea>
+						  <textarea  id="numeroSerieUsuario" name="numeroSerieUsuario">#{sessionScope.usuario.numeroSerieCertificado}</textarea>
+				   		  <textarea id="isoFirmado" name="isoFirmado"></textarea>
+				   		  <textarea  id="hashIso" name="hashIso">#{depositoDivisaController.hashIso}</textarea>
+			    	</div>
+                   	<h:panelGroup rendered="#{not empty depositoDivisaController.isoSinFirmar}">
+                    	<script>
+                    		function firmarOperacion(){
+                    			$j("input[id$='btnGuardar2']").prop("disabled",false);
+                    			$j("input[id$='btnLimpiar']").prop("disabled",false);
+                    		    $j("input[id$='btnGuardar2']").click();
+                    		}
+                    	</script>		 
+			            
+				         <ui:decorate template="/firmaDigitalSimple.xhtml">
+				         	<ui:define name="isoSinFirmar"><h:outputText value="#{depositoDivisaController.isoSinFirmar}"/></ui:define>
+				         </ui:decorate>
+				         
+                   	</h:panelGroup>
+               </h:panelGroup>
+			</indeval:authorizeFaculty> 
+			
+		</h:panelGroup>
+		<br />
+		
+	</ui:define>
+
+	<ui:define name="botones">
+		<div style="height: 20px">
+			<a4j:status id="commonStatus">
+				<f:facet name="start">
+					<h:panelGroup>
+						<h:graphicImage value="/images/ajax-loader.gif" />
+						<h:outputText value="#{etq.buscando}"></h:outputText>
+					</h:panelGroup>
+				</f:facet>
+			</a4j:status>
+		</div>
+		
+						
+		<h:panelGrid width="25%">
+			<h:panelGroup id="botones">
+				<div class="limpiar">
+					<a4j:commandButton id="btnLimpiar"  image="/images/transparent.gif" styleClass="submit"
+						reRender="general,botones"
+						actionListener="#{depositoDivisaController.limpiar}" 
+						onclick="deshabilitarBoton('btnLimpiar');"
+						oncomplete="habilitarBoton('btnLimpiar');" tabindex="120">
+					</a4j:commandButton>
+				</div>
+				<div class="guardar">
+					<a4j:commandButton id="btnGuardar" image="/images/transparent.gif" styleClass="submit"						
+						reRender="panelFirma,general,botones" 
+						actionListener="#{depositoDivisaController.guardar}"
+						onclick="if(confirmarOperacionGeneral()) deshabilitarBoton('btnGuardar'); else return false"
+						oncomplete="establecerFoco('idFolioTraspasante'); habilitarBoton('btnGuardar');" tabindex="110" >						
+					</a4j:commandButton>
+				</div>
+				<div class="guardar">		
+				    <!--Este boton solo se usa para hacer click con el applet  -->						
+					<h:commandButton id="btnGuardar2" image="/images/transparent.gif"
+						styleClass="hidden"
+						reRender="general" tabindex="115" 
+						actionListener="#{depositoDivisaController.guardar}">
+					</h:commandButton>						
+				</div>					
+
+			</h:panelGroup>
+		</h:panelGrid>
+	</ui:define>
+
+</ui:composition>
+</html>

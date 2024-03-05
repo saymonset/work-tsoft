@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:indeval="http://indeval.com/indeval"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en">
+
+	<ui:composition
+		template="/layoutCaptura.xhtml">
+		<ui:define name="head">
+			<script language="javascript" type="text/javascript"
+                src="#{facesContext.externalContext.requestContextPath}/js/mostrarFirmaDigital.js"></script>
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/consultaPosiciones.js"></script>
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js"></script>
+			<script language="javascript" type="text/javascript">
+				function mostrar(seleccionado){
+					if(seleccionado==1){
+						window.location='#{facesContext.externalContext.requestContextPath}/tesoreria/fondos/retiroFondos.faces?esBancaComercial=false&amp;tipoRetiro='+seleccionado; 
+					}
+				}
+			</script>
+		</ui:define>
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.retiroFondosInternacional}"></h:outputText>
+		</ui:define>
+		
+
+		<ui:define name="seccionForma">
+			<h:outputText id="miInit" value="#{retiroFondosIntCtrl.init}" />
+			<a4j:keepAlive beanName="retiroFondosIntCtrl" />
+			<h:panelGroup id="general">
+			
+				<table width="45%" align="center" cellpadding="1" cellspacing="2" border="0">
+
+								<tr>
+									<td width="35%">
+										<h:outputText styleClass="texto" value="#{etq.divisa}" />
+										<h:outputText value="#{etq.asterisco}" styleClass="required" />
+									</td>
+									<td colspan="2">
+										<h:selectOneMenu id="valorEn"
+											value="#{retiroFondosIntCtrl.retiro.valorEn}"
+											converter="divisaConverter"
+											disabled="false" onchange="javascript:mostrar(this.options[this.selectedIndex].value);">
+											<f:selectItems value="#{catalogosBean.opcionesComboDivisa}" />
+											<a4j:support 
+											     event="onchange" 
+											     actionListener="#{retiroFondosIntCtrl.obtieneCuentasBeneficiario}" 
+											     reRender="cuentaBeneficiario, miInit" />
+										</h:selectOneMenu>
+									</td>
+								</tr>
+								<tr><td><br/><br/>&#160;</td></tr>
+								<tr>
+									<td width="30%">
+									</td>
+									<td align="left">
+										<b><h:outputText styleClass="texto" value="#{etq.participante}" /></b>
+									</td>
+									<td align="left">
+										<b><h:outputText styleClass="texto" value="#{etq.institucionMinus}" /></b>
+									</td>
+								</tr>
+								<tr>
+									<td width="30%">
+										<h:outputText styleClass="texto" value="Traspasante" />
+										<h:outputText value="#{etq.asterisco}" styleClass="required" />
+									</td>
+									<td>
+										<h:inputText autocomplete="off" id="idTraspasante"
+											value="#{retiroFondosIntCtrl.retiro.idFolioUsuario}" size="4" maxlength="5"
+											styleClass='texto campoNumericoAsterisco #{!retiroFondosIntCtrl.usuarioIndeval ? "readonly" : "" }'>
+											<a4j:support event="onchange" actionListener="#{retiroFondosIntCtrl.buscarInstitucionParticipante}"
+													reRender="nombreInstitucionTraspasante, saldoDisponible, miInit," />
+										</h:inputText>
+										<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="idTraspasante"
+											ignoreDupResponses="true"
+											eventsQueue="folioTraspasanteQueue"
+											requestDelay ="#{inicioSesionBean.delay}"
+											suggestionAction="#{retiroFondosIntCtrl.buscarParticipante}"
+											var="coincidencia" fetchValue="#{coincidencia.claveTipoInstitucion}#{coincidencia.folioInstitucion}"
+											minChars="1" width="450" nothingLabel="Sin coincidencias"
+										>
+											<h:column>
+												<h:outputText value="#{coincidencia.claveTipoInstitucion}#{coincidencia.folioInstitucion}" /> - <h:outputText
+														value="#{coincidencia.nombreCorto}" />
+											</h:column>
+											<a4j:support event="onselect" actionListener="#{retiroFondosIntCtrl.buscarInstitucionParticipante}"
+													reRender="nombreInstitucionTraspasante, saldoDisponible, miInit," />
+										</rich:suggestionbox>
+									</td>
+									<td align="left">
+										<h:inputText autocomplete="off" id="nombreInstitucionTraspasante"
+											styleClass="texto readonly"
+											value="#{retiroFondosIntCtrl.retiro.saldoUsuario.cuenta.institucion.nombreCorto}"
+											size="16">
+										</h:inputText>
+									</td>
+								</tr>
+								<tr>
+									<td width="30%">
+										<h:outputText styleClass="texto" value="Cuenta Beneficiario" />
+										<h:outputText value="#{etq.asterisco}" styleClass="required" />
+									</td>
+									<td colspan="2">
+										<h:selectOneMenu styleClass="texto"
+											value="#{retiroFondosIntCtrl.retiro.cuentaBeneficiaria}"
+											id="cuentaBeneficiario"
+											>
+											<f:selectItems value="#{retiroFondosIntCtrl.retiro.cuentasBeneficiario}" />
+										</h:selectOneMenu>
+									</td>
+								</tr>
+				</table>
+				<h:panelGroup id="todo">
+					<table width="45%" align="center" cellpadding="1" cellspacing="2" border="0">
+						<tr>
+							<td>
+								<h:panelGroup>
+									<h:outputText styleClass="texto" value="#{etq.bovedaMinus}" />
+									<h:outputText value="#{etq.asterisco}" styleClass="required" />
+								</h:panelGroup>
+							</td>
+							<td>
+								<h:selectOneMenu styleClass="texto" 
+									value="#{retiroFondosIntCtrl.retiro.saldoUsuario.boveda}"
+									id="boveda" converter="bovedaConverter"
+									tabindex="20">
+									<f:selectItems
+										value="#{seleccionarEmisionBean.bovedasEfectivo}" />
+									<a4j:support event="onchange" actionListener="#{retiroFondosIntCtrl.obtieneSaldoDisponibleBoveda}" reRender="saldoDisponible" />
+								</h:selectOneMenu>
+							</td>
+						</tr>
+						<tr>
+							<td width="35%">
+								<h:outputText styleClass="texto"
+									value="#{etq.saldoDisponibleMinus}"></h:outputText>
+							</td>
+							<td>
+								<h:inputText autocomplete="off" id="saldoDisponible" styleClass="texto readonly"
+									size="30" maxlength="30" converter="formatoMonedaConverter"
+									value="#{retiroFondosIntCtrl.retiro.saldoUsuario.saldoDisponible}">
+								</h:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td width="35%">
+								<h:outputText styleClass="texto"
+									value="#{etq.saldoNoDisponibleMinus}"></h:outputText>
+							</td>
+							<td>
+								<h:inputText autocomplete="off" id="saldoNoDisponible" styleClass="texto readonly"
+									size="30" maxlength="30" converter="formatoMonedaConverter"
+									value="#{retiroFondosIntCtrl.retiro.saldoUsuario.saldoNoDisponible}">
+								</h:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.importe}"></h:outputText>
+								<h:outputText value="#{etq.asterisco}" styleClass="required" />
+							</td>
+							<td>
+								<h:inputText autocomplete="off" id="importeRetiro" size="30" maxlength="16"
+								 	styleClass="texto campoNumericoDecimal campoNumericoDecimalDosDecimales"
+									tabindex="30" onchange="deformater()" converter="formatoMonedaConverter"
+									value="#{retiroFondosIntCtrl.retiro.importeRetiro}"  >
+									<a4j:support event="onchange"
+										reRender="saldoActual"
+										actionListener="#{retiroFondosIntCtrl.calculaSaldoActual}" />
+									<a4j:support event="onchange"
+										reRender="saldoActual"
+										actionListener="#{retiroFondosIntCtrl.calculaSaldoActual}" />
+								</h:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<h:outputText styleClass="texto" value="#{etq.saldoActual}"></h:outputText>
+							</td>
+							<td>
+								<h:inputText autocomplete="off" id="saldoActual" styleClass="texto readonly" size="30"
+									maxlength="30" converter="formatoMonedaConverter"
+									value="#{retiroFondosIntCtrl.retiro.saldoActual}">
+								</h:inputText>
+								<h:inputHidden value="#{retiroFondosIntCtrl.retiro.saldoActual}"/>
+							</td>
+						</tr>
+						<tr>
+							<td width="35%">
+								<h:outputText styleClass="texto" value="#{etq.fechaValor}"></h:outputText>
+								<h:outputText value="#{etq.asterisco}" styleClass="required" />
+							</td>
+							<td align="left">
+								<rich:calendar id="fechaValor" 
+									value="#{retiroFondosIntCtrl.retiro.fechaValor}"
+									datePattern="dd/MM/yyyy"
+									inputSize="11"
+									inputClass="textoControles"
+									inputStyle="background-color: #ffffe6;"
+									isDayEnabled="isDayEnabled" />
+							</td>
+						</tr>
+						<tr>
+							<td width="35%">
+								<h:outputText styleClass="texto" value="#{etq.conceptoPago}"></h:outputText>
+								<h:outputText value="#{etq.asterisco}" styleClass="required" />
+							</td>
+							<td align="left">
+								<h:inputText autocomplete="off" id="conceptoPago" styleClass="texto campoAlphaEspeciales" size="30"
+									maxlength="15"
+									value="#{retiroFondosIntCtrl.retiro.conceptoPago}">
+								</h:inputText>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="refrescar" style="float: left">
+									<a4j:status id="commonStatus">
+										<f:facet name="start">
+											<h:panelGroup>
+												<h:graphicImage value="/images/ajax-loader.gif" />
+												<h:outputText value="#{etq.procesando}"></h:outputText>
+											</h:panelGroup>
+										</f:facet>
+									</a4j:status>
+								</div>
+							</td>
+						</tr>
+					</table>
+					<table width="35%" align="center" cellpadding="1" cellspacing="2">
+						<tr>
+							<td colspan="2" align="center">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								&#160;
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center">
+
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center">
+
+							</td>
+						</tr>
+					</table>
+
+	             
+			
+						
+					</h:panelGroup>
+				</h:panelGroup>
+		</ui:define>
+		
+		<ui:define name="botones">
+            <h:panelGrid width="25%">
+				<h:panelGroup id="botones">
+					<div class="limpiar">
+						<h:commandButton id="btnLimpiar" image="/images/transparent.gif"
+							styleClass="submit" 
+							actionListener="#{retiroFondosIntCtrl.limpiar}">
+						</h:commandButton>
+					</div>
+					<div class="guardar">
+						<!-- h:commandButton id="btnGuardar" image="/images/transparent.gif"
+							styleClass="submit" 
+							reRender="general,botones"
+							actionListener="{retiroFondosIntCtrl.guardarRetiro}">
+						</h:commandButton-->								
+						<a4j:commandButton  id="btnguardar" title="Guardar" image="/images/transparent.gif"
+						styleClass="submit"  
+						reRender="mensaje,panelFirma" limitToList="true" 
+						actionListener="#{retiroFondosIntCtrl.guardarRetiro}"
+						oncomplete="#{empty sessionScope.facultades['CON_CERTIFICADO'] ? 'deshabilitarIntlGuardar();':' '} window.scrollTo(0,0);"    
+						onclick="removeAppletEfectivo();" 
+						>						
+						<f:param name="firma" value="#{!empty sessionScope.facultades['CON_CERTIFICADO']}"/>																																					 											 
+						</a4j:commandButton>
+						
+						
+					</div>
+					
+						<!-- La facultad debe reflejar el valor de SeguridadConstants.FACULTAD_FIRMA_OPERACION -->
+						<indeval:authorizeFaculty userInFaculty="CON_CERTIFICADO">
+							<h:panelGroup id="panelFirma">
+								<h:panelGroup
+									rendered="#{not empty retiroFondosIntCtrl.isosSinFirmar}">	
+												<div style="display: none" >
+											<textarea id="isoSinFirmar1"
+												name="isoSinFirmar1">#{retiroFondosIntCtrl.isosSinFirmar[0]}												
+											</textarea>
+											<textarea id="isoFirmado1"
+												name="isoFirmado1"></textarea>
+											<textarea id="hashIso1" name="hashIso1">#{retiroFondosIntCtrl.hashIso[0]}
+											</textarea>
+										<textarea  id="numeroSerie" name="numeroSerie"></textarea>
+										<textarea  id="numeroSerieUsuario" name="numeroSerieUsuario">#{sessionScope.usuario.numeroSerieCertificado}</textarea>										
+										<textarea name="totalOperaciones"  id="totalOperaciones">#{retiroFondosIntCtrl.totalOperaciones}</textarea>
+									</div>
+						<script><!--
+									function firmarOperacion(){							            																				   
+										removeAppletEfectivo();
+										divItems=document.getElementById('daliForm:btnguardar');										
+										divItems.click();																																					   	
+										deshabilitarIntlGuardar();   	
+									} 
+																												
+				                    --></script>
+				                   <div id="firmaId">
+									<ui:decorate template="/firmaDigitalMultiple.xhtml">
+									</ui:decorate>
+									</div>	
+									
+								</h:panelGroup>
+							</h:panelGroup>
+						</indeval:authorizeFaculty>		
+					
+					
+				</h:panelGroup>
+			</h:panelGrid>
+        </ui:define>
+		
+		
+	</ui:composition>
+</html>

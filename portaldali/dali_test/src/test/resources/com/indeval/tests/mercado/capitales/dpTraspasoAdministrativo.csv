@@ -1,0 +1,2 @@
+idFolioTraspasante,tipoCuentaTraspasante,idFolioReceptor,tipoCuentaReceptor,cantidadOperada,mensajeEsperado
+01003,TERC_NOM,01006,TERC_NOM,10," La informacion ha sido guardada y se ha generado el folio"

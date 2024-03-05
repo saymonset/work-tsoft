@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:indeval="http://indeval.com/indeval">
+
+		<ui:composition template="/layoutLogin.xhtml">
+			<ui:define name="head">
+				<script type="javascript" language="javascript" src="#{facesContext.externalContext.requestContextPath}/js/common.js" />
+			</ui:define>
+			<ui:define name="body">
+				<a4j:keepAlive beanName="inicioSesionBean" />
+				<a4j:status id="ajaxStatusId" onstart="Richfaces.showModalPanel('loginForm:ajaxLoadingModalBox',{width:450, top:200})" onstop="Richfaces.hideModalPanel('loginForm:ajaxLoadingModalBox')" />
+				<h:form id="loginForm">
+
+
+					<table width="761" align="center" cellpadding="0" cellspacing="0" class="tabla_login" border="0">
+						<tr>
+							<td width="495" valign="top" class="tabla_login_izq" height="350">
+								<table width="786" border="0" cellpadding="2" cellspacing="0" class="tabla_campos">
+									<tr>
+										<td>&#160;</td>
+									</tr>
+									<tr>
+										<td height="25">&#160;</td>
+										<td colspan="1" height="50" valign="top" rowspan="2">
+											<h:panelGroup id="panelMensajes">
+												<div id="mensajes" 
+													style="display: #{( not empty inicioSesionBean.mensajeError or inicioSesionBean.mensajesCaptcha) ? 'inline' : 'none'}" >
+													<table width="92%" border="0" cellpadding="0" cellspacing="0">
+														<tr>
+															<td class="tituloMensaje">&#160;</td>
+														</tr>
+														<tr>
+															<td align="center">
+																<div class="warning">
+																	<h:outputText value="#{inicioSesionBean.mensajeError}" />
+																	<br />
+																	<h:outputText value="#{inicioSesionBean.mensajeError2}" rendered="#{not empty inicioSesionBean.mensajeError2}" />
+																	<h:message for="inputCaptcha" />
+																</div>
+															</td>
+														</tr>
+													</table>
+												</div>
+											</h:panelGroup>
+										</td>
+									</tr>
+									<tr>
+										<td>&#160;</td>
+									</tr>
+									<tr>
+										<td width="207">
+											<div align="right">
+												<h:outputText value="#{etq.usuarioMinus}" />:
+											</div>
+										</td>
+										<td width="284">
+											<h:inputText autocomplete="off" value="#{inicioSesionBean.usuario}" size="18" id="usuario" />
+											<input type="text" style="display:none" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div align="right">
+												<h:outputText value="#{etq.contrasenaMinus}" />:
+											</div>
+										</td>
+										<td>
+											<h:inputSecret autocomplete="off" value="#{inicioSesionBean.password}" size="18" id="password"  redisplay="true" />
+											<input type="text" style="display:none" />
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2" align="center">
+										<a4j:outputPanel id="panelFirma">
+												<h:panelGroup rendered="#{inicioSesionBean.tipoAutenticacion eq 4}">
+													<table align="center" border="0" cellpadding="0" cellspacing="0">
+														<!-- Firmar del Applet -->
+														<tr>
+															<td>
+																<div style="display: none;">
+																	<textarea id="ticketSinFirmar" name="ticketSinFirmar" readonly="true" >#{inicioSesionBean.ticketSinFirmar}</textarea>
+																	<textarea id="ticketFirmado" name="ticketFirmado">#{inicioSesionBean.ticketFirmado}</textarea>
+																</div>
+																<script>
+											               			function firmarOperacion(){
+											             		    		$j("input[id$='btnIniciaSesion']").click();
+											               			}
+											               		</script>
+																<div id="divAppletLogin">
+																	<ui:decorate template="/firmaDigitalLogin.xhtml" />
+																</div>
+															</td>
+														</tr>
+													</table>
+												</h:panelGroup>
+										</a4j:outputPanel>
+										</td>
+									</tr>
+									<tr>
+										<td>&#160;</td>
+										<td>&#160;</td>
+									</tr>
+									<tr>
+										<td>&#160;</td>
+										<td>
+ 											<a4j:outputPanel id="panelCaptcha"> 
+												<h:panelGroup rendered="#{inicioSesionBean.mostrarCaptcha}">											
+													<indeval:captcha autocomplete="off" value="#{inicioSesionBean.textoCaptcha}" id="inputCaptcha">
+														<rich:paint2D id="captcha3" width="200" height="70"
+															format="jpeg" paint="#{inicioSesionBean.paint}"
+															data="#{inicioSesionBean.captchaId}" border="2"
+															rendered="#{inicioSesionBean.mostrarCaptcha}" />
+														<br/>
+														<h:outputText styleClass="texto" value="#{etq.textoImagen}" />
+														<br/>
+														<indeval:captchaValidator />
+														&#160;
+													</indeval:captcha>
+												</h:panelGroup>
+ 											</a4j:outputPanel> 
+										</td>
+									</tr>
+									<tr>
+										<td colspan="2" align="center">
+											<h:panelGroup id="panelToken">
+												<h:panelGroup rendered="#{inicioSesionBean.tipoAutenticacion eq 2}">
+													<table align="center" border="0" cellpadding="0" cellspacing="0">
+														<tr>
+															<td width="207">
+																<div align="right">
+																	&#160;
+																	<br />
+																	<h:outputText value="#{etq.token}" />
+																	:&#160;
+																</div>
+															</td>
+															<td width="284">&#160;
+																<div align="left">
+																	<h:outputText styleClass="texto" value="#{etq.llenadoToken}" />
+																	<br/>
+																	<h:inputSecret value="#{inicioSesionBean.token}" styleClass="borrar campoNumerico" maxlength="6" size="18" id="token" />
+																</div>
+															</td>
+														</tr>
+													</table>
+												</h:panelGroup>
+											</h:panelGroup>
+										</td>
+									</tr>
+									<tr>
+										<td>&#160;</td>
+										<td>&#160;</td>
+									</tr>
+									<tr>
+										<td>&#160;</td>
+										<td>
+						                	<h:panelGroup id="panelBotonLogin">
+		                						
+						                		<h:commandButton	id="btnDeterminaLogin"
+													action="#{inicioSesionBean.determinaLogin}"
+													value="INICIAR SESI&#211;N"
+													image="/images/transparent.gif"
+													styleClass="btn_login" />
+										
+										<a4j:commandButton id="btnIniciaSesion" action="#{inicioSesionBean.iniciarSesion}"  reRender="panelBotonesCambioPwd" style="display: none;" />
+
+		
+										<h:outputLink id="btnCambiarPassword" value="#{facesContext.externalContext.requestContextPath}/changePassword.faces" style="display: none;">
+													changePassword
+										</h:outputLink>
+	
+										<h:outputLink id="btnNavegarIndex" value="#{facesContext.externalContext.requestContextPath}/index.faces" style="display: none;">
+													navegaIndex
+										</h:outputLink>
+												
+										
+						                	</h:panelGroup> 
+										</td>
+									</tr>
+									<tr>
+								              		<td colspan="2" align="right" valign="bottom" height="13">
+								              				
+											   				<h:graphicImage value="/imgs_login/1px_linea_blanca.gif"  width="350" height="1"></h:graphicImage>
+											   		</td>
+									</tr>
+								</table>
+							</td>
+							<td width="254" valign="top" class="tabla_login_der">&#160;</td>
+						</tr>
+					</table>
+	
+					<h:panelGroup id="panelBotonesCambioPwd">
+
+						<script type="text/javascript">Richfaces.hideModalPanel('loginForm:ajaxLoadingModalBox');</script>
+
+						<h:panelGroup rendered="#{inicioSesionBean.puedeCambiarPassword}">
+							<script type="text/javascript">
+								$j(document).ready(function () {
+									$j(".borrar").attr("value","");
+									$j("input[id$='inputCaptcha']").attr("value","");
+									confirmarCambioPassword(#{inicioSesionBean.diasPorVencer});
+								});
+							</script>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{inicioSesionBean.debeCambiarPassword}">
+							<script type="text/javascript">
+								$j(document).ready(function () {
+									$j(".borrar").attr("value","");
+									$j("input[id$='inputCaptcha']").attr("value","");
+									avisoCambioPassword();
+								});
+							</script>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{inicioSesionBean.mostrarCaptcha}">
+							<script type="text/javascript">
+								$j(document).ready(function () {
+									$j("input[id$='inputCaptcha']").attr("value","");
+								});
+							</script>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{(inicioSesionBean.tipoAutenticacion eq 0 or inicioSesionBean.tipoAutenticacion eq 2 or inicioSesionBean.tieneSesion) and not(inicioSesionBean.puedeCambiarPassword or inicioSesionBean.debeCambiarPassword)}">
+						<script type="text/javascript">
+								document.getElementById('loginForm:btnNavegarIndex').click();
+					        </script>
+						</h:panelGroup> 
+					</h:panelGroup>
+					<iframe class="divModal"  id="firmaDigitalLogin"  frameborder="0"  scrolling="no" align="top"></iframe>
+<!--  					<a4j:poll id="pollping" interval="240000" reRender="panelCaptcha" ajaxSingle="true" />		  -->
+
+					<rich:modalPanel id="ajaxLoadingModalBox" minHeight="125" minWidth="250"
+					height="70" width="250" zindex="2000" style="background-color: #FFFFFF; width: 100%; border-width: 1px; border-color: black; border-style: solid; text-align: center;">
+						<h:panelGrid columns="1" style="width: 100%; border-width: 0px; text-align: center;"> 
+							<h:outputText value="Cargando ..." style="font-weight: bold;"/>
+							<h:graphicImage value="/images/loading.gif" alt="ai" />
+						</h:panelGrid> 
+					</rich:modalPanel>
+
+				</h:form>
+				
+				
+				
+				
+			</ui:define>
+		</ui:composition>
+
+</html>

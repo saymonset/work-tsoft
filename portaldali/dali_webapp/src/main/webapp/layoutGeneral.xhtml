@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:indeval="http://indeval.com/indeval"
+	xmlns:menu="http://indeval.com/jsf/menu"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:rich="http://richfaces.org/rich" xml:lang="es" lang="es">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1" />
+		<title><ui:insert name="titulo"></ui:insert></title>		
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" type="text/css" media="all"
+			href="#{facesContext.externalContext.requestContextPath}/css/dali.css" />
+
+		<link rel="stylesheet" type="text/css" media="all"
+			href="#{facesContext.externalContext.requestContextPath}/css/menuie7.css" />
+		<!--[if IE 6]>
+		<link rel="stylesheet" type="text/css" media="all"
+			href="#{facesContext.externalContext.requestContextPath}/css/menu.css" />
+		<![endif]-->
+	    <link type="text/css" href="#{facesContext.externalContext.requestContextPath}/js/jquery/css/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
+		<script language="javascript" type="text/javascript"
+					src="#{facesContext.externalContext.requestContextPath}/js/shortcut.js">
+				</script>
+		
+			<script language="javascript" type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/js/jquery/js/jquery-1.8.0.min.js"></script>
+		<script language="javascript" type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/js/jquery/js/jqueryUi.js"></script>	
+			
+		<script language="javascript" >
+		shortcut.add("Ctrl+Space",function(event) {
+			var elem = event.target || event.srcElement;
+			elem.className = elem.className + ' suggest';
+		},
+		{
+			
+		});
+		</script>
+		<script language="javascript">
+			contextPath = '#{facesContext.externalContext.requestContextPath}';
+			var $j = jQuery.noConflict();
+		</script>
+
+		<script language="javascript" type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/js/c_config.js"></script>
+		<script language="javascript" type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/js/c_smartmenus.js"></script>
+		<script language="javascript" type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/js/c_addon_position_fixed.js"></script>		
+		
+		<script language="javascript" type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/js/common.js"></script>
+		<script language="javascript" type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/js/menu.js"></script>
+		
+
+		<ui:insert name="head"></ui:insert>
+	</head>
+	<body onload="checaHeader();">
+		<h:inputHidden value="#{inicioSesionBean.init}" />
+		
+		
+		
+		<div id="menuContainer" class="clearFix"></div>
+
+		<menu:menuNavegacion
+			elementoRaiz="#{inicioSesionBean.elementoMenuRaiz}"></menu:menuNavegacion>
+
+		<div id="mainContainer">
+			<div id="mainPlaceholder">
+				<div id="topMainContainer">
+					<div id="mainContent">
+						<div id="wrap">
+							<div id="contenido_pag">
+								<div id="tituloContenido">
+									<div class='descripcion'>
+										
+										<h1 class="titulo">
+											<ui:insert name="tituloSeccion"></ui:insert>
+										</h1>
+										<p>
+											<ui:insert name="subtituloSeccion"></ui:insert>
+										</p>
+										
+									</div>
+								</div>
+
+								<div class="seccion texto">
+									<h:panelGroup rendered="#{not empty inicioSesionBean.mensajesUsuario}">
+											<iframe class="divModal"  id="usrmessages"  frameborder="0"  scrolling="auto" aling="top"></iframe>
+											<div id="mensajesUsuario" class="warning" style="display:#{empty inicioSesionBean.mensajesUsuario ? 'none' : 'block'}; text-align:center;">
+												<h:panelGroup>
+													<h:graphicImage url="/images/001_50.gif" width="14px" height="14px"/>&#160;
+												</h:panelGroup><a href="javascript:void(0);" onclick="javascript:limpiarMensajesDeUsuario();mostrarMensajesUsr('#{facesContext.externalContext.requestContextPath}/common/mostrarMensajesUsuario.faces?height=350&amp;width=925','');">
+												<h:outputText value="#{etq.tieneMensajes}"></h:outputText>&#160;
+												<h:outputText value="#{inicioSesionBean.numeroMensajesUsuario}"></h:outputText>&#160;
+												<h:outputText value="#{etq.tieneMensajesNuevos}"></h:outputText>&#160;
+												</a>
+											</div>
+											<script language="javascript">
+												setInterval("animarMensajesDeUsuario()",5000);
+											</script>
+										</h:panelGroup>
+										<h:panelGroup rendered="#{not empty appMensajePortalBean.mensajePortal}">
+											<div id="mensajePortalDiv" class="warning" style="display:#{empty appMensajePortalBean.mensajePortal ? 'none' : 'block'}; text-align:center;">
+												<h:panelGroup>
+													<h:graphicImage url="/images/001_50.gif" width="14px" height="14px"/>&#160;
+												</h:panelGroup>
+												<h:outputText value="#{appMensajePortalBean.mensajePortal}"></h:outputText>&#160;
+											</div>
+											<script language="javascript">
+												setInterval("animarMensajePortal()",5000);
+											</script>
+										</h:panelGroup>
+									<ui:insert name="body"></ui:insert>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<br />
+				<div id="footerMainContainer"></div>
+			</div>
+		</div>
+		<br/>
+		<div id="padding">
+			&nbsp;
+		</div>
+		<a4j:outputPanel ajaxRendered="true">
+			<script languaje="javascript">
+				$j('.readonly').prop('readonly',true);
+				$j('.disabled').prop('disabled',true);
+				decorarCamposCaptura();
+		    </script>
+		</a4j:outputPanel>
+		<div id="footerContainer">
+			<p class="textoBlancoGrande">Paseo de la Reforma No. 255 2do y 3er piso. Col Cuauht&#233;moc C.P. 06500 M&#233;xico D.F.<br/>
+			Tel. (55)53 42 90 00  </p>
+		</div>
+		
+	</body>
+	
+</html>

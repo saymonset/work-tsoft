@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd"	
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       >
+       
+       <util:list id="listaEspecialValidacionesColocacionPrimariaMismoDia">
+       		<!-- Valida que todos los campos requeridos 
+					@return boolean true si encontró un error o false en caso contrario -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumericoRequerido">
+					<property name="llaveMensaje"
+						value="PRECIO_TITULO_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="precioTitulo" />
+						</map>
+					</property>
+				</bean>
+				<!-- fin  -->
+
+				<!-- Valida que todos los campos requeridos tengan el formato esperado 
+					@return boolean true si encontró un error o false en caso contrario -->
+				<!-- Verifica el valor Dias Vigentes no sea 0 En caso de que sea 0, se coloca el
+					correspondiente mensaje de error y se regresa a la pagina de captura  
+					@return: true si alguno de los campos es Cero, false si todo esta bien-->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+					<property name="llaveMensaje"
+						value="DIAS_VIGENTES_MAYOR_IGUAL_CERO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="diasVigentes" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+					<property name="llaveMensaje"
+						value="PRECIO_TITUlO_MAYOR_CERO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="precioTitulo" />
+						</map>
+					</property>
+				</bean>
+       </util:list>
+       
+       <util:list id="listaEspecialValidacionesColocacionPrimariaMismoDiaCompra">
+       			<!-- Valida que todos los campos requeridos 
+					@return boolean true si encontró un error o false en caso contrario -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumericoRequerido">
+					<property name="llaveMensaje"
+						value="PRECIO_TITULO_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="precioTitulo" />
+						</map>
+					</property>
+				</bean>
+				<!-- fin  -->
+				<!-- Verifica el valor Dias Vigentes no sea 0 En caso de que sea 0, se coloca el
+					correspondiente mensaje de error y se regresa a la pagina de captura  
+					@return: true si alguno de los campos es Cero, false si todo esta bien-->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+					<property name="llaveMensaje"
+						value="DIAS_VIGENTES_MAYOR_IGUAL_CERO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="diasVigentes" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+					<property name="llaveMensaje"
+						value="PRECIO_TITUlO_MAYOR_CERO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="precioTitulo" />
+						</map>
+					</property>
+				</bean>
+       </util:list>
+       
+       <util:list id="listaEspecialValidacionesColocacionPrimariaFechaValor">
+       			<!-- Valida que todos los campos requeridos 
+					@return boolean true si encontró un error o false en caso contrario -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumericoRequerido">
+					<property name="llaveMensaje"
+						value="PRECIO_TITULO_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="precioTitulo" />
+						</map>
+					</property>
+				</bean>
+				<!-- fin  -->
+
+				<!-- Verifica el valor Dias Vigentes no sea 0 En caso de que sea 0, se coloca el
+					correspondiente mensaje de error y se regresa a la pagina de captura  
+					@return: true si alguno de los campos es Cero, false si todo esta bien-->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+					<property name="llaveMensaje"
+						value="DIAS_VIGENTES_MAYOR_IGUAL_CERO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="diasVigentes" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+					<property name="llaveMensaje"
+						value="PRECIO_TITUlO_MAYOR_CERO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="precioTitulo" />
+						</map>
+					</property>
+				</bean>
+       </util:list>
+       
+       <util:list id="listaEspecialValidacionesColocacionPrimariaFechaValorCompra">
+       		<!-- Valida que todos los campos requeridos 
+					@return boolean true si encontró un error o false en caso contrario -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumericoRequerido">
+					<property name="llaveMensaje"
+						value="PRECIO_TITULO_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="precioTitulo" />
+						</map>
+					</property>
+				</bean>
+				<!-- fin  -->
+
+				<!-- Verifica el valor Dias Vigentes no sea 0 En caso de que sea 0, se coloca el
+					correspondiente mensaje de error y se regresa a la pagina de captura  
+					@return: true si alguno de los campos es Cero, false si todo esta bien-->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+					<property name="llaveMensaje"
+						value="DIAS_VIGENTES_MAYOR_IGUAL_CERO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="diasVigentes" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+					<property name="llaveMensaje"
+						value="PRECIO_TITUlO_MAYOR_CERO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="precioTitulo" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionFechaPosteriorActual">
+					<property name="llaveMensaje"
+						value="FECHA_CONCERTACION_MAYOR_IGUAL_HOY" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="fechaConcertacion" />
+						</map>
+					</property>
+				</bean>
+       
+       </util:list>
+       
+       
+       
+       <util:list id="listaValidadoresColocacionPrimariaMismoDia"
+		list-class="com.indeval.portaldali.presentation.util.MergeList">
+		<ref bean="listaValidacionesComunesCapturaOperacion" />
+		<ref bean="listaEspecialValidacionesColocacionPrimariaMismoDia" />
+	</util:list>
+	
+	<util:list id="listaValidadoresColocacionPrimariaMismoDiaCompra"
+		list-class="com.indeval.portaldali.presentation.util.MergeList">
+		<ref bean="listaValidacionesComunesCapturaOperacion" />
+		<ref bean="listaEspecialValidacionesColocacionPrimariaMismoDiaCompra" />
+	</util:list>
+	
+	<util:list id="listaValidadoresColocacionPrimariaFechaValor"
+		list-class="com.indeval.portaldali.presentation.util.MergeList">
+		<ref bean="listaValidacionesComunesCapturaOperacion" />
+		<ref bean="listaEspecialValidacionesColocacionPrimariaFechaValor" />
+	</util:list>
+	
+	<util:list id="listaValidadoresColocacionPrimariaFechaValorCompra"
+		list-class="com.indeval.portaldali.presentation.util.MergeList">
+		<ref bean="listaValidacionesComunesCapturaOperacion" />
+		<ref bean="listaEspecialValidacionesColocacionPrimariaFechaValorCompra" />
+	</util:list>
+       
+       
+       
+	<bean id="validadorCapturaOperacionesColocacionPrimariaOpcionMismoDia"
+		parent="validacionesComunesCO">
+		
+		<property name="criteriosValidacion" ref="listaValidadoresColocacionPrimariaMismoDia">
+		
+		</property>
+	</bean>
+
+	<bean id="validadorCapturaOperacionesColocacionPrimariaOpcionFechaValor"
+		parent="validacionesComunesCO">
+		
+		<property name="criteriosValidacion" ref="listaValidadoresColocacionPrimariaFechaValor">
+		
+		</property>
+	</bean>
+
+
+	<bean id="validadorCapturaOperacionesColocacionPrimariaOpcionCompraEnMD"
+		parent="validacionesComunesCO">
+		
+		<property name="criteriosValidacion" ref="listaValidadoresColocacionPrimariaMismoDiaCompra">
+		</property>
+	</bean>
+
+	<bean id="validadorCapturaOperacionesColocacionPrimariaOpcionCompraEnFV"
+		parent="validacionesComunesCO">
+		
+		<property name="criteriosValidacion" ref="listaValidadoresColocacionPrimariaFechaValorCompra">
+	
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	<bean id="validadorCapturaOperacionesColocacionPrimariaOpcionMismoDiaArchivo"
+		parent="validacionesComunesArchivoCO">
+		
+		<property name="criteriosValidacion" ref="listaValidadoresColocacionPrimariaMismoDia">
+		
+		</property>
+	</bean>
+
+	<bean id="validadorCapturaOperacionesColocacionPrimariaOpcionFechaValorArchivo"
+		parent="validacionesComunesArchivoCO">
+		
+		<property name="criteriosValidacion" ref="listaValidadoresColocacionPrimariaFechaValor">
+		
+		</property>
+	</bean>
+
+
+	<bean id="validadorCapturaOperacionesColocacionPrimariaOpcionCompraEnMDArchivo"
+		parent="validacionesComunesArchivoCO">
+		
+		<property name="criteriosValidacion" ref="listaValidadoresColocacionPrimariaMismoDiaCompra">
+		</property>
+	</bean>
+
+	<bean id="validadorCapturaOperacionesColocacionPrimariaOpcionCompraEnFVArchivo"
+		parent="validacionesComunesArchivoCO">
+		
+		<property name="criteriosValidacion" ref="listaValidadoresColocacionPrimariaFechaValorCompra">
+	
+		</property>
+	</bean>
+
+</beans>

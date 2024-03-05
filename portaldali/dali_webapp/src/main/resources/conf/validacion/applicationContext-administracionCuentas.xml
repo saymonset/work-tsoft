@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="validadorCreaCuentaBancaComercial"
+		class="com.indeval.portaldali.presentation.validation.impl.DTOValidatorImpl">
+		<property name="nombreBundle"
+			value="mensajes.validacionesAdministracionCuentas" />
+		<property name="criteriosValidacion">
+			<list>
+			
+				<!-- Requeridos -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="IDFOLIO_AGENTE_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="idFolioUsuario" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="NOMBRE_AGENTE_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="institucion.nombreCorto" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="BCO_BENEFICIARIO_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="idBancoBeneficiario" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="NOMBRE_BCO_BENEFICIARIO_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="institucionBeneficiario.nombreCorto" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="CTA_BENEFICIARIO_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="cuentaBeneficiario" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="NOMBRE_BENEFICIARIO_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="nombreBeneficiario" />
+						</map>
+					</property>
+				</bean>
+				
+				
+				<!-- Longitud -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionLongitudCampo">
+					<property name="llaveMensaje"
+						value="LONGITUD_DFOLIO_AGENTE_INCORRECTA" />
+					<property name="longitudMaxima" value="5" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="idFolioUsuario" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionLongitudCampo">
+					<property name="llaveMensaje"
+						value="LONGITUD_BCO_BENEFICIARIO_INCORRECTA" />
+					<property name="longitudMaxima" value="5" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="idBancoBeneficiario" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionLongitudCampo">
+					<property name="llaveMensaje"
+						value="LONGITUD_CTA_BENEFICIARIO_INCORRECTA" />
+					<property name="longitudMaxima" value="18" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="cuentaBeneficiario" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionLongitudCampo">
+					<property name="llaveMensaje"
+						value="LONGITUD_NOMBRE_BENEFICIARIO_INCORRECTA" />
+					<property name="longitudMaxima" value="140" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="nombreBeneficiario" />
+						</map>
+					</property>
+				</bean>
+				
+				
+				<!-- Formato -->
+<!--			
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumerico">
+					<property name="llaveMensaje"
+						value="FORMATO_MAX_MENSUAL_INVALIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="montoMaximoMensual" />
+						</map>
+					</property>
+				</bean> 
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumerico">
+					<property name="llaveMensaje"
+						value="FORMATO_MAX_DIARIO_INVALIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="montoMaximoDiario" />
+						</map>
+					</property>
+				</bean> 
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumerico">
+					<property name="llaveMensaje"
+						value="FORMATO_MAX_TRANSACCION_INVALIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="montoMaximoXTran" />
+						</map>
+					</property>
+				</bean> 
+ -->				
+				
+				<!-- Valor mayor a cero  -->
+<!-- 
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+					<property name="llaveMensaje"
+						value="MAX_MENSUAL_MAYOR_CERO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="montoMaximoMensual" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+					<property name="llaveMensaje"
+						value="MAX_DIARIO_MAYOR_CERO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="montoMaximoDiario" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+					<property name="llaveMensaje"
+						value="MAX_TRANSACCION_MAYOR_CERO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="montoMaximoXTran" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+					<property name="llaveMensaje"
+						value="MAX_MOVS_MENSUAL_MAYOR_CERO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="numMaximoMovsXMes" />
+						</map>
+					</property>
+				</bean>
+-->
+				
+			</list>
+		</property>
+	</bean>
+	
+	
+	
+	<bean id="validadorCreaCuentaInternacional"
+		class="com.indeval.portaldali.presentation.validation.impl.DTOValidatorImpl">
+		<property name="nombreBundle"
+			value="mensajes.validacionesAdministracionCuentas" />
+		<property name="criteriosValidacion">
+			<list>
+			
+				<!-- Requeridos -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="IDFOLIO_AGENTE_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="idFolioUsuario" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="NOMBRE_AGENTE_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="institucion.nombreCorto" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="NOMBRE_CORTO_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="aliasCuenta" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="CTA_BENEFC_FINAL_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="cuentaBeneficiarioFinal" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="NOMBRE_BENEFC_FINAL_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="nombreBeneficiarioFinal" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="BCO_BENEFICIARIO_REQUERIDO_INT" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="bancoBeneficiario" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="NOMBRE_BCO_BENEFICIARIO_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="nombreBancoBeneficiario" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="DETALLES_PAGO_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="detallesPago" />
+						</map>
+					</property>
+				</bean>
+				
+			</list>
+		</property>
+	</bean>
+	
+	
+	
+	<bean id="validadorCreaRetiroInternacional"
+		class="com.indeval.portaldali.presentation.validation.impl.DTOValidatorImpl">
+		<property name="nombreBundle"
+			value="mensajes.validacionesAdministracionCuentas" />
+		<property name="criteriosValidacion">
+			<list>
+			
+				<!-- Requeridos -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="IDFOLIO_TRASPASANTE_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="idFolioUsuario" />
+						</map>
+					</property>
+				</bean>
+				
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="CUENTA_BENEFICIARIO_REQUERIDA" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="cuentaBeneficiaria" />
+						</map>
+					</property>
+				</bean>
+				
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="BOVEDA_REQUERIDA" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="boveda" />
+						</map>
+					</property>
+				</bean>
+				
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="IMPORTE_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="importeRetiro" />
+						</map>
+					</property>
+				</bean>												
+
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="CONCEPTO_PAGO_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="conceptoPago" />
+						</map>
+					</property>
+				</bean>
+				
+				<!-- 
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="FECHA_VALOR_REQUERIDA" />
+					<property name="parametros">
+						<map>
+							<entry key="campo" value="fechaValor"/>
+						</map>
+					</property>
+				</bean>
+				 -->
+				 			
+			</list>
+		</property>
+	</bean>
+</beans>

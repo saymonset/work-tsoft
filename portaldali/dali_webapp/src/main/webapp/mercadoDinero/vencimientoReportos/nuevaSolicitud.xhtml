@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:cvt="http://indeval.com/jsf/converters"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:indeval="http://indeval.com/indeval">
+	
+	<ui:composition template="/layoutCaptura.xhtml">
+		<ui:define name="headCaptura">
+			<script language="javascript" type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/js/reportos.js"></script>
+		</ui:define>
+	
+		<ui:define name="tituloEncabezado">
+			<h:outputText value="#{etq.modalSolicitudNueva}" />
+		</ui:define>
+		<!-- <ui:define name="subtitulo"></ui:define>-->
+		<ui:define name="seccionForma">
+<!-- 			<h:form id="vencimientoForm"> -->
+				<a4j:keepAlive beanName="nuevoVencimientoController"/>
+				<h:outputText value="#{nuevoVencimientoController.init}" />
+				<h:inputHidden id="validationErrors" value="#{nuevoVencimientoController.validationErrors}"></h:inputHidden>
+				
+				<f:facet name="header">
+					<h:outputText value="#{etq.modalSolicitudNueva}" />
+				</f:facet>
+				
+				
+				<table>
+					<!-- Fecha Reporto Vigente -->
+					<tr>
+						<td align="left">
+							<b><h:outputText value="#{etq.fechaReportoActual}" styleClass="texto" />:</b>
+						</td>
+						<td align="left">
+							<h:outputText value="#{nuevoVencimientoController.solicitud.fechaVencimientoVigente}" styleClass="texto" >
+								<cvt:simpleDateConverter pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</td>
+					</tr>
+					<!--  Plazo Vigente -->
+					<tr>
+						<td align="left">
+							<b><h:outputText value="#{etq.plazoActual}" styleClass="texto" />:</b>
+						</td>
+						<td align="left">
+							<h:outputText value="#{nuevoVencimientoController.solicitud.plazoVigente}" styleClass="texto" />
+						</td>
+					</tr>
+					<!-- Fecha Solicitud -->
+					<tr>
+						<td align="left"><b><h:outputText value="#{etq.fechaReportoSolicitud}" styleClass="texto" />:</b></td>
+						<td align="left">
+							<rich:calendar id="fechaVencimientoSolicitud" 
+										value="#{nuevoVencimientoController.solicitud.fechaVencimientoSolicitud}"
+										datePattern="dd/MM/yyyy"
+										inputSize="11"
+										inputClass="textoControles"
+										inputStyle="background-color: #ffffe6;"
+										isDayEnabled="isDayEnabled"
+										todayControlMode="hidden" >
+								<a4j:support event="onchanged"
+									reRender="plazoSolicitud, mensajes, validationErrors"
+									actionListener="#{nuevoVencimientoController.validaNuevoPlazo}" />
+							</rich:calendar>
+						</td>
+					</tr>
+					
+					<!-- Plazo Solicitud -->
+					<tr>
+						<td align="left">
+							<b><h:outputText value="#{etq.plazoSolicitud}" styleClass="texto" />:</b>
+						</td>
+						<td align="left">
+							<h:inputText autocomplete="off" id="plazoSolicitud" styleClass="readonly" size="10" maxlength="4"
+								value="#{nuevoVencimientoController.solicitud.plazoSolicitud}" readonly="true"/>
+						</td>
+					</tr>
+					
+				</table>
+<!-- 			</h:form> -->
+			
+			<!-- La facultad debe reflejar el valor de SeguridadConstants.FACULTAD_FIRMA_OPERACION -->
+			<indeval:authorizeFaculty userInFaculty="CON_CERTIFICADO">
+				<h:panelGroup id="panelFirma">
+					<div style="display:none">
+						<textarea  id ="isoSinFirmar" name="isoSinFirmar" >#{nuevoVencimientoController.isoSinFirmar}</textarea>
+						<textarea id="numeroSerie" name="numeroSerie" ></textarea>
+						<textarea  id="numeroSerieUsuario" name="numeroSerieUsuario">#{sessionScope.usuario.numeroSerieCertificado}</textarea>
+						<textarea id="isoFirmado" name="isoFirmado"></textarea>
+						<textarea  id="hashIso" name="hashIso">#{nuevoVencimientoController.hashIso}</textarea>
+					</div>
+					<h:panelGroup rendered="#{not empty nuevoVencimientoController.isoSinFirmar}">
+						<script>
+							function firmarOperacion(){
+								$j("input[id$='btnAceptarSolicitud2']").prop("disabled",false);
+								$j("input[id$='btnLimpiar']").prop("disabled",false);
+								$j("input[id$='btnAceptarSolicitud2']").click();
+							}
+						</script>
+						<ui:decorate template="/firmaDigitalSimple.xhtml">
+							<ui:define name="isoSinFirmar"><h:outputText value="#{nuevoVencimientoController.isoSinFirmar}"/></ui:define>
+						</ui:decorate>
+					</h:panelGroup>
+				</h:panelGroup>
+			</indeval:authorizeFaculty>
+		</ui:define>
+		
+		<ui:define name="botones">
+			<h:panelGroup>
+				<table>
+					<tr>
+						<!-- CANCELAR -->
+						<td>
+							<a4j:commandButton id="btnCancelarSolicitud" value="Cancelar" 
+								action="#{detalleVencimientoController.toConsultaSolicitud}" style="margin-left:10px">
+								<f:param name="reload" value="true" ></f:param>
+							</a4j:commandButton>
+						</td>
+						<!-- ACEPTAR -->
+						<td>
+							<a4j:commandButton id="btnAceptarSolicitud" value="Aceptar"
+								reRender="validationErrors, mensajes, panelFirma" style="margin-right:10px"
+								action="#{nuevoVencimientoController.solicitarVencimientoAnticipado}" 
+								onclick="if(hasErrors()) return false; deshabilitarBoton('btnAceptarSolicitud');"
+								oncomplete="habilitarBoton('btnAceptarSolicitud'); if(hasErrors()){ return false; }">
+								<f:param name="reload" value="true" ></f:param>
+								<f:param name="modMessage" value="#{mensajes.msgNuevaSolicitud}" ></f:param>
+							</a4j:commandButton>
+						</td>
+					</tr>
+					<tr class="hidden">
+						<td>
+							<a4j:commandButton id="btnAceptarSolicitud2" styleClass="hidden"
+								action="#{nuevoVencimientoController.solicitarVencimientoAnticipado}" >
+								<f:param name="reload" value="true" ></f:param>
+								<f:param name="modMessage" value="#{mensajes.msgNuevaSolicitud}" ></f:param>
+							</a4j:commandButton>
+						</td>
+					</tr>
+				</table>
+			</h:panelGroup>
+		</ui:define>
+	</ui:composition>
+</html>

@@ -1,0 +1,728 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+	<bean id="fileUploadService"
+		class="com.indeval.portaldali.middleware.services.util.FileUploadServiceImpl">
+		<property name="fileUploadDao" ref="fileUploadDao"></property>
+	</bean>	
+
+	<bean id="consultaEmisionService"
+		class="com.indeval.portaldali.middleware.services.common.ConsultaEmisionServiceImpl">
+		<property name="emisionDAO" ref="emisionDAO"></property>
+	</bean>
+	
+	<bean id="consultaErroresLiquidacionService" class="com.indeval.portaldali.middleware.services.common.ConsultaErroresLiquidacionServiceImpl">
+		<property name="errorLiquidacionDaliDAO" ref="errorLiquidacionDaliDAO"></property>
+	</bean>
+	
+	<bean id="consultaMercadoService" class="com.indeval.portaldali.middleware.services.common.ConsultaMercadoServiceImpl">
+		<property name="mercadoDAO" ref="mercadoDAO"/>
+	</bean>
+	
+	<bean id="consultaEstadoInstruccionService" class="com.indeval.portaldali.middleware.services.common.ConsultaEstadoInstruccionServiceImpl">
+		<property name="estadoInstruccionDAO" ref="estadoInstruccionDAO"></property>
+	</bean>
+	
+	<bean id="consultaDivisaService" class="com.indeval.portaldali.middleware.services.common.ConsultaDivisaServiceImpl">
+		<property name="divisaDAO" ref="divisaDAO"></property>
+	</bean>
+	
+	
+	<bean id="consultaTipoOperacionService" class="com.indeval.portaldali.middleware.services.common.ConsultaTipoOperacionServiceImpl">
+		<property name="tipoOperacionDAO" ref="tipoOperacionDAO"></property>
+	</bean> 
+	
+	<bean id="consultaBovedaService"
+		class="com.indeval.portaldali.middleware.services.common.ConsultaBovedaServiceImpl">
+		<property name="bovedaDAO" ref="bovedaDAO"></property>
+	</bean>
+	
+	<bean id= "consultaInstitucionService" class="com.indeval.portaldali.middleware.services.common.ConsultaInstitucionServiceImpl">
+		<property name="institucionDAO" ref="institucionDAO"></property>
+	</bean>
+	
+	<bean id="consultaTipoValorService" class="com.indeval.portaldali.middleware.services.common.ConsultaTipoValorServiceImpl">
+		<property name="tipoValorDAO" ref="tipoValorDAO"></property>
+	</bean>
+	
+	<bean id="consultaTipoMensajeService" class="com.indeval.portaldali.middleware.services.common.ConsultaTipoMensajeServiceImpl">
+		<property name="tipoMensajeDAO" ref="tipoMensajeDAO"></property>
+	</bean>	
+	
+	<bean id="consultaTipoInstruccionService" class="com.indeval.portaldali.middleware.services.common.ConsultaTipoInstruccionServiceImpl" >
+		<property name="tipoInstruccionDAO" ref="tipoInstruccionDAO"></property>
+	</bean>
+	
+	<bean id="consultaTipoLiquidacionService" class="com.indeval.portaldali.middleware.services.common.ConsultaTipoLiquidacionServiceImpl" >
+		<property name="tipoLiquidacionDAO" ref="tipoLiquidacionDAO"></property>
+	</bean>
+	
+	
+	<bean id="consultaCuentaService" class="com.indeval.portaldali.middleware.services.common.ConsultaCuentaServiceImpl" >
+		<property name="cuentaDAO" ref="cuentaDAO"></property>
+	</bean>
+	
+	<bean id="mensajePortalService" class="com.indeval.portaldali.middleware.services.common.MensajePortalServiceImpl"
+		init-method="init" >
+		<property name="mensajePortalDaliDao" ref="mensajePortalDaliDao"></property>
+		<property name="dateDao" ref="dateUtilsDao"></property>
+		<property name="delay" value="60000"></property>
+		<property name="period" value="120000"></property>
+	</bean>
+	
+	<bean id="consultaEmisoraService" class="com.indeval.portaldali.middleware.services.common.ConsultaEmisoraServiceImpl">
+		<property name="emisoraDAO" ref="emisoraDAO"></property>
+	</bean>
+	
+	
+	
+	<bean id= "consultaTipoInstitucionService" class="com.indeval.portaldali.middleware.services.common.ConsultaTipoInstitucionServiceImpl">
+		<property name="tipoInstitucionDAO" ref="tipoInstitucionDAO"></property>
+	</bean>
+	
+	<bean id="consultaTipoTenenciaService" class="com.indeval.portaldali.middleware.services.common.ConsultaTipoTenenciaServiceImpl">
+		<property name="tipoTenenciaDAO" ref="tipoTenenciaDAO"></property>
+	</bean>	
+	
+	
+	<bean id="fechasUtilService" class="com.indeval.portaldali.middleware.services.util.FechasUtilServiceImpl">
+		<property name="fechaDao" ref="fechaDao"></property>
+	</bean>
+	
+	<bean id="bitacoraOperacionesService" class="com.indeval.portaldali.middleware.services.util.BitacoraOperacionesServiceImpl">
+		<property name="dateUtilsDao" ref="dateUtilsDao"></property>
+		
+		<property name="listaTiposOperacion">
+			<list>
+				<value>M</value>
+				<value>H</value>
+				<value>Z</value>
+				<value>T</value>
+			</list>
+		</property>
+		
+		<property name="errorResolver" ref="errorResolver"></property>
+	</bean>
+	
+    <bean id="tesoreriaService" class="com.indeval.portaldali.middleware.services.tesoreria.TesoreriaServiceImpl" lazy-init="true">
+        <property name="utilService" ref="utilServices"></property>
+        <property name="decretosEjercicioDerechos" ref="decretosEjercicioDerechos"/>
+        <property name="errorResolver" ref="errorResolver"></property>
+        <property name="dateUtilsDao" ref="dateUtilsDao"></property>
+        <property name="institucionDaliDAO" ref="institucionDAO"></property>
+        <property name="saldoNombradaDao" ref="saldoNombradaDao"></property>
+        <!-- property name="depositanteValidoBanxicoDao" ref="depositanteValidoBanxicoDao"/ -->
+    </bean>
+	
+	<bean id="fileTransferService"
+		class="com.indeval.portaldali.middleware.services.filetransfer.FileTransferServiceImpl"
+		lazy-init="true">
+		<description>
+			Bean de Acceso a servicios del FileTransfer
+		</description>
+		<property name="utilService" ref="utilServices"></property>
+		<property name="diaInhabilDao" ref="diaInhabilDao"></property>
+		<property name="errorResolver" ref="errorResolver"></property>
+		<property name="fileTransferDao" ref="fileTransferDao"></property>
+		<property name="fileTransferOperacionesDao" ref="fileTransferOperacionesDao"></property>
+		<property name="dateUtilsDao" ref="dateUtilsDao"></property>
+		<property name="instrumentoDao" ref="cInstrumentoDao"></property>
+		<property name="emisionDao" ref="emisionDAO"></property>
+		<property name="institucionDaliDAO" ref="institucionDAO" />
+		<!-- property name="depositanteValidoBanxicoDao" ref="depositanteValidoBanxicoDao" / -->
+		<property name="admonCuentasService" ref="admonCuentasRetiroEfectivoService" />
+		<property name="estadoInstruccionDaliDAO" ref="estadoInstruccionDAO" />
+		<property name="admonRetiroEfectivo" ref="admonRetirosEfectivoService" />
+		<property name="divisaDAO" ref="divisaDAO"></property>
+		<property name="bovedaDAO" ref="bovedaDAO"></property>
+		<property name="validacionService" ref="validacionService" />
+		<property name="cuentaDaliDao" ref="cuentaDAO"></property>
+		<property name="cuentasInvalidas">
+			<list value-type="java.lang.String">
+				<value>0030</value>
+				<value>0031</value>
+				<value>0056</value>
+				<value>0057</value>
+				<value>0070</value>
+				<value>0081</value>
+				<value>54..</value>				
+				<value>..98</value>				
+			</list>
+		</property>
+		
+	</bean>
+	
+	<bean id="utilServices"
+		class="com.indeval.portaldali.middleware.services.util.UtilServicesImpl"
+		lazy-init="true">
+		<description>Bean de Acceso a servicios Util</description>
+		<property name="secuenciaDaliDao" ref="secuenciaDaliDao"></property>
+		<property name="cuentaNombradaDao" ref="cCuentaNombradaDao"></property>
+		<property name="errorResolver" ref="errorResolver"></property>
+		<property name="diaInhabilDao" ref="diaInhabilDao"></property>
+		<property name="dateUtilsDao" ref="dateUtilsDao"></property>
+		<property name="cuponDao" ref="cuponDao"></property>
+		<property name="bovedaDAO" ref="bovedaDAO"></property>
+		<property name="divisaDAO" ref="divisaDAO"></property>
+		<property name="mapeoOperacionInstruccion">
+			<map>
+				<entry key="VC">
+					<bean class="com.indeval.portaldali.middleware.dto.TipoInstruccionDTO">
+						<property name="idTipoInstruccion" value="3"></property>
+						<property name="nombreCorto" value="DVPC"></property>
+						<property name="descripcion" value="TRASPASOS CONTRA PAGO DVP CUSTODIOS (ACTUALMENTE TVLE)"></property>
+					</bean>
+				</entry>
+				<entry key="R">
+					<bean class="com.indeval.portaldali.middleware.dto.TipoInstruccionDTO">
+						<property name="idTipoInstruccion" value="22"></property>
+						<property name="nombreCorto" value="REPO"></property>
+						<property name="descripcion" value="INICIOS DE REPORTO PARA VALORES NACIONALES REPORTABLES"></property>
+					</bean>
+				</entry>
+				<entry key="P">
+					<bean class="com.indeval.portaldali.middleware.dto.TipoInstruccionDTO">
+						<property name="idTipoInstruccion" value="23"></property>
+						<property name="nombreCorto" value="RSPP"></property>
+						<property name="descripcion" value="INICIOS Y RECUPERACIONES DE REPORTOS INTRADêA CON BANXICO CON LIQUIDACIîN DE EFECTIVO EN INDEVAL"></property>
+					</bean>
+				</entry>
+				<entry key="N">
+					<bean class="com.indeval.portaldali.middleware.dto.TipoInstruccionDTO">
+						<property name="idTipoInstruccion" value="56"></property>
+						<property name="nombreCorto" value="RSPN"></property>
+						<property name="descripcion" value="INICIOS Y RECUPERACIONES DE REPORTOS INTRADíA CON BANXICO CON LIQUIDACIóN DE EFECTIVO EN INDEVAL NO COMPENSABLE"></property>
+					</bean>
+				</entry>
+				<entry key="X">
+					<bean class="com.indeval.portaldali.middleware.dto.TipoInstruccionDTO">
+						<property name="idTipoInstruccion" value="24"></property>
+						<property name="nombreCorto" value="VREP"></property>
+						<property name="descripcion" value="VENCIMIENTOS DE REPORTO"></property>
+					</bean>
+				</entry>
+				<entry key="V">
+					<bean class="com.indeval.portaldali.middleware.dto.TipoInstruccionDTO">
+						<property name="idTipoInstruccion" value="25"></property>
+						<property name="nombreCorto" value="COVE"></property>
+						<property name="descripcion" value="COMPRAVENTA DE VALORES NACIONALES"></property>
+					</bean>
+				</entry>
+				<entry key="J">
+					<bean class="com.indeval.portaldali.middleware.dto.TipoInstruccionDTO">
+						<property name="idTipoInstruccion" value="26"></property>
+						<property name="nombreCorto" value="CORE"></property>
+						<property name="descripcion" value="SUBASTA PRIMARIA DE VALORES NACIONALES DE DEUDA O RECOMPRA DE VALORES NACIONALES DE DEUDA"></property>
+					</bean>
+				</entry>
+				<entry key="T">
+					<bean class="com.indeval.portaldali.middleware.dto.TipoInstruccionDTO">
+						<property name="idTipoInstruccion" value="35"></property>
+						<property name="nombreCorto" value="TLPI"></property>
+						<property name="descripcion" value="TRASPASOS LIBRES DE PAGO (TRASPASOS DE CETES ESPECIALES, TLP DE MERCADO DE DINERO, TLP DE MERCADO DE CAPITALES, TRASPASOS DE GARANTêAS DE SAGA-PL)"></property>
+					</bean>
+				</entry>
+				<entry key="B">
+					<bean class="com.indeval.portaldali.middleware.dto.TipoInstruccionDTO">
+						<property name="idTipoInstruccion" value="58"></property>
+						<property name="nombreCorto" value="BREM"></property>
+						<property name="descripcion" value="TRASPASOS LIBRES DE PAGO (TRASPASOS DE BREMS, TRASPASOS DE GARANTÍAS DE SAGA-PL)"></property>
+					</bean>
+				</entry>
+				<entry key="L">
+					<bean class="com.indeval.portaldali.middleware.dto.TipoInstruccionDTO">
+						<property name="idTipoInstruccion" value="36"></property>
+						<property name="nombreCorto" value="RSPL"></property>
+						<property name="descripcion" value="COMPRAVENTA DE VALORES NACIONALES"></property>
+					</bean>
+				</entry>
+				<entry key="M">
+					<bean class="com.indeval.portaldali.middleware.dto.TipoInstruccionDTO">
+						<property name="idTipoInstruccion" value="38"></property>
+						<property name="nombreCorto" value="TLPF"></property>
+						<property name="descripcion" value="COMPRAVENTA DE VALORES NACIONALES"></property>
+					</bean>
+				</entry>
+				<entry key="H">
+					<bean class="com.indeval.portaldali.middleware.dto.TipoInstruccionDTO">
+						<property name="idTipoInstruccion" value="39"></property>
+						<property name="nombreCorto" value="TLAT"></property>
+						<property name="descripcion" value="TRASPASO DE VALORES DESPUÉS DE LA FASE OPERATIVA DE INDEVAL"></property>
+					</bean>
+				</entry>
+				<entry key="Z">
+					<bean class="com.indeval.portaldali.middleware.dto.TipoInstruccionDTO">
+						<property name="idTipoInstruccion" value="40"></property>
+						<property name="nombreCorto" value="TLAR"></property>
+						<property name="descripcion" value="TRASPASO LIBRE DE PAGO POR APERTURA DE SISTEMAS CON CARGO AL RECEPTOR"></property>
+					</bean>
+				</entry>
+				<entry key="K">
+					<bean class="com.indeval.portaldali.middleware.dto.TipoInstruccionDTO">
+						<property name="idTipoInstruccion" value="41"></property>
+						<property name="nombreCorto" value="TRAA"></property>
+						<property name="descripcion" value="TRASPASOS INSTRUIDOS POR PERSONAL DE INDEVAL"></property>
+					</bean>
+				</entry>
+				<entry key="O">  <!-- Esta key se le asignó arbitrariamente, si es necesario cambiarla, no debe haber problema -->
+					<bean class="com.indeval.portaldali.middleware.dto.TipoInstruccionDTO">
+						<property name="idTipoInstruccion" value="30"></property>
+						<property name="nombreCorto" value="TREF"></property>
+						<property name="descripcion" value="TRASPASO DE EFECTIVO"></property>
+					</bean>
+				</entry>
+			</map>
+		</property>
+		
+	</bean>
+	<bean id="errorResolver"
+		class="com.bursatec.util.message.impl.MessageResolverImpl">
+		<description>Bean de Acceso al Message Error</description>
+
+		<property name="messageSource">
+			<bean
+				class="org.springframework.context.support.ResourceBundleMessageSource">
+				<property name="basenames">
+					<list>
+						<value>erroresPortalDali</value>
+						<value>fileTransfer</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- Bean para obtener los mensajes de los archivos properties -->
+	<bean id="messageResolver" class="com.bursatec.util.message.impl.MessageResolverImpl">
+		<property name="messageSource">
+			<bean class="org.springframework.context.support.ResourceBundleMessageSource">
+				<property name="basenames">
+					<list>
+						<value>erroresPortalDali</value>
+						<value>fileTransfer</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+	
+	<bean id="patternResolver"
+		class="com.bursatec.util.message.impl.MessageResolverImpl">
+		<description>Bean de Acceso al Pattern Number</description>
+
+		<property name="messageSource">
+			<bean
+				class="org.springframework.context.support.ResourceBundleMessageSource">
+				<property name="basenames">
+					<list>
+						<value>patternNumberDali</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+	</bean>
+    
+    
+	<bean id="envioOperacionesService" class="com.indeval.portaldali.middleware.services.enviooperaciones.EnvioOperacionesServiceImpl">
+		<property name="bitacoraOperacionesService" ref="bitacoraOperacionesService"></property>
+		<property name="dateUtilsDao" ref="dateUtilsDao"></property>
+		<property name="registroInstruccionesMatch2Dao" ref="registroInstruccionesMatch2Dao"></property>
+		<property name="utilService" ref="utilServices"></property>
+		<property name="errorResolver" ref="errorResolver"></property>
+		<property name="instrumentoDao" ref="cInstrumentoDao"></property>
+		<property name="institucionDAO" ref="institucionDAO"></property>
+		<property name="tlpService" ref="traspasoLibrePagoService"/>
+		<property name="dvpService" ref="traspasoContraPagoService"/>
+		<property name="efectivo" ref="efectivoService"/>
+		<property name="tesoreriaService" ref="tesoreriaService"/>
+		<property name="bovedaDao" ref="bovedaDAO"/>
+		<property name="admonCuentasRetiroEfectivoService" ref="admonCuentasRetiroEfectivoService"/>
+		<!-- property name="retiroEfvoInterService" ref="admonRetirosEfectivoService"/ -->
+		<property name="bitacoraOperacionesDao" ref="bitacoraOperacionesDao" />		
+		<property name="fasesValidasConfirmacion">
+			<map>
+				<entry key="3">
+					<value>Confirmacion</value>
+				</entry>
+				<entry key="5">
+					<value>Confirmacion</value>
+				</entry>
+				<entry key="7">
+					<value>Confirmacion</value>
+				</entry>
+				<entry key="10">
+					<value>Confirmacion</value>
+				</entry>
+				<entry key="11">
+					<value>Confirmacion</value>
+				</entry>
+			</map>
+		</property>
+		<property name="listaTiposOperacion">
+			<list>
+				<value>M</value>
+				<value>H</value>
+				<value>Z</value>
+				<value>T</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="conciliacionModulosService" class="com.indeval.portaldali.middleware.services.conciliacionModulos.ConciliacionModulosServiceImpl">
+		<property name="conciliacionModulosDAO" ref="conciliacionModulosDAO" />
+		<property name="bitacoraReenvioDAO" ref="bitacoraReenvioDAO" />
+		<property name="consultaInstruccionesEfectivoDAO" ref="consultaInstruccionesEfectivoDAO"/>
+		<property name="jmsTemplateReenvioMov" ref="jmsTemplateReenvioMov" />
+		<property name="validateSignatureService" ref="validateSignatureService"></property>
+		<property name="signMensaje" ref="signMensaje" />
+		<property name="sendMessageServiceSign" ref="sendMessageServiceSign"/>
+		<property name="ejbSpeiOperaciones" ref="ejbSpeiOperaciones"/>
+        <property name="jmsTemplateReenvioMAV" ref="jmsTemplateReenvioMAV" />
+        <property name="jmsTemplateReenvioMOS" ref="jmsTemplateReenvioMOS" />
+        <property name="jmsTemplateReenvioSLV" ref="jmsTemplateReenvioSLV" />
+        <property name="jmsTemplateReenvioADAPTERMAVPFI" ref="jmsTemplateReenvioADAPTERMAVPFI" />
+        <property name="jmsTemplateReenvioAE" ref="jmsTemplateReenvioAE" />
+        <property name="jmsTemplateReenvioMATCH" ref="jmsTemplateReenvioMATCH" />
+        <property name="bitacoraReenvioConfLiqReteService" ref="bitacoraReenvioConfLiqReteService" />
+	</bean>
+	
+	<bean id="bitacoraReenvioConfLiqReteService" class="com.indeval.portaldali.middleware.services.common.BitacoraReenvioConfLiqReteServiceImpl">
+		<property name="bitacoraReenvioConfLiqReteDAO" ref="bitacoraReenvioConfLiqReteDAO" />
+	</bean>
+	
+	<bean id="mercadoDineroService" class="com.indeval.portaldali.middleware.services.mercadodinero.MercadoDineroServiceImpl">
+		<property name="validacionService" ref="validacionService" />
+		<property name="errorResolver" ref="errorResolver" />
+		<property name="instrumentoDao" ref="cInstrumentoDao" />
+		<property name="utilService" ref="utilServices" />
+		<property name="patternResolver" ref="patternResolver" />
+		<property name="catalogoService" ref="catalogoService" />
+		<property name="diaInhabilDao" ref="diaInhabilDao" />
+		<property name="dateUtilsDao" ref="dateUtilsDao" />
+		<property name="fasesAbiertas">
+			<map>
+				<entry key="1">
+					<value>TRASPASOS_CUENTAS_PROPIAS</value>
+				</entry>
+				<entry key="3">
+					<value>ABIERTO</value>
+				</entry>
+				<entry key="5">
+					<value>ABIERTO</value>
+				</entry>
+				<entry key="7">
+					<value>ABIERTO</value>
+				</entry>
+				<entry key="8">
+					<value>TRASPASOS_CUENTAS_PROPIAS</value>
+				</entry>
+				<entry key="10">
+					<value>FONDEO_CUENTAS_PROPIAS</value>
+				</entry>
+				<entry key="11">
+					<value>FONDEO_CUENTAS_PROPIAS</value>
+				</entry>
+			</map>
+		</property>
+		
+		<property name="businessRulesCatalogoService" ref="businessRulesCatalogoService" />
+		<property name="businessRulesMercadoDineroService" ref="businessRulesMercadoDineroService" />
+		<property name="validadorCuentasEmision" ref="validadorCuentasEmision" />
+	</bean>
+	
+	<bean id="mercadoCapitalesService" class="com.indeval.portaldali.middleware.services.mercadocapitales.MercadoCapitalesServiceImpl">
+		
+		<property name="validacionService">
+			<ref bean="validacionService"/>
+		</property>
+		
+		<property name="catalogoService">
+			<ref bean="catalogoService" />
+		</property>
+
+		<property name="diaInhabilDao">
+			<ref bean="diaInhabilDao" />
+		</property>
+
+		<property name="errorResolver">
+			<ref bean="errorResolver" />
+		</property>
+
+		<property name="instrumentoDao">
+			<ref bean="cInstrumentoDao" />
+		</property>
+
+		<property name="businessRulesMercadoCapitalesService">
+			<ref bean="businessRulesMercadoCapitalesService" />
+		</property>
+
+		<property name="patternResolver">
+			<ref bean="patternResolver" />
+		</property>
+
+		<property name="dateUtilsDao">
+			<ref bean="dateUtilsDao" />
+		</property>
+
+		<property name="utilService">
+			<ref bean="utilServices" />
+		</property>
+		
+		<property name="estadoCuentaSocInvDAO">
+			<ref bean="estadoCuentaSocInvDao" />
+		</property>
+
+		<property name="fasesValidasCapturaTraspasos">
+			<map>
+				<entry key="1">
+					<value>Captura</value>
+				</entry>
+				<entry key="8">
+					<value>Captura</value>
+				</entry>
+			</map>
+		</property>
+		<property name="cuentasInvalidas">
+			<list value-type="java.lang.String">
+				<value>0030</value>
+				<value>0031</value>
+				<value>0056</value>
+				<value>0057</value>
+				<value>0070</value>
+				<value>0081</value>
+				<value>54..</value>				
+				<value>..98</value>
+			</list>
+		</property>
+		
+		<property name="validadorCuentasEmision" ref="validadorCuentasEmision" />
+		
+	</bean>
+	
+	<bean id="businessRulesMercadoCapitalesService"
+		class="com.indeval.portaldali.middleware.services.modelo.BusinessRulesMercadoCapitalesServiceImpl"
+		lazy-init="true">
+		
+		<property name="claveReporto">
+			<map>
+				<entry key="T">
+					<value>T</value>
+				</entry>
+				<entry key="O">
+					<value>O</value>
+				</entry>
+				<entry key="P">
+					<value>P</value>
+				</entry>
+				<entry key="V">
+					<value>V</value>
+				</entry>
+				<entry key="A">
+					<value>A</value>
+				</entry>
+			</map>
+		</property>
+
+		<property name="errorResolver">
+			<ref bean="errorResolver" />
+		</property>
+
+		<property name="instrumentoDao">
+			<ref bean="cInstrumentoDao" />
+		</property>
+
+		<property name="utilService">
+			<ref bean="utilServices" />
+		</property>
+		
+		<property name="dateUtilsDao">
+			<ref bean="dateUtilsDao" />
+		</property>
+
+	</bean>
+	
+	<bean id="catalogoService"
+		class="com.indeval.portaldali.middleware.services.modelo.CatalogoServiceImpl"
+		lazy-init="true">
+		<description>Bean de Acceso a servicios de Catalogo</description>
+
+		<property name="dateUtilsDao" ref="dateUtilsDao" />
+		<property name="utilService" ref="utilServices"></property>
+		<property name="posicionControladaDao" ref="tPosicionControladaDao"/>
+		<property name="posicionNombradaDao" ref="tPosicionNombradaDao"/>
+		<property name="instrumentoDao" ref="cInstrumentoDao"></property>
+	</bean>
+	
+	<bean id="baseService" class="com.indeval.protocolofinanciero.api.service.impl.BaseServiceImpl" lazy-init="true">
+		<description>Clase base para los servicios del Protocolo Financiero Indeval</description>
+	</bean>
+	
+	
+	<!-- bean id="callMoneyService" class="com.indeval.protocolofinanciero.api.service.impl.TraspasoEfectivoFVImpl"
+          parent="baseService" lazy-init="true">
+        <description>
+            Servicios de CallMoney para el Protocolo Financiero Indeval
+        </description>
+    </bean -->
+	
+	<bean id="traspasoLibrePagoService" class="com.indeval.protocolofinanciero.api.service.impl.TraspasoLibrePagoImpl"
+		parent="baseService" lazy-init="true">
+		<description>Servicio de Traspasos Libres de Pago para el Protocolo Financiero Indeval</description>
+	</bean>
+
+	<bean id="traspasoContraPagoService" class="com.indeval.protocolofinanciero.api.service.impl.TraspasoContraPagoImpl"
+		parent="baseService" lazy-init="true">
+		<description>Servicio de Traspasos Contra Pago de Mercados para el Protocolo Financiero Indeval</description>
+	</bean>
+
+	<bean id="efectivoService" class="com.indeval.protocolofinanciero.api.service.impl.EfectivoImpl"
+		parent="baseService" lazy-init="true">
+		<description>Servicios de Efectivo para el Protocolo Financiero Indeval</description>
+	</bean>
+	
+	<bean id="traspasosAdministrativosService"
+        class="com.indeval.portaldali.middleware.services.movimientosadministrativos.TraspasosAdministrativosServiceImpl"
+        lazy-init="true">
+        <description>
+            Bean de Acceso a servicios de
+            TraspasosAdministrativosServiceImpl
+        </description>
+
+        <property name="catalogoService">
+            <ref bean="catalogoService" />
+        </property>
+
+        <property name="utilService">
+            <ref bean="utilServices" />
+        </property>
+        <property name="errorResolver">
+            <ref bean="errorResolver" />
+        </property>
+
+		<property name="validadorCuentasEmision" ref="validadorCuentasEmision" />
+
+    </bean>
+	
+    <bean id="conciliacionService" 
+        class="com.indeval.portaldali.middleware.services.conciliacion.ConciliacionServiceImpl"
+        lazy-init="true">
+        <description>Bean de Acceso a servicios de Control</description>
+        
+        <property name="dateUtilsDao">
+            <ref bean="dateUtilsDao" />
+        </property>
+
+        <property name="errorResolver">
+            <ref bean="errorResolver" />
+        </property>
+        
+        <property name="operacionNombradaDao">
+            <ref bean="operacionNombradaDao" />
+        </property>
+        
+        <property name="posicionNombradaDao">
+            <ref bean="tPosicionNombradaDao" />
+        </property>
+        
+        <property name="regContValNombradaDao">
+            <ref bean="regContValNombradaDao" />
+        </property>
+        
+        <property name="utilService">
+            <ref bean="utilServices" />
+        </property>
+    
+    </bean>
+	
+	<bean id="businessRulesCatalogoService"
+		class="com.indeval.portaldali.middleware.services.modelo.BusinessRulesCatalogoServiceImpl"
+		lazy-init="true">
+		<description>
+			Bean de Acceso a servicios de BusinessRulesCatalogo
+		</description>
+
+		
+		<property name="errorResolver">
+			<ref bean="errorResolver" />
+		</property>
+
+		<property name="instrumentoDao">
+			<ref bean="cInstrumentoDao" />
+		</property>
+
+		<property name="utilService">
+			<ref bean="utilServices" />
+		</property>
+
+	</bean>
+	
+	<bean id="businessRulesMercadoDineroService" class="com.indeval.portaldali.middleware.services.modelo.BusinessRulesMercadoDineroServiceImpl">
+		<property name="utilService" ref="utilServices"></property>
+	</bean>	
+	
+	<bean id="admonCuentasRetiroEfectivoService" class="com.indeval.portaldali.middleware.services.tesoreria.cuentas.AdministracionCuentasRetiroServiceImpl">
+		<property name="cuentasDao"    ref="cuentasRetiroEfectivoDao"/>
+		<property name="bitacoraDao"   ref="bitacoraCtasRetiroEfectivoDao"/>
+		<property name="historicoDao"  ref="historicoCtasRetiroEfectivoDao"/>
+		<property name="edosDao"       ref="edosCuentasRetiroEfectivoDao"/>
+		<!-- property name="depositanteValidoBanxicoDao" ref="depositanteValidoBanxicoDao"/ -->
+		<property name="paisDivisaDao" ref="paisDivisaDao"/>
+		<property name="errorResolver" ref="errorResolver"/>
+		<property name="utilService"   ref="utilServices"/>
+		<property name="dateUtilsDao"  ref="dateUtilsDao"/>
+		<property name="parametrosDao" ref="parametrosDao"/>
+		<property name="diaInhabilDaliDao"    ref="diaInhabilDao"/>
+		<property name="jasyptStringDigester" ref="jasyptStringDigester"/>
+		<property name="secuenciaDaliDao"     ref="secuenciaDaliDao"/>
+		<property name="institucionDaliDAO" ref="institucionDAO"/>
+	</bean>	
+
+	<bean id="admonRetirosEfectivoService" class="com.indeval.portaldali.middleware.services.tesoreria.AdmonRetirosEfectivoServiceImpl">
+		<property name="retiroDao"       ref="retiroEfectivoDao"/>
+		<property name="edosDao"         ref="estadoInstruccionDAO"/>
+		<property name="cuentaRetiroDao" ref="cuentasRetiroEfectivoDao"/>
+		<property name="efectivo" ref="efectivoService"/>
+		<property name="errorResolver"   ref="errorResolver"/>
+	</bean>
+	
+	<bean id="jasyptStringDigester" class="org.jasypt.digest.StandardStringDigester" >
+	    <property name="algorithm"  value="SHA-1" />
+	    <property name="iterations" value="100000" />
+	</bean>
+	
+	<!-- Bean para realizar validaciones comunes -->
+	<!-- Bean para las validaciones de file transfer -->
+	<bean id="validacionService" class="com.indeval.portaldali.middleware.services.common.ValidacionServiceImpl" lazy-init="true">
+		<property name="dateUtilsDao" ref="dateUtilsDao" />
+		<property name="diaInhabilDao" ref="diaInhabilDao" />
+		<property name="divisaDAO" ref="divisaDAO"/>
+		<property name="cCuentaNombradaDao" ref="cCuentaNombradaDao" />
+	</bean>
+
+	<!-- Bean para la validacion de operaciones con cuentas de emision -->
+	<bean id="validadorCuentasEmision" class="com.indeval.portaldali.middleware.services.util.ValidadorCuentasEmisionImpl">
+		<property name="institucionDaliDAO" ref="institucionDAO" />
+		<property name="cuentaNombradaDaliDao" ref="cCuentaNombradaDao" />
+		<property name="emisionDaliDAO" ref="emisionDAO" />
+		<property name="rInstitucionPerfilEmisionDao" ref="rInstitucionPerfilEmisionDao" />
+		<property name="messageResolver" ref="messageResolver" />
+	</bean>
+
+	<bean id="propiedadesDaliService" class="com.indeval.portaldali.middleware.services.common.PropiedadesDaliServiceImpl">
+		<property name="propiedadesDaliDAO" ref="propiedadesDaliDAO"></property>
+		<property name="ambiente" ref="appConfigEnvironment"></property>
+	</bean>
+	
+	<bean id="signMensaje" class="com.indeval.portaldali.middleware.services.common.SignMensajeImpl"  lazy-init="true">
+		<property name="generateSignatureService" ref="generateSignatureService" />
+	</bean>
+
+</beans>

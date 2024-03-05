@@ -1,0 +1,19 @@
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.0">
+    <deployment>
+    	<exclusions>
+			<module name="javax.faces.api" slot="main"/>
+			<module name="com.sun.jsf-impl" slot="main"/>
+<!-- 			<module name="org.jboss.as.web"/> -->
+		</exclusions>
+<!--         <dependencies> -->
+<!--             <module name="javax.faces.api" slot="1.2" export="true"/> -->
+<!--             <module name="com.sun.jsf-impl" slot="1.2" export="true"/> -->
+<!--         </dependencies> -->
+	  <dependencies>
+
+        	<module name="org.jboss.ironjacamar.jdbcadapters" slot="main" export="true"/>
+      </dependencies>
+    </deployment>
+    
+        
+</jboss-deployment-structure>

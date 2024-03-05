@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:txt="http://indeval.com/jsf/txt" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core" xmlns:cvt="http://indeval.com/jsf/converters">
+<txt:document documentName="liquidacionDecretosTXT">		
+		<txt:table value="#{consultaEstadoCuentaLiqDecretosExportacionController.resultados}" var="item" >		
+			<txt:row>               							
+						<txt:col size="4" align="left" value="#{item.tipoDerecho}" />
+						<txt:col size="5" align="left" value="#{item.idInst}#{item.folioInst}" />
+						<txt:col size="4" align="left" value="#{item.cuenta}" />
+						<txt:col size="4" align="left" value="#{item.tv}" />
+						<txt:col size="7" align="left" value="#{item.emisora}" />
+						<txt:col size="6" align="left" value="#{item.serie}" />
+						<txt:col size="4" align="left" value="#{item.cupon}" />
+						<txt:col size="15" align="left" value="#{item.isin}" />
+						<txt:col size="18" align="right" value="#{item.importeACobrar}">
+							<f:convertNumber pattern="000000000000000.00" />
+						</txt:col>
+						<txt:col size="18" align="right" value="#{item.importeCobrado}" >
+							<f:convertNumber pattern="000000000000000.00" />
+						</txt:col>								
+						<txt:col size="18" align="right" value="#{item.remanente}">
+							<f:convertNumber pattern="000000000000000.00" />
+						</txt:col>							
+						<txt:col size="10" align="right" value="#{item.fechaVencimientoEmision}" 
+							rendered="#{consultaEstadoCuentaLiqDecretosExportacionController.edoCtaLiqParams.tipoConsulta ne  'COBROS'}">														
+							<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>
+						</txt:col>												 
+						<txt:col size="10" align="left" value="#{item.fechaLiq}" >
+							<cvt:simpleDateConverter pattern="dd/MM/yyyy"/>							
+						</txt:col>
+						<txt:col size="10" align="left" value="#{item.descBoveda}" >														
+						</txt:col>
+						<txt:col size="10" align="left" value="#{item.divisaPago}" />
+			</txt:row>
+        </txt:table>			
+		
+</txt:document>		
+</html>

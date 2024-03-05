@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:f="http://java.sun.com/jsf/core" xml:lang="en" lang="en">
+
+<ui:composition template="/layoutCaptura.xhtml">
+	<ui:define name="head">
+		<script language="javascript" type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/js/consultaPosiciones.js"></script>
+		<script language="javascript" type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/js/mostrarPosiciones.js"></script>
+	</ui:define>
+	<ui:define name="tituloEncabezado">
+		<h:outputText value="#{etq.estadoCuentaSocInv}"></h:outputText>
+	</ui:define>
+	
+	
+
+	<ui:define name="seccionForma">
+	
+		<h:outputText value="#{estadoCuentaSocInvBean.init}"></h:outputText>
+	
+		<a4j:keepAlive beanName="estadoCuentaSocInvBean" />
+		<h:panelGroup id="general">
+			<table width="50%" border="0" cellspacing="0" cellpadding="0"
+				id="datosPaticipante">
+				<tr>
+					<td colspan="5" align="center">
+						<h:outputText value="#{etq.admonCustodio}" styleClass="texto" style="font-weight: bold;"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="5" height="15px">
+						<h:outputText value="" />
+					</td>
+				</tr>
+				<tr>
+					<td width="23%">
+						<h:outputText value="#{etq.participante}" styleClass="texto" />
+					</td>
+					<td width="23%">
+						<a4j:region renderRegionOnly="false">
+							<h:inputText autocomplete="off" id="idFolioTraspasante" size="5" maxlength="5" 
+								value="#{estadoCuentaSocInvBean.claveInstitucion}" tabindex="10" 
+								styleClass="#{estadoCuentaSocInvBean.usuarioIndeval ? 'campoNumericoAsterisco' : 'readonly'}" >
+								<a4j:support event="onchange"
+									actionListener="#{estadoCuentaSocInvBean.validaInstitucion}"
+									reRender="razonSocialTraspasante" />
+							</h:inputText> 
+							<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="idFolioTraspasante"
+								suggestionAction="#{seleccionarCuentaBean.buscarParticipante}"
+								var="coincidencia"
+								fetchValue="#{coincidencia.claveTipoInstitucion}#{coincidencia.folioInstitucion}"
+								eventsQueue="folioTraspQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+								minChars="1" width="200" immediate="false"
+								nothingLabel="Sin coincidencias">
+								<h:column>
+									<h:outputText
+										value="#{coincidencia.claveTipoInstitucion}#{coincidencia.folioInstitucion}" /> 
+									<h:outputText value=" - #{coincidencia.nombreCorto}" />
+								</h:column>
+								<a4j:support event="onselect" actionListener="#{estadoCuentaSocInvBean.validaInstitucion}"
+									reRender="razonSocialTraspasante" />
+							</rich:suggestionbox>
+						</a4j:region>
+					</td>
+					<td width="8%">
+						<h:outputText value="" />
+					</td>
+					<td width="23%">
+						<h:outputText value="#{etq.razonSocial}" styleClass="texto" />
+					</td>
+					<td width="23%">
+						<h:inputText autocomplete="off" id="razonSocialTraspasante" size="25"
+							styleClass="readonly"
+							value="#{estadoCuentaSocInvBean.agente.razon}" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="5" height="25px">
+						<h:outputText value="" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h:outputText value="#{etq.tv}" styleClass="texto" />
+					</td>
+					<td>
+						<h:panelGroup id="panelTipoValor">
+							<h:inputText autocomplete="off" id="tipoValor" size="7" maxlength="4"
+								value="#{estadoCuentaSocInvBean.emision.idTipoValor}"
+								tabindex="50" styleClass="textoTipoValor campoAlphaNumericoAsterisco" >
+								<a4j:support event="onchange" reRender="razonSocialTraspasante"/> 
+							</h:inputText>
+							<rich:suggestionbox selectValueClass="autoCompleteSeleccionado" 
+								for="tipoValor"
+								suggestionAction="#{seleccionarEmisionAmbosBean.buscarTiposValorPorPrefijo}"
+								eventsQueue="tipoValQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+								var="coincidencia" fetchValue="#{coincidencia.claveTipoValor}"
+								minChars="1" width="300" immediate="false"
+								nothingLabel="Sin coincidencias">
+								<h:column>
+									<h:outputText value="#{coincidencia.claveTipoValor}" /> - <h:outputText
+										value="#{coincidencia.descripcion}" />
+								</h:column>
+							</rich:suggestionbox>
+						</h:panelGroup>
+					</td>
+					<td>
+						<h:outputText value="" />
+					</td>
+					<td>
+						<h:outputText value="#{etq.emisoraMinus}" styleClass="texto" />
+					</td>
+					<td>
+						<h:panelGroup id="panelEmisora">
+							<h:inputText autocomplete="off" id="emisora" size="7" maxlength="7"
+								value="#{estadoCuentaSocInvBean.emision.emisora}"
+								required="false" tabindex="60" styleClass="campoAlphaNumericoEmisora" >
+								<a4j:support event="onchange" reRender="razonSocialTraspasante"/>
+							</h:inputText>
+							<rich:suggestionbox selectValueClass="autoCompleteSeleccionado"  for="emisora"
+								suggestionAction="#{estadoCuentaSocInvBean.recuperaEmisiones}"
+								eventsQueue="emisoraQueue" ignoreDupResponses="true" requestDelay="#{inicioSesionBean.delay}"
+								var="coincidencia" fetchValue="#{coincidencia}"
+								minChars="1" width="300" immediate="false"
+								nothingLabel="Sin coincidencias">
+								<h:column>
+									<h:outputText value="#{coincidencia}" />
+								</h:column>
+							</rich:suggestionbox>
+						</h:panelGroup>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="5" height="30px">
+						<h:outputText value="" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div class="buscar">
+							<a4j:commandButton id="botonBuscar" image="/images/transparent.gif" styleClass="submit"
+								reRender="general, pnlTablaEdoCuentaSocInv"
+								action="#{estadoCuentaSocInvBean.consultar}"
+								onclick="deshabilitarBoton('botonBuscar');"
+								oncomplete="establecerFoco('idFolioTraspasante');habilitarBoton('botonBuscar');" tabindex="120" >
+								<a4j:actionparam name="navCuentaiDebeBitacorear" value="true"
+									assignTo="#{estadoCuentaSocInvBean.debeDejarBitacora}" />								
+							</a4j:commandButton>
+						</div>
+					</td>
+					<td>
+						<h:outputText value="" />
+					</td>
+					<td colspan="2">
+						<div class="limpiar"  style="float: left;">
+							<a4j:commandButton id="btnLimpiar" reRender="general, pnlTablaEdoCuentaSocInv"
+								image="/images/transparent.gif" styleClass="submit"
+								action="#{estadoCuentaSocInvBean.limpiar}"
+								tabindex="140" onclick="deshabilitarBoton('btnLimpiar');"
+								oncomplete="habilitarBoton('btnLimpiar');">
+							</a4j:commandButton>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</h:panelGroup>
+		<br />
+	</ui:define>
+
+	<ui:define name="botones">
+		<div style="height: 20px">
+			<a4j:status id="commonStatus">
+				<f:facet name="start">
+					<h:panelGroup>
+						<h:graphicImage value="/images/ajax-loader.gif" />
+						<h:outputText value="#{etq.buscando}"></h:outputText>
+					</h:panelGroup>
+				</f:facet>
+			</a4j:status>
+		</div>
+		
+		<h:panelGroup id="pnlTablaEdoCuentaSocInv">
+			<h:panelGroup rendered="#{estadoCuentaSocInvBean.reporteListo and estadoCuentaSocInvBean.totalPaginas le 0}" 
+				style="width: 100%; text-align: center">
+				<br />
+				<table border="0" class="tablaGeneral" cellspacing="0px"
+					width="900px">
+					<tr>
+						<td colspan="20"><img
+							src="#{facesContext.externalContext.requestContextPath}/images/blank.gif"
+							width="900px" height="0px" style="height: 1px" /></td>
+					</tr>
+					<tr>
+						<th class="tituloTabla" width="900px"><h:outputText
+							value="#{etq.sinResultados}" /></th>
+					</tr>
+				</table>
+			</h:panelGroup>
+			
+			<h:panelGroup style="width: 100%; text-align: center" 
+				rendered="#{estadoCuentaSocInvBean.reporteListo and estadoCuentaSocInvBean.totalPaginas gt 0}">
+				<a4j:region renderRegionOnly="false">
+					<a4j:commandLink id="filtro_emisiones_primero"
+						action="#{estadoCuentaSocInvBean.irPrimeraPagina}"
+						disabled="#{!estadoCuentaSocInvBean.irAlPrimero}" 
+						reRender="pnlTablaEdoCuentaSocInv">
+						<a4j:actionparam name="navCuentaiDebeBitacorear" value="true"
+							assignTo="#{estadoCuentaSocInvBean.debeDejarBitacora}" />
+						<img
+							src="#{facesContext.externalContext.requestContextPath}/images/control_primero.png"
+							border="0" alt="" />
+					</a4j:commandLink>
+					&#160;
+					<a4j:commandLink id="filtro_emisiones_atras_fast"
+						action="#{estadoCuentaSocInvBean.retrocederPaginasRapido}"
+						disabled="#{!estadoCuentaSocInvBean.retrocederRapido}"
+						reRender="pnlTablaEdoCuentaSocInv">
+						<a4j:actionparam name="navCuentaiDebeBitacorear" value="true"
+							assignTo="#{estadoCuentaSocInvBean.debeDejarBitacora}" />
+						<img
+							src="#{facesContext.externalContext.requestContextPath}/images/control_atras_fast.png"
+							border="0" alt="" />
+					</a4j:commandLink>
+					&#160;
+					<a4j:commandLink id="filtro_emisiones_atras"
+						action="#{estadoCuentaSocInvBean.retrocederPagina}"
+						disabled="#{!estadoCuentaSocInvBean.retroceder}" reRender="pnlTablaEdoCuentaSocInv">
+						<a4j:actionparam name="navCuentaiDebeBitacorear" value="true"
+							assignTo="#{estadoCuentaSocInvBean.debeDejarBitacora}" />
+						<img
+							src="#{facesContext.externalContext.requestContextPath}/images/control_atras.png"
+							border="0" alt="" />
+					</a4j:commandLink>
+					&#160;
+					<a4j:commandLink id="filtro_emisiones_adelante"
+						action="#{estadoCuentaSocInvBean.avanzarPagina}"
+						disabled="#{!estadoCuentaSocInvBean.avanzar}" reRender="pnlTablaEdoCuentaSocInv">
+						<a4j:actionparam name="navCuentaiDebeBitacorear" value="true"
+							assignTo="#{estadoCuentaSocInvBean.debeDejarBitacora}" />
+						<img
+							src="#{facesContext.externalContext.requestContextPath}/images/control_adelante.png"
+							border="0" alt="" />
+					</a4j:commandLink>
+					&#160;
+					<a4j:commandLink id="filtro_emisiones_adelante_fast"
+						action="#{estadoCuentaSocInvBean.avanzarPaginasRapido}"
+						disabled="#{!estadoCuentaSocInvBean.avanzarRapido}"
+						reRender="pnlTablaEdoCuentaSocInv">
+						<a4j:actionparam name="navCuentaiDebeBitacorear" value="true"
+							assignTo="#{estadoCuentaSocInvBean.debeDejarBitacora}" />
+						<img
+							src="#{facesContext.externalContext.requestContextPath}/images/control_adelante_fast.png"
+							border="0" alt="" />
+	
+					</a4j:commandLink>
+					&#160;
+					<a4j:commandLink id="filtro_emisiones_ultimo"
+						action="#{estadoCuentaSocInvBean.irUltimaPagina}"
+						disabled="#{!estadoCuentaSocInvBean.irAlUltimo}" reRender="pnlTablaEdoCuentaSocInv">
+						<a4j:actionparam name="navCuentaiDebeBitacorear" value="true"
+							assignTo="#{estadoCuentaSocInvBean.debeDejarBitacora}" />
+						<img
+							src="#{facesContext.externalContext.requestContextPath}/images/control_ultimo.png"
+							border="0" alt="" />
+					</a4j:commandLink>
+				</a4j:region>
+				<br />
+			</h:panelGroup>
+			
+			<br />
+
+			 <table cellpadding="0" cellspacing="0" border="0" align="center" width="100%">
+                <tr align="right">
+                    <td align="right">
+                    	<div style="display:#{estadoCuentaSocInvBean.reporteListo and estadoCuentaSocInvBean.totalPaginas gt 0 ? 'inline' : 'none'}">
+							<h:commandButton
+								id="generarPdf" 
+								action="consultaEstadoCuentaSocInvPdf"
+								actionListener="#{estadoCuentaSocInvBean.generarReportes}"
+								image="/images/pdf.gif"
+								title="Exportar a PDF todos los resultados de la consulta"
+								onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);" />                                    
+		                     &#160;&#160;
+		                     <h:commandButton
+								id="generarExcel"
+								action="consultaEstadoCuentaSocInvXls"
+								actionListener="#{estadoCuentaSocInvBean.generarReportes}"
+								image="/images/excel-file.gif"
+								title="Exportar a Excel todos los resultados de la consulta"
+								onclick="bloquearBotonesReportes(['generarExcel', 'generarPdf']);" />
+                    	</div>
+
+						<div id="monitorPeticionReporte" style="display: none;">
+							<h:panelGroup id="panelMonitorPeticionReporte">
+								<h:graphicImage value="/images/ajax-loader.gif" />
+								&#160;&#160;
+								<h:outputText value="#{etq.reporteEnProceso}" />
+								<a4j:commandButton id="btnActualizarEstadoPeticion"
+									image="/images/transparent.gif" styleClass="submit"
+									actionListener="#{estadoCuentaSocInvBean.actualizarEstadoPeticion}"
+									reRender="panelMonitorPeticionReporte"
+									oncomplete="desbloquearBotonesReportes(#{estadoCuentaSocInvBean.peticionReporteCompleta}, ['generarExcel', 'generarPdf']);" />
+							</h:panelGroup>
+						</div>
+
+					</td>
+				</tr>
+			</table>
+
+			<br />
+			
+			<h:panelGroup style="width: 100%; text-align: center" 
+				rendered="#{estadoCuentaSocInvBean.reporteListo and estadoCuentaSocInvBean.totalPaginas gt 0}">
+				<div class="texto" style="width: 100%; text-align: right;">
+					<h:outputText value="#{etq.mostrandoPagina} ("
+						styleClass="TEXTO_RESUMEN" />
+					<h:outputText value="#{estadoCuentaSocInvBean.numeroPagina} "
+						styleClass="TEXTO_RESUMEN NEGRITAS" />
+					<h:outputText value="#{etq.de} " styleClass="TEXTO_RESUMEN" />
+					<h:outputText value="#{estadoCuentaSocInvBean.totalPaginas}) "
+						styleClass="TEXTO_RESUMEN NEGRITAS" />
+					&#160;&#160;
+					<h:outputText value="-" styleClass="TEXTO_RESUMEN NEGRITAS " />
+					&#160;&#160;
+					<h:outputText value="#{estadoCuentaSocInvBean.paginaVO.totalRegistros} "
+						styleClass="TEXTO_RESUMEN NEGRITAS" />
+					&#160;&#160;
+					<h:outputText styleClass="TEXTO_RESUMEN"
+						value="Sociedades Encontradas." />
+				</div>
+			</h:panelGroup>
+			
+			<h:panelGroup style="width: 100%; text-align: center" 
+				rendered="#{estadoCuentaSocInvBean.reporteListo and estadoCuentaSocInvBean.totalPaginas gt 0}">
+				<!-- Tabla de resultados -->
+				<br />
+				<h:outputText value="#{estadoCuentaSocInvBean.emisoraActual.razonSocial}" 
+					styleClass="texto" style="font-weight: bold; font-size: 12px;"/>
+					
+				<br/>
+				<br/>
+				
+				<div style="width: 100%; text-align: right" >
+					<h:outputText value="#{estadoCuentaSocInvBean.listaSaldosSize}"
+							styleClass="TEXTO_RESUMEN NEGRITAS" />
+					&#160;&#160;
+					<h:outputText styleClass="TEXTO_RESUMEN"
+							value="Emisiones Encontradas." />
+				</div>
+						
+				<br/>
+				<br/>
+				
+				<h:dataTable id="tblSaldosEmisiones" var="item"
+					value="#{estadoCuentaSocInvBean.saldosEmisiones}"
+					headerClass="tituloTabla" width="900px" footerClass="tituloTabla"
+					border="0" cellpadding="3px" cellspacing="0px"
+					columnClasses="renglonTablaUno everyColumn columnaTexto"
+					rowClasses="renglonTablaUno, renglonTablaDos">
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{etq.tv}" />
+						</f:facet>
+						<h:outputText value="#{item.idTipoValor}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{etq.emisoraMinus}" />
+						</f:facet>
+						<h:outputText value="#{item.emisora}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{etq.serieMinus}" />
+						</f:facet>
+						<h:outputText value="#{item.serie}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{etq.cuponMinus}" />
+						</f:facet>
+						<h:outputText value="#{item.cupon}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{etq.saldoCirculacion}" />
+						</f:facet>
+						<h:outputText value="#{item.posicionDisponible}">
+							<f:convertNumber pattern="###,###,##0" />
+						</h:outputText>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{etq.saldoTesoreria}" />
+						</f:facet>
+						<h:outputText value="#{item.posicionTesoreria}" >
+							<f:convertNumber pattern="###,###,##0" />
+						</h:outputText>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="#{etq.totalMinus}" />
+						</f:facet>
+						<h:outputText value="#{item.posicionTotal}"> 
+							<f:convertNumber pattern="###,###,##0" />
+						</h:outputText>
+					</h:column>
+				</h:dataTable>
+			</h:panelGroup>
+			
+			<br />
+			
+			<h:panelGroup style="width: 100%; text-align: center" 
+				rendered="#{estadoCuentaSocInvBean.reporteListo and estadoCuentaSocInvBean.totalPaginas gt 0}">
+				<div class="texto" style="width: 100%; text-align: right;">
+					<h:outputText value="#{etq.mostrandoPagina} ("
+						styleClass="TEXTO_RESUMEN" />
+					<h:outputText value="#{estadoCuentaSocInvBean.numeroPagina} "
+						styleClass="TEXTO_RESUMEN NEGRITAS" />
+					<h:outputText value="#{etq.de} " styleClass="TEXTO_RESUMEN" />
+					<h:outputText value="#{estadoCuentaSocInvBean.totalPaginas}) "
+						styleClass="TEXTO_RESUMEN NEGRITAS" />
+					&#160;&#160;
+					<h:outputText value="-" styleClass="TEXTO_RESUMEN NEGRITAS " />
+					&#160;&#160;
+					<h:outputText value="#{estadoCuentaSocInvBean.paginaVO.totalRegistros} "
+						styleClass="TEXTO_RESUMEN NEGRITAS" />
+					&#160;&#160;
+					<h:outputText styleClass="TEXTO_RESUMEN"
+						value="Sociedades Encontradas." />
+				</div>
+			</h:panelGroup>
+		
+		</h:panelGroup>
+	</ui:define>
+
+</ui:composition>
+</html>

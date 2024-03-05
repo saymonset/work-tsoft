@@ -1,0 +1,42 @@
+﻿#header 
+{
+	display: none;
+}
+
+#nav
+{
+	display: none;
+}
+
+
+#reports .settings
+{
+	display: none;
+}
+
+#reports .options
+{
+	display: none;
+}
+
+
+thead {display: table-header-group;}
+
+#wrap
+{
+	width: auto;
+	border: 0;
+	margin: 0 5%;
+	padding: 0;
+	float: none;
+}
+
+#reports table
+{
+	clear: none;
+}
+
+#export
+{
+	display: none;
+}

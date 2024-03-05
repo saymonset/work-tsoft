@@ -1,0 +1,267 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd" version="1.2">
+
+	<managed-bean>
+		<managed-bean-name>retiroFondosCtrl</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portaldali.presentation.controller.tesoreria.RetiroDeFondosController
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+
+
+		<managed-property>
+			<property-name>consultaCatalogosFacade</property-name>
+			<value>#{consultaCatalogosFacade}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>tesoreriaService</property-name>
+			<value>#{tesoreriaServiceEJB}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>configuracion</property-name>
+			<value>#{captOpConf}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>validadorRetiroDeFondos</property-name>
+			<value>#{validadorRetiroDeFondos}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>isoHelper</property-name>
+			<value>#{isoHelper}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>movimientosEfectivoService</property-name>
+			<value>#{movimientosEfectivoService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>utilService</property-name>
+			<value>#{utilServices}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>servicesCapturaOperacionViewHelper</property-name>
+			<value>#{servicesCapturaOperacionViewHelper}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>validadorRetiroBancaComercial</property-name>
+			<value>#{validadorRetiroBancaComercial}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>admonRetiroEfectivo</property-name>
+			<value>#{admonRetiroEfectivoServiceEJB}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>admonCuentasService</property-name>
+			<value>#{admonCuentasRetiroEfectivoService}</value>
+		</managed-property>
+	</managed-bean>
+	
+    <managed-bean>
+        <managed-bean-name>
+            consultaEstadoCuentaLiqDecretosExportacionController
+        </managed-bean-name>
+        <managed-bean-class>
+            com.indeval.portaldali.presentation.controller.tesoreria.ConsultaEstadoCuentaLiquidacionDecretosExportacionController
+        </managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>liquidacionDecretosDaliService</property-name>
+            <value>#{liquidacionDecretosDaliService}</value>
+        </managed-property>
+    </managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>
+			consultaEstadoCuentaLiqDecretosController
+		</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portaldali.presentation.controller.tesoreria.ConsultaEstadoCuentaLiquidacionDecretosController
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>fechasUtilService</property-name>
+			<value>#{fechasUtilService}</value>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>utilService</property-name>
+			<value>#{utilServices}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>tesoreriaService</property-name>
+			<value>#{tesoreriaServiceEJB}</value>
+		</managed-property>
+		<!-- estaba comentado -->
+		<managed-property>
+			<property-name>liquidacionDecretosDaliService</property-name>
+			<value>#{liquidacionDecretosDaliService}</value>
+		</managed-property>
+       <!-- termina comentado -->
+	</managed-bean>
+	<navigation-rule>
+		<from-view-id>
+			/tesoreria/estadoCuentaLiquidacionDecretos.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>liquidacionDecretosPdf</from-outcome>
+			<to-view-id>
+				/tesoreria/estadoCuentaLiquidacionDecretosPDF.xhtml
+			</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>liquidacionDecretosXls</from-outcome>
+			<to-view-id>
+				/tesoreria/estadoCuentaLiquidacionDecretosXLS.xhtml
+			</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>liquidacionDecretosTXT</from-outcome>
+			<to-view-id>
+				/tesoreria/estadoCuentaLiquidacionDecretosTXT.xhtml
+			</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>
+			/tesoreria/estadoCuentaLiquidacionDecretosDetalle.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>liquidacionDecretosDetallePdf</from-outcome>
+			<to-view-id>
+				/tesoreria/estadoCuentaLiquidacionDecretosDetallePDF.xhtml
+			</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>liquidacionDecretosDetalleXls</from-outcome>
+			<to-view-id>
+				/tesoreria/estadoCuentaLiquidacionDecretosDetalleXLS.xhtml
+			</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>
+			/tesoreria/estadoCuentaLiquidacionDecretosDetalleAmortizacion.xhtml
+		</from-view-id>
+		<navigation-case>
+			<from-outcome>liquidacionDecretosDetalleAmortizacionXls</from-outcome>
+			<to-view-id>
+				/tesoreria/estadoCuentaLiquidacionDecretosDetalleAmortizacionXLS.xhtml
+			</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>liquidacionDecretosDetalleAmortizacionPdf</from-outcome>
+			<to-view-id>
+				/tesoreria/estadoCuentaLiquidacionDecretosDetalleAmortizacionPDF.xhtml
+			</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!--  INFORMACION MOR-->
+		<navigation-rule>
+			<from-view-id>*</from-view-id>
+			<navigation-case>
+			<from-outcome>consultaRecuperacion</from-outcome>
+			<to-view-id>
+				/tesoreria/mor/consultaRecuperacion.xhtml
+			</to-view-id>
+			</navigation-case>
+			<navigation-case>
+				<from-outcome>consultaRecuperacionPdf</from-outcome>
+				<to-view-id>
+					/tesoreria/mor/consultaRecuperacionPDF.xhtml
+				</to-view-id>
+			</navigation-case>
+			<navigation-case>
+				<from-outcome>consultaRecuperacionXls</from-outcome>
+				<to-view-id>
+					/tesoreria/mor/consultaRecuperacionXLS.xhtml
+				</to-view-id>
+			</navigation-case>
+			<navigation-case>
+				<from-outcome>detalleConsultaRecuperacion</from-outcome>
+				<to-view-id>
+					/tesoreria/mor/detalleConsultaRecuperacion.xhtml
+				</to-view-id>
+			</navigation-case>
+		
+			
+			
+			
+		</navigation-rule>
+		
+		
+		
+		<navigation-rule>
+			<from-view-id>*</from-view-id>
+			<navigation-case>
+				<from-outcome>detalleConsultaRecuperacionPdf</from-outcome>
+				<to-view-id>
+					/tesoreria/mor/detalleConsultaRecuperacionPDF.xhtml
+				</to-view-id>
+			</navigation-case>
+			<navigation-case>
+				<from-outcome>detalleConsultaRecuperacionXls</from-outcome>
+				<to-view-id>
+					/tesoreria/mor/detalleConsultaRecuperacionXLS.xhtml
+				</to-view-id>
+			</navigation-case>
+			
+			<!-- navigation-case>
+				<from-action>#{consultaRecuperacionesController.paginaPrincipal}</from-action>
+				<from-outcome>consultaRecuperacion</from-outcome>
+				<to-view-id>
+					/tesoreria/mor/consultaRecuperacion.xhtml
+				</to-view-id>
+			</navigation-case-->
+			<navigation-case>
+				<from-action>#{consultaRecuperacionesController.generaReporteDetalleExcel}</from-action>
+				<from-outcome>detalleConsultaRecuperacionXls</from-outcome>
+				<to-view-id>
+						/tesoreria/mor/detalleConsultaRecuperacionXLS.xhtml
+				</to-view-id>
+			</navigation-case>
+			
+		</navigation-rule>
+		
+		
+		<managed-bean>
+			<managed-bean-name>
+				consultaRecuperacionesController
+			</managed-bean-name>
+			<managed-bean-class>
+				com.indeval.portaldali.presentation.controller.tesoreria.ConsultaRecuperacionesController
+			</managed-bean-class>
+			<managed-bean-scope>session</managed-bean-scope>
+			<managed-property>
+				<property-name>fechasUtilService</property-name>
+				<value>#{fechasUtilService}</value>
+			</managed-property>
+			<managed-property>
+				<property-name>morEJBService</property-name>
+	  		    <value>#{morEJBService}</value>
+			</managed-property>
+	    </managed-bean>
+	   
+	    
+	    <managed-bean>
+			<managed-bean-name>
+				 detalleConsultaRecuperacionController
+			</managed-bean-name>
+			<managed-bean-class>
+				com.indeval.portaldali.presentation.controller.tesoreria.DetalleConsultaRecuperacionController
+			</managed-bean-class>
+			<managed-bean-scope>session</managed-bean-scope>
+			<managed-property>
+				<property-name>fechasUtilService</property-name>
+				<value>#{fechasUtilService}</value>
+			</managed-property>
+			<managed-property>
+				<property-name>morEJBService</property-name>
+	  		    <value>#{morEJBService}</value>
+			</managed-property>
+    </managed-bean>
+
+</faces-config>
+

@@ -1,0 +1,21 @@
+build:
+
+  script:
+
+
+    - mvn clean install -Dmaven.test.skip=true -Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2
+
+  stage: build
+
+  tags:
+    - 'INDEVAL'
+
+sonar:
+  script:
+    - . /home/gitlab-runner/switch_java_to 8
+    - mvn compile sonar:sonar -Dsonar.host.url=$HOST_SONAR -Dsonar.login=$SONAR_LOGIN_TOKEN
+
+  stage: deploy
+
+  tags:
+    - 'INDEVAL'

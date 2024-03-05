@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+        
+    <parent>
+        <groupId>com.indeval.dali</groupId>
+		<artifactId>portal-dali</artifactId>
+		<version>5.5.50-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>dali_EAR</artifactId>
+    <name>dali_ear</name>
+    
+    <packaging>ear</packaging>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <configuration>
+                    <displayName>Portal DALI</displayName>                    
+                    <version>1.4</version>
+                    <finalName>dali_services</finalName>                    
+					<defaultJavaBundleDir>lib</defaultJavaBundleDir>                   
+                    <modules>
+                        <ejbModule>
+				            <groupId>com.bursatec.seguridad</groupId>
+				            <artifactId>dali_seguridad_captcha_EJB</artifactId>
+				            <bundleFileName>dali_seguridad_services_ejb.jar</bundleFileName>
+						</ejbModule>
+						<ejbModule>
+				            <groupId>com.indeval.dali</groupId>
+							<artifactId>dali_ejb</artifactId>
+							<bundleFileName>dali_services_ejb.jar</bundleFileName>
+						</ejbModule>
+
+                    </modules>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+	<dependencies>
+	
+		<!-- Dependencias DALI -->
+        <dependency>
+            <groupId>com.bursatec.seguridad</groupId>
+            <artifactId>dali_seguridad_captcha_EJB</artifactId>
+            <version>${project.version}</version>
+            <type>ejb</type>
+        </dependency>
+		<dependency>
+			<groupId>com.indeval.dali</groupId>
+			<artifactId>dali_ejb</artifactId>
+			<version>${project.version}</version>
+			<type>ejb</type>
+		</dependency>	 
+		<dependency>
+			<groupId>com.indeval.dali</groupId>
+			<artifactId>dali_serviciosimpl</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+    </dependencies>
+</project>

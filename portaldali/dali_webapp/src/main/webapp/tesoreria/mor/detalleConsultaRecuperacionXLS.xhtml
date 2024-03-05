@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls" xmlns:a4j="http://richfaces.org/a4j" xmlns:cvt="http://indeval.com/jsf/converters" xmlns:f="http://java.sun.com/jsf/core">	
+
+<xls:document  documentName="consultarRecuperaciones" documentTitle="Detalle Consulta Recuperaciones"
+	
+	institucion="#{consultaRecuperacionesController.institucionActual.nombreCorto}"
+	fecha="#{consultaRecuperacionesController.fechaActual}" >
+
+	<!-- Criterios de consulta -->
+	<xls:table value="#{consultaRecuperacionesController}" var="criterios"  >
+		<xls:row>
+			
+			<xls:col header="#{etq.tipoValor}"
+				value="#{consultaRecuperacionesController.recuperacionMorVo.tv}"></xls:col>
+			<xls:col header="#{etq.emisora}"
+				value="#{consultaRecuperacionesController.recuperacionMorVo.emisora}"></xls:col>
+			<xls:col header="#{etq.serie}"
+				value="#{consultaRecuperacionesController.recuperacionMorVo.serie}"></xls:col>
+			<xls:col header="#{etq.cupon}"
+				value="#{consultaRecuperacionesController.recuperacionMorVo.cupon}"></xls:col>
+				
+			<xls:col header="#{etq.moduloOrigen}"
+				value="#{consultaRecuperacionesController.consultaRecuperacionDTO.idModuloOrigen == -1 ? 'TODAS' : consultaRecuperacionesController.descripcionModuloOrigen}"></xls:col>
+			<xls:col header="#{etq.tipoMovimiento}"
+				value="#{consultaRecuperacionesController.consultaRecuperacionDTO.idTipoMovimiento == -1 ? 'TODAS' : consultaRecuperacionesController.descripcionIdTipoMovimiento}"></xls:col>	
+				
+			<xls:col header="#{etq.fechaLiquidacion}"
+				value="#{consultaRecuperacionesController.recuperacionMorVo.fechaLiquidacion}"
+				pattern="dd/MM/yyyy"></xls:col>
+			<xls:col header="#{etq.fechaCorte}"
+				value="#{consultaRecuperacionesController.recuperacionMorVo.fechaCorte}"
+				pattern="dd/MM/yyyy"></xls:col>				
+			<xls:col header="#{etq.fechaPago}"
+				value="#{consultaRecuperacionesController.recuperacionMorVo.fechaPago}"
+				pattern="dd/MM/yyyy"></xls:col>
+		</xls:row>
+	</xls:table>
+		<!-- Resultados tabla -->
+	
+	<xls:table value="#{consultaRecuperacionesController.recuperacionMorVo.lstMovimientoMorVo}" var="resultado" >
+			<xls:row>
+			
+				<xls:col header="#{etq.traspasante}" value="#{resultado.traspasante}"  ></xls:col>
+				<xls:col header="#{etq.cuentaTraspasante}" value="#{resultado.cuentaTraspasante}" ></xls:col>
+				<xls:col header="#{etq.receptor}" value="#{resultado.receptor}"></xls:col>
+				<xls:col header="#{etq.cuentaReceptor}" value="#{resultado.cuentaReceptor}" ></xls:col>
+				<xls:col header="#{etq.referenciaOperacion}" value="#{resultado.referenciaOperacion}"></xls:col>
+				
+				<xls:col header="#{etq.tipoValor}" value="#{consultaRecuperacionesController.recuperacionMorVo.tv}"></xls:col>
+				<xls:col header="#{etq.emisora}" value="#{consultaRecuperacionesController.recuperacionMorVo.emisora}"></xls:col>
+				<xls:col header="#{etq.serie}" value="#{consultaRecuperacionesController.recuperacionMorVo.serie}"></xls:col>
+				<xls:col header="#{etq.cupon}" value="#{consultaRecuperacionesController.recuperacionMorVo.cupon}"></xls:col>
+				
+				<xls:col header="#{etq.importe}" value="#{resultado.importe}" pattern="$##,##0.00"></xls:col>
+				<xls:col header="#{etq.cantidadTit}" value="#{resultado.cantidadTitulos}" pattern="#,##0"></xls:col>
+				<xls:col header="#{etq.moduloOrigen}" value="#{resultado.moduloOrigen}" ></xls:col>
+				<xls:col header="#{etq.tipoMovimiento}" value="#{resultado.tipoMovimientoOrigen}"  ></xls:col>
+				<xls:col header="#{etq.folioRecu}" value="#{resultado.folioRecuperacion}"  ></xls:col>
+				<xls:col header="#{etq.fechaMovimiento}" value="#{resultado.fechaMovimiento}"  pattern="dd/MM/yyyy" ></xls:col>
+				<xls:col header="#{etq.estadoMovimiento}" value="#{resultado.estadoMovimiento}"  ></xls:col>
+				
+			</xls:row>
+	</xls:table>
+			
+
+</xls:document>
+</html>

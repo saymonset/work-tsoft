@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xml:lang="es" lang="es">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>
+			<ui:insert name="titulo">Detalle CFI</ui:insert>
+		</title>
+		<link rel="stylesheet" type="text/css" media="all" href="#{facesContext.externalContext.requestContextPath}/css/daliDetalle.css" />
+	</head>
+	<body>
+		<form jsfc="h:form" name="detalleCFI" id ="detalleCFI">
+			<h:outputText value="#{consultaDetalleCfiBean.init}" />
+			<table width="900px" cellpadding="0px" cellspacing="3px">
+		    	<tr>
+		      		<td colspan="2">
+		      			<table width="900" border="0" cellpadding="0px">
+					    	<tr>
+					    		<td width="6%" class="tableHeading" colspan="6">
+					    			<strong>CFI</strong>
+					    		</td>
+					    	</tr>
+					        <tr>
+					        	<td>
+									<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					                	<tr>
+					                    	<td width="17%" valign="top" class="tableHeadingAltHover" align="center">
+					                    		<strong><h:outputText value="#{etq.categoria}"/></strong>
+					                    	</td>
+					                    	<td width="17%" valign="top" class="tableHeadingAltHover" align="center">
+					                    		<strong><h:outputText value="#{etq.grupo}"/></strong>
+					                    	</td>
+					                    	<td width="17%" valign="top" class="tableHeadingAltHover" align="center">
+					                    		<strong><h:outputText value="#{etq.atributoUno}"/></strong>
+					                    	</td>
+					                    	<td width="17%" valign="top" class="tableHeadingAltHover" align="center">
+					                    		<strong><h:outputText value="#{etq.atributoDos}"/></strong>
+					                    	</td>
+					                    	<td width="16%" valign="top" class="tableHeadingAltHover" align="center">
+					                    		<strong><h:outputText value="#{etq.atributoTres}"/></strong>
+					                    	</td>
+					                    	<td width="16%" valign="top" class="tableHeadingAltHover" align="center">
+					                    		<strong><h:outputText value="#{etq.atributoCuatro}"/></strong>
+					                    	</td>
+					                  	</tr>
+										<tr>
+											<td align="center" valign="top" class="tableCellThree">
+												<h:outputText value="#{consultaDetalleCfiBean.detalleCfiTO.categoria}" />
+												-
+												<h:outputText value="#{consultaDetalleCfiBean.detalleCfiTO.descripcionCategoria}" />
+											</td>
+											<td valign="top" class="tableCellThree" align="center">
+												<h:outputText value="#{consultaDetalleCfiBean.detalleCfiTO.grupo}" />
+												-
+												<h:outputText value="#{consultaDetalleCfiBean.detalleCfiTO.descripcionGrupo}" />
+											</td>
+											<td valign="top" class="tableCellThree" align="center">
+												<h:outputText value="#{consultaDetalleCfiBean.detalleCfiTO.atributoUno}" />
+												-
+												<h:outputText value="#{consultaDetalleCfiBean.detalleCfiTO.descripcionAtributoUno}" />
+											</td>
+											<td valign="top" class="tableCellThree" align="left">
+												<h:outputText value="#{consultaDetalleCfiBean.detalleCfiTO.atributoDos}" />
+												-
+												<h:outputText value="#{consultaDetalleCfiBean.detalleCfiTO.descripcionAtributoDos}" />
+											</td>
+											<td valign="top" class="tableCellThree" align="center">
+												<h:outputText value="#{consultaDetalleCfiBean.detalleCfiTO.atributoTres}" />
+												-
+												<h:outputText value="#{consultaDetalleCfiBean.detalleCfiTO.descripcionAtributoTres}" />
+											</td>
+											<td valign="top" class="tableCellThree" align="center">
+												<h:outputText value="#{consultaDetalleCfiBean.detalleCfiTO.atributoCuatro}" />
+												-
+												<h:outputText value="#{consultaDetalleCfiBean.detalleCfiTO.descripcionAtributoCuatro}" />
+											</td>
+										</tr>
+									</table>
+					            </td>
+					        </tr>
+					   	</table>
+		      		</td>
+		      	</tr>
+		    </table>		
+		</form>
+	</body>
+</html>

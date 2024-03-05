@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:xls="http://indeval.com/jsf/xls"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+	<xls:document documentName="consultaEstadoCuentaPosiciones"
+		documentTitle="Estado de Cuenta Operativo de Valores"
+		institucion="#{consultaEstadoCuentaPosicionesBean.institucionActual.claveTipoInstitucion} #{consultaEstadoCuentaPosicionesBean.institucionActual.folioInstitucion} #{consultaEstadoCuentaPosicionesBean.institucionActual.razonSocial}"
+		fecha="#{consultaEstadoCuentaPosicionesBean.fechaActual}">
+
+		<!-- Criterios de consulta -->
+		<xls:table
+			value="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones}"
+			var="consulta">
+			<xls:row>
+				<xls:col header="#{etq.fechaInicialSinPuntos}"
+					value="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones.criterioFechaInicial}" pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.fechaFinalSinPuntos}"
+					value="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones.criterioFechaFinal}" pattern="dd/MM/yyyy" />
+				<xls:col header="#{etq.institucionMinus}"
+					value="#{empty consultaEstadoCuentaPosicionesBean.nombreInstitucion ? 'TODAS' : consultaEstadoCuentaPosicionesBean.nombreInstitucion}" />
+				<xls:col header="#{etq.naturalezaMinus}"
+					value="#{consulta.cuentaSeleccionada.tipoTenencia.tipoNaturaleza.descripcion}" />
+				<xls:col header="#{etq.tipoCuentaMinus}"
+					value="#{consulta.cuentaSeleccionada.tipoTenencia.tipoCuenta.descripcion}" />
+				<xls:col header="#{etq.tipoTenenciaMinus}"
+					value="#{consulta.cuentaSeleccionada.tipoTenencia.descripcion}" />
+				<xls:col header="#{etq.cuentaMinus}"
+					value="#{consulta.cuentaSeleccionada.descripcion}" />
+				<xls:col header="#{etq.tipoMercado}"
+					value="#{consultaMovimientosValorBean.descripcionPapelMercado}" />
+				<xls:col header="#{etq.papelMinus}"
+					value="#{consulta.criterioEmision.opcionSeleccionada.tipoValor.mercado.descripcion}" />
+				<xls:col header="#{etq.tv}"
+					value="#{empty consulta.criterioEmision.opcionSeleccionada.tipoValor.claveTipoValor ? 'TODOS' : consulta.criterioEmision.opcionSeleccionada.tipoValor.claveTipoValor}" />
+				<xls:col header="#{etq.emisora}"
+					value="#{consulta.criterioEmision.opcionSeleccionada.emisora.descripcion}" />
+				<xls:col header="#{etq.isin}"
+					value="#{empty consulta.criterioEmision.opcionSeleccionada.isin ? 'TODOS' : consulta.criterioEmision.opcionSeleccionada.isin}" />
+				<xls:col header="#{etq.serie}"
+					value="#{consulta.criterioEmision.opcionSeleccionada.serie.descripcion}"  />
+				<xls:col header="#{etq.boveda}" 
+					value="#{consulta.criterioBoveda.opcionSeleccionada.descripcion}" />
+			</xls:row>
+		</xls:table>
+		
+		<xls:table
+			value="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones}"
+			var="consulta">
+			<xls:row>
+				<xls:col header="#{etq.registrosEncontrados}"
+					value="#{consultaEstadoCuentaPosicionesBean.totalResultados}" />
+			</xls:row>
+		</xls:table>
+ 
+		<!-- Fin de los criterios de consulta -->
+
+		<xls:iterator
+			value="#{consultaEstadoCuentaPosicionesBean.resultadosEstadoCuentaPosicion}"
+			var="estadoCuentaPosicionPorEmision">
+			<xls:table	rendered="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones.criterioCuenta.criterioTipoTenencia.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}"
+				value="#{estadoCuentaPosicionPorEmision}" var="dummy">
+				<xls:row>
+					<xls:col header="#{etq.emision} #{etq.dosPuntos}" value="" />
+					<xls:col
+						header="#{estadoCuentaPosicionPorEmision.emision.tipoValor.claveTipoValor}"
+						value="" />
+					<xls:col header="#{estadoCuentaPosicionPorEmision.emision.emisora.descripcion}" />
+					<xls:col header="#{estadoCuentaPosicionPorEmision.emision.serie.serie}" />
+					<xls:col header="#{estadoCuentaPosicionPorEmision.emision.isin}" />
+					<xls:col value="" />
+				</xls:row>
+			</xls:table>
+
+			<xls:table	rendered="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones.criterioCuenta.criterioTipoTenencia.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}"
+				value="#{estadoCuentaPosicionPorEmision}" var="dummy">
+				<xls:row>
+					<xls:col header="#{etq.emision} #{etq.dosPuntos}" value="" />
+					<xls:col
+						header="#{estadoCuentaPosicionPorEmision.emision.tipoValor.claveTipoValor}"
+						value="" />
+					<xls:col header="#{estadoCuentaPosicionPorEmision.emision.emisora.descripcion}" />
+					<xls:col header="#{estadoCuentaPosicionPorEmision.emision.serie.serie}" />
+					<xls:col header="#{estadoCuentaPosicionPorEmision.emision.isin}" />
+					<xls:col value="" />
+					<xls:col value="" />
+					<xls:col value="" />
+					<xls:col value="" />
+					<xls:col value="" />
+				</xls:row>
+			</xls:table>
+
+			<xls:iterator
+				value="#{estadoCuentaPosicionPorEmision.detallesBoveda}"
+				var="estadoCuentaPosicionPorBoveda">
+				<xls:table value="#{estadoCuentaPosicionPorBoveda}" 
+					rendered="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones.criterioCuenta.criterioTipoTenencia.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}"
+					var="dummy">
+					<xls:row>
+						<xls:col header="#{etq.boveda} #{etq.dosPuntos}" value="#{estadoCuentaPosicionPorBoveda.boveda.descripcion}" />
+						<xls:col value="" />
+						<xls:col value="" />
+						<xls:col value="" />
+						<xls:col value="" />
+						<xls:col header="#{etq.posicionInicialMinus} #{etq.dosPuntos}" 
+							value="#{estadoCuentaPosicionPorBoveda.estadoPosicionInicial.posicionInicial}" pattern="###,###,###,###,###,##0" />
+					</xls:row>
+				</xls:table>
+				
+				<xls:table value="#{estadoCuentaPosicionPorBoveda}" 
+					rendered="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones.criterioCuenta.criterioTipoTenencia.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}"
+					var="dummy">
+					<xls:row>
+						<xls:col header="#{etq.boveda} #{etq.dosPuntos}" value="#{estadoCuentaPosicionPorBoveda.boveda.descripcion}" />
+						<xls:col value="" />
+						<xls:col value="" />
+						<xls:col value="" />
+						<xls:col value="" />
+						<xls:col value="" />
+						<xls:col value="" />
+						<xls:col header="#{etq.posicionDisponibleMinus}" value="#{estadoCuentaPosicionPorBoveda.estadoPosicionInicial.posicionInicialDisponible}" pattern="###,###,###,###,###,##0"/>
+						<xls:col header="#{etq.posicionNoDisponibleMinus}" value="#{estadoCuentaPosicionPorBoveda.estadoPosicionInicial.posicionInicialNoDisponible}" pattern="###,###,###,###,###,##0"/>
+						<xls:col header="#{etq.posicionInicialMinus} #{etq.dosPuntos}" value="#{estadoCuentaPosicionPorBoveda.estadoPosicionInicial.posicionInicial}" pattern="###,###,###,###,###,##0" />
+					</xls:row>
+				</xls:table>
+
+				<xls:table
+					value="#{estadoCuentaPosicionPorBoveda.registrosContablesControladas}"
+					var="registroContable"
+					rendered="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones.criterioCuenta.criterioTipoTenencia.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}">
+					<xls:row>
+						<xls:col header="#{etq.fechaLiquidacion}"
+							value="#{registroContable.fecha}" pattern="dd/MM/yyyy HH:mm:ss"/>
+						<xls:col header="#{etq.descripcion}"
+							value="#{registroContable.descripcion}" />
+						<xls:col header="#{etq.cupon}"
+							value="#{registroContable.cupon.claveCupon}" />
+						<xls:col header="#{etq.entrega}"
+							value="#{empty registroContable.cantidadRecepcion ? 0 : registroContable.cantidadRecepcion}" pattern="###,###,###,###,###,##0" />
+						<xls:col header="#{etq.recepcion}"
+							value="#{empty registroContable.cantidadEntrega ? 0 : registroContable.cantidadEntrega}" pattern="###,###,###,###,###,##0" />
+						<xls:col header="#{etq.posicion}"
+							value="#{registroContable.posicionTotal}" pattern="###,###,###,###,###,##0" />
+					</xls:row>
+				</xls:table>
+
+				<xls:table
+					value="#{estadoCuentaPosicionPorBoveda.registrosContablesNombradas}"
+					var="registroContable"
+					rendered="#{!empty estadoCuentaPosicionPorBoveda.registrosContablesNombradas and consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones.criterioCuenta.criterioTipoTenencia.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}">
+					<xls:row>
+						<xls:col header="#{etq.fechaLiquidacion}" 	value="#{registroContable.fecha}" pattern="dd/MM/yyyy HH:mm:ss"/>
+						<xls:col header="#{etq.descripcion}" 		value="#{registroContable.descripcion}" />
+						<xls:col header="#{etq.participanteId}" 	value="#{registroContable.claveTipoInstitucionParticipante}" />
+						<xls:col header="#{etq.participanteFolio}" 	value="#{registroContable.folioInstitucionParticipante}" />
+						<xls:col header="#{etq.participanteCuenta}"	value="#{registroContable.numeroCuentaParticipante}" />
+						<xls:col header="#{etq.contraparteId}" 		value="#{registroContable.claveTipoInstitucionContraparte}" />
+						<xls:col header="#{etq.contraparteFolio}" 	value="#{registroContable.folioInstitucionContraparte}" />
+						<xls:col header="#{etq.contraparteCuenta}" 	value="#{registroContable.numeroCuentaContraparte}" />
+						<xls:col header="#{etq.cupon}" 				value="#{registroContable.cupon.claveCupon}" />
+						<xls:col header="#{etq.folioInstruccion}" 	value="#{registroContable.operacion.instruccionLiquidacion.folioInstruccion}" />
+						<xls:col header="#{etq.recepcionMinus}" 			value="#{empty registroContable.cantidadRecepcion ? 0 : registroContable.cantidadRecepcion}" 		pattern="###,###,###,###,###,##0"/>
+						<xls:col header="#{etq.entrega}" 			value="#{empty registroContable.cantidadEntrega ? 0 : registroContable.cantidadEntrega}" 		pattern="###,###,###,###,###,##0"/>
+						<xls:col header="#{etq.disponibleMinus}" 		value="#{registroContable.posicionDisponible}" 		pattern="###,###,###,###,###,##0" />
+						<xls:col header="#{etq.noDisponibleMinus}" 		value="#{registroContable.posicionNoDisponible}" 	pattern="###,###,###,###,###,##0" />
+						<xls:col header="#{etq.posicionMinus}" 			value="#{registroContable.posicionTotal}" 			pattern="###,###,###,###,###,##0" />
+					</xls:row>
+				</xls:table>
+
+
+				<xls:table value="#{estadoCuentaPosicionPorBoveda}"
+						rendered="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones.criterioCuenta.criterioTipoTenencia.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}"
+						var="dummy">
+					<xls:row>
+						<xls:col value="" />
+						<xls:col value="" />
+						<xls:col value="" />
+						<xls:col value="" />
+						<xls:col value="" />
+						<xls:col header="#{etq.posicionFinalMinus} #{etq.dosPuntos}" 
+							value="#{estadoCuentaPosicionPorBoveda.estadoPosicionFinal.posicionFinal}" pattern="###,###,###,###,###,##0"/>
+					</xls:row>
+				</xls:table>
+
+				<xls:table value="#{estadoCuentaPosicionPorBoveda}"
+						rendered="#{consultaEstadoCuentaPosicionesBean.consultaEstadoCuentaPosiciones.criterioCuenta.criterioTipoTenencia.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}"
+						var="dummy">
+					<xls:row>
+						<xls:col value="" />
+						<xls:col value="" />
+						<xls:col value="" />
+						<xls:col value="" />
+						<xls:col value="" />
+						<xls:col value="" />
+						<xls:col value="" />
+						<xls:col header="#{etq.posicionDisponibleMinus}" value="#{estadoCuentaPosicionPorBoveda.estadoPosicionFinal.posicionFinalDisponible}" pattern="###,###,###,###,###,##0"/>
+						<xls:col header="#{etq.posicionNoDisponibleMinus}" value="#{estadoCuentaPosicionPorBoveda.estadoPosicionFinal.posicionFinalNoDisponible}" pattern="###,###,###,###,###,##0"/>
+						<xls:col header="#{etq.posicionFinalMinus} #{etq.dosPuntos}" 
+							value="#{estadoCuentaPosicionPorBoveda.estadoPosicionFinal.posicionFinal}" pattern="###,###,###,###,###,##0"/>
+					</xls:row>
+				</xls:table>
+
+
+			</xls:iterator>
+		</xls:iterator>
+		<xls:br />
+
+	</xls:document>
+
+</html>
+

@@ -1,0 +1,128 @@
+<html xmlns:txt="http://indeval.com/jsf/txt"
+	xmlns:cvt="http://indeval.com/jsf/converters" 
+	xmlns:f="http://java.sun.com/jsf/core">
+
+    <txt:document documentName="consultaMovimientosEfectivo" documentTitle="Consulta de Movimientos de Efectivo"
+        fecha="#{elegirInstitucionBean.fechaActual}" >
+        
+     	<txt:table value="#{consultaMovimientosEfectivoBean}" var="bean">
+     		 <txt:row>
+                <txt:col align="left" size="13" header="" value="Institucion :"  />
+                <txt:col align="center" size="4" header="" value="#{consultaMovimientosEfectivoBean.institucionActual.claveTipoInstitucion}"  >
+                	<f:convertNumber pattern="00" />
+                </txt:col>      	
+                <txt:col align="center" size="5" header="" value="#{consultaMovimientosEfectivoBean.institucionActual.folioInstitucion}"  >
+                	<f:convertNumber pattern="000" />
+                </txt:col>     	
+                <txt:col align="left" size="200" header="" value="#{consultaMovimientosEfectivoBean.institucionActual.razonSocial}"  />
+        	</txt:row>
+        	<txt:row>
+                <txt:col align="left" size="28" header="" value=""  />
+        	</txt:row>
+        </txt:table>
+
+
+		<txt:table
+			value="#{consultaMovimientosEfectivoBean.consultaMovimientos}"
+			var="consulta">
+			<txt:row>
+				<txt:col size="28" align="center" header="#{etq.naturalezaMinus}" value="#{consulta.cuentaSeleccionada.tipoNaturaleza.descripcion}" />
+				<txt:col size="28" align="center" header="#{etq.tipoCuentaMinus}" value="#{consulta.cuentaSeleccionada.tipoCuenta.descripcion}" />
+				<txt:col size="28" align="center" header="#{etq.cuentaMinus}" value="#{consulta.cuentaSeleccionada.descripcion}" />
+				<txt:col size="28" align="center" header="#{etq.rol}" value="#{consulta.descripcionRolParticipante}" />
+			</txt:row>
+		</txt:table>
+		<txt:table
+			value="#{consultaMovimientosEfectivoBean.consultaMovimientos}"
+			rendered="#{consultaMovimientosEfectivoBean.consultaMovimientos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}"
+			var="consulta">
+			<txt:row>
+				<txt:col size="28" align="center" header="#{etq.divisa}" value="#{consultaMovimientosEfectivoBean.consultaMovimientos.criterioDivisa.opcionSeleccionada.descripcion}" />
+				<txt:col size="28" align="center" header="#{etq.boveda}" value="#{consultaMovimientosEfectivoBean.consultaMovimientos.criterioBoveda.opcionSeleccionada.descripcion}" />
+				<txt:col size="28" align="center" header="#{etq.tipoInstruccion}" value="#{consulta.criterioTipoInstruccion.opcionSeleccionada.nombreCorto}" />
+				<txt:col size="28" align="center" header="#{etq.tipoOperacion}" value="#{consulta.criterioTipoOperacion.opcionSeleccionada.claveTipoOperacion}" />
+				<txt:col size="28" align="center" header="#{etq.folioInstruccion}" value="#{consulta.criterioFolioInstruccion}" />
+				<txt:col size="28" align="center" header="#{etq.contraparteCuenta}" value="#{consulta.criterioCuentaContraparte.numeroCuenta ne '-1' ? consulta.criterioCuentaContraparte.numeroCuenta : 'TODAS'}" />
+				<txt:col size="28" align="center" header="#{etq.rol}" value="#{consulta.descripcionRolContraparte}" />
+			</txt:row>
+		</txt:table>
+		<txt:table value="#{consultaMovimientosEfectivoBean.consultaMovimientos}"
+			var="consulta">
+			<txt:row>
+				<txt:col size="28" align="center" header="#{etq.registrosEncontrados}" />
+				<txt:col size="28" align="center" header="#{consultaMovimientosEfectivoBean.totalResultados}" />
+			</txt:row>
+		</txt:table>
+		
+		<txt:table
+			value="#{consultaMovimientosEfectivoBean.resultadosNombradasReporteXls}"
+			var="nombrada"
+			rendered="#{consultaMovimientosEfectivoBean.consultaMovimientos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}">
+			
+			<txt:row>
+				<txt:col size="28" align="center" header="#{etq.fechaLiquidacionMinus}" value="#{nombrada.fechaLiquidacion}" >
+					<cvt:simpleDateConverter pattern="yyyy-MM-dd HH:mm:ss" />
+				</txt:col>
+				<txt:col size="28" align="center" header="#{etq.descripcionMinus}" value="#{nombrada.descripcion}" />
+				<txt:col size="28" align="center" header="#{etq.participanteId}" value="#{nombrada.claveTipoInstitucionParticipante}" />
+				<txt:col size="28" align="center" header="#{etq.participanteFolio}" value="#{nombrada.folioInstitucionParticipante}" />
+				<txt:col size="28" align="center" header="#{etq.participanteCuenta}" value="#{nombrada.numeroCuentaParticipante}" />
+				<txt:col size="28" align="center" header="#{etq.contraparteId}" value="#{nombrada.claveTipoInstitucionContraparte}" />
+				<txt:col size="28" align="center" header="#{etq.contraparteFolio}" value="#{nombrada.folioInstitucionContraparte}" />
+				<txt:col size="28" align="center" header="#{etq.contraparteCuenta}" value="#{nombrada.numeroCuentaContraparte}" />
+				<txt:col size="28" align="center" header="#{etq.folioInstruccion}" value="#{nombrada.folioInstruccion}" />
+				<txt:col size="28" align="right" header="#{etq.cobro}" value="#{empty nombrada.cantidadRecepcion ? 0 : nombrada.cantidadRecepcion}" footer="#{consultaMovimientosEfectivoBean.totalAbono}"  >
+                	<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                </txt:col>
+				<txt:col size="28" align="right" header="#{etq.pago}" value="#{empty nombrada.cantidadEntrega ? 0 : nombrada.cantidadEntrega}" footer="#{consultaMovimientosEfectivoBean.totalCargo}"  >
+                	<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+				</txt:col>
+				<txt:col size="28" align="center" header="#{etq.tipoInstruccionMinus}" value="#{nombrada.operacion.instruccionLiquidacion.tipoInstruccion.nombreCorto}" />
+				<txt:col size="28" align="center" header="#{etq.tipoDoR}" value="#{nombrada.operacion.instruccionLiquidacion.instruccionEfectivo.tipoRetiro}"/>
+				<txt:col size="28" align="center" header="#{etq.plazo}" value="#{nombrada.operacion.instruccionLiquidacion.plazoReporto}"/>
+				<txt:col size="28" align="center" header="#{etq.tasaPorcentaje}" value="#{nombrada.operacion.instruccionLiquidacion.tasaNegociada}"  >
+                	<f:convertNumber pattern="###,###,###,###,###,##0.000000"/>
+                </txt:col>
+				<txt:col size="28" align="center" header="#{etq.tv}" value="#{nombrada.operacion.posicion.emision.tipoValor.claveTipoValor}" />
+				<txt:col size="28" align="center" header="#{etq.emisora}" value="#{nombrada.operacion.posicion.emision.emisora.descripcion}" />
+				<txt:col size="28" align="center" header="#{etq.serie}" value="#{nombrada.operacion.posicion.emision.serie.serie}" />
+				<txt:col size="28" align="center" header="#{etq.cupon}" value="#{nombrada.operacion.posicion.cupon.claveCupon}" />
+				<txt:col size="28" align="center" header="#{etq.tipoMercado}" value="#{nombrada.operacion.posicion.cupon.emision.tipoValor.mercado.claveMercado}" />
+				<txt:col size="28" align="center" header="#{etq.cantidad}" value="#{nombrada.operacion.numeroTitulos}"  >
+                	<f:convertNumber pattern="###,###,###,###,###,##0" />
+                </txt:col>
+				<txt:col size="28" align="right" header="#{etq.precio}" value="#{nombrada.operacion.precio}"  >
+                	<f:convertNumber pattern="$###,###,###,###,###,##0.00000000" />
+                </txt:col>
+				<txt:col size="28" align="center" header="#{etq.cuentaReceptor}" value="#{nombrada.operacion.cuentaReceptora.numeroCuenta}" />
+				<txt:col size="28" align="center" header="#{etq.cuentaTraspasante}" value="#{nombrada.operacion.cuentaTraspasante.numeroCuenta}" />
+			</txt:row>
+		</txt:table>
+
+		<txt:table
+			value="#{consultaMovimientosEfectivoBean.resultadosControladasReporteXls}"
+			var="controlada"
+			rendered="#{consultaMovimientosEfectivoBean.consultaMovimientos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}">
+			<txt:row>	
+				<txt:col size="28" align="center" header="#{etq.registrosEncontrados}" value="#{consultaMovimientosEfectivoBean.totalResultados}"/>
+			</txt:row>
+			<txt:row>
+				<txt:col size="28" align="center" header="#{etq.divisa}" value="#{controlada.saldoEfectivo.divisa.descripcion}" />
+				<txt:col size="28" align="center" header="#{etq.boveda}" value="#{controlada.saldoEfectivo.boveda.descripcion}" />
+				<txt:col size="28" align="center" header="#{etq.fechaLiquidacionMinus}" value="#{controlada.fechaLiquidacion}" >
+					<cvt:simpleDateConverter pattern="yyyy-MM-dd HH:mm:ss" />
+				</txt:col>
+				<txt:col size="28" align="center" header="#{etq.descripcionMinus}" value="#{controlada.descripcion}" />
+				<txt:col size="28" align="right" header="#{etq.abonoMinus}" value="#{empty controlada.cantidadRecepcion ? 0 : controlada.cantidadRecepcion}" footer="#{consultaMovimientosEfectivoBean.totalAbono}"  >
+                	<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                </txt:col>
+				<txt:col size="28" align="right" header="#{etq.cargoMinus}" value="#{empty controlada.cantidadEntrega ? 0 : controlada.cantidadRecepcion}" footer="#{consultaMovimientosEfectivoBean.totalCargo}" >
+                	<f:convertNumber pattern="$###,###,###,###,###,##0.00" />
+                </txt:col>
+			</txt:row>
+		</txt:table>
+
+	</txt:document>
+
+</html>
+

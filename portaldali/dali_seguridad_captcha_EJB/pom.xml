@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.indeval.dali</groupId>
+		<artifactId>portal-dali</artifactId>
+		<version>5.5.50-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.bursatec.seguridad</groupId>
+	<artifactId>dali_seguridad_captcha_EJB</artifactId>
+	<name>dali_seguridad_captcha_EJB</name>
+	<packaging>ejb</packaging>
+
+	<build>
+		<pluginManagement>
+		
+			<plugins>
+			
+				<plugin>
+
+				<artifactId>maven-ejb-plugin</artifactId>
+
+				<configuration>
+
+				<ejbVersion>3.0</ejbVersion>
+
+				<archive>
+
+				<manifest>
+
+				<addClasspath>true</addClasspath>
+
+				</manifest>
+
+				</archive>
+
+				</configuration>
+
+				</plugin>
+
+			</plugins>
+			
+		</pluginManagement>
+	</build>
+
+
+	<dependencies>
+		
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring</artifactId>
+		    <exclusions>
+		    	<exclusion>
+		    		<groupId>commons-logging</groupId>
+		    		<artifactId>commons-logging</artifactId>
+		    	</exclusion>
+		    </exclusions>
+		</dependency>
+		<dependency>
+		    <groupId>com.octo.captcha</groupId>
+		    <artifactId>jcaptcha-all</artifactId>
+		    <version>1.0-RC6</version>
+		    <exclusions>
+		    	<exclusion>
+		    		<groupId>commons-logging</groupId>
+		    		<artifactId>commons-logging</artifactId>
+		    	</exclusion>
+		    </exclusions>
+		</dependency>
+		<dependency>
+			<groupId>javax.ejb</groupId>
+			<artifactId>ejb-api</artifactId>
+			<version>3.0</version>
+			<scope>provided</scope>
+		</dependency> 
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-test</artifactId>
+            	    <scope>test</scope>
+            	    <exclusions>
+            	    	<exclusion>
+            	    		<groupId>commons-logging</groupId>
+            	    		<artifactId>commons-logging</artifactId>
+            	    	</exclusion>
+            	    </exclusions>
+		</dependency>		
+	</dependencies>
+</project>

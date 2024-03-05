@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="retiroEfectivoService" class="com.indeval.portaldali.middleware.services.efectivo.RetiroEfectivoServiceImpl">
+		<property name="retiroEfectivoDao" ref="retiroEfectivoDao"></property>
+	</bean>
+	<bean id="movimientosEfectivoService" class="com.indeval.portaldali.middleware.services.efectivo.MovimientosEfectivoServiceImpl">
+		<property name="retiroEfectivoService" ref="retiroEfectivoService"></property>
+		<property name="institucionDao" ref="institucionDAO"></property>
+		<property name="divisaDao" ref="divisaDAO"></property>
+		<property name="bovedaDao" ref="bovedaDAO"></property>
+	</bean>
+	
+</beans>

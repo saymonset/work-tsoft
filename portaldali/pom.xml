@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.indeval.dali</groupId>
+	<artifactId>portal-dali</artifactId>
+	<version>5.5.50-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>portal-dali</name>
+
+	<!-- Modulos Dali -->
+	<modules>
+		<module>dali_model</module>
+		<module>dali_seguridad_tags</module>
+		<module>dali_seguridad_captcha_EJB</module>
+		<module>dali_jsf_componentes</module>
+		<module>dali_servicios</module>
+		<module>dali_persistence</module>
+		<module>dali_serviciosimpl</module>
+		<module>dali_ejb</module>
+		<module>dali_webapp</module>
+		<module>dali_EAR</module>
+		<module>dali_config</module>
+	</modules>
+
+	<!-- Propiedades Dali -->
+	<properties>
+		<version.seguridad>2.5.8</version.seguridad>
+		<version.digitalSignerApplet>1.1</version.digitalSignerApplet>
+		<version.digitalUnsignerApplet>1.1</version.digitalUnsignerApplet>
+		<version.consultaDecretosDali>1.7.7</version.consultaDecretosDali>
+		<version.portal.internacional>5.0.29</version.portal.internacional>
+		<commons-indeval.version>1.1.0</commons-indeval.version>
+		<dali-core.version>2.0.1</dali-core.version>
+		<jboss.version>6.4.7.GA</jboss.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<logging.slf4j.version>1.7.36</logging.slf4j.version>
+
+		<version.protocoloFinancieroApi>7.0.5</version.protocoloFinancieroApi>
+		<version.mor>1.3.0</version.mor>
+		<version.speiFacade>2.0.3</version.speiFacade>
+	</properties>
+
+	<!-- Repositorios -->
+	<repositories>
+		<!-- Intranet -->
+		<repository>
+			<id>intranet</id>
+			<name>Repositorio de la intranet</name>
+			<url>http://10.100.225.74:8081/artifactory/indeval</url>
+		</repository>
+		<!-- Red Hat -->
+		<repository>
+			<!--d>redhat-techpreview-all-repository</id -->
+			<id>redhat-ga-repository</id>
+			<name>Red Hat Tech Preview repository (all)</name>
+			<url>https://maven.repository.redhat.com/ga/</url>
+		</repository>
+		<!-- Central -->
+		<repository>
+			<id>central</id>
+			<name>Repositorio central</name>
+			<url>https://repo1.maven.org/maven2</url>
+		</repository>
+	</repositories>
+
+	<!-- Plug versionamiento -->
+	<scm>
+		<connection>scm:git:http://git.grupobmv.com.mx/indeval/portalDali-lookAndFeel.git</connection>
+		<developerConnection>scm:git:http://git.grupobmv.com.mx/indeval/portalDali-lookAndFeel.git</developerConnection>
+		<url>scm:git:http://git.grupobmv.com.mx/indeval/portalDali-lookAndFeel.git</url>
+		<tag>HEAD</tag>
+	</scm>
+	
+	<!-- Configuracion para artifactory -->
+	<distributionManagement>
+	    <repository>
+		<id>central</id>
+		<name>gbmvqrodapp01-releases</name>
+		<url>http://10.100.225.74:8081/artifactory/indeval</url>
+	    </repository>
+	</distributionManagement>
+
+	<build>
+		<defaultGoal>package</defaultGoal>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>ISO-8859-1</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.12.4</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.2</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.scm</groupId>
+						<artifactId>maven-scm-provider-gitexe</artifactId>
+						<version>1.8.1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.2</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<doCheck>false</doCheck>
+					<doUpdate>false</doUpdate>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<!-- Dependencias de seguridad -->
+			<dependency>
+				<groupId>com.indeval</groupId>
+				<artifactId>seguridadMensajeria</artifactId>
+				<version>1.0.1</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springmodules</groupId>
+						<artifactId>spring-modules-jakarta-commons</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>net.sf.saxon</groupId>
+				<artifactId>saxon</artifactId>
+				<version>8.7</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sf.saxon</groupId>
+				<artifactId>saxon-dom</artifactId>
+				<version>8.7</version>
+			</dependency>
+			<!-- <dependency> -->
+			<!-- <groupId>com.indeval</groupId> -->
+			<!-- <artifactId>seguridad-ejb</artifactId> -->
+			<!-- <version>${version.seguridad}</version> -->
+			<!-- <type>ejb-client</type> -->
+			<!-- </dependency> -->
+			<dependency>
+				<groupId>com.indeval</groupId>
+				<artifactId>seguridad-api</artifactId>
+				<version>${version.seguridad}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.indeval</groupId>
+				<artifactId>seguridad-pki</artifactId>
+				<version>${version.seguridad}</version>
+			</dependency>
+			<!-- <dependency> -->
+			<!-- <groupId>com.indeval</groupId> -->
+			<!-- <artifactId>seguridad-modelo</artifactId> -->
+			<!-- <version>${version.seguridad}</version> -->
+			<!-- </dependency> -->
+			<dependency>
+				<groupId>antlr</groupId>
+				<artifactId>antlr</artifactId>
+				<version>2.7.7</version>
+			</dependency>
+			<dependency>
+				<groupId>com.bursatec</groupId>
+				<artifactId>base-core</artifactId>
+				<version>1.2.8</version>
+			</dependency>
+			<dependency>
+				<groupId>com.indeval.protocolofinanciero.api</groupId>
+				<artifactId>protocolofinancieroAPI</artifactId>
+				<version>${version.protocoloFinancieroApi}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>xstream</groupId>
+						<artifactId>xstream</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>com.progress</groupId>
+						<artifactId>sonic-client</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>com.progress</groupId>
+						<artifactId>sonic-crypto</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>com.indeval.protocolofinanciero.api</groupId>
+						<artifactId>WebServiceSeguridadClient</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>com.indeval.protocolofinanciero.api</groupId>
+						<artifactId>WebServiceConfiguracionClient</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.bouncycastle</groupId>
+						<artifactId>bcprov-jdk15on</artifactId>
+					</exclusion>
+
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-context</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>javax.jms</groupId>
+						<artifactId>javax.jms-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-jms</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>com.intellij</groupId>
+						<artifactId>forms_rt</artifactId>
+					</exclusion>
+
+					<exclusion>
+						<groupId>com.thoughtworks.xstream</groupId>
+						<artifactId>xstream</artifactId>
+					</exclusion>
+
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-tx</artifactId>
+					</exclusion>
+
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>2.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjrt</artifactId>
+				<version>1.6.5</version>
+			</dependency>
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>1.6.5</version>
+			</dependency>
+			<dependency>
+				<groupId>cglib</groupId>
+				<artifactId>cglib</artifactId>
+				<version>2.1_3</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sybase</groupId>
+				<artifactId>jconn</artifactId>
+				<version>3.0</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-beanutils</groupId>
+				<artifactId>commons-beanutils</artifactId>
+				<version>1.7.0</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>2.2</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-collections</groupId>
+				<artifactId>commons-collections</artifactId>
+				<version>3.2</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.ejb</groupId>
+				<artifactId>ejb</artifactId>
+				<version>2.1</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.spec.javax.servlet</groupId>
+				<artifactId>jboss-servlet-api_3.1_spec</artifactId>
+				<version>1.0.0.Final</version>
+				<scope>provided</scope>
+			</dependency>
+
+
+
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.0</version>
+				<scope>test</scope>
+			</dependency>
+			<!-- <dependency> -->
+			<!-- <groupId>log4j</groupId> -->
+			<!-- <artifactId>log4j</artifactId> -->
+			<!-- <version>1.2.13</version> -->
+			<!-- </dependency> -->
+			<dependency>
+				<groupId>ojdbc</groupId>
+				<artifactId>ojdbc</artifactId>
+				<version>14</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate</artifactId>
+				<version>3.2.5.ga</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring</artifactId>
+				<version>2.5.3</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-mock</artifactId>
+				<version>2.0.2</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>2.5.3</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.lowagie</groupId>
+				<artifactId>itext</artifactId>
+				<version>2.1.3</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>3.5-FINAL</version>
+			</dependency>
+			<dependency>
+				<groupId>com.indeval.dali</groupId>
+				<artifactId>dali_servicios</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.indeval.dali</groupId>
+				<artifactId>dali_serviciosimpl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.indeval.dali</groupId>
+				<artifactId>dali_model</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.indeval.dali</groupId>
+				<artifactId>dali_persistence</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.indeval.dali</groupId>
+				<artifactId>dali-divint-webapp</artifactId>
+				<version>${version.portal.internacional}</version>
+				<type>war</type>
+			</dependency>
+			<dependency>
+				<groupId>com.bursatec</groupId>
+				<artifactId>ConsultaDecretosEJB</artifactId>
+				<version>${version.consultaDecretosDali}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>oracle</groupId>
+						<artifactId>ojdbc</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>com.bursatec</groupId>
+				<artifactId>ConsultaDecretosBeans</artifactId>
+				<version>${version.consultaDecretosDali}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>oracle</groupId>
+						<artifactId>ojdbc</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>com.thoughtworks.xstream</groupId>
+				<artifactId>xstream</artifactId>
+				<version>1.3.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jasypt</groupId>
+				<artifactId>jasypt</artifactId>
+				<version>1.5</version>
+			</dependency>
+			<dependency>
+				<groupId>com.ibm.icu</groupId>
+				<artifactId>icu4j</artifactId>
+				<version>3.4.4</version>
+			</dependency>
+
+			<!-- ESAPI -->
+			<dependency>
+				<groupId>org.owasp.esapi</groupId>
+				<artifactId>esapi</artifactId>
+				<version>2.2.1.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.indeval.commons</groupId>
+				<artifactId>commons-cache-ejb</artifactId>
+				<type>ejb-client</type>
+				<version>${commons-indeval.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.indeval.commons</groupId>
+				<artifactId>commons-firma-digital</artifactId>
+				<version>${commons-indeval.version}</version>
+				<type>war</type>
+				<scope>runtime</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>com.indeval.dali</groupId>
+				<artifactId>dali-core-jsf-componentes</artifactId>
+				<version>${dali-core.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>bouncycastle</groupId>
+						<artifactId>bcprov-jdk14</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!-- Spei Facade -->
+			<dependency>
+				<groupId>com.indeval.spei</groupId>
+				<artifactId>speiFacade-api</artifactId>
+				<version>${version.speiFacade}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.indeval.spei</groupId>
+				<artifactId>speiFacade-model</artifactId>
+				<version>${version.speiFacade}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.indeval</groupId>
+				<artifactId>workflow-dali-web</artifactId>
+				<version>1.0.8</version>
+				<classifier>client</classifier>
+				<type>jar</type>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-web</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>
+							spring-boot-starter-security
+						</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>
+							org.springframework.security.oauth.boot
+						</groupId>
+						<artifactId>
+							spring-security-oauth2-autoconfigure
+						</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-jdbc</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-jms</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.activiti</groupId>
+						<artifactId>
+							activiti-spring-boot-starter-basic
+						</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-starter-mail</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>
+						spring-boot-starter-web-services
+					</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.activiti</groupId>
+						<artifactId>
+						activiti-spring-boot-starter-jpa
+					</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.jboss.logging</groupId>
+						<artifactId>jboss-logging</artifactId>
+					</exclusion>
+
+				</exclusions>
+			</dependency>
+			<!-- LOG -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${logging.slf4j.version}</version>
+			</dependency>
+			
+			<!-- MOR -->
+			<dependency>
+				<groupId>com.indeval.mor</groupId>
+				<artifactId>mor-ejb</artifactId>
+				<type>ejb-client</type>
+				<version>${version.mor}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>*</groupId>
+						<artifactId>*</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>com.indeval.mor</groupId>
+				<artifactId>mor-core</artifactId>
+				<version>${version.mor}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>*</groupId>
+						<artifactId>*</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>com.indeval.mor</groupId>
+				<artifactId>mor-api</artifactId>
+				<version>${version.mor}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>*</groupId>
+						<artifactId>*</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			
+		</dependencies>
+	</dependencyManagement>
+</project>

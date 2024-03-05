@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="validaPosicionYCuentaCO" abstract="true"
+		class="com.indeval.portaldali.presentation.validation.impl.DTOValidatorImpl">
+		<property name="nombreBundle"
+			value="mensajes.validacionesCapturaOperaciones" />
+		<property name="criteriosValidacion"
+			ref="listavalidaPosicionYCuentaCapturaOperacion">
+
+		</property>
+	</bean>
+
+	<bean id="validaPosicionYCuentaArchivoCO" abstract="true"
+		class="com.indeval.portaldali.presentation.validation.impl.DTOValidatorAcumulativoImpl">
+		<property name="nombreBundle"
+			value="mensajes.validacionesCapturaOperaciones" />
+		<property name="criteriosValidacion"
+			ref="listavalidaPosicionYCuentaCapturaOperacion">
+
+		</property>
+	</bean>
+
+	<bean id="listavalidaPosicionYCuentaCapturaOperacion"
+		class="java.util.ArrayList">
+		<constructor-arg index="0">
+			<list>
+
+				<!-- Valida que todos los campos requeridos 
+					@return boolean true si encontró un error o false en caso contrario -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="INSTITUCION_TRASPASANTE_REQUERIDA" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="posicionTraspasante.cuenta.institucion" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="ID_TRASPASANTE_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="posicionTraspasante.cuenta.institucion.claveTipoInstitucion" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="FOLIO_TRASPASANTE_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="posicionTraspasante.cuenta.institucion.folioInstitucion" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="CUENTA_TRASPASANTE_REQUERIDA" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="posicionTraspasante.cuenta.cuenta" />
+						</map>
+					</property>
+				</bean>
+				<!--  -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="INSTITUCION_RECEPTORA_REQUERIDA" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="cuentaReceptor.institucion" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="ID_RECEPTOR_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="cuentaReceptor.institucion.claveTipoInstitucion" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="FOLIO_RECEPTOR_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="cuentaReceptor.institucion.folioInstitucion" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="CUENTA_RECEPTORA_REQUERIDA" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="cuentaReceptor.cuenta" />
+						</map>
+					</property>
+				</bean>
+				<!--  -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="TIPO_VALOR_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="posicionTraspasante.emision.tipoValor.claveTipoValor" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="EMISORA_REQUERIDA" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="posicionTraspasante.emision.emisora.descripcion" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="SERIE_REQUERIDA" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="posicionTraspasante.emision.serie.serie" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="CUPON_REQUERIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="posicionTraspasante.emision.cupon" />
+						</map>
+					</property>
+				</bean>
+				<!-- 
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoRequerido">
+					<property name="llaveMensaje"
+						value="BOVEDA_REQUERIDA" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="posicionTraspasante.boveda" />
+						</map>
+					</property>
+				</bean>
+				 -->
+
+				<!-- Valida que todos los campos requeridos tengan el formato esperado 
+					@return boolean true si encontró un error o false en caso contrario -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionLongitudCampo">
+					<property name="llaveMensaje"
+						value="LONGITUD_ID_TRASPASANTE_INCORRECTA" />
+					<property name="longitudMaxima" value="2" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="posicionTraspasante.cuenta.institucion.claveTipoInstitucion" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionLongitudCampo">
+					<property name="llaveMensaje"
+						value="LONGITUD_FOLIO_TRASPASANTE_INCORRECTA" />
+					<property name="longitudMaxima" value="3" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="posicionTraspasante.cuenta.institucion.folioInstitucion" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionLongitudCampo">
+					<property name="llaveMensaje"
+						value="LONGITUD_CUENTA_TRASPASANTE_INCORRECTA" />
+					<property name="longitudMaxima" value="4" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="posicionTraspasante.cuenta.cuenta" />
+						</map>
+					</property>
+				</bean>
+				<!--  -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionLongitudCampo">
+					<property name="llaveMensaje"
+						value="LONGITUD_ID_RECEPTOR_INCORRECTA" />
+					<property name="longitudMaxima" value="2" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="cuentaReceptor.institucion.claveTipoInstitucion" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionLongitudCampo">
+					<property name="llaveMensaje"
+						value="LONGITUD_FOLIO_RECEPTOR_INCORRECTA" />
+					<property name="longitudMaxima" value="3" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="cuentaReceptor.institucion.folioInstitucion" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionLongitudCampo">
+					<property name="llaveMensaje"
+						value="LONGITUD_CUENTA_RECEPTOR_INCORRECTA" />
+					<property name="longitudMaxima" value="4" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="cuentaReceptor.cuenta" />
+						</map>
+					</property>
+				</bean>
+
+
+				<!-- Valida que todos los campos requeridos sean numericos
+					@return boolean true si encontró un error o false en caso contrario -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumerico">
+					<property name="llaveMensaje"
+						value="FORMATO_ID_TRASPASANTE_INVALIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="posicionTraspasante.cuenta.institucion.claveTipoInstitucion" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumerico">
+					<property name="llaveMensaje"
+						value="FORMATO_FOLIO_TRASPASANTE_INVALIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="posicionTraspasante.cuenta.institucion.folioInstitucion" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumerico">
+					<property name="llaveMensaje"
+						value="FORMATO_CUENTA_TRASPASANTE_INVALIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="posicionTraspasante.cuenta.cuenta" />
+						</map>
+					</property>
+				</bean>
+				<!--  -->
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumerico">
+					<property name="llaveMensaje"
+						value="FORMATO_CUENTA_RECEPTOR_INVALIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="cuentaReceptor.cuenta" />
+						</map>
+					</property>
+				</bean>
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionCampoNumerico">
+					<property name="llaveMensaje"
+						value="FORMATO_FOLIO_RECEPTOR_INVALIDO" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="cuentaReceptor.institucion.folioInstitucion" />
+						</map>
+					</property>
+				</bean>
+
+				<!-- 
+				<bean
+					class="com.indeval.portaldali.presentation.validation.impl.CriterioValidacionNumeroNatural">
+					<property name="llaveMensaje"
+						value="BOVEDA_REQUERIDA" />
+					<property name="parametros">
+						<map>
+							<entry key="campo"
+								value="posicionTraspasante.boveda.id" />
+						</map>
+					</property>
+				</bean>
+				-->
+
+			</list>
+
+		</constructor-arg>
+	</bean>
+
+</beans>

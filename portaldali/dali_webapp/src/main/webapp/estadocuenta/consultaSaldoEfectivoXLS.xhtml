@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xls="http://indeval.com/jsf/xls" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:f="http://java.sun.com/jsf/core">
+
+    <xls:document documentName="consultaSaldoEfectivo" documentTitle="Consulta de Saldos de Efectivo"
+        fecha="#{elegirInstitucionBean.fechaActual}" 
+   			 institucion = "#{elegirInstitucionBean.descripcionInstitucion}"  >
+
+        <xls:table value="#{consultaSaldosEfectivoBean.consultaSaldos}" var="saldos"
+            rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}">
+            <xls:row>
+            	<xls:col header="#{etq.fecha}" value="#{saldos.criterioFecha}" align="center" pattern="dd/MM/yyyy" />
+                <xls:col header="#{etq.naturalezaMinus}" value="#{saldos.cuentaSeleccionada.tipoNaturaleza.descripcion}" />
+                <xls:col header="#{etq.tipoCuentaMinus}" value="#{saldos.cuentaSeleccionada.tipoCuenta.descripcion}" />
+                <xls:col header="#{etq.institucionMinus}" value="#{consultaSaldosEfectivoBean.folioClaveInstitucion}"/>
+                <xls:col header="#{etq.cuentaMinus}" value="#{saldos.cuentaSeleccionada.descripcion}" />
+                <xls:col header="#{etq.divisaMinus}" value="#{saldos.divisaSeleccionada.descripcion}" align="center" />
+                <xls:col header="#{etq.bovedaMinus}" value="#{saldos.bovedaSeleccionada.descripcion}" align="center" />
+            </xls:row>
+        </xls:table>
+         
+        <xls:table value="#{consultaSaldosEfectivoBean.consultaSaldos}" var="saldos"
+            rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}">
+            <xls:row>
+            	<xls:col header="#{etq.fecha}" value="#{saldos.criterioFecha}" align="center" pattern="dd/MM/yyyy" />
+                <xls:col header="#{etq.naturalezaMinus}" value="#{saldos.cuentaSeleccionada.tipoNaturaleza.descripcion}" />
+                <xls:col header="#{etq.tipoCuentaMinus}" value="#{saldos.cuentaSeleccionada.tipoCuenta.descripcion}" />
+                <xls:col header="#{etq.institucionMinus}" value="#{consultaSaldosEfectivoBean.folioClaveInstitucion}"/>
+                <xls:col header="#{etq.cuentaMinus}" value="#{saldos.cuentaSeleccionada.descripcion}" />
+                <xls:col header="#{etq.divisaMinus}" value="#{saldos.divisaSeleccionada.descripcion}" align="center" />
+                <xls:col header="#{etq.bovedaMinus}" value="#{saldos.bovedaSeleccionada.descripcion}" align="center" />
+            </xls:row>
+        </xls:table>
+
+ 		<xls:table value="#{consultaSaldosEfectivoBean.consultaSaldos}" var="saldos">
+            <xls:row>  
+                <xls:col header="" value="#{etq.registrosEncontrados} :     #{consultaSaldosEfectivoBean.registrosEncontrados}" align="right" />
+            </xls:row>
+        </xls:table>
+
+        <xls:table value="#{consultaSaldosEfectivoBean.resultadosConsultaSaldo}" var="saldo"
+            rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}">
+            <xls:row>
+               
+                <xls:col header="#{etq.cuentaMinus}" value="#{saldo.cuenta.numeroCuenta}" />
+                <xls:col header="#{etq.divisaMinus}" value="#{saldo.divisa.descripcion}" />
+                <xls:col header="#{etq.bovedaMinus}" value="#{saldo.boveda.descripcion}" />
+                <xls:col header="#{etq.saldoMinus}" value="#{saldo.saldo}" pattern="$###,###,###,###,###,##0.00" />
+            </xls:row>
+        </xls:table>
+        
+        <xls:table value="#{consultaSaldosEfectivoBean.resumenSaldo}" var="dummy"
+            rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'C'}">
+
+            <xls:row>
+                
+              
+                <xls:col header="" value="#{consultaSaldosEfectivoBean.resumenSaldo.saldo}" pattern="$###,###,###,###,###,##0.00" />
+            </xls:row>
+        </xls:table>
+
+        <xls:table value="#{consultaSaldosEfectivoBean.resultadosConsultaSaldo}" var="saldo"
+            rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}">
+            <xls:row>
+                <xls:col header="#{etq.cuentaMinus}" value="#{saldo.cuenta.numeroCuenta}" />
+                <xls:col header="#{etq.divisaMinus}" value="#{saldo.divisa.descripcion}" />
+                <xls:col header="#{etq.bovedaMinus}" value="#{saldo.boveda.descripcion}" />
+                <xls:col header="#{etq.saldoMinus}" value="#{saldo.saldo}" pattern="$###,###,###,###,###,##0.00" />
+                <xls:col header="#{etq.disponibleMinus}" value="#{saldo.saldoDisponible}" pattern="$###,###,###,###,###,##0.00" />
+                <xls:col header="#{etq.noDisponibleMinus}" value="#{saldo.saldoNoDisponible}" pattern="$###,###,###,###,###,##0.00" />
+            </xls:row>
+        </xls:table>
+
+        <xls:table value="#{consultaSaldosEfectivoBean.resumenSaldo}" var="dummy"
+            rendered="#{consultaSaldosEfectivoBean.consultaSaldos.criterioCuenta.criterioTipoCuenta.opcionSeleccionada.id eq 'N'}">
+
+            <xls:row>
+                <xls:col header="" value="#{etq.totalConsultaMinus}" />
+                <xls:col header="" value="" />
+                <xls:col header="" value="" />
+                <xls:col header="" value="#{consultaSaldosEfectivoBean.resumenConsulta['saldoTotal']}" 				pattern="$###,###,###,###,###,##0.00" />
+                <xls:col header="" value="#{consultaSaldosEfectivoBean.resumenConsulta['saldoTotalDisponible']}"  	pattern="$###,###,###,###,###,##0.00" />
+                <xls:col header="" value="#{consultaSaldosEfectivoBean.resumenConsulta['saldoTotalNoDisponible']}" 	pattern="$###,###,###,###,###,##0.00" />
+            </xls:row>
+        </xls:table>
+
+    </xls:document>
+</html>

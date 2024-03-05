@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd" version="1.2">
+
+	<managed-bean>
+		<managed-bean-name>altaCuenta</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portaldali.presentation.controller.tesoreria.cuentas.AltaCuentaController
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+
+		<managed-property>
+			<property-name>consultaCatalogosFacade</property-name>
+			<value>#{consultaCatalogosFacade}</value>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>validadorAltaCuenta</property-name>
+			<value>#{validadorCreaCuentaBancaComercial}</value>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>validadorAltaCuentaInt</property-name>
+			<value>#{validadorCreaCuentaInternacional}</value>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>admonCuentasService</property-name>
+			<value>#{admonCuentasRetiroEfectivoService}</value>
+		</managed-property>
+
+		<managed-property>
+			<property-name>consultaCuentaController</property-name>
+			<value>#{consultaCuentas}</value>
+		</managed-property>
+				 
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>consultaCuentas</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portaldali.presentation.controller.tesoreria.cuentas.ConsultaCuentaController
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+
+		<managed-property>
+			<property-name>consultaCatalogosFacade</property-name>
+			<value>#{consultaCatalogosFacade}</value>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>admonCuentasService</property-name>
+			<value>#{admonCuentasRetiroEfectivoServiceEJB}</value>
+		</managed-property>
+	</managed-bean>
+
+	<!-- 
+	<managed-bean>
+		<managed-bean-name>altaCuentaInt</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portaldali.presentation.controller.tesoreria.cuentas.AltaCuentaInternacionalController
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+
+		<managed-property>
+			<property-name>consultaCatalogosFacade</property-name>
+			<value>#{consultaCatalogosFacade}</value>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>validadorAltaCuenta</property-name>
+			<value>#{validadorCreaCuentaInternacional}</value>
+		</managed-property>
+		
+		<managed-property>
+			<property-name>admonCuentasService</property-name>
+			<value>#{admonCuentasRetiroEfectivoServiceEJB}</value>
+		</managed-property>
+				 
+	</managed-bean>
+	 -->
+
+	<managed-bean>
+		<managed-bean-name>detalleCuentas</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portaldali.presentation.controller.tesoreria.cuentas.DetalleCuentasController
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>admonCuentasService</property-name>
+			<value>#{admonCuentasRetiroEfectivoServiceEJB}</value>
+		</managed-property>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>detalleEstados</managed-bean-name>
+		<managed-bean-class>
+			com.indeval.portaldali.presentation.controller.tesoreria.cuentas.DetalleEstadosController
+		</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>admonCuentasService</property-name>
+			<value>#{admonCuentasRetiroEfectivoServiceEJB}</value>
+		</managed-property>
+	</managed-bean>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consultaCuentaNacional</from-outcome>
+			<to-view-id>
+				/tesoreria/cuentas/consultaCuentasNacional.xhtml
+			</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>altaCuentaNacional</from-outcome>
+			<to-view-id>
+				/tesoreria/cuentas/altaCuenta.xhtml
+			</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+    
+</faces-config>
+

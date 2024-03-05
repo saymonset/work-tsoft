@@ -1,0 +1,20 @@
+<!-- Descomentar si ya est aconfigurado el EJB Remoto -->
+<jboss-ejb-client xmlns="urn:jboss:ejb-client:1.2">
+  <client-context>
+    <ejb-receivers>       
+       <remoting-ejb-receiver outbound-connection-ref="remote-ejb-security-connection-1"/>
+       <remoting-ejb-receiver outbound-connection-ref="remote-ejb-security-connection-2"/>
+       <remoting-ejb-receiver outbound-connection-ref="remote-speiFacade-ejb-connection-1"/>
+       <remoting-ejb-receiver outbound-connection-ref="remote-speiFacade-ejb-connection-2"/>
+    </ejb-receivers>
+    <clusters>
+            <cluster name="ejb" max-allowed-connected-nodes="20" connect-timeout="5000" >
+                <connection-creation-options>
+                    <property name="org.xnio.Options.SSL_ENABLED" value="false"/>
+                    <property name="org.xnio.Options.SASL_POLICY_NOANONYMOUS" value="false"/>
+                </connection-creation-options>
+            </cluster>
+   </clusters>
+   
+  </client-context>
+</jboss-ejb-client>
