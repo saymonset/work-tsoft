@@ -98,14 +98,6 @@ public class TipoOperacionDTO implements Serializable{
 			result = super.equals(o);
 		}
 		return result;
-	}
-
-	@Override
-	public String toString() {
-		return "TipoOperacionDTO{" +
-				"id=" + id +
-				", claveTipoOperacion='" + claveTipoOperacion + '\'' +
-				", descripcion='" + descripcion + '\'' +
-				'}';
-	}
+	}	
+	
 }

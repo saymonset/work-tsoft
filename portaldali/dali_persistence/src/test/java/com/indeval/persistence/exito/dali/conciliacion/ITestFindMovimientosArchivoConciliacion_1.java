@@ -28,14 +28,14 @@ import com.indeval.portaldali.persistence.vo.PageVO;
 public class ITestFindMovimientosArchivoConciliacion_1 extends BaseDaoTestCase {
 
     /** Objeto de loggeo */
-    private static final Logger log = LoggerFactory.getLogger(ITestFindMovimientosArchivoConciliacion_1.class);
+    private static final Logger logger = LoggerFactory.getLogger(ITestFindMovimientosArchivoConciliacion_1.class);
 
     /** bean de cInstrumentoDao */
     private OperacionNombradaDao operacionNombradaDao;
     
     /**
      * 
-     * @see com.indeval.persistence.unittest.BaseDaoTestCase#onSetUp()
+     * @see com.indeval.persistence.portallegado.unittest.BaseDaoTestCase#onSetUp()
      */
     protected void onSetUp() {
 

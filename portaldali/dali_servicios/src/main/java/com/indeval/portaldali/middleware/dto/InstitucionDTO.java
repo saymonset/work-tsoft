@@ -284,22 +284,5 @@ public class InstitucionDTO implements Serializable {
 	public void setClaveSpeiBeneficiario(String claveSpeiBeneficiario) {
 		this.claveSpeiBeneficiario = claveSpeiBeneficiario;
 	}
-
-	@Override
-	public String toString() {
-		return "InstitucionDTO{" +
-				"id=" + id +
-				", nombreCorto='" + nombreCorto + '\'' +
-				", claveTipoInstitucion='" + claveTipoInstitucion + '\'' +
-				", tipoInstitucionDTO=" + tipoInstitucionDTO +
-				", folioInstitucion='" + folioInstitucion + '\'' +
-				", razonSocial='" + razonSocial + '\'' +
-				", cuentaClabe='" + cuentaClabe + '\'' +
-				", claveCasfim='" + claveCasfim + '\'' +
-				", claveSpei='" + claveSpei + '\'' +
-				", operaSiac=" + operaSiac +
-				", cuentaClabeBeneficiario='" + cuentaClabeBeneficiario + '\'' +
-				", claveSpeiBeneficiario='" + claveSpeiBeneficiario + '\'' +
-				'}';
-	}
+	
 }

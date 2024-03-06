@@ -33,7 +33,7 @@ public class ITestGetListaInstrumentos_e1 extends BaseDaoTestCase {
 	private InstrumentoDaliDao cInstrumentoDao;
 	
     /**
-     * @see com.indeval.persistence.unittest.BaseDaoTestCase#onSetUp()
+     * @see com.indeval.persistence.portallegado.unittest.BaseDaoTestCase#onSetUp()
      */
     protected void onSetUp() {
         super.onSetUp();

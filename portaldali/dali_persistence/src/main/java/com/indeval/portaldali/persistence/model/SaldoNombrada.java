@@ -287,15 +287,4 @@ public class SaldoNombrada implements Serializable {
         return new EqualsBuilder().append(idSaldo, rhs.getIdSaldo()).isEquals();
     }
 
-    @Override
-    public String toString() {
-        return "SaldoNombrada{" +
-                "idSaldo=" + idSaldo +
-                ", idCuenta=" + idCuenta +
-                ", idBoveda=" + idBoveda +
-                ", idDivisa=" + idDivisa +
-                ", saldoDisponible=" + saldoDisponible +
-                ", saldoNoDisponible=" + saldoNoDisponible +
-                '}';
-    }
 }

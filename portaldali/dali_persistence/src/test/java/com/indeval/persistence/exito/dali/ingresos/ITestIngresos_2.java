@@ -30,7 +30,7 @@ public class ITestIngresos_2 extends BaseDaoTestCase {
     private IngresosDao ingresosDao;
 	
     /**
-     * @see com.indeval.persistence.unittest.BaseDaoTestCase#onSetUp()
+     * @see com.indeval.persistence.portallegado.unittest.BaseDaoTestCase#onSetUp()
      */
     protected void onSetUp() {
         super.onSetUp();

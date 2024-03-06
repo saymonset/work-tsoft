@@ -217,20 +217,6 @@ public class CuentaEfectivoDTO implements Serializable{
 	 */
 	public void setCuenta(String cuenta) {
 		this.cuenta = cuenta;
-	}
-
-	@Override
-	public String toString() {
-		return "CuentaEfectivoDTO{" +
-				"tipoCuenta=" + tipoCuenta +
-				", idCuenta=" + idCuenta +
-				", numeroCuenta='" + numeroCuenta + '\'' +
-				", nombreCuenta='" + nombreCuenta + '\'' +
-				", cuenta='" + cuenta + '\'' +
-				", institucion=" + institucion +
-				", tipoCustodia='" + tipoCustodia + '\'' +
-				", descripcion='" + descripcion + '\'' +
-				", tipoNaturaleza=" + tipoNaturaleza +
-				'}';
-	}
+	}	
+	
 }

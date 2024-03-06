@@ -5,8 +5,6 @@ package com.indeval.persistence.unittest;
 
 import org.hibernate.SessionFactory;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 
@@ -24,9 +22,7 @@ import com.indeval.portaldali.persistence.vo.PageVO;
  * @author Fco. Agustin Calderon Ordu&ntilde;a
  */
 public abstract class BaseDaoTestCase extends AbstractDependencyInjectionSpringContextTests {
-
-    private Logger logger = LoggerFactory.getLogger(BaseDaoTestCase.class);
-
+    
     private SessionFactory sessionFactoryAnotation = null;
     
     //    private SessionFactory sessionFactoryDali = null;
@@ -99,8 +95,7 @@ public abstract class BaseDaoTestCase extends AbstractDependencyInjectionSpringC
 
         String[] paths = new String[] {
                 "iTestApplicationContext.xml",
-                "db-propertiesContext-Test.xml",
-                "persistence-dali-dao-context-Test.xml"
+                "persistence-dali-dao-context.xml"
                          
         };
 

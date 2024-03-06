@@ -19,13 +19,13 @@ import com.indeval.portaldali.persistence.model.ConsultaIngresos;
 public class ITestIngresos_3 extends BaseDaoTestCase {
 	
 	/** Objeto de loggeo */
-    private static final Logger log = LoggerFactory.getLogger(ITestIngresos_3.class);
+    private static final Logger logger = LoggerFactory.getLogger(ITestIngresos_3.class);
 
     
     private IngresosDao ingresosDao;
 	
     /**
-     * @see com.indeval.persistence.unittest.BaseDaoTestCase#onSetUp()
+     * @see com.indeval.persistence.portallegado.unittest.BaseDaoTestCase#onSetUp()
      */
     protected void onSetUp() {
         super.onSetUp();

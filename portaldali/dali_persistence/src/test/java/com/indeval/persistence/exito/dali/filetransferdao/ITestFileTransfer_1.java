@@ -16,7 +16,7 @@ import com.indeval.portaldali.persistence.dao.filetransfer.FileTransferDao;
 public class ITestFileTransfer_1 extends BaseDaoTestCase {
 	
 	/** Objeto de loggeo */
-    private static final Logger log = LoggerFactory.getLogger(ITestFileTransfer_1.class);
+    private static final Logger logger = LoggerFactory.getLogger(ITestFileTransfer_1.class);
 
     /**
      * bean de fileTransferDao
@@ -24,7 +24,7 @@ public class ITestFileTransfer_1 extends BaseDaoTestCase {
 	private FileTransferDao fileTransferDao;
 	
     /**
-     * @see com.indeval.persistence.unittest.BaseDaoTestCase#onSetUp()
+     * @see com.indeval.persistence.portallegado.unittest.BaseDaoTestCase#onSetUp()
      */
     protected void onSetUp() {
         super.onSetUp();

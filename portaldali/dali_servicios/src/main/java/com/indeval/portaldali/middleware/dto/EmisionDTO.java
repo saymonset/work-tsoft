@@ -248,21 +248,4 @@ public class EmisionDTO implements Serializable{
 	public void setFechaVencimiento(Date fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
 	}
-
-	@Override
-	public String toString() {
-		return "EmisionDTO{" +
-				"serie=" + serie +
-				", tipoValor=" + tipoValor +
-				", emisora=" + emisora +
-				", cupon='" + cupon + '\'' +
-				", id=" + id +
-				", isin='" + isin + '\'' +
-				", valorNominal=" + valorNominal +
-				", diasVigentes=" + diasVigentes +
-				", fechaVencimiento=" + fechaVencimiento +
-				", divisa=" + divisa +
-				", boveda=" + boveda +
-				'}';
-	}
 }

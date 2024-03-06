@@ -84,11 +84,4 @@ public class TipoCuentaDTO implements Serializable{
 		return result;
 	}
 
-	@Override
-	public String toString() {
-		return "TipoCuentaDTO{" +
-				"id='" + id + '\'' +
-				", descripcion='" + descripcion + '\'' +
-				'}';
-	}
 }

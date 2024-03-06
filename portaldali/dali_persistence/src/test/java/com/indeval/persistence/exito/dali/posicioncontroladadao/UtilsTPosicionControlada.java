@@ -24,7 +24,7 @@ public class UtilsTPosicionControlada {
     /**
      * Log de clase.
      */
-    private static final Logger log = LoggerFactory.getLogger(UtilsTPosicionControlada.class);
+    private static final Logger logger = LoggerFactory.getLogger(UtilsTPosicionControlada.class);
     
     /**
      * Retorna una instancia de TPosicionControladaParamsPersistence con la bandera test = true 
