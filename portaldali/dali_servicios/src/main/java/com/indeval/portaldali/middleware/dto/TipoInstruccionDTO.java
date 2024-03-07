@@ -139,5 +139,15 @@ public class TipoInstruccionDTO implements Serializable {
 	 */
 	public void setInstruccion(String instruccion) {
 	    this.instruccion = instruccion;
-	}	
+	}
+
+	@Override
+	public String toString() {
+		return "TipoInstruccionDTO{" +
+				"idTipoInstruccion=" + idTipoInstruccion +
+				", nombreCorto='" + nombreCorto + '\'' +
+				", descripcion='" + descripcion + '\'' +
+				", instruccion='" + instruccion + '\'' +
+				'}';
+	}
 }

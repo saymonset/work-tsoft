@@ -20,8 +20,7 @@ import com.indeval.portaldali.persistence.util.UtilsLog;
 public class ITestGetSaldoControlada_1 extends BaseDaoTestCase {
 	
 	/** Objeto de loggeo  */
-    private static final Log log = 
-    	LogFactory.getLog(ITestGetSaldoControlada_1.class);
+    private static final Logger log = LoggerFactory.getLogger(ITestGetSaldoControlada_1.class);
 
     /**
      * bean de cInstrumentoDao
@@ -29,7 +28,7 @@ public class ITestGetSaldoControlada_1 extends BaseDaoTestCase {
 	private SaldoControladaDaliDao saldoControladaDaliDao;
 	
     /**
-     * @see com.indeval.persistence.portallegado.unittest.BaseDaoTestCase#onSetUp()
+     * @see com.indeval.persistence.unittest.BaseDaoTestCase#onSetUp()
      */
     protected void onSetUp() {
         super.onSetUp();

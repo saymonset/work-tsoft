@@ -27,7 +27,7 @@ public class ITestEsInhabil_e1 extends BaseDaoTestCase {
 	private DiaInhabilDaliDao diaInhabilDaliDao;
 	
     /**
-     * @see com.indeval.persistence.portallegado.unittest.BaseDaoTestCase#onSetUp()
+     * @see com.indeval.persistence.unittest.BaseDaoTestCase#onSetUp()
      */
     protected void onSetUp() {
         super.onSetUp();

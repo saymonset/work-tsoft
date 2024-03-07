@@ -23,401 +23,430 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * Cata&acute;logo de las instituciones financieras que tienen relaci&oacute;n
  * con INDEVAL. Esta contiene principalmente diferentes claves por medio de las
  * cuales puede identificarse a cada uno de los participantes.
- * 
+ * <p>
  * C_INSTITUCION
- * 
+ *
  * @author rchavez
  * @version 1.0
  */
 @Entity
 @Table(name = "C_INSTITUCION")
 public class Institucion implements Serializable {
-	/**
-	 * serialVersionUID.
-	 */
-	private static final long serialVersionUID = 1L;
-	/**
-	 * Identificador de la instituci&oacute;n.
-	 */
-	@Id
-	@Column(name = "ID_INSTITUCION")
-	private BigInteger idInstitucion;
-	/**
-	 * Tipo de instituci&oacute;n.
-	 */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ID_TIPO_INSTITUCION")
-	private TipoInstitucion tipoInstitucion;
-	/**
-	 * Folio de la instituci&oacute;n.
-	 */
-	@Column(name = "FOLIO_INSTITUCION")
-	private String folioInstitucion;
-	/**
-	 * BIC de la instituci&oacute;n.
-	 */
-	@Column(name = "BIC")
-	private String bic;
-	/**
-	 * Clave casfim de la instituci&oacute;n.
-	 */
-	@Column(name = "CLAVE_CASFIM")
-	private String claveCasfim;
-	/**
-	 * Nombre corto de la instituci&oacute;n.
-	 */
-	@Column(name = "NOMBRE_CORTO")
-	private String nombreCorto;
-	/**
-	 * Fecha de registro de la instituci&oacute;n.
-	 */
-	@Column(name = "FECHA_ALTA")
-	private Date fechaAlta;
-	/**
-	 * Identificador del estado de la instituci&oacute;n.
-	 */
-	@Column(name = "ID_ESTADO_INSTITUCION")
-	private BigInteger idEstadoInstitucion;
-	/**
-	 * Fecha de baja de la instituci&oacute;n.
-	 */
-	@Column(name = "FECHA_BAJA")
-	private Date fechaBaja;
+    /**
+     * serialVersionUID.
+     */
+    private static final long serialVersionUID = 1L;
+    /**
+     * Identificador de la instituci&oacute;n.
+     */
+    @Id
+    @Column(name = "ID_INSTITUCION")
+    private BigInteger idInstitucion;
+    /**
+     * Tipo de instituci&oacute;n.
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_TIPO_INSTITUCION", updatable = false, insertable = false)
+    private TipoInstitucion tipoInstitucion;
 
-	/**
-	 * La cuenta CLABE de la institución.
-	 */
-	@Column(name = "CUENTA_CLABE")
-	private String cuentaClabe;
+    @Column(name = "ID_TIPO_INSTITUCION")
+    private BigInteger idTipoInstitucion;
+    /**
+     * Folio de la instituci&oacute;n.
+     */
+    @Column(name = "FOLIO_INSTITUCION")
+    private String folioInstitucion;
+    /**
+     * BIC de la instituci&oacute;n.
+     */
+    @Column(name = "BIC")
+    private String bic;
+    /**
+     * Clave casfim de la instituci&oacute;n.
+     */
+    @Column(name = "CLAVE_CASFIM")
+    private String claveCasfim;
+    /**
+     * Nombre corto de la instituci&oacute;n.
+     */
+    @Column(name = "NOMBRE_CORTO")
+    private String nombreCorto;
+    /**
+     * Fecha de registro de la instituci&oacute;n.
+     */
+    @Column(name = "FECHA_ALTA")
+    private Date fechaAlta;
+    /**
+     * Identificador del estado de la instituci&oacute;n.
+     */
+    @Column(name = "ID_ESTADO_INSTITUCION")
+    private BigInteger idEstadoInstitucion;
+    /**
+     * Fecha de baja de la instituci&oacute;n.
+     */
+    @Column(name = "FECHA_BAJA")
+    private Date fechaBaja;
 
-	// @ManyToOne(fetch = FetchType.LAZY)
-	// @JoinColumn(name =
-	// "id_estado_institucion",insertable=false,updatable=false)
-	// private EstadoInstitucion estadoInstitucion; // FK
-	@Column(name = "clave_casfim2", unique = false, nullable = true)
-	private BigDecimal claveCasfim2;
-	@Column(name = "origen", unique = false, nullable = true)
-	private String origen;
-	@Column(name = "interna", unique = false, nullable = true)
-	private BigDecimal interna;
-	@Column(name = "razon_social", unique = false, nullable = true)
-	private String razonSocial;
+    /**
+     * La cuenta CLABE de la institución.
+     */
+    @Column(name = "CUENTA_CLABE")
+    private String cuentaClabe;
 
-	/*
-	 * Se agregan campos para la resolución del requerimiento R-IND-2014-010
-	 * 02/10/2014 Pablo Balderas.
-	 */
-	
-	/** Clave SPEI */
-	@Column(name="CLAVE_SPEI")
-	private String claveSpei;
-	
-	/** Opera SIAC */
-	@Column(name="OPERA_SIAC")
-	private Boolean operaSiac;
-	
-	/** Cuenta Clabe BENEFICIARIO */
-	@Column(name="CUENTA_CLABE_BENEFICIARIO")
-	private String cuentaClabeBeneficiario;
-	
-	/** Clave SPEI BENEFICIARIO */
-	@Column(name="CLAVE_SPEI_BENEFICIARIO")
-	private String claveSpeiBeneficiario;
-	
-	
-	/**
-	 * @return the claveSpei
-	 */
-	public String getClaveSpei() {
-		return claveSpei;
-	}
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name =
+    // "id_estado_institucion",insertable=false,updatable=false)
+    // private EstadoInstitucion estadoInstitucion; // FK
+    @Column(name = "clave_casfim2", unique = false, nullable = true)
+    private BigDecimal claveCasfim2;
+    @Column(name = "origen", unique = false, nullable = true)
+    private String origen;
+    @Column(name = "interna", unique = false, nullable = true)
+    private BigDecimal interna;
+    @Column(name = "razon_social", unique = false, nullable = true)
+    private String razonSocial;
 
-	/**
-	 * @param claveSpei the claveSpei to set
-	 */
-	public void setClaveSpei(String claveSpei) {
-		this.claveSpei = claveSpei;
-	}
+    /*
+     * Se agregan campos para la resolución del requerimiento R-IND-2014-010
+     * 02/10/2014 Pablo Balderas.
+     */
 
-	/**
-	 * @return the operaSiac
-	 */
-	public Boolean isOperaSiac() {
-		return operaSiac;
-	}
+    /**
+     * Clave SPEI
+     */
+    @Column(name = "CLAVE_SPEI")
+    private String claveSpei;
 
-	/**
-	 * @param operaSiac the operaSiac to set
-	 */
-	public void setOperaSiac(Boolean operaSiac) {
-		this.operaSiac = operaSiac;
-	}
+    /**
+     * Opera SIAC
+     */
+    @Column(name = "OPERA_SIAC")
+    private Boolean operaSiac;
 
-	/**
-	 * Identificador secuencial de la instituci&oacute;n.
-	 * 
-	 * @return BigInteger
-	 */
-	public BigInteger getIdInstitucion() {
-		return idInstitucion;
-	}
+    /**
+     * Cuenta Clabe BENEFICIARIO
+     */
+    @Column(name = "CUENTA_CLABE_BENEFICIARIO")
+    private String cuentaClabeBeneficiario;
 
-	/**
-	 * @param idInstitucion
-	 */
-	public void setIdInstitucion(BigInteger idInstitucion) {
-		this.idInstitucion = idInstitucion;
-	}
+    /**
+     * Clave SPEI BENEFICIARIO
+     */
+    @Column(name = "CLAVE_SPEI_BENEFICIARIO")
+    private String claveSpeiBeneficiario;
 
-	/**
-	 * Referencia al tipo de la instituci&oacute;n.
-	 * 
-	 * @return TipoInstitucion
-	 */
-	public TipoInstitucion getTipoInstitucion() {
-		return tipoInstitucion;
-	}
 
-	/**
-	 * Obtiene el valor del atributo cuentaClabe
-	 * 
-	 * @return el valor del atributo cuentaClabe
-	 */
-	public String getCuentaClabe() {
-		return cuentaClabe;
-	}
+    /**
+     * @return the claveSpei
+     */
+    public String getClaveSpei() {
+        return claveSpei;
+    }
 
-	/**
-	 * Establece el valor del atributo cuentaClabe
-	 * 
-	 * @param cuentaClabe
-	 *            el valor del atributo cuentaClabe a establecer
-	 */
-	public void setCuentaClabe(String cuentaClabe) {
-		this.cuentaClabe = cuentaClabe;
-	}
+    /**
+     * @param claveSpei the claveSpei to set
+     */
+    public void setClaveSpei(String claveSpei) {
+        this.claveSpei = claveSpei;
+    }
 
-	/**
-	 * @param tipoInstitucion
-	 */
-	public void setTipoInstitucion(TipoInstitucion tipoInstitucion) {
-		this.tipoInstitucion = tipoInstitucion;
-	}
+    /**
+     * @return the operaSiac
+     */
+    public Boolean isOperaSiac() {
+        return operaSiac;
+    }
 
-	/**
-	 * Folio correspondiente a la instituci&oacute;n.
-	 * 
-	 * @return String
-	 */
-	public String getFolioInstitucion() {
-		return folioInstitucion;
-	}
+    /**
+     * @param operaSiac the operaSiac to set
+     */
+    public void setOperaSiac(Boolean operaSiac) {
+        this.operaSiac = operaSiac;
+    }
 
-	/**
-	 * @param folioInstitucion
-	 */
-	public void setFolioInstitucion(String folioInstitucion) {
-		this.folioInstitucion = folioInstitucion;
-	}
+    /**
+     * Identificador secuencial de la instituci&oacute;n.
+     *
+     * @return BigInteger
+     */
+    public BigInteger getIdInstitucion() {
+        return idInstitucion;
+    }
 
-	/**
-	 * BIC/BEI. Homologaci&oacute;n con norma ISO-9362.
-	 * 
-	 * @return String
-	 */
-	public String getBic() {
-		return bic;
-	}
+    /**
+     * @param idInstitucion
+     */
+    public void setIdInstitucion(BigInteger idInstitucion) {
+        this.idInstitucion = idInstitucion;
+    }
 
-	/**
-	 * @param bic
-	 */
-	public void setBic(String bic) {
-		this.bic = bic;
-	}
+    /**
+     * Referencia al tipo de la instituci&oacute;n.
+     *
+     * @return TipoInstitucion
+     */
+    public TipoInstitucion getTipoInstitucion() {
+        return tipoInstitucion;
+    }
 
-	/**
-	 * número de sector, gui&oacute;n como separador, y número de
-	 * identificaci&oacute;n de instituci&oacute;n financiera.
-	 * Homologaci&oacute;n con CASFIM.
-	 * 
-	 * @return String
-	 */
-	public String getClaveCasfim() {
-		return claveCasfim;
-	}
+    /**
+     * Referencia al ID de tipo de la instituci&oacute;n.
+     *
+     * @return BigInteger idTipoInstitucion
+     */
 
-	/**
-	 * @param claveCasfim
-	 */
-	public void setClaveCasfim(String claveCasfim) {
-		this.claveCasfim = claveCasfim;
-	}
+    public BigInteger getIdTipoInstitucion() {
+        return idTipoInstitucion;
+    }
 
-	/**
-	 * Nombre corto, siglas de la instituci&oacute;n. Para una
-	 * instituci&oacute;n listada en CASFIM debe coincidir con el nombre corto
-	 * ah listado.
-	 * 
-	 * @return String
-	 */
-	public String getNombreCorto() {
-		return nombreCorto;
-	}
+    /**
+     * Establece el valor del atributo idTipoInstitucion
+     *
+     * @param idTipoInstitucion el valor del atributo idTipoInstitucion a establecer
+     */
+    public void setIdTipoInstitucion(BigInteger idTipoInstitucion) {
+        this.idTipoInstitucion = idTipoInstitucion;
+    }
 
-	/**
-	 * @param nombreCorto
-	 */
-	public void setNombreCorto(String nombreCorto) {
-		this.nombreCorto = nombreCorto;
-	}
+    /**
+     * Obtiene el valor del atributo cuentaClabe
+     *
+     * @return el valor del atributo cuentaClabe
+     */
+    public String getCuentaClabe() {
+        return cuentaClabe;
+    }
 
-	/**
-	 * Fecha en que se hace el alta de la instituci&oacute;n.
-	 * 
-	 * @return Date
-	 */
-	public Date getFechaAlta() {
-		return fechaAlta;
-	}
+    /**
+     * Establece el valor del atributo cuentaClabe
+     *
+     * @param cuentaClabe el valor del atributo cuentaClabe a establecer
+     */
+    public void setCuentaClabe(String cuentaClabe) {
+        this.cuentaClabe = cuentaClabe;
+    }
 
-	/**
-	 * @param fechaAlta
-	 */
-	public void setFechaAlta(Date fechaAlta) {
-		this.fechaAlta = fechaAlta;
-	}
+    /**
+     * @param tipoInstitucion
+     */
+    public void setTipoInstitucion(TipoInstitucion tipoInstitucion) {
+        this.tipoInstitucion = tipoInstitucion;
+    }
 
-	/**
-	 * Referencia al estado de la instituci&oacute;n.
-	 * 
-	 * @return BigInteger
-	 */
-	public BigInteger getIdEstadoInstitucion() {
-		return idEstadoInstitucion;
-	}
+    /**
+     * Folio correspondiente a la instituci&oacute;n.
+     *
+     * @return String
+     */
+    public String getFolioInstitucion() {
+        return folioInstitucion;
+    }
 
-	/**
-	 * @param idEstadoInstitucion
-	 */
-	public void setIdEstadoInstitucion(BigInteger idEstadoInstitucion) {
-		this.idEstadoInstitucion = idEstadoInstitucion;
-	}
+    /**
+     * @param folioInstitucion
+     */
+    public void setFolioInstitucion(String folioInstitucion) {
+        this.folioInstitucion = folioInstitucion;
+    }
 
-	/**
-	 * Fecha en que se hace la baja l&oacute;gica de la instituci&oacute;n.
-	 * 
-	 * @return Date
-	 */
-	public Date getFechaBaja() {
-		return fechaBaja;
-	}
+    /**
+     * BIC/BEI. Homologaci&oacute;n con norma ISO-9362.
+     *
+     * @return String
+     */
+    public String getBic() {
+        return bic;
+    }
 
-	/**
-	 * @param fechaBaja
-	 */
-	public void setFechaBaja(Date fechaBaja) {
-		this.fechaBaja = fechaBaja;
-	}
+    /**
+     * @param bic
+     */
+    public void setBic(String bic) {
+        this.bic = bic;
+    }
 
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder(13, 23).append(idInstitucion).toHashCode();
-	}
+    /**
+     * número de sector, gui&oacute;n como separador, y número de
+     * identificaci&oacute;n de instituci&oacute;n financiera.
+     * Homologaci&oacute;n con CASFIM.
+     *
+     * @return String
+     */
+    public String getClaveCasfim() {
+        return claveCasfim;
+    }
 
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof Institucion)) {
-			return false;
-		}
-		if (this == obj) {
-			return true;
-		}
-		Institucion rhs = (Institucion) obj;
-		return new EqualsBuilder().append(idInstitucion, rhs.getIdInstitucion()).isEquals();
-	}
+    /**
+     * @param claveCasfim
+     */
+    public void setClaveCasfim(String claveCasfim) {
+        this.claveCasfim = claveCasfim;
+    }
 
-	public BigDecimal getClaveCasfim2() {
-		return claveCasfim2;
-	}
+    /**
+     * Nombre corto, siglas de la instituci&oacute;n. Para una
+     * instituci&oacute;n listada en CASFIM debe coincidir con el nombre corto
+     * ah listado.
+     *
+     * @return String
+     */
+    public String getNombreCorto() {
+        return nombreCorto;
+    }
 
-	public String getOrigen() {
-		return origen;
-	}
+    /**
+     * @param nombreCorto
+     */
+    public void setNombreCorto(String nombreCorto) {
+        this.nombreCorto = nombreCorto;
+    }
 
-	public BigDecimal getInterna() {
-		return interna;
-	}
+    /**
+     * Fecha en que se hace el alta de la instituci&oacute;n.
+     *
+     * @return Date
+     */
+    public Date getFechaAlta() {
+        return fechaAlta;
+    }
 
-	public String getRazonSocial() {
-		return razonSocial;
-	}
+    /**
+     * @param fechaAlta
+     */
+    public void setFechaAlta(Date fechaAlta) {
+        this.fechaAlta = fechaAlta;
+    }
 
-	/**
-	 * @param estadoInstitucion
-	 */
+    /**
+     * Referencia al estado de la instituci&oacute;n.
+     *
+     * @return BigInteger
+     */
+    public BigInteger getIdEstadoInstitucion() {
+        return idEstadoInstitucion;
+    }
 
-	/**
-	 * @param claveCasfim2
-	 */
-	public void setClaveCasfim2(BigDecimal claveCasfim2) {
-		this.claveCasfim2 = claveCasfim2;
-	}
+    /**
+     * @param idEstadoInstitucion
+     */
+    public void setIdEstadoInstitucion(BigInteger idEstadoInstitucion) {
+        this.idEstadoInstitucion = idEstadoInstitucion;
+    }
 
-	/**
-	 * @param origen
-	 */
-	public void setOrigen(String origen) {
-		this.origen = origen;
-	}
+    /**
+     * Fecha en que se hace la baja l&oacute;gica de la instituci&oacute;n.
+     *
+     * @return Date
+     */
+    public Date getFechaBaja() {
+        return fechaBaja;
+    }
 
-	/**
-	 * @param interna
-	 */
-	public void setInterna(BigDecimal interna) {
-		this.interna = interna;
-	}
+    /**
+     * @param fechaBaja
+     */
+    public void setFechaBaja(Date fechaBaja) {
+        this.fechaBaja = fechaBaja;
+    }
 
-	/**
-	 * @param razonSocial
-	 */
-	public void setRazonSocial(String razonSocial) {
-		this.razonSocial = razonSocial;
-	}
+    /**
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(13, 23).append(idInstitucion).toHashCode();
+    }
 
-	/**
-	 * @return the cuentaClabeBeneficiario
-	 */
-	public String getCuentaClabeBeneficiario() {
-		return cuentaClabeBeneficiario;
-	}
+    /**
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Institucion)) {
+            return false;
+        }
+        if (this == obj) {
+            return true;
+        }
+        Institucion rhs = (Institucion) obj;
+        return new EqualsBuilder().append(idInstitucion, rhs.getIdInstitucion()).isEquals();
+    }
 
-	/**
-	 * @param cuentaClabeBeneficiario the cuentaClabeBeneficiario to set
-	 */
-	public void setCuentaClabeBeneficiario(String cuentaClabeBeneficiario) {
-		this.cuentaClabeBeneficiario = cuentaClabeBeneficiario;
-	}
+    public BigDecimal getClaveCasfim2() {
+        return claveCasfim2;
+    }
 
-	/**
-	 * @return the claveSpeiBeneficiario
-	 */
-	public String getClaveSpeiBeneficiario() {
-		return claveSpeiBeneficiario;
-	}
+    public String getOrigen() {
+        return origen;
+    }
 
-	/**
-	 * @param claveSpeiBeneficiario the claveSpeiBeneficiario to set
-	 */
-	public void setClaveSpeiBeneficiario(String claveSpeiBeneficiario) {
-		this.claveSpeiBeneficiario = claveSpeiBeneficiario;
-	}
-	
-	
+    public BigDecimal getInterna() {
+        return interna;
+    }
+
+    public String getRazonSocial() {
+        return razonSocial;
+    }
+
+    /**
+     * @param estadoInstitucion
+     */
+
+    /**
+     * @param claveCasfim2
+     */
+    public void setClaveCasfim2(BigDecimal claveCasfim2) {
+        this.claveCasfim2 = claveCasfim2;
+    }
+
+    /**
+     * @param origen
+     */
+    public void setOrigen(String origen) {
+        this.origen = origen;
+    }
+
+    /**
+     * @param interna
+     */
+    public void setInterna(BigDecimal interna) {
+        this.interna = interna;
+    }
+
+    /**
+     * @param razonSocial
+     */
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
+    }
+
+    /**
+     * @return the cuentaClabeBeneficiario
+     */
+    public String getCuentaClabeBeneficiario() {
+        return cuentaClabeBeneficiario;
+    }
+
+    /**
+     * @param cuentaClabeBeneficiario the cuentaClabeBeneficiario to set
+     */
+    public void setCuentaClabeBeneficiario(String cuentaClabeBeneficiario) {
+        this.cuentaClabeBeneficiario = cuentaClabeBeneficiario;
+    }
+
+    /**
+     * @return the claveSpeiBeneficiario
+     */
+    public String getClaveSpeiBeneficiario() {
+        return claveSpeiBeneficiario;
+    }
+
+    /**
+     * @param claveSpeiBeneficiario the claveSpeiBeneficiario to set
+     */
+    public void setClaveSpeiBeneficiario(String claveSpeiBeneficiario) {
+        this.claveSpeiBeneficiario = claveSpeiBeneficiario;
+    }
+
+
 }

@@ -52,4 +52,12 @@ public class TipoInstitucionDTO implements Serializable {
 		this.descripcion = descripcion;
 	}
 
+	@Override
+	public String toString() {
+		return "TipoInstitucionDTO{" +
+				"id=" + id +
+				", claveTipoInstitucion='" + claveTipoInstitucion + '\'' +
+				", descripcion='" + descripcion + '\'' +
+				'}';
+	}
 }

@@ -384,5 +384,20 @@ public class CuentaNombrada implements Serializable {
 	   		.append(idCuentaNombrada, rhs.getIdCuentaNombrada())
 			.isEquals();
     }
-    
+
+	@Override
+	public String toString() {
+		return "CuentaNombrada{" +
+				"idCuentaNombrada=" + idCuentaNombrada +
+				", cuenta='" + cuenta + '\'' +
+				", iban='" + iban + '\'' +
+				", idInstitucion=" + idInstitucion +
+				", idTipoCuenta=" + idTipoCuenta +
+				", razonSocialCuenta='" + razonSocialCuenta + '\'' +
+				", nombreCuenta='" + nombreCuenta + '\'' +
+				", fechaAlta=" + fechaAlta +
+				", fechaBaja=" + fechaBaja +
+				", idCuentaControlada=" + idCuentaControlada +
+				'}';
+	}
 }

@@ -114,4 +114,14 @@ public class TipoValorDTO implements Serializable{
 	public void setClaveTipoValor(String claveTipoValor) {
 		this.claveTipoValor = claveTipoValor;
 	}
+
+	@Override
+	public String toString() {
+		return "TipoValorDTO{" +
+				"mercado=" + mercado +
+				", id=" + id +
+				", descripcion='" + descripcion + '\'' +
+				", claveTipoValor='" + claveTipoValor + '\'' +
+				'}';
+	}
 }

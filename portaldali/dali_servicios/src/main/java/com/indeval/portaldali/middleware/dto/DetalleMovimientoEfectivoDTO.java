@@ -1,273 +1,313 @@
 /**
  * 2H Software - Bursatec
- * 
+ * <p>
  * Sistema de Consulta de Estados de Cuenta
- *
+ * <p>
  * Dec 28, 2007
- *
  */
 package com.indeval.portaldali.middleware.dto;
 
 import java.util.Date;
 
 /**
- * Objeto de transferencia de datos para encapsular la información referente al 
+ * Objeto de transferencia de datos para encapsular la información referente al
  * detalle de un registro contable de efectivo.
- * 
+ *
  * @author Pablo Julián Balderas Méndez
- * 
  */
 public class DetalleMovimientoEfectivoDTO {
-	
-	/** Fecha del movimiento */
-	private Date fechaMovimiento = null;
-	
-	/** Participante del movimiento */
-	private String participante = null;
-	
-	/** Contraparte del movimiento */
-	private String contraparte = null;
-	
-	/** Descripción del movimiento */
-	private String descripcionMovimiento = null;
-	
-	/** Folio de la operación */
-	private Long folioOperacion = null;
-	
-	/** Cargo del movimiento (es el mismo que monto operado)*/
-	private Double cargoMovimiento = null;
-	
-	/** Traspasante */
-	private String traspasante = null;
-	
-	/** Receptor */
-	private String receptor = null;
-	
-	/** Saldo efectivo, contiene la información de la boveda, la cuenta y la divisa */
-	private SaldoEfectivoDTO saldoEfectivoDTO = null;
-	
-	/** Instrucción de liquidación */
-	private InstruccionLiquidacionDTO instruccion = null;
-	
-	/** Operación realizada */
-	private OperacionSaldoDTO operacion = null;
-	
-	/** Tipo de movimiento, cargo o abono */
-	private String movimiento = null;
-	
-	/**
-	 * Obtiene el atributo fechaMovimiento
-	 *
-	 * @return El atrubuto fechaMovimiento
-	 */
-	public Date getFechaMovimiento() {
-		return fechaMovimiento;
-	}
 
-	/**
-	 * Establece la propiedad fechaMovimiento
-	 *
-	 * @param fechaMovimiento el campo fechaMovimiento a establecer
-	 */
-	public void setFechaMovimiento(Date fechaMovimiento) {
-		this.fechaMovimiento = fechaMovimiento;
-	}
+    /**
+     * Fecha del movimiento
+     */
+    private Date fechaMovimiento = null;
 
-	/**
-	 * Obtiene el atributo participante
-	 *
-	 * @return El atrubuto participante
-	 */
-	public String getParticipante() {
-		return participante;
-	}
+    /**
+     * Participante del movimiento
+     */
+    private String participante = null;
 
-	/**
-	 * Establece la propiedad participante
-	 *
-	 * @param participante el campo participante a establecer
-	 */
-	public void setParticipante(String participante) {
-		this.participante = participante;
-	}
+    /**
+     * Contraparte del movimiento
+     */
+    private String contraparte = null;
 
-	/**
-	 * Obtiene el atributo contraparte
-	 *
-	 * @return El atrubuto contraparte
-	 */
-	public String getContraparte() {
-		return contraparte;
-	}
+    /**
+     * Descripción del movimiento
+     */
+    private String descripcionMovimiento = null;
 
-	/**
-	 * Establece la propiedad contraparte
-	 *
-	 * @param contraparte el campo contraparte a establecer
-	 */
-	public void setContraparte(String contraparte) {
-		this.contraparte = contraparte;
-	}
+    /**
+     * Folio de la operación
+     */
+    private Long folioOperacion = null;
 
-	/**
-	 * Obtiene el atributo descripcionMovimiento
-	 *
-	 * @return El atrubuto descripcionMovimiento
-	 */
-	public String getDescripcionMovimiento() {
-		return descripcionMovimiento;
-	}
+    /**
+     * Cargo del movimiento (es el mismo que monto operado)
+     */
+    private Double cargoMovimiento = null;
 
-	/**
-	 * Establece la propiedad descripcionMovimiento
-	 *
-	 * @param descripcionMovimiento el campo descripcionMovimiento a establecer
-	 */
-	public void setDescripcionMovimiento(String descripcionMovimiento) {
-		this.descripcionMovimiento = descripcionMovimiento;
-	}
+    /**
+     * Traspasante
+     */
+    private String traspasante = null;
 
-	/**
-	 * Obtiene el atributo folioOperacion
-	 *
-	 * @return El atrubuto folioOperacion
-	 */
-	public Long getFolioOperacion() {
-		return folioOperacion;
-	}
+    /**
+     * Receptor
+     */
+    private String receptor = null;
 
-	/**
-	 * Establece la propiedad folioOperacion
-	 *
-	 * @param folioOperacion el campo folioOperacion a establecer
-	 */
-	public void setFolioOperacion(Long folioOperacion) {
-		this.folioOperacion = folioOperacion;
-	}
+    /**
+     * Saldo efectivo, contiene la información de la boveda, la cuenta y la divisa
+     */
+    private SaldoEfectivoDTO saldoEfectivoDTO = null;
 
-	/**
-	 * Obtiene el atributo cargoMovimiento
-	 *
-	 * @return El atrubuto cargoMovimiento
-	 */
-	public Double getCargoMovimiento() {
-		return cargoMovimiento;
-	}
+    /**
+     * Instrucción de liquidación
+     */
+    private InstruccionLiquidacionDTO instruccion = null;
 
-	/**
-	 * Establece la propiedad cargoMovimiento
-	 *
-	 * @param cargoMovimiento el campo cargoMovimiento a establecer
-	 */
-	public void setCargoMovimiento(Double cargoMovimiento) {
-		this.cargoMovimiento = cargoMovimiento;
-	}
+    /**
+     * Operación realizada
+     */
+    private OperacionSaldoDTO operacion = null;
 
-	/**
-	 * Obtiene el atributo traspasante
-	 *
-	 * @return El atrubuto traspasante
-	 */
-	public String getTraspasante() {
-		return traspasante;
-	}
+    /**
+     * Tipo de movimiento, cargo o abono
+     */
+    private String movimiento = null;
 
-	/**
-	 * Establece la propiedad traspasante
-	 *
-	 * @param traspasante el campo traspasante a establecer
-	 */
-	public void setTraspasante(String transpasante) {
-		this.traspasante = transpasante;
-	}
+    /**
+     * Obtiene el atributo fechaMovimiento
+     *
+     * @return El atrubuto fechaMovimiento
+     */
+    public Date getFechaMovimiento() {
+        return fechaMovimiento;
+    }
 
-	/**
-	 * Obtiene el atributo receptor
-	 *
-	 * @return El atrubuto receptor
-	 */
-	public String getReceptor() {
-		return receptor;
-	}
+    /**
+     * Establece la propiedad fechaMovimiento
+     *
+     * @param fechaMovimiento el campo fechaMovimiento a establecer
+     */
+    public void setFechaMovimiento(Date fechaMovimiento) {
+        this.fechaMovimiento = fechaMovimiento;
+    }
 
-	/**
-	 * Establece la propiedad receptor
-	 *
-	 * @param receptor el campo receptor a establecer
-	 */
-	public void setReceptor(String receptor) {
-		this.receptor = receptor;
-	}
+    /**
+     * Obtiene el atributo participante
+     *
+     * @return El atrubuto participante
+     */
+    public String getParticipante() {
+        return participante;
+    }
 
-	/**
-	 * Obtiene el atributo instruccion
-	 *
-	 * @return El atrubuto instruccion
-	 */
-	public InstruccionLiquidacionDTO getInstruccion() {
-		return instruccion;
-	}
+    /**
+     * Establece la propiedad participante
+     *
+     * @param participante el campo participante a establecer
+     */
+    public void setParticipante(String participante) {
+        this.participante = participante;
+    }
 
-	/**
-	 * Establece la propiedad instruccion
-	 *
-	 * @param instruccion el campo instruccion a establecer
-	 */
-	public void setInstruccion(InstruccionLiquidacionDTO instruccion) {
-		this.instruccion = instruccion;
-	}
+    /**
+     * Obtiene el atributo contraparte
+     *
+     * @return El atrubuto contraparte
+     */
+    public String getContraparte() {
+        return contraparte;
+    }
 
-	/**
-	 * Obtiene el atributo operacion
-	 *
-	 * @return El atrubuto operacion
-	 */
-	public OperacionSaldoDTO getOperacion() {
-		return operacion;
-	}
+    /**
+     * Establece la propiedad contraparte
+     *
+     * @param contraparte el campo contraparte a establecer
+     */
+    public void setContraparte(String contraparte) {
+        this.contraparte = contraparte;
+    }
 
-	/**
-	 * Establece la propiedad operacion
-	 *
-	 * @param operacion el campo operacion a establecer
-	 */
-	public void setOperacion(OperacionSaldoDTO operacion) {
-		this.operacion = operacion;
-	}
+    /**
+     * Obtiene el atributo descripcionMovimiento
+     *
+     * @return El atrubuto descripcionMovimiento
+     */
+    public String getDescripcionMovimiento() {
+        return descripcionMovimiento;
+    }
 
-	/**
-	 * Obtiene el atributo movimiento
-	 *
-	 * @return El atrubuto movimiento
-	 */
-	public String getMovimiento() {
-		return movimiento;
-	}
+    /**
+     * Establece la propiedad descripcionMovimiento
+     *
+     * @param descripcionMovimiento el campo descripcionMovimiento a establecer
+     */
+    public void setDescripcionMovimiento(String descripcionMovimiento) {
+        this.descripcionMovimiento = descripcionMovimiento;
+    }
 
-	/**
-	 * Establece la propiedad movimiento
-	 *
-	 * @param movimiento el campo movimiento a establecer
-	 */
-	public void setMovimiento(String movimiento) {
-		this.movimiento = movimiento;
-	}
+    /**
+     * Obtiene el atributo folioOperacion
+     *
+     * @return El atrubuto folioOperacion
+     */
+    public Long getFolioOperacion() {
+        return folioOperacion;
+    }
 
-	/**
-	 * Obtiene el atributo saldoEfectivoDTO
-	 *
-	 * @return El atrubuto saldoEfectivoDTO
-	 */
-	public SaldoEfectivoDTO getSaldoEfectivoDTO() {
-		return saldoEfectivoDTO;
-	}
+    /**
+     * Establece la propiedad folioOperacion
+     *
+     * @param folioOperacion el campo folioOperacion a establecer
+     */
+    public void setFolioOperacion(Long folioOperacion) {
+        this.folioOperacion = folioOperacion;
+    }
 
-	/**
-	 * Establece la propiedad saldoEfectivoDTO
-	 *
-	 * @param saldoEfectivoDTO el campo saldoEfectivoDTO a establecer
-	 */
-	public void setSaldoEfectivoDTO(SaldoEfectivoDTO saldoEfectivoDTO) {
-		this.saldoEfectivoDTO = saldoEfectivoDTO;
-	}
- }
+    /**
+     * Obtiene el atributo cargoMovimiento
+     *
+     * @return El atrubuto cargoMovimiento
+     */
+    public Double getCargoMovimiento() {
+        return cargoMovimiento;
+    }
+
+    /**
+     * Establece la propiedad cargoMovimiento
+     *
+     * @param cargoMovimiento el campo cargoMovimiento a establecer
+     */
+    public void setCargoMovimiento(Double cargoMovimiento) {
+        this.cargoMovimiento = cargoMovimiento;
+    }
+
+    /**
+     * Obtiene el atributo traspasante
+     *
+     * @return El atrubuto traspasante
+     */
+    public String getTraspasante() {
+        return traspasante;
+    }
+
+    /**
+     * Establece la propiedad traspasante
+     *
+     * @param transpasante el campo traspasante a establecer
+     */
+    public void setTraspasante(String transpasante) {
+        this.traspasante = transpasante;
+    }
+
+    /**
+     * Obtiene el atributo receptor
+     *
+     * @return El atrubuto receptor
+     */
+    public String getReceptor() {
+        return receptor;
+    }
+
+    /**
+     * Establece la propiedad receptor
+     *
+     * @param receptor el campo receptor a establecer
+     */
+    public void setReceptor(String receptor) {
+        this.receptor = receptor;
+    }
+
+    /**
+     * Obtiene el atributo instruccion
+     *
+     * @return El atrubuto instruccion
+     */
+    public InstruccionLiquidacionDTO getInstruccion() {
+        return instruccion;
+    }
+
+    /**
+     * Establece la propiedad instruccion
+     *
+     * @param instruccion el campo instruccion a establecer
+     */
+    public void setInstruccion(InstruccionLiquidacionDTO instruccion) {
+        this.instruccion = instruccion;
+    }
+
+    /**
+     * Obtiene el atributo operacion
+     *
+     * @return El atrubuto operacion
+     */
+    public OperacionSaldoDTO getOperacion() {
+        return operacion;
+    }
+
+    /**
+     * Establece la propiedad operacion
+     *
+     * @param operacion el campo operacion a establecer
+     */
+    public void setOperacion(OperacionSaldoDTO operacion) {
+        this.operacion = operacion;
+    }
+
+    /**
+     * Obtiene el atributo movimiento
+     *
+     * @return El atrubuto movimiento
+     */
+    public String getMovimiento() {
+        return movimiento;
+    }
+
+    /**
+     * Establece la propiedad movimiento
+     *
+     * @param movimiento el campo movimiento a establecer
+     */
+    public void setMovimiento(String movimiento) {
+        this.movimiento = movimiento;
+    }
+
+    /**
+     * Obtiene el atributo saldoEfectivoDTO
+     *
+     * @return El atrubuto saldoEfectivoDTO
+     */
+    public SaldoEfectivoDTO getSaldoEfectivoDTO() {
+        return saldoEfectivoDTO;
+    }
+
+    /**
+     * Establece la propiedad saldoEfectivoDTO
+     *
+     * @param saldoEfectivoDTO el campo saldoEfectivoDTO a establecer
+     */
+    public void setSaldoEfectivoDTO(SaldoEfectivoDTO saldoEfectivoDTO) {
+        this.saldoEfectivoDTO = saldoEfectivoDTO;
+    }
+
+    @Override
+    public String toString() {
+        return "DetalleMovimientoEfectivoDTO{" +
+                ((fechaMovimiento != null) ? ("fechaMovimiento=" + fechaMovimiento) : "") +
+                ((participante != null) ? (", participante='" + participante + '\'') : "") +
+                ((contraparte != null) ? (", contraparte='" + contraparte + '\'') : "") +
+                ((descripcionMovimiento != null) ? (", descripcionMovimiento='" + descripcionMovimiento + '\'') : "") +
+                ((folioOperacion != null) ? (", folioOperacion=" + folioOperacion) : "") +
+                ((cargoMovimiento != null) ? (", cargoMovimiento=" + cargoMovimiento) : "") +
+                ((traspasante != null) ? (", traspasante='" + traspasante + '\'') : "") +
+                ((receptor != null) ? (", receptor='" + receptor + '\'') : "") +
+                ((saldoEfectivoDTO != null) ? (", saldoEfectivoDTO=" + saldoEfectivoDTO) : "") +
+                ((instruccion != null) ? (", instruccion=" + instruccion) : "") +
+                ((operacion != null) ? (", operacion=" + operacion) : "") +
+                ((movimiento != null) ? (", movimiento='" + movimiento + '\'') : "") +
+                '}';
+    }
+}

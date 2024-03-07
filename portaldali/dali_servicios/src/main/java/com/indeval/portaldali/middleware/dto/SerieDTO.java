@@ -153,4 +153,15 @@ public class SerieDTO implements Serializable{
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+
+	@Override
+	public String toString() {
+		return "SerieDTO{" +
+				"emisora=" + emisora +
+				", tipoValor=" + tipoValor +
+				", id=" + id +
+				", serie='" + serie + '\'' +
+				", descripcion='" + descripcion + '\'' +
+				'}';
+	}
 }

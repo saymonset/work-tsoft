@@ -21,7 +21,7 @@ import com.indeval.portaldali.persistence.dao.estadocuenta.EstadoCuentaSocInvDAO
 public class ITestGetSaldoEmisionesSI_1 extends BaseDaoTestCase {
 	
 	/** Objeto de loggeo  */
-    private static final Logger logger = LoggerFactory.getLogger(ITestGetSaldoEmisionesSI_1.class);
+    private static final Logger log = LoggerFactory.getLogger(ITestGetSaldoEmisionesSI_1.class);
 
     /**
      * bean de cInstrumentoDao
@@ -29,7 +29,7 @@ public class ITestGetSaldoEmisionesSI_1 extends BaseDaoTestCase {
 	private EstadoCuentaSocInvDAO estadoCuentaSocInvDAO;
 	
     /**
-     * @see com.indeval.persistence.portallegado.unittest.BaseDaoTestCase#onSetUp()
+     * @see com.indeval.persistence.unittest.BaseDaoTestCase#onSetUp()
      */
     protected void onSetUp() {
         super.onSetUp();

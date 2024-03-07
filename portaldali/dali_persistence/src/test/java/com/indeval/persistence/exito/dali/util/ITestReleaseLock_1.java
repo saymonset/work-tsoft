@@ -17,7 +17,7 @@ import com.indeval.portaldali.persistence.model.FileUpload;
  */
 public class ITestReleaseLock_1 extends BaseDaoTestCase {
 	/** Objeto de loggeo */
-	private static final Logger logger = LoggerFactory.getLogger(ITestReleaseLock_1.class);
+	private static final Logger log = LoggerFactory.getLogger(ITestReleaseLock_1.class);
 
 	/**
 	 * bean de fileUploadDao
@@ -25,7 +25,7 @@ public class ITestReleaseLock_1 extends BaseDaoTestCase {
 	private FileUploadDao fileUploadDao;
 
 	/**
-	 * @see com.indeval.persistence.portallegado.unittest.BaseDaoTestCase#onSetUp()
+	 * @see com.indeval.persistence.unittest.BaseDaoTestCase#onSetUp()
 	 */
 	protected void onSetUp() {
 		super.onSetUp();

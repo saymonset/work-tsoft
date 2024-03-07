@@ -1,6 +1,6 @@
 /**
  * 2H Software SA de CV
- * 
+ *
  * Sistema de Consulta de Estado de Cuenta - Indeval
  *
  * Fecha de creación: Jan 03, 2008
@@ -13,7 +13,7 @@ import java.util.Date;
 
 /**
  * DTO de criterios para la consulta de movimientos de efectivo
- * 
+ *
  * @author Emigdio Hernández Rodríguez
  * @version 1.0
  */
@@ -72,7 +72,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 	 * El importe de la busqueda
 	 */
 	private BigDecimal importe;
-	
+
 	/**
 	 * Tipo de Retiro
 	 */
@@ -80,7 +80,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Obtiene el campo divisa
-	 * 
+	 *
 	 * @return divisa
 	 */
 	public DivisaDTO getDivisa() {
@@ -89,7 +89,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Obtiene el valor del atributo emision
-	 * 
+	 *
 	 * @return el valor del atributo emision
 	 */
 	public EmisionDTO getEmision() {
@@ -98,7 +98,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Establece el valor del atributo emision
-	 * 
+	 *
 	 * @param emision
 	 *            el valor del atributo emision a establecer
 	 */
@@ -108,7 +108,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Asigna el valor del campo divisa
-	 * 
+	 *
 	 * @param divisa
 	 *            el valor de divisa a asignar
 	 */
@@ -118,7 +118,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Obtiene el valor del atributo cuentaValoresContraparte
-	 * 
+	 *
 	 * @return el valor del atributo cuentaValoresContraparte
 	 */
 	public CuentaDTO getCuentaValoresContraparte() {
@@ -127,7 +127,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Establece el valor del atributo cuentaValoresContraparte
-	 * 
+	 *
 	 * @param cuentaValoresContraparte
 	 *            el valor del atributo cuentaValoresContraparte a establecer
 	 */
@@ -137,7 +137,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Obtiene el campo cuenta
-	 * 
+	 *
 	 * @return cuenta
 	 */
 	public CuentaEfectivoDTO getCuenta() {
@@ -146,7 +146,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Asigna el valor del campo cuenta
-	 * 
+	 *
 	 * @param cuenta
 	 *            el valor de cuenta a asignar
 	 */
@@ -156,7 +156,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Obtiene el campo boveda
-	 * 
+	 *
 	 * @return boveda
 	 */
 	public BovedaDTO getBoveda() {
@@ -165,7 +165,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Asigna el valor del campo boveda
-	 * 
+	 *
 	 * @param boveda
 	 *            el valor de boveda a asignar
 	 */
@@ -175,7 +175,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Obtiene el campo fechaInicial
-	 * 
+	 *
 	 * @return fechaInicial
 	 */
 	public Date getFechaInicial() {
@@ -184,7 +184,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Asigna el valor del campo fechaInicial
-	 * 
+	 *
 	 * @param fechaInicial
 	 *            el valor de fechaInicial a asignar
 	 */
@@ -194,7 +194,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Obtiene el campo fechaFinal
-	 * 
+	 *
 	 * @return fechaFinal
 	 */
 	public Date getFechaFinal() {
@@ -203,7 +203,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Asigna el valor del campo fechaFinal
-	 * 
+	 *
 	 * @param fechaFinal
 	 *            el valor de fechaFinal a asignar
 	 */
@@ -213,7 +213,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Obtiene el campo cuentaContraparte
-	 * 
+	 *
 	 * @return cuentaContraparte
 	 */
 	public CuentaEfectivoDTO getCuentaContraparte() {
@@ -222,7 +222,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Asigna el valor del campo cuentaContraparte
-	 * 
+	 *
 	 * @param cuentaContraparte
 	 *            el valor de cuentaContraparte a asignar
 	 */
@@ -232,7 +232,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Obtiene el campo tipoInstruccion
-	 * 
+	 *
 	 * @return tipoInstruccion
 	 */
 	public TipoInstruccionDTO getTipoInstruccion() {
@@ -241,7 +241,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Asigna el valor del campo tipoInstruccion
-	 * 
+	 *
 	 * @param tipoInstruccion
 	 *            el valor de tipoInstruccion a asignar
 	 */
@@ -251,7 +251,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Obtiene el campo tipoOperacion
-	 * 
+	 *
 	 * @return tipoOperacion
 	 */
 	public TipoOperacionDTO getTipoOperacion() {
@@ -260,7 +260,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Asigna el valor del campo tipoOperacion
-	 * 
+	 *
 	 * @param tipoOperacion
 	 *            el valor de tipoOperacion a asignar
 	 */
@@ -270,7 +270,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Obtiene el campo folioInstruccion
-	 * 
+	 *
 	 * @return folioInstruccion
 	 */
 	public String getFolioInstruccion() {
@@ -279,7 +279,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Asigna el valor del campo folioInstruccion
-	 * 
+	 *
 	 * @param folioInstruccion
 	 *            el valor de folioInstruccion a asignar
 	 */
@@ -289,7 +289,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Obtiene el campo busquedaFechaConcertacion
-	 * 
+	 *
 	 * @return busquedaFechaConcertacion
 	 */
 	public boolean isBusquedaFechaConcertacion() {
@@ -298,7 +298,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Asigna el valor del campo busquedaFechaConcertacion
-	 * 
+	 *
 	 * @param busquedaFechaConcertacion
 	 *            el valor de busquedaFechaConcertacion a asignar
 	 */
@@ -308,7 +308,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Obtiene el campo busquedaFechaAplicacion
-	 * 
+	 *
 	 * @return busquedaFechaAplicacion
 	 */
 	public boolean isBusquedaFechaAplicacion() {
@@ -317,7 +317,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Asigna el valor del campo busquedaFechaAplicacion
-	 * 
+	 *
 	 * @param busquedaFechaAplicacion
 	 *            el valor de busquedaFechaAplicacion a asignar
 	 */
@@ -327,7 +327,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Obtiene el campo rolParticipante
-	 * 
+	 *
 	 * @return rolParticipante
 	 */
 	public int getRolParticipante() {
@@ -336,7 +336,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Asigna el valor del campo rolParticipante
-	 * 
+	 *
 	 * @param rolParticipante
 	 *            el valor de rolParticipante a asignar
 	 */
@@ -346,7 +346,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Obtiene el campo rolContraparte
-	 * 
+	 *
 	 * @return rolContraparte
 	 */
 	public int getRolContraparte() {
@@ -355,7 +355,7 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 
 	/**
 	 * Asigna el valor del campo rolContraparte
-	 * 
+	 *
 	 * @param rolContraparte
 	 *            el valor de rolContraparte a asignar
 	 */
@@ -399,4 +399,27 @@ public class CriterioConsultaMovimientosEfectivoDTO implements Serializable {
 		return tipoRetiro;
 	}
 
+	@Override
+	public String toString() {
+		return "CriterioConsultaMovimientosEfectivoDTO{" +
+				"divisa=" + divisa +
+				", cuenta=" + cuenta +
+				", boveda=" + boveda +
+				", fechaInicial=" + fechaInicial +
+				", fechaFinal=" + fechaFinal +
+				", cuentaValoresContraparte=" + cuentaValoresContraparte +
+				", cuentaContraparte=" + cuentaContraparte +
+				", tipoInstruccion=" + tipoInstruccion +
+				", tipoOperacion=" + tipoOperacion +
+				", folioInstruccion='" + folioInstruccion + '\'' +
+				", busquedaFechaConcertacion=" + busquedaFechaConcertacion +
+				", busquedaFechaAplicacion=" + busquedaFechaAplicacion +
+				", rolParticipante=" + rolParticipante +
+				", rolContraparte=" + rolContraparte +
+				", ordenarPorTipoDeInstruccion=" + ordenarPorTipoDeInstruccion +
+				", emision=" + emision +
+				", importe=" + importe +
+				", tipoRetiro='" + tipoRetiro + '\'' +
+				'}';
+	}
 }

@@ -18,8 +18,7 @@ import com.indeval.portaldali.persistence.vo.TPosicionNombradaParamsPersistence;
 public class ITestGetTPosicionNombradaFileTransferMC_1 extends BaseDaoTestCase {
 	
 	/** Objeto de loggeo  */
-    private static final Log log = 
-    	LogFactory.getLog(ITestGetTPosicionNombradaFileTransferMC_1.class);
+    private static final Logger log = LoggerFactory.getLogger(ITestGetTPosicionNombradaFileTransferMC_1.class);
 
     /**
      * bean de cInstrumentoDao
@@ -27,7 +26,7 @@ public class ITestGetTPosicionNombradaFileTransferMC_1 extends BaseDaoTestCase {
 	private PosicionNombradaDaliDao tPosicionNombradaDao;
 	
     /**
-     * @see com.indeval.persistence.portallegado.unittest.BaseDaoTestCase#onSetUp()
+     * @see com.indeval.persistence.unittest.BaseDaoTestCase#onSetUp()
      */
     protected void onSetUp() {
         super.onSetUp();

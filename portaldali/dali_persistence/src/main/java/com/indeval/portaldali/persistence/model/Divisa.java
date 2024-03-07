@@ -110,5 +110,14 @@ public class Divisa implements Serializable {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
+
+	@Override
+	public String toString() {
+		return "Divisa{" +
+				"idDivisa=" + idDivisa +
+				", claveAlfabetica='" + claveAlfabetica + '\'' +
+				", claveNumerica='" + claveNumerica + '\'' +
+				", descripcion='" + descripcion + '\'' +
+				'}';
+	}
 }

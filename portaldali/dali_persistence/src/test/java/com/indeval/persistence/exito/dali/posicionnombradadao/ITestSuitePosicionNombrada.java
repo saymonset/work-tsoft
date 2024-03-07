@@ -21,8 +21,7 @@ import com.indeval.persistence.unittest.BaseDaoTestCase;
 public class ITestSuitePosicionNombrada extends BaseDaoTestCase {
 
 	/** Objeto de loggeo */
-	private static final Log log = LogFactory
-			.getLog(ITestSuitePosicionNombrada.class);
+	private static final Logger log = LoggerFactory.getLogger(ITestSuitePosicionNombrada.class);
 
 	/**
 	 * TestCase para testSuite()

@@ -23,8 +23,7 @@ import com.indeval.portaldali.persistence.vo.TPosicionControladaParamsPersistenc
 public class ITestGetVencimientosPendientesByInstitucionFechaVencimiento_1 extends BaseDaoTestCase {
 	
 	/** Objeto de loggeo  */
-    private static final Log log = 
-    	LogFactory.getLog(ITestGetVencimientosPendientesByInstitucionFechaVencimiento_1.class);
+    private static final Logger log = LoggerFactory.getLogger(ITestGetVencimientosPendientesByInstitucionFechaVencimiento_1.class);
 
     /**
      * bean de cInstrumentoDao
@@ -32,7 +31,7 @@ public class ITestGetVencimientosPendientesByInstitucionFechaVencimiento_1 exten
 	private PosicionControladaDaliDaoImpl tPosicionControladaDao;
 	
     /**
-     * @see com.indeval.persistence.portallegado.unittest.BaseDaoTestCase#onSetUp()
+     * @see com.indeval.persistence.unittest.BaseDaoTestCase#onSetUp()
      */
     protected void onSetUp() {
         super.onSetUp();

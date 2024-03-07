@@ -26,14 +26,14 @@ import com.indeval.portaldali.persistence.vo.PageVO;
 public class ITestFindArchivoConciliacion_1 extends BaseDaoTestCase {
 
     /** Objeto de loggeo */
-    private static final Logger logger = LoggerFactory.getLogger(ITestFindArchivoConciliacion_1.class);
+    private static final Logger log = LoggerFactory.getLogger(ITestFindArchivoConciliacion_1.class);
 
     /** bean de cInstrumentoDao */
     private RegContValNombradaDao regContValNombradaDao;
     
     /**
      * 
-     * @see com.indeval.persistence.portallegado.unittest.BaseDaoTestCase#onSetUp()
+     * @see com.indeval.persistence.unittest.BaseDaoTestCase#onSetUp()
      */
     protected void onSetUp() {
 
@@ -288,21 +288,21 @@ public class ITestFindArchivoConciliacion_1 extends BaseDaoTestCase {
      */
     private void logElementosListaRegContValNombrada(List lista) {
         
-        log.debug("Imprimiendo los elementos RegContValNombrada...");
+        log.info("Imprimiendo los elementos RegContValNombrada...");
         int indice = 1;
         for (Iterator iterator = lista.iterator(); iterator.hasNext();) {
-            
+
             log.debug("Imprimiendo el elemento " + indice);
             RegContValNombrada elemento = (RegContValNombrada) iterator.next();
-            log.debug(elemento.getCantidad());
-            log.debug(elemento.getCargoA());
-            log.debug(elemento.getFecha());
-            log.debug(elemento.getIdCiclo());
-            log.debug(elemento.getIdCuenta());
-            log.debug(elemento.getIdOperacion());
-            log.debug(elemento.getIdPosicion());
-            log.debug(elemento.getIdRegContableControlada());
-            log.debug(elemento.getIdRegistroContable());
+            log.debug(elemento.getCantidad().toString());
+            log.debug(elemento.getCargoA().toString());
+            log.debug(elemento.getFecha().toString());
+            log.debug(elemento.getIdCiclo().toString());
+            log.debug(elemento.getIdCuenta().toString());
+            log.debug(elemento.getIdOperacion().toString());
+            log.debug(elemento.getIdPosicion().toString());
+            log.debug(elemento.getIdRegContableControlada().toString());
+            log.debug(elemento.getIdRegistroContable().toString());
             
             ++indice;
         }

@@ -82,4 +82,11 @@ public class TipoNaturalezaDTO implements Serializable{
 		return result;
 	}
 
+	@Override
+	public String toString() {
+		return "TipoNaturalezaDTO{" +
+				"id='" + id + '\'' +
+				", descripcion='" + descripcion + '\'' +
+				'}';
+	}
 }

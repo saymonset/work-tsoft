@@ -19,7 +19,7 @@ import com.indeval.portaldali.persistence.model.MensajePortal;
 public class ITestMensajePortal_2 extends BaseDaoTestCase {
 	
 	/** Objeto de loggeo  */
-    private static final Logger logger = LoggerFactory.getLogger(ITestMensajePortal_2.class);
+    private static final Logger log = LoggerFactory.getLogger(ITestMensajePortal_2.class);
 
     /**
      * bean de mensajePortalDao
@@ -27,7 +27,7 @@ public class ITestMensajePortal_2 extends BaseDaoTestCase {
 	private MensajePortalDaliDAO mensajePortalDao;
 	
     /**
-     * @see com.indeval.persistence.portallegado.unittest.BaseDaoTestCase#onSetUp()
+     * @see com.indeval.persistence.unittest.BaseDaoTestCase#onSetUp()
      */
     protected void onSetUp() {
         super.onSetUp();

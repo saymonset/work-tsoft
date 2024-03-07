@@ -16,13 +16,14 @@ $j(document).on('ready',function(){
 		);
 });
 	
-function buscarRegistros() {	
+function buscarRegistros() {
+	console.log("Buscar Registros");
 	$j('input[id$=botonBuscar]').prop('disabled','disabled');
 	return true;
 }
 
 function presentarResultados() { 
-
+console.log("Presentar Resultados")
 	$j('#contenido').css('display','block');
 	//$j('#contenido').css('opacity','0');
 	//$j('#contenido').animate({
@@ -37,6 +38,7 @@ function presentarResultados() {
 }
 
 function presentarCriterios(){
+	console.log("presentarCriterios ... ")
 	$j("#divCriterios").css('display','inline');
 	$j("#divResumen").css('display','none');
 	$j("#botonEditarCriterios").css('display','none');

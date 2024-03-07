@@ -24,7 +24,7 @@ public class ITestAdministracionCuentas extends BaseDaoTestCase {
     private CuentasRetiroEfectivoDao cuentasRetiroEfectivoDao; 	
 	
     /**
-     * @see com.indeval.persistence.portallegado.unittest.BaseDaoTestCase#onSetUp()
+     * @see com.indeval.persistence.unittest.BaseDaoTestCase#onSetUp()
      */
     protected void onSetUp() {
         super.onSetUp();

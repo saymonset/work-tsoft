@@ -527,7 +527,7 @@ public class InstruccionLiquidacionHistorico implements Serializable {
 	/**
 	 * Establece el valor del atributo fechaCreacion
 	 * 
-	 * @param instruccionEfectivo el valor del atributo fechaCreacion a establecer
+	 * @param fechaCreacion el valor del atributo fechaCreacion a establecer
 	 */
 	public void setFechaCreacion(Date fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;

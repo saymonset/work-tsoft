@@ -21,8 +21,7 @@ public class UtilsTPosicionNombrada {
 	/**
 	 * Log de clase.
 	 */
-	private static final Log log = LogFactory
-			.getLog(UtilsTPosicionNombrada.class);
+	private static final Logger log = LoggerFactory.getLogger(UtilsTPosicionNombrada.class);
 
 	/**
 	 * Retorna una instancia de TPosicionNombradaParamsPersistence con la

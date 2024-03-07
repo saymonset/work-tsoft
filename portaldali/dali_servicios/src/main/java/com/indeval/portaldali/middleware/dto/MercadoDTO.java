@@ -114,4 +114,13 @@ public class MercadoDTO implements Serializable{
 	public void setClaveMercado(String claveMercado) {
 		this.claveMercado = claveMercado;
 	}
+
+	@Override
+	public String toString() {
+		return "MercadoDTO{" +
+				"id=" + id +
+				", descripcion='" + descripcion + '\'' +
+				", claveMercado='" + claveMercado + '\'' +
+				'}';
+	}
 }
