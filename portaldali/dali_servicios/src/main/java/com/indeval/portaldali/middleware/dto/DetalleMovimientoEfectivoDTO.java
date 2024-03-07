@@ -54,9 +54,7 @@ public class DetalleMovimientoEfectivoDTO {
 	
 	/** Tipo de movimiento, cargo o abono */
 	private String movimiento = null;
-
-	/** Concepto en la instruccion de efectivo */
-	private String concepto = null;
+	
 	/**
 	 * Obtiene el atributo fechaMovimiento
 	 *
@@ -272,21 +270,4 @@ public class DetalleMovimientoEfectivoDTO {
 	public void setSaldoEfectivoDTO(SaldoEfectivoDTO saldoEfectivoDTO) {
 		this.saldoEfectivoDTO = saldoEfectivoDTO;
 	}
-
-	/**
-	 * Concepto en la instruccion de efectivo
-	 *
-	 */
-	public String getConcepto() {
-		return concepto;
-	}
-
-	/**
-	 * Concepto en la instruccion de efectivo
-	 *
-	 * @param concepto el campo concepto en la instruccion de efectivo
-	 */
-	public void setConcepto(String concepto) {
-		this.concepto = concepto;
-	}
-}
+ }

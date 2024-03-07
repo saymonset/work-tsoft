@@ -53,10 +53,8 @@ public class DetalleMovimientoEfectivoDAOImpl extends HibernateDaoSupport implem
 		final ArrayList<Object> tipos = new ArrayList<Object>();
 		String nombreTabla = (isHistorico) ? RegContEfecNombradaHistorico.class.getName() : RegContEfecNombrada.class.getName();
 
-		query.append("SELECT registro, ");
-		query.append(" registro.operacion.instruccion.instruccionEfectivo.tipoRetiro.nombreCorto, ");
-		query.append(" registro.operacion.instruccion.instruccionEfectivo.idTipoPago, ");
-		query.append(" registro.operacion.instruccion.instruccionEfectivo.concepto ");
+		query.append("SELECT registro, registro.operacion.instruccion.instruccionEfectivo.tipoRetiro.nombreCorto, ");
+		query.append(" registro.operacion.instruccion.instruccionEfectivo.idTipoPago ");
 		query.append(" FROM " + nombreTabla + " registro ");
 		query.append(" join fetch registro.operacion ");
 		query.append(" join fetch registro.operacion.tipoOperacion "); 
@@ -105,18 +103,16 @@ public class DetalleMovimientoEfectivoDAOImpl extends HibernateDaoSupport implem
 				if (listaResultados != null && listaResultados.size() > 0) {
 					Object[] array = (Object[])listaResultados.get(0);
 					if(isHistorico) {
-						logger.info("Termino el query: [" + array[0] + "-" + array[1] + "-" + array[2] + "-" + array[3]+ "]");
+						logger.info("Termino el query: [" + array[0] + "-" + array[1] + "-" + array[2] + "]");
 						detalleMovimientoEfectivoDTO = DTOAssembler.crearDetalleMovimientoEfectivoDTO(
 								(RegContEfecNombradaHistorico) array[0],
 								(String) array[1],
-								(Integer) array[2],
-								(String) array[3]);
+								(Integer) array[2]);
 					} else {
 						detalleMovimientoEfectivoDTO = DTOAssembler.crearDetalleMovimientoEfectivoDTO(
 								(RegContEfecNombrada) array[0],
 								(String) array[1],
-								(Integer) array[2],
-								(String) array[3]);
+								(Integer) array[2]);
 					}
 				}
 

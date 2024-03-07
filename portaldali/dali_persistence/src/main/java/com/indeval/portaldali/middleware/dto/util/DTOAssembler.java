@@ -2440,24 +2440,6 @@ public class DTOAssembler {
 	/**
 	 * Crea un objeto del tipo {@link DetalleMovimientoEfectivoDTO} a partir de
 	 * un objeto de hibernate del tipo {@link RegContEfecNombrada}
-	 *
-	 * @param regContable
-	 *            Objeto de hibernate para construir el DTO
-	 * @return DTO creado a partir del parámetro de entrada
-	 */
-	public static DetalleMovimientoEfectivoDTO crearDetalleMovimientoEfectivoDTO(
-			RegContEfecNombrada regContEfecNombrada, String tipoRetiro,
-			Integer idTipoPago, String concepto) {
-		DetalleMovimientoEfectivoDTO  detalleMovimientoEfectivoDTO = crearDetalleMovimientoEfectivoDTO(
-				  regContEfecNombrada,   tipoRetiro,
-				  idTipoPago);
-		//		* Concepto en la instruccion de efectivo
-		detalleMovimientoEfectivoDTO.setConcepto(concepto);
-		return detalleMovimientoEfectivoDTO;
-	}
-	/**
-	 * Crea un objeto del tipo {@link DetalleMovimientoEfectivoDTO} a partir de
-	 * un objeto de hibernate del tipo {@link RegContEfecNombrada}
 	 * 
 	 * @param regContable
 	 *            Objeto de hibernate para construir el DTO
@@ -2625,27 +2607,6 @@ public class DTOAssembler {
 			}
 		}
 		return dto;
-	}
-
-	/**
-	 * Crea un objeto del tipo {@link DetalleMovimientoEfectivoDTO} a partir de
-	 * un objeto de hibernate del tipo {@link RegContEfecNombradaHistorico}
-	 *
-	 * @param regContable
-	 *            Objeto de hibernate para construir el DTO
-	 * @return DTO creado a partir del parámetro de entrada
-	 */
-	public static DetalleMovimientoEfectivoDTO crearDetalleMovimientoEfectivoDTO(
-			RegContEfecNombradaHistorico regContEfecNombrada,
-			String tipoRetiro, Integer idTipoPago, String concepto) {
-
-		DetalleMovimientoEfectivoDTO detalleMovimientoEfectivoDTO = crearDetalleMovimientoEfectivoDTO(
-				  regContEfecNombrada,
-				  tipoRetiro,   idTipoPago);
-
-//		* Concepto en la instruccion de efectivo
-		detalleMovimientoEfectivoDTO.setConcepto(concepto);
-		return detalleMovimientoEfectivoDTO;
 	}
 
 	/**

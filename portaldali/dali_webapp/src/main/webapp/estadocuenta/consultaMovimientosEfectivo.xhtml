@@ -16,13 +16,13 @@
 		
 		
 		<ui:define name="titulo">
-			<h:outputText value="#{etq.consultaMovEfectivo}333333"></h:outputText>
+			<h:outputText value="#{etq.consultaMovEfectivo}"></h:outputText>
 		</ui:define>
 		
-		<ui:define name="tituloSeccion"><h:outputText value="#{etq.consultaMovEfectivo}444444"></h:outputText></ui:define>
+		<ui:define name="tituloSeccion"><h:outputText value="#{etq.consultaMovEfectivo}"></h:outputText></ui:define>
 		
 		<ui:define name="barraTitulo">
-			<h:outputText value="#{etq.consultaMovEfectivo}666666"></h:outputText>
+			<h:outputText value="#{etq.consultaMovEfectivo}"></h:outputText>
 			
 		</ui:define>
 		
@@ -1582,7 +1582,7 @@
                                                                                 <h:outputText value="#{etq.tipoDoR}"/>
                                                                         </th>
                                                                         <th align="center" class="tituloTabla">
-                                                                                <h:outputText value="#{etq.plazo}UUUUUU"/>
+                                                                                <h:outputText value="#{etq.plazo}"/>
                                                                         </th>
                                                                         <th align="center" class="tituloTabla">
                                                                                 <h:outputText value="#{etq.tasaPorcentaje}"/>
@@ -1618,9 +1618,9 @@
                                                                         <td colspan="4" class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'}">
                                                                         
                                                                         <h:panelGroup rendered="#{not empty registroContable.rutaPantallaDetalle}">
-                                                                            <a  title="#{registroContable.descripcionLarga}"  href="javascript:mostrarDetalle('Detalle del Movimiento','#{facesContext.externalContext.requestContextPath}/#{registroContable.rutaPantallaDetalle}?idRegistro=#{registroContable.idRegistroContable}&amp;isHistorico=#{registroContable.historico}&amp;efectivo=true&amp;height=#{registroContable.altoPantallaDetalle}&amp;width=#{registroContable.anchoPantallaDetalle}');"
+                                                                            <a  title="#{registroContable.descripcionLarga}"  href="javascript:mostrarDetalle('Detalle del Movimiento','#{facesContext.externalContext.requestContextPath}/#{registroContable.rutaPantallaDetalle}?idRegistro=#{registroContable.idRegistroContable}&amp;isHistorico=#{registroContable.historico}&amp;efectivo=true&amp;height=#{registroContable.altoPantallaDetalle}&amp;width=#{registroContable.anchoPantallaDetalle}');" 
 	                                                                        >
-	                                                                       		<h:outputText value="#{registroContable.descripcion}XXXXXXXXXXXXXXXX-> #{registroContable.rutaPantallaDetalle}"/>
+	                                                                       		<h:outputText value="#{registroContable.descripcion}"/> 
 	                                                                       </a>
                                                                        </h:panelGroup>
                                                                        <h:panelGroup rendered="#{empty registroContable.rutaPantallaDetalle}">
@@ -1753,7 +1753,7 @@
                                                                     <tr>
                                                                        
                                                                         <td class="renglonTablaUno" nowrap="true">
-                                                                        	<h:outputText value="#{registroContable.fechaLiquidacion}XXXX">
+                                                                        	<h:outputText value="#{registroContable.fechaLiquidacion}">
                                                                         		<f:converter converterId="formatoFechaLargaConverter"/>
                                                                         	</h:outputText>
                                                                         </td>
