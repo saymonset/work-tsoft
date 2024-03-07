@@ -377,43 +377,7 @@
 							</table>
 						</h:column>
 						<!-- Footer -->
-						<f:facet name="footer">
-							<rich:dataTable value="#{consultaSaldoCustodiosBean.consultaSaldoCustodiosTotales}" var="totales" rows="2"
-											styleClass="tablaGeneralsinborde centrado" headerClass="tituloTabla" width="100%"
-											footerClass="tituloTabla" border="0" cellpadding="3px"
-											cellspacing="0px" columnClasses="everyColumn"
-											rowClasses="renglonTablaUno, renglonTablaDos">
-								<rich:column styleClass="tituloTabla everyColumn " colspan="2">
-									<h:outputText styleClass="texto textoPeque12 alineacionIzquierda" rendered="#{totales.consultaPorPagina}"  value="#{etq.totalConsulta}"/>
-									<h:outputText styleClass="texto textoPeque12 alineacionIzquierda" rendered="#{!totales.consultaPorPagina}"  value="#{etq.totalPagina}"/>
-								</rich:column>
-							   	   <rich:column styleClass=" tituloTabla everyColumn">
-									   <f:facet name="header">
-										   <h:outputText styleClass="texto textoPeque12" value="#{etq.saldo}" />
-									   </f:facet>
-										<h:outputText styleClass="texto textoPeque12 derecha" value="#{totales.totalSaldo}"  >
-											<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
-										</h:outputText>
-									</rich:column>
-							    	<rich:column styleClass=" tituloTabla everyColumn">
-										<f:facet name="header">
-											<h:outputText styleClass="texto textoPeque12" value="#{etq.disponible}" />
-										</f:facet>
-										<h:outputText styleClass="texto textoPeque12 derecha" value="#{totales.totalDisponible}"  >
-											<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
-										</h:outputText>
-									</rich:column>
-								     <rich:column styleClass=" tituloTabla everyColumn">
-										 <f:facet name="header">
-											 <h:outputText styleClass="texto textoPeque12" value="#{etq.noDisponible}" />
-										 </f:facet>
-										<h:outputText styleClass="texto textoPeque12 derecha" value="#{totales.totalNoDisponible}"  >
-											<f:convertNumber pattern="###,###,###,###,###,##0.######"/>
-										</h:outputText>
-									</rich:column>
 
-							</rich:dataTable>
-						</f:facet>
 
 
 
