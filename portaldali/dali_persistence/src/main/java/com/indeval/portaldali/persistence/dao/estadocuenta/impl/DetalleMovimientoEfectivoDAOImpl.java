@@ -61,7 +61,9 @@ public class DetalleMovimientoEfectivoDAOImpl extends HibernateDaoSupport implem
 
             query.append("SELECT registro, registro.operacion.instruccion.instruccionEfectivo.tipoRetiro.nombreCorto, ");
             query.append(" registro.operacion.instruccion.instruccionEfectivo.idTipoPago, ");
-            query.append(" registro.operacion.instruccion.instruccionEfectivo.folioInstLiquidacion ");
+            query.append(" registro.operacion.instruccion.instruccionEfectivo.folioInstLiquidacion, ");
+            query.append(" registro.operacion.instruccion.instruccionEfectivo.concepto, ");
+            query.append(" registro.operacion.instruccion.instruccionEfectivo.referenciaOperacion ");
             query.append(" FROM " + nombreTabla + " registro ");
             query.append(" join fetch registro.operacion ");
             query.append(" join fetch registro.operacion.tipoOperacion ");
@@ -115,12 +117,16 @@ public class DetalleMovimientoEfectivoDAOImpl extends HibernateDaoSupport implem
                             detalleMovimientoEfectivoDTO = DTOAssembler.crearDetalleMovimientoEfectivoDTO(
                                     (RegContEfecNombradaHistorico) array[0],
                                     (String) array[1],
-                                    (Integer) array[2]);
+                                    (Integer) array[2],
+                                    (String) array[3],
+                                    (String) array[4]);
                         } else {
                             detalleMovimientoEfectivoDTO = DTOAssembler.crearDetalleMovimientoEfectivoDTO(
                                     (RegContEfecNombrada) array[0],
                                     (String) array[1],
-                                    (Integer) array[2]);
+                                    (Integer) array[2],
+                                    (String) array[3],
+                                    (String) array[4]);
                         }
                     }
 
@@ -222,6 +228,8 @@ public class DetalleMovimientoEfectivoDAOImpl extends HibernateDaoSupport implem
                             detalleDB.instruccionEfectivoIdTipoPago);
                 }
 
+                detalleMovimientoEfectivoDTO.setConcepto(detalleDB.concepto);
+                detalleMovimientoEfectivoDTO.setReferenciaOperacion(detalleDB.referenciaOperacion);
                 logger.debug("Referencia encontrada :: ");
                 logger.trace(detalleMovimientoEfectivoDTO.toString());
                 return detalleMovimientoEfectivoDTO;
@@ -254,7 +262,9 @@ public class DetalleMovimientoEfectivoDAOImpl extends HibernateDaoSupport implem
                 "       instruccionEfectivo.FOLIO_INST_LIQUIDACION, \n" +
                 "       operacion.ID_TIPO_OPERACION,\n" +
                 "       operacion.ID_INSTRUCCION, instruccion.FOLIO_INSTRUCCION,\n" +
-                "       operacion.FOLIO_OPERACION \n" +
+                "       operacion.FOLIO_OPERACION, \n" +
+                "       instruccionEfectivo.CONCEPTO, \n" +
+                "       instruccionEfectivo.REFERENCIA_OPERACION \n" +
                 "FROM " + nombreTablaRegistro + " registro\n" +
                 "INNER JOIN " + nombreTablaOperacion + " operacion ON registro.ID_OPERACION = operacion." + nombreCampoOperacion + "\n" +
                 "INNER JOIN C_TIPO_OPERACION tipoOperacion ON operacion.ID_TIPO_OPERACION = tipoOperacion.ID_TIPO_OPERACION\n" +
@@ -312,11 +322,15 @@ public class DetalleMovimientoEfectivoDAOImpl extends HibernateDaoSupport implem
         BigInteger folioInstruccion = new BigInteger(((BigDecimal) row[i]).toString());
         i++;
         BigInteger folioOperacion = new BigInteger(((BigDecimal) row[i]).toString());
+        i++;
+        String concepto =  row[i]!=null ? row[i].toString():"";
+        i++;
+        String referenciaOperacion =  row[i]!=null ? row[i].toString():"";
 
         return new DetalleDB(idRegistroContable, idSaldo, idTipoAccion, importe, fecha, idCiclo, idOperacion,
                 idCuenta, cargoA, idRegContableControlada, fechaCreacion, retiroNombreCorto,
                 instruccionEfectivoIdTipoPago, instruccionEfectivoFolioInstLiquidacion, idTipoOperacion,
-                idInstruccion, folioInstruccion, folioOperacion);
+                idInstruccion, folioInstruccion, folioOperacion, concepto, referenciaOperacion);
 
     }
 
@@ -653,12 +667,16 @@ public class DetalleMovimientoEfectivoDAOImpl extends HibernateDaoSupport implem
         BigInteger folioInstruccion;
         BigInteger folioOperacion;
 
+        String concepto ;
+        String referenciaOperacion;
+
         public DetalleDB(BigInteger idRegistroContable, BigInteger idSaldo, BigDecimal idTipoAccion,
                          BigDecimal importe, Date fecha, BigInteger idCiclo, BigInteger idOperacion,
                          BigInteger idCuenta, BigInteger cargoA, BigInteger idRegContableControlada,
                          Date fechaCreacion, String retiroNombreCorto, Integer instruccionEfectivoIdTipoPago,
                          BigInteger instruccionEfectivoFolioInstLiquidacion, BigInteger idTipoOperacion,
-                         BigInteger idInstruccion, BigInteger folioInstruccion, BigInteger folioOperacion) {
+                         BigInteger idInstruccion, BigInteger folioInstruccion, BigInteger folioOperacion,
+                         String concepto, String referenciaOperacion) {
             this.idRegistroContable = idRegistroContable;
             this.idSaldo = idSaldo;
             this.idTipoAccion = idTipoAccion;
@@ -677,6 +695,8 @@ public class DetalleMovimientoEfectivoDAOImpl extends HibernateDaoSupport implem
             this.idInstruccion = idInstruccion;
             this.folioInstruccion = folioInstruccion;
             this.folioOperacion = folioOperacion;
+            this.concepto = concepto;
+            this.referenciaOperacion = referenciaOperacion;
         }
 
         @Override
@@ -700,6 +720,8 @@ public class DetalleMovimientoEfectivoDAOImpl extends HibernateDaoSupport implem
                     + "ID_INSTRUCCION [" + idInstruccion + "] :: "
                     + "FOLIO_INSTRUCCION [" + folioInstruccion + "] :: "
                     + "FOLIO_OPERACION [" + folioOperacion + "] :: "
+                    + "CONCEPTO [" + concepto + "] :: "
+                    + "REFERENCIA_OPERACION [" + referenciaOperacion + "] :: "
                     + '}';
         }
     }

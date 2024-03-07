@@ -77,6 +77,9 @@ public class DetalleMovimientoEfectivoDTO {
      */
     private String movimiento = null;
 
+    private String concepto;
+    private  String referenciaOperacion;
+
     /**
      * Obtiene el atributo fechaMovimiento
      *
@@ -309,5 +312,21 @@ public class DetalleMovimientoEfectivoDTO {
                 ((operacion != null) ? (", operacion=" + operacion) : "") +
                 ((movimiento != null) ? (", movimiento='" + movimiento + '\'') : "") +
                 '}';
+    }
+
+    public String getConcepto() {
+        return concepto;
+    }
+
+    public void setConcepto(String concepto) {
+        this.concepto = concepto;
+    }
+
+    public String getReferenciaOperacion() {
+        return referenciaOperacion;
+    }
+
+    public void setReferenciaOperacion(String referenciaOperacion) {
+        this.referenciaOperacion = referenciaOperacion;
     }
 }

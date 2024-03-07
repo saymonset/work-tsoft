@@ -2378,6 +2378,28 @@ public class DTOAssembler {
         return registroContablePosicionControladaDTO;
     }
 
+
+    /**
+     * Crea un objeto del tipo {@link DetalleMovimientoEfectivoDTO} a partir de
+     * un objeto de hibernate del tipo {@link RegContEfecNombrada}
+     *
+     * @param regContEfecNombrada Objeto de hibernate para construir el DTO
+     * @param tipoRetiro          Objeto que ayuda a determinar el tipo de retiro del objeto contruido DTO
+     * @param idTipoPago          Objeto que ayuda a determinar el tipo de pago del objeto contruido DTO
+     * @return DTO creado a partir del parámetro de entrada
+     */
+    public static DetalleMovimientoEfectivoDTO crearDetalleMovimientoEfectivoDTO(
+            RegContEfecNombrada regContEfecNombrada, String tipoRetiro,
+            Integer idTipoPago, String concepto,
+            String referenciaOperacion) {
+        DetalleMovimientoEfectivoDTO detalleMovimientoEfectivoDTO = crearDetalleMovimientoEfectivoDTO(
+                regContEfecNombrada,
+                tipoRetiro,   idTipoPago);
+        detalleMovimientoEfectivoDTO.setConcepto(concepto);
+        detalleMovimientoEfectivoDTO.setReferenciaOperacion(referenciaOperacion);
+        return detalleMovimientoEfectivoDTO;
+    }
+
     /**
      * Crea un objeto del tipo {@link DetalleMovimientoEfectivoDTO} a partir de
      * un objeto de hibernate del tipo {@link RegContEfecNombrada}
@@ -2671,6 +2693,25 @@ public class DTOAssembler {
         return dto;
     }
 
+    /**
+     * Crea un objeto del tipo {@link DetalleMovimientoEfectivoDTO} a partir de
+     * un objeto de hibernate del tipo {@link RegContEfecNombradaHistorico}
+     *
+     * @param regContEfecNombrada Objeto de hibernate para construir el DTO
+     * @param tipoRetiro
+     * @return DTO creado a partir del parámetro de entrada
+     */
+    public static DetalleMovimientoEfectivoDTO crearDetalleMovimientoEfectivoDTO(
+            RegContEfecNombradaHistorico regContEfecNombrada,
+            String tipoRetiro, Integer idTipoPago, String concepto,
+            String referenciaOperacion) {
+        DetalleMovimientoEfectivoDTO detalleMovimientoEfectivoDTO = crearDetalleMovimientoEfectivoDTO(
+                  regContEfecNombrada,
+                  tipoRetiro,   idTipoPago);
+        detalleMovimientoEfectivoDTO.setConcepto(concepto);
+        detalleMovimientoEfectivoDTO.setReferenciaOperacion(referenciaOperacion);
+        return detalleMovimientoEfectivoDTO;
+    }
 
     /**
      * Crea un objeto del tipo {@link DetalleMovimientoEfectivoDTO} a partir de
