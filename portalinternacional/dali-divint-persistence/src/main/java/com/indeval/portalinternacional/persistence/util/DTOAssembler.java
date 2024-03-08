@@ -171,6 +171,21 @@ public class DTOAssembler {
         return divisaDTO;
     }
 
+    public static ConciliacionDivisasIntDTO crearConciliacionDivisasIntDTO(ConciliacionDivisasInt conciliacionDivisasInt) {
+        ConciliacionDivisasIntDTO conciliacionDivisasIntDTO = null;
+        if (conciliacionDivisasInt != null) {
+            conciliacionDivisasIntDTO = new ConciliacionDivisasIntDTO();
+            conciliacionDivisasIntDTO.setFecha(conciliacionDivisasInt.getFecha());
+            conciliacionDivisasIntDTO.setIdConciliacionEfectivo(conciliacionDivisasInt.getIdConciliacionEfectivo());
+            conciliacionDivisasIntDTO.setIdBoveda(conciliacionDivisasInt.getIdBoveda());
+            conciliacionDivisasIntDTO.setIdDivisa(conciliacionDivisasInt.getIdDivisa());
+            conciliacionDivisasIntDTO.setMontoCustodio(conciliacionDivisasInt.getMontoCustodio());
+            conciliacionDivisasIntDTO.setMontoIndeval(conciliacionDivisasInt.getMontoIndeval());
+            conciliacionDivisasIntDTO.setMontoDiferencia(conciliacionDivisasInt.getMontoDiferencia());
+        }
+        return conciliacionDivisasIntDTO;
+    }
+
     public static BovedaDto crearBovedaDTO(Boveda boveda) {
         BovedaDto dto = null;
         if (boveda != null) {

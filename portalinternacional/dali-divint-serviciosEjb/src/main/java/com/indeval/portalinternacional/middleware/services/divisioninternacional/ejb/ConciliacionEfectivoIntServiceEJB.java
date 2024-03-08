@@ -50,7 +50,7 @@ public class ConciliacionEfectivoIntServiceEJB implements ConciliacionEfectivoIn
 	}
 
 	public List<BitacoraConciliacionEfectivoInt> getBitacoraConciliacionEfectivoInt(
-			Long idConciliacion) {
+			String idConciliacion) {
 		return conciliacionEfectivoIntService.getBitacoraConciliacionEfectivoInt(idConciliacion);
 	}
 	

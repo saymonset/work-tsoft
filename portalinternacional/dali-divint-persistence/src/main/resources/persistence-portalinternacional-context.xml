@@ -85,79 +85,82 @@
                     com.indeval.portalinternacional.middleware.servicios.modelo.CatEstatusBitacoraSic
                 </value>
 
-                <!--value> com.indeval.portaldali.persistence.modelo.Ciclo </value -->
-                <!--value> com.indeval.portaldali.persistence.modelo.CicloCompensacion
-                    </value -->
-                <!--value> com.indeval.portaldali.persistence.modelo.CreditoEspecial
-                    </value -->
-                <value>
-                    com.indeval.portalinternacional.middleware.servicios.modelo.ComentarioEfectivoInt
-                </value>
-                <value>
-                    com.indeval.portalinternacional.middleware.servicios.modelo.CodigoIdentificacionEfectivoInt
-                </value>
-                <value>
-                    com.indeval.portalinternacional.middleware.servicios.modelo.ConciliacionEfectivoInt
-                </value>
-                <value>
-                    com.indeval.portalinternacional.middleware.servicios.modelo.ConciliacionInt
-                </value>
-                <value>
-                    com.indeval.portalinternacional.middleware.servicios.modelo.SettlementDisciplineRegime
-                </value>
-                <value>com.indeval.portalinternacional.middleware.servicios.modelo.makercheker.SolicitudAutorizacion
-                </value>
-                <value>
-                    com.indeval.portalinternacional.middleware.servicios.modelo.ConfirmacionEfectivo
-                </value>
-                <value>
-                    com.indeval.portaldali.persistence.modelo.CuentaControlada
-                </value>
-                <value>
-                    com.indeval.portalinternacional.middleware.servicios.modelo.CuentaCorresponsal
-                </value>
-                <value>
-                    com.indeval.portalinternacional.middleware.servicios.modelo.CuentaCorresponsal103
-                </value>
-                <value>
-                    com.indeval.portalinternacional.middleware.servicios.modelo.CuentaCorresponsal202
-                </value>
-                <value>
-                    com.indeval.portalinternacional.middleware.servicios.modelo.CuentaEfectivoInt
-                </value>
-                <value>
-                    com.indeval.portalinternacional.middleware.servicios.modelo.DivisaBoveda
-                </value>
-                <value>
-                    com.indeval.portalinternacional.middleware.servicios.modelo.DivisaInt
-                </value>
-                <value>
-                    com.indeval.portaldali.persistence.modelo.CuentaNombrada
-                </value>
-                <value>
-                    com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.CuerpoEventoCorporativo
-                </value>
-                <value>
-                    com.indeval.portaldali.persistence.modelo.Cupon
-                </value>
-                <value>
-                    com.indeval.portaldali.persistence.modelo.CatalogoElementos
-                </value>
-                <value>
-                    com.indeval.portaldali.persistence.modelo.CruceBmv
-                </value>
-                <value>
-                    com.indeval.portalinternacional.middleware.servicios.modelo.CustodioTipoBenef
-                </value>
-                <value>
-                    com.indeval.portalinternacional.middleware.servicios.modelo.Custodio
-                </value>
-                <value>
-                    com.indeval.portalinternacional.middleware.servicios.modelo.CustodioBoveda
-                </value>
-                <value>
-                    com.indeval.portalinternacional.middleware.servicios.modelo.CustodioCalendarioParticipante
-                </value>
+				<!--value> com.indeval.portaldali.persistence.modelo.Ciclo </value -->
+				<!--value> com.indeval.portaldali.persistence.modelo.CicloCompensacion
+					</value -->
+				<!--value> com.indeval.portaldali.persistence.modelo.CreditoEspecial
+					</value -->
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.ComentarioEfectivoInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CodigoIdentificacionEfectivoInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.ConciliacionDivisasInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.ConciliacionEfectivoInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.ConciliacionInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.SettlementDisciplineRegime
+				</value>
+				<value>com.indeval.portalinternacional.middleware.servicios.modelo.makercheker.SolicitudAutorizacion
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.ConfirmacionEfectivo
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.CuentaControlada
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CuentaCorresponsal
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CuentaCorresponsal103
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CuentaCorresponsal202
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CuentaEfectivoInt
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.DivisaBoveda
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.DivisaInt
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.CuentaNombrada
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.eventosCorporativos.CuerpoEventoCorporativo
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.Cupon
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.CatalogoElementos
+				</value>
+				<value>
+					com.indeval.portaldali.persistence.modelo.CruceBmv
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CustodioTipoBenef
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.Custodio
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CustodioBoveda
+				</value>
+				<value>
+					com.indeval.portalinternacional.middleware.servicios.modelo.CustodioCalendarioParticipante
+				</value>
 
                 <value>
                     com.indeval.portaldali.persistence.modelo.DiaInhabil
@@ -1253,13 +1256,21 @@
         </property>
     </bean>
 
-    <bean id="bovedaIntDao"
-          class="com.indeval.portalinternacional.persistence.dao.impl.BovedaDaoImpl"
-          lazy-init="true">
-        <property name="sessionFactory">
-            <ref local="sessionFactoryInternacional"/>
-        </property>
-    </bean>
+	<bean id="bovedaIntDao"
+		class="com.indeval.portalinternacional.persistence.dao.impl.BovedaDaoImpl"
+		lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
+
+	<bean id="conciliacionDivisasIntDao"
+		  class="com.indeval.portalinternacional.persistence.dao.impl.ConciliacionDivisasIntDaoImpl"
+		  lazy-init="true">
+		<property name="sessionFactory">
+			<ref local="sessionFactoryInternacional" />
+		</property>
+	</bean>
 
     <bean id="rEmisionBovedaDao"
           class="com.indeval.portalinternacional.persistence.dao.impl.REmisionBovedaDaoImpl"

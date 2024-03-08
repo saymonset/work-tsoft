@@ -72,10 +72,10 @@ public class ConciliacionEfectivoIntServiceImpl implements
 	}
 
 	/**
-	 * @see com.indeval.portalinternacional.middleware.services.divisioninternacional.ConciliacionEfectivoIntService#getBitacoraConciliacionEfectivoInt(java.lang.Long)
+	 * @see com.indeval.portalinternacional.middleware.services.divisioninternacional.ConciliacionEfectivoIntService#getBitacoraConciliacionEfectivoInt(java.lang.String)
 	 */
 	public List<BitacoraConciliacionEfectivoInt> getBitacoraConciliacionEfectivoInt(
-			Long idConciliacion) {		
+			String idConciliacion) {
 		return conciliacionEfectivoDao.getBitacoraConciliacionEfectivoInt(idConciliacion);
 	}
 	

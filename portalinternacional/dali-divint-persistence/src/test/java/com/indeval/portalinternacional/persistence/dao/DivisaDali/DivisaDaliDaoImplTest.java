@@ -80,4 +80,32 @@ public class DivisaDaliDaoImplTest extends BaseDaoTestCase {
                             divisaInt.getDescripcion());
         }
     }
+
+    public void testGetDivisaDescripcionById() {
+        System.out.println("testGetDivisaDescripcionById()");
+
+        int idDivisa = 3;
+        String expectedDescripcion = "USA DOLLAR";
+
+        assertNotNull("DivisaDaliDao Nulo", dao);
+        String descripcion = dao.getDivisaDescripcionById(idDivisa);
+
+        System.out.println(descripcion);
+
+        assertNotNull(descripcion);
+        assertEquals(expectedDescripcion, descripcion);
+    }
+
+    public void testGetDivisaDescripcionByWrongId() {
+        System.out.println("testGetDivisaDescripcionByWrongId()");
+
+        int idDivisa = 0;
+
+        assertNotNull("DivisaDaliDao Nulo", dao);
+        String result = dao.getDivisaDescripcionById(idDivisa);
+
+        System.out.println(result);
+
+        assertNull(result);
+    }
 }

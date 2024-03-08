@@ -1,6 +1,8 @@
 package com.indeval.portalinternacional.persistence.dao.impl.cuentasTransitoriasEfectivo;
 
 
+import java.math.BigDecimal;
+
 /**
  * Queries para el manejo de informaci&oacute;n de pantalla Cuentas de Tesorer&iacute;a de Efectivo
  *
@@ -14,6 +16,7 @@ public class ConsultasCuentasTransitoriasEfectivo {
     private static final String ID_CUSTODIO = "\\[ID_CUSTODIO\\]";
     private static final String ID_DIVISA = "\\[ID_DIVISA\\]";
     private static final String FOLIO_RELACIONADO = "\\[FOLIO_RELACIONADO\\]";
+    private static final String ID_CALENDARIO_INT = "\\[ID_CALENDARIO_INT\\]";
     private static final String ID_REGISTRO = "\\[ID_REGISTRO\\]";
 
     private static final String FECHA_INICIO = "\\[FECHA_INICIO\\]";
@@ -85,8 +88,30 @@ public class ConsultasCuentasTransitoriasEfectivo {
      */
     static final String QUERY_ASIGNAR_FOLIO_RELACIONADO = "\n" +
             "UPDATE T_CUENTA_TRANSITORIA \n" +
-            "SET FOLIO_RELACIONADO = '[FOLIO_RELACIONADO]' \n" +
-            "WHERE ID_CUENTA_TRANSITORIA = [ID_REGISTRO]";
+            "SET FOLIO_RELACIONADO = '[FOLIO_RELACIONADO]', \n" +
+            "    ID_CALENDARIO_INT = (SELECT ID_CALENDARIO_INT\n" +
+            "                            FROM (SELECT ID_CALENDARIO_INT\n" +
+            "                                  FROM T_CALENDARIO_INT  \n" +
+            "                                  WHERE referencia='[FOLIO_RELACIONADO]'\n" +
+            "                                  ORDER BY FECHA_CORTE, FECHA_PAGO, FECHA_VALOR DESC)\n" +
+            "                            WHERE ROWNUM = 1)\n" +
+            "WHERE ID_CUENTA_TRANSITORIA = '[ID_REGISTRO]'";
+//            "UPDATE T_CUENTA_TRANSITORIA \n" +
+//            "SET FOLIO_RELACIONADO = '[FOLIO_RELACIONADO]' \n" +
+//            "    [COMPLEMENTO]\n" +
+//            "WHERE ID_CUENTA_TRANSITORIA = [ID_REGISTRO]";
+
+    /**
+     * Obtener ID_CALENDARIO_INT con REFERENCIA
+     */
+    static final String QUERY_OBTENER_CALENDARIO_INT = "\n" +
+            "SELECT ID_CALENDARIO_INT\n" +
+            "FROM (SELECT ID_CALENDARIO_INT\n" +
+            "      FROM T_CALENDARIO_INT  \n" +
+            "      WHERE REFERENCIA='[FOLIO_RELACIONADO]'\n" +
+            "            ORDER BY FECHA_CORTE, FECHA_PAGO, FECHA_VALOR DESC)\n" +
+            "WHERE ROWNUM = 1";
+
 
     /**
      * Obtiene la consulta para el Resumen: FOLIO_RELACIONADO agrupados
@@ -158,6 +183,14 @@ public class ConsultasCuentasTransitoriasEfectivo {
         return QUERY_ASIGNAR_FOLIO_RELACIONADO
                 .replaceAll(FOLIO_RELACIONADO, folioRelacionado)
                 .replaceAll(ID_REGISTRO, idRegistro);
+    }
+
+    /**
+     * Obtiene la query para obtener ID_CALENDARIO_INT por FOLIO_RELACIONADO
+     */
+    public static final String getQueryObtenerIdCalendarioInt(String folioRelacionado) {
+        return QUERY_OBTENER_CALENDARIO_INT
+                .replaceAll(FOLIO_RELACIONADO, folioRelacionado);
     }
 
     public static final String getQueryRegistroPorIdRegistro(String idRegistro) {
@@ -383,5 +416,9 @@ public class ConsultasCuentasTransitoriasEfectivo {
      */
     private static final String FILTRO_FECHAS = "AND FECHA_RECEPCION BETWEEN TO_DATE('[FECHA_INICIO]','DD/MM/YY') AND TO_DATE ('[FECHA_FIN]','DD/MM/YY')\n";
 
+    /**
+     * Complemento de asignación de FOLIO_RELACIONADO
+     */
+    private static final String ACTUALIZA_CALENDARIO_INT = ", ID_CALENDARIO_INT = [ID_CALENDARIO_INT]\n";
 
 }

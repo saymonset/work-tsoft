@@ -27,8 +27,8 @@ public interface ConciliacionEfectivoDao extends BaseDao {
 	
 	BigDecimal obtieneSumaCreditoDebito(final DetalleConciliacionEfectivoIntDTO params, String tipo);
 	
-	List<BitacoraConciliacionEfectivoInt> getBitacoraConciliacionEfectivoInt(Long idConciliacion);
-	
+	List<BitacoraConciliacionEfectivoInt> getBitacoraConciliacionEfectivoInt(String idConciliacion);
+
 	List<String> consultaBicCodes();
 	
 	List<Divisa> consultaDivisas(Set<String> bicCodes);

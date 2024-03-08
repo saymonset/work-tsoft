@@ -40,9 +40,9 @@ public class DivisaDaliDaoImpl extends BaseDaoHibernateImpl implements DivisaDal
     @SuppressWarnings("unchecked")
     public List<DivisaDTO> buscarDivisas(final EstadoPaginacionDTO estadoPaginacion) {
 
-        return (List<DivisaDTO>) getHibernateTemplate().execute(new HibernateCallback() {
-            public Object doInHibernate(Session session) throws HibernateException, SQLException {
-                Query query = session.createQuery("FROM " + DivisaInt.class.getName() + " d " + " order by d.descripcion");
+		return (List<DivisaDTO>) getHibernateTemplate().execute(new HibernateCallback() {
+			public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				Query query = session.createQuery("FROM " + DivisaInt.class.getName() + " d " + " order by d.descripcion ASC");
 
                 if (estadoPaginacion != null) {
                     query.setFirstResult(
@@ -193,22 +193,22 @@ public class DivisaDaliDaoImpl extends BaseDaoHibernateImpl implements DivisaDal
         this.divisa = divisa;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see com.indeval.portaldali.persistence.dao.common.DivisaDaliDAO#
-     * buscarDivisasPorTipoOperacion(com.indeval.portaldali.middleware.dto.util.
-     * EstadoPaginacionDTO, com.indeval.portaldali.persistence.model.TipoOperacion)
-     */
-    @SuppressWarnings("unchecked")
-    public List<DivisaDTO> buscarDivisasPorTipoInstruccion(final EstadoPaginacionDTO estadoPaginacion,
-                                                           final BigInteger idTipoInstruccion) {
-        return (List<DivisaDTO>) getHibernateTemplate().execute(new HibernateCallback() {
-            public Object doInHibernate(Session session) throws HibernateException, SQLException {
-                Query query = session.createQuery("FROM " + DivisaInt.class.getName() + " d " + " where d.idDivisa IN ( "
-                        + " SELECT DISTINCT(tid.divisa.idDivisa) FROM " + TipoInstruccionDivisa.class.getName()
-                        + " tid " + " WHERE tid.tipoInstruccion.idTipoInstruccion = " + idTipoInstruccion + " ) "
-                        + " order by d.descripcion");
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.indeval.portaldali.persistence.dao.common.DivisaDaliDAO#
+	 * buscarDivisasPorTipoOperacion(com.indeval.portaldali.middleware.dto.util.
+	 * EstadoPaginacionDTO, com.indeval.portaldali.persistence.model.TipoOperacion)
+	 */
+	@SuppressWarnings("unchecked")
+	public List<DivisaDTO> buscarDivisasPorTipoInstruccion(final EstadoPaginacionDTO estadoPaginacion,
+			final BigInteger idTipoInstruccion) {
+		return (List<DivisaDTO>) getHibernateTemplate().execute(new HibernateCallback() {
+			public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				Query query = session.createQuery("FROM " + DivisaInt.class.getName() + " d " + " where d.idDivisa IN ( "
+						+ " SELECT DISTINCT(tid.divisa.idDivisa) FROM " + TipoInstruccionDivisa.class.getName()
+						+ " tid " + " WHERE tid.tipoInstruccion.idTipoInstruccion = " + idTipoInstruccion + " ) "
+						+ " order by d.descripcion");
 
                 if (estadoPaginacion != null) {
                     query.setFirstResult(
@@ -267,6 +267,7 @@ public class DivisaDaliDaoImpl extends BaseDaoHibernateImpl implements DivisaDal
         });
     }
 
+
 		/*
 		 * (non-Javadoc)
 		 *
@@ -299,6 +300,22 @@ public class DivisaDaliDaoImpl extends BaseDaoHibernateImpl implements DivisaDal
 			});
 		}
 
+    @SuppressWarnings("unchecked")
+    public String getDivisaDescripcionById(final Integer idDivisa) {
+        return (String) getHibernateTemplate().execute(new HibernateCallback() {
 
+            public Object doInHibernate(Session session) throws HibernateException, SQLException {
+                Query query = session.createQuery(
+                        "SELECT d.descripcion FROM " + DivisaInt.class.getName() + " d " + " where d.idDivisa = '" + idDivisa + "' ");
+                List<String> result = query.list();
+
+                if (!result.isEmpty()) {
+                    return result.get(0);
+                }
+
+                return null;
+            }
+        });
+    }
 
 }

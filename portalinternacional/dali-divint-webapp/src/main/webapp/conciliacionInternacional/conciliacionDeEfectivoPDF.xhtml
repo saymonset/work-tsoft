@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:pdf="http://indeval.com/jsf/pdf" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:cvt="http://indeval.com/jsf/converters">
+
+    <pdf:document documentName="ConciliacionesEfectivo" documentTitle="Conciliación de Efectivo"
+        institucion="#{conciliacionDeEfectivoBean.agenteFirmado.id} #{conciliacionDeEfectivoBean.agenteFirmado.folio} #{conciliacionDeEfectivoBean.agenteFirmado.razon}"
+        landscape="true" fecha="#{conciliacionDeEfectivoBean.fechaActual}" imageResource="/images/indeval.jpg">
+        <pdf:table value="conciliacionDeEfectivoBean" currentBean="conciliation" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="CRITERIOS DE CONSULTA" value="" align="center" />
+            </pdf:row>
+        </pdf:table>
+        <pdf:table value="conciliacionDeEfectivoBean" currentBean="conciliation" widthPercentage="100">
+            <pdf:row>
+                <pdf:col header="#{etq.bovedaMinus}" value="#{conciliacionDeEfectivoBean.getBovedaDescriptionByIdBoveda(conciliacionDeEfectivoBean.efectivoInternacionalVO.boveda.idBovedaStr)}" align="center" />
+                <pdf:col header="#{etq.divisaMinus}" value="#{conciliacionDeEfectivoBean.getClaveAlfabeticaByIdDivisa(conciliacionDeEfectivoBean.efectivoInternacionalVO.divisa.idString)}" align="center" />
+            </pdf:row>
+        </pdf:table>
+        
+        <pdf:br/>
+        <pdf:text align="center" value="#{etq.registrosEncontrados}: #{conciliacionDeEfectivoBean.totalRegistros}"/>
+        <pdf:br/>
+
+        <pdf:table value="#{conciliacionDeEfectivoBean.conciliations}" currentBean="conciliation" widthPercentage="100">
+            <pdf:row>
+				<pdf:col header="#{etq.divisaMinus}" value="#{conciliation.divisaDescripcion}" align="center" />
+
+				<pdf:col header="#{etq.bovedaMinus}" value="#{conciliation.bovedaDescription}" align="center" />
+
+				<pdf:col header="#{etq.saldoFinalMT}" value="#{conciliation.montoCustodio}" align="right" rendered="#{!empty conciliation.montoCustodio}">
+					<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+				</pdf:col>
+				<pdf:col header="#{etq.saldoFinalMT}" value="N/A" align="right" rendered="#{empty conciliation.montoCustodio}" />
+
+				<pdf:col header="#{etq.saldoBoveda}" value="#{conciliation.montoIndeval}" align="right" rendered="#{!empty conciliation.montoIndeval}">
+					<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+				</pdf:col>
+				<pdf:col header="#{etq.saldoBoveda}" value="N/A" align="right"  rendered="#{empty conciliation.montoIndeval}" />
+
+				<pdf:col header="#{etq.diferencia}" value="#{conciliation.montoDiferencia}" align="right"  rendered="#{!empty conciliation.montoDiferencia}" >
+					<f:convertNumber pattern="###,###,###,###,###,##0.##" />
+				</pdf:col>
+				<pdf:col header="#{etq.diferencia}" value="N/A" align="right"  rendered="#{empty conciliation.montoDiferencia}" />
+			</pdf:row>
+        </pdf:table>
+    </pdf:document>
+</html>

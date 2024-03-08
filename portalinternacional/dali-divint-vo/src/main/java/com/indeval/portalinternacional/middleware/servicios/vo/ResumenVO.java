@@ -27,7 +27,7 @@ public class ResumenVO extends AbstractBaseDTO {
     private Integer totalError;
 
     private Integer totalRegistros;
-
+    
     private Integer totalProtocolo;
 
     private String nombreUsuario;
@@ -44,7 +44,7 @@ public class ResumenVO extends AbstractBaseDTO {
 
     /**
      * @see org.springframework.validation.Validator#validate(java.lang.Object,
-     * org.springframework.validation.Errors)
+     *      org.springframework.validation.Errors)
      */
     public void validate(Object target, Errors errors) {
     }

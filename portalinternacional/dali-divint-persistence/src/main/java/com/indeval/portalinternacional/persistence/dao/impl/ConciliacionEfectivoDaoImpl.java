@@ -418,17 +418,16 @@ public class ConciliacionEfectivoDaoImpl extends BaseDaoHibernateImpl implements
 	}
 
 	/**
-	 * @see com.indeval.portalinternacional.persistence.dao.ConciliacionEfectivoDao#getBitacoraConciliacionEfectivoInt(java.lang.Long)
+	 * @see com.indeval.portalinternacional.persistence.dao.ConciliacionEfectivoDao#getBitacoraConciliacionEfectivoInt(java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
-	public List<BitacoraConciliacionEfectivoInt> getBitacoraConciliacionEfectivoInt(final Long idConciliacion) {
+	public List<BitacoraConciliacionEfectivoInt> getBitacoraConciliacionEfectivoInt(final String idConciliacion) {
 		final StringBuilder sb = new StringBuilder();		
 		sb.append("FROM BitacoraConciliacionEfectivoInt b ");
-		sb.append(" WHERE b.idConciliacionEfectivo = :idConciliacion ");		
+		sb.append(" WHERE b.idConciliacionEfectivo IN ("+idConciliacion+") ");
 		return (List<BitacoraConciliacionEfectivoInt>) getHibernateTemplate().execute(new HibernateCallback() {
 			public Object doInHibernate(Session session) throws HibernateException, SQLException {
 				Query query = session.createQuery(sb.toString());
-				query.setLong("idConciliacion", idConciliacion);
 				return query.list();
 			}
 		});

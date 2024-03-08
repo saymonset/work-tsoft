@@ -14,6 +14,7 @@ import com.indeval.portalinternacional.middleware.servicios.dto.BovedaDto;
 import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
 import com.indeval.portalinternacional.middleware.servicios.dto.EstadoPaginacionDTO;
 import com.indeval.portalinternacional.middleware.servicios.modelo.DivisaBoveda;
+import com.indeval.portalinternacional.middleware.servicios.modelo.DivisaInt;
 import com.indeval.portalinternacional.persistence.util.DTOAssembler;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -88,16 +89,16 @@ public class BovedaDaoImpl extends BaseDaoHibernateImpl implements BovedaDao {
         });
     }
 
-// Cambio Multidivisas
+    // Cambio Multidivisas
     @Override
     @SuppressWarnings("unchecked")
     public List<BigInteger> obtenerBovedasPorDivisa(final DivisaDTO divisaDTO) {
         final StringBuilder sb = new StringBuilder();
         sb.append(" FROM DivisaBoveda d where d.id.idDivisa  = ").append(divisaDTO.getId());
 
-        return (List<BigInteger>) getHibernateTemplate().execute(new HibernateCallback(){
+        return (List<BigInteger>) getHibernateTemplate().execute(new HibernateCallback() {
             public Object doInHibernate(Session session) throws HibernateException, SQLException {
-              //  Query query = session.createQuery(" FROM " + DivisaBoveda.class.getName() + " d where d.idDivisa  = "+ divisaDTO.getId() +" ");
+                //  Query query = session.createQuery(" FROM " + DivisaBoveda.class.getName() + " d where d.idDivisa  = "+ divisaDTO.getId() +" ");
                 Query query = session.createQuery(sb.toString());
                 List<DivisaBoveda> consulta = query.list();
                 List<BigInteger> resultadosConsulta = new ArrayList<BigInteger>();
@@ -112,18 +113,18 @@ public class BovedaDaoImpl extends BaseDaoHibernateImpl implements BovedaDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<BovedaDto> buscarBovedasPorTipoCustodia(final BovedaDto boveda, final EstadoPaginacionDTO estadoPaginacion) {
-        return (List<BovedaDto> )getHibernateTemplate().executeFind(new HibernateCallback(){
+        return (List<BovedaDto>) getHibernateTemplate().executeFind(new HibernateCallback() {
             public Object doInHibernate(Session session) throws HibernateException, SQLException {
                 Criteria criteria = session.createCriteria(Bovedas.class);
 
                 if (boveda != null && boveda.getTipoBoveda().getClave() != null) {
 
                     if (boveda.getTipoBoveda().getClave().equals("V")) {
-                        criteria.add(Expression.in("idTipoBoveda", new Object[] { TipoBoveda.INTERNACIONAL_VALORES, TipoBoveda.NACIONAL_VALORES })
+                        criteria.add(Expression.in("idTipoBoveda", new Object[]{TipoBoveda.INTERNACIONAL_VALORES, TipoBoveda.NACIONAL_VALORES})
 
                         );
                     } else {
-                        criteria.add(Expression.in("idTipoBoveda", new Object[] { TipoBoveda.INTERNACIONAL_EFECTIVO, TipoBoveda.INTERNACIONAL_EFECTIVO })
+                        criteria.add(Expression.in("idTipoBoveda", new Object[]{TipoBoveda.INTERNACIONAL_EFECTIVO, TipoBoveda.INTERNACIONAL_EFECTIVO})
 
                         );
                     }
@@ -171,5 +172,23 @@ public class BovedaDaoImpl extends BaseDaoHibernateImpl implements BovedaDao {
         });
     }
 
+
+    @SuppressWarnings("unchecked")
+    public String getBovedaDescriptionById(final Integer idBoveda) {
+        return (String) getHibernateTemplate().execute(new HibernateCallback() {
+
+            public Object doInHibernate(Session session) throws HibernateException, SQLException {
+                Query query = session.createQuery(
+                        "SELECT b.descripcion FROM " + Bovedas.class.getName() + " b " + " where b.idBoveda = '" + idBoveda + "' ");
+                List<String> result = query.list();
+
+                if (!result.isEmpty()) {
+                    return result.get(0);
+                }
+
+                return null;
+            }
+        });
+    }
     //Fin Cambio Multidivisas
 }

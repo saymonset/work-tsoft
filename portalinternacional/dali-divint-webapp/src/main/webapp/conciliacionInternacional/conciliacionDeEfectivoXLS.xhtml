@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:xls="http://indeval.com/jsf/xls"
+      xmlns:cvt="http://indeval.com/jsf/converters">
+
+<xls:document documentName="ConciliacionesEfectivo" documentTitle="Conciliación de Efectivo"
+              institucion="#{conciliacionDeEfectivoBean.agenteFirmado.id} #{conciliacionDeEfectivoBean.agenteFirmado.folio} #{conciliacionDeEfectivoBean.agenteFirmado.razon}"
+              fecha="#{conciliacionDeEfectivoBean.fechaActual}">
+
+    <xls:table value="#{conciliacionDeEfectivoBean}" var="conciliation">
+        <xls:row>
+            <xls:col header="#{etq.bovedaMinus}"
+                     value="#{conciliacionDeEfectivoBean.getBovedaDescriptionByIdBoveda(conciliacionDeEfectivoBean.efectivoInternacionalVO.boveda.idBovedaStr)}"/>
+            <xls:col header="#{etq.divisaMinus}"
+                     value="#{conciliacionDeEfectivoBean.getClaveAlfabeticaByIdDivisa(conciliacionDeEfectivoBean.efectivoInternacionalVO.divisa.idString)}"/>
+        </xls:row>
+    </xls:table>
+
+    <xls:subtitle value="#{etq.registrosEncontrados}: #{conciliacionDeEfectivoBean.totalRegistros}"/>
+
+    <xls:table value="#{conciliacionDeEfectivoBean.conciliations}" var="conciliation">
+        <xls:row>
+            <xls:col header="#{etq.bovedaMinus}" value="#{conciliation.bovedaDescription}"/>
+            <xls:col header="#{etq.divisaMinus}" value="#{conciliation.divisaDescripcion}"/>
+
+            <xls:col header="#{etq.saldoFinalMT}"
+                     value="#{!empty conciliation.montoCustodio ? conciliation.montoCustodio : 'N/A' }"
+                     pattern="###,###,###,###,###,##0.##"/>
+            <xls:col header="#{etq.saldoBoveda}"
+                     value="#{!empty conciliation.montoIndeval ? conciliation.montoIndeval : 'N/A' }"
+                     pattern="###,###,###,###,###,##0.##"/>
+            <xls:col header="#{etq.diferencia}"
+                     value="#{!empty conciliation.montoDiferencia ? conciliation.montoDiferencia : 'N/A' }"
+                     pattern="###,###,###,###,###,##0.##"/>
+        </xls:row>
+    </xls:table>
+</xls:document>
+</html>

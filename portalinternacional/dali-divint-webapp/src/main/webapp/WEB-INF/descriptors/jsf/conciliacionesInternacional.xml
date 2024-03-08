@@ -24,6 +24,23 @@
 			</managed-property>			
 	</managed-bean>
 	<managed-bean>
+		<managed-bean-name>conciliacionDeEfectivoBean</managed-bean-name>
+		<managed-bean-class>com.indeval.portalinternacional.presentation.controller.conciliacionInternacional.ConciliacionDeEfectivoController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>bovedaService</property-name>
+			<value>#{bovedaService}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>catalogosFacade</property-name>
+			<value>#{catalogosFacade}</value>
+		</managed-property>
+		<managed-property>
+			<property-name>conciliacionDivisasIntService</property-name>
+			<value>#{conciliacionDivisasIntService}</value>
+		</managed-property>
+	</managed-bean>
+	<managed-bean>
 			<managed-bean-name>detalleConciliacionesIntBean</managed-bean-name>
 			<managed-bean-class>
 				com.indeval.portalinternacional.presentation.controller.conciliacionInternacional.ConsultaDetalleConciliacionInternacionalController

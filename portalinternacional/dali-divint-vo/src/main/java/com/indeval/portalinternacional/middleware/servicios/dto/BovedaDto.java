@@ -19,7 +19,7 @@ public class BovedaDto implements Serializable {
 	// Cambio Multidivisas
 	private String idBovedaStr;
 	// Fin Cambio Multidivisas
-    
+
     /** Tipo de boveda */
     private TipoBovedaDto tipoBoveda;
     

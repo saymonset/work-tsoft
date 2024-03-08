@@ -53,6 +53,9 @@
                 <value>
                     com.indeval.portalinternacional.middleware.servicios.modelo.Bovedas
                 </value>
+                <value>
+                    com.indeval.portalinternacional.middleware.servicios.modelo.ConciliacionDivisasInt
+                </value>
                 <!--value>
                     com.indeval.portaldali.persistence.modelo.CampoBean
                 </value-->
@@ -1241,6 +1244,14 @@
     </bean>
 
     <bean id="bovedaIntDao" class="com.indeval.portalinternacional.persistence.dao.impl.BovedaDaoImpl" lazy-init="true">
+        <property name="sessionFactory">
+            <ref local="sessionFactoryInternacional"/>
+        </property>
+    </bean>
+
+    <bean id="conciliacionDivisasIntDao"
+          class="com.indeval.portalinternacional.persistence.dao.impl.ConciliacionDivisasIntDaoImpl"
+          lazy-init="true">
         <property name="sessionFactory">
             <ref local="sessionFactoryInternacional"/>
         </property>

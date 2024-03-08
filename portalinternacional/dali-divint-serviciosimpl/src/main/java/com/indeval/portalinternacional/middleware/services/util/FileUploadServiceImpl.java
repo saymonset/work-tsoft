@@ -1,7 +1,7 @@
 /**
  * 2H Software - Bursatec - INDEVAL
  * Portal DALI
- * <p>
+ *
  * Agosto 28, 2008
  */
 package com.indeval.portalinternacional.middleware.services.util;
@@ -16,49 +16,47 @@ import com.indeval.portalinternacional.persistence.dao.FileUploadDao;
 /**
  * Implementacion del servicio que opera el mecanismo de lock para la pantalla de
  * trasferencia de archivos
- *
+ * 
  * @author Esteban Herrera
  */
 public class FileUploadServiceImpl implements FileUploadService {
 
-    /**
-     * Objeto de loggeo
-     */
-    private final static Logger log = LoggerFactory.getLogger(FileUploadServiceImpl.class);
+	/** Objeto de loggeo */
+	private final static Logger log = LoggerFactory.getLogger(FileUploadServiceImpl.class);
 
-    /**
-     * Dao FileUploadDao
-     */
-    private FileUploadDao fileUploadDao;
+	/**
+	 * Dao FileUploadDao
+	 */
+	private FileUploadDao fileUploadDao;
 
-    /**
-     * @see com.indeval.portalinternacional.middleware.services.util.FileUploadService#obtainLock(ProcessInfoVO)
-     */
-    public Boolean obtainLock(ProcessInfoVO processInfoVO) {
-        log.info("Entrando a FileUploadServiceImpl.getLock()");
-        FileUpload fileUpload = parseProcessInfoVO2FileUpload(processInfoVO);
-        return fileUploadDao.getLock(fileUpload);
-    }
+	/**
+	 * @see com.indeval.portaldali.middleware.services.util.FileUploadService#obtainLock(com.indeval.portaldali.middleware.services.util.vo.ProcessInfoVO)
+	 */
+	public Boolean obtainLock(ProcessInfoVO processInfoVO) {
+		log.info("Entrando a FileUploadServiceImpl.getLock()");
+		FileUpload fileUpload = parseProcessInfoVO2FileUpload(processInfoVO);
+		return fileUploadDao.getLock(fileUpload);
+	}
 
-    /**
-     * @see com.indeval.portalinternacional.middleware.services.util.FileUploadService#getProcessInfo(ProcessInfoVO)
-     */
-    public ProcessInfoVO getProcessInfo(ProcessInfoVO processInfoVO) {
-        log.info("Entrando a FileUploadServiceImpl.getProcessInfo()");
-        FileUpload fileUpload = parseProcessInfoVO2FileUpload(processInfoVO);
-        FileUpload fileUpload2 = fileUploadDao.getProcessInfo(fileUpload);
-        ProcessInfoVO processInfoVO2 = parseFileUpload2ProcessInfoVO(fileUpload2);
-        return processInfoVO2;
-    }
+	/**
+	 * @see com.indeval.portaldali.middleware.services.util.FileUploadService#getProcessInfo(com.indeval.portaldali.middleware.services.util.vo.ProcessInfoVO)
+	 */
+	public ProcessInfoVO getProcessInfo(ProcessInfoVO processInfoVO) {
+		log.info("Entrando a FileUploadServiceImpl.getProcessInfo()");
+		FileUpload fileUpload = parseProcessInfoVO2FileUpload(processInfoVO);
+		FileUpload fileUpload2 = fileUploadDao.getProcessInfo(fileUpload);
+		ProcessInfoVO processInfoVO2 = parseFileUpload2ProcessInfoVO(fileUpload2);
+		return processInfoVO2;
+	}
 
-    /**
-     * @see com.indeval.portalinternacional.middleware.services.util.FileUploadService#isProcessRunning(ProcessInfoVO)
-     */
-    public Boolean isProcessRunning(ProcessInfoVO processInfoVO) {
-        log.info("Entrando a FileUploadServiceImpl.isProcessRunning()");
-        FileUpload fileUpload = parseProcessInfoVO2FileUpload(processInfoVO);
-        return fileUploadDao.isProcessRunning(fileUpload);
-    }
+	/**
+	 * @see com.indeval.portaldali.middleware.services.util.FileUploadService#isProcessRunning(com.indeval.portaldali.middleware.services.util.vo.ProcessInfoVO)
+	 */
+	public Boolean isProcessRunning(ProcessInfoVO processInfoVO) {
+		log.info("Entrando a FileUploadServiceImpl.isProcessRunning()");
+		FileUpload fileUpload = parseProcessInfoVO2FileUpload(processInfoVO);
+		return fileUploadDao.isProcessRunning(fileUpload);
+	}
 
     /**
      * @see com.indeval.portalinternacional.middleware.services.util.FileUploadService#releaseLock(ProcessInfoVO)

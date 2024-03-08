@@ -62,4 +62,32 @@ public class BovedaDaoImplTest extends BaseDaoTestCase {
         }
         assertNotNull(bovedasEfectivo);
     }
+
+    public void testGetBovedaDescriptionById() {
+        System.out.println("testGetBovedaDescriptionById()");
+
+        int idBoveda = 13;
+        String expectedBovedaDescription = "BOVEDA DE EFECTIVO EUROCLEAR";
+
+        assertNotNull("BovedasDao Nulo", dao);
+        String bovedaDescription = dao.getBovedaDescriptionById(idBoveda);
+
+        System.out.println(bovedaDescription);
+
+        assertNotNull(bovedaDescription);
+        assertEquals(expectedBovedaDescription, bovedaDescription);
+    }
+
+    public void testGetBovedaDescriptionByWrongId() {
+        System.out.println("testGetBovedaDescriptionByWrongId()");
+
+        int idBoveda = 0;
+
+        assertNotNull("BovedasDao Nulo", dao);
+        String result = dao.getBovedaDescriptionById(idBoveda);
+
+        System.out.println(result);
+
+        assertNull(result);
+    }
 }

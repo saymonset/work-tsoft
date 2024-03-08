@@ -1725,6 +1725,14 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="catBicDao" ref="catBicDao"/>
     </bean>
 
+    <bean id="conciliacionDivisasIntService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConciliacionDivisasIntServiceImpl"
+          lazy-init="true">
+        <property name="conciliacionDivisasIntDao" ref="conciliacionDivisasIntDao"/>
+        <property name="bovedaDao" ref="bovedaIntDao"/>
+        <property name="divisaDao" ref="divisaDaliDao"/>
+    </bean>
+
     <bean id="validadorLongitud"
           class="com.indeval.portalinternacional.middleware.services.validador.ValidadorLongitudImpl"/>
 

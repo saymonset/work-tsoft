@@ -363,6 +363,14 @@
             <from-outcome>detalleConciliacionesEfectivoXLS</from-outcome>
             <to-view-id>/conciliacionInternacional/consultaDetalleConciliacionesEfectivoXLS.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>conciliacionDeEfectivoPDF</from-outcome>
+            <to-view-id>/conciliacionInternacional/conciliacionDeEfectivoPDF.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>conciliacionDeEfectivoXLS</from-outcome>
+            <to-view-id>/conciliacionInternacional/conciliacionDeEfectivoXLS.xhtml</to-view-id>
+        </navigation-case>
 
         <!-- Administración de cuentas de efectivo -->
         <navigation-case>

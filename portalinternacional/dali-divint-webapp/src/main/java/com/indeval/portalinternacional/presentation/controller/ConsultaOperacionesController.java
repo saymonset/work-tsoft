@@ -183,7 +183,7 @@ public class ConsultaOperacionesController extends ControllerBase {
 	private SicService sicService;
 
     private boolean esUsuarioCambioBoveda = false;
-    
+
     private boolean esUsuarioSic = false;
 
     private String folioControlParcialidad;
@@ -248,7 +248,7 @@ public class ConsultaOperacionesController extends ControllerBase {
 		if (this.usuarioContieneRolCambioBoveda()) {
             this.esUsuarioCambioBoveda = true;
         }
-		
+
 		if (this.isUsuarioSic()) {
             this.esUsuarioSic = true;
         }
@@ -460,12 +460,12 @@ public class ConsultaOperacionesController extends ControllerBase {
         final String ROL_CAMBIO_BOVEDA = "INT_CAMBIO_BOVEDA";
         return this.isUserInRoll(ROL_CAMBIO_BOVEDA);
     }
-    
+
     public boolean isUsuarioSic() {
-    	
+
     	boolean usuarioSic = isUserInRoll(Constantes.ROL_INT_SIC);
     	return usuarioSic;
-   
+
     }
 
 	/**
@@ -505,7 +505,6 @@ public class ConsultaOperacionesController extends ControllerBase {
 
 		
 		for (OperacionSic operacionSic : operaciones) {
-
 		    operacionSic.setConMensaje(conMensaje);
 		    if (operacionSic.getCambioBoveda() != null && operacionSic.getCambioBoveda().equals(BigInteger.ONE)) {
 		        validaMovimientosPermitidosCambioBoveda(operacionSic, listaOperaciones);

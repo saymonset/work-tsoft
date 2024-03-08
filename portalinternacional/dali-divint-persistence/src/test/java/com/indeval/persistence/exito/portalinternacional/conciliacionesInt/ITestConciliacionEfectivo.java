@@ -136,7 +136,7 @@ public class ITestConciliacionEfectivo extends BaseDaoTestCase {
 	}
 	
 	public void tesstConsultaBitacora(){
-		List<BitacoraConciliacionEfectivoInt> lista = conciliacionEfectivoDao.getBitacoraConciliacionEfectivoInt(2346l);
+		List<BitacoraConciliacionEfectivoInt> lista = conciliacionEfectivoDao.getBitacoraConciliacionEfectivoInt("2346");
 		for(BitacoraConciliacionEfectivoInt bit : lista){
 			System.out.println(bit.getBicCode());
 			System.out.println(bit.getChk());

@@ -746,8 +746,6 @@ function bloquearBotonesReportes(botonesBloquear) {
 	setTimeout("refrescarMonitor()", 5000);
 }
 
-
-
 function bloquearSeccionReportes() {
 	iniciarMonitorPeticionReporte = true;
 	$j("#divControlesReportes").css("display", "none");
@@ -769,8 +767,6 @@ function desbloquearBotonesReportes(estatusPeticion, botonesDesbloquear) {
 		setTimeout("refrescarMonitor()", 5000);
 	}
 }
-
-
 
 function desbloquearSeccionReportes(estatusPeticion) {
 	if(estatusPeticion === true) {		

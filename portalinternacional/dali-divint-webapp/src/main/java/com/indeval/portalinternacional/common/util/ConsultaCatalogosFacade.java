@@ -3,11 +3,13 @@
  */
 package com.indeval.portalinternacional.common.util;
 
+import com.indeval.portaldali.persistence.modelo.Boveda;
 import com.indeval.portaldali.persistence.util.constants.DaliConstants;
 import com.indeval.portalinternacional.middleware.services.divisioninternacional.*;
 import com.indeval.portalinternacional.middleware.servicios.constantes.Constantes;
 import com.indeval.portalinternacional.middleware.servicios.constantes.TipoCustodiaConstants;
 import com.indeval.portalinternacional.middleware.servicios.dto.*;
+import com.indeval.portalinternacional.middleware.servicios.modelo.Bovedas;
 import com.indeval.portalinternacional.middleware.servicios.modelo.CuentaCorresponsal;
 import com.indeval.portalinternacional.middleware.servicios.modelo.CuentaCorresponsal103;
 import com.indeval.portalinternacional.middleware.servicios.modelo.CuentaCorresponsal202;
@@ -45,7 +47,7 @@ public class ConsultaCatalogosFacade {
 
 		SelectItem item = null;
 		for (DivisaDTO divisa : consultaDivisaService.consultarDivisas(null)) {
-			opcionesSelect.add(new SelectItem("" + divisa.getId(), divisa.getClaveAlfabetica()));
+			opcionesSelect.add(new SelectItem("" + divisa.getId(), divisa.getDescripcion()));
 		}
 		return opcionesSelect;
 	}
@@ -215,6 +217,31 @@ public class ConsultaCatalogosFacade {
 			}
 		}
 		return opcionesSelect;
+	}
+
+	/**
+	 * Obtiene una lista con los elementos del cat�logo de tipos de Bovedas y
+	 * filtra solo las de tipo valor preparados en elementos del tipo
+	 * {@link SelectItem} para desplegar las opciones en un selectOneMenu
+	 *
+	 * @return Lista con las opciones a presentar
+	 */
+	public List<SelectItem> getSelectItemsBovedasEfectivo() {
+		List<SelectItem> listBovedas = new ArrayList<SelectItem>();
+
+		BovedaDto dto = new BovedaDto();
+		dto.setIdBoveda(DaliConstants.VALOR_COMBO_TODOS);
+		dto.setDescripcion("TODAS");
+		TipoBovedaDto tipoBoveda = new TipoBovedaDto();
+		tipoBoveda.setClave(TipoCustodiaConstants.EFECTIVO);
+		dto.setTipoBoveda(tipoBoveda);
+		listBovedas.add(new SelectItem("-1", dto.getDescripcion()));
+
+		// Obtiene las Bovedas
+		for (BovedaDto boveda : consultaBovedaService.buscarBovedasPorTipoCustodia(dto, null, null)) {
+			listBovedas.add(new SelectItem("" + boveda.getIdBoveda(), boveda.getDescripcion()));
+		}
+		return listBovedas;
 	}
 
 	/**

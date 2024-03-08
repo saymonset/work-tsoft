@@ -48,7 +48,7 @@ public interface ConciliacionEfectivoIntService {
 	 * @param idConciliacion
 	 * @return List<BitacoraConciliacionEfectivoInt> lista con los mensajes
 	 */
-	List<BitacoraConciliacionEfectivoInt> getBitacoraConciliacionEfectivoInt(Long idConciliacion);
+	List<BitacoraConciliacionEfectivoInt> getBitacoraConciliacionEfectivoInt(String idConciliacion);
 	
 	/**
 	 * Obtiene una lista de bicCodes

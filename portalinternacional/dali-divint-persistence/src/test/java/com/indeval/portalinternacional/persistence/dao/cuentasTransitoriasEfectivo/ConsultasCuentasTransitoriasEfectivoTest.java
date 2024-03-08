@@ -4,6 +4,7 @@ package com.indeval.portalinternacional.persistence.dao.cuentasTransitoriasEfect
 import com.indeval.portalinternacional.persistence.dao.impl.cuentasTransitoriasEfectivo.ConsultasCuentasTransitoriasEfectivo;
 import junit.framework.TestCase;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -108,6 +109,12 @@ public class ConsultasCuentasTransitoriasEfectivoTest extends TestCase {
                         getQueryObtenerCustodio(ID_REGISTRO)));
     }
 
+    public void testObtenerIdCalendarioInt() {
+        assertTrue(validarQuery(false,
+                ConsultasCuentasTransitoriasEfectivo.getQueryObtenerIdCalendarioInt(FOLIO_RELACIONADO)));
+
+    }
+
     public void testGetQueryAsignarFolioRelacionado() {
         assertTrue(validarQuery(true,
                 ConsultasCuentasTransitoriasEfectivo.
@@ -148,8 +155,8 @@ public class ConsultasCuentasTransitoriasEfectivoTest extends TestCase {
             String url = "jdbc:oracle:thin:@10.100.230.42:1521/homology";
             //jdbc:oracle:thin:@hostname:1521/service_name
             //jdbc:oracle:thin:@hostname:1521:SID
-            String username = "dali_admin";
-            String password = "dalidev";
+            String username = "ADMINSEGU_7";
+            String password = "s3Gw_7H0moGi";
             connection = DriverManager.getConnection(url, username, password);
         } catch (Exception e) {
             e.printStackTrace();

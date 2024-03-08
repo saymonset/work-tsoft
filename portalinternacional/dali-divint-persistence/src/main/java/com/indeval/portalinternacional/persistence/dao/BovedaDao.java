@@ -67,5 +67,6 @@ public interface BovedaDao extends BaseDao {
      */
     List<Bovedas> findAllBovedasEfectivo();
 
-    // Fin Cambio Multidivisas
+    String getBovedaDescriptionById(Integer idBoveda);
+// Fin Cambio Multidivisas
 }

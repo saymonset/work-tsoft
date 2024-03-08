@@ -94,6 +94,9 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
                     com.indeval.portalinternacional.middleware.servicios.modelo.CodigoIdentificacionEfectivoInt
                 </value>
                 <value>
+                    com.indeval.portalinternacional.middleware.servicios.modelo.ConciliacionDivisasInt
+                </value>
+                <value>
                     com.indeval.portalinternacional.middleware.servicios.modelo.ConciliacionEfectivoInt
                 </value>
                 <value>
@@ -746,6 +749,12 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <property name="bovedaDao" ref="bovedaDao"/>
         <property name="bovedaIntDao" ref="bovedaIntDao"/>
         <property name="catBicDao" ref="catBicDao"/>
+    </bean>
+
+    <bean id="conciliacionDivisasIntService"
+          class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConciliacionDivisasIntServiceImpl"
+          lazy-init="true">
+        <property name="conciliacionDivisasIntDao" ref="conciliacionDivisasIntDao"/>
     </bean>
 
     <bean id="consultaCuentasService" class="com.indeval.portalinternacional.middleware.services.divisioninternacional.ConsultaCuentasServiceImpl" lazy-init="true">

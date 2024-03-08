@@ -1549,6 +1549,19 @@
                                                             </list>
                                                         </property>
                                                     </bean>
+                                                    <bean class="com.indeval.portaldali.presentation.jsf.menunavegacion.vo.ElementoMenu">
+                                                        <property name="id" value="conciliacionDeEfectivo"></property>
+                                                        <property name="etiqueta" value="Conciliación Efectivo Bóvedas-Custodio"></property>
+                                                        <property name="urlIcono" value="/dali/images/menu/menu_item_icon.png"></property>
+                                                        <property name="url"
+                                                                  value="/dali-divint/conciliacionInternacional/conciliacionDeEfectivo.faces"></property>
+                                                        <property name="roles">
+                                                            <list>
+                                                                <value>INT_BEN_INDEVAL</value>
+                                                                <value>DEV_MODE_DALI</value>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
                                                 </list>
                                             </property>
                                         </bean>
