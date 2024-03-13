@@ -144,7 +144,49 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 		return pagina;
 	}
 
+
 	public List<CalendarioDerechos> calculaMontos(List<CalendarioDerechos> lista){
+		List<CalendarioDerechos> calendarioCaldulado= new ArrayList<>();
+		List<BitacoraMensajeSwiftImporte> mensajesSwift = new ArrayList<>();
+		double montoConfir = 0.0;
+		double monto566= 0.0; // Debe cubriri el total a pagar
+		double monto900= 0.0; // Retiro
+		double monto910= 0.0; //Deposito
+
+		for (CalendarioDerechos derecho: lista) {
+
+			Long idCalendarioBit = derecho.getIdCalendario();
+			mensajesSwift = getBitacoraMensajeSwiftImportebyId(idCalendarioBit);
+			//		citibank = 13
+			/** Sumatoria de los 566 cuadre con el monto real que tengo que pagar */
+			/** Los 566 debe ser igual o mayor al calcula de la sumatoria de los ( 910 menos los 900 )*/
+			// EuroClear
+			//Debe haber 566 y validar que existn fechas y un mensaje 567
+
+			monto566= 0.0; // Debe cubrir el total a pagar
+			monto900= 0.0; // Retiro (Viene con saldo negativo)
+			monto910= 0.0; //Deposito
+			montoConfir=0.0;
+			for (BitacoraMensajeSwiftImporte mensajeSwift : mensajesSwift) {
+				if ((mensajeSwift.getTipoMensaje() != null && "900".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString()))) {
+					monto900 += mensajeSwift.getImporte() != null? mensajeSwift.getImporte().doubleValue() : 0;
+				}
+				if ((mensajeSwift.getTipoMensaje() != null && "910".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString()))) {
+					monto910 += mensajeSwift.getImporte() != null? mensajeSwift.getImporte().doubleValue() : 0;
+				}
+				if ((mensajeSwift.getTipoMensaje() != null && "566".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString()))) {
+					monto566 += mensajeSwift.getImporte() != null? mensajeSwift.getImporte().doubleValue() : 0;
+				}
+
+			}
+			montoConfir = monto566 - (monto910 + monto900 );
+			derecho.setMontoConfirmado(montoConfir);
+			calendarioCaldulado.add(derecho);
+		}
+		return calendarioCaldulado;
+	}
+
+	public List<CalendarioDerechos> calculaMontosBorrar(List<CalendarioDerechos> lista){
 		List<CalendarioDerechos> calendarioCaldulado= new ArrayList<>();
 		List<BitacoraMensajeSwiftImporte> mensajesSwift = new ArrayList<>();
 		double montoConfir = 0.0;
@@ -246,35 +288,45 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 		sb.append(" FROM BitacoraMensajeSwift bms");
 		sb.append(" where bms.idCalendario = :id");
 		sb.append(" ORDER BY bms.fecha desc, bms.idCalendario desc");
-		@SuppressWarnings("unchecked")
-		List<BitacoraMensajeSwift> retorno = (List<BitacoraMensajeSwift>) getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				Query query = session.createQuery(sb.toString());	
-				query.setLong("id", id);
-				return query.list();
-			}
-		});
+		List<BitacoraMensajeSwift> retorno = null;
+		try {
+			retorno = (List<BitacoraMensajeSwift>) getHibernateTemplate().execute(new HibernateCallback() {
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					Query query = session.createQuery(sb.toString());
+					query.setLong("id", id);
+					return query.list();
+				}
+			});
+		}catch (Exception e) {
+			System.out.println("e.toString() = " + e.toString());
+		}
+
 		return retorno;
 	}
 
 	/*	Metodo creado para proyecto Multidivisas
 	 *	Calcula el Importe de los mensajes
-	 */
-	public List<BitacoraMensajeSwiftImporte>  getBitacoraMensajeSwiftImportebyId(final Long id) {
+	 */public List<BitacoraMensajeSwiftImporte>  getBitacoraMensajeSwiftImportebyId(final Long id) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append(" FROM BitacoraMensajeSwiftImporte bsi");
-		sb.append(" where bsi.idCalendario = :id ");
+		sb.append(" where bsi.idCalendario =:id ");
 		sb.append(" ORDER BY bsi.fecha desc, bsi.idCalendario desc ");
-		@SuppressWarnings("unchecked")
-		List<BitacoraMensajeSwiftImporte> retorno = (List<BitacoraMensajeSwiftImporte>) getHibernateTemplate().execute(new HibernateCallback() {
-			public Object doInHibernate(Session session) throws HibernateException, SQLException {
-				Query query = session.createQuery(sb.toString());
-				query.setLong("id", id);
-				return query.list();
-			}
-		});
+		List<BitacoraMensajeSwiftImporte> retorno = null;
+		try {
+			retorno = (List<BitacoraMensajeSwiftImporte>) getHibernateTemplate().execute(new HibernateCallback() {
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					Query query = session.createQuery(sb.toString());
+					query.setLong("id", id);
+					return query.list();
+				}
+			});
+		}catch (Exception e) {
+			System.out.println("e.toString() = " + e.toString());
+		}
+
 		return retorno;
 	}
+
 
 
 
