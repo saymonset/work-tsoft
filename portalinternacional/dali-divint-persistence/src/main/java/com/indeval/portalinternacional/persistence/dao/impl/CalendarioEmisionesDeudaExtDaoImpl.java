@@ -7,9 +7,7 @@ package com.indeval.portalinternacional.persistence.dao.impl;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import com.indeval.portalinternacional.middleware.servicios.modelo.*;
 import org.hibernate.HibernateException;
@@ -146,85 +144,102 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 
 
 	public List<CalendarioDerechos> calculaMontos(List<CalendarioDerechos> lista){
-		List<CalendarioDerechos> calendarioCaldulado= new ArrayList<>();
-		List<BitacoraMensajeSwiftImporte> mensajesSwift = new ArrayList<>();
-		double montoConfir = 0.0;
-		double monto566= 0.0; // Debe cubriri el total a pagar
-		double monto900= 0.0; // Retiro
-		double monto910= 0.0; //Deposito
 
-		for (CalendarioDerechos derecho: lista) {
-
-			Long idCalendarioBit = derecho.getIdCalendario();
-			mensajesSwift = getBitacoraMensajeSwiftImportebyId(idCalendarioBit);
-			//		citibank = 13
-			/** Sumatoria de los 566 cuadre con el monto real que tengo que pagar */
-			/** Los 566 debe ser igual o mayor al calcula de la sumatoria de los ( 910 menos los 900 )*/
-			// EuroClear
-			//Debe haber 566 y validar que existn fechas y un mensaje 567
-
-			monto566= 0.0; // Debe cubrir el total a pagar
-			monto900= 0.0; // Retiro (Viene con saldo negativo)
-			monto910= 0.0; //Deposito
-			montoConfir=0.0;
-			for (BitacoraMensajeSwiftImporte mensajeSwift : mensajesSwift) {
-				if ((mensajeSwift.getTipoMensaje() != null && "900".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString()))) {
-					monto900 += mensajeSwift.getImporte() != null? mensajeSwift.getImporte().doubleValue() : 0;
-				}
-				if ((mensajeSwift.getTipoMensaje() != null && "910".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString()))) {
-					monto910 += mensajeSwift.getImporte() != null? mensajeSwift.getImporte().doubleValue() : 0;
-				}
-				if ((mensajeSwift.getTipoMensaje() != null && "566".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString()))) {
-					monto566 += mensajeSwift.getImporte() != null? mensajeSwift.getImporte().doubleValue() : 0;
-				}
-
-			}
-			montoConfir = monto566 - (monto910 + monto900 );
-			derecho.setMontoConfirmado(montoConfir);
-			calendarioCaldulado.add(derecho);
+//		#Sacamos todos los id_calendar para preparar un in de sql
+		StringBuilder stringBuilder = new StringBuilder();
+		for (CalendarioDerechos calendario : lista) {
+			stringBuilder.append(calendario.getIdCalendario()).append(",");
 		}
-		return calendarioCaldulado;
-	}
 
-	public List<CalendarioDerechos> calculaMontosBorrar(List<CalendarioDerechos> lista){
-		List<CalendarioDerechos> calendarioCaldulado= new ArrayList<>();
-		List<BitacoraMensajeSwiftImporte> mensajesSwift = new ArrayList<>();
-		double montoConfir = 0.0;
-		for (CalendarioDerechos derecho: lista) {
-			montoConfir=0.0;
-			if (derecho.getCustodio().getId() == 13) {
-
-				Long idCalendarioBit = derecho.getIdCalendario();
-				try {
-					mensajesSwift = getBitacoraMensajeSwiftImportebyId(idCalendarioBit);
-				}catch (Exception e){
-					log.info(e.toString());
-				}
-				for (BitacoraMensajeSwiftImporte mensajeSwift : mensajesSwift) {
-					if ((mensajeSwift.getTipoMensaje() == "900") || (mensajeSwift.getTipoMensaje() == "910")) {
-						//para pruebas internas evitando defectos en los mensajes null
-						try{
-							montoConfir += mensajeSwift.getImporte();
-						}catch (Exception e){
-							log.info(e.toString());
-							montoConfir+=0.0;
-						}
-					} else if (mensajeSwift.getTipoMensaje() == "566") {
-						//Try catch para evitar errores por los mensajes con monto en null
-						try{
-							montoConfir = montoConfir - mensajeSwift.getImporte();
-						}catch (Exception e){
-							log.info(e.toString());
-							montoConfir+=0.0;
-						}
-					}
-					derecho.setMontoConfirmado(montoConfir);
-				}
-			}else{
-				derecho.setMontoConfirmado(0.0);
-			}
-			calendarioCaldulado.add(derecho);
+// Remove the trailing comma if needed
+		if (stringBuilder.length() > 0) {
+			stringBuilder.deleteCharAt(stringBuilder.length() - 1);
 		}
+
+		String sqlIn = stringBuilder.toString();
+
+		List<BitacoraMensajeSwiftImporte> bmsiLst = getBitacoraMensajeSwiftImportebyId(sqlIn.toString());
+		if (bmsiLst == null){
+			bmsiLst = new ArrayList<>();
+		}
+
+		Map<Long, List<BitacoraMensajeSwiftImporte>> mapa = new HashMap<Long, List<BitacoraMensajeSwiftImporte>>();
+		for (BitacoraMensajeSwiftImporte bmsi : bmsiLst) {
+			Long idCalendario = bmsi.getIdCalendario();
+			if (!mapa.containsKey(idCalendario)) {
+				mapa.put(idCalendario, new ArrayList<BitacoraMensajeSwiftImporte>());
+			}
+			mapa.get(idCalendario).add(bmsi);
+		}
+
+		List<CalendarioDerechos> calendarioCaldulado= new ArrayList<>();
+		for (CalendarioDerechos calendario : lista) {
+			Long idCalendario = calendario.getIdCalendario();
+			List<BitacoraMensajeSwiftImporte> lista0 = mapa.containsKey(idCalendario) ? mapa.get(idCalendario) : new ArrayList<BitacoraMensajeSwiftImporte>();
+
+			double monto566 = 0;
+			double monto900 = 0;
+			double monto910 = 0;
+
+			for (BitacoraMensajeSwiftImporte mensajeSwift : lista0) {
+				if ("566".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString())) {
+					monto566 += mensajeSwift.getImporte() != null ? mensajeSwift.getImporte().doubleValue() : 0;
+				} else if ("900".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString())) {
+					monto900 += mensajeSwift.getImporte() != null ? mensajeSwift.getImporte().doubleValue() : 0;
+				} else if ("910".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString())) {
+					monto910 += mensajeSwift.getImporte() != null ? mensajeSwift.getImporte().doubleValue() : 0;
+				}
+			}
+
+			double montoConfir = monto566 - (monto910 + monto900);
+
+			calendario.setMontoConfirmado(montoConfir);
+			calendarioCaldulado.add(calendario);
+		}
+
+
+//
+//
+//
+//
+//
+//		List<CalendarioDerechos> calendarioCaldulado= new ArrayList<>();
+//		List<BitacoraMensajeSwiftImporte> mensajesSwift = new ArrayList<>();
+//		double montoConfir = 0.0;
+//		double monto566= 0.0; // Debe cubriri el total a pagar
+//		double monto900= 0.0; // Retiro
+//		double monto910= 0.0; //Deposito
+//
+//		for (CalendarioDerechos derecho: lista) {
+//
+//			Long idCalendarioBit = derecho.getIdCalendario();
+//			mensajesSwift = getBitacoraMensajeSwiftImportebyId(idCalendarioBit);
+//			//		citibank = 13
+//			/** Sumatoria de los 566 cuadre con el monto real que tengo que pagar */
+//			/** Los 566 debe ser igual o mayor al calcula de la sumatoria de los ( 910 menos los 900 )*/
+//			// EuroClear
+//			//Debe haber 566 y validar que existn fechas y un mensaje 567
+//
+//			monto566= 0.0; // Debe cubrir el total a pagar
+//			monto900= 0.0; // Retiro (Viene con saldo negativo)
+//			monto910= 0.0; //Deposito
+//			montoConfir=0.0;
+//			for (BitacoraMensajeSwiftImporte mensajeSwift : mensajesSwift) {
+//				if ((mensajeSwift.getTipoMensaje() != null && "900".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString()))) {
+//					monto900 += mensajeSwift.getImporte() != null? mensajeSwift.getImporte().doubleValue() : 0;
+//				}
+//				if ((mensajeSwift.getTipoMensaje() != null && "910".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString()))) {
+//					monto910 += mensajeSwift.getImporte() != null? mensajeSwift.getImporte().doubleValue() : 0;
+//				}
+//				if ((mensajeSwift.getTipoMensaje() != null && "566".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString()))) {
+//					monto566 += mensajeSwift.getImporte() != null? mensajeSwift.getImporte().doubleValue() : 0;
+//				}
+//
+//			}
+//			montoConfir = monto566 - (monto910 + monto900 );
+//			derecho.setMontoConfirmado(montoConfir);
+//			calendarioCaldulado.add(derecho);
+//		}
 		return calendarioCaldulado;
 	}
 
@@ -304,6 +319,35 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 		return retorno;
 	}
 
+
+	/*	Metodo creado para proyecto Multidivisas
+	 *	Calcula el Importe de los mensajes
+	 */
+
+	public List<BitacoraMensajeSwiftImporte>  getBitacoraMensajeSwiftImportebyId(final String sqlIn) {
+		final StringBuilder sb = new StringBuilder();
+		sb.append(" FROM BitacoraMensajeSwiftImporte bsi");
+		sb.append(" WHERE bsi.idCalendario IN (:ids)");
+		sb.append(" ORDER BY bsi.fecha desc, bsi.idCalendario desc ");
+		List<BitacoraMensajeSwiftImporte> retorno = null;
+		try {
+			retorno = (List<BitacoraMensajeSwiftImporte>) getHibernateTemplate().execute(new HibernateCallback() {
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					Query query = session.createQuery(sb.toString());
+					List<Long> idList = new ArrayList<Long>();
+					String[] idArray = sqlIn.split(",");
+					for (String id : idArray) {
+						idList.add(Long.parseLong(id.trim()));
+					}
+					query.setParameterList("ids", idList);
+					return query.list();
+				}
+			});
+		}catch (Exception e) {
+			System.out.println("e.toString() = " + e.toString());
+		}
+		return retorno;
+	}
 	/*	Metodo creado para proyecto Multidivisas
 	 *	Calcula el Importe de los mensajes
 	 */public List<BitacoraMensajeSwiftImporte>  getBitacoraMensajeSwiftImportebyId(final Long id) {
