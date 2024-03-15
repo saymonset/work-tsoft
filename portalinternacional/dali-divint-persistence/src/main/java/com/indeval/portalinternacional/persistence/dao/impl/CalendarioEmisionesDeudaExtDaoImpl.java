@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.indeval.portalinternacional.middleware.servicios.modelo.*;
+import com.indeval.portalinternacional.middleware.servicios.vo.CalendarioDerechosVO;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -135,16 +136,16 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 			}
 		});
 		if(lista != null && lista.size() > 0){
-			lista=calculaMontos(lista);
-			pagina.setRegistros(lista);
+			List<CalendarioDerechosVO> listaVO=calculaMontos(lista);
+			pagina.setRegistros(listaVO);
 		}
 		
 		return pagina;
 	}
 
 
-	public List<CalendarioDerechos> calculaMontos(List<CalendarioDerechos> lista){
-
+	public List<CalendarioDerechosVO> calculaMontos(List<CalendarioDerechos> lista){
+		List<CalendarioDerechosVO> calendarioCalculadosVO= new ArrayList<>();
 //		#Sacamos todos los id_calendar para preparar un in de sql
 		StringBuilder stringBuilder = new StringBuilder();
 		for (CalendarioDerechos calendario : lista) {
@@ -172,75 +173,66 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 			mapa.get(idCalendario).add(bmsi);
 		}
 
-		List<CalendarioDerechos> calendarioCaldulado= new ArrayList<>();
+
 		for (CalendarioDerechos calendario : lista) {
-			Long idCalendario = calendario.getIdCalendario();
+
+			//Mapeamos todos los valores del entity calendario a VO CalendarioVO
+			CalendarioDerechosVO calendarioDerechosVO = new CalendarioDerechosVO(calendario);
+			Long idCalendario = calendarioDerechosVO.getIdCalendario();
 			List<BitacoraMensajeSwiftImporte> lista0 = mapa.containsKey(idCalendario) ? mapa.get(idCalendario) : new ArrayList<BitacoraMensajeSwiftImporte>();
+
+			boolean isEuroclearAndFechaPagoValor = false;
+			boolean isCitiBank = false;
+			//	Solo para los custodios EUROCLE = 2 se busca que fecha valor y fecha de pago sean iguales para encntrar un MT567 que debe tener como obligatorio si las fechas son iguales
+			if (calendarioDerechosVO.getCustodio() != null && calendarioDerechosVO.getCustodio().getId() == 2){
+				if (calendarioDerechosVO.getFechaPago() != null &&
+						calendarioDerechosVO.getFechaValor()!=null &&
+						calendarioDerechosVO.getFechaValor().equals(calendarioDerechosVO.getFechaPago())){
+					isEuroclearAndFechaPagoValor = true;
+				}
+			}
+
+			//CITIBANCK
+			if (calendarioDerechosVO.getCustodio() != null && calendarioDerechosVO.getCustodio().getId() == 13){
+				isCitiBank = true;
+			}
 
 			double monto566 = 0;
 			double monto900 = 0;
 			double monto910 = 0;
 
 			for (BitacoraMensajeSwiftImporte mensajeSwift : lista0) {
+				if (isEuroclearAndFechaPagoValor){
+					calendarioDerechosVO.setHasEqualsFpagoAndFvalor(true);
+					if ("567".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString())) {
+						calendarioDerechosVO.setHasM567(true);
+					}
+				}
+
+//				Solo para los custodios CITIBANK = 13 se busca los mt900 y mt 910
+				if (isCitiBank){
+					if ("900".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString())) {
+						monto900 += mensajeSwift.getImporte() != null ? mensajeSwift.getImporte().doubleValue() : 0;
+					}
+					if ("910".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString())) {
+						monto910 += mensajeSwift.getImporte() != null ? mensajeSwift.getImporte().doubleValue() : 0;
+					}
+				}
+
 				if ("566".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString())) {
 					monto566 += mensajeSwift.getImporte() != null ? mensajeSwift.getImporte().doubleValue() : 0;
-				} else if ("900".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString())) {
-					monto900 += mensajeSwift.getImporte() != null ? mensajeSwift.getImporte().doubleValue() : 0;
-				} else if ("910".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString())) {
-					monto910 += mensajeSwift.getImporte() != null ? mensajeSwift.getImporte().doubleValue() : 0;
 				}
+
+
 			}
 
 			double montoConfir = monto566 - (monto910 + monto900);
 
-			calendario.setMontoConfirmado(montoConfir);
-			calendarioCaldulado.add(calendario);
+			calendarioDerechosVO.setMontoConfirmado(montoConfir);
+			calendarioCalculadosVO.add(calendarioDerechosVO);
 		}
 
-
-//
-//
-//
-//
-//
-//		List<CalendarioDerechos> calendarioCaldulado= new ArrayList<>();
-//		List<BitacoraMensajeSwiftImporte> mensajesSwift = new ArrayList<>();
-//		double montoConfir = 0.0;
-//		double monto566= 0.0; // Debe cubriri el total a pagar
-//		double monto900= 0.0; // Retiro
-//		double monto910= 0.0; //Deposito
-//
-//		for (CalendarioDerechos derecho: lista) {
-//
-//			Long idCalendarioBit = derecho.getIdCalendario();
-//			mensajesSwift = getBitacoraMensajeSwiftImportebyId(idCalendarioBit);
-//			//		citibank = 13
-//			/** Sumatoria de los 566 cuadre con el monto real que tengo que pagar */
-//			/** Los 566 debe ser igual o mayor al calcula de la sumatoria de los ( 910 menos los 900 )*/
-//			// EuroClear
-//			//Debe haber 566 y validar que existn fechas y un mensaje 567
-//
-//			monto566= 0.0; // Debe cubrir el total a pagar
-//			monto900= 0.0; // Retiro (Viene con saldo negativo)
-//			monto910= 0.0; //Deposito
-//			montoConfir=0.0;
-//			for (BitacoraMensajeSwiftImporte mensajeSwift : mensajesSwift) {
-//				if ((mensajeSwift.getTipoMensaje() != null && "900".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString()))) {
-//					monto900 += mensajeSwift.getImporte() != null? mensajeSwift.getImporte().doubleValue() : 0;
-//				}
-//				if ((mensajeSwift.getTipoMensaje() != null && "910".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString()))) {
-//					monto910 += mensajeSwift.getImporte() != null? mensajeSwift.getImporte().doubleValue() : 0;
-//				}
-//				if ((mensajeSwift.getTipoMensaje() != null && "566".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString()))) {
-//					monto566 += mensajeSwift.getImporte() != null? mensajeSwift.getImporte().doubleValue() : 0;
-//				}
-//
-//			}
-//			montoConfir = monto566 - (monto910 + monto900 );
-//			derecho.setMontoConfirmado(montoConfir);
-//			calendarioCaldulado.add(derecho);
-//		}
-		return calendarioCaldulado;
+		return calendarioCalculadosVO;
 	}
 
 	public Integer actualizarEstadosDerechoInt(final Set<Long> ids, 	final Integer nuevoEstado) {			

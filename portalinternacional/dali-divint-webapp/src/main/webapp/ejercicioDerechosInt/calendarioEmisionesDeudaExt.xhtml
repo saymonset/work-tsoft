@@ -873,7 +873,7 @@
 								</td>
 								<!--FN_LIQUIDAR -->
 								<td class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} centrado"  rowspan='3'>
-									<h:panelGroup rendered="#{(derecho.estado.descripcion ne 'LIQUIDADO' and derecho.estado.descripcion eq 'PRELIQUIDADO' and empty calendarioEmisionesDeudaExtBean.derechosAutomatizadosDeuda[derecho.tipoValor]) or (!empty sessionScope.roles['INT_CAL_INDEVAL_SU']) }"
+									<h:panelGroup
 										styleClass="liquida_#{derecho.idCalendario}" >
 										<table><tr><td>	
 											<input  id="chk_liquida_#{derecho.idCalendario}"	type="checkbox"
@@ -881,7 +881,7 @@
 												 />
 											</td></tr>
 											<tr><td>
-											<a4j:commandButton id="botonLiquidar" title="Liquidar"
+											<a4j:commandButton id="botonLiquidar" title="LiquidarXXXXX"
 													action="#{calendarioEmisionesDeudaExtBean.liquidaDerechos}"													
 													image="/images/accept.png"
 													onclick="lockBotones('botonLiquidar');agregaLiquida('chk_liquida_#{derecho.idCalendario}' , true);if(!validarAccion('liquidar')){unlockBotones('botonLiquidar');return false;}" 
