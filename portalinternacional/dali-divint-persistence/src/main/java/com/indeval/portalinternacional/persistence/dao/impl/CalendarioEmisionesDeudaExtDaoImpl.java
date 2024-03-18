@@ -5,6 +5,7 @@ package com.indeval.portalinternacional.persistence.dao.impl;
 
 
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -159,11 +160,13 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 
 		String sqlIn = stringBuilder.toString();
 
+		//Buscamos n bd
 		List<BitacoraMensajeSwiftImporte> bmsiLst = getBitacoraMensajeSwiftImportebyId(sqlIn.toString());
 		if (bmsiLst == null){
 			bmsiLst = new ArrayList<>();
 		}
 
+		//agrupamos en un map los CalendarId
 		Map<Long, List<BitacoraMensajeSwiftImporte>> mapa = new HashMap<Long, List<BitacoraMensajeSwiftImporte>>();
 		for (BitacoraMensajeSwiftImporte bmsi : bmsiLst) {
 			Long idCalendario = bmsi.getIdCalendario();
@@ -179,31 +182,34 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 			//Mapeamos todos los valores del entity calendario a VO CalendarioVO
 			CalendarioDerechosVO calendarioDerechosVO = new CalendarioDerechosVO(calendario);
 			Long idCalendario = calendarioDerechosVO.getIdCalendario();
-			List<BitacoraMensajeSwiftImporte> lista0 = mapa.containsKey(idCalendario) ? mapa.get(idCalendario) : new ArrayList<BitacoraMensajeSwiftImporte>();
 
-			boolean isEuroclearAndFechaPagoValor = false;
-			boolean isCitiBank = false;
+
 			//	Solo para los custodios EUROCLE = 2 se busca que fecha valor y fecha de pago sean iguales para encntrar un MT567 que debe tener como obligatorio si las fechas son iguales
 			if (calendarioDerechosVO.getCustodio() != null && calendarioDerechosVO.getCustodio().getId() == 2){
 				if (calendarioDerechosVO.getFechaPago() != null &&
 						calendarioDerechosVO.getFechaValor()!=null &&
 						calendarioDerechosVO.getFechaValor().equals(calendarioDerechosVO.getFechaPago())){
-					isEuroclearAndFechaPagoValor = true;
+					calendarioDerechosVO.setEuroclearAndFechaPagoValor(true);
 				}
 			}
 
+			boolean isCitiBank = false;
 			//CITIBANCK
 			if (calendarioDerechosVO.getCustodio() != null && calendarioDerechosVO.getCustodio().getId() == 13){
 				isCitiBank = true;
+				calendarioDerechosVO.setCitiBank(isCitiBank);
 			}
 
-			double monto566 = 0;
-			double monto900 = 0;
-			double monto910 = 0;
+			BigDecimal monto566 = new BigDecimal(0.0);
+			//retiro
+			BigDecimal monto900 = new BigDecimal(0.0);
+			// deposito
+			BigDecimal monto910 = new BigDecimal(0.0);
 
+			List<BitacoraMensajeSwiftImporte> lista0 = mapa.containsKey(idCalendario) ? mapa.get(idCalendario) : new ArrayList<BitacoraMensajeSwiftImporte>();
 			for (BitacoraMensajeSwiftImporte mensajeSwift : lista0) {
-				if (isEuroclearAndFechaPagoValor){
-					calendarioDerechosVO.setHasEqualsFpagoAndFvalor(true);
+				//Segun la regla, si es euroclear y tiene fecha de pago y fecha valor, debe tener un MT 567 para poder conctinuar
+				if (calendarioDerechosVO.getEuroclearAndFechaPagoValor()){
 					if ("567".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString())) {
 						calendarioDerechosVO.setHasM567(true);
 					}
@@ -212,22 +218,31 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 //				Solo para los custodios CITIBANK = 13 se busca los mt900 y mt 910
 				if (isCitiBank){
 					if ("900".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString())) {
-						monto900 += mensajeSwift.getImporte() != null ? mensajeSwift.getImporte().doubleValue() : 0;
+						monto900.add(mensajeSwift.getImporte() != null ?  new BigDecimal(mensajeSwift.getImporte()) : new BigDecimal(0.0));
 					}
 					if ("910".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString())) {
-						monto910 += mensajeSwift.getImporte() != null ? mensajeSwift.getImporte().doubleValue() : 0;
+						monto910.add(mensajeSwift.getImporte() != null ?  new BigDecimal(mensajeSwift.getImporte()) : new BigDecimal(0.0));
 					}
 				}
 
 				if ("566".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString())) {
-					monto566 += mensajeSwift.getImporte() != null ? mensajeSwift.getImporte().doubleValue() : 0;
+					monto566.add(mensajeSwift.getImporte() != null ?  new BigDecimal(mensajeSwift.getImporte()) : new BigDecimal(0.0));
 				}
 
 
 			}
 
-			double montoConfir = monto566 - (monto910 + monto900);
+			BigDecimal montoConfir = new BigDecimal(0.0);
+			if (isCitiBank){
+				montoConfir = monto566.subtract(monto910.add(monto900));
+			}else{
+				montoConfir = monto566;
+			}
 
+			BigDecimal importe = calendarioDerechosVO.getImporte();
+			boolean isPuedePagar = importe!=null? montoConfir.subtract(importe).compareTo(BigDecimal.ZERO) >= 0 : true;
+
+			calendarioDerechosVO.setPuedePagar(isPuedePagar);
 			calendarioDerechosVO.setMontoConfirmado(montoConfir);
 			calendarioCalculadosVO.add(calendarioDerechosVO);
 		}

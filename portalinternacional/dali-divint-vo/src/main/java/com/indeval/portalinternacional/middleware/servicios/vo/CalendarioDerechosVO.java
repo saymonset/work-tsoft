@@ -53,12 +53,14 @@ public class CalendarioDerechosVO implements Serializable {
     private ControlVO control;
     private Date horaEnvio;
     private Date horaRecepcion;
-    private Double montoConfirmado;
+    private BigDecimal montoConfirmado;
 
     //    Solo para euroclear, la fecha de pago y fecha valor si son iguales, debe tener un m567
-    private Boolean hasEqualsFpagoAndFvalor;
+    private Boolean isEuroclearAndFechaPagoValor;
     private Boolean hasM567;
-    private Boolean euroclear;
+    private Boolean isEuroclear;
+    private Boolean isCitiBank;
+    private Boolean isPuedePagar;
 
 
     /**
@@ -113,11 +115,13 @@ public class CalendarioDerechosVO implements Serializable {
             this.control = new ControlVO(calendarioDerechos.getControl());
             this.horaEnvio = calendarioDerechos.getHoraEnvio();
             this.horaRecepcion = calendarioDerechos.getHoraRecepcion();
-            this.montoConfirmado = calendarioDerechos.getMontoConfirmado();
+            this.montoConfirmado = new BigDecimal(0.0);
             //    Solo para euroclear, la fecha de pago y fecha valor si son iguales, debe tener un m567
-            this.hasEqualsFpagoAndFvalor = false;
+            this.isEuroclearAndFechaPagoValor = false;
             this.hasM567 = false;
-            this.euroclear = false;
+            this.isEuroclear = false;
+            this.isCitiBank = false;
+            this.isPuedePagar = false;
         }
     }
 
@@ -473,20 +477,13 @@ public class CalendarioDerechosVO implements Serializable {
         this.horaRecepcion = horaRecepcion;
     }
 
-    public Double getMontoConfirmado() {
+
+    public BigDecimal getMontoConfirmado() {
         return montoConfirmado;
     }
 
-    public void setMontoConfirmado(Double montoConfirmado) {
+    public void setMontoConfirmado(BigDecimal montoConfirmado) {
         this.montoConfirmado = montoConfirmado;
-    }
-
-    public Boolean getHasEqualsFpagoAndFvalor() {
-        return hasEqualsFpagoAndFvalor;
-    }
-
-    public void setHasEqualsFpagoAndFvalor(Boolean hasEqualsFpagoAndFvalor) {
-        this.hasEqualsFpagoAndFvalor = hasEqualsFpagoAndFvalor;
     }
 
     public Boolean getHasM567() {
@@ -498,10 +495,34 @@ public class CalendarioDerechosVO implements Serializable {
     }
 
     public Boolean getEuroclear() {
-        return euroclear;
+        return isEuroclear;
     }
 
     public void setEuroclear(Boolean euroclear) {
-        this.euroclear = euroclear;
+        isEuroclear = euroclear;
+    }
+
+    public Boolean getCitiBank() {
+        return isCitiBank;
+    }
+
+    public void setCitiBank(Boolean citiBank) {
+        isCitiBank = citiBank;
+    }
+
+    public Boolean getEuroclearAndFechaPagoValor() {
+        return isEuroclearAndFechaPagoValor;
+    }
+
+    public void setEuroclearAndFechaPagoValor(Boolean euroclearAndFechaPagoValor) {
+        isEuroclearAndFechaPagoValor = euroclearAndFechaPagoValor;
+    }
+
+    public Boolean getPuedePagar() {
+        return isPuedePagar;
+    }
+
+    public void setPuedePagar(Boolean puedePagar) {
+        isPuedePagar = puedePagar;
     }
 }
