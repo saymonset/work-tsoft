@@ -886,7 +886,8 @@
 															   actionListener="#{calendarioEmisionesDeudaExtBean.liquidaDerechosEvent}"
 
 													image="/images/accept.png"
-													onclick="lockBotones('botonLiquidar');agregaLiquida('chk_liquida_#{derecho.idCalendario}' , true);
+													onclick="lockBotones('botonLiquidar');
+													         agregaLiquida('chk_liquida_#{derecho.idCalendario}' , true);
 													                          if(!validarAccionLiquidar('liquidar','#{derecho.montoConfirmado}',
 													                          										'#{derecho.citiBank}',
 													                          										'#{derecho.euroclearAndFechaPagoValor}',
@@ -907,10 +908,10 @@
 														 value="#{derecho.citiBank}" />
 												<f:param id="euroclearAndFechaPagoValorID" name="euroclearAndFechaPagoValorID"
 														 value="#{derecho.euroclearAndFechaPagoValor}" />
-												<f:param id="puedePagarID" name="puedePagarID"
-														 value="#{derecho.puedePagar}" />
 												<f:param id="hasM567ID" name="hasM567ID"
 														 value="#{derecho.hasM567}" />
+												<f:param id="puedePagarID" name="puedePagarID"
+														 value="#{derecho.puedePagar}" />
 												<f:param id="euroclearID" name="euroclearID"
 														 value="#{derecho.euroclear}" />
 											</a4j:commandButton>

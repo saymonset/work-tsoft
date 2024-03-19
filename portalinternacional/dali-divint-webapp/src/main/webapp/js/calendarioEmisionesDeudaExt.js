@@ -326,16 +326,18 @@ function validarAccionLiquidar(accion, montoConfirmado , citiBank, euroclearAndF
 	console.log('puedePagar: '+puedePagar);
 	console.log('hasM567: '+hasM567);
 	console.log('euroclear: '+euroclear);
-	if (citiBank){
+
+	if (citiBank==true){
 		console.log('-------------1--------------------');
-		alert('Es Citi Bankd, debp salir!');
+		alert('Es Citi Bank, debe salir! No puede ser liquidado');
 		console.log('-------------1A--------------------');
-		return false;
-	}else if (euroclear){
+		return false
+	}else if (euroclear==true){
 		console.log('-------------2--------------------');
 		alert('Es EUROCLEAR debp salir!');
 		console.log('-------------2B--------------------');
-		return false;
+
+		return confirm("Euroclear!!! Se van a "+accion+" "+" derechos.\n ¿Está usted seguro de querer realizar esta acción?")
 	}else{
 		console.log('-------------3--------------------');
 		console.log('-------------3C--------------------');
