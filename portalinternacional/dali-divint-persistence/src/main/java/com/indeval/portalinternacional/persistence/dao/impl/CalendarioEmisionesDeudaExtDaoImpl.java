@@ -183,9 +183,19 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 			CalendarioDerechosVO calendarioDerechosVO = new CalendarioDerechosVO(calendario);
 			Long idCalendario = calendarioDerechosVO.getIdCalendario();
 
+			boolean isCitiBank = false;
+			//CITIBANCK
+			if (calendarioDerechosVO.getCustodio() != null && calendarioDerechosVO.getCustodio().getId().equals(13)){
+				isCitiBank = true;
+				calendarioDerechosVO.setCitiBank(isCitiBank);
+			}
+			//EUROCLEAR
+			if (calendarioDerechosVO.getCustodio() != null && calendarioDerechosVO.getCustodio().getId().equals(2)){
+				calendarioDerechosVO.setEuroclear(true);
+			}
 
 			//	Solo para los custodios EUROCLE = 2 se busca que fecha valor y fecha de pago sean iguales para encntrar un MT567 que debe tener como obligatorio si las fechas son iguales
-			if (calendarioDerechosVO.getCustodio() != null && calendarioDerechosVO.getCustodio().getId() == 2){
+			if (calendarioDerechosVO.getEuroclear()){
 				if (calendarioDerechosVO.getFechaPago() != null &&
 						calendarioDerechosVO.getFechaValor()!=null &&
 						calendarioDerechosVO.getFechaValor().equals(calendarioDerechosVO.getFechaPago())){
@@ -193,12 +203,7 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 				}
 			}
 
-			boolean isCitiBank = false;
-			//CITIBANCK
-			if (calendarioDerechosVO.getCustodio() != null && calendarioDerechosVO.getCustodio().getId() == 13){
-				isCitiBank = true;
-				calendarioDerechosVO.setCitiBank(isCitiBank);
-			}
+
 
 			BigDecimal monto566 = new BigDecimal(0.0);
 			//retiro
@@ -244,6 +249,7 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 
 			calendarioDerechosVO.setPuedePagar(isPuedePagar);
 			calendarioDerechosVO.setMontoConfirmado(montoConfir);
+			calendarioDerechosVO.setCustodioId(calendarioDerechosVO.getCustodio().getId());
 			calendarioCalculadosVO.add(calendarioDerechosVO);
 		}
 

@@ -10,6 +10,7 @@ import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
@@ -782,6 +783,20 @@ public class CalendarioEmisionesDeudaExtController extends ControllerBase{
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Debe seleccionar una boveda, por favor revisar.", "Debe seleccionar una boveda, por favor revisar."));
 		//Integer regactualizados=divisionInternacionalService.actualizarEstadosDerechoInt(ids, Constantes.CALENDARIO_DERECHOS_LIQUIDADO, isUserInRoll("INT_CAL_INDEVAL_SU"));
 		return null;
+	}
+
+	public void liquidaDerechosEvent(ActionEvent event) {
+
+		UIParameter component = (UIParameter) event.getComponent()
+				.findComponent("idCalendarioID");
+		System.out.println("----------------XXX1------------------------------");
+		if ((component != null) && (component.getValue().toString() != null)) {
+			long id = Long.parseLong(component.getValue().toString());
+			System.out.println("----------------1------------------------------");
+			System.out.println("idCalendarioID = " + id);
+			System.out.println("------------------2----------------------------");
+		}
+
 	}
 	public String corregirReversal(){
 		Set<Long> ids = getIdsModificar("daliForm:calIdDerechoCorregir");

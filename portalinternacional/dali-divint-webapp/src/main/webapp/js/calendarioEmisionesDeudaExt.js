@@ -317,6 +317,34 @@ function escondeColumnas(){
         $j('td:nth-child(23),th:nth-child(23)').hide();
    
 }
+function validarAccionLiquidar(accion, montoConfirmado , citiBank, euroclearAndFechaPagoValor, puedePagar, hasM567, euroclear, custodioId ){
+
+	console.log('custodioId: '+custodioId);
+	console.log('montoConfirmado: '+montoConfirmado);
+	console.log('citiBank: '+ citiBank);
+	console.log('euroclearAndFechaPagoValor: '+ euroclearAndFechaPagoValor);
+	console.log('puedePagar: '+puedePagar);
+	console.log('hasM567: '+hasM567);
+	console.log('euroclear: '+euroclear);
+	if (citiBank){
+		console.log('-------------1--------------------');
+		alert('Es Citi Bankd, debp salir!');
+		console.log('-------------1A--------------------');
+		return false;
+	}else if (euroclear){
+		console.log('-------------2--------------------');
+		alert('Es EUROCLEAR debp salir!');
+		console.log('-------------2B--------------------');
+		return false;
+	}else{
+		console.log('-------------3--------------------');
+		console.log('-------------3C--------------------');
+		return validarAccion(accion);
+
+	}
+	console.log('-------------4--------------------');
+}
+
 function validarAccion(accion){
 	var hiddenField=""
 	var registros=0

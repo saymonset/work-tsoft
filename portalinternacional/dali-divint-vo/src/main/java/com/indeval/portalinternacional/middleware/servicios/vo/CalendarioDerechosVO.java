@@ -62,6 +62,8 @@ public class CalendarioDerechosVO implements Serializable {
     private Boolean isCitiBank;
     private Boolean isPuedePagar;
 
+    private Integer custodioId;
+
 
     /**
      * Constructor por Default
@@ -524,5 +526,13 @@ public class CalendarioDerechosVO implements Serializable {
 
     public void setPuedePagar(Boolean puedePagar) {
         isPuedePagar = puedePagar;
+    }
+
+    public Integer getCustodioId() {
+        return custodioId;
+    }
+
+    public void setCustodioId(Integer custodioId) {
+        this.custodioId = custodioId;
     }
 }
