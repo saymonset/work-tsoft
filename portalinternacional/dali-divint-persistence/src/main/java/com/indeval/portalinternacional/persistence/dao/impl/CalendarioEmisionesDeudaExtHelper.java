@@ -157,7 +157,9 @@ import com.indeval.portalinternacional.middleware.servicios.vo.CalendarioEmision
 	private void whereCalendarioIndeval(CalendarioInternacionalQuery query, CalendarioEmisionesDeudaExtDTO params){
 		//para los operadores del calendario
 		String filtroCapitalesEditado = this.editarFiltroCapitales(this.filtroCapitales);
+
 		query.setEnunciado(" AND ( cal.tipoValor NOT IN (" + filtroCapitalesEditado + ") OR  ( cal.horaEnvio is null OR cal.horaRecepcion is null ) )");
+
 		if ( params.isAll() ) {
 			//solo clearstream y euroclear: TEMPORAL			
 			//query.setEnunciado(" AND cal.custodio.id in(1,2) ");

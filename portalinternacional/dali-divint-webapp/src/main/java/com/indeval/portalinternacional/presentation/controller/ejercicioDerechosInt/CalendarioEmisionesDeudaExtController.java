@@ -142,8 +142,20 @@ public class CalendarioEmisionesDeudaExtController extends ControllerBase{
 		
 		return null;
 	}
-	
-	
+
+	/**
+	 * Inicializa el bean
+	 * @return
+	 */
+	public void getResetLiquidando(){
+		this.isLiquidando = false;
+		this.montoConfirmado = new BigDecimal(0.0);
+		this.isCitiBank = false;
+		this.isEuroclearAndFechaPagoValor  = false;
+		this.hasM567 = false;
+		this.isPuedePagar =  false;
+		this.isEuroclear = false;
+	}
 
 	/**
 	 * Buscar las emisiones
@@ -155,30 +167,23 @@ public class CalendarioEmisionesDeudaExtController extends ControllerBase{
 		paginaVO.setOffset(0);
         getPaginaVO().setRegistros(null);
 		boolean isSeguir = true;
-		if (this.isLiquidando){
 
+		//Si estamos liquidando, debemos cumplr estas reglas
+		if (this.isLiquidando){
 			if (this.isCitiBank){
 				//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: En este momento no se puede liquidar custodio CITIBANK", "CITIBANK"));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: No se puede hacer pago de efectivo para CITIBANK, se debe hacer desde file transfer", "CITIBANK"));
 				isSeguir = false;
-			}
-
-			if (this.isEuroclear && this.isEuroclearAndFechaPagoValor && !this.hasM567){
+			}else  if (this.isEuroclear && this.isEuroclearAndFechaPagoValor && !this.hasM567){
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Las reglas de Euroclear con Fecha de pago y fecha valor son iguales pero no a llegado un MT-567", "EUROCLEAR"));
 				isSeguir = false;
+			}else{
+				//Todo oK Liquidando
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Actualizado", "Actualizado"));
 			}
 		}
-
-
-
-
-		//Solo para liquidar, chequear estas variables
-		this.isLiquidando = false;
-		this.montoConfirmado = new BigDecimal(0.0);
-		this.isCitiBank = false;
-		this.isEuroclearAndFechaPagoValor  = false;
-		this.hasM567 = false;
-		this.isPuedePagar =  false;
-		this.isEuroclear = false;
+       //Solo para liquidar, chequear estas variables. Ya se usaron entonces se reinicia las variables
+		getResetLiquidando();
 
 		if (isSeguir){
 			ejecutarConsulta();
@@ -225,6 +230,9 @@ public class CalendarioEmisionesDeudaExtController extends ControllerBase{
 	private void setParams() {
 		calendario= new CalendarioEmisionesDeudaExtDTO();
 		calendario.setRefCustodio(refCustodio);
+		//BORRAR INICIO
+		calendario.setIdCalendario(155495L);
+		//BORRAR FIN
 		
 		calendario.setTipoValor(tipoValor);
 		calendario.setEmisora(emisora);
@@ -819,28 +827,27 @@ public class CalendarioEmisionesDeudaExtController extends ControllerBase{
 		return null;
 	}
 	public String liquidaDerechos(){
+		this.isLiquidando = true;
 		Set<Long> ids = getIdsModificar("daliForm:calIdDerechoLiquidar");
 		log.debug("ids "+ids);
 
+//		No se puede liquidar si es citibank
 		if (this.isCitiBank){
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ZZZError: En este momento no se puede liquidar custodio CITIBANK", "CITIBANK"));
+
 		   return null;
 		}
 
+//		No se puede iquidar si no cumple estas reglas
 		if (this.isEuroclear && this.isEuroclearAndFechaPagoValor && !this.hasM567){
 			return null;
 		}
 
+		//Paso los filros anteriores, liquidamos
 		Integer regactualizados=divisionInternacionalService.actualizarEstadosDerechoInt(ids, Constantes.CALENDARIO_DERECHOS_LIQUIDADO, isUserInRoll("INT_CAL_INDEVAL_SU"));
 		return null;
 	}
 
 	public void liquidaDerechosEvent(ActionEvent event) {
-
-		this.isLiquidando = true;
-
-
-		//    Solo para euroclear, la fecha de pago y fecha valor si son iguales, debe tener un m567
 
 
 		UIParameter idCalendarioIDC = (UIParameter) event.getComponent()

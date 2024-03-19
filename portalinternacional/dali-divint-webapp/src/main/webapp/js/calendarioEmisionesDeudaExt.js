@@ -269,7 +269,9 @@ function cancelaTodos(campo){
 function refresco(){
 	document.getElementById('daliForm:botonBuscar').click();
 	alert("Actualizado");
-	
+}
+function refrescoLiquidar(){
+	document.getElementById('daliForm:botonBuscar').click();
 }
 
 function actualizaMensaje(idmensaje){
@@ -319,32 +321,24 @@ function escondeColumnas(){
 }
 function validarAccionLiquidar(accion, montoConfirmado , citiBank, euroclearAndFechaPagoValor, puedePagar, hasM567, euroclear, custodioId ){
 
-	console.log('custodioId: '+custodioId);
-	console.log('montoConfirmado: '+montoConfirmado);
-	console.log('citiBank: '+ citiBank);
-	console.log('euroclearAndFechaPagoValor: '+ euroclearAndFechaPagoValor);
-	console.log('puedePagar: '+puedePagar);
-	console.log('hasM567: '+hasM567);
-	console.log('euroclear: '+euroclear);
+	// console.log('custodioId: '+custodioId);
+	// console.log('montoConfirmado: '+montoConfirmado);
+	// console.log('citiBank: '+ citiBank);
+	// console.log('euroclearAndFechaPagoValor: '+ euroclearAndFechaPagoValor);
+	// console.log('puedePagar: '+puedePagar);
+	// console.log('hasM567: '+hasM567);
+	// console.log('euroclear: '+euroclear);
 
 	if (citiBank==true){
-		console.log('-------------1--------------------');
 		alert('Es Citi Bank, debe salir! No puede ser liquidado');
-		console.log('-------------1A--------------------');
 		return false
 	}else if (euroclear==true){
-		console.log('-------------2--------------------');
 		alert('Es EUROCLEAR debp salir!');
-		console.log('-------------2B--------------------');
-
 		return confirm("Euroclear!!! Se van a "+accion+" "+" derechos.\n ¿Está usted seguro de querer realizar esta acción?")
 	}else{
-		console.log('-------------3--------------------');
-		console.log('-------------3C--------------------');
 		return validarAccion(accion);
 
 	}
-	console.log('-------------4--------------------');
 }
 
 function validarAccion(accion){

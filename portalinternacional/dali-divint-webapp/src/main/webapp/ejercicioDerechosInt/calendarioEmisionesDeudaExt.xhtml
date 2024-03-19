@@ -881,24 +881,17 @@
 												 />
 											</td></tr>
 											<tr><td>
-											<a4j:commandButton id="botonLiquidar" title="LiquidarXXXXX"
+											<a4j:commandButton id="botonLiquidar" title="Liquidar"
 													action="#{calendarioEmisionesDeudaExtBean.liquidaDerechos}"
 															   actionListener="#{calendarioEmisionesDeudaExtBean.liquidaDerechosEvent}"
 
 													image="/images/accept.png"
 													onclick="lockBotones('botonLiquidar');
 													         agregaLiquida('chk_liquida_#{derecho.idCalendario}' , true);
-													                          if(!validarAccionLiquidar('liquidar','#{derecho.montoConfirmado}',
-													                          										'#{derecho.citiBank}',
-													                          										'#{derecho.euroclearAndFechaPagoValor}',
-													                          										'#{derecho.puedePagar}',
-													                          										'#{derecho.hasM567}',
-													                          										'#{derecho.euroclear}',
-													                          										'#{derecho.custodioId}'
-													                                                               )){unlockBotones('botonLiquidar');return false;}"
+													                          if(!validarAccion('liquidar')){unlockBotones('botonLiquidar');return false;}"
 													reRender="resultados,containerResultados,tablaResultados,panelResumen"
 													limitToList="true"
-													oncomplete="limpiar('chk_liquida_#{derecho.idCalendario}');unlockBotones('botonLiquidar');refresco();window.scrollTo(0,0);"
+													oncomplete="limpiar('chk_liquida_#{derecho.idCalendario}');unlockBotones('botonLiquidar');refrescoLiquidar();window.scrollTo(0,0);"
 													>
 												<f:param id="idCalendarioID" name="idCalendarioID"
 														 value="#{derecho.idCalendario}" />

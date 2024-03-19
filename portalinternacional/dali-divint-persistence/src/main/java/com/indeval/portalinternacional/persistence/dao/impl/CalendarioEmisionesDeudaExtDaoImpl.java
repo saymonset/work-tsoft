@@ -5,16 +5,18 @@ package com.indeval.portalinternacional.persistence.dao.impl;
 
 
 
+import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
 import com.indeval.portalinternacional.middleware.servicios.modelo.*;
+import com.indeval.portalinternacional.middleware.servicios.vo.BitacoraMensajeSwiftVO;
 import com.indeval.portalinternacional.middleware.servicios.vo.CalendarioDerechosVO;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
+import org.hibernate.*;
+import org.hibernate.transform.Transformers;
 import org.hibernate.type.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,12 @@ import com.indeval.portaldali.persistence.modelo.Boveda;
 import com.indeval.portalinternacional.middleware.servicios.constantes.Constantes;
 import com.indeval.portalinternacional.middleware.servicios.vo.CalendarioEmisionesDeudaExtDTO;
 import com.indeval.portalinternacional.persistence.dao.CalendarioEmisionesDeudaExtDao;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * @author lmunoz
@@ -310,6 +318,15 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 		return retorno;
 	}
 
+
+	/**
+	 *
+	 * SELECT T_CUENTA_TRANSITORIA.ID_CALENDARIO_INT AS ID_CALENDARIO_INT,
+	 *     T_CUENTA_TRANSITORIA.tipo_mensaje AS TIPO_MENSAJE, T_CUENTA_TRANSITORIA.fecha_RECEPCION AS FECHA_NOTIFICACION,
+	 *     C_CUSTODIO.CODIGO_BANCO AS CUSTODIO_ORIGEN, CAST(T_CUENTA_TRANSITORIA.XML AS varchar(4000)) as MENSAJE
+	 *     FROM T_CUENTA_TRANSITORIA INNER JOIN C_CUSTODIO ON T_CUENTA_TRANSITORIA.ID_CUSTODIO = C_CUSTODIO.ID_CUSTODIO
+	 * */
+
 	//Modificado para Multidivisas
 	public List<BitacoraMensajeSwift>  getBitacoraMensajeSwiftbyId(final Long id) {
 		final StringBuilder sb = new StringBuilder();
@@ -332,6 +349,104 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 		return retorno;
 	}
 
+	public List<BitacoraMensajeSwiftVO>  getBitacoraMensajeSwiftbyIdVO(final Long id) {
+		final StringBuilder query = new StringBuilder();
+			query.append(" SELECT T_CUENTA_TRANSITORIA.ID_CUENTA_TRANSITORIA as id, T_CUENTA_TRANSITORIA.ID_CALENDARIO_INT AS idCalendario, " +
+					"             T_CUENTA_TRANSITORIA.tipo_mensaje AS tipoMensaje, T_CUENTA_TRANSITORIA.fecha_RECEPCION AS fecha, ");
+			query.append("        C_CUSTODIO.CODIGO_BANCO AS origen, CAST(T_CUENTA_TRANSITORIA.XML AS varchar(4000)) as mensaje  ");
+			query.append(" FROM T_CUENTA_TRANSITORIA INNER JOIN C_CUSTODIO ON T_CUENTA_TRANSITORIA.ID_CUSTODIO = C_CUSTODIO.ID_CUSTODIO ");
+			query.append(" WHERE T_CUENTA_TRANSITORIA.ID_CALENDARIO_INT =  "+id);
+
+		List<BitacoraMensajeSwiftVO> lista = (List) getHibernateTemplate().execute(new HibernateCallback() {
+
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					SQLQuery sqlQuery = session.createSQLQuery(query.toString());
+
+					sqlQuery.addScalar("id", Hibernate.LONG);
+					sqlQuery.addScalar("idCalendario", Hibernate.LONG);
+					sqlQuery.addScalar("fecha", Hibernate.DATE);
+					sqlQuery.addScalar("mensaje", Hibernate.STRING);
+					sqlQuery.addScalar("origen", Hibernate.STRING);
+					sqlQuery.addScalar("tipoMensaje", Hibernate.STRING);
+					sqlQuery.setResultTransformer(Transformers.aliasToBean(BitacoraMensajeSwiftVO.class));
+					return sqlQuery.list();
+				}
+			});
+
+		/**
+		 *
+		 *
+		 *
+		 * */
+
+		List<BitacoraMensajeSwiftVO> listaVO = new ArrayList<>();
+		for (BitacoraMensajeSwiftVO bm:lista){
+
+
+			try {
+				String xmlString = bm.getMensaje()!=null?bm.getMensaje():"";
+
+				DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder builder = factory.newDocumentBuilder();
+				Document document = builder.parse(new ByteArrayInputStream(xmlString.getBytes()));
+
+//				NodeList mensajeISOList = document.getElementsByTagName("mensajeISO");
+//				if (mensajeISOList.getLength() > 0) {
+//					Element mensajeISOElement = (Element) mensajeISOList.item(0);
+//					String mensajeISOContent = mensajeISOElement.getTextContent();
+//					System.out.println("Content within <mensajeISO> tag: " + mensajeISOContent);
+//					bm.setMensajeISO(mensajeISOContent);
+//				} else {
+//					System.out.println("No <mensajeISO> tag found in the XML.");
+//				}
+
+				NodeList mensajeISOList = document.getElementsByTagName("*");
+				for (int i = 0; i < mensajeISOList.getLength(); i++) {
+					Element element = (Element) mensajeISOList.item(i);
+					if (element.getTagName().matches("(?i)mensajeISO")) {
+						String mensajeISOContent = element.getTextContent();
+						bm.setMensajeISO(mensajeISOContent);
+						System.out.println("Content within <mensajeISO> tag: " + mensajeISOContent);
+						break;  // Si se encuentra el elemento, se puede salir del bucle
+					}
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			listaVO.add(bm);
+		}
+
+		return listaVO;
+	}
+
+
+	/**
+	 *
+	 *
+	 * public List<DivisaDTO> findDivisaByBovedad(final Long idBoveda)  {
+	 * 			final StringBuilder query = new StringBuilder();
+	 * 			query.append(" SELECT cd.ID_DIVISA as id, cd.CLAVE_ALFABETICA as claveAlfabetica, " +
+	 * 					"cd.CLAVE_NUMERICA  as claveNumerica, cd.DESCRIPCION as descripcion ");
+	 * 			query.append(" FROM C_DIVISA cd, R_DIVISA_BOVEDA rdb  ");
+	 * 			query.append(" WHERE cd.ID_DIVISA = rdb.ID_DIVISA  and rdb.ID_BOVEDA =  "+idBoveda);
+	 *
+	 * 			return (List) getHibernateTemplate().execute(new HibernateCallback() {
+	 *
+	 * 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+	 * 					SQLQuery sqlQuery = session.createSQLQuery(query.toString());
+	 *
+	 * 					sqlQuery.addScalar("id", Hibernate.LONG);
+	 * 					sqlQuery.addScalar("claveAlfabetica", Hibernate.STRING);
+	 * 					sqlQuery.addScalar("claveNumerica", Hibernate.STRING);
+	 * 					sqlQuery.addScalar("descripcion", Hibernate.STRING);
+	 *
+	 * 					sqlQuery.setResultTransformer(Transformers.aliasToBean(DivisaDTO.class));
+	 * 					return sqlQuery.list();
+	 *                                }* 			});
+	 * 		}
+	 *
+	 * */
 
 	/*	Metodo creado para proyecto Multidivisas
 	 *	Calcula el Importe de los mensajes
@@ -496,5 +611,32 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 		});
 		return retorno;
 	}
-		
+
+	public List<BitacoraMensajeSwiftVO>  getBitacoraMensajeSwiftbyIdHistVO(final Long id) {
+
+		final StringBuilder query = new StringBuilder();
+		query.append(" SELECT T_CUENTA_TRANSITORIA.ID_CUENTA_TRANSITORIA as id, T_CUENTA_TRANSITORIA.ID_CALENDARIO_INT AS idCalendario, " +
+				"             T_CUENTA_TRANSITORIA.tipo_mensaje AS tipoMensaje, T_CUENTA_TRANSITORIA.fecha_RECEPCION AS fecha, ");
+		query.append("        C_CUSTODIO.CODIGO_BANCO AS origen, CAST(T_CUENTA_TRANSITORIA.XML AS varchar(4000)) as mensaje  ");
+		query.append(" FROM T_CUENTA_TRANSITORIA INNER JOIN C_CUSTODIO ON T_CUENTA_TRANSITORIA.ID_CUSTODIO = C_CUSTODIO.ID_CUSTODIO ");
+		query.append(" WHERE T_CUENTA_TRANSITORIA.id =  "+id);
+		query.append(" ORDER BY T_CUENTA_TRANSITORIA.fecha_RECEPCION DESC, ");
+		query.append("    T_CUENTA_TRANSITORIA.ID_CUENTA_TRANSITORIA desc");
+
+		return (List) getHibernateTemplate().execute(new HibernateCallback() {
+
+			public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				SQLQuery sqlQuery = session.createSQLQuery(query.toString());
+
+				sqlQuery.addScalar("id", Hibernate.LONG);
+				sqlQuery.addScalar("idCalendario", Hibernate.LONG);
+				sqlQuery.addScalar("fecha", Hibernate.DATE);
+				sqlQuery.addScalar("mensaje", Hibernate.STRING);
+				sqlQuery.addScalar("origen", Hibernate.STRING);
+				sqlQuery.addScalar("tipoMensaje", Hibernate.STRING);
+				sqlQuery.setResultTransformer(Transformers.aliasToBean(BitacoraMensajeSwiftVO.class));
+				return sqlQuery.list();
+			}
+		});
+	}
 }
