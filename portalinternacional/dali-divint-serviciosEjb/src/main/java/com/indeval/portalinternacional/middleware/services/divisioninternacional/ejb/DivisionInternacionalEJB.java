@@ -16,6 +16,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 
+import com.indeval.portalinternacional.middleware.servicios.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.indeval.portaldali.middleware.servicios.modelo.BusinessException;
@@ -41,18 +42,6 @@ import com.indeval.portalinternacional.middleware.servicios.modelo.SicDetalle;
 import com.indeval.portalinternacional.middleware.servicios.modelo.SicEmision;
 import com.indeval.portalinternacional.middleware.servicios.modelo.TipoBeneficiario;
 import com.indeval.portalinternacional.middleware.servicios.modelo.TipoPagoInt;
-import com.indeval.portalinternacional.middleware.servicios.vo.AltaCustodioVO;
-import com.indeval.portalinternacional.middleware.servicios.vo.ArqueoVO;
-import com.indeval.portalinternacional.middleware.servicios.vo.CalendarioEmisionesDeudaExtDTO;
-import com.indeval.portalinternacional.middleware.servicios.vo.ConciliacionIntDTO;
-import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaCierreFideicomisoParams;
-import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaCierreFideicomisoVO;
-import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaCustodiosVO;
-import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaFideicomisosVO;
-import com.indeval.portalinternacional.middleware.servicios.vo.DetalleConciliacionIntDTO;
-import com.indeval.portalinternacional.middleware.servicios.vo.GrabaOperacionParams;
-import com.indeval.portalinternacional.middleware.servicios.vo.HistorialBitacoraOperacionesSICDTO;
-import com.indeval.portalinternacional.middleware.servicios.vo.TotalArqueoVO;
 import com.indeval.protocolofinanciero.api.vo.TraspasoLibrePagoVO;
 
 /**
@@ -391,6 +380,13 @@ public class DivisionInternacionalEJB implements DivisionInternacionalService, S
 			throws BusinessException {
 		return divisionInternacionalService.consultaBitacoraMensajesSwift(id);
 	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+	public List<BitacoraMensajeSwiftVO> consultaBitacoraMensajesSwiftVO(Long id) throws BusinessException {
+		return divisionInternacionalService.consultaBitacoraMensajesSwiftVO(id);
+	}
+
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public CalendarioDerechos consultaCalendarioDerechosById(Long id)
 			throws BusinessException {
@@ -505,8 +501,13 @@ public class DivisionInternacionalEJB implements DivisionInternacionalService, S
 			throws BusinessException {
 		return divisionInternacionalService.consultaBitacoraMensajesSwiftByHist(id);
 	}
-    
-    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+
+	@Override
+	public List<BitacoraMensajeSwiftVO> getBitacoraMensajeSwiftbyIdHistVO(Long id) throws BusinessException {
+		return divisionInternacionalService.getBitacoraMensajeSwiftbyIdHistVO(id);
+	}
+
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public boolean validarExistenciaTipoValor(String tv) throws BusinessException {
         return divisionInternacionalService.validarExistenciaTipoValor(tv);
     }

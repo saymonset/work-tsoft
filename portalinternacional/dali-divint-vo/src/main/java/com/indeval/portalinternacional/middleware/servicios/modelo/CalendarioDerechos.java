@@ -70,8 +70,7 @@ public class CalendarioDerechos implements Serializable {
     private Control control;
     private Date horaEnvio;
     private Date horaRecepcion;
-    @Transient
-    private Double montoConfirmado;
+
     
     
     /**
@@ -917,13 +916,5 @@ public class CalendarioDerechos implements Serializable {
 	public void setHoraRecepcion(Date horaRecepcion) {
 		this.horaRecepcion = horaRecepcion;
 	}
-	
-	@Transient
-	public Double getMontoConfirmado(){
-    return montoConfirmado;
-    }
 
-    public void setMontoConfirmado (double montoConfirmado){
-        this.montoConfirmado=montoConfirmado;
-    }
 }

@@ -618,11 +618,13 @@ public class CatBicDaoImpl extends BaseDaoHibernateImpl implements CatBicDao {
 	}
 
 	public void modificarCustodios(CatBicVO custodiosBeneficiarios) {
-		Query query = getSession().createQuery("UPDATE CatBic cb SET cb.activo = :activo, cb.abreviacionCustodio = :abreviacionCustodio where cb.cuentaNombrada.idCuentaNombrada = :idCuentaNombrada");
-		query.setInteger("activo", custodiosBeneficiarios.getActivo());
-		query.setString("abreviacionCustodio", custodiosBeneficiarios.getAbreviacionCustodio());
-		query.setLong("idCuentaNombrada", custodiosBeneficiarios.getCuentaNombrada());
-		query.executeUpdate();
+		if (custodiosBeneficiarios!=null){
+			Query query = getSession().createQuery("UPDATE CatBic cb SET cb.activo = :activo, cb.abreviacionCustodio = :abreviacionCustodio where cb.cuentaNombrada.idCuentaNombrada = :idCuentaNombrada");
+			query.setInteger("activo", custodiosBeneficiarios.getActivo());
+			query.setString("abreviacionCustodio", custodiosBeneficiarios.getAbreviacionCustodio());
+			query.setLong("idCuentaNombrada", custodiosBeneficiarios.getCuentaNombrada().getIdCuentaNombrada());
+			query.executeUpdate();
+		}
 	}
 
 	public CatBic findAbreviacionByCustodio(String abreviacionCustodio) {

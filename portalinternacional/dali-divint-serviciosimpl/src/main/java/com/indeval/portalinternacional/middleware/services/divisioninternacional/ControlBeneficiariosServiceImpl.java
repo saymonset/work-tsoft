@@ -13,6 +13,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import com.indeval.portalinternacional.middleware.servicios.vo.*;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,13 +52,6 @@ import com.indeval.portalinternacional.middleware.servicios.modelo.PaisInt;
 import com.indeval.portalinternacional.middleware.servicios.modelo.StatusBeneficiario;
 import com.indeval.portalinternacional.middleware.servicios.modelo.TipoBeneficiario;
 import com.indeval.portalinternacional.middleware.servicios.modelo.adp.ClaveAdp;
-import com.indeval.portalinternacional.middleware.servicios.vo.BeneficiariosPaginacionVO;
-import com.indeval.portalinternacional.middleware.servicios.vo.CatBicVO;
-import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaBeneficiariosParam;
-import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaHistoricoBeneficiariosParam;
-import com.indeval.portalinternacional.middleware.servicios.vo.ListStatusBeneficiario;
-import com.indeval.portalinternacional.middleware.servicios.vo.NombreBeneficiario;
-import com.indeval.portalinternacional.middleware.servicios.vo.TipoFormato;
 import com.indeval.portalinternacional.persistence.dao.AdpCustodioPorcentajeDao;
 import com.indeval.portalinternacional.persistence.dao.BeneficiarioDao;
 import com.indeval.portalinternacional.persistence.dao.CamposFormatosDao;
@@ -2435,7 +2429,9 @@ public class ControlBeneficiariosServiceImpl implements ControlBeneficiariosServ
 		
 		CatBicVO catvo = new CatBicVO();
 
-		catvo.setCuentaNombrada((Long)catBic[0]);
+        CuentaNombradaVO cuentaNombradaVO = new CuentaNombradaVO();
+        cuentaNombradaVO.setIdCuentaNombrada((Long)catBic[0]);
+		catvo.setCuentaNombrada(cuentaNombradaVO);
 		catvo.setDetalleCustodio((String) catBic[1]);
 		catvo.setBicProd((String) catBic[2]);
 		catvo.setEstatusRegistro((String) catBic[3]);

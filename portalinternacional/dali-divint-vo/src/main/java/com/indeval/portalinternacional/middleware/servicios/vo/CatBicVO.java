@@ -1,5 +1,8 @@
 package com.indeval.portalinternacional.middleware.servicios.vo;
 
+import com.indeval.portaldali.persistence.modelo.CuentaNombrada;
+import com.indeval.portalinternacional.middleware.servicios.modelo.CatBic;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -19,7 +22,7 @@ public class CatBicVO implements Serializable{
 	/**
 	 * CuentaNombrada
 	 */
-	private Long cuentaNombrada;
+	private CuentaNombradaVO cuentaNombrada;
 
 	/**
 	 * String
@@ -90,6 +93,85 @@ public class CatBicVO implements Serializable{
     private boolean editar;
 
 
+	public CatBicVO(CatBic catBic) {
+		this.idCatbic = catBic.getIdCatbic();
+
+		/**
+		 * CuentaNombrada
+		 */
+		this.cuentaNombrada = new CuentaNombradaVO(catBic.getCuentaNombrada());
+
+		/**
+		 * String
+		 */
+		this.bicProd  = catBic.getBicProd();
+
+		/**
+		 * String
+		 */
+		this.bicPrueba = catBic.getBicPrueba();
+
+		/**
+		 * String
+		 */
+		this.cuentaIndeval = catBic.getCuentaIndeval();
+
+		/**
+		 * Date
+		 */
+		this.fechaHora = catBic.getFechaHora();
+
+		/**
+		 * String
+		 */
+		this.pais = catBic.getPais();
+
+		/**
+		 * String
+		 */
+		this.status = catBic.getStatus();
+
+		/**
+		 * String
+		 */
+		this.usuario = catBic.getUsuario();
+
+		/**
+		 * String
+		 */
+		this.moneda = catBic.getMoneda();
+
+		/**
+		 * String
+		 */
+		this.detalleCustodio = catBic.getDetalleCustodio();
+
+		/**
+		 * String
+		 */
+		this.mercado = catBic.getMercado();
+
+		/**
+		 * String
+		 */
+		this.estatusRegistro = catBic.getEstatusRegistro();
+
+		/**
+		 * Integer
+		 */
+		this.activo = catBic.getActivo();
+
+		/**
+		 * String
+		 */
+		this.abreviacionCustodio = catBic.getAbreviacionCustodio();
+
+
+	}
+
+	public CatBicVO() {
+	}
+
 	public Long getIdCatbic() {
 		return idCatbic;
 	}
@@ -100,14 +182,6 @@ public class CatBicVO implements Serializable{
 	}
 
 
-	public Long getCuentaNombrada() {
-		return cuentaNombrada;
-	}
-
-
-	public void setCuentaNombrada(Long cuentaNombrada) {
-		this.cuentaNombrada = cuentaNombrada;
-	}
 
 
 	public String getBicProd() {
@@ -263,8 +337,12 @@ public class CatBicVO implements Serializable{
 				+ ", detalleCustodio=" + detalleCustodio + ", mercado=" + mercado + ", estatusRegistro="
 				+ estatusRegistro + ", activo=" + activo + "]";
 	}
-	
-	
-	
 
+	public void setCuentaNombrada(CuentaNombradaVO cuentaNombrada) {
+		this.cuentaNombrada = cuentaNombrada;
+	}
+
+	public CuentaNombradaVO getCuentaNombrada() {
+		return cuentaNombrada;
+	}
 }
