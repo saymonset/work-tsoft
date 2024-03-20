@@ -1,5 +1,6 @@
 package com.indeval.portalinternacional.middleware.services.divisioninternacional.cuentasTransitoriasEfectivo;
 
+import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.BovedaMontosDto;
 import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.CuentaTransitoriaEfectivoDto;
 import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.DetalleReferenciaDto;
 import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.FolioAgrupadoDto;
@@ -33,9 +34,19 @@ public interface CuentasTransitoriasEfectivoService {
      *
      * @param idDivisa
      * @param idCustodio
-     * @return List <FolioAgrupadoDto>
+     * @return List<DetalleReferenciaDto>
      */
-    List<FolioAgrupadoDto> obtenerNegativos(String idDivisa, String idCustodio);
+    List<DetalleReferenciaDto> obtenerNegativosDetalles(String idDivisa, String idCustodio);
+
+    /**
+     * Realiza la consulta de Negativos
+     *
+     * @param idDivisa
+     * @param idCustodio
+     * @return List<FolioAgrupadoDto>
+     */
+    List<FolioAgrupadoDto> obtenerNegativosTotal(String idDivisa, String idCustodio);
+
 
     /**
      * Realiza la consulta de Resumen: Folio Agrupado
@@ -47,9 +58,9 @@ public interface CuentasTransitoriasEfectivoService {
      * @param folioRelacionado
      * @return List <FolioAgrupadoDto>
      */
-    List<FolioAgrupadoDto> obtenerFolioAgrupado(String idDivisa, String idCustodio,
-                                                String fechaInicio, String fechaFin,
-                                                String folioRelacionado);
+    List<FolioAgrupadoDto> obtenerFoliosAgrupados(String idDivisa, String idCustodio,
+                                                  String fechaInicio, String fechaFin,
+                                                  String folioRelacionado);
 
     /**
      * Realiza la consulta de Informaci&oacute;n de Referencias
@@ -58,25 +69,29 @@ public interface CuentasTransitoriasEfectivoService {
      * @param idCustodio
      * @return List <CuentaTransitoriaEfectivoDto>
      */
-    List<CuentaTransitoriaEfectivoDto> obtenerReferencias(String idDivisa, String idCustodio,
-                                                          String fechaInicio, String fechaFin,
-                                                          String folioRelacionado);
+    List<CuentaTransitoriaEfectivoDto> obtenerSinReferencias(String idDivisa, String idCustodio,
+                                                             String fechaInicio, String fechaFin,
+                                                             String folioRelacionado);
 
     /**
      * Realiza la consulta de Detalles de Referencias
      *
+     * @param idDivisa
+     * @param idCustodio
      * @param folioRelacionado
      * @return List <CuentaTransitoriaEfectivoDto>
      */
-    List<DetalleReferenciaDto> obtenerDetallesReferencia(String folioRelacionado);
+    List<DetalleReferenciaDto> obtenerDetallesReferencia(String idDivisa, String idCustodio, String folioRelacionado);
 
     /**
      * Realiza la consulta del Total de Detalles de Referencias
      *
+     * @param idDivisa
+     * @param idCustodio
      * @param folioRelacionado
      * @return BigDecimal
      */
-    BigDecimal obtenerDetallesReferenciaTotal(String folioRelacionado);
+    BigDecimal obtenerDetallesReferenciaTotal(String idDivisa, String idCustodio, String folioRelacionado);
 
     /**
      * Realiza la consulta de mensaje ISO
@@ -112,12 +127,13 @@ public interface CuentasTransitoriasEfectivoService {
     DetalleReferenciaDto obtenerRegistroPorReferencia(String folioRelacionado);
 
     /**
-     * Obtener registro por ID_REGISTRO
+     * Obtener montos de Boveda
      *
-     * @param idRegistro
-     * @return DetalleReferenciaDto
+     * @param idDivisa
+     * @param idCustodio
+     * @return BovedaMontosDto
      */
-    DetalleReferenciaDto obtenerRegistroPorIdRegistro(String idRegistro);
+    BovedaMontosDto obetenerTotalBoveda(String idDivisa, String idCustodio);
 
 
 }

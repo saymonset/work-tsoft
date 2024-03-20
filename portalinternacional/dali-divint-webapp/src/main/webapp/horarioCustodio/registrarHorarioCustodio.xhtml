@@ -84,7 +84,7 @@
                                     </td>
                                     <td align="center">
                                         <h:outputText styleClass="texto"
-                                                      value="#{etq.tipoMinus} #{etq.horarioFinal}"/>
+                                                      value="#{etq.horarioFinal}"/>
                                     </td>
                                 </tr>
                                 <tr align="center">
@@ -105,20 +105,27 @@
                                         </h:selectOneMenu>
                                     </td>
                                     <td>
-                                        <h:selectOneMenu id="lstFechasInicio"
-                                                         value="#{horariosCustodioRegistroController.horarioInicial}"
-                                                         styleClass="textoControles" tabindex="5">
-                                            <f:selectItems
-                                                    value="#{horariosCustodioRegistroController.horaInicio}"/>
-                                        </h:selectOneMenu>
+                                        <h:inputText id="horaInputInicio"
+                                                     value="#{horariosCustodioRegistroController.horarioInicial}"
+                                                     style="width: 70px; text-align: center;"
+                                                     onmouseover="if (this.value=='') this.value='HH:MM';"
+                                                     onfocus="if (this.value=='HH:MM') this.value='';"
+                                                     onblur="if (this.value=='') this.value='HH:MM';"
+                                                     maxlength="5">
+                                            <f:attribute name="placeholder" value="HH:MM"/>
+                                        </h:inputText>
+
                                     </td>
                                     <td>
-                                        <h:selectOneMenu id="lstFechasFin"
-                                                         value="#{horariosCustodioRegistroController.horarioFinal}"
-                                                         styleClass="textoControles" tabindex="5">
-                                            <f:selectItems
-                                                    value="#{horariosCustodioRegistroController.horaFin}"/>
-                                        </h:selectOneMenu>
+                                        <h:inputText id="horaInputFin"
+                                                     value="#{horariosCustodioRegistroController.horarioFinal}"
+                                                     style="width: 70px; text-align: center;"
+                                                     onmouseover="if (this.value=='') this.value='HH:MM';"
+                                                     onfocus="if (this.value=='HH:MM') this.value='';"
+                                                     onblur="if (this.value=='') this.value='HH:MM';"
+                                                     maxlength="5">
+                                            <f:attribute name="placeholder" value="HH:MM"/>
+                                        </h:inputText>
                                     </td>
                                 </tr>
                             </table>

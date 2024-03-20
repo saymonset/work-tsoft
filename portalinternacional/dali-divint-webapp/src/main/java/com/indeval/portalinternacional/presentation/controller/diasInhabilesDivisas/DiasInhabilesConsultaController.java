@@ -106,6 +106,7 @@ public class DiasInhabilesConsultaController extends ControllerBase {
      */
     private void inicializarPaginaVO() {
         if (paginaVO == null) paginaVO = new PaginaVO();
+        paginaVO.limpiaResultados();
         paginaVO.setRegistrosXPag(20);
         paginaVO.setOffset(0);
     }
@@ -140,6 +141,9 @@ public class DiasInhabilesConsultaController extends ControllerBase {
 
     // </editor-fold>
 
+    /**
+     * Obtiene los registros de históricos cargados (Información de archivos csv)
+     */
     public String cargaHistoricos() {
         log.debug("Cargar Historicos" + OPERACION);
         String anio = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("anio");
@@ -159,6 +163,7 @@ public class DiasInhabilesConsultaController extends ControllerBase {
             log.debug("Consultar año [" + anioSeleccionado + "]");
             this.historicos = diasInhabilesDivisasService.getAll(null, this.anioSeleccionado);
         }
+
         return null;
     }
 

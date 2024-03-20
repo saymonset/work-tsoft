@@ -26,15 +26,13 @@ public class BitacoraMensajeSwiftImporte implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "foliador")
 	@Column(name = "INDICE")
 	private Long id;//ID_BITACORA_MENSAJE
-	@Column(name = "IDTRANSACCION")
 	private Long idCalendario;//ID_CALENDARIO_INT
 	private Date fecha;//FECHA_NOTIFICACION
 	private String mensaje;//MENSAJE
 	private String origen;//ORIGEN
 	private String tipoMensaje;//TIPO_MENSAJE
 	//Dato usado para Multidivisas - Se usa para el calculo de Importe segun los mensajes
-	@Column(name = "IMPORTE")
-	private Double importe;//IMPORTE
+	private double importe;//IMPORTE
 
 	public BitacoraMensajeSwiftImporte() {
 		// TODO Auto-generated constructor stub
@@ -50,7 +48,7 @@ public class BitacoraMensajeSwiftImporte implements Serializable {
 	 * @param importe
 	 */
 	public BitacoraMensajeSwiftImporte(Long id, Long idCalendario, Date fecha,
-                                       String mensaje, String origen, String tipoMensaje, Double importe) {
+                                       String mensaje, String origen, String tipoMensaje, double importe) {
 		this.id = id;
 		this.idCalendario = idCalendario;
 		this.fecha = fecha;
@@ -78,7 +76,7 @@ public class BitacoraMensajeSwiftImporte implements Serializable {
 	/**
 	 * @return the idCalendario
 	 */
-
+	@Column(name = "IDTRANSACCION")
 	public Long getIdCalendario() {
 		return idCalendario;
 	}
@@ -152,12 +150,12 @@ public class BitacoraMensajeSwiftImporte implements Serializable {
 	}
 
 	//AÑADIDO PARA MULTIDIVISAS - CALCULO DE IMPORTE SEGUN EL TIPO DE MENSAJES
-
-	public Double getImporte(){
+	@Column(name = "IMPORTE")
+	public double getImporte(){
 		return importe;
 	}
 	//Añadido para multidivisas - para el calculo de importe
-	public void setImporte(Double importe){
+	public void setImporte(double importe){
 		this.importe=importe;
 	}
 }

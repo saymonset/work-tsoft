@@ -24,7 +24,9 @@
 
         <pdf:table value="#{conciliacionDeEfectivoBean.conciliations}" currentBean="conciliation" widthPercentage="100">
             <pdf:row>
-				<pdf:col header="#{etq.divisaMinus}" value="#{conciliation.divisaDescripcion}" align="center" />
+                <pdf:col header="#{etq.fechaMinus}" value="#{conciliation.fecha}" align="center" />
+
+                <pdf:col header="#{etq.divisaMinus}" value="#{conciliation.divisaDescripcion}" align="center" />
 
 				<pdf:col header="#{etq.bovedaMinus}" value="#{conciliation.bovedaDescription}" align="center" />
 

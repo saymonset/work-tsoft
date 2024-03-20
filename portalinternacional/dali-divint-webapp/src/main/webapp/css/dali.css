@@ -1320,27 +1320,47 @@ A:hover {
     top: 1px;
 }
 
-.resaltarNegativo {
-    background: #F5B7B1;
-    color: #7B241C;
-    text-decoration-line: overline;
-    text-decoration-color: #7B241C;
+.tituloNegativo{
+    color: #f1bbb6;
+    text-decoration-color: #a4706c;
+    font-weight:bold;
+    background: #a2180b;
+    text-align: center;
 }
 
-.resaltarNegativoTotal {
-    background: #a2180b;
-    color: #F5B7B1;
-    font-size: small;
+.totalNegativo{
+    background: #FFFFFF;
+    color: #54020f;
+    text-decoration-color: #651b14;
+    font-weight:bold;
+    font-size: larger;
+}
+
+.resaltarNegativo {
+    background: #e1ada8;
+    text-decoration-line: overline;
+    color: #54020f;
+    text-decoration-color: #651b14;
 }
 
 .resaltarNegativoRenglon1 {
-    background: #e0c0bd;
-    color: #7B241C;
-    text-decoration-color: #7B241C;
+    background: #eacac7;
+    text-align: center;
+    color: #54020f;
+    text-decoration-color: #651b14;
 }
 
 .resaltarNegativoRenglon2 {
-    background: #eaa49d;
-    color: #7B241C;
-    text-decoration-color: #7B241C;
+    background: #e09c96;
+    text-align: center;
+    color: #54020f;
+    text-decoration-color: #651b14;
+}
+
+
+.totalTabla{
+    color: #FFFFFF;
+    text-decoration-color: #3472a6;
+    font-weight:bold;
+    font-size: larger;
 }

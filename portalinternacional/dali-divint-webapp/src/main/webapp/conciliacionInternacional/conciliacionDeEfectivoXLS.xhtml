@@ -23,6 +23,7 @@
 
     <xls:table value="#{conciliacionDeEfectivoBean.conciliations}" var="conciliation">
         <xls:row>
+            <xls:col header="#{etq.fechaMinus}" value="#{conciliation.fecha}"/>
             <xls:col header="#{etq.bovedaMinus}" value="#{conciliation.bovedaDescription}"/>
             <xls:col header="#{etq.divisaMinus}" value="#{conciliation.divisaDescripcion}"/>
 

@@ -1,5 +1,7 @@
 package com.indeval.portalinternacional.presentation.controller.conciliacionInternacional;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 import java.util.*;
@@ -42,10 +44,6 @@ public class ConciliacionDeEfectivoController extends ControllerBase {
 
     private ConsultaCatalogosFacade catalogosFacade;
 
-    private String boveda;
-
-    private String divisa;
-
     private BovedaService bovedaService;
 
     private static final Logger log = LoggerFactory.getLogger(MovimientosEfectivoController.class);
@@ -53,6 +51,26 @@ public class ConciliacionDeEfectivoController extends ControllerBase {
     private MovimientoEfectivoInternacionalVO efectivoInternacionalVO;
 
     private List<SelectItem> divisas;
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    private Date startDate;
+
+    private Date endDate;
 
     public String getInicializar() {
         log.info("Inicializar :: ConciliacionDeEfectivoController");
@@ -78,14 +96,66 @@ public class ConciliacionDeEfectivoController extends ControllerBase {
     }
 
     public void findConciliationsForeignExchange() {
-        conciliations = new ArrayList<ConciliacionDivisasVO>();
+        conciliations = new ArrayList<>();
 
         String idDivisa = efectivoInternacionalVO.getDivisa().getIdString();
         String idBoveda = efectivoInternacionalVO.getBoveda().getIdBovedaStr();
+        Date startDate = getStartDate();
+        Date endDate = getEndDate();
 
-        conciliations = conciliacionDivisasIntService.getAllBy(Integer.parseInt(idBoveda), Integer.parseInt(idDivisa));
+        if (!validateDatesNotNull(startDate, endDate)) {
+            return;
+        }
+        if (!validateDatesRange(startDate, endDate)) {
+            return;
+        }
+        if (!validateDatesNotFuture(startDate, endDate)) {
+            return;
+        }
+        if (!validateEndDateAfterStartDate(startDate, endDate)) {
+            return;
+        }
+
+        conciliations = conciliacionDivisasIntService.getAllBy(Integer.parseInt(idBoveda), Integer.parseInt(idDivisa), startDate, endDate);
 
         setConsultaEjecutada(true);
+    }
+
+    private boolean validateDatesRange(Date startDate, Date endDate) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(startDate);
+        calendar.add(Calendar.MONTH, 3);
+
+        if (endDate.after(calendar.getTime())) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "El rango de fechas no puede ser mayor a 3 meses", "El rango de fechas no puede ser mayor a 3 meses"));
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateDatesNotNull(Date startDate, Date endDate) {
+        if (startDate == null || endDate == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "La fecha de inicio y la fecha de fin deben estar presentes", "La fecha de inicio y la fecha de fin deben estar presentes"));
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateDatesNotFuture(Date startDate, Date endDate) {
+        Date currentDate = new Date();
+        if (startDate.after(currentDate) || endDate.after(currentDate)) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "La fecha de inicio y la fecha de fin no pueden ser posteriores a la fecha actual", "La fecha de inicio y la fecha de fin no pueden ser posteriores a la fecha actual"));
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateEndDateAfterStartDate(Date startDate, Date endDate) {
+        if (endDate.before(startDate)) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "La fecha de fin no puede ser anterior a la fecha de inicio", "La fecha de fin no puede ser anterior a la fecha de inicio"));
+            return false;
+        }
+        return true;
     }
 
     public List<ConciliacionDivisasVO> getConciliations() {
@@ -200,8 +270,10 @@ public class ConciliacionDeEfectivoController extends ControllerBase {
 
         String idDivisa = efectivoInternacionalVO.getDivisa().getIdString();
         String idBoveda = efectivoInternacionalVO.getBoveda().getIdBovedaStr();
+        Date startDate = getStartDate();
+        Date endDate = getEndDate();
 
-        conciliations = conciliacionDivisasIntService.getAllBy(Integer.parseInt(idBoveda), Integer.parseInt(idDivisa));
+        conciliations = conciliacionDivisasIntService.getAllBy(Integer.parseInt(idBoveda), Integer.parseInt(idDivisa), startDate, endDate);
 
         setTotalRegistros(conciliations.size());
     }

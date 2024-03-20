@@ -8,7 +8,9 @@ import com.indeval.portalinternacional.persistence.dao.ConciliacionDivisasIntDao
 import com.indeval.portalinternacional.persistence.dao.DivisaDaliDao;
 
 import javax.faces.model.SelectItem;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ConciliacionDivisasIntServiceImpl implements ConciliacionDivisasIntService {
@@ -19,13 +21,13 @@ public class ConciliacionDivisasIntServiceImpl implements ConciliacionDivisasInt
     private DivisaDaliDao divisaDao;
 
     @Override
-    public List<ConciliacionDivisasVO> getAllBy(Integer idBoveda, Integer idDivisa) {
+    public List<ConciliacionDivisasVO> getAllBy(Integer idBoveda, Integer idDivisa, Date startDate, Date endDate) {
         List<ConciliacionDivisasIntDTO> conciliations = new ArrayList<ConciliacionDivisasIntDTO>();
 
         if (idBoveda != -1) {
-            conciliations = conciliacionDivisasIntDao.getAllByIdBovedaAndIdDivisa(idBoveda, idDivisa);
+            conciliations = conciliacionDivisasIntDao.getAllByIdBovedaAndIdDivisa(idBoveda, idDivisa, startDate, endDate);
         } else {
-            conciliations = conciliacionDivisasIntDao.getAllByIdDivisa(idDivisa);
+            conciliations = conciliacionDivisasIntDao.getAllByIdDivisa(idDivisa, startDate, endDate);
         }
 
         List<ConciliacionDivisasVO> conciliacionesDivisasVO = new ArrayList<ConciliacionDivisasVO>();
@@ -39,6 +41,7 @@ public class ConciliacionDivisasIntServiceImpl implements ConciliacionDivisasInt
             conciliacionDivisasVO.setMontoCustodio(conciliation.getMontoCustodio());
             conciliacionDivisasVO.setMontoIndeval(conciliation.getMontoIndeval());
             conciliacionDivisasVO.setMontoDiferencia(conciliation.getMontoDiferencia());
+            conciliacionDivisasVO.setFecha(new SimpleDateFormat("dd/MM/yyyy").format(conciliation.getFecha()));
 
             conciliacionesDivisasVO.add(conciliacionDivisasVO);
         }

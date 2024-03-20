@@ -21,6 +21,16 @@ public class ConciliacionDivisasVO implements Serializable {
 
     private BigDecimal montoDiferencia;
 
+    private String fecha;
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
     public String getBovedaDescription() {
         return bovedaDescription;
     }

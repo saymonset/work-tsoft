@@ -30,7 +30,18 @@ import com.indeval.portalinternacional.middleware.servicios.modelo.SicDetalle;
 import com.indeval.portalinternacional.middleware.servicios.modelo.SicEmision;
 import com.indeval.portalinternacional.middleware.servicios.modelo.TipoBeneficiario;
 import com.indeval.portalinternacional.middleware.servicios.modelo.TipoPagoInt;
-import com.indeval.portalinternacional.middleware.servicios.vo.*;
+import com.indeval.portalinternacional.middleware.servicios.vo.AltaCustodioVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.ArqueoVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.CalendarioEmisionesDeudaExtDTO;
+import com.indeval.portalinternacional.middleware.servicios.vo.ConciliacionIntDTO;
+import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaCierreFideicomisoParams;
+import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaCierreFideicomisoVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaCustodiosVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaFideicomisosVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.DetalleConciliacionIntDTO;
+import com.indeval.portalinternacional.middleware.servicios.vo.GrabaOperacionParams;
+import com.indeval.portalinternacional.middleware.servicios.vo.HistorialBitacoraOperacionesSICDTO;
+import com.indeval.portalinternacional.middleware.servicios.vo.TotalArqueoVO;
 import com.indeval.protocolofinanciero.api.vo.TraspasoLibrePagoVO;
 
 /**
@@ -425,7 +436,6 @@ public interface DivisionInternacionalService {
 	 * @return
 	 */
 	public List<BitacoraMensajeSwift> consultaBitacoraMensajesSwift(Long id)throws BusinessException;
-	public List<BitacoraMensajeSwiftVO> consultaBitacoraMensajesSwiftVO(Long id)throws BusinessException;
 	/**
 	 * obtiene el catalogo de Bovedas
 	 * @param soloInternacional solo obtiene las bovedas de internacional
@@ -521,9 +531,7 @@ public interface DivisionInternacionalService {
     
     public List<BitacoraMensajeSwift> consultaBitacoraMensajesSwiftByHist(Long id)	throws BusinessException;
 
-	public List<BitacoraMensajeSwiftVO>  getBitacoraMensajeSwiftbyIdHistVO(final Long id) 	throws BusinessException;
-
-	/**
+    /**
      * Valida la existencia de un tipo valor en la BD.
      * @param tv El tipo valor a verificar en la BD.
      * @return true si existe, false en caso contrario.

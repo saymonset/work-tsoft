@@ -8,14 +8,16 @@ import com.indeval.portaldali.middleware.servicios.modelo.BusinessException;
 import com.indeval.portaldali.persistence.dao.common.DivisaDao;
 import com.indeval.portalinternacional.middleware.services.divisioninternacional.CustodioService;
 import com.indeval.portalinternacional.middleware.services.divisioninternacional.HorariosCustodiosService;
+import com.indeval.portalinternacional.middleware.servicios.constantes.EstatusDB;
 import com.indeval.portalinternacional.middleware.servicios.dto.HorariosCustodiosDto;
 import com.indeval.portalinternacional.presentation.controller.common.CapturaOperacionesController;
-import com.indeval.portalinternacional.middleware.servicios.constantes.EstatusDB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +37,8 @@ public class HorariosCustodiosRegistroController extends CapturaOperacionesContr
     private Integer idCustodio;
     private String horarioInicial;
     private String horarioFinal;
+
+    private static final SimpleDateFormat FORMATO_HORARIOS = new SimpleDateFormat("HH:mm");
     private Integer estatus;
     private List<SelectItem> listaDivisas;
     private List<SelectItem> listaCustodio;
@@ -83,46 +87,113 @@ public class HorariosCustodiosRegistroController extends CapturaOperacionesContr
                 "idDivisa: " + idDivisa + " | " +
                 "horarioInicial: " + horarioInicial + " | " +
                 "horarioFinal: " + horarioFinal);
-        horariosCustodiosDto = new ArrayList<HorariosCustodiosDto>();
-        try {
-            this.consultaEjecutada = false;
-            HorariosCustodiosDto horarioCustodio = new HorariosCustodiosDto();
-            horarioCustodio.setIdDivisa(idDivisa);
-            horarioCustodio.setIdCustodio(idCustodio);
-            horarioCustodio.setHorarioInicial(horarioInicial);
-            horarioCustodio.setHorarioFinal(horarioFinal);
-            horarioCustodio.setFechaCreacion(new Date());
-            horarioCustodio.setFechaUltModificacion(horarioCustodio.getFechaCreacion());
-            horarioCustodio.setEstatus(ID_ESTADO_REGISTRADO);
-            horarioCustodio.setCreador(getNombreUsuarioSesion());
 
-            LOG.debug("Salvar :: " + horarioCustodio);
-            HorariosCustodiosDto nuevoHorarioCustodioDto = horariosCustodiosService.salvarHorarioCustodio(horarioCustodio);
-
-
-            if (horariosCustodiosDto != null) {
-                LOG.debug("Horario Custodio Registrado :: " + nuevoHorarioCustodioDto.toString());
-                this.consultaEjecutada = true;
-                nuevoHorarioCustodioDto.setHorarioInicial(
-                        nuevoHorarioCustodioDto.getHorarioInicial().substring(0,
-                                nuevoHorarioCustodioDto.getHorarioInicial().length() - 3));
-                nuevoHorarioCustodioDto.setHorarioFinal(
-                        nuevoHorarioCustodioDto.getHorarioFinal().substring(0,
-                                nuevoHorarioCustodioDto.getHorarioFinal().length() - 3));
-                this.horariosCustodiosDto.add(nuevoHorarioCustodioDto);
-                LOG.debug(nuevoHorarioCustodioDto.toString());
-                agregarInfoMensaje("Horario registrado con exito");
-            }
-        } catch (Exception ex) {
-            LOG.error(ex.toString(), ex);
-            this.consultaEjecutada = false;
-        }
-
-        if (!this.consultaEjecutada) {
+        if (validarHorarios()) {
             horariosCustodiosDto = new ArrayList<HorariosCustodiosDto>();
-            agregarMensaje(new BusinessException("ERROR: No fue posible registrar el horario del custodio"));
+
+            try {
+                this.consultaEjecutada = false;
+                HorariosCustodiosDto horarioCustodio = new HorariosCustodiosDto();
+                horarioCustodio.setIdDivisa(idDivisa);
+                horarioCustodio.setIdCustodio(idCustodio);
+                horarioCustodio.setHorarioInicial(horarioInicial + ":00");
+                horarioCustodio.setHorarioFinal(horarioFinal + ":59");
+                horarioCustodio.setFechaCreacion(new Date());
+                horarioCustodio.setFechaUltModificacion(horarioCustodio.getFechaCreacion());
+                horarioCustodio.setEstatus(ID_ESTADO_REGISTRADO);
+                horarioCustodio.setCreador(getNombreUsuarioSesion());
+
+
+                LOG.debug("Salvar :: " + horarioCustodio);
+                HorariosCustodiosDto nuevoHorarioCustodioDto =
+                        horariosCustodiosService.salvarHorarioCustodio(horarioCustodio);
+
+                if (horariosCustodiosDto != null) {
+                    LOG.debug("Horario Custodio Registrado :: " + nuevoHorarioCustodioDto.toString());
+                    this.consultaEjecutada = true;
+                    nuevoHorarioCustodioDto.setHorarioInicial(
+                            nuevoHorarioCustodioDto.getHorarioInicial().substring(0,
+                                    nuevoHorarioCustodioDto.getHorarioInicial().length() - 3));
+                    nuevoHorarioCustodioDto.setHorarioFinal(
+                            nuevoHorarioCustodioDto.getHorarioFinal().substring(0,
+                                    nuevoHorarioCustodioDto.getHorarioFinal().length() - 3));
+                    this.horariosCustodiosDto.add(nuevoHorarioCustodioDto);
+                    LOG.debug(nuevoHorarioCustodioDto.toString());
+                    agregarInfoMensaje("Horario registrado exitosamente");
+                }
+            } catch (Exception ex) {
+                LOG.error(ex.toString(), ex);
+                this.consultaEjecutada = false;
+            }
+
+            if (!this.consultaEjecutada) {
+                horariosCustodiosDto = new ArrayList<HorariosCustodiosDto>();
+                agregarMensaje(new BusinessException("ERROR: No fue posible registrar el horario del custodio"));
+            }
+        } else {
+            this.consultaEjecutada = false;
         }
     }
+
+
+    private boolean validarHorarios() {
+        if (horarioInicial != null && !horarioInicial.isEmpty() && !horarioInicial.equals("HH:MM")
+                && horarioFinal != null && !horarioFinal.isEmpty() && !horarioFinal.equals("HH:MM")) {
+            try {
+                if (validaFormatoHora(horarioInicial) && validaFormatoHora(horarioFinal)) {
+                    Date horaInicio = FORMATO_HORARIOS.parse(horarioInicial);
+                    Date horaFin = FORMATO_HORARIOS.parse(horarioFinal);
+                    if (horaInicio.compareTo(horaFin) < 0) {
+                        return true;
+                    } else if (horaInicio.compareTo(horaFin) > 0) {
+                        agregarMensaje(new BusinessException("ERROR: La Hora Inicial introducida [" + horarioInicial + "] " +
+                                "no puede ser posterior a la Hora Final introducida [" + horarioFinal + "] , intente de nuevo"));
+                    } else {
+                        agregarMensaje(new BusinessException("ERROR: La Hora Inicial  y la Hora Final introducidas " +
+                                "no pueden ser iguales [" + horarioInicial + "] , intente de nuevo"));
+                    }
+                } else {
+                    if (!validaFormatoHora(horarioInicial)) {
+                        agregarMensaje(new BusinessException("ERROR: La Hora Inicial introducida [" + horarioInicial + "] " +
+                                "no es aceptable, intente de nuevo"));
+                    }
+                    if (!validaFormatoHora(horarioFinal)) {
+                        agregarMensaje(new BusinessException("ERROR: La Hora Final introducida [" + horarioFinal + "] " +
+                                "no es aceptable, intente de nuevo"));
+                    }
+                }
+            } catch (ParseException e) {
+                LOG.error(e.getMessage(), e);
+            }
+        } else {
+            if (horarioInicial == null || horarioInicial.isEmpty() || horarioInicial.equals("HH:MM")) {
+                agregarMensaje(new BusinessException("Favor de llenar el campo Horario Inicial"));
+            }
+            if (horarioFinal == null || horarioFinal.isEmpty() || horarioFinal.equals("HH:MM")) {
+                agregarMensaje(new BusinessException("Favor de llenar el campo Horario Final"));
+            }
+        }
+        return false;
+    }
+
+    private boolean validaFormatoHora(String horario) {
+        try {
+            if (horario.contains(":")) {
+                String hora[] = horario.split(":");
+                int horas = Integer.parseInt(hora[0]);
+                int minutos = Integer.parseInt(hora[1]);
+                if (horas >= 0 && horas < 24
+                        && minutos >= 0 && minutos < 60) {
+                    FORMATO_HORARIOS.parse(horario);
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+        }
+        return false;
+    }
+
 
     /**
      * Obtienen la descripción del estado del horario del custodio

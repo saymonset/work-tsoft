@@ -1,5 +1,6 @@
 package com.indeval.portalinternacional.middleware.services.divisioninternacional.cuentasTransitoriasEfectivo;
 
+import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.BovedaMontosDto;
 import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.CuentaTransitoriaEfectivoDto;
 import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.DetalleReferenciaDto;
 import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.FolioAgrupadoDto;
@@ -66,41 +67,42 @@ public class CuentasTransitoriasEfectivoServiceImpl implements CuentasTransitori
     }
 
     /**
-     * @see com.indeval.portalinternacional.middleware.services.divisioninternacional.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoService#obtenerNegativos(String, String)
+     * @see com.indeval.portalinternacional.middleware.services.divisioninternacional.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoService#obtenerNegativosDetalles(String, String)
      */
     @Override
-    public List<FolioAgrupadoDto> obtenerNegativos(String idDivisa, String idCustodio) {
-        log.debug("Obtener Resumen :: SERVICE :: Folio Agrupado :: " +
+    public List<DetalleReferenciaDto> obtenerNegativosDetalles(String idDivisa, String idCustodio) {
+        log.debug("Obtener Resumen :: SERVICE :: Negativos Detalles :: " +
                 "idCustodio [" + (idCustodio == null ? "Todos" : idCustodio) + "] - " +
                 "idDivisas [" + (idDivisa == null ? "Todas" : idDivisa) + "] ");
 
-        List<FolioAgrupadoDto> negativosEncontrados = new ArrayList<>();
-        List<String[]> negativos = cuentasTransitoriasEfectivoDao.
-                obtenerNegativos(idDivisa, idCustodio);
-
-
-        if (negativos != null) {
-            for (String[] referencia : negativos) {
-                FolioAgrupadoDto folioAgrupadoDto = new FolioAgrupadoDto();
-                folioAgrupadoDto.setIdDivisa(referencia[0]);
-                folioAgrupadoDto.setDivisa(referencia[1]);
-                folioAgrupadoDto.setIdCustodio(referencia[2]);
-                folioAgrupadoDto.setCustodio(referencia[3]);
-                folioAgrupadoDto.setTotal(new BigDecimal(referencia[4]));
-                log.debug(negativosEncontrados.toString());
-                negativosEncontrados.add(folioAgrupadoDto);
-            }
-        }
-        return negativosEncontrados;
+        return cuentasTransitoriasEfectivoDao.obtenerNegativosDetalles(idDivisa, idCustodio);
     }
 
     /**
-     * @see com.indeval.portalinternacional.middleware.services.divisioninternacional.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoService#obtenerFolioAgrupado(String, String, String, String, String)
+     * @see com.indeval.portalinternacional.middleware.services.divisioninternacional.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoService#obtenerNegativosTotal(String, String)
      */
     @Override
-    public List<FolioAgrupadoDto> obtenerFolioAgrupado(String idDivisa, String idCustodio,
-                                                       String fechaInicio, String fechaFin,
-                                                       String folioRelacionado) {
+    public List<FolioAgrupadoDto> obtenerNegativosTotal(String idDivisa, String idCustodio) {
+        log.debug("Obtener Resumen :: SERVICE :: Negativos Total :: " +
+                "idCustodio [" + (idCustodio == null ? "Todos" : idCustodio) + "] - " +
+                "idDivisas [" + (idDivisa == null ? "Todas" : idDivisa) + "] ");
+
+        List<FolioAgrupadoDto> negativosTotal = new ArrayList<>();
+        FolioAgrupadoDto total = cuentasTransitoriasEfectivoDao.obetenerNegativosTotal(idDivisa, idCustodio);
+
+        if (total != null) {
+            negativosTotal.add(total);
+        }
+        return negativosTotal;
+    }
+
+    /**
+     * @see com.indeval.portalinternacional.middleware.services.divisioninternacional.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoService#obtenerFoliosAgrupados(String, String, String, String, String)
+     */
+    @Override
+    public List<FolioAgrupadoDto> obtenerFoliosAgrupados(String idDivisa, String idCustodio,
+                                                         String fechaInicio, String fechaFin,
+                                                         String folioRelacionado) {
         log.debug("Obtener Resumen :: SERVICE :: Folio Agrupado :: " +
                 "idCustodio [" + (idCustodio == null ? "Todos" : idCustodio) + "] - " +
                 "idDivisas [" + (idDivisa == null ? "Todas" : idDivisa) + "] "
@@ -110,34 +112,19 @@ public class CuentasTransitoriasEfectivoServiceImpl implements CuentasTransitori
 
         fechaFin = validarFechaFin(fechaInicio, fechaFin);
 
-        List<FolioAgrupadoDto> folioAgrupado = new ArrayList<>();
-        List<String[]> referencias = cuentasTransitoriasEfectivoDao.
-                obtenerInformacionFolioAgrupado(idDivisa, idCustodio, fechaInicio, fechaFin, folioRelacionado);
-
-        if (referencias != null) {
-            for (String[] referencia : referencias) {
-                FolioAgrupadoDto folioAgrupadoDto = new FolioAgrupadoDto();
-                folioAgrupadoDto.setFolioRelacionado(referencia[0]);
-                folioAgrupadoDto.setCustodio(referencia[1]);
-                folioAgrupadoDto.setDivisa(referencia[2].substring(0, 3));
-                folioAgrupadoDto.setDivisaExtendida(referencia[2]);
-                folioAgrupadoDto.setRegistros(referencia[3]);
-                folioAgrupadoDto.setTotal(new BigDecimal(referencia[4]));
-                folioAgrupadoDto.setMontoNegativo(Boolean.parseBoolean(referencia[5]));
-                log.debug(folioAgrupado.toString());
-                folioAgrupado.add(folioAgrupadoDto);
-            }
-        }
-        return folioAgrupado;
+        List<FolioAgrupadoDto> foliosAgrupados = cuentasTransitoriasEfectivoDao.
+                obtenerInformacionFoliosAgrupados(idDivisa, idCustodio, fechaInicio, fechaFin, folioRelacionado);
+        log.debug("Folios Agrupados Encontrados :: " + foliosAgrupados.size());
+        return foliosAgrupados;
     }
 
     /**
-     * @see com.indeval.portalinternacional.middleware.services.divisioninternacional.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoService#obtenerReferencias(String, String, String, String, String)
+     * @see com.indeval.portalinternacional.middleware.services.divisioninternacional.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoService#obtenerSinReferencias(String, String, String, String, String)
      */
     @Override
-    public List<CuentaTransitoriaEfectivoDto> obtenerReferencias(String idDivisa, String idCustodio,
-                                                                 String fechaInicio, String fechaFin,
-                                                                 String folioRelacionado) {
+    public List<CuentaTransitoriaEfectivoDto> obtenerSinReferencias(String idDivisa, String idCustodio,
+                                                                    String fechaInicio, String fechaFin,
+                                                                    String folioRelacionado) {
         log.debug("Obtener Referencias :: SERVICE :: " +
                 "idCustodio [" + (idCustodio == null ? "Todos" : idCustodio) + "] - " +
                 "idDivisas [" + (idDivisa == null ? "Todas" : idDivisa) + "] "
@@ -147,35 +134,8 @@ public class CuentasTransitoriasEfectivoServiceImpl implements CuentasTransitori
 
         fechaFin = validarFechaFin(fechaInicio, fechaFin);
 
-        List<CuentaTransitoriaEfectivoDto> referenciados = new ArrayList<>();
-        List<String[]> referencias = cuentasTransitoriasEfectivoDao.
-                obtenerInformacionReferencias(idDivisa, idCustodio, fechaInicio, fechaFin, folioRelacionado);
-
-        if (referencias != null) {
-            for (String[] referencia : referencias) {
-                log.debug("REFERENCIA_OPERACION [" + referencia[0] + "] :: "
-                        + "TIPO_MENSAJE [" + referencia[1] + "] :: "
-                        + "CLAVE_ALFABETICA [" + referencia[2] + "] :: "
-                        + "NOMBRE_CORTO [" + referencia[3] + "] :: "
-                        + "MONTO  [" + referencia[4] + "] :: "
-                        + "ID_CUENTA_TRANSITORIA  [" + referencia[5] + "] :: "
-                        + "XML_MENSAJE_ISO  [" + referencia[6] + "] ");
-
-                CuentaTransitoriaEfectivoDto referenciada = new CuentaTransitoriaEfectivoDto();
-                referenciada.setReferenciaOperacion(referencia[0]);
-                referenciada.setTipoMensaje(referencia[1]);
-                referenciada.setDivisa(referencia[2]);
-                referenciada.setIdDivisa(referencia[3]);
-                referenciada.setCustodio(referencia[4]);
-                referenciada.setIdCustodio(referencia[5]);
-                referenciada.setTotal(new BigDecimal(referencia[6]));
-                referenciada.setIdRegistro(referencia[7]);
-                referenciada.setMensajeISO(referencia[8]);
-                log.debug(referenciada.toString());
-                referenciados.add(referenciada);
-            }
-        }
-        return referenciados;
+        return cuentasTransitoriasEfectivoDao.
+                obtenerInformacionSinReferencias(idDivisa, idCustodio, fechaInicio, fechaFin, folioRelacionado);
     }
 
     private String validarFechaFin(String fechaInicio, String fechaFin) {
@@ -188,40 +148,27 @@ public class CuentasTransitoriasEfectivoServiceImpl implements CuentasTransitori
     }
 
     /**
-     * @see com.indeval.portalinternacional.middleware.services.divisioninternacional.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoService#obtenerDetallesReferencia(String)
+     * @see com.indeval.portalinternacional.middleware.services.divisioninternacional.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoService#obtenerDetallesReferencia(String, String, String)
      */
     @Override
-    public List<DetalleReferenciaDto> obtenerDetallesReferencia(String folioRelacionado) {
-        log.debug("Obtener Detalles Referencia :: SERVICE :: folioRelacionado [" + folioRelacionado + "] ");
-        List<DetalleReferenciaDto> referenciados = new ArrayList<>();
-        List<String[]> referencias = cuentasTransitoriasEfectivoDao.obtenerDetalleReferencias(folioRelacionado);
-        if (referencias != null) {
-            for (String[] referencia : referencias) {
-                DetalleReferenciaDto detalle = new DetalleReferenciaDto();
-                detalle.setIdRegistro(referencia[0]);
-                detalle.setFolioRelacionado(referencia[1]);
-                detalle.setTipoMensaje(referencia[2]);
-                detalle.setDivisa(referencia[3]);
-                detalle.setCustodio(referencia[4]);
-                detalle.setTotal(new BigDecimal(referencia[5]));
-                detalle.setDetalleMovimientos(referencia[6]);
-                detalle.setSeme(referencia[7]);
-                detalle.setMensajeISO(referencia[8]);
-                log.debug(detalle.toString());
-                referenciados.add(detalle);
-            }
-        }
-        log.debug("Detalles referencias :: " + referenciados.size());
-        return referenciados;
+    public List<DetalleReferenciaDto> obtenerDetallesReferencia(String idDivisa, String idCustodio, String folioRelacionado) {
+        log.debug("Obtener Detalles Referencia :: SERVICE :: " +
+                "idDivisas [" + (idDivisa == null ? "Todas" : idDivisa) + "] - " +
+                "idCustodio [" + (idCustodio == null ? "Todos" : idCustodio) + "] - " +
+                "folioRelacionado [" + folioRelacionado + "] ");
+        List<DetalleReferenciaDto> referencias =
+                cuentasTransitoriasEfectivoDao.obtenerDetalleReferencias(idDivisa, idCustodio, folioRelacionado);
+        log.debug("Detalles referencias :: " + referencias.size());
+        return referencias;
     }
 
     /**
-     * @see com.indeval.portalinternacional.middleware.services.divisioninternacional.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoService#obtenerDetallesReferenciaTotal(String)
+     * @see com.indeval.portalinternacional.middleware.services.divisioninternacional.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoService#obtenerDetallesReferenciaTotal(String, String, String)
      */
     @Override
-    public BigDecimal obtenerDetallesReferenciaTotal(String folioRelacionado) {
+    public BigDecimal obtenerDetallesReferenciaTotal(String idDivisa, String idCustodio, String folioRelacionado) {
         log.debug("Obtener Total de Detalles Referencia :: SERVICE :: folioRelacionado [" + folioRelacionado + "] ");
-        return cuentasTransitoriasEfectivoDao.obtenerDetalleReferenciasTotal(folioRelacionado);
+        return cuentasTransitoriasEfectivoDao.obtenerDetalleReferenciasTotal(idDivisa, idCustodio, folioRelacionado);
     }
 
     /**
@@ -258,12 +205,11 @@ public class CuentasTransitoriasEfectivoServiceImpl implements CuentasTransitori
     }
 
     /**
-     * @see com.indeval.portalinternacional.middleware.services.divisioninternacional.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoService#obtenerRegistroPorIdRegistro(String)
+     * @see com.indeval.portalinternacional.middleware.services.divisioninternacional.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoService#obetenerTotalBoveda(String, String, String)
      */
     @Override
-    public DetalleReferenciaDto obtenerRegistroPorIdRegistro(String idRegistro) {
-        return cargarRegistro(cuentasTransitoriasEfectivoDao.
-                obtenerIdRegistro(idRegistro));
+    public BovedaMontosDto obetenerTotalBoveda(String idDivisa, String idCustodio) {
+        return cuentasTransitoriasEfectivoDao.obetenerTotalBoveda(idDivisa, idCustodio);
     }
 
     private DetalleReferenciaDto cargarRegistro(String[] registro) {

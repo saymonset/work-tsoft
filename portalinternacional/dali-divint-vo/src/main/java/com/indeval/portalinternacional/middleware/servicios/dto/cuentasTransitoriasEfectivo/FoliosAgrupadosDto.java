@@ -1,11 +1,12 @@
 package com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo;
 
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class FoliosAgrupadosDto {
     private String divisa;
-    private String monto;
+    private BigDecimal monto;
 
     /**
      * Indica si el monto TOTAL de los movimientos es NEGATIVO
@@ -21,11 +22,11 @@ public class FoliosAgrupadosDto {
         this.divisa = divisa;
     }
 
-    public String getMonto() {
+    public BigDecimal getMonto() {
         return monto;
     }
 
-    public void setMonto(String monto) {
+    public void setMonto(BigDecimal monto) {
         this.monto = monto;
     }
 

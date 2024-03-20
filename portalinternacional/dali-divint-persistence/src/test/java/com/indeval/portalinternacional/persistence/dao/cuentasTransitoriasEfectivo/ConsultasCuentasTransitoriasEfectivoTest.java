@@ -4,7 +4,6 @@ package com.indeval.portalinternacional.persistence.dao.cuentasTransitoriasEfect
 import com.indeval.portalinternacional.persistence.dao.impl.cuentasTransitoriasEfectivo.ConsultasCuentasTransitoriasEfectivo;
 import junit.framework.TestCase;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -23,6 +22,46 @@ public class ConsultasCuentasTransitoriasEfectivoTest extends TestCase {
     }
 
 
+    public void testGetQueryTotalBoveda() {
+        assertTrue(validarQuery(false,
+                ConsultasCuentasTransitoriasEfectivo.
+                        getQueryTotalBoveda(ID_DIVISA, ID_CUSTODIO)));
+    }
+
+    public void testGetQueryFoliosNegativosTotales() {
+        System.out.println("testGetQueryFoliosNegativosTotales()");
+        int i = 0;
+        for (String[] combinacion : COMBINACIONES) {
+            i++;
+            System.out.println("     Prueba combinacion [" + i + "] :: " + combinacion[5]);
+
+            if (!validarQuery(false,
+                    ConsultasCuentasTransitoriasEfectivo.getQueryNegativosTotal(
+                            combinacion[0], combinacion[1]))) {
+                assertTrue(false);
+                break;
+            }
+        }
+        assertTrue(true);
+    }
+
+    public void testGetQueryFoliosNegativosDetalles() {
+        System.out.println("testGetQueryFoliosNegativosDetalles()");
+        int i = 0;
+        for (String[] combinacion : COMBINACIONES) {
+            i++;
+            System.out.println("     Prueba combinacion [" + i + "] :: " + combinacion[5]);
+
+            if (!validarQuery(false,
+                    ConsultasCuentasTransitoriasEfectivo.getQueryNegativosDetalles(
+                            combinacion[0], combinacion[1]))) {
+                assertTrue(false);
+                break;
+            }
+        }
+        assertTrue(true);
+    }
+
     public void testGetQueryFoliosRelacionadosAgrupados() {
         System.out.println("testGetQueryFoliosRelacionadosAgrupado()");
         int i = 0;
@@ -32,7 +71,7 @@ public class ConsultasCuentasTransitoriasEfectivoTest extends TestCase {
 
             if (!validarQuery(false,
                     ConsultasCuentasTransitoriasEfectivo.
-                            getQueryFoliosRelacionadosAgrupados(
+                            getQueryFoliosAgrupados(
                                     combinacion[0], combinacion[1],
                                     combinacion[2], combinacion[3],
                                     combinacion[4]))) {
@@ -43,28 +82,16 @@ public class ConsultasCuentasTransitoriasEfectivoTest extends TestCase {
         assertTrue(true);
     }
 
-    public void testGetQueryFoliosNegativos() {
-        System.out.println("testGetQueryFoliosNegativos()");
-        int i = 0;
-        for (String[] combinacion : COMBINACIONES) {
-            i++;
-            System.out.println("     Prueba combinacion [" + i + "] :: " + combinacion[5]);
-
-            if (!validarQuery(false,
-                    ConsultasCuentasTransitoriasEfectivo.getQueryNegativos(
-                            combinacion[0], combinacion[1]))) {
-                assertTrue(false);
-                break;
-            }
-        }
-        assertTrue(true);
-    }
-
-
-    public void testGetQueryMensajeISO() {
+    public void testGetQueryReferenciasDetalle() {
         assertTrue(validarQuery(false,
                 ConsultasCuentasTransitoriasEfectivo.
-                        getQueryMensajeISO(ID_REGISTRO)));
+                        getQueryReferenciasDetalle(ID_DIVISA, ID_CUSTODIO, FOLIO_RELACIONADO)));
+    }
+
+    public void testGetQueryReferenciasDetalleTotal() {
+        assertTrue(validarQuery(false,
+                ConsultasCuentasTransitoriasEfectivo.
+                        getQueryReferenciasDetalleTotal(ID_DIVISA, ID_CUSTODIO, FOLIO_RELACIONADO)));
     }
 
     public void testGetQueryReferencias() {
@@ -74,7 +101,7 @@ public class ConsultasCuentasTransitoriasEfectivoTest extends TestCase {
             i++;
             System.out.println("     Prueba combinacion [" + i + "] :: " + combinacion[5]);
             if (!validarQuery(false,
-                    ConsultasCuentasTransitoriasEfectivo.getQueryReferencias(
+                    ConsultasCuentasTransitoriasEfectivo.getQuerySinReferencias(
                             combinacion[0], combinacion[1],
                             combinacion[2], combinacion[3],
                             combinacion[4]))) {
@@ -85,16 +112,10 @@ public class ConsultasCuentasTransitoriasEfectivoTest extends TestCase {
         assertTrue(true);
     }
 
-    public void testGetQueryReferenciasDetalle() {
+    public void testGetQueryMensajeISO() {
         assertTrue(validarQuery(false,
                 ConsultasCuentasTransitoriasEfectivo.
-                        getQueryReferenciasDetalle(FOLIO_RELACIONADO)));
-    }
-
-    public void testGetQueryReferenciasDetalleTotal() {
-        assertTrue(validarQuery(false,
-                ConsultasCuentasTransitoriasEfectivo.
-                        getQueryReferenciasDetalleTotal(FOLIO_RELACIONADO)));
+                        getQueryMensajeISO(ID_REGISTRO)));
     }
 
     public void testGetQueryValidarFolioRelacionado() {
@@ -109,10 +130,10 @@ public class ConsultasCuentasTransitoriasEfectivoTest extends TestCase {
                         getQueryObtenerCustodio(ID_REGISTRO)));
     }
 
-    public void testObtenerIdCalendarioInt() {
-        assertTrue(validarQuery(false,
-                ConsultasCuentasTransitoriasEfectivo.getQueryObtenerIdCalendarioInt(FOLIO_RELACIONADO)));
-
+    public void testGetQueryRegistroPorReferencia() {
+        assertTrue(validarQuery(true,
+                ConsultasCuentasTransitoriasEfectivo.
+                        getQueryRegistroPorReferencia(FOLIO_RELACIONADO)));
     }
 
     public void testGetQueryAsignarFolioRelacionado() {
@@ -121,20 +142,10 @@ public class ConsultasCuentasTransitoriasEfectivoTest extends TestCase {
                         getQueryAsignarFolioRelacionado(FOLIO_RELACIONADO, ID_REGISTRO)));
     }
 
-    public void testGetQueryRegistroPorIdRegistro() {
-        assertTrue(validarQuery(true,
-                ConsultasCuentasTransitoriasEfectivo.
-                        getQueryRegistroPorIdRegistro(ID_REGISTRO)));
-    }
-
-    public void testGetQueryRegistroPorReferencia() {
-        assertTrue(validarQuery(true,
-                ConsultasCuentasTransitoriasEfectivo.
-                        getQueryRegistroPorReferencia(FOLIO_RELACIONADO)));
-    }
-
     private boolean validarQuery(boolean update, String query) {
         try {
+            //System.out.println("validarQuery ... ");
+            //System.out.println(query);
             Statement statement = connection.createStatement();
             if (update) {
                 statement.executeUpdate(query);
@@ -144,6 +155,7 @@ public class ConsultasCuentasTransitoriasEfectivoTest extends TestCase {
             return true;
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println(query);
             return false;
         }
     }
@@ -181,6 +193,5 @@ public class ConsultasCuentasTransitoriasEfectivoTest extends TestCase {
             statement = null;
         }
     }
-
 
 }

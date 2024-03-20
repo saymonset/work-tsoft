@@ -158,17 +158,19 @@ public class HorariosCustodiosDaoImpl extends BaseDaoHibernateImpl implements Ho
         sb.append("FROM C_HORARIOS_CUSTODIOS HC, \n");
         sb.append("     C_CUSTODIO C, C_DIVISA D\n");
         sb.append("WHERE HC.ID_CUSTODIO = C.ID_CUSTODIO\n");
-        sb.append("  AND HC.ID_DIVISA = D.ID_DIVISA");
+        sb.append("  AND HC.ID_DIVISA = D.ID_DIVISA\n");
 
         if (criteriosConsulta.getFechaCreacion() != null) {
-            sb.append("  AND TO_CHAR(HC.FECHA_CREACION, 'YYYY-MM-DD') = TO_CHAR(:fechaCreacion, 'YYYY-MM-DD') ");
+            sb.append("  AND TO_CHAR(HC.FECHA_CREACION, 'YYYY-MM-DD') = TO_CHAR(:fechaCreacion, 'YYYY-MM-DD') \n");
         }
         if (criteriosConsulta.getIdDivisa() != null) {
-            sb.append("  AND HC.ID_DIVISA = :idDivisa");
+            sb.append("  AND HC.ID_DIVISA = :idDivisa\n");
         }
         if (criteriosConsulta.getIdCustodio() != null) {
-            sb.append("  AND HC.ID_CUSTODIO = :idCustodio ");
+            sb.append("  AND HC.ID_CUSTODIO = :idCustodio \n");
         }
+
+        sb.append("ORDER BY HC.ID_DIVISA ASC, HC.ID_CUSTODIO ASC , HC.FECHA_CREACION DESC");
 
         List<HorariosCustodiosVO> resultados = (List<HorariosCustodiosVO>) getHibernateTemplate().execute(new HibernateCallback() {
             public Object doInHibernate(Session session) throws HibernateException, SQLException {

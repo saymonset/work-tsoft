@@ -23,15 +23,16 @@ public class FolioAgrupadoDto implements Serializable {
     /**
      * CUSTODIO : custodio
      */
-    protected String custodio;
     protected String idCustodio;
+    protected String custodio;
 
     /**
      * DIVISA : Divisa
      */
+    protected String idDivisa;
     protected String divisa;
     protected String divisaExtendida;
-    protected String idDivisa;
+
 
     /**
      * REGISTROS : Cantidad
@@ -74,6 +75,24 @@ public class FolioAgrupadoDto implements Serializable {
     }
 
     /**
+     * Metodo para obtener el atributo idCustodio
+     *
+     * @return El atributo idCustodio
+     */
+    public String getIdCustodio() {
+        return idCustodio;
+    }
+
+    /**
+     * Metodo para establecer el atributo idCustodio
+     *
+     * @param idCustodio El valor del atributo idCustodio a establecer.
+     */
+    public void setIdCustodio(String idCustodio) {
+        this.idCustodio = idCustodio;
+    }
+
+    /**
      * Metodo para obtener el atributo custodio
      *
      * @return El atributo custodio
@@ -92,21 +111,21 @@ public class FolioAgrupadoDto implements Serializable {
     }
 
     /**
-     * Metodo para obtener el atributo idCustodio
+     * Metodo para obtener el atributo idDivisa
      *
-     * @return El atributo idCustodio
+     * @return El atributo idDivisa
      */
-    public String getIdCustodio() {
-        return idCustodio;
+    public String getIdDivisa() {
+        return idDivisa;
     }
 
     /**
-     * Metodo para establecer el atributo idCustodio
+     * Metodo para establecer el atributo idDivisa
      *
-     * @param idCustodio El valor del atributo idCustodio a establecer.
+     * @param idDivisa El valor del atributo idDivisa a establecer.
      */
-    public void setIdCustodio(String idCustodio) {
-        this.idCustodio = idCustodio;
+    public void setIdDivisa(String idDivisa) {
+        this.idDivisa = idDivisa;
     }
 
     /**
@@ -145,23 +164,6 @@ public class FolioAgrupadoDto implements Serializable {
         this.divisaExtendida = divisaExtendida;
     }
 
-    /**
-     * Metodo para obtener el atributo idDivisa
-     *
-     * @return El atributo idDivisa
-     */
-    public String getIdDivisa() {
-        return idDivisa;
-    }
-
-    /**
-     * Metodo para establecer el atributo idDivisa
-     *
-     * @param idDivisa El valor del atributo idDivisa a establecer.
-     */
-    public void setIdDivisa(String idDivisa) {
-        this.idDivisa = idDivisa;
-    }
 
     /**
      * Metodo para obtener el atributo registros
@@ -217,17 +219,18 @@ public class FolioAgrupadoDto implements Serializable {
         this.montoNegativo = montoNegativo;
     }
 
+
     @Override
     public String toString() {
         return "FolioAgrupadoDto{" +
                 "folioRelacionado='" + folioRelacionado + '\'' +
-                ", custodio='" + custodio + '\'' +
                 ", idCustodio='" + idCustodio + '\'' +
+                ", custodio='" + custodio + '\'' +
+                ", idDivisa='" + idDivisa + '\'' +
                 ", divisa='" + divisa + '\'' +
                 ", divisaExtendida='" + divisaExtendida + '\'' +
-                ", idDivisa='" + idDivisa + '\'' +
                 ", registros='" + registros + '\'' +
-                ", total='" + total + '\'' +
+                ", total=" + total +
                 ", montoNegativo=" + montoNegativo +
                 '}';
     }

@@ -19,22 +19,42 @@
         <pdf:row>
             <pdf:col align="center" header="#{etq.custodio}" value="#{filtros.custodioConsulta}"/>
             <pdf:col align="center" header="#{etq.divisaMinus}" value="#{filtros.divisaCustodia}"/>
-            <pdf:col align="center" header="#{etq.fechaInicioCT}" value="#{filtros.fechaInicioFormateada}"/>
-            <pdf:col align="center" header="#{etq.fechaFinCT}" value="#{filtros.fechaFinFormateada}"/>
-            <pdf:col align="center" header="#{etq.folioRelacionado}" value="#{filtros.referenciaBuscar_2}"/>
+            <pdf:col align="center" header="#{etq.fechaInicioCT}" value="#{filtros.fechaInicioFormateada}"
+                     rendered="#{not empty filtros.fechaInicioFormateada}"/>
+            <pdf:col align="center" header="#{etq.fechaFinCT}" value="#{filtros.fechaFinFormateada}"
+                     rendered="#{not empty filtros.fechaFinFormateada}"/>
+            <pdf:col align="center" header="#{etq.folioRelacionado}" value="#{filtros.referenciaBuscar_2}"
+                     rendered="#{not empty filtros.referenciaBuscar_2}"/>
         </pdf:row>
     </pdf:table>
 
-    <pdf:subtitle value="#{etq.negativos}"/>
-    <pdf:table value="#{cuentasTransitoriasEfectivoController.negativos}" currentBean="row">
+    <pdf:br/>
+    <pdf:br/>
+
+    <pdf:table value="#{cuentasTransitoriasEfectivoController.bovedaSaldos}" currentBean="boveda" widthPercentage="100">
         <pdf:row>
-            <pdf:col header="#{etq.custodio}" value="#{row.custodio}" bgcolor="#F5B7B1"/>
-            <pdf:col header="#{etq.divisaMinus}" value="#{row.divisa}" bgcolor="#F5B7B1"/>
-            <pdf:col header="#{etq.monto}" value="#{row.total}" bgcolor="#F5B7B1"/>
+            <pdf:col align="center" header="#{etq.bovedaMinus}" value="#{boveda.boveda}" bgcolor="#b1eff5"/>
+            <pdf:col align="center" header="#{etq.custodio}" value="#{boveda.custodio}" bgcolor="#b1eff5"/>
+            <pdf:col align="center" header="#{etq.divisaMinus}" value="#{boveda.divisa}" bgcolor="#b1eff5"/>
+            <pdf:col align="center" header="#{etq.saldoBoveda}" value="#{boveda.saldoTotal}" bgcolor="#b1eff5"/>
         </pdf:row>
     </pdf:table>
 
-    <pdf:subtitle value="#{etq.foliosAgrupado}"/>
+    <pdf:br/>
+    <pdf:br/>
+
+    <pdf:table
+            value="#{cuentasTransitoriasEfectivoController.negativosTotal}" currentBean="negativos" widthPercentage="100">
+        <pdf:row>
+            <pdf:col header="#{etq.custodio}" value="#{negativos.custodio}" bgcolor="#F5B7B1"/>
+            <pdf:col header="#{etq.divisaMinus}" value="#{negativos.divisa}" bgcolor="#F5B7B1"/>
+            <pdf:col header="#{etq.monto}" value="#{negativos.total}" bgcolor="#F5B7B1"/>
+        </pdf:row>
+    </pdf:table>
+
+    <pdf:br/>
+    <pdf:br/>
+
     <pdf:iterator id="DivisasEncontradas"
                   value="#{cuentasTransitoriasEfectivoController.foliosAgrupadosDtos}"
                   var="divisas">
@@ -62,8 +82,9 @@
         </pdf:table>
     </pdf:iterator>
 
+    <pdf:br/>
+    <pdf:br/>
 
-    <pdf:subtitle value="#{etq.registrosNoReferenciados}"/>
     <pdf:table value="#{cuentasTransitoriasEfectivoController.registrosNoReferenciados}"
                currentBean="row">
         <pdf:row>

@@ -36,41 +36,109 @@
 
     <txt:table>
         <txt:row>
-            <txt:col header="" value="*" size="1"/>
-            <txt:col header="" value="***************" size="15"/>
-            <txt:col header="" value="***************" size="15"/>
-            <txt:col header="" value="***************" size="15"/>
-            <txt:col header="" value="*" size="1"/>
+            <txt:col header="*" value="" size="1"/>
+            <txt:col header="****************************************" value="" size="40"/>
+            <txt:col header="***************" value="" size="15"/>
+            <txt:col header="***************" value="" size="15"/>
+            <txt:col header="********************" value="" size="20"/>
+            <txt:col header="*" value="" size="1"/>
         </txt:row>
     </txt:table>
     <txt:table>
         <txt:row>
-            <txt:col header="" value="*" size="1"/>
+            <txt:col header="*" value="" size="1"/>
+            <txt:col header="#{etq.bovedaMinus}" value="" size="40"/>
             <txt:col header="#{etq.custodio}" value="" size="15"/>
             <txt:col header="#{etq.divisaMinus}" value="" size="15"/>
-            <txt:col header="#{etq.monto}" value="" size="15"/>
-            <txt:col header="" value="*" size="1"/>
-        </txt:row>
-    </txt:table>
-    <txt:table value="#{cuentasTransitoriasEfectivoController.negativos}" var="row">
-        <txt:row>
-            <txt:col header="" value="*" size="1"/>
-            <txt:col header="" value="#{row.custodio}" size="15"/>
-            <txt:col header="" value="#{row.divisa}" size="15"/>
-            <txt:col header="" value="#{row.total}" size="15"/>
-            <txt:col header="" value="*" size="1"/>
+            <txt:col header="#{etq.saldoBoveda}" value="" size="20"/>
+            <txt:col header="*" value="" size="1"/>
         </txt:row>
     </txt:table>
     <txt:table>
         <txt:row>
-            <txt:col header="" value="*" size="1"/>
-            <txt:col header="" value="***************" size="15"/>
-            <txt:col header="" value="***************" size="15"/>
-            <txt:col header="" value="***************" size="15"/>
-            <txt:col header="" value="*" size="1"/>
+            <txt:col header="*" value="" size="1"/>
+            <txt:col header="#{cuentasTransitoriasEfectivoController.bovedaSaldos.boveda}" value="" size="40"/>
+            <txt:col header="#{cuentasTransitoriasEfectivoController.bovedaSaldos.custodio}" value="" size="15"/>
+            <txt:col header="#{cuentasTransitoriasEfectivoController.bovedaSaldos.divisa}" value="" size="15"/>
+            <txt:col header="#{cuentasTransitoriasEfectivoController.bovedaSaldos.saldoTotal}" value="" size="20"/>
+            <txt:col header="*" value="" size="1"/>
+        </txt:row>
+    </txt:table>
+    <txt:table>
+        <txt:row>
+            <txt:col header="*" value="" size="1"/>
+            <txt:col header="****************************************" value="" size="40"/>
+            <txt:col header="***************" value="" size="15"/>
+            <txt:col header="***************" value="" size="15"/>
+            <txt:col header="********************" value="" size="20"/>
+            <txt:col header="*" value="" size="1"/>
+        </txt:row>
+        <txt:row>
+            <txt:col header="" value="" size="92"/>
+        </txt:row>
+        <txt:row>
+            <txt:col header="" value="" size="92"/>
         </txt:row>
     </txt:table>
 
+
+    <txt:table>
+        <txt:row>
+            <txt:col header="|" value="" size="1"/>
+            <txt:col header="---------------" value="" size="15"/>
+            <txt:col header="|" value="" size="1"/>
+            <txt:col header="---------------" value="" size="15"/>
+            <txt:col header="|" value="" size="1"/>
+            <txt:col header="---------------" value="" size="15"/>
+            <txt:col header="|" value="" size="1"/>
+        </txt:row>
+    </txt:table>
+    <txt:table>
+        <txt:row>
+            <txt:col header="|" value="" size="1"/>
+            <txt:col header="#{etq.custodio}" value="" size="15"/>
+            <txt:col header="|" value="" size="1"/>
+            <txt:col header="#{etq.divisaMinus}" value="" size="15"/>
+            <txt:col header="|" value="" size="1"/>
+            <txt:col header="#{etq.monto}" value="" size="15"/>
+            <txt:col header="|" value="" size="1"/>
+        </txt:row>
+        <txt:row>
+            <txt:col header="-" value="" size="1"/>
+            <txt:col header="---------------" value="" size="15"/>
+            <txt:col header="-" value="" size="1"/>
+            <txt:col header="---------------" value="" size="15"/>
+            <txt:col header="-" value="" size="1"/>
+            <txt:col header="---------------" value="" size="15"/>
+            <txt:col header="-" value="" size="1"/>
+        </txt:row>
+    </txt:table>
+    <txt:table value="#{cuentasTransitoriasEfectivoController.negativosTotal}" var="row">
+        <txt:row>
+            <txt:col header="|" value="" size="1"/>
+            <txt:col header="#{row.custodio}" value="" size="15"/>
+            <txt:col header="|" value="" size="1"/>
+            <txt:col header="#{row.divisa}" value="" size="15"/>
+            <txt:col header="|" value="" size="1"/>
+            <txt:col header="#{row.total}" value="" size="15"/>
+            <txt:col header="|" value="" size="1"/>
+        </txt:row>
+    </txt:table>
+    <txt:row>
+        <txt:col header="-" value="" size="1"/>
+        <txt:col header="---------------" value="" size="15"/>
+        <txt:col header="-" value="" size="1"/>
+        <txt:col header="---------------" value="" size="15"/>
+        <txt:col header="-" value="" size="1"/>
+        <txt:col header="---------------" value="" size="15"/>
+        <txt:col header="-" value="" size="1"/>
+        <txt:row>
+            <txt:col header="" value="" size="47"/>
+        </txt:row>
+        <txt:row>
+            <txt:col header="" value="" size="47"/>
+        </txt:row>
+    </txt:row>
 
 
     <txt:iterator var="divisas" value="#{cuentasTransitoriasEfectivoController.foliosAgrupadosDtos}">
@@ -123,11 +191,11 @@
     </txt:table>
     <txt:table value="#{cuentasTransitoriasEfectivoController.registrosNoReferenciados}" var="row">
         <txt:row>
-            <txt:col header="" value="#{row.referenciaOperacion}" size="20"/>
-            <txt:col header="" value="#{row.tipoMensaje}" size="15"/>
-            <txt:col header="" value="#{row.divisa}" size="15"/>
-            <txt:col header="" value="#{row.custodio}" size="15"/>
-            <txt:col header="" value="#{row.total}" size="15"/>
+            <txt:col header="#{row.referenciaOperacion}" value="" size="20"/>
+            <txt:col header="#{row.tipoMensaje}" value="" size="15"/>
+            <txt:col header="#{row.divisa}" value="" size="15"/>
+            <txt:col header="#{row.custodio}" value="" size="15"/>
+            <txt:col header="#{row.total}" value="" size="15"/>
         </txt:row>
     </txt:table>
 

@@ -1,6 +1,5 @@
 package com.indeval.portalinternacional.presentation.controller.ejercicioDerechosInt;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -10,8 +9,6 @@ import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
@@ -87,17 +84,6 @@ public class CalendarioEmisionesDeudaExtController extends ControllerBase{
 	private String estadoMensajeria;
 	/** Pagina para los reportes*/
     private PaginaVO paginaReportes;
-
-	private boolean isLiquidando = false;
-	private BigDecimal montoConfirmado;
-	//    Solo para euroclear, la fecha de pago y fecha valor si son iguales, debe tener un m567
-	private Boolean isEuroclearAndFechaPagoValor;
-	private Boolean hasM567;
-	private Boolean isEuroclear;
-	private Boolean isCitiBank;
-	private Boolean isPuedePagar;
-	private Integer custodioId;
-	private Long idCalendario;// ID_CALENDARIO_INT
     
     public CalendarioEmisionesDeudaExtController(){
     	this.pattern = Pattern.compile("/calendarioEmisionesDeudaExt.faces$");    	
@@ -142,20 +128,8 @@ public class CalendarioEmisionesDeudaExtController extends ControllerBase{
 		
 		return null;
 	}
-
-	/**
-	 * Inicializa el bean
-	 * @return
-	 */
-	public void getResetLiquidando(){
-		this.isLiquidando = false;
-		this.montoConfirmado = new BigDecimal(0.0);
-		this.isCitiBank = false;
-		this.isEuroclearAndFechaPagoValor  = false;
-		this.hasM567 = false;
-		this.isPuedePagar =  false;
-		this.isEuroclear = false;
-	}
+	
+	
 
 	/**
 	 * Buscar las emisiones
@@ -166,29 +140,7 @@ public class CalendarioEmisionesDeudaExtController extends ControllerBase{
         paginaVO.setRegistrosXPag(50);
 		paginaVO.setOffset(0);
         getPaginaVO().setRegistros(null);
-		boolean isSeguir = true;
-
-		//Si estamos liquidando, debemos cumplr estas reglas
-		if (this.isLiquidando){
-			if (this.isCitiBank){
-				//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: En este momento no se puede liquidar custodio CITIBANK", "CITIBANK"));
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: No se puede hacer pago de efectivo para CITIBANK, se debe hacer desde file transfer", "CITIBANK"));
-				isSeguir = false;
-			}else  if (this.isEuroclear && this.isEuroclearAndFechaPagoValor && !this.hasM567){
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error: Las reglas de Euroclear con Fecha de pago y fecha valor son iguales pero no a llegado un MT-567", "EUROCLEAR"));
-				isSeguir = false;
-			}else{
-				//Todo oK Liquidando
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Actualizado", "Actualizado"));
-			}
-		}
-       //Solo para liquidar, chequear estas variables. Ya se usaron entonces se reinicia las variables
-		getResetLiquidando();
-
-		if (isSeguir){
-			ejecutarConsulta();
-		}
-
+		ejecutarConsulta();
 
 	}
 	
@@ -230,9 +182,6 @@ public class CalendarioEmisionesDeudaExtController extends ControllerBase{
 	private void setParams() {
 		calendario= new CalendarioEmisionesDeudaExtDTO();
 		calendario.setRefCustodio(refCustodio);
-		//BORRAR INICIO
-		calendario.setIdCalendario(155495L);
-		//BORRAR FIN
 		
 		calendario.setTipoValor(tipoValor);
 		calendario.setEmisora(emisora);
@@ -827,68 +776,10 @@ public class CalendarioEmisionesDeudaExtController extends ControllerBase{
 		return null;
 	}
 	public String liquidaDerechos(){
-		this.isLiquidando = true;
 		Set<Long> ids = getIdsModificar("daliForm:calIdDerechoLiquidar");
 		log.debug("ids "+ids);
-
-//		No se puede liquidar si es citibank
-		if (this.isCitiBank){
-
-		   return null;
-		}
-
-//		No se puede iquidar si no cumple estas reglas
-		if (this.isEuroclear && this.isEuroclearAndFechaPagoValor && !this.hasM567){
-			return null;
-		}
-
-		//Paso los filros anteriores, liquidamos
 		Integer regactualizados=divisionInternacionalService.actualizarEstadosDerechoInt(ids, Constantes.CALENDARIO_DERECHOS_LIQUIDADO, isUserInRoll("INT_CAL_INDEVAL_SU"));
 		return null;
-	}
-
-	public void liquidaDerechosEvent(ActionEvent event) {
-
-
-		UIParameter idCalendarioIDC = (UIParameter) event.getComponent()
-				.findComponent("idCalendarioID");
-		UIParameter montoConfirmadoID = (UIParameter) event.getComponent()
-				.findComponent("montoConfirmadoID");
-		UIParameter citiBanID = (UIParameter) event.getComponent()
-				.findComponent("citiBanID");
-		UIParameter euroclearAndFechaPagoValorID = (UIParameter) event.getComponent()
-				.findComponent("euroclearAndFechaPagoValorID");
-		UIParameter hasM567ID = (UIParameter) event.getComponent()
-				.findComponent("hasM567ID");
-		UIParameter puedePagarID = (UIParameter) event.getComponent()
-				.findComponent("puedePagarID");
-	UIParameter euroclearID = (UIParameter) event.getComponent()
-				.findComponent("euroclearID");
-
-
-		if ((idCalendarioIDC != null) && (idCalendarioIDC.getValue().toString() != null)) {
-			this.idCalendario = Long.parseLong(idCalendarioIDC.getValue().toString());
-
-		}
-		if ((montoConfirmadoID != null) && (montoConfirmadoID.getValue().toString() != null)) {
-			this.montoConfirmado = new BigDecimal(montoConfirmadoID.getValue().toString());
-		}
-		if ((citiBanID != null) && (citiBanID.getValue().toString() != null)) {
-			this.isCitiBank = new Boolean(citiBanID.getValue().toString());
-		}
-		if ((euroclearAndFechaPagoValorID != null) && (euroclearAndFechaPagoValorID.getValue().toString() != null)) {
-			this.isEuroclearAndFechaPagoValor = new Boolean(euroclearAndFechaPagoValorID.getValue().toString());
-		}
-		if ((hasM567ID != null) && (hasM567ID.getValue().toString() != null)) {
-			this.hasM567 = new Boolean(hasM567ID.getValue().toString());
-		}
-		if ((puedePagarID != null) && (puedePagarID.getValue().toString() != null)) {
-			this.isPuedePagar = new Boolean(puedePagarID.getValue().toString());
-		}
-		if ((euroclearID != null) && (euroclearID.getValue().toString() != null)) {
-			this.isEuroclear = new Boolean(euroclearID.getValue().toString());
-		}
-
 	}
 	public String corregirReversal(){
 		Set<Long> ids = getIdsModificar("daliForm:calIdDerechoCorregir");
@@ -1047,76 +938,5 @@ public class CalendarioEmisionesDeudaExtController extends ControllerBase{
 		}
 		return derechosAutomatizadosDeuda;
 	}
-
-	public boolean isLiquidando() {
-		return isLiquidando;
-	}
-
-	public void setLiquidando(boolean liquidando) {
-		isLiquidando = liquidando;
-	}
-
-	public BigDecimal getMontoConfirmado() {
-		return montoConfirmado;
-	}
-
-	public void setMontoConfirmado(BigDecimal montoConfirmado) {
-		this.montoConfirmado = montoConfirmado;
-	}
-
-	public Boolean getEuroclearAndFechaPagoValor() {
-		return isEuroclearAndFechaPagoValor;
-	}
-
-	public void setEuroclearAndFechaPagoValor(Boolean euroclearAndFechaPagoValor) {
-		isEuroclearAndFechaPagoValor = euroclearAndFechaPagoValor;
-	}
-
-	public Boolean getHasM567() {
-		return hasM567;
-	}
-
-	public void setHasM567(Boolean hasM567) {
-		this.hasM567 = hasM567;
-	}
-
-	public Boolean getEuroclear() {
-		return isEuroclear;
-	}
-
-	public void setEuroclear(Boolean euroclear) {
-		isEuroclear = euroclear;
-	}
-
-	public Boolean getCitiBank() {
-		return isCitiBank;
-	}
-
-	public void setCitiBank(Boolean citiBank) {
-		isCitiBank = citiBank;
-	}
-
-	public Boolean getPuedePagar() {
-		return isPuedePagar;
-	}
-
-	public void setPuedePagar(Boolean puedePagar) {
-		isPuedePagar = puedePagar;
-	}
-
-	public Integer getCustodioId() {
-		return custodioId;
-	}
-
-	public void setCustodioId(Integer custodioId) {
-		this.custodioId = custodioId;
-	}
-
-	public Long getIdCalendario() {
-		return idCalendario;
-	}
-
-	public void setIdCalendario(Long idCalendario) {
-		this.idCalendario = idCalendario;
-	}
+		
 }

@@ -13,20 +13,40 @@
         <xls:row>
             <xls:col header="#{etq.custodio}" value="#{filtros.custodioConsulta}"/>
             <xls:col header="#{etq.divisaMinus}" value="#{filtros.divisaCustodia}"/>
-            <xls:col header="#{etq.fechaInicioCT}" value="#{filtros.fechaInicioFormateada}"/>
-            <xls:col header="#{etq.fechaFinCT}" value="#{filtros.fechaFinFormateada}"/>
-            <xls:col header="#{etq.folioRelacionado}" value="#{filtros.referenciaBuscar_2}"/>
+            <xls:col header="#{etq.fechaInicioCT}" value="#{filtros.fechaInicioFormateada}"
+                     rendered="#{not empty filtros.fechaInicioFormateada}"/>
+            <xls:col header="#{etq.fechaFinCT}" value="#{filtros.fechaFinFormateada}"
+                     rendered="#{not empty filtros.fechaFinFormateada}"/>
+            <xls:col header="#{etq.folioRelacionado}" value="#{filtros.referenciaBuscar_2}"
+                     rendered="#{not empty filtros.referenciaBuscar_2}"/>
         </xls:row>
     </xls:table>
 
-    <xls:table var="row"
-               value="#{cuentasTransitoriasEfectivoController.negativos}">
+    <xls:br/>
+
+    <xls:table var="boveda" rendered="#{not empty cuentasTransitoriasEfectivoController.bovedaSaldos}"
+               value="#{cuentasTransitoriasEfectivoController.bovedaSaldos}">
         <xls:row>
-            <xls:col header="#{etq.custodio}" value="#{row.custodio}"/>
-            <xls:col header="#{etq.divisaMinus}" value="#{row.divisa}"/>
-            <xls:col header="#{etq.monto}" value="#{row.total}"/>
+            <xls:col header="#{etq.bovedaMinus}" value="#{boveda.boveda}" align="CENTER"/>
+            <xls:col header="#{etq.custodio}" value="#{boveda.custodio}" align="CENTER"/>
+            <xls:col header="#{etq.divisaMinus}" value="#{boveda.divisa}" align="CENTER"/>
+            <xls:col header="#{etq.saldoBoveda}" value="#{boveda.saldoTotal}" align="CENTER"/>
         </xls:row>
     </xls:table>
+
+    <xls:br/>
+
+    <xls:table var="negativos" rendered="#{not empty cuentasTransitoriasEfectivoController.negativosTotal}"
+               value="#{cuentasTransitoriasEfectivoController.negativosTotal}">
+        <xls:row>
+            <xls:col header="#{etq.custodio}" value="#{negativos.custodio}" align="CENTER"/>
+            <xls:col header="#{etq.divisaMinus}" value="#{negativos.divisa}" align="CENTER"/>
+            <xls:col header="#{etq.monto}" value="#{negativos.total}" align="CENTER"/>
+        </xls:row>
+    </xls:table>
+
+    <xls:br/>
+    <xls:br/>
 
     <xls:iterator var="divisas" value="#{cuentasTransitoriasEfectivoController.foliosAgrupadosDtos}">
         <xls:row>
@@ -50,7 +70,10 @@
         </xls:row>
     </xls:iterator>
 
-    <xls:table var="row"
+    <xls:br/>
+    <xls:br/>
+
+    <xls:table var="row" rendered="#{not empty cuentasTransitoriasEfectivoController.registrosNoReferenciados}"
                value="#{cuentasTransitoriasEfectivoController.registrosNoReferenciados}">
         <xls:row>
             <xls:col header="#{etq.referencia}" value="#{row.referenciaOperacion}"/>

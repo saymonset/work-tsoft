@@ -1,6 +1,7 @@
 package com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * DTO que contiene la informacion detalle de la referencia: FOLIO_RELACIONADO agrupado en cuentas transitorias de efectivo.
@@ -37,6 +38,34 @@ public class DetalleReferenciaDto extends FolioAgrupadoDto implements Serializab
      * Detalle de Movimientos
      */
     private String detalleMovimientos;
+
+
+    /**
+     * Número de Registro, ROWNUM
+     */
+    private BigDecimal numeroRegistro;
+
+    /**
+     * ID de transacción generado para identificación de los movimientos
+     * <p>
+     * NULL: Saldos Negativos
+     * 1: TIPO_MENSAJE 566 son depositos y se suman
+     * 1: TIPO_MENSAJE = 900 AND ID_CUSTODIO IN (2, 14) son depositos y se suman
+     * -1: TIPO_MENSAJE = 910 AND ID_CUSTODIO IN (2, 14) son retiros y se restan, para los custodios\n" +
+     * 0: TIPO_MENSAJE IN (900, 910) AND ID_CUSTODIO = 13 son informativos
+     */
+    private BigDecimal idTipoTransaccion;
+
+    /**
+     * Tipo de transacción generado para identificación de los movimientos
+     * <p>
+     * NULL: Saldos Negativos
+     * Deposito: TIPO_MENSAJE 566 son depositos y se suman
+     * Deposito: TIPO_MENSAJE = 900 AND ID_CUSTODIO IN (2, 14) son depositos y se suman
+     * Retiro: TIPO_MENSAJE = 910 AND ID_CUSTODIO IN (2, 14) son retiros y se restan, para los custodios\n" +
+     * Informativo: TIPO_MENSAJE IN (900, 910) AND ID_CUSTODIO = 13 son informativos
+     */
+    private String tipoTransaccion;
 
     /**
      * Constructor de la clase.
@@ -136,18 +165,77 @@ public class DetalleReferenciaDto extends FolioAgrupadoDto implements Serializab
         this.detalleMovimientos = detalleMovimientos;
     }
 
+    /**
+     * Metodo para obtener el atributo numeroRegistro
+     *
+     * @return El atributo numeroRegistro
+     */
+    public BigDecimal getNumeroRegistro() {
+        return numeroRegistro;
+    }
+
+    /**
+     * Metodo para establecer el atributo numeroRegistro
+     *
+     * @param numeroRegistro El valor del atributo numeroRegistro a establecer.
+     */
+    public void setNumeroRegistro(BigDecimal numeroRegistro) {
+        this.numeroRegistro = numeroRegistro;
+    }
+
+    /**
+     * Metodo para obtener el atributo idTipoTransaccion
+     *
+     * @return El atributo idTipoTransaccion
+     */
+    public BigDecimal getIdTipoTransaccion() {
+        return idTipoTransaccion;
+    }
+
+    /**
+     * Metodo para establecer el atributo idTipoTransaccion
+     *
+     * @param idTipoTransaccion El valor del atributo idTipoTransaccion a establecer.
+     */
+    public void setIdTipoTransaccion(BigDecimal idTipoTransaccion) {
+        this.idTipoTransaccion = idTipoTransaccion;
+    }
+
+    /**
+     * Metodo para obtener el atributo tipoTransaccion
+     *
+     * @return El atributo tipoTransaccion
+     */
+    public String getTipoTransaccion() {
+        return tipoTransaccion;
+    }
+
+    /**
+     * Metodo para establecer el atributo tipoTransaccion
+     *
+     * @param tipoTransaccion El valor del atributo tipoTransaccion a establecer.
+     */
+    public void setTipoTransaccion(String tipoTransaccion) {
+        this.tipoTransaccion = tipoTransaccion;
+    }
+
     @Override
     public String toString() {
         return "DetalleReferenciaDto{" +
+                ", numeroRegistro=" + numeroRegistro +
                 "idRegistro='" + idRegistro + '\'' +
                 ", folioRelacionado='" + folioRelacionado + '\'' +
-                ", divisa='" + divisa + '\'' +
+                ", idCustodio='" + idCustodio + '\'' +
                 ", custodio='" + custodio + '\'' +
-                ", total='" + total + '\'' +
+                ", idDivisa='" + idDivisa + '\'' +
+                ", divisa='" + divisa + '\'' +
                 ", tipoMensaje='" + tipoMensaje + '\'' +
-                ", seme='" + seme + '\'' +
+                ", idTipoTransaccion=" + idTipoTransaccion +
+                ", tipoTransaccion='" + tipoTransaccion + '\'' +
                 ", detalleMovimientos='" + detalleMovimientos + '\'' +
+                ", seme='" + seme + '\'' +
                 ", mensajeISO='" + mensajeISO + '\'' +
+                ", montoNegativo=" + montoNegativo +
                 '}';
     }
 }

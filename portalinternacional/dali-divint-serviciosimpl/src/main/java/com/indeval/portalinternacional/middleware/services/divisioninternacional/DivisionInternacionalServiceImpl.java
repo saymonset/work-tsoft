@@ -19,7 +19,6 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
 
-import com.indeval.portalinternacional.middleware.servicios.vo.*;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
@@ -93,6 +92,30 @@ import com.indeval.portalinternacional.middleware.servicios.modelo.SicEmision;
 import com.indeval.portalinternacional.middleware.servicios.modelo.TipoBeneficiario;
 import com.indeval.portalinternacional.middleware.servicios.modelo.TipoPagoInt;
 import com.indeval.portalinternacional.middleware.servicios.modelo.VBitacoraOperacionesSic;
+import com.indeval.portalinternacional.middleware.servicios.vo.AgenteArqueoVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.AgenteFideicomisoVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.AltaCustodioVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.ArqueoVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.CalendarioEmisionesDeudaExtDTO;
+import com.indeval.portalinternacional.middleware.servicios.vo.ConciliacionIntDTO;
+import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaCierreFideicomisoParams;
+import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaCierreFideicomisoVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaCustodiosVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.ConsultaFideicomisosVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.DetalleConciliacionIntDTO;
+import com.indeval.portalinternacional.middleware.servicios.vo.EmisionArqueadaVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.EstadisticasFideicomisoPorAgenteVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.EstadisticasFideicomisoPorCuentaVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.GrabaOperacionParams;
+import com.indeval.portalinternacional.middleware.servicios.vo.HistorialBitacoraOperacionesSICDTO;
+import com.indeval.portalinternacional.middleware.servicios.vo.ListaArqueoVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.MovimientoFideicomisoVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.PorcentajeAgenteVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.PorcentajeArqueoVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.PorcentajeCuentaVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.TopeCirculanteFidecomisoVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.TotalArqueoVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.TotalListaArqueoVO;
 import com.indeval.portalinternacional.persistence.dao.CalendarioEmisionesDeudaExtDao;
 import com.indeval.portalinternacional.persistence.dao.CatBicDao;
 import com.indeval.portalinternacional.persistence.dao.ConciliacionIntDao;
@@ -3722,11 +3745,6 @@ public class DivisionInternacionalServiceImpl implements DivisionInternacionalSe
 	public List<BitacoraMensajeSwift> consultaBitacoraMensajesSwift(Long id)	throws BusinessException {
 		return calendarioEmisionesDeudaExtDao.getBitacoraMensajeSwiftbyId(id);
 	}
-
-    @Override
-    public List<BitacoraMensajeSwiftVO> consultaBitacoraMensajesSwiftVO(Long id) throws BusinessException {
-        return calendarioEmisionesDeudaExtDao.getBitacoraMensajeSwiftbyIdVO(id);
-    }
     /* Accessors and mutators */
 
     /**
@@ -4132,32 +4150,16 @@ public List<Control> obtieneEstadosMensajeria(String id)
 	
 	
 	/**
-     * Regresa la bitacora swift filtrando por el id
-     * @param id
-     * @return
-     * @throws BusinessException
-     */
-    public List<BitacoraMensajeSwift> consultaBitacoraMensajesSwiftByHist(Long id)	throws BusinessException {
-        return calendarioEmisionesDeudaExtDao.getBitacoraMensajeSwiftbyIdHist(id);
-    }
+	 * Regresa la bitacora swift filtrando por el id
+	 * @param id
+	 * @return
+	 * @throws BusinessException
+	 */
+	public List<BitacoraMensajeSwift> consultaBitacoraMensajesSwiftByHist(Long id)	throws BusinessException {
+		return calendarioEmisionesDeudaExtDao.getBitacoraMensajeSwiftbyIdHist(id);
+	}
 
-    @Override
-    public List<BitacoraMensajeSwiftVO> getBitacoraMensajeSwiftbyIdHistVO(Long id) throws BusinessException {
-        return calendarioEmisionesDeudaExtDao.getBitacoraMensajeSwiftbyIdHistVO(id);
-    }
-
-    /**
-     * Regresa la bitacora swift filtrando por el id
-     * @param id
-     * @return
-     * @throws BusinessException
-     */
-    public List<BitacoraMensajeSwiftVO> consultaBitacoraMensajesSwiftByHistVO(Long id)	throws BusinessException {
-        return calendarioEmisionesDeudaExtDao.getBitacoraMensajeSwiftbyIdHistVO(id);
-    }
-
-
-    /**
+	/**
 	 * @see com.indeval.portalinternacional.middleware.services.divisioninternacional.DivisionInternacionalService#realizarCambioDeBoveda(List<SicEmision>,long)
 	 */
 	public void realizarCambioDeBoveda(List<SicEmision> listaEmisiones, long idCuentaBoveda) throws BusinessException {

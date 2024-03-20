@@ -14,6 +14,7 @@
 
 <ui:composition template="/layoutPopUp.xhtml">
     <ui:define name="head">
+        <!--    <link rel="stylesheet" type="text/css" media="all" href="#{facesContext.externalContext.requestContextPath}/css/beneficiarioActivo.css" /> -->
         <script type="text/javascript"
                 src="#{facesContext.externalContext.requestContextPath}/js/consultasMensajesIso.js"/>
     </ui:define>
@@ -24,88 +25,77 @@
     <ui:define name="body">
         <h:form id="formaDetalleCuentaTransitoriaEfectivo">
             <a4j:keepAlive beanName="cuentasTransitoriasEfectivoController"/>
-            <h:outputText id="initDetalleReferencia" value="#{cuentasTransitoriasEfectivoController.initDetalle}"/>
+            <h:outputText id="initDetalleNegativos"
+                          value="#{cuentasTransitoriasEfectivoController.initDetalleNegativos}"/>
 
             <table width="900px" border="0" cellpadding="0px" cellspacing="5px" align="center">
                 <tr>
                     <td style="width:100%;">
                         <table class="tablaGeneral" width="900px" cellspacing="0px">
                             <tr>
-                                <th class="tituloTabla" style="text-align: center" width="3%">
-                                    <h:outputText styleClass="texto" value="#{etq.No}"/>
-                                </th>
-                                <th class="tituloTabla" style="text-align: center" width="5%">
+                                <th class="tituloTabla tituloNegativo" style="text-align: center" width="10%">
                                     <h:outputText styleClass="texto" value="#{etq.tipoMensaje}"/>
                                 </th>
-                                <th class="tituloTabla" style="text-align: center" width="15%">
+                                <th class="tituloTabla tituloNegativo" style="text-align: center" width="10%">
                                     <h:outputText styleClass="texto" value="#{etq.referencia}"/>
                                 </th>
-                                <th class="tituloTabla" style="text-align: center" width="10%">
+                                <th class="tituloTabla tituloNegativo" style="text-align: center" width="15%">
                                     <h:outputText styleClass="texto" value="#{etq.divisaMinus}"/>
                                 </th>
-                                <th class="tituloTabla" style="text-align: center" width="10%">
+                                <th class="tituloTabla tituloNegativo" style="text-align: center" width="15%">
                                     <h:outputText styleClass="texto" value="#{etq.custodio}"/>
                                 </th>
-                                <th class="tituloTabla" style="text-align: center" width="10%">
-                                    <h:outputText styleClass="texto" value="#{etq.movimientoMinus}"/>
-                                </th>
-                                <th class="tituloTabla" style="text-align: center" width="15%">
+                                <th class="tituloTabla tituloNegativo" style="text-align: center" width="15%">
                                     <h:outputText styleClass="texto" value="#{etq.cantidadMinus}"/>
                                 </th>
-                                <th class="tituloTabla" style="text-align: center" width="15%">
-                                    <h:outputText styleClass="texto" value="#{etq.seme}"/>
-                                </th>
-                                <th class="tituloTabla" style="text-align: center" width="14%">
+                                <th class="tituloTabla tituloNegativo" style="text-align: center" width="15%">
                                     <h:outputText styleClass="texto" value="#{etq.detalle}"/>
                                 </th>
-                                <th class="tituloTabla" style="text-align: center" width="3%">
+                                <th class="tituloTabla tituloNegativo" style="text-align: center" width="10%">
+                                    <h:outputText styleClass="texto" value="#{etq.seme}"/>
+                                </th>
+                                <th class="tituloTabla tituloNegativo" style="text-align: center" width="10%">
                                     <h:outputText styleClass="texto" value="#{etq.mensajeMinus}"/>
                                 </th>
                             </tr>
-                            <t:dataList value="#{cuentasTransitoriasEfectivoController.detallesRegistroReferenciados}"
+                            <t:dataList value="#{cuentasTransitoriasEfectivoController.negativosDetalles}"
                                         var="row" id="resultados" rowIndexVar="indice">
                                 <tr>
                                     <td style="text-align: center;"
-                                        class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} #{row.montoNegativo ? 'resaltarNegativo':'texto textoPeque12'}">
-                                        <h:outputText value="#{row.numeroRegistro}"/>
+                                        class="#{indice%2 == 0 ?'resaltarNegativoRenglon1':'resaltarNegativoRenglon2'}">
+                                        <h:outputText styleClass="texto textoPeque12" value="#{row.tipoMensaje}"/>
                                     </td>
                                     <td style="text-align: center;"
-                                        class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} #{row.montoNegativo ? 'resaltarNegativo':'texto textoPeque12'}">
-                                        <h:outputText value="#{row.tipoMensaje}"/>
+                                        class="#{indice%2 == 0 ?'resaltarNegativoRenglon1':'resaltarNegativoRenglon2'}">
+                                        <h:outputText styleClass="texto textoPeque12" value="#{row.folioRelacionado}"/>
                                     </td>
                                     <td style="text-align: center;"
-                                        class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} #{row.montoNegativo ? 'resaltarNegativo':'texto textoPeque12'}">
-                                        <h:outputText value="#{row.folioRelacionado}"/>
+                                        class="#{indice%2 == 0 ?'resaltarNegativoRenglon1':'resaltarNegativoRenglon2'}">
+                                        <h:outputText styleClass="texto textoPeque12" value="#{row.divisa}"/>
                                     </td>
                                     <td style="text-align: center;"
-                                        class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} #{row.montoNegativo ? 'resaltarNegativo':'texto textoPeque12'}">
-                                        <h:outputText value="#{row.divisa}"/>
+                                        class="#{indice%2 == 0 ?'resaltarNegativoRenglon1':'resaltarNegativoRenglon2'}">
+                                        <h:outputText styleClass="texto textoPeque12" value="#{row.custodio}"/>
                                     </td>
                                     <td style="text-align: center;"
-                                        class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} #{row.montoNegativo ? 'resaltarNegativo':'texto textoPeque12'}">
-                                        <h:outputText value="#{row.custodio}"/>
-                                    </td>
-                                    <td style="text-align: center;"
-                                        class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} #{row.montoNegativo ? 'resaltarNegativo':'texto textoPeque12'}">
-                                        <h:outputText value="#{row.tipoTransaccion}"/>
-                                    </td>
-                                    <td style="text-align: center;"
-                                        class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} #{row.montoNegativo ? 'resaltarNegativo':'texto textoPeque12'}">
-                                        <h:outputText value="#{row.total}"
+                                        class="#{indice%2 == 0 ?'resaltarNegativoRenglon1':'resaltarNegativoRenglon2'}">
+                                        <h:outputText styleClass="texto textoPeque12" value="#{row.total}"
                                                       converter="formatoMonedaConverter">
                                             <f:convertNumber pattern="###,###,###,###,###,##0.00"/>
                                         </h:outputText>
                                     </td>
                                     <td style="text-align: center;"
-                                        class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} #{row.montoNegativo ? 'resaltarNegativo':'texto textoPeque12'}">
-                                        <h:outputText value="#{row.seme}"/>
+                                        class="#{indice%2 == 0 ?'resaltarNegativoRenglon1':'resaltarNegativoRenglon2'}">
+                                        <h:outputText styleClass="texto textoPeque12"
+                                                      value="#{row.detalleMovimientos}"/>
                                     </td>
                                     <td style="text-align: center;"
-                                        class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} #{row.montoNegativo ? 'resaltarNegativo':'texto textoPeque12'}">
-                                        <h:outputText value="#{row.detalleMovimientos}"/>
+                                        class="#{indice%2 == 0 ?'resaltarNegativoRenglon1':'resaltarNegativoRenglon2'}">
+                                        <h:outputText styleClass="texto textoPeque12"
+                                                      value="#{row.seme}"/>
                                     </td>
                                     <td style="text-align: center;"
-                                        class="#{indice%2 == 0 ?'renglonTablaUno':'renglonTablaDos'} #{row.montoNegativo ? 'resaltarNegativo':'texto textoPeque12'}">
+                                        class="#{indice%2 == 0 ?'resaltarNegativoRenglon1':'resaltarNegativoRenglon2'}">
                                         <input type="hidden" id="swift_#{row.idRegistro}"
                                                class="swift_#{row.idRegistro}" value="#{row.mensajeISO}"/>
                                         <a href="javascript:void(0);"
@@ -116,18 +106,18 @@
                                 </tr>
                             </t:dataList>
                             <tr>
-                                <td colspan="6" style="text-align: center;">
-                                    <h:outputText styleClass="texto" value="#{etq.totalMinus}"/>
+                                <td colspan="4" style="text-align: right; padding-right: 10px;">
+                                    <h:outputText styleClass="totalNegativo" value="#{etq.totalMinus}"/>
                                 </td>
                                 <td style="text-align: center;">
                                     <h:outputText
-                                            value="#{cuentasTransitoriasEfectivoController.totalDetallesRegistroReferenciados}"
-                                            style="font-weight:bold;"
+                                            value="#{cuentasTransitoriasEfectivoController.negativosTotal.get(0).total}"
+                                            styleClass="totalNegativo"
                                             converter="formatoMonedaConverter">
                                         <f:convertNumber pattern="###,###,###,###,###,##0.00"/>
                                     </h:outputText>
                                 </td>
-                                <td colspan="3">
+                                <td colspan="2">
                                 </td>
                             </tr>
                         </table>

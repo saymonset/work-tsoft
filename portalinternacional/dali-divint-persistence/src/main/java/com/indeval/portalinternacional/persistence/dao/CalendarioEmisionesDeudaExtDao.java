@@ -15,7 +15,6 @@ import com.indeval.portalinternacional.middleware.servicios.modelo.Control;
 import com.indeval.portalinternacional.middleware.servicios.modelo.Custodio;
 import com.indeval.portalinternacional.middleware.servicios.modelo.EstadoDerechoInt;
 import com.indeval.portalinternacional.middleware.servicios.modelo.TipoPagoInt;
-import com.indeval.portalinternacional.middleware.servicios.vo.BitacoraMensajeSwiftVO;
 import com.indeval.portalinternacional.middleware.servicios.vo.CalendarioEmisionesDeudaExtDTO;
 
 public interface CalendarioEmisionesDeudaExtDao extends BaseDao {
@@ -57,9 +56,7 @@ public interface CalendarioEmisionesDeudaExtDao extends BaseDao {
 	 * @param id
 	 * @return
 	 */
-	public List<BitacoraMensajeSwift>  getBitacoraMensajeSwiftbyId(Long id);
-
-	public List<BitacoraMensajeSwiftVO>  getBitacoraMensajeSwiftbyIdVO(final Long id) ;
+	public List<BitacoraMensajeSwift>  getBitacoraMensajeSwiftbyId(Long id);			
 	/**
 	 * 
 	 * @param id
@@ -92,12 +89,4 @@ public interface CalendarioEmisionesDeudaExtDao extends BaseDao {
 	  * @return
 	  */
 	 public List<BitacoraMensajeSwift>  getBitacoraMensajeSwiftbyIdHist(final Long id);
-
-	/**
-	 * Regresa la bitacora filtrada por el id
-	 * @param id
-	 * @return
-	 */
-	public List<BitacoraMensajeSwiftVO>  getBitacoraMensajeSwiftbyIdHistVO(final Long id);
-
 }

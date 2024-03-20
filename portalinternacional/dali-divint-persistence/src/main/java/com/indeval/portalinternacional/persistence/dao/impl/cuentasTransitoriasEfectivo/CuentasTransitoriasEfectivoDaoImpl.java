@@ -1,6 +1,10 @@
 package com.indeval.portalinternacional.persistence.dao.impl.cuentasTransitoriasEfectivo;
 
 import com.bursatec.persistence.dao.impl.BaseDaoHibernateImpl;
+import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.BovedaMontosDto;
+import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.CuentaTransitoriaEfectivoDto;
+import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.DetalleReferenciaDto;
+import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.FolioAgrupadoDto;
 import com.indeval.portalinternacional.persistence.dao.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoDao;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
@@ -49,44 +53,33 @@ public class CuentasTransitoriasEfectivoDaoImpl extends BaseDaoHibernateImpl imp
     }
 
     /**
-     * @see com.indeval.portalinternacional.persistence.dao.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoDao#obtenerNegativos(String, String)
+     * @see com.indeval.portalinternacional.persistence.dao.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoDao#obtenerNegativosDetalles(String, String)
      */
     @Override
-    public List<String[]> obtenerNegativos(String idDivisa, String idCustodio) {
-        log.debug("Obtener Negativos :: DAO :: " +
+    public List<DetalleReferenciaDto> obtenerNegativosDetalles(String idDivisa, String idCustodio) {
+        log.debug("Obtener Negativos DETALLES :: DAO :: " +
                 "idCustodio [" + (idCustodio == null ? "Todos" : idCustodio) + "] - " +
                 "idDivisas [" + (idDivisa == null ? "Todas" : idDivisa) + "] ");
 
-        List<DivisaBean> negativos = obetenerNegativos(idDivisa, idCustodio);
-        if (negativos != null) {
-            List<String[]> negativosEncontrados = new ArrayList<>();
-            for (DivisaBean divisa : negativos) {
-                String[] divisaEncontrada = new String[5];
-                divisaEncontrada = new String[]{
-                        divisa.idDivisa.toString(), divisa.claveAlfabetica,
-                        divisa.idCustodio.toString(), divisa.nombreCortoCustodio,
-                        divisa.total.toString()};
+        return obetenerNegativosDetallesDB(idDivisa, idCustodio);
+    }
 
-                log.debug("Referencia :: "
-                        + divisaEncontrada[0] + " | "
-                        + divisaEncontrada[1] + " | "
-                        + divisaEncontrada[2] + " | "
-                        + divisaEncontrada[3] + " | "
-                        + divisaEncontrada[4]);
-                negativosEncontrados.add(divisaEncontrada);
-            }
-            return negativosEncontrados;
-        }
-        return null;
-
+    /**
+     * @see com.indeval.portalinternacional.persistence.dao.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoDao#obetenerNegativosTotal(String, String)
+     */
+    public FolioAgrupadoDto obetenerNegativosTotal(String idDivisa, String idCustodio) {
+        log.debug("Obtener Negativos TOTAL:: DAO :: " +
+                "idCustodio [" + (idCustodio == null ? "Todos" : idCustodio) + "] - " +
+                "idDivisas [" + (idDivisa == null ? "Todas" : idDivisa) + "] ");
+        return obetenerNegativosTotalDB(idDivisa, idCustodio);
     }
 
 
     /**
-     * @see com.indeval.portalinternacional.persistence.dao.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoDao#obtenerInformacionFolioAgrupado(String, String, String, String, String)
+     * @see com.indeval.portalinternacional.persistence.dao.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoDao#obtenerInformacionFoliosAgrupados(String, String, String, String, String)
      */
     @Override
-    public List<String[]> obtenerInformacionFolioAgrupado(
+    public List<FolioAgrupadoDto> obtenerInformacionFoliosAgrupados(
             String idDivisa, String idCustodio, String fechaInicio, String fechaFin, String folioRelacionado) {
         log.debug("Obtener Resumen :: DAO :: Folio Agrupado :: " +
                 "idCustodio [" + (idCustodio == null ? "Todos" : idCustodio) + "] - " +
@@ -95,48 +88,18 @@ public class CuentasTransitoriasEfectivoDaoImpl extends BaseDaoHibernateImpl imp
                 + (fechaFin == null ? "" : "- fechaFin [" + fechaFin + "] ")
                 + (folioRelacionado == null ? "" : "- folioRelacionado [" + folioRelacionado + "] "));
 
-        List<ReferenciaBean> referencias = obetenerFolioRelacionadoAgrupado(
+        List<FolioAgrupadoDto> foliosAgrupados = obetenerFoliosAgrupados(
                 idDivisa, idCustodio, fechaInicio, fechaFin, folioRelacionado);
-        if (referencias != null) {
-            List<String[]> referenciasEncontradas = new ArrayList<>();
-            for (ReferenciaBean referencia : referencias) {
-                String[] referenciaEncontrada = new String[6];
-                if (referencia.divisas.size() > 1) {
-                    BigDecimal registros = new BigDecimal(0);
-                    for (DivisaBean divisa : referencia.divisas) {
-                        registros = registros.add(divisa.registros);
-                    }
-                    referenciaEncontrada = new String[]{
-                            referencia.folioRelacionado, "", registros.toString(), "", "FALSE"};
-                } else {
-                    referenciaEncontrada = new String[]{
-                            referencia.folioRelacionado,
-                            referencia.divisas.get(0).nombreCortoCustodio,
-                            referencia.divisas.get(0).claveAlfabetica,
-                            referencia.divisas.get(0).registros.toString(),
-                            referencia.divisas.get(0).total.toString(),
-                            referencia.divisas.get(0).montoNegativo ? "TRUE" : "FALSE"};
-                }
-                log.debug("Referencia :: "
-                        + referenciaEncontrada[0] + " | "
-                        + referenciaEncontrada[1] + " | "
-                        + referenciaEncontrada[2] + " | "
-                        + referenciaEncontrada[3] + " | "
-                        + referenciaEncontrada[4] + " | "
-                        + referenciaEncontrada[5]);
-                referenciasEncontradas.add(referenciaEncontrada);
-            }
-            return referenciasEncontradas;
-        }
-        return null;
 
+        log.debug("Folios Agrupados Encontrados :: " + foliosAgrupados.size());
+        return foliosAgrupados;
     }
 
     /**
-     * @see com.indeval.portalinternacional.persistence.dao.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoDao#obtenerInformacionReferencias(String, String, String, String, String)
+     * @see com.indeval.portalinternacional.persistence.dao.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoDao#obtenerInformacionSinReferencias(String, String, String, String, String)
      */
     @Override
-    public List<String[]> obtenerInformacionReferencias(
+    public List<CuentaTransitoriaEfectivoDto> obtenerInformacionSinReferencias(
             String idDivisa, String idCustodio, String fechaInicio, String fechaFin, String folioRelacionado) {
         log.debug("Obtener Referencias :: DAO :: " +
                 "idCustodio [" + (idCustodio == null ? "Todos" : idCustodio) + "] - " +
@@ -144,72 +107,41 @@ public class CuentasTransitoriasEfectivoDaoImpl extends BaseDaoHibernateImpl imp
                 + (fechaInicio == null ? "" : "- fechaInicio [" + fechaInicio + "] ")
                 + (fechaFin == null ? "" : "- fechaFin [" + fechaFin + "] ")
                 + (folioRelacionado == null ? "" : "- folioRelacionado [" + folioRelacionado + "] "));
-        List<ReferenciaBean> referencias = obetenerReferencias(
+        return obetenerSinReferencias(
                 idDivisa, idCustodio, fechaInicio, fechaFin, folioRelacionado);
-        if (referencias != null && !referencias.isEmpty()) {
-            List<String[]> referenciasEncontradas = new ArrayList<>();
-
-            for (ReferenciaBean referencia : referencias) {
-                log.debug(referencia.toString());
-                referenciasEncontradas.add(new String[]{
-                        referencia.folioRelacionado,
-                        referencia.tipoMensaje,
-                        referencia.divisas.get(0).claveAlfabetica,
-                        referencia.divisas.get(0).idDivisa.toString(),
-                        referencia.divisas.get(0).nombreCortoCustodio,
-                        referencia.divisas.get(0).idCustodio.toString(),
-                        referencia.divisas.get(0).total.toString(),
-                        referencia.idCuentaTransitoria.toString(),
-                        referencia.mensajeISO});
-            }
-            return referenciasEncontradas;
-        }
-        return null;
     }
 
     /**
-     * @see com.indeval.portalinternacional.persistence.dao.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoDao#obtenerDetalleReferencias(String)
+     * @see com.indeval.portalinternacional.persistence.dao.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoDao#obtenerDetalleReferencias(String, String, String)
      */
     @Override
-    public List<String[]> obtenerDetalleReferencias(String folioRelacionado) {
-        log.debug("Obtener Detalles Referencia :: DAO :: folioRelacionado [" + folioRelacionado + "]");
-        List<ReferenciaBean> referencias = obetenerReferenciasDetalle(folioRelacionado);
+    public List<DetalleReferenciaDto> obtenerDetalleReferencias(
+            String idDivisa, String idCustodio, String folioRelacionado) {
+        log.debug("Obtener Detalles Referencia :: DAO " +
+                "idDivisas [" + idDivisa + "] " +
+                "idCustodio [" + idCustodio + "] - " +
+                " - folioRelacionado [" + folioRelacionado + "] ");
+        List<DetalleReferenciaDto> referencias = obetenerReferenciasDetalle(
+                idDivisa, idCustodio, folioRelacionado);
 
-        List<String[]> referenciasEncontradas = new ArrayList<>();
-        for (ReferenciaBean referencia : referencias) {
-            log.debug(referencia.toString());
-            DivisaBean divisa = referencia.divisas.get(0);
-            log.debug("ID_CUENTA_TRANSITORIA  [" + referencia.idCuentaTransitoria + "] :: ");
-            log.debug("FOLIO_RELACIONADO [" + referencia.folioRelacionado + "] :: ");
-            log.debug("TIPO_MENSAJE :: [" + referencia.tipoMensaje + "] :: ");
-            log.debug("CLAVE_ALFABETICA [" + divisa.claveAlfabetica + "] :: ");
-            log.debug("NOMBRE_CORTO [" + divisa.nombreCortoCustodio + "] :: ");
-            log.debug("TOTAL  [" + divisa.total.toString() + "] :: ");
-            log.debug("DETALLE_MOVIMIENTOS  [" + referencia.detalleMovimientos + "] :: ");
-            log.debug("XML_SEME  [" + referencia.seme + "] :: ");
-            log.debug("XML_MENSAJE_ISO  [" + referencia.mensajeISO + "] ");
+        log.debug("Referencias Encontradas:: " + referencias.size());
 
-            referenciasEncontradas.add(new String[]{
-                    referencia.idCuentaTransitoria.toString(),
-                    referencia.folioRelacionado,
-                    referencia.tipoMensaje,
-                    divisa.claveAlfabetica,
-                    divisa.nombreCortoCustodio,
-                    divisa.total.toString(),
-                    referencia.detalleMovimientos,
-                    referencia.seme,
-                    referencia.mensajeISO});
-        }
-        return referenciasEncontradas;
+        return referencias;
     }
 
     /**
-     * @see com.indeval.portalinternacional.persistence.dao.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoDao#obtenerDetalleReferenciasTotal(String)
+     * @see com.indeval.portalinternacional.persistence.dao.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoDao#obtenerDetalleReferenciasTotal(String, String, String)
      */
     @Override
-    public BigDecimal obtenerDetalleReferenciasTotal(String folioRelacionado) {
-        log.debug("Obtener Detalles Referencia Total :: DAO :: folioRelacionado [" + folioRelacionado + "]");
-        BigDecimal totalReferencia = obetenerReferenciasDetalleTotal(folioRelacionado);
+    public BigDecimal obtenerDetalleReferenciasTotal(
+            String idDivisa, String idCustodio, String folioRelacionado) {
+        log.debug("Obtener Detalles Referencia Total :: DAO :: " +
+                "idDivisas [" + idDivisa + "] " +
+                "idCustodio [" + idCustodio + "] - " +
+                " - folioRelacionado [" + folioRelacionado + "] ");
+        BigDecimal totalReferencia = obetenerReferenciasDetalleTotal(
+                idDivisa, idCustodio, folioRelacionado);
+        log.debug("Total :: " + totalReferencia);
         return totalReferencia;
 
     }
@@ -225,19 +157,15 @@ public class CuentasTransitoriasEfectivoDaoImpl extends BaseDaoHibernateImpl imp
         try {
             List<Object[]> lstResult = ejecutarQuery(query);
             for (Object[] row : lstResult) {
-                Object mensajeISO910Object = getString(row[6]);
-                Object mensajeISO900Object = getString(row[7]);
-                if (mensajeISO910Object instanceof String
-                        && mensajeISO900Object instanceof String) {
-                    String mensajeISO = getString(mensajeISO910Object);
-                    mensajeISO = (mensajeISO.equals(N_A) ? getString(mensajeISO900Object) : mensajeISO);
+                Object mensajeISOObject = getString(row[8]);
+                if (mensajeISOObject instanceof String) {
+                    String mensajeISO = getString(mensajeISOObject);
                     log.debug("XML_MENSAJE_ISO  [" + mensajeISO + "]");
                     return mensajeISO;
                 } else {
                     log.error("Problemas con la identificacion del tipo de objeto resultado de la query");
                     log.error(query);
-                    log.debug("XML_MENSAJE_ISO_900 [" + mensajeISO900Object.getClass().getName() + "] :: "
-                            + "XML_MENSAJE_ISO_910 [" + mensajeISO910Object.getClass().getName() + "]");
+                    log.error("XML_MENSAJE_ISO_910 [" + mensajeISOObject.getClass().getName() + "]");
                 }
             }
         } catch (Exception ex) {
@@ -291,15 +219,6 @@ public class CuentasTransitoriasEfectivoDaoImpl extends BaseDaoHibernateImpl imp
     }
 
     /**
-     * @see com.indeval.portalinternacional.persistence.dao.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoDao#obtenerIdRegistro(String)
-     */
-    @Override
-    public String[] obtenerIdRegistro(String idRegistro) {
-        log.info("Obtener Registo  por :: idRegistro :: [" + idRegistro + "]");
-        return obtenerRegistro(getQueryRegistroPorIdRegistro(idRegistro));
-    }
-
-    /**
      * @see com.indeval.portalinternacional.persistence.dao.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoDao#asignarFolioRelacionado(String, String)
      */
     @Override
@@ -315,62 +234,106 @@ public class CuentasTransitoriasEfectivoDaoImpl extends BaseDaoHibernateImpl imp
 
     }
 
-    private List<DivisaBean> obetenerNegativos(String idDivisa, String idCustodio) {
+    /**
+     * @see com.indeval.portalinternacional.persistence.dao.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoDao#obetenerTotalBoveda(String, String)
+     */
+    @Override
+    public BovedaMontosDto obetenerTotalBoveda(String idDivisa, String idCustodio) {
+        log.debug("Obtener Saldos Boveda :: DAO :: " +
+                "idDivisas [" + idDivisa + "] " +
+                "idCustodio [" + idCustodio + "] ");
+        BovedaMontosDto bovedaMontosDto = obetenerTotalBovedaDB(idDivisa, idCustodio);
+        log.debug((bovedaMontosDto == null ? "NULL" : bovedaMontosDto.toString()));
+        return bovedaMontosDto;
+    }
+
+
+    private List<DetalleReferenciaDto> obetenerNegativosDetallesDB(String idDivisa, String idCustodio) {
         log.info("Obtener Negativos:: " +
                 "[idDivisa - " + idDivisa + "] :: " +
                 "[idCustodio - " + idCustodio + "] ");
-        String query = getQueryNegativos(idDivisa, idCustodio);
-        List<DivisaBean> negativos = new ArrayList<>();
+
+        String query = getQueryNegativosDetalles(idDivisa, idCustodio);
+        List<DetalleReferenciaDto> negativos = new ArrayList<>();
         try {
             List<Object[]> lstResult = ejecutarQuery(query);
             for (Object[] row : lstResult) {
-                Object idCustodioObject = row[0];
-                Object nombreCortoObject = row[1];
-                Object idDivisaObject = row[2];
-                Object divisaObject = row[3];
-                Object idBovedaObject = row[4];
-                Object montoTesoreriaObject = row[5];
-                Object saldoNegativoObject = row[6];
-                Object totalObject = row[7];
+                Object idCuentaTransitoriaObject = row[0];
+                Object tipoMensajeObject = row[1];
+                Object detalleMovimientosObject = getString(row[2]);
+                Object idDivisaObject = row[3];
+                Object divisaObject = row[4];
+                Object idCustodioObject = row[5];
+                Object nombreCortoObject = row[6];
+                Object montoObject = row[7];
+                Object folioRelacionadoObject = getString(row[8]);
+                Object semeObject = getString(row[9]);
+                Object mensajeISOObject = getString(row[10]);
 
-                if (idCustodioObject instanceof BigDecimal
-                        && nombreCortoObject instanceof String
+
+                if (idCuentaTransitoriaObject instanceof BigDecimal
+                        && tipoMensajeObject instanceof String
+                        && detalleMovimientosObject instanceof String
                         && idDivisaObject instanceof BigDecimal
                         && divisaObject instanceof String
-                        && idBovedaObject instanceof BigDecimal
-                        && montoTesoreriaObject instanceof BigDecimal
-                        && saldoNegativoObject instanceof BigDecimal
-                        && totalObject instanceof BigDecimal) {
-                    BigDecimal idCustodioRegistro = getBigDecimal(idCustodioObject);
-                    String nombreCorto = getString(nombreCortoObject);
+                        && idCustodioObject instanceof BigDecimal
+                        && nombreCortoObject instanceof String
+                        && montoObject instanceof BigDecimal
+                        && folioRelacionadoObject instanceof String
+                        && semeObject instanceof String
+                        && mensajeISOObject instanceof String) {
+                    BigDecimal idCuentaTransitoria = getBigDecimal(idCuentaTransitoriaObject);
+                    String tipoMensaje = getString(tipoMensajeObject);
+                    String detalleMovimientos = getString(detalleMovimientosObject);
                     BigDecimal idDivisaRegistro = getBigDecimal(idDivisaObject);
                     String divisa = getString(divisaObject);
-                    BigDecimal idBoveda = getBigDecimal(idBovedaObject);
-                    BigDecimal montoTesoreria = getBigDecimal(montoTesoreriaObject);
-                    BigDecimal saldoNegativo = getBigDecimal(saldoNegativoObject);
-                    BigDecimal total = getBigDecimal(totalObject);
+                    BigDecimal idCustodioRegistro = getBigDecimal(idCustodioObject);
+                    String nombreCorto = getString(nombreCortoObject);
+                    BigDecimal monto = getBigDecimal(montoObject);
+                    String folioRelacionado = getString(folioRelacionadoObject);
+                    String seme = getString(semeObject);
+                    String mensajeISO = getString(mensajeISOObject);
 
-                    log.debug("ID_CUSTODIO [" + idCustodio + "] :: "
-                            + "NOMBRE_CORTO [" + nombreCorto + "] :: "
-                            + "ID_DIVISA [" + idDivisa + "] :: "
-                            + "DIVISA [" + divisa + "] :: "
-                            + "ID_BOVEDA [" + idBoveda + "] :: "
-                            + "MONTO_TESORERIA [" + montoTesoreria + "] :: "
-                            + "SALDO_NEGATIVO [" + saldoNegativo + "] :: "
-                            + "TOTAL  [" + total + "] ");
+                    log.debug("ID_CUENTA_TRANSITORIA [" + idCuentaTransitoria + "] ::"
+                            + "TIPO_MENSAJE [" + tipoMensaje + "] ::"
+                            + "DETALLE_MOVIMIENTOS [" + detalleMovimientos + "] ::"
+                            + "ID_DIVISA [" + idDivisaRegistro + "] ::"
+                            + "DIVISA [" + divisa + "] ::"
+                            + "ID_CUSTODIO [" + idCustodioRegistro + "] ::"
+                            + "NOMBRE_CORTO [" + nombreCorto + "] ::"
+                            + "MONTO [" + monto + "] ::"
+                            + "FOLIO_RELACIONADO [" + folioRelacionado + "] ::"
+                            + "MENSAJE_ISO [" + mensajeISO + "]");
 
-                    negativos.add(new DivisaBean(divisa, idDivisaRegistro, nombreCorto, idCustodioRegistro, total));
+                    DetalleReferenciaDto registroNegativo = new DetalleReferenciaDto();
+                    registroNegativo.setIdRegistro(idCuentaTransitoria.toString());
+                    registroNegativo.setTipoMensaje(tipoMensaje);
+                    registroNegativo.setDetalleMovimientos(detalleMovimientos);
+                    registroNegativo.setIdDivisa(idDivisa);
+                    registroNegativo.setDivisa(divisa);
+                    registroNegativo.setIdCustodio(idCustodio);
+                    registroNegativo.setCustodio(nombreCorto);
+                    registroNegativo.setTotal(monto);
+                    registroNegativo.setFolioRelacionado(folioRelacionado);
+                    registroNegativo.setSeme(seme);
+                    registroNegativo.setMensajeISO(mensajeISO);
+                    registroNegativo.setMontoNegativo(true);
+                    log.debug(registroNegativo.toString());
+                    negativos.add(registroNegativo);
                 } else {
                     log.error("Problemas con la identificacion del tipo de objeto resultado de la query");
                     log.error(query);
-                    log.error("ID_CUSTODIO [" + idCustodioObject.getClass().getName() + "] :: "
-                            + "NOMBRE_CORTO [" + nombreCortoObject.getClass().getName() + "] :: "
-                            + "ID_DIVISA [" + idDivisaObject.getClass().getName() + "] :: "
-                            + "DIVISA [" + divisaObject.getClass().getName() + "] :: "
-                            + "ID_BOVEDA [" + idBovedaObject.getClass().getName() + "] :: "
-                            + "MONTO_TESORERIA [" + montoTesoreriaObject.getClass().getName() + "] :: "
-                            + "SALDO_NEGATIVO [" + saldoNegativoObject.getClass().getName() + "] :: "
-                            + "TOTAL  [" + totalObject.getClass().getName() + "] ");
+                    log.error("ID_CUENTA_TRANSITORIA [" + idCuentaTransitoriaObject.getClass() + "] ::"
+                            + "TIPO_MENSAJE [" + tipoMensajeObject.getClass() + "] ::"
+                            + "DETALLE_MOVIMIENTOS [" + detalleMovimientosObject.getClass() + "] ::"
+                            + "ID_DIVISA [" + idDivisaObject.getClass() + "] ::"
+                            + "DIVISA [" + divisaObject.getClass() + "] ::"
+                            + "ID_CUSTODIO [" + idCustodioObject.getClass() + "] ::"
+                            + "NOMBRE_CORTO [" + nombreCortoObject.getClass() + "] ::"
+                            + "MONTO [" + montoObject.getClass() + "] ::"
+                            + "FOLIO_RELACIONADO [" + folioRelacionadoObject.getClass() + "] ::"
+                            + "SEME [" + semeObject.getClass() + "] :: "
+                            + "MENSAJE_ISO [" + mensajeISOObject.getClass() + "]");
                 }
             }
             log.debug("Referencia encontrada :: " + negativos.size());
@@ -382,56 +345,83 @@ public class CuentasTransitoriasEfectivoDaoImpl extends BaseDaoHibernateImpl imp
         return null;
     }
 
-    private List<ReferenciaBean> obetenerFolioRelacionadoAgrupado(
-            String idDivisa, String idCustodio, String fechaInicio, String fechaFin, String referencia) {
-        log.info("Obtener Folio Relacionado Agrupado :: " +
+    private BovedaMontosDto obetenerTotalBovedaDB(String idDivisa, String idCustodio) {
+        log.info("Obtener Total Boveda:: " +
                 "[idDivisa - " + idDivisa + "] :: " +
-                "[idCustodio - " + idCustodio + "] :: " +
-                "[fechaInicio - " + fechaInicio + "] :: " +
-                "[fechaFin - " + fechaFin + "] :: " +
-                "[folioRelacionado - " + referencia + "] ");
-        String query = getQueryFoliosRelacionadosAgrupados(
-                idDivisa, idCustodio, fechaInicio, fechaFin, referencia);
-        List<ReferenciaBean> referencias = new ArrayList<>();
+                "[idCustodio - " + idCustodio + "] ");
+
+        String query = getQueryTotalBoveda(idDivisa, idCustodio);
         try {
             List<Object[]> lstResult = ejecutarQuery(query);
             for (Object[] row : lstResult) {
-                Object folioRelacionadoObject = row[0];
-                Object nombreCortoObject = row[1];
-                Object divisaObject = row[2];
-                Object registrosObject = row[3];
-                Object totalObject = row[4];
-                if (folioRelacionadoObject instanceof String
-                        && nombreCortoObject instanceof String
+                Object idBovedaObject = row[0];
+                Object bovedaObject = row[1];
+                Object idCustodioObject = row[2];
+                Object custodioObject = row[3];
+                Object idDivisaObject = row[4];
+                Object divisaObject = row[5];
+                Object saldoDisponibleObject = row[6];
+                Object saldoNoDisponibleObject = row[7];
+                Object saldoTotalObject = row[8];
+
+
+                if (idBovedaObject instanceof BigDecimal
+                        && bovedaObject instanceof String
+                        && idCustodioObject instanceof BigDecimal
+                        && custodioObject instanceof String
+                        && idDivisaObject instanceof BigDecimal
                         && divisaObject instanceof String
-                        && registrosObject instanceof BigDecimal
-                        && totalObject instanceof BigDecimal) {
-                    String folioRelacionado = getString(folioRelacionadoObject);
-                    String nombreCorto = getString(nombreCortoObject);
+                        && saldoDisponibleObject instanceof BigDecimal
+                        && saldoNoDisponibleObject instanceof BigDecimal
+                        && saldoTotalObject instanceof BigDecimal) {
+
+                    BigDecimal idBoveda = getBigDecimal(idBovedaObject);
+                    String boveda = getString(bovedaObject);
+                    BigDecimal idCustodioRegistro = getBigDecimal(idCustodioObject);
+                    String custodio = getString(custodioObject);
+                    BigDecimal idDivisaRegistro = getBigDecimal(idDivisaObject);
                     String divisa = getString(divisaObject);
-                    BigDecimal registros = getBigDecimal(registrosObject);
-                    BigDecimal total = getBigDecimal(totalObject);
+                    BigDecimal saldoDisponible = getBigDecimal(saldoDisponibleObject);
+                    BigDecimal saldoNoDisponible = getBigDecimal(saldoNoDisponibleObject);
+                    BigDecimal saldoTotal = getBigDecimal(saldoTotalObject);
 
-                    log.debug("FOLIO_RELACIONADO [" + folioRelacionado + "] :: "
-                            + "NOMBRE_CORTO [" + nombreCorto + "] :: "
+                    log.debug("ID_BOVEDA [" + idBoveda + "] :: "
+                            + "NOMBRE_BOVEDA [" + boveda + "] :: "
+                            + "ID_CUSTODIO [" + idCustodioRegistro + "] :: "
+                            + "CUSTODIO [" + custodio + "] :: "
+                            + "ID_DIVISA [" + idDivisaRegistro + "] :: "
                             + "DIVISA [" + divisa + "] :: "
-                            + "REGISTROS [" + registros + "] :: "
-                            + "TOTAL  [" + total + "] ");
+                            + "SALDO_DISPONIBLE [" + saldoDisponible + "] :: "
+                            + "SALDO_NO_DISPONIBLE [" + saldoNoDisponible + "] :: "
+                            + "SALDO_TOTAL [" + saldoTotal + "] :: ");
 
-                    referencias.add(new ReferenciaBean(folioRelacionado,
-                            new DivisaBean(divisa, nombreCorto, registros, total)));
+                    BovedaMontosDto bovedaMontosDto = new BovedaMontosDto();
+                    bovedaMontosDto.setIdBoveda(idBoveda);
+                    bovedaMontosDto.setBoveda(boveda);
+                    bovedaMontosDto.setIdCustodio(idCustodio);
+                    bovedaMontosDto.setCustodio(custodio);
+                    bovedaMontosDto.setIdDivisa(idDivisa);
+                    bovedaMontosDto.setDivisa(divisa);
+                    bovedaMontosDto.setSaldoDisponible(saldoDisponible);
+                    bovedaMontosDto.setSaldoNoDisponible(saldoNoDisponible);
+                    bovedaMontosDto.setSaldoTotal(saldoTotal);
+                    bovedaMontosDto.setMontoNegativo(saldoTotal.compareTo(BigDecimal.ZERO) < 0);
+                    log.debug("Boveda Montos :: " + bovedaMontosDto.toString());
+                    return bovedaMontosDto;
                 } else {
                     log.error("Problemas con la identificacion del tipo de objeto resultado de la query");
                     log.error(query);
-                    log.error("FOLIO_RELACIONADO [" + folioRelacionadoObject.getClass().getName() + "] :: "
-                            + "NOMBRE_CORTO [" + nombreCortoObject.getClass().getName() + "] :: "
+                    log.error("ID_BOVEDA [" + idBovedaObject.getClass().getName() + "] :: "
+                            + "NOMBRE_BOVEDA [" + bovedaObject.getClass().getName() + "] :: "
+                            + "ID_CUSTODIO [" + idCustodioObject.getClass().getName() + "] :: "
+                            + "CUSTODIO [" + custodioObject.getClass().getName() + "] :: "
+                            + "ID_DIVISA [" + idDivisaObject.getClass().getName() + "] :: "
                             + "DIVISA [" + divisaObject.getClass().getName() + "] :: "
-                            + "REGISTROS [" + registrosObject.getClass().getName() + "] :: "
-                            + "TOTAL  [" + totalObject.getClass().getName() + "] ");
+                            + "SALDO_DISPONIBLE [" + saldoDisponibleObject.getClass().getName() + "] :: "
+                            + "SALDO_NO_DISPONIBLE [" + saldoNoDisponibleObject.getClass().getName() + "] :: "
+                            + "SALDO_TOTAL [" + saldoTotalObject.getClass().getName() + "] ");
                 }
             }
-            log.debug("Referencia encontrada :: " + referencias.size());
-            return referencias;
         } catch (Exception ex) {
             ex.printStackTrace();
             log.error(ex.toString(), ex);
@@ -439,18 +429,157 @@ public class CuentasTransitoriasEfectivoDaoImpl extends BaseDaoHibernateImpl imp
         return null;
     }
 
-    private List<ReferenciaBean> obetenerReferencias(
+    private FolioAgrupadoDto obetenerNegativosTotalDB(String idDivisa, String idCustodio) {
+        log.info("Obtener Negativos:: " +
+                "[idDivisa - " + idDivisa + "] :: " +
+                "[idCustodio - " + idCustodio + "] ");
+
+        String query = getQueryNegativosTotal(idDivisa, idCustodio);
+        try {
+            List<Object[]> lstResult = ejecutarQuery(query);
+            for (Object[] row : lstResult) {
+                Object idDivisaObject = row[0];
+                Object divisaObject = row[1];
+                Object idCustodioObject = row[2];
+                Object nombreCortoObject = row[3];
+                Object montoObject = row[4];
+
+
+                if (idDivisaObject instanceof BigDecimal
+                        && divisaObject instanceof String
+                        && idCustodioObject instanceof BigDecimal
+                        && nombreCortoObject instanceof String
+                        && montoObject instanceof BigDecimal) {
+
+                    BigDecimal idDivisaRegistro = getBigDecimal(idDivisaObject);
+                    String divisa = getString(divisaObject);
+                    BigDecimal idCustodioRegistro = getBigDecimal(idCustodioObject);
+                    String nombreCorto = getString(nombreCortoObject);
+                    BigDecimal monto = getBigDecimal(montoObject);
+
+                    log.debug("ID_DIVISA [" + idDivisaRegistro + "] ::"
+                            + "DIVISA [" + divisa + "] ::"
+                            + "ID_CUSTODIO [" + idCustodioRegistro + "] ::"
+                            + "NOMBRE_CORTO [" + nombreCorto + "] ::"
+                            + "MONTO [" + monto + "]");
+
+                    FolioAgrupadoDto negativosTotal = new FolioAgrupadoDto();
+                    negativosTotal.setIdDivisa(idDivisa);
+                    negativosTotal.setDivisa(divisa);
+                    negativosTotal.setIdCustodio(idCustodio);
+                    negativosTotal.setCustodio(nombreCorto);
+                    negativosTotal.setTotal(monto);
+                    negativosTotal.setMontoNegativo(true);
+                    log.debug("Negativo Total :: " + negativosTotal.toString());
+                    return negativosTotal;
+                } else {
+                    log.error("Problemas con la identificacion del tipo de objeto resultado de la query");
+                    log.error(query);
+                    log.error("ID_DIVISA [" + idDivisaObject.getClass().getName() + "] ::"
+                            + "DIVISA [" + divisaObject.getClass().getName() + "] ::"
+                            + "ID_CUSTODIO [" + idCustodioObject.getClass().getName() + "] ::"
+                            + "NOMBRE_CORTO [" + nombreCortoObject.getClass().getName() + "] ::"
+                            + "MONTO [" + montoObject.getClass().getName() + "]");
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            log.error(ex.toString(), ex);
+        }
+        return null;
+    }
+
+
+    private List<FolioAgrupadoDto> obetenerFoliosAgrupados(
+            String idDivisa, String idCustodio, String fechaInicio, String fechaFin, String folio) {
+        log.info("Obtener Folio Relacionado Agrupado :: " +
+                "[idDivisa - " + idDivisa + "] :: " +
+                "[idCustodio - " + idCustodio + "] :: " +
+                "[fechaInicio - " + fechaInicio + "] :: " +
+                "[fechaFin - " + fechaFin + "] :: " +
+                "[folioRelacionado - " + folio + "] ");
+        String query = getQueryFoliosAgrupados(
+                idDivisa, idCustodio, fechaInicio, fechaFin, folio);
+        List<FolioAgrupadoDto> foliosAgrupados = new ArrayList<>();
+        try {
+            List<Object[]> lstResult = ejecutarQuery(query);
+            for (Object[] row : lstResult) {
+                Object folioRelacionadoObject = row[0];
+                Object idCustodioObject = row[1];
+                Object nombreCortoObject = row[2];
+                Object idDivisaObject = row[3];
+                Object divisaObject = row[4];
+                Object totalObject = getBigDecimal(row[5]);
+                Object registrosObject = row[6];
+
+                if (folioRelacionadoObject instanceof String
+                        && idCustodioObject instanceof BigDecimal
+                        && nombreCortoObject instanceof String
+                        && idDivisaObject instanceof BigDecimal
+                        && divisaObject instanceof String
+                        && totalObject instanceof BigDecimal
+                        && registrosObject instanceof BigDecimal) {
+                    String folioRelacionado = getString(folioRelacionadoObject);
+                    BigDecimal idCustodioRegistro = getBigDecimal(idCustodioObject);
+                    String nombreCorto = getString(nombreCortoObject);
+                    String divisa = getString(divisaObject);
+                    BigDecimal idDivisaRegistro = getBigDecimal(idDivisaObject);
+                    BigDecimal total = getBigDecimal(totalObject);
+                    BigDecimal registros = getBigDecimal(registrosObject);
+
+
+                    log.debug("FOLIO_RELACIONADO [" + folioRelacionado + "] :: "
+                            + "ID_CUSTODIO [" + idCustodio + "] :: "
+                            + "NOMBRE_CORTO [" + nombreCorto + "] :: "
+                            + "ID_DIVISA [" + idDivisa + "] :: "
+                            + "DIVISA [" + divisa + "] :: "
+                            + "REGISTROS [" + registros + "] :: "
+                            + "TOTAL  [" + total + "] ");
+
+                    FolioAgrupadoDto folioAgrupadoDto = new FolioAgrupadoDto();
+                    folioAgrupadoDto.setFolioRelacionado(folioRelacionado);
+                    folioAgrupadoDto.setIdDivisa(idDivisaRegistro.toString());
+                    folioAgrupadoDto.setDivisa(divisa.substring(0, 3));
+                    folioAgrupadoDto.setDivisaExtendida(divisa);
+                    folioAgrupadoDto.setIdCustodio(idCustodioRegistro.toString());
+                    folioAgrupadoDto.setCustodio(nombreCorto);
+                    folioAgrupadoDto.setRegistros(registros.toString());
+                    folioAgrupadoDto.setTotal(total);
+                    folioAgrupadoDto.setMontoNegativo(total.compareTo(BigDecimal.ZERO) < 0);
+                    log.debug(folioAgrupadoDto.toString());
+                    foliosAgrupados.add(folioAgrupadoDto);
+                } else {
+                    log.error("Problemas con la identificacion del tipo de objeto resultado de la query");
+                    log.error(query);
+                    log.error("FOLIO_RELACIONADO [" + folioRelacionadoObject.getClass().getName() + "] :: "
+                            + "ID_CUSTODIO [" + idCustodioObject.getClass().getName() + "] :: "
+                            + "NOMBRE_CORTO [" + nombreCortoObject.getClass().getName() + "] :: "
+                            + "ID_DIVISA [" + idDivisaObject.getClass().getName() + "] :: "
+                            + "DIVISA [" + divisaObject.getClass().getName() + "] :: "
+                            + "REGISTROS [" + registrosObject.getClass().getName() + "] :: "
+                            + "TOTAL  [" + totalObject.getClass().getName() + "] ");
+                }
+            }
+            log.debug("Referencia encontrada :: " + foliosAgrupados.size());
+            return foliosAgrupados;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            log.error(ex.toString(), ex);
+        }
+        return null;
+    }
+
+    private List<CuentaTransitoriaEfectivoDto> obetenerSinReferencias(
             String idDivisa, String idCustodio, String fechaInicio, String fechaFin, String folioRelacionado_1) {
-        log.info("Obtener Referencias :: " +
+        log.info("Obtener Sin Referencias :: " +
                 "[idDivisa - " + idDivisa + "] :: " +
                 "[idCustodio - " + idCustodio + "] :: " +
                 "[fechaInicio - " + fechaInicio + "] :: " +
                 "[fechaFin - " + fechaFin + "] :: " +
                 "[folioRelacionado - " + folioRelacionado_1 + "] ");
-
-        String query = getQueryReferencias(idDivisa, idCustodio, fechaInicio, fechaFin, folioRelacionado_1);
-        List<ReferenciaBean> referencias = new ArrayList<>();
+        List<CuentaTransitoriaEfectivoDto> referencias = new ArrayList<>();
         try {
+            String query = getQuerySinReferencias(idDivisa, idCustodio, fechaInicio, fechaFin, folioRelacionado_1);
             List<Object[]> lstResult = ejecutarQuery(query);
             for (Object[] row : lstResult) {
                 Object referenciaOperacionObject = row[0];
@@ -459,10 +588,9 @@ public class CuentasTransitoriasEfectivoDaoImpl extends BaseDaoHibernateImpl imp
                 Object nombreCortoCustodioObject = row[3];
                 Object totalObject = row[4];
                 Object idCuentaTransitoriaObject = row[5];
-                Object mensajeISO910Object = getString(row[6]);
-                Object mensajeISO900Object = getString(row[7]);
-                Object idDivisaObject = row[8];
-                Object idCustodioaObject = row[9];
+                Object idDivisaObject = row[6];
+                Object idCustodioaObject = row[7];
+                Object mensajeISOObject = getString(row[8]);
 
                 if (referenciaOperacionObject instanceof String
                         && tipoMensajeObject instanceof String
@@ -470,18 +598,16 @@ public class CuentasTransitoriasEfectivoDaoImpl extends BaseDaoHibernateImpl imp
                         && nombreCortoCustodioObject instanceof String
                         && totalObject instanceof BigDecimal
                         && idCuentaTransitoriaObject instanceof BigDecimal
-                        && mensajeISO910Object instanceof String
-                        && mensajeISO900Object instanceof String
                         && idDivisaObject instanceof BigDecimal
-                        && idCustodioaObject instanceof BigDecimal) {
+                        && idCustodioaObject instanceof BigDecimal
+                        && mensajeISOObject instanceof String) {
                     String folioRelacionado = getString(referenciaOperacionObject);
                     String tipoMensaje = getString(tipoMensajeObject);
                     String claveAlfabetica = getString(claveAlfabeticaObject).substring(0, 3);
                     String nombreCortoCustodio = getString(nombreCortoCustodioObject);
                     BigDecimal total = getBigDecimal(totalObject);
                     BigDecimal idCuentaTransitoria = getBigDecimal(idCuentaTransitoriaObject);
-                    String mensajeISO = getString(mensajeISO910Object);
-                    mensajeISO = (mensajeISO.equals(N_A) ? getString(mensajeISO900Object) : mensajeISO);
+                    String mensajeISO = getString(mensajeISOObject);
                     BigDecimal idDivisaRegistro = getBigDecimal(idDivisaObject);
                     BigDecimal idCustodioRegistro = getBigDecimal(idCustodioaObject);
 
@@ -495,22 +621,30 @@ public class CuentasTransitoriasEfectivoDaoImpl extends BaseDaoHibernateImpl imp
                             + "ID_CUENTA_TRANSITORIA  [" + idCuentaTransitoria + "] :: "
                             + "XML_MENSAJE_ISO  [" + mensajeISO + "]");
 
-                    DivisaBean divisa = new DivisaBean(claveAlfabetica, idDivisaRegistro, nombreCortoCustodio, idCustodioRegistro, total);
-                    log.debug(divisa.toString());
-                    ReferenciaBean referencia = new ReferenciaBean(idCuentaTransitoria, folioRelacionado, tipoMensaje, mensajeISO, divisa);
-                    referencias.add(referencia);
-                    log.debug(referencia.toString());
+
+                    CuentaTransitoriaEfectivoDto referenciada = new CuentaTransitoriaEfectivoDto();
+                    referenciada.setReferenciaOperacion(folioRelacionado);
+                    referenciada.setTipoMensaje(tipoMensaje);
+                    referenciada.setDivisa(claveAlfabetica);
+                    referenciada.setIdDivisa(idDivisa);
+                    referenciada.setCustodio(nombreCortoCustodio);
+                    referenciada.setIdCustodio(idCustodio);
+                    referenciada.setTotal(total);
+                    referenciada.setIdRegistro(idCuentaTransitoria.toString());
+                    referenciada.setMensajeISO(mensajeISO);
+                    referenciada.setMontoNegativo(total.compareTo(BigDecimal.ZERO) < 0);
+                    referencias.add(referenciada);
+                    log.debug(referenciada.toString());
                 } else {
                     log.error("Problemas con la identificacion del tipo de objeto resultado de la query");
                     log.error(query);
-                    log.debug("REFERENCIA_OPERACION [" + referenciaOperacionObject.getClass().getName() + "] :: "
+                    log.error("REFERENCIA_OPERACION [" + referenciaOperacionObject.getClass().getName() + "] :: "
                             + "TIPO_MENSAJE :: [" + tipoMensajeObject.getClass().getName() + "]"
                             + "CLAVE_ALFABETICA [" + claveAlfabeticaObject.getClass().getName() + "] :: "
                             + "NOMBRE_CORTO [" + nombreCortoCustodioObject.getClass().getName() + "] :: "
                             + "MONTO [" + totalObject.getClass().getName() + "] :: "
                             + "ID_CUENTA_TRANSITORIA  [" + idCuentaTransitoriaObject.getClass().getName() + "] :: "
-                            + "XML_MENSAJE_ISO_900 [" + mensajeISO900Object.getClass().getName() + "] :: "
-                            + "XML_MENSAJE_ISO_910 [" + mensajeISO910Object.getClass().getName() + "]");
+                            + "XML_MENSAJE_ISO[" + mensajeISOObject.getClass().getName() + "]");
                 }
             }
         } catch (Exception ex) {
@@ -520,71 +654,114 @@ public class CuentasTransitoriasEfectivoDaoImpl extends BaseDaoHibernateImpl imp
         return referencias;
     }
 
-    private List<ReferenciaBean> obetenerReferenciasDetalle(String referenciaFolio) {
-        log.info("Obtener Referencias Detalle :: [folioRelacionado - " + referenciaFolio + "]");
-        String query = getQueryReferenciasDetalle(referenciaFolio);
-        List<ReferenciaBean> referencias = new ArrayList<>();
+    private List<DetalleReferenciaDto> obetenerReferenciasDetalle(
+            String idDivisa, String idCustodio, String referenciaFolio) {
+        log.info("Obtener Referencias Detalle " +
+                "[idDivisa - " + idDivisa + "] :: " +
+                "[idCustodio - " + idCustodio + "] :: " +
+                "[folioRelacionado - " + referenciaFolio + "] ");
+        String query = getQueryReferenciasDetalle(idDivisa, idCustodio, referenciaFolio);
+        List<DetalleReferenciaDto> referencias = new ArrayList<>();
         try {
             List<Object[]> lstResult = ejecutarQuery(query);
             for (Object[] row : lstResult) {
                 Object idCuentaTransitoriaObject = row[0];
-                Object tipoMensajeObject = row[1];
-                Object folioRelacionadoObject = row[2];
-                Object claveAlfabeticaObject = row[3];
-                Object nombreCortoCustodioObject = row[4];
-                Object totalObject = row[5];
-                Object detalleMovimientosObject = getString(row[6]);
-                Object semeObject = getString(row[7]);
-                Object mensajeISOObject = getString(row[8]);
+                Object folioRelacionadoObject = row[1];
+                Object tipoMensajeObject = row[2];
+                Object idCustodioObject = row[3];
+                Object custodioObject = row[4];
+                Object idDivisaObject = row[5];
+                Object divisaObject = row[6];
+                Object detalleMovimientosObject = getString(row[7]);
+                Object montoObject = row[8];
+                Object numeroRegistroObject = row[9];
+                Object idTipoTransaccionObject = getBigDecimal(row[10]);
+                Object tipoTransaccionObject = getString(row[11]);
+                Object semeObject = getString(row[12]);
+                Object mensajeISOObject = getString(row[13]);
+
 
                 if (idCuentaTransitoriaObject instanceof BigDecimal
-
                         && folioRelacionadoObject instanceof String
                         && tipoMensajeObject instanceof String
-                        && claveAlfabeticaObject instanceof String
-                        && nombreCortoCustodioObject instanceof String
-                        && totalObject instanceof BigDecimal
+                        && idCustodioObject instanceof BigDecimal
+                        && custodioObject instanceof String
+                        && idDivisaObject instanceof BigDecimal
+                        && divisaObject instanceof String
                         && detalleMovimientosObject instanceof String
+                        && montoObject instanceof BigDecimal
+                        && numeroRegistroObject instanceof BigDecimal
+                        && idTipoTransaccionObject instanceof BigDecimal
+                        && tipoTransaccionObject instanceof String
                         && semeObject instanceof String
                         && mensajeISOObject instanceof String) {
+
                     BigDecimal idCuentaTransitoria = getBigDecimal(idCuentaTransitoriaObject);
                     String folioRelacionado = getString(folioRelacionadoObject);
                     String tipoMensaje = getString(tipoMensajeObject);
-                    String claveAlfabetica = getString(claveAlfabeticaObject).substring(0, 3);
-                    String nombreCortoCustodio = getString(nombreCortoCustodioObject);
-                    BigDecimal total = getBigDecimal(totalObject);
+                    BigDecimal idCustodioRegistro = getBigDecimal(idCustodioObject);
+                    String custodio = getString(custodioObject);
+                    BigDecimal idDivisaRegistro = getBigDecimal(idDivisaObject);
+                    String divisa = getString(divisaObject).substring(0, 3);
                     String detalleMovimientos = getString(detalleMovimientosObject);
+                    BigDecimal monto = getBigDecimal(montoObject);
+                    BigDecimal numeroRegistro = getBigDecimal(numeroRegistroObject);
+                    BigDecimal idTipoTransaccion = getBigDecimal(idTipoTransaccionObject);
+                    String tipoTransaccion = getString(tipoTransaccionObject);
                     String seme = getString(semeObject);
                     String mensajeISO = getString(mensajeISOObject);
 
                     log.debug("ID_CUENTA_TRANSITORIA  [" + idCuentaTransitoria + "] :: "
                             + "FOLIO_RELACIONADO [" + folioRelacionado + "] :: "
                             + "TIPO_MENSAJE [" + tipoMensaje + "] :: "
-                            + "CLAVE_ALFABETICA [" + claveAlfabetica + "] :: "
-                            + "NOMBRE_CORTO [" + nombreCortoCustodio + "] :: "
-                            + "TOTAL  [" + total + "] :: "
+                            + "ID_CUSTODIO [" + idCustodioRegistro + "] :: "
+                            + "CUSTODIO [" + custodio + "] :: "
+                            + "ID_DIVISA [" + idDivisaRegistro + "] :: "
+                            + "DIVISA [" + divisa + "] :: "
                             + "DETALLE_MOVIMIENTOS  [" + detalleMovimientos + "] :: "
+                            + "MONTO [" + monto + "] :: "
+                            + "NUM_REGISTRO [" + numeroRegistro + "] :: "
+                            + "ID_TIPO_TRANSACCION [" + idTipoTransaccion + "] :: "
+                            + "TIPO_TRANSACCION [" + tipoTransaccion + "] :: "
                             + "XML_SEME  [" + seme + "] :: "
                             + "XML_MENSAJE_ISO  [" + mensajeISO + "]");
 
-                    DivisaBean divisa = new DivisaBean(claveAlfabetica, nombreCortoCustodio, total);
-                    log.trace(divisa.toString());
-                    ReferenciaBean referencia = new ReferenciaBean(idCuentaTransitoria,
-                            folioRelacionado, tipoMensaje, detalleMovimientos, seme, mensajeISO, divisa);
+
+                    DetalleReferenciaDto referencia = new DetalleReferenciaDto();
+                    referencia.setIdRegistro(idCuentaTransitoria.toString());
+                    referencia.setFolioRelacionado(folioRelacionado);
+                    referencia.setTipoMensaje(tipoMensaje);
+                    referencia.setIdCustodio(idCustodioRegistro.toString());
+                    referencia.setCustodio(custodio);
+                    referencia.setIdDivisa(idDivisaRegistro.toString());
+                    referencia.setDivisa(divisa);
+                    referencia.setDetalleMovimientos(detalleMovimientos);
+                    referencia.setTotal(monto);
+                    referencia.setNumeroRegistro(numeroRegistro);
+                    referencia.setIdTipoTransaccion(idTipoTransaccion);
+                    referencia.setTipoTransaccion(tipoTransaccion);
+                    referencia.setSeme(seme);
+                    referencia.setMensajeISO(mensajeISO);
+                    referencia.setMontoNegativo(monto.compareTo(BigDecimal.ZERO) < 0);
                     referencias.add(referencia);
                     log.trace(referencia.toString());
                 } else {
                     log.error("Problemas con la identificacion del tipo de objeto resultado de la query");
                     log.error(query);
-                    log.debug("ID_CUENTA_TRANSITORIA  [" + idCuentaTransitoriaObject.getClass().getName() + "] :: "
+                    log.error("ID_CUENTA_TRANSITORIA  [" + idCuentaTransitoriaObject.getClass().getName() + "] :: "
                             + "FOLIO_RELACIONADO [" + folioRelacionadoObject.getClass().getName() + "] :: "
-                            + "TIPO_MENSAJE :: [" + tipoMensajeObject.getClass().getName() + "]"
-                            + "CLAVE_ALFABETICA [" + claveAlfabeticaObject.getClass().getName() + "] :: "
-                            + "NOMBRE_CORTO [" + nombreCortoCustodioObject.getClass().getName() + "] :: "
-                            + "TOTAL  [" + totalObject.getClass().getName() + "] :: "
+                            + "TIPO_MENSAJE [" + tipoMensajeObject.getClass().getName() + "] :: "
+                            + "ID_CUSTODIO [" + idCustodioObject.getClass().getName() + "] :: "
+                            + "CUSTODIO [" + custodioObject.getClass().getName() + "] :: "
+                            + "ID_DIVISA [" + idDivisaObject.getClass().getName() + "] :: "
+                            + "DIVISA [" + divisaObject.getClass().getName() + "] :: "
                             + "DETALLE_MOVIMIENTOS  [" + detalleMovimientosObject.getClass().getName() + "] :: "
+                            + "MONTO [" + montoObject.getClass().getName() + "] :: "
+                            + "NUM_REGISTRO [" + numeroRegistroObject.getClass().getName() + "] :: "
+                            + "ID_TIPO_TRANSACCION [" + idTipoTransaccionObject.getClass().getName() + "] :: "
+                            + "TIPO_TRANSACCION [" + tipoTransaccionObject.getClass().getName() + "] :: "
                             + "XML_SEME  [" + semeObject.getClass().getName() + "] :: "
-                            + "XML_MENSAJE_ISO_D  [" + mensajeISOObject.getClass().getName() + "]");
+                            + "XML_MENSAJE_ISO  [" + mensajeISOObject.getClass().getName() + "]");
                 }
             }
         } catch (Exception ex) {
@@ -594,13 +771,17 @@ public class CuentasTransitoriasEfectivoDaoImpl extends BaseDaoHibernateImpl imp
         return referencias;
     }
 
-    private BigDecimal obetenerReferenciasDetalleTotal(String referenciaFolio) {
-        log.info("Obtener Total de Referencias Detalle :: [folioRelacionado - " + referenciaFolio + "]");
-        String query = getQueryReferenciasDetalleTotal(referenciaFolio);
+    private BigDecimal obetenerReferenciasDetalleTotal(
+            String idDivisa, String idCustodio, String referenciaFolio) {
+        log.info("Obtener Total de Referencias Detalle " +
+                "[idDivisa - " + idDivisa + "] :: " +
+                "[idCustodio - " + idCustodio + "] :: " +
+                "[folioRelacionado - " + referenciaFolio + "] ");
+        String query = getQueryReferenciasDetalleTotal(idDivisa, idCustodio, referenciaFolio);
         try {
             List<Object[]> lstResult = ejecutarQuery(query);
             for (Object[] row : lstResult) {
-                Object totalObject = row[0];
+                Object totalObject = row[5];
 
                 if (totalObject instanceof BigDecimal) {
                     BigDecimal total = getBigDecimal(totalObject);
@@ -609,7 +790,7 @@ public class CuentasTransitoriasEfectivoDaoImpl extends BaseDaoHibernateImpl imp
                 } else {
                     log.error("Problemas con la identificacion del tipo de objeto resultado de la query");
                     log.error(query);
-                    log.debug("TOTAL  [" + totalObject.getClass().getName() + "]");
+                    log.error("TOTAL  [" + totalObject.getClass().getName() + "]");
                 }
             }
         } catch (Exception ex) {
@@ -714,11 +895,10 @@ public class CuentasTransitoriasEfectivoDaoImpl extends BaseDaoHibernateImpl imp
                 } else {
                     log.error("Problemas con la identificacion del tipo de objeto resultado de la query");
                     log.error(query);
-                    log.debug(
-                            "ID_CUENTA_TRANSITORIA [" + idCuentaTransitoriaObject.getClass() + "] ::" +
-                                    "FOLIO_RELACIONADO  [" + folioRelacionadoObject.getClass() + "] :: " +
-                                    "ID_CUSTODIO [" + idCustodioObject.getClass() + "] :: " +
-                                    "ID_DIVISA [" + idDivisaObject.getClass() + "]");
+                    log.error("ID_CUENTA_TRANSITORIA [" + idCuentaTransitoriaObject.getClass().getName() + "] ::" +
+                            "FOLIO_RELACIONADO  [" + folioRelacionadoObject.getClass().getName() + "] :: " +
+                            "ID_CUSTODIO [" + idCustodioObject.getClass().getName() + "] :: " +
+                            "ID_DIVISA [" + idDivisaObject.getClass().getName() + "]");
                 }
             }
         } catch (Exception ex) {
@@ -743,7 +923,8 @@ public class CuentasTransitoriasEfectivoDaoImpl extends BaseDaoHibernateImpl imp
                 } else {
                     log.error("Problemas con la identificación del tipo de objeto resultado de la query");
                     log.error(query);
-                    log.error("ID [" + idObject.getClass().getName() + "] :: " + "VALUE [" + valueObject.getClass().getName() + "]");
+                    log.error("ID [" + idObject.getClass().getName() + "] :: " +
+                            "VALUE [" + valueObject.getClass().getName() + "]");
                 }
             }
         } catch (Exception ex) {

@@ -66,7 +66,7 @@
 							<f:facet name="header">
 								<h:outputText value="#{etq.mensajeMinus}" />
 							</f:facet>
-							<input type="hidden" id="swift_#{mensaje.id}"  class="swift_#{mensaje.id}" value="#{mensaje.mensajeISO}"/>
+							<input type="hidden" id="swift_#{mensaje.id}"  class="swift_#{mensaje.id}" value="#{mensaje.mensaje}"/>
 							
 							 <a href="javascript:void(0);" 
 								onclick="actualizaMensaje('swift_#{mensaje.id}');marcar('css_swift_#{mensaje.id}');">

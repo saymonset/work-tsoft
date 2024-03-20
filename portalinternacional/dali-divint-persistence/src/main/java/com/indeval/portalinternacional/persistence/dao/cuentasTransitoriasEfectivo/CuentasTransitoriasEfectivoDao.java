@@ -1,6 +1,10 @@
 package com.indeval.portalinternacional.persistence.dao.cuentasTransitoriasEfectivo;
 
 import com.bursatec.persistence.dao.BaseDao;
+import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.BovedaMontosDto;
+import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.CuentaTransitoriaEfectivoDto;
+import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.DetalleReferenciaDto;
+import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.FolioAgrupadoDto;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -31,9 +35,19 @@ public interface CuentasTransitoriasEfectivoDao extends BaseDao {
      *
      * @param idDivisa
      * @param idCustodio
-     * @return List<String [ ]>
+     * @return List<DetalleReferenciaDto>
      */
-    List<String[]> obtenerNegativos(String idDivisa, String idCustodio);
+    List<DetalleReferenciaDto> obtenerNegativosDetalles(String idDivisa, String idCustodio);
+
+
+    /**
+     * Consulta referencias con montos negativos
+     *
+     * @param idDivisa
+     * @param idCustodio
+     * @return FolioAgrupadoDto
+     */
+    FolioAgrupadoDto obetenerNegativosTotal(String idDivisa, String idCustodio);
 
 
     /**
@@ -44,9 +58,9 @@ public interface CuentasTransitoriasEfectivoDao extends BaseDao {
      * @param fechaInicio
      * @param fechaFin
      * @param folioRelacionado
-     * @return List<String [ ]>
+     * @return List<FolioAgrupadoDto>
      */
-    List<String[]> obtenerInformacionFolioAgrupado(
+    List<FolioAgrupadoDto> obtenerInformacionFoliosAgrupados(
             String idDivisa, String idCustodio, String fechaInicio, String fechaFin, String folioRelacionado);
 
     /**
@@ -57,26 +71,30 @@ public interface CuentasTransitoriasEfectivoDao extends BaseDao {
      * @param fechaInicio
      * @param fechaFin
      * @param folioRelacionado
-     * @return List<String [ ]>
+     * @return List<CuentaTransitoriaEfectivoDto>
      */
-    List<String[]> obtenerInformacionReferencias(
+    List<CuentaTransitoriaEfectivoDto> obtenerInformacionSinReferencias(
             String idDivisa, String idCustodio, String fechaInicio, String fechaFin, String folioRelacionado);
 
     /**
      * Consulta de Detalle Referencias
      *
+     * @param idDivisa
+     * @param idCustodio
      * @param referenciaFolio
-     * @return List<String [ ]>
+     * @return List<DetalleReferenciaDto>
      */
-    List<String[]> obtenerDetalleReferencias(String referenciaFolio);
+    List<DetalleReferenciaDto> obtenerDetalleReferencias(String idDivisa, String idCustodio, String referenciaFolio);
 
     /**
      * Consulta de Detalle Total de Referencias
      *
+     * @param idDivisa
+     * @param idCustodio
      * @param referenciaFolio
-     * @return String
+     * @return BigDecimal
      */
-    BigDecimal obtenerDetalleReferenciasTotal(String referenciaFolio);
+    BigDecimal obtenerDetalleReferenciasTotal(String idDivisa, String idCustodio, String referenciaFolio);
 
     /**
      * Consulta de MensajeISO
@@ -104,14 +122,6 @@ public interface CuentasTransitoriasEfectivoDao extends BaseDao {
     String[] obtenerFolioRelacionado(String folioRelacionado);
 
     /**
-     * Obtener REGISTRO
-     *
-     * @param idRegistro
-     * @return String [ ]
-     */
-    String[] obtenerIdRegistro(String idRegistro);
-
-    /**
      * Asignar FOLIO_RELACIONADO a registro no referenciado
      *
      * @param folioRelacionado
@@ -119,4 +129,13 @@ public interface CuentasTransitoriasEfectivoDao extends BaseDao {
      * @return Boolean
      */
     Boolean asignarFolioRelacionado(String folioRelacionado, String idRegistro);
+
+    /**
+     * Consulta de informaci&oacute;n Referencias
+     *
+     * @param idDivisa
+     * @param idCustodio
+     * @return BovedaMontosDto
+     */
+    BovedaMontosDto obetenerTotalBoveda(String idDivisa, String idCustodio);
 }

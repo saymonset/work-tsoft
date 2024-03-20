@@ -14,10 +14,7 @@ import javax.faces.model.SelectItem;
 
 import com.indeval.portaldali.middleware.servicios.modelo.BusinessException;
 import com.indeval.portalinternacional.middleware.services.divisioninternacional.cuentasTransitoriasEfectivo.CuentasTransitoriasEfectivoService;
-import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.CuentaTransitoriaEfectivoDto;
-import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.DetalleReferenciaDto;
-import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.FolioAgrupadoDto;
-import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.FoliosAgrupadosDto;
+import com.indeval.portalinternacional.middleware.servicios.dto.cuentasTransitoriasEfectivo.*;
 import com.indeval.portalinternacional.presentation.controller.common.ControllerBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,9 +78,19 @@ public class CuentasTransitoriasEfectivoController extends ControllerBase {
 
 
     /**
-     * Negativos
+     * Saldos de Boveda
      */
-    List<FolioAgrupadoDto> negativos;
+    BovedaMontosDto bovedaSaldos;
+
+    /**
+     * Negativos Totales
+     */
+    List<FolioAgrupadoDto> negativosTotal;
+
+    /**
+     * Negativos Detalles
+     */
+    List<DetalleReferenciaDto> negativosDetalles;
 
     /**
      * Folio agrupado : Resumen
@@ -105,7 +112,7 @@ public class CuentasTransitoriasEfectivoController extends ControllerBase {
     /**
      * Total detalles de registros referenciados
      */
-    private String totalDetallesRegistroReferenciados;
+    private BigDecimal totalDetallesRegistroReferenciados;
 
     /**
      * Cadena para visualizar un mensaje ISO
@@ -165,41 +172,66 @@ public class CuentasTransitoriasEfectivoController extends ControllerBase {
      * @return
      */
     public String getInitDetalle() {
+        log.info("Inicio de Detalle");
+
         consultaEjecutada = false;
         detallesRegistroReferenciados = null;
 
-        log.info("Inicio de Detalle");
         String referencia = FacesContext.getCurrentInstance().
                 getExternalContext().getRequestParameterMap().get("referencia");
-        log.debug("Detalle de registros para la referencia [" + referencia + "]");
-        detallesRegistroReferenciados = cuentasTransitoriasEfectivoService.obtenerDetallesReferencia(referencia);
-        BigDecimal total = cuentasTransitoriasEfectivoService.obtenerDetallesReferenciaTotal(referencia);
-        totalDetallesRegistroReferenciados = (total == null ? "" : total.toString());
-        //obtenerMontoTotal();
+        String idDivisa = FacesContext.getCurrentInstance().
+                getExternalContext().getRequestParameterMap().get("idDivisa");
+        String idCustodio = FacesContext.getCurrentInstance().
+                getExternalContext().getRequestParameterMap().get("idCustodio");
+
+        log.debug("referencia [" + referencia + "] :: idDivisa [" + idDivisa + "] :: idCustodio [" + idCustodio + "]");
+
+        detallesRegistroReferenciados = cuentasTransitoriasEfectivoService.
+                obtenerDetallesReferencia(idDivisa, idCustodio, referencia);
+
+
+        BigDecimal total = cuentasTransitoriasEfectivoService.
+                obtenerDetallesReferenciaTotal(idDivisa, idCustodio, referencia);
+
+        totalDetallesRegistroReferenciados = (total == null ? new BigDecimal("0.0") : total);
+
         log.debug("Detalle de referencias encontradas :: " + detallesRegistroReferenciados.size());
+        log.debug("TOTAL : " + totalDetallesRegistroReferenciados);
+
         consultaEjecutada = true;
         return null;
     }
 
-    private void obtenerMontoTotal() {
-        if (detallesRegistroReferenciados != null
-                && !detallesRegistroReferenciados.isEmpty()) {
-            String divisa = null;
-            BigDecimal monto = null;
-            for (DetalleReferenciaDto detalleReferenciaDto : detallesRegistroReferenciados) {
-                if (divisa == null) {
-                    divisa = detalleReferenciaDto.getDivisa();
-                    monto = detalleReferenciaDto.getTotal();
-                } else if (divisa.equals(detalleReferenciaDto.getDivisa())) {
-                    monto.add(detalleReferenciaDto.getTotal());
-                } else {
-                    totalDetallesRegistroReferenciados = null;
-                    break;
-                }
-            }
-            totalDetallesRegistroReferenciados = monto.toString();
+    /**
+     * Inicializa la pantalla de detalle Negativos
+     *
+     * @return
+     */
+    public String getInitDetalleNegativos() {
+        log.info("Inicio de Detalle");
+
+        consultaEjecutada = false;
+
+        String idDivisa = FacesContext.getCurrentInstance().
+                getExternalContext().getRequestParameterMap().get("idDivisa");
+        String idCustodio = FacesContext.getCurrentInstance().
+                getExternalContext().getRequestParameterMap().get("idCustodio");
+
+        idDivisaConsulta = Long.parseLong(idDivisa);
+        idCustodioConsulta = Long.parseLong(idCustodio);
+
+        cargaNegativos();
+
+        for (DetalleReferenciaDto detalle : negativosDetalles) {
+            log.debug(detalle.toString());
         }
+        log.debug("TOTAL : ");
+        log.debug(negativosTotal.get(0).toString());
+
+        consultaEjecutada = true;
+        return null;
     }
+
 
     /**
      * Inicializa la pantalla para mostrar el ISO
@@ -229,8 +261,6 @@ public class CuentasTransitoriasEfectivoController extends ControllerBase {
 
     private void limpiar() {
         consultaEjecutada = false;
-//		paginaVO = new PaginaVO();
-//		paginaVO.setRegistrosXPag(50);
         idCustodioConsulta = -1L;
         idDivisaConsulta = -1L;
         registroReferenciado = null;
@@ -241,7 +271,7 @@ public class CuentasTransitoriasEfectivoController extends ControllerBase {
         fechaInicioFormateada = null;
         fechaFin = null;
         fechaFinFormateada = null;
-        negativos = null;
+        negativosTotal = null;
     }
 
 
@@ -337,64 +367,102 @@ public class CuentasTransitoriasEfectivoController extends ControllerBase {
 
         totalEfectivo = null;
 
-        validarDivisaCustodioConsulta();
-        validarBusquedaFolio();
+        if (validarDivisaCustodioConsulta()) {
+            validarBusquedaFolio();
 
-        log.debug("Obtener consulta de FOLIOS RELACIONADOS AGRUPADOS :: " +
-                "Custodio Seleccionado [" + custodioConsulta + "] - " +
-                "Divisa Seleccionada [" + divisaCustodia + "] - " +
-                "Fecha Inicio [" + fechaInicio + "] - " +
-                "Fecha Fin [" + fechaFin + "] - " +
-                "Referencia Buscar [" + referenciaBuscar_1 + "] ");
-
-
-        boolean fechasValidas = validarFechas();
+            log.debug("Obtener consulta de FOLIOS RELACIONADOS AGRUPADOS :: " +
+                    "Custodio Seleccionado [" + custodioConsulta + "] - " +
+                    "Divisa Seleccionada [" + divisaCustodia + "] - " +
+                    "Fecha Inicio [" + fechaInicio + "] - " +
+                    "Fecha Fin [" + fechaFin + "] - " +
+                    "Referencia Buscar [" + referenciaBuscar_1 + "] ");
 
 
-        if (fechasValidas) {
-            registroReferenciado = cuentasTransitoriasEfectivoService.obtenerFolioAgrupado(
-                    (idDivisaConsulta.equals(-1L) ? null : idDivisaConsulta.toString()),
-                    (idCustodioConsulta.equals(-1L) ? null : idCustodioConsulta.toString()),
-                    fechaInicioFormateada, fechaFinFormateada, referenciaBuscar_1);
-
-            negativos = cuentasTransitoriasEfectivoService.obtenerNegativos(
-                    (idDivisaConsulta.equals(-1L) ? null : idDivisaConsulta.toString()),
-                    (idCustodioConsulta.equals(-1L) ? null : idCustodioConsulta.toString()));
-            ordenarFolioAgrupados();
-
-            registrosNoReferenciados = cuentasTransitoriasEfectivoService.obtenerReferencias(
-                    (idDivisaConsulta.equals(-1L) ? null : idDivisaConsulta.toString()),
-                    (idCustodioConsulta.equals(-1L) ? null : idCustodioConsulta.toString()),
-                    fechaInicioFormateada, fechaFinFormateada, null);
+            boolean fechasValidas = validarFechas();
 
 
-            exportarContenido = ((registroReferenciado != null && !registroReferenciado.isEmpty())
-                    || (registrosNoReferenciados != null && !registrosNoReferenciados.isEmpty()));
-            consultaEjecutada = true;
+            if (fechasValidas) {
+                bovedaSaldos = cuentasTransitoriasEfectivoService.obetenerTotalBoveda(
+                        idDivisaConsulta.toString(), idCustodioConsulta.toString());
+
+                registroReferenciado = cuentasTransitoriasEfectivoService.obtenerFoliosAgrupados(
+                        idDivisaConsulta.toString(), idCustodioConsulta.toString(),
+                        fechaInicioFormateada, fechaFinFormateada, referenciaBuscar_1);
+
+                cargaNegativos();
+
+                ordenarFolioAgrupados();
+
+                registrosNoReferenciados = cuentasTransitoriasEfectivoService.obtenerSinReferencias(
+                        idDivisaConsulta.toString(), idCustodioConsulta.toString(),
+                        fechaInicioFormateada, fechaFinFormateada, null);
+
+
+                exportarContenido = ((registroReferenciado != null && !registroReferenciado.isEmpty())
+                        || (registrosNoReferenciados != null && !registrosNoReferenciados.isEmpty()));
+                consultaEjecutada = true;
+            }
         }
         return null;
     }
 
-    private void validarDivisaCustodioConsulta() {
-        SelectItem itemCustodioSeleccionado = new SelectItem(-1L, "Todos");
-        SelectItem itemDivisaSeleccionada = new SelectItem(-1L, "Todas");
+    /**
+     * Carga la información de la seccion de Negativos: Total y Detalles
+     */
+    private void cargaNegativos() {
+        negativosTotal = cuentasTransitoriasEfectivoService.obtenerNegativosTotal(
+                idDivisaConsulta.toString(), idCustodioConsulta.toString());
 
-        for (SelectItem item : listaCustodios) {
-            if (((String) item.getValue()).equals(idCustodioConsulta.toString())) {
-                itemCustodioSeleccionado = item;
-                break;
-            }
+        if (negativosTotal != null && !negativosTotal.isEmpty()) {
+            negativosDetalles = cuentasTransitoriasEfectivoService.obtenerNegativosDetalles(
+                    idDivisaConsulta.toString(), idCustodioConsulta.toString());
         }
-        custodioConsulta = itemCustodioSeleccionado.getLabel();
-        for (SelectItem item : listaDivisas) {
-            if (((String) item.getValue()).equals(idDivisaConsulta.toString())) {
-                itemDivisaSeleccionada = item;
-                break;
-            }
-        }
-        divisaCustodia = itemDivisaSeleccionada.getLabel();
     }
 
+    /**
+     * Valida que se seleccione Divisa y Custodio
+     */
+    private boolean validarDivisaCustodioConsulta() {
+        if (idCustodioConsulta.intValue() == -1 || idDivisaConsulta.intValue() == -1) {
+            String mensajeError = "Favor de seleccionar ";
+
+            if (idCustodioConsulta.intValue() == -1) {
+                mensajeError += "custodio";
+            }
+
+            if (idDivisaConsulta.intValue() == -1) {
+                if (idCustodioConsulta.intValue() == -1) {
+                    mensajeError += "y ";
+                }
+                mensajeError += "divisa";
+            }
+            agregarMensaje(new BusinessException(mensajeError));
+            return false;
+        } else {
+            SelectItem itemCustodioSeleccionado = new SelectItem(-1L, "Todos");
+            SelectItem itemDivisaSeleccionada = new SelectItem(-1L, "Todas");
+
+            for (SelectItem item : listaCustodios) {
+                if (((String) item.getValue()).equals(idCustodioConsulta.toString())) {
+                    itemCustodioSeleccionado = item;
+                    break;
+                }
+            }
+            custodioConsulta = itemCustodioSeleccionado.getLabel();
+            for (SelectItem item : listaDivisas) {
+                if (((String) item.getValue()).equals(idDivisaConsulta.toString())) {
+                    itemDivisaSeleccionada = item;
+                    break;
+                }
+            }
+            divisaCustodia = itemDivisaSeleccionada.getLabel();
+            return true;
+        }
+    }
+
+    /**
+     * Valida que el folio para la búsqueda sea válido
+     */
     private void validarBusquedaFolio() {
         if (referenciaBuscar_1 != null) {
             referenciaBuscar_1 = referenciaBuscar_1.replaceAll("\\s", "").replaceAll("[\\p{Cntrl}\\p{Z}]+", "");
@@ -412,6 +480,9 @@ public class CuentasTransitoriasEfectivoController extends ControllerBase {
 
     }
 
+    /**
+     * Valida que las fechas sean válidad
+     */
     private boolean validarFechas() {
 
         if (fechaInicio != null && fechaFin != null) {
@@ -464,7 +535,7 @@ public class CuentasTransitoriasEfectivoController extends ControllerBase {
             FoliosAgrupadosDto aux = new FoliosAgrupadosDto();
             aux.setDivisa(entry.getValue().get(0).getDivisaExtendida());
             aux.setReferencias(entry.getValue());
-            aux.setMonto(monto.toString());
+            aux.setMonto(monto);
             aux.setMontoNegativo(monto.intValue() < 0);
             foliosAgrupadosDtos.add(aux);
             log.debug(aux.toString());
@@ -495,6 +566,9 @@ public class CuentasTransitoriasEfectivoController extends ControllerBase {
         reiniciarEstadoPeticion();
         ejecutarConsulta();
     }
+
+
+    // <editor-fold defaultstate="collapsed" desc="Seccion getters and setters.">
 
     /**
      * Metodo para obtener el atributo listaCustodios
@@ -532,23 +606,58 @@ public class CuentasTransitoriasEfectivoController extends ControllerBase {
         this.listaDivisas = listaDivisas;
     }
 
-
     /**
-     * Metodo para obtener el atributo negativos
+     * Metodo para obtener el atributo bovedaSaldos
      *
-     * @return El atributo negativos
+     * @return El atributo bovedaSaldos
      */
-    public List<FolioAgrupadoDto> getNegativos() {
-        return negativos;
+    public BovedaMontosDto getBovedaSaldos() {
+        return bovedaSaldos;
     }
 
     /**
-     * Metodo para establecer el atributo negativos
+     * Metodo para establecer el atributo bovedaSaldos
      *
-     * @param negativos El valor del atributo negativos a establecer.
+     * @param bovedaSaldos El valor del atributo bovedaSaldos a establecer.
      */
-    public void setNegativos(List<FolioAgrupadoDto> negativos) {
-        this.negativos = negativos;
+    public void setBovedaSaldos(BovedaMontosDto bovedaSaldos) {
+        this.bovedaSaldos = bovedaSaldos;
+    }
+
+    /**
+     * Metodo para obtener el atributo negativosTotal
+     *
+     * @return El atributo negativosTotal
+     */
+    public List<FolioAgrupadoDto> getNegativosTotal() {
+        return negativosTotal;
+    }
+
+    /**
+     * Metodo para establecer el atributo negativosTotal
+     *
+     * @param negativosTotal El valor del atributo negativosTotal a establecer.
+     */
+    public void setNegativosTotal(List<FolioAgrupadoDto> negativosTotal) {
+        this.negativosTotal = negativosTotal;
+    }
+
+    /**
+     * Metodo para obtener el atributo negativosDetalles
+     *
+     * @return El atributo negativosDetalles
+     */
+    public List<DetalleReferenciaDto> getNegativosDetalles() {
+        return negativosDetalles;
+    }
+
+    /**
+     * Metodo para establecer el atributo negativosDetalles
+     *
+     * @param negativosDetalles El valor del atributo negativosDetalles a establecer.
+     */
+    public void setNegativosDetalles(List<DetalleReferenciaDto> negativosDetalles) {
+        this.negativosDetalles = negativosDetalles;
     }
 
     /**
@@ -682,7 +791,7 @@ public class CuentasTransitoriasEfectivoController extends ControllerBase {
      *
      * @return El atributo totalDetallesRegistroReferenciados
      */
-    public String getTotalDetallesRegistroReferenciados() {
+    public BigDecimal getTotalDetallesRegistroReferenciados() {
         return totalDetallesRegistroReferenciados;
     }
 
@@ -691,7 +800,7 @@ public class CuentasTransitoriasEfectivoController extends ControllerBase {
      *
      * @param totalDetallesRegistroReferenciados El valor del atributo totalDetallesRegistroReferenciados a establecer.
      */
-    public void setTotalDetallesRegistroReferenciados(String totalDetallesRegistroReferenciados) {
+    public void setTotalDetallesRegistroReferenciados(BigDecimal totalDetallesRegistroReferenciados) {
         this.totalDetallesRegistroReferenciados = totalDetallesRegistroReferenciados;
     }
 
@@ -925,4 +1034,5 @@ public class CuentasTransitoriasEfectivoController extends ControllerBase {
     public void setCuentasTransitoriasEfectivoService(CuentasTransitoriasEfectivoService cuentasTransitoriasEfectivoService) {
         this.cuentasTransitoriasEfectivoService = cuentasTransitoriasEfectivoService;
     }
+    // </editor-fold>
 }

@@ -4,6 +4,7 @@ import com.indeval.persistence.unittest.BaseDaoTestCase;
 import com.indeval.portalinternacional.middleware.servicios.dto.ConciliacionDivisasIntDTO;
 import com.indeval.portalinternacional.persistence.dao.ConciliacionDivisasIntDao;
 
+import java.util.Date;
 import java.util.List;
 
 public class ConciliacionDivisasIntDaoImplTest extends BaseDaoTestCase {
@@ -18,9 +19,11 @@ public class ConciliacionDivisasIntDaoImplTest extends BaseDaoTestCase {
         System.out.println("testGetAllByIdBovedaAndIdDivisa()");
         Integer idDivisa = 3;
         Integer idBoveda = 31;
+        Date startDate = new Date();
+        Date endDate = new Date();
 
         assertNotNull("ConciliacionDivisasIntDao Nulo", conciliacionDivisasIntDao);
-        List<ConciliacionDivisasIntDTO> conciliacionDivisasIntDTO = conciliacionDivisasIntDao.getAllByIdBovedaAndIdDivisa(idBoveda, idDivisa);
+        List<ConciliacionDivisasIntDTO> conciliacionDivisasIntDTO = conciliacionDivisasIntDao.getAllByIdBovedaAndIdDivisa(idBoveda, idDivisa, startDate, endDate);
 
         System.out.println("conciliacion divisas array by boveda and divisa: " + conciliacionDivisasIntDTO);
 
@@ -30,9 +33,11 @@ public class ConciliacionDivisasIntDaoImplTest extends BaseDaoTestCase {
     public void testGetAllByIdDivisa() {
         System.out.println("testGetAllByIdDivisa()");
         Integer idDivisa = 3;
+        Date startDate = new Date();
+        Date endDate = new Date();
 
         assertNotNull("ConciliacionDivisasIntDao Nulo", conciliacionDivisasIntDao);
-        List<ConciliacionDivisasIntDTO> conciliacionDivisasIntDTO = conciliacionDivisasIntDao.getAllByIdDivisa(idDivisa);
+        List<ConciliacionDivisasIntDTO> conciliacionDivisasIntDTO = conciliacionDivisasIntDao.getAllByIdDivisa(idDivisa, startDate, endDate);
 
         System.out.println("conciliacion divisas array by divisa: " + conciliacionDivisasIntDTO);
 

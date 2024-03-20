@@ -20,7 +20,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletResponse;
 
-import com.indeval.portalinternacional.middleware.servicios.vo.BitacoraMensajeSwiftVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +50,7 @@ public class BitacoraCalendarioEmisionesDeudaExtController extends ControllerBas
 	/** Parametros enviados por el Request */
 	private Map<String, String> params;
 	
-	private List<BitacoraMensajeSwiftVO> resultados;
+	private List<BitacoraMensajeSwift> resultados;
 	
 	private CalendarioDerechos derecho;
 	
@@ -69,9 +68,9 @@ public class BitacoraCalendarioEmisionesDeudaExtController extends ControllerBas
 		}
 		if(id != null){
 			if("DEUDA".equals(origen)){
-				resultados=divisionInternacionalService.consultaBitacoraMensajesSwiftVO(id);
+				resultados=divisionInternacionalService.consultaBitacoraMensajesSwift(id);
 			}else{
-				resultados=divisionInternacionalService.getBitacoraMensajeSwiftbyIdHistVO(id);
+				resultados=divisionInternacionalService.consultaBitacoraMensajesSwiftByHist(id);
 			}
 			
 		}
@@ -147,14 +146,14 @@ public class BitacoraCalendarioEmisionesDeudaExtController extends ControllerBas
 	/**
 	 * @return the resultados
 	 */
-	public List<BitacoraMensajeSwiftVO> getResultados() {
+	public List<BitacoraMensajeSwift> getResultados() {
 		return resultados;
 	}
 
 	/**
 	 * @param resultados the resultados to set
 	 */
-	public void setResultados(List<BitacoraMensajeSwiftVO> resultados) {
+	public void setResultados(List<BitacoraMensajeSwift> resultados) {
 		this.resultados = resultados;
 	}
 
@@ -200,11 +199,11 @@ public class BitacoraCalendarioEmisionesDeudaExtController extends ControllerBas
 		docWriter = PdfWriter.getInstance(doc, baosPDF);
 		doc.addTitle("mensajeSwift");
 		doc.open();
-		for(BitacoraMensajeSwiftVO bms:this.resultados){
+		for(BitacoraMensajeSwift bms:this.resultados){
 			
 			doc.add(new Paragraph(
 					"==========="+ bms.getTipoMensaje()+" | "+bms.getOrigen()+" | "+formatDateToMxnTimeZone(bms.getFecha(),null)+" | ================\n"));
-			doc.add(new Paragraph(bms.getMensajeISO()));
+			doc.add(new Paragraph(bms.getMensaje()));
 			doc.add(new Paragraph("====================================FIN MENSAJE ========================\n"));
 			doc.newPage();
 		}

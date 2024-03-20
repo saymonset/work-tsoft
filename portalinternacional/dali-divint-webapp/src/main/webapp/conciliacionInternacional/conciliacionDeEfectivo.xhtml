@@ -24,7 +24,7 @@
     </ui:define>
 
     <ui:define name="subtituloSeccion">
-        <h:outputText value="" />
+        <h:outputText value=""/>
     </ui:define>
 
     <ui:define name="tituloEncabezado">
@@ -34,7 +34,7 @@
     <ui:define name="initPantalla">
         <a4j:keepAlive beanName="conciliacionDeEfectivoBean"/>
         <h:panelGroup id="init">
-            <h:outputText value="#{conciliacionDeEfectivoBean.inicializar}" />
+            <h:outputText value="#{conciliacionDeEfectivoBean.inicializar}"/>
         </h:panelGroup>
     </ui:define>
 
@@ -75,6 +75,9 @@
                                     <td>
                                         <h:outputText styleClass="texto" value="Bóveda"/>
                                     </td>
+                                    <td>
+                                        <h:outputText styleClass="texto" value="Fecha De Inicio"/>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -83,10 +86,20 @@
                                             <f:selectItems value="#{conciliacionDeEfectivoBean.bovedas}"/>
                                         </h:selectOneMenu>
                                     </td>
+                                    <td>
+                                        <rich:calendar inputClass="textoControles"
+                                                       inputStyle="background-color: #ffffe6;" inputSize="11"
+                                                       value="#{conciliacionDeEfectivoBean.startDate}"
+                                                       datePattern="dd/MM/yyyy" tabindex="120"/>
+
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <h:outputText styleClass="texto" value="Divisa"/>
+                                    </td>
+                                    <td>
+                                        <h:outputText styleClass="texto" value="Fecha De Fin"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -95,6 +108,12 @@
                                                          value="#{conciliacionDeEfectivoBean.efectivoInternacionalVO.divisa.idString}">
                                             <f:selectItems value="#{conciliacionDeEfectivoBean.divisas}"/>
                                         </h:selectOneMenu>
+                                    </td>
+                                    <td>
+                                        <rich:calendar inputClass="textoControles"
+                                                       inputStyle="background-color: #ffffe6;" inputSize="11"
+                                                       value="#{conciliacionDeEfectivoBean.endDate}"
+                                                       datePattern="dd/MM/yyyy" tabindex="130"/>
                                     </td>
                                 </tr>
                             </table>
@@ -176,19 +195,26 @@
                                  cellspacing="0px" columnClasses="everyColumn"
                                  rowClasses="renglonTablaUno, renglonTablaDos">
 
-                        <h:column >
+                        <h:column>
                             <f:facet name="header">
-                                <h:outputText styleClass="texto textoPeque12" value="#{etq.detalleMensaje}" />
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.detalleMensaje}"/>
                             </f:facet>
                             <table align="center">
                                 <tr>
                                     <td>
-                                        <a href="javascript:detalleResultadoMensaje(#{conciliation.idConciliacionEfectivo.toString()});" title="Muestra el mensaje Swift">
-                                            <img src="#{facesContext.externalContext.requestContextPath}/images/msg.gif"  />
+                                        <a href="javascript:detalleResultadoMensaje(#{conciliation.idConciliacionEfectivo.toString()});"
+                                           title="Muestra el mensaje Swift">
+                                            <img src="#{facesContext.externalContext.requestContextPath}/images/msg.gif"/>
                                         </a>
                                     </td>
                                 </tr>
                             </table>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText styleClass="texto textoPeque12" value="#{etq.fechaMinus}"/>
+                            </f:facet>
+                            <h:outputText styleClass="texto textoPeque12" value="#{conciliation.fecha}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
