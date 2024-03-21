@@ -13,11 +13,10 @@ import java.util.*;
 
 import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
 import com.indeval.portalinternacional.middleware.servicios.modelo.*;
-import com.indeval.portalinternacional.middleware.servicios.vo.BitacoraMensajeSwiftVO;
-import com.indeval.portalinternacional.middleware.servicios.vo.CalendarioDerechosVO;
+import com.indeval.portalinternacional.middleware.servicios.vo.*;
 import org.hibernate.*;
 import org.hibernate.transform.Transformers;
-import org.hibernate.type.Type;
+import org.hibernate.type.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate3.HibernateCallback;
@@ -27,7 +26,6 @@ import com.indeval.portaldali.middleware.servicios.modelo.BusinessException;
 import com.indeval.portaldali.middleware.servicios.modelo.vo.PaginaVO;
 import com.indeval.portaldali.persistence.modelo.Boveda;
 import com.indeval.portalinternacional.middleware.servicios.constantes.Constantes;
-import com.indeval.portalinternacional.middleware.servicios.vo.CalendarioEmisionesDeudaExtDTO;
 import com.indeval.portalinternacional.persistence.dao.CalendarioEmisionesDeudaExtDao;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -219,6 +217,8 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 			// deposito
 			BigDecimal monto910 = new BigDecimal(0.0);
 
+			// Crear el mapa
+			Map<String, SaldoNombradaIntVO> saldoDisponibleMap = new HashMap<>();
 			List<BitacoraMensajeSwiftImporte> lista0 = mapa.containsKey(idCalendario) ? mapa.get(idCalendario) : new ArrayList<BitacoraMensajeSwiftImporte>();
 			for (BitacoraMensajeSwiftImporte mensajeSwift : lista0) {
 				//Segun la regla, si es euroclear y tiene fecha de pago y fecha valor, debe tener un MT 567 para poder conctinuar
@@ -245,18 +245,38 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 
 			}
 
-			BigDecimal montoConfir = new BigDecimal(0.0);
-			if (isCitiBank){
-				montoConfir = monto566.subtract(monto910.add(monto900));
-			}else{
-				montoConfir = monto566;
+
+
+           //SACAMOS EL SALDO DISPONIBLE DE t_saldo_nombrada dependiendo de su custodio y bovedad
+			ConsultaSaldoCustodiosInDTO criteriosConsulta = new ConsultaSaldoCustodiosInDTO();
+			criteriosConsulta.setBovedaDali(calendarioDerechosVO.getCustodio().getId()+"");
+			criteriosConsulta.setDivisaDali(calendarioDerechosVO.getDivisa());
+			// Consultar el mapa con las claves
+			String clave = criteriosConsulta.getBovedaDali() + criteriosConsulta.getDivisaDali();
+			SaldoNombradaIntVO saldoNombradaIntVO = null;
+			if (saldoDisponibleMap.containsKey(clave)) {
+				// Si la clave existe, sacar el valor del mapa
+				saldoNombradaIntVO = saldoDisponibleMap.get(clave);
+			} else {
+				// Si la clave no existe, ejecutar la lógica para obtener saldoNombradaIntVO
+				List<SaldoNombradaIntVO> listSaloNombrada = vSaldo_custodioSaldoDisponible(criteriosConsulta);
+				saldoNombradaIntVO = (listSaloNombrada != null && listSaloNombrada.size()>0)
+						 ? listSaloNombrada.get(0)
+						 : new SaldoNombradaIntVO();
+				// Colocar el key y el valor en el mapa
+				saldoDisponibleMap.put(clave, saldoNombradaIntVO);
 			}
 
-			BigDecimal importe = calendarioDerechosVO.getImporte();
-			boolean isPuedePagar = importe!=null? montoConfir.subtract(importe).compareTo(BigDecimal.ZERO) >= 0 : true;
+//			Vemos si hay saldo disponible y el importe para pagar
+			BigDecimal importe = calendarioDerechosVO.getImporte() !=null
+					? calendarioDerechosVO.getImporte()
+					: new BigDecimal(0);
+
+			boolean isPuedePagar = (saldoNombradaIntVO !=null && saldoNombradaIntVO.getSaldoDisponible()!=null)?
+					saldoNombradaIntVO.getSaldoDisponible().subtract(importe).compareTo(BigDecimal.ZERO) >= 0 : false;
 
 			calendarioDerechosVO.setPuedePagar(isPuedePagar);
-			calendarioDerechosVO.setMontoConfirmado(montoConfir);
+			calendarioDerechosVO.setMontoConfirmado(monto566);
 			calendarioDerechosVO.setCustodioId(calendarioDerechosVO.getCustodio().getId());
 			calendarioCalculadosVO.add(calendarioDerechosVO);
 		}
@@ -411,6 +431,47 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 		return listaVO;
 	}
 
+
+
+	private  List<SaldoNombradaIntVO> vSaldo_custodioSaldoDisponible(final ConsultaSaldoCustodiosInDTO criteriosConsulta) throws BusinessException {
+		final StringBuilder sb = new StringBuilder();
+		sb.append("SELECT " +
+				"       v.saldo_disponible AS saldoDisponible " +
+				"                                  FROM T_SALDO_NOMBRADA v  WHERE ID_CUENTA = 3999  ");
+		if(criteriosConsulta.getDivisaDali() != null  && !"-1".equalsIgnoreCase(criteriosConsulta.getDivisaDali()) ){
+			sb.append("  AND v.ID_DIVISA = :idDivisa");
+		}
+		if(criteriosConsulta.getBovedaDali() != null && !"-1".equalsIgnoreCase(criteriosConsulta.getBovedaDali() )){
+			sb.append("  AND v.ID_BOVEDA  = :idBoveda");
+		}
+		List<SaldoNombradaIntVO> resultados = (List<SaldoNombradaIntVO>) getHibernateTemplate().execute(new HibernateCallback() {
+			public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				SQLQuery query = session.createSQLQuery(sb.toString());
+				query.setCacheable(false);
+
+				if(criteriosConsulta.getDivisaDali() != null  && !"-1".equalsIgnoreCase(criteriosConsulta.getDivisaDali()) ){
+					Integer divisaId = new Integer(criteriosConsulta.getDivisaDali());
+					query.setInteger("idDivisa", divisaId);
+				}
+				if(criteriosConsulta.getBovedaDali() != null && !"-1".equalsIgnoreCase(criteriosConsulta.getBovedaDali() )){
+					Integer bovedaId = new Integer(criteriosConsulta.getBovedaDali());
+					query.setInteger("idBoveda",bovedaId);
+				}
+
+
+
+				IntegerType it = new IntegerType();
+				BigDecimalType bi = new BigDecimalType();
+				DateType dt = new DateType();
+				StringType st = new StringType();
+				query.addScalar("saldoDisponible", bi);
+				log.debug(query.toString());
+				query.setResultTransformer(Transformers.aliasToBean(SaldoNombradaIntVO.class));
+				return query.list();
+			}
+		});
+		return resultados;
+	}
 	/*	Metodo creado para proyecto Multidivisas
 	 *	Calcula el Importe de los mensajes
 	 */

@@ -22,8 +22,8 @@ public class SaldoNombradaIntVO implements Serializable{
     private BigDecimal saldoCalculado;
     private BigDecimal idSaldo;
 
-    private BigDecimal saldoDisponible;
-    private BigDecimal saldoNoDisponible;
+    private BigDecimal saldoDisponible= new BigDecimal(0);
+    private BigDecimal saldoNoDisponible = new BigDecimal(0);
 
     private BigDecimal totalSaldo = new BigDecimal(0);
     private BigDecimal totalDisponible = new BigDecimal(0);
