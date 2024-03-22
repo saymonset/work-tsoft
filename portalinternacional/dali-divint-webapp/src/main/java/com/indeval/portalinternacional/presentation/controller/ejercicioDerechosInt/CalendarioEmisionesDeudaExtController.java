@@ -887,9 +887,10 @@ public class CalendarioEmisionesDeudaExtController extends ControllerBase{
 
 
 		boolean cumpleReglaEuroclear = true;
+		//Solo evaluamos a eurclear si fecha de pago y fecha valor so iguales, de lo contraio lo dejamos pasar
 		if (this.isEuroclearAndFechaPagoValor){
 			//Si es euroclear y fecha de pago , fecha de valor son iguales, debe tener a fuerza el M57
-			 cumpleReglaEuroclear = this.isEuroclear && this.isEuroclearAndFechaPagoValor && this.hasM567;
+			 cumpleReglaEuroclear = this.isEuroclearAndFechaPagoValor && this.hasM567;
 		}
 
 		//Si es cualquier bovedad que no sea Citibank o Euroclear pasa.

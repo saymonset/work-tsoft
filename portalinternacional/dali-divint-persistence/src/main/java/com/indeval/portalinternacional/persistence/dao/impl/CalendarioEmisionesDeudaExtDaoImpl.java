@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import com.indeval.portalinternacional.middleware.servicios.dto.DivisaDTO;
 import com.indeval.portalinternacional.middleware.servicios.modelo.*;
 import com.indeval.portalinternacional.middleware.servicios.vo.*;
 import org.hibernate.*;
@@ -167,24 +166,21 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 		String sqlIn = stringBuilder.toString();
 
 		//Buscamos n bd
-		List<BitacoraMensajeSwiftImporte> bmsiLst = getBitacoraMensajeSwiftImportebyId(sqlIn.toString());
+		List<TcuentaTransitoriaVO> bmsiLst = getCuentaTransitoriabyId(sqlIn.toString());
 		if (bmsiLst == null){
 			bmsiLst = new ArrayList<>();
 		}
 
 		//agrupamos en un map los CalendarId
-		Map<Long, List<BitacoraMensajeSwiftImporte>> mapa = new HashMap<Long, List<BitacoraMensajeSwiftImporte>>();
-		for (BitacoraMensajeSwiftImporte bmsi : bmsiLst) {
+		Map<Long, List<TcuentaTransitoriaVO>> mapa = new HashMap<Long, List<TcuentaTransitoriaVO>>();
+		for (TcuentaTransitoriaVO bmsi : bmsiLst) {
 			Long idCalendario = bmsi.getIdCalendario();
 			if (!mapa.containsKey(idCalendario)) {
-				mapa.put(idCalendario, new ArrayList<BitacoraMensajeSwiftImporte>());
+				mapa.put(idCalendario, new ArrayList<TcuentaTransitoriaVO>());
 			}
 			mapa.get(idCalendario).add(bmsi);
 		}
-
-
 		for (CalendarioDerechos calendario : lista) {
-
 			//Mapeamos todos los valores del entity calendario a VO CalendarioVO
 			CalendarioDerechosVO calendarioDerechosVO = new CalendarioDerechosVO(calendario);
 			Long idCalendario = calendarioDerechosVO.getIdCalendario();
@@ -199,7 +195,6 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 			if (calendarioDerechosVO.getCustodio() != null && calendarioDerechosVO.getCustodio().getId().equals(2)){
 				calendarioDerechosVO.setEuroclear(true);
 			}
-
 			//	Solo para los custodios EUROCLE = 2 se busca que fecha valor y fecha de pago sean iguales para encntrar un MT567 que debe tener como obligatorio si las fechas son iguales
 			if (calendarioDerechosVO.getEuroclear()){
 				if (calendarioDerechosVO.getFechaPago() != null &&
@@ -208,9 +203,6 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 					calendarioDerechosVO.setEuroclearAndFechaPagoValor(true);
 				}
 			}
-
-
-
 			BigDecimal monto566 = new BigDecimal(0.0);
 			//retiro
 			BigDecimal monto900 = new BigDecimal(0.0);
@@ -218,16 +210,17 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 			BigDecimal monto910 = new BigDecimal(0.0);
 
 			// Crear el mapa
+			SaldoNombradaIntVO saldoNombradaIntVO = null;
 			Map<String, SaldoNombradaIntVO> saldoDisponibleMap = new HashMap<>();
-			List<BitacoraMensajeSwiftImporte> lista0 = mapa.containsKey(idCalendario) ? mapa.get(idCalendario) : new ArrayList<BitacoraMensajeSwiftImporte>();
-			for (BitacoraMensajeSwiftImporte mensajeSwift : lista0) {
+			List<TcuentaTransitoriaVO> lista0 = mapa.containsKey(idCalendario) ? mapa.get(idCalendario) : new ArrayList<TcuentaTransitoriaVO>();
+			for (TcuentaTransitoriaVO mensajeSwift : lista0) {
+
 				//Segun la regla, si es euroclear y tiene fecha de pago y fecha valor, debe tener un MT 567 para poder conctinuar
 				if (calendarioDerechosVO.getEuroclearAndFechaPagoValor()){
 					if ("567".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString())) {
 						calendarioDerechosVO.setHasM567(true);
 					}
 				}
-
 //				Solo para los custodios CITIBANK = 13 se busca los mt900 y mt 910
 				if (isCitiBank){
 					if ("900".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString())) {
@@ -237,35 +230,31 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 						monto910.add(mensajeSwift.getImporte() != null ?  new BigDecimal(mensajeSwift.getImporte()) : new BigDecimal(0.0));
 					}
 				}
-
 				if ("566".equalsIgnoreCase(mensajeSwift.getTipoMensaje().toString())) {
 					monto566.add(mensajeSwift.getImporte() != null ?  new BigDecimal(mensajeSwift.getImporte()) : new BigDecimal(0.0));
 				}
 
-
+				//SACAMOS EL SALDO DISPONIBLE DE t_saldo_nombrada dependiendo de su custodio y bovedad
+				ConsultaSaldoCustodiosInDTO criteriosConsulta = new ConsultaSaldoCustodiosInDTO();
+				criteriosConsulta.setBovedaDali(calendarioDerechosVO.getCustodio().getId()+"");
+				criteriosConsulta.setDivisaDali(mensajeSwift.getIdDivisa()+"");
+				// Consultar el mapa con las claves
+				String clave = criteriosConsulta.getBovedaDali() + criteriosConsulta.getDivisaDali();
+                //Pequeno cache para no ir cadarato abd a buscar el saldo dsponible de custodio y divisa
+				if (saldoDisponibleMap.containsKey(clave)) {
+					// Si la clave existe, sacar el valor del mapa
+					saldoNombradaIntVO = saldoDisponibleMap.get(clave);
+				} else {
+					// Si la clave no existe, ejecutar la lógica para obtener saldoNombradaIntVO
+					List<SaldoNombradaIntVO> listSaloNombrada = vSaldo_custodioSaldoDisponible(criteriosConsulta);
+					saldoNombradaIntVO = (listSaloNombrada != null && listSaloNombrada.size()>0)
+							? listSaloNombrada.get(0)
+							: new SaldoNombradaIntVO();
+					// Colocar el key y el valor en el mapa
+					saldoDisponibleMap.put(clave, saldoNombradaIntVO);
+				}
 			}
 
-
-
-           //SACAMOS EL SALDO DISPONIBLE DE t_saldo_nombrada dependiendo de su custodio y bovedad
-			ConsultaSaldoCustodiosInDTO criteriosConsulta = new ConsultaSaldoCustodiosInDTO();
-			criteriosConsulta.setBovedaDali(calendarioDerechosVO.getCustodio().getId()+"");
-			criteriosConsulta.setDivisaDali(calendarioDerechosVO.getDivisa());
-			// Consultar el mapa con las claves
-			String clave = criteriosConsulta.getBovedaDali() + criteriosConsulta.getDivisaDali();
-			SaldoNombradaIntVO saldoNombradaIntVO = null;
-			if (saldoDisponibleMap.containsKey(clave)) {
-				// Si la clave existe, sacar el valor del mapa
-				saldoNombradaIntVO = saldoDisponibleMap.get(clave);
-			} else {
-				// Si la clave no existe, ejecutar la lógica para obtener saldoNombradaIntVO
-				List<SaldoNombradaIntVO> listSaloNombrada = vSaldo_custodioSaldoDisponible(criteriosConsulta);
-				saldoNombradaIntVO = (listSaloNombrada != null && listSaloNombrada.size()>0)
-						 ? listSaloNombrada.get(0)
-						 : new SaldoNombradaIntVO();
-				// Colocar el key y el valor en el mapa
-				saldoDisponibleMap.put(clave, saldoNombradaIntVO);
-			}
 
 //			Vemos si hay saldo disponible y el importe para pagar
 			BigDecimal importe = calendarioDerechosVO.getImporte() !=null
@@ -476,52 +465,90 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 	 *	Calcula el Importe de los mensajes
 	 */
 
-	public List<BitacoraMensajeSwiftImporte>  getBitacoraMensajeSwiftImportebyId(final String sqlIn) {
-		final StringBuilder sb = new StringBuilder();
-		sb.append(" FROM BitacoraMensajeSwiftImporte bsi");
-		sb.append(" WHERE bsi.idCalendario IN (:ids)");
-		sb.append(" ORDER BY bsi.fecha desc, bsi.idCalendario desc ");
-		List<BitacoraMensajeSwiftImporte> retorno = null;
-		try {
-			retorno = (List<BitacoraMensajeSwiftImporte>) getHibernateTemplate().execute(new HibernateCallback() {
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(sb.toString());
-					List<Long> idList = new ArrayList<Long>();
-					String[] idArray = sqlIn.split(",");
-					for (String id : idArray) {
-						idList.add(Long.parseLong(id.trim()));
-					}
-					query.setParameterList("ids", idList);
-					return query.list();
-				}
-			});
-		}catch (Exception e) {
-			System.out.println("e.toString() = " + e.toString());
-		}
-		return retorno;
-	}
-	/*	Metodo creado para proyecto Multidivisas
-	 *	Calcula el Importe de los mensajes
-	 */public List<BitacoraMensajeSwiftImporte>  getBitacoraMensajeSwiftImportebyId(final Long id) {
-		final StringBuilder sb = new StringBuilder();
-		sb.append(" FROM BitacoraMensajeSwiftImporte bsi");
-		sb.append(" where bsi.idCalendario =:id ");
-		sb.append(" ORDER BY bsi.fecha desc, bsi.idCalendario desc ");
-		List<BitacoraMensajeSwiftImporte> retorno = null;
-		try {
-			retorno = (List<BitacoraMensajeSwiftImporte>) getHibernateTemplate().execute(new HibernateCallback() {
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(sb.toString());
-					query.setLong("id", id);
-					return query.list();
-				}
-			});
-		}catch (Exception e) {
-			System.out.println("e.toString() = " + e.toString());
-		}
+	private List<TcuentaTransitoriaVO> getCuentaTransitoriabyId(final String sqlIn) {
+		final StringBuilder query = new StringBuilder();
+		query.append("SELECT T_CUENTA_TRANSITORIA.ID_CALENDARIO_INT AS idTransaccion, ");
+		query.append( " T_CUENTA_TRANSITORIA.ID_CALENDARIO_INT AS idCalendario, ");
+		query.append( " T_CUENTA_TRANSITORIA.tipo_mensaje AS tipomensaje, ");
+		query.append( " T_CUENTA_TRANSITORIA.fecha_RECEPCION AS fecha, ");
+		query.append( " C_CUSTODIO.CODIGO_BANCO AS origen, ");
+		query.append( " CAST(T_CUENTA_TRANSITORIA.XML AS varchar(4000)) as mensaje, ");
+		query.append( " T_CUENTA_TRANSITORIA.MONTO AS importe, ");
+		query.append( " T_CUENTA_TRANSITORIA.id_divisa ");
+		query.append( " FROM T_CUENTA_TRANSITORIA ");
+		query.append( " INNER JOIN C_CUSTODIO ON ");
+		query.append( " T_CUENTA_TRANSITORIA.ID_CUSTODIO = C_CUSTODIO.ID_CUSTODIO ");
+		query.append( " WHERE T_CUENTA_TRANSITORIA.ID_CALENDARIO_INT IN (:ids)");
+		List<TcuentaTransitoriaVO> lista = (List) getHibernateTemplate().execute(new HibernateCallback() {
 
-		return retorno;
+			public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				SQLQuery sqlQuery = session.createSQLQuery(query.toString());
+				List<Long> idList = new ArrayList<Long>();
+				String[] idArray = sqlIn.split(",");
+				for (String id : idArray) {
+					idList.add(Long.parseLong(id.trim()));
+				}
+				sqlQuery.setParameterList("ids", idList);
+
+				sqlQuery.addScalar("idTransaccion", Hibernate.LONG);
+				sqlQuery.addScalar("idCalendario", Hibernate.LONG);
+				sqlQuery.addScalar("tipomensaje", Hibernate.STRING);
+				sqlQuery.addScalar("fecha", Hibernate.DATE);
+				sqlQuery.addScalar("origen", Hibernate.STRING);
+				sqlQuery.addScalar("mensaje", Hibernate.STRING);
+				sqlQuery.addScalar("importe", Hibernate.BIG_DECIMAL);
+				sqlQuery.addScalar("id_divisa", Hibernate.LONG);
+				sqlQuery.setResultTransformer(Transformers.aliasToBean(TcuentaTransitoriaVO.class));
+				return sqlQuery.list();
+			}
+		});
+
+//
+//		final StringBuilder sb = new StringBuilder();
+//		sb.append(" FROM BitacoraMensajeSwiftImporte bsi");
+//		sb.append(" WHERE bsi.idCalendario IN (:ids)");
+//		sb.append(" ORDER BY bsi.fecha desc, bsi.idCalendario desc ");
+//		List<TcuentaTransitoriaVO> retorno = null;
+//		try {
+//			retorno = (List<TcuentaTransitoriaVO>) getHibernateTemplate().execute(new HibernateCallback() {
+//				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+//					Query query = session.createQuery(sb.toString());
+//					List<Long> idList = new ArrayList<Long>();
+//					String[] idArray = sqlIn.split(",");
+//					for (String id : idArray) {
+//						idList.add(Long.parseLong(id.trim()));
+//					}
+//					query.setParameterList("ids", idList);
+//					return query.list();
+//				}
+//			});
+//		}catch (Exception e) {
+//			System.out.println("e.toString() = " + e.toString());
+//		}
+		return lista;
 	}
+//	/*	Metodo creado para proyecto Multidivisas
+//	 *	Calcula el Importe de los mensajes
+//	 */public List<BitacoraMensajeSwiftImporte>  getBitacoraMensajeSwiftImportebyId(final Long id) {
+//		final StringBuilder sb = new StringBuilder();
+//		sb.append(" FROM BitacoraMensajeSwiftImporte bsi");
+//		sb.append(" where bsi.idCalendario =:id ");
+//		sb.append(" ORDER BY bsi.fecha desc, bsi.idCalendario desc ");
+//		List<BitacoraMensajeSwiftImporte> retorno = null;
+//		try {
+//			retorno = (List<BitacoraMensajeSwiftImporte>) getHibernateTemplate().execute(new HibernateCallback() {
+//				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+//					Query query = session.createQuery(sb.toString());
+//					query.setLong("id", id);
+//					return query.list();
+//				}
+//			});
+//		}catch (Exception e) {
+//			System.out.println("e.toString() = " + e.toString());
+//		}
+//
+//		return retorno;
+//	}
 
 
 
