@@ -469,12 +469,12 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 		final StringBuilder query = new StringBuilder();
 		query.append("SELECT T_CUENTA_TRANSITORIA.ID_CALENDARIO_INT AS idTransaccion, ");
 		query.append( " T_CUENTA_TRANSITORIA.ID_CALENDARIO_INT AS idCalendario, ");
-		query.append( " T_CUENTA_TRANSITORIA.tipo_mensaje AS tipomensaje, ");
+		query.append( " T_CUENTA_TRANSITORIA.tipo_mensaje AS tipoMensaje, ");
 		query.append( " T_CUENTA_TRANSITORIA.fecha_RECEPCION AS fecha, ");
 		query.append( " C_CUSTODIO.CODIGO_BANCO AS origen, ");
 		query.append( " CAST(T_CUENTA_TRANSITORIA.XML AS varchar(4000)) as mensaje, ");
 		query.append( " T_CUENTA_TRANSITORIA.MONTO AS importe, ");
-		query.append( " T_CUENTA_TRANSITORIA.id_divisa ");
+		query.append( " T_CUENTA_TRANSITORIA.id_divisa as idDivisa ");
 		query.append( " FROM T_CUENTA_TRANSITORIA ");
 		query.append( " INNER JOIN C_CUSTODIO ON ");
 		query.append( " T_CUENTA_TRANSITORIA.ID_CUSTODIO = C_CUSTODIO.ID_CUSTODIO ");
@@ -492,12 +492,12 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 
 				sqlQuery.addScalar("idTransaccion", Hibernate.LONG);
 				sqlQuery.addScalar("idCalendario", Hibernate.LONG);
-				sqlQuery.addScalar("tipomensaje", Hibernate.STRING);
+				sqlQuery.addScalar("tipoMensaje", Hibernate.STRING);
 				sqlQuery.addScalar("fecha", Hibernate.DATE);
 				sqlQuery.addScalar("origen", Hibernate.STRING);
 				sqlQuery.addScalar("mensaje", Hibernate.STRING);
-				sqlQuery.addScalar("importe", Hibernate.BIG_DECIMAL);
-				sqlQuery.addScalar("id_divisa", Hibernate.LONG);
+				sqlQuery.addScalar("importe", Hibernate.DOUBLE);
+				sqlQuery.addScalar("idDivisa", Hibernate.LONG);
 				sqlQuery.setResultTransformer(Transformers.aliasToBean(TcuentaTransitoriaVO.class));
 				return sqlQuery.list();
 			}
