@@ -1,2 +1,0 @@
-# Desinstalar los componentes (1 de 2)
-undeploy dali_services.ear --server-groups=grupo-portal-dali

@@ -1,3 +1,0 @@
-usuario,password,accion,mensaje
-"",pruebas1,USUARIO_VACIO,"Los campos Usuario, Contraseña y Captcha son requeridos."
-02061,,PASSWORD_VACIO,"Los campos Usuario, Contraseña y Captcha son requeridos."

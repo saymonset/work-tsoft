@@ -1,5 +1,0 @@
-idFolioTraspasante,tipoCuentaTraspasante,idFolioReceptor,tipoCuentaReceptor,cantidadOperada,recepcion,tipoApertura,mensajeEsperado
-01003,TERC_NOM,01006,TERC_NOM,10,false,ACT," La informacion se ha guardado y se ha generado el Folio"
-01003,TERC_NOM,01006,TERC_NOM,10,true,ACT," La informacion se ha guardado y se ha generado el Folio"
-01003,TERC_NOM,01006,TERC_NOM,10,false,ACR," La informacion se ha guardado y se ha generado el Folio"
-01003,TERC_NOM,01006,TERC_NOM,10,true,ACR," La informacion se ha guardado y se ha generado el Folio"
