@@ -1,3 +1,0 @@
-#!/bin/bash
-${JBOSS_HOME}/bin/jboss-cli.sh --connect --controller=${HOST_DEPLOY}:${PORT_DEPLOY} --user=${USER_DEPLOY} --password=${PASSWORD_DEPLOY} --command="deploy dali_config/target/dali-EAP-${jboss.version}-${project.version}.cli --script=undeploy-1de2.scr"
-${JBOSS_HOME}/bin/jboss-cli.sh --connect --controller=${HOST_DEPLOY}:${PORT_DEPLOY} --user=${USER_DEPLOY} --password=${PASSWORD_DEPLOY} --command="deploy dali_config/target/dali-EAP-${jboss.version}-${project.version}.cli --script=undeploy-2de2.scr"

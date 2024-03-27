@@ -1,4 +1,0 @@
-<jboss-web>
-    <context-root>/dali</context-root>
-    <security-domain>sec-login</security-domain>
-</jboss-web>

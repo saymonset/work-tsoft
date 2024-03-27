@@ -1,2 +1,0 @@
-# Despliegue de componentes (2 de 2)
-deploy dali.war --server-groups=grupo-portal-dali
