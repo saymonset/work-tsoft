@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="ejb-jar" name="dali-divint-seguridad-captcha_EJB:ejb">
+    <output-path>$PROJECT_DIR$/dali-divint-seguridad-captcha_EJB/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>dali-divint-seguridad-captcha_EJB</module>
+        <packaging>ejb</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="dali-divint-seguridad-captcha_EJB-5.10.7-SNAPSHOT.jar">
+      <element id="artifact" artifact-name="dali-divint-seguridad-captcha_EJB:ejb exploded" />
+    </root>
+  </artifact>
+</component>

@@ -26,6 +26,11 @@
     <orderEntry type="library" name="Maven: javax.xml.soap:saaj-api:1.3" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.3" level="project" />
     <orderEntry type="library" name="Maven: com.bursatec:seguridad-ejb:2.2.12" level="project" />
+    <orderEntry type="library" name="Maven: com.bursatec:seguridad-api:2.2.12" level="project" />
+    <orderEntry type="library" name="Maven: com.bursatec:seguridad-ara:2.2.12" level="project" />
+    <orderEntry type="library" name="Maven: com.bursatec:seguridad-pki:2.2.12" level="project" />
+    <orderEntry type="library" name="Maven: commons-ssl:commons-ssl:0.3.5" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk15:1.45" level="project" />
     <orderEntry type="library" name="Maven: com.bursatec:seguridad-modelo:2.2.12" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.ejb:ejb-api:3.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.0" level="project" />

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.springmodules:spring-modules-jakarta-commons:0.8a">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/OneDrive/.m2/repository/org/springmodules/spring-modules-jakarta-commons/0.8a/spring-modules-jakarta-commons-0.8a.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/OneDrive/.m2/repository/org/springmodules/spring-modules-jakarta-commons/0.8a/spring-modules-jakarta-commons-0.8a-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/OneDrive/.m2/repository/org/springmodules/spring-modules-jakarta-commons/0.8a/spring-modules-jakarta-commons-0.8a-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

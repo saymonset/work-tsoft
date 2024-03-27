@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.ibm.icu:icu4j:3.4.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/OneDrive/.m2/repository/com/ibm/icu/icu4j/3.4.4/icu4j-3.4.4.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/OneDrive/.m2/repository/com/ibm/icu/icu4j/3.4.4/icu4j-3.4.4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/OneDrive/.m2/repository/com/ibm/icu/icu4j/3.4.4/icu4j-3.4.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

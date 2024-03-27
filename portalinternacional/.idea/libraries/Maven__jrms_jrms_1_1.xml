@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: jrms:jrms:1.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/OneDrive/.m2/repository/jrms/jrms/1.1/jrms-1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/OneDrive/.m2/repository/jrms/jrms/1.1/jrms-1.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/OneDrive/.m2/repository/jrms/jrms/1.1/jrms-1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

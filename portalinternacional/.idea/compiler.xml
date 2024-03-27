@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="dali-divint-webapp" />
+        <module name="dali-divint-serviciosimpl" />
+        <module name="dali-divint-serviciosEjb" />
+        <module name="dali-divint-vo" />
+        <module name="dali-divint-servicios" />
+        <module name="dali-divint-ear" />
+        <module name="dali-divint-seguridad-tags" />
+        <module name="dali-divint-seguridad-captcha_EJB" />
+        <module name="dali-divint-moi-receiver-ear" />
+        <module name="dali-divint-ws" />
+        <module name="dali-divint-receiverEjb" />
+        <module name="dali-divint-ws-servicios" />
+        <module name="dali-divint-receiver-ear" />
+        <module name="dali-divint-persistence" />
+        <module name="dali-divint-moi-receiverEjb" />
+        <module name="dali-divint-jsf-componentes" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="dali-divint-config" target="1.7" />
+      <module name="dali-divint-ear" target="1.7" />
+      <module name="dali-divint-jsf-componentes" target="1.7" />
+      <module name="dali-divint-moi-receiver-ear" target="1.7" />
+      <module name="dali-divint-moi-receiverEjb" target="1.7" />
+      <module name="dali-divint-persistence" target="1.7" />
+      <module name="dali-divint-receiver-ear" target="1.7" />
+      <module name="dali-divint-receiverEjb" target="1.7" />
+      <module name="dali-divint-seguridad-captcha_EJB" target="1.7" />
+      <module name="dali-divint-seguridad-tags" target="1.7" />
+      <module name="dali-divint-servicios" target="1.7" />
+      <module name="dali-divint-serviciosEjb" target="1.7" />
+      <module name="dali-divint-serviciosimpl" target="1.7" />
+      <module name="dali-divint-vo" target="1.7" />
+      <module name="dali-divint-webapp" target="1.7" />
+      <module name="dali-divint-ws" target="1.7" />
+      <module name="dali-divint-ws-servicios" target="1.7" />
+      <module name="portalinternacional" target="1.7" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

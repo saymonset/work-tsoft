@@ -1,0 +1,19 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-ejb" name="dali-divint-receiverEjb:ejb exploded">
+    <output-path>$PROJECT_DIR$/dali-divint-receiverEjb/target/dali-divint-receiverEjb-5.10.7-SNAPSHOT</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>dali-divint-receiverEjb</module>
+        <packaging>ejb</packaging>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="dali-divint-receiverEjb/ejb/EJB" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/dali-divint-receiverEjb/target/dali-divint-receiverEjb-5.10.7-SNAPSHOT/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="dali-divint-receiverEjb" />
+    </root>
+  </artifact>
+</component>

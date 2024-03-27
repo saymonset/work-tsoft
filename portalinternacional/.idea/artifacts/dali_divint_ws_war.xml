@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="dali-divint-ws:war">
+    <output-path>$PROJECT_DIR$/dali-divint-ws/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>dali-divint-ws</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="DerechosCapitalesWS.war">
+      <element id="artifact" artifact-name="dali-divint-ws:war exploded" />
+    </root>
+  </artifact>
+</component>

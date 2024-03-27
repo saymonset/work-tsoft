@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file url="file://$PROJECT_DIR$/dali-divint-webapp/overlays" />
+    <file type="ejb" url="file://$PROJECT_DIR$/dali-divint-moi-receiverEjb" />
+    <file type="ejb" url="file://$PROJECT_DIR$/dali-divint-receiverEjb" />
+    <file type="ejb" url="file://$PROJECT_DIR$/dali-divint-seguridad-captcha_EJB" />
+    <file type="ejb" url="file://$PROJECT_DIR$/dali-divint-serviciosEjb" />
+    <file type="javaeeApplication" url="file://$PROJECT_DIR$/dali-divint-ear" />
+    <file type="javaeeApplication" url="file://$PROJECT_DIR$/dali-divint-moi-receiver-ear" />
+    <file type="javaeeApplication" url="file://$PROJECT_DIR$/dali-divint-receiver-ear" />
+    <file type="web" url="file://$PROJECT_DIR$/dali-divint-webapp" />
+    <file type="web" url="file://$PROJECT_DIR$/dali-divint-ws" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/classes" />
+  </component>
+</project>

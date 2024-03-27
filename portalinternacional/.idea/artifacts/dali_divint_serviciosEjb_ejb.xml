@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="ejb-jar" name="dali-divint-serviciosEjb:ejb">
+    <output-path>$PROJECT_DIR$/dali-divint-serviciosEjb/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>dali-divint-serviciosEjb</module>
+        <packaging>ejb</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="dali-divint-serviciosEjb-5.10.7-SNAPSHOT.jar">
+      <element id="artifact" artifact-name="dali-divint-serviciosEjb:ejb exploded" />
+    </root>
+  </artifact>
+</component>

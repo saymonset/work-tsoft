@@ -10,6 +10,13 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: com.bursatec:EjerciciosBeans:3.4.11" level="project" />
+    <orderEntry type="library" name="Maven: com.bursatec:Bitacora:2.0.5" level="project" />
+    <orderEntry type="library" name="Maven: com.bursatec:UtileriasMavNegocio:2.0.4" level="project" />
+    <orderEntry type="library" name="Maven: com.bursatec:UtileriasMavBeans:2.0.4" level="project" />
+    <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.7.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.3" level="project" />
+    <orderEntry type="library" name="Maven: com.thoughtworks.xstream:xstream:1.2.2" level="project" />
+    <orderEntry type="library" name="Maven: xpp3:xpp3_min:1.1.3.4.O" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.36" level="project" />
   </component>
 </module>

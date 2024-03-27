@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="ejb-jar" name="dali-divint-moi-receiverEjb:ejb">
+    <output-path>$PROJECT_DIR$/dali-divint-moi-receiverEjb/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>dali-divint-moi-receiverEjb</module>
+        <packaging>ejb</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="dali-divint-moi-receiverEjb-5.10.7-SNAPSHOT.jar">
+      <element id="artifact" artifact-name="dali-divint-moi-receiverEjb:ejb exploded" />
+    </root>
+  </artifact>
+</component>

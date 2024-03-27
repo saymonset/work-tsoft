@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="s3Gu4dM1n">
+  <database-model serializer="dbm" dbms="ORACLE" family-id="ORACLE" format-version="4.43">
+    <root id="1">
+      <IntrospectionLevel>3</IntrospectionLevel>
+      <ServerVersion>12.2.0.1.0</ServerVersion>
+    </root>
+    <schema id="2" parent="1" name="SYS"/>
+    <schema id="3" parent="1" name="SYSTEM"/>
+    <schema id="4" parent="1" name="OUTLN"/>
+    <schema id="5" parent="1" name="GSMADMIN_INTERNAL"/>
+    <schema id="6" parent="1" name="REMOTE_SCHEDULER_AGENT"/>
+    <schema id="7" parent="1" name="DBSFWUSER"/>
+    <schema id="8" parent="1" name="ORACLE_OCM"/>
+    <schema id="9" parent="1" name="DBSNMP"/>
+    <schema id="10" parent="1" name="APPQOSSYS"/>
+    <schema id="11" parent="1" name="VALPREE_ADMIN"/>
+    <schema id="12" parent="1" name="XDB"/>
+    <schema id="13" parent="1" name="WMSYS"/>
+    <schema id="14" parent="1" name="VALPREE_REP"/>
+    <schema id="15" parent="1" name="VALPREE_DEV"/>
+    <schema id="16" parent="1" name="VALPREE_APP"/>
+    <schema id="17" parent="1" name="SEGU_REP"/>
+    <schema id="18" parent="1" name="SAVAR_REP"/>
+    <schema id="19" parent="1" name="MARC_REP"/>
+    <schema id="20" parent="1" name="MARC_APP"/>
+    <schema id="21" parent="1" name="MARC_ADMIN"/>
+    <schema id="22" parent="1" name="INGRESOS_ADMIN"/>
+    <schema id="23" parent="1" name="FASTWORK"/>
+    <schema id="24" parent="1" name="APP_SAVAR"/>
+    <schema id="25" parent="1" name="APP_COMP"/>
+    <schema id="26" parent="1" name="ADMIN_VALPREFV"/>
+    <schema id="27" parent="1" name="ADMIN_SEGU">
+      <Current>1</Current>
+    </schema>
+    <schema id="28" parent="1" name="ADMIN_SAVAR"/>
+    <schema id="29" parent="1" name="ADMIN_DEROTC"/>
+    <schema id="30" parent="1" name="MIC_ADMIN"/>
+    <schema id="31" parent="1" name="TEST_USR"/>
+    <schema id="32" parent="1" name="ADMIN_SIMOTOR"/>
+    <schema id="33" parent="1" name="SDOTC_ADMIN"/>
+    <schema id="34" parent="1" name="SDOTC_APP"/>
+    <schema id="35" parent="1" name="SDOTC_DEV"/>
+    <schema id="36" parent="1" name="INDEVAL_CONSULTA"/>
+    <schema id="37" parent="1" name="CCV_REP"/>
+    <schema id="38" parent="1" name="ADMIN_SPEI"/>
+    <schema id="39" parent="1" name="SEGU_SSL"/>
+    <schema id="40" parent="1" name="EXTRACT_SSL"/>
+    <schema id="41" parent="1" name="ADMINSEGU_7"/>
+    <schema id="42" parent="1" name="INCOSMS_DALI"/>
+    <schema id="43" parent="1" name="ACTIVITI_ADMIN"/>
+    <schema id="44" parent="1" name="ACTIVITI_APP"/>
+    <schema id="45" parent="1" name="LGALVAN_AUX"/>
+    <schema id="46" parent="1" name="INVEN_ADMIN"/>
+    <schema id="47" parent="1" name="INVEN_APP"/>
+    <schema id="48" parent="1" name="AMHN_APP"/>
+    <schema id="49" parent="1" name="ACTIVITY_DALI_ADMIN"/>
+    <schema id="50" parent="1" name="ACTIVITY_DALI_APP"/>
+    <schema id="51" parent="1" name="VALMER"/>
+    <schema id="52" parent="1" name="SSO_ADMIN"/>
+    <schema id="53" parent="1" name="SMS_ADMIN"/>
+    <schema id="54" parent="1" name="ADMINJIRA"/>
+    <schema id="55" parent="1" name="CVLIPEPL_ADMIN"/>
+    <schema id="56" parent="1" name="INCOME_DALI"/>
+    <schema id="57" parent="1" name="DALI_ADMIN"/>
+    <schema id="58" parent="1" name="APP_VALPREFV"/>
+    <schema id="59" parent="1" name="ADMIN_SEGU_TMP"/>
+    <schema id="60" parent="1" name="USR_VULNERA"/>
+    <schema id="61" parent="1" name="EXTRACT_ADMIN"/>
+    <schema id="62" parent="1" name="INCOME_ADMIN"/>
+    <schema id="63" parent="1" name="INCOME_APP"/>
+    <schema id="64" parent="1" name="INCOME_REP"/>
+    <schema id="65" parent="1" name="EXTRACT_APP"/>
+    <schema id="66" parent="1" name="EXTRACT_REP"/>
+    <schema id="67" parent="1" name="RPS_ADMIN"/>
+    <schema id="68" parent="1" name="RPS_APP"/>
+    <schema id="69" parent="1" name="RPS_ADMIN_1"/>
+    <schema id="70" parent="1" name="RPS_APP_1"/>
+    <schema id="71" parent="1" name="SONARQUBE_ADMIN"/>
+    <schema id="72" parent="1" name="INCOME_SSL"/>
+    <schema id="73" parent="1" name="AMHN_SSL"/>
+    <schema id="74" parent="1" name="ADMIN_MKDATA"/>
+    <schema id="75" parent="1" name="ACTIVITI_DALI_ADMIN"/>
+  </database-model>
+</dataSource>

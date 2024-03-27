@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="ear" name="dali-divint-ear:ear">
+    <output-path>$PROJECT_DIR$/dali-divint-ear/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>dali-divint-ear</module>
+        <packaging>ear</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="dali-divint-ear-5.10.7-SNAPSHOT.ear">
+      <element id="artifact" artifact-name="dali-divint-ear:ear exploded" />
+    </root>
+  </artifact>
+</component>

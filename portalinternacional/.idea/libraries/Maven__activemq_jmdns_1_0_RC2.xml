@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: activemq:jmdns:1.0-RC2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/OneDrive/.m2/repository/activemq/jmdns/1.0-RC2/jmdns-1.0-RC2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/OneDrive/.m2/repository/activemq/jmdns/1.0-RC2/jmdns-1.0-RC2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/OneDrive/.m2/repository/activemq/jmdns/1.0-RC2/jmdns-1.0-RC2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

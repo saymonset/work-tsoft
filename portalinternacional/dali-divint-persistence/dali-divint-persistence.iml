@@ -30,6 +30,23 @@
     <orderEntry type="library" name="Maven: org.springframework:spring:2.5.3" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.3" level="project" />
     <orderEntry type="library" name="Maven: com.indeval.protocolofinanciero.api:protocolofinancieroAPI:7.0.4" level="project" />
+    <orderEntry type="library" name="Maven: ch.qos.logback:logback-classic:1.2.11" level="project" />
+    <orderEntry type="library" name="Maven: ch.qos.logback:logback-core:1.2.11" level="project" />
+    <orderEntry type="library" name="Maven: com.indeval.seguridad:seguridad-sonicClient:3.1.11" level="project" />
+    <orderEntry type="library" name="Maven: com.indeval.seguridad:seguridad-pki:3.1.11" level="project" />
+    <orderEntry type="library" name="Maven: ca.juliusdavies:not-yet-commons-ssl:0.3.11" level="project" />
+    <orderEntry type="library" name="Maven: com.indeval.protocolofinancieroapi-C24:protocolofinancieroapi-C24:4.11" level="project" />
+    <orderEntry type="library" name="Maven: biz.c24:c24-io-api:4.12.21" level="project" />
+    <orderEntry type="library" name="Maven: biz.c24:biz.c24.io.swift2005.datadictionary:2.0" level="project" />
+    <orderEntry type="library" name="Maven: biz.c24:biz.c24.io.swift2005.mtnnn:2.0" level="project" />
+    <orderEntry type="library" name="Maven: biz.c24:biz.c24.io.swift2005.mt1nn:2.0" level="project" />
+    <orderEntry type="library" name="Maven: biz.c24:biz.c24.io.swift2005.mt3nn:2.0" level="project" />
+    <orderEntry type="library" name="Maven: biz.c24:biz.c24.io.swift2005.mt2nn:2.0" level="project" />
+    <orderEntry type="library" name="Maven: biz.c24:biz.c24.io.swift2005.mt5nn:2.0" level="project" />
+    <orderEntry type="library" name="Maven: biz.c24:biz.c24.io.swift2005.mt9nn:2.0" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.saxon:Saxon-EE:9.5.1.9" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.13" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.13" level="project" />
     <orderEntry type="library" name="Maven: org.jasypt:jasypt:1.5" level="project" />
     <orderEntry type="library" name="Maven: com.ibm.icu:icu4j:3.4.4" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-commons-annotations:3.0.0.ga" level="project" />

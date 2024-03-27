@@ -1,0 +1,19 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-ejb" name="dali-divint-serviciosEjb:ejb exploded">
+    <output-path>$PROJECT_DIR$/dali-divint-serviciosEjb/target/dali-divint-serviciosEjb-5.10.7-SNAPSHOT</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>dali-divint-serviciosEjb</module>
+        <packaging>ejb</packaging>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="dali-divint-serviciosEjb/ejb/EJB" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/dali-divint-serviciosEjb/target/dali-divint-serviciosEjb-5.10.7-SNAPSHOT/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="dali-divint-serviciosEjb" />
+    </root>
+  </artifact>
+</component>

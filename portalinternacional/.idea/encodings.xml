@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/dali-divint-config/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-config/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-ear/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-ear/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-jsf-componentes/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-jsf-componentes/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-moi-receiver-ear/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-moi-receiver-ear/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-moi-receiverEjb/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-moi-receiverEjb/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-moi-receiverEjb/target/generated-sources/ejbgen" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-persistence/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-persistence/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-receiver-ear/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-receiver-ear/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-receiverEjb/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-receiverEjb/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-seguridad-captcha_EJB/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-seguridad-captcha_EJB/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-seguridad-tags/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-seguridad-tags/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-servicios/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-servicios/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-serviciosEjb/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-serviciosEjb/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-serviciosimpl/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-serviciosimpl/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-vo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-vo/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-webapp/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-webapp/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-ws-servicios/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-ws-servicios/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-ws/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dali-divint-ws/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

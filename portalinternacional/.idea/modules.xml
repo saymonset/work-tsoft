@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/dali-divint-config/dali-divint-config.iml" filepath="$PROJECT_DIR$/dali-divint-config/dali-divint-config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dali-divint-ear/dali-divint-ear.iml" filepath="$PROJECT_DIR$/dali-divint-ear/dali-divint-ear.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dali-divint-jsf-componentes/dali-divint-jsf-componentes.iml" filepath="$PROJECT_DIR$/dali-divint-jsf-componentes/dali-divint-jsf-componentes.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dali-divint-moi-receiver-ear/dali-divint-moi-receiver-ear.iml" filepath="$PROJECT_DIR$/dali-divint-moi-receiver-ear/dali-divint-moi-receiver-ear.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dali-divint-moi-receiverEjb/dali-divint-moi-receiverEjb.iml" filepath="$PROJECT_DIR$/dali-divint-moi-receiverEjb/dali-divint-moi-receiverEjb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dali-divint-persistence/dali-divint-persistence.iml" filepath="$PROJECT_DIR$/dali-divint-persistence/dali-divint-persistence.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dali-divint-receiver-ear/dali-divint-receiver-ear.iml" filepath="$PROJECT_DIR$/dali-divint-receiver-ear/dali-divint-receiver-ear.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dali-divint-receiverEjb/dali-divint-receiverEjb.iml" filepath="$PROJECT_DIR$/dali-divint-receiverEjb/dali-divint-receiverEjb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dali-divint-seguridad-captcha_EJB/dali-divint-seguridad-captcha_EJB.iml" filepath="$PROJECT_DIR$/dali-divint-seguridad-captcha_EJB/dali-divint-seguridad-captcha_EJB.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dali-divint-seguridad-tags/dali-divint-seguridad-tags.iml" filepath="$PROJECT_DIR$/dali-divint-seguridad-tags/dali-divint-seguridad-tags.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dali-divint-servicios/dali-divint-servicios.iml" filepath="$PROJECT_DIR$/dali-divint-servicios/dali-divint-servicios.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dali-divint-serviciosEjb/dali-divint-serviciosEjb.iml" filepath="$PROJECT_DIR$/dali-divint-serviciosEjb/dali-divint-serviciosEjb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dali-divint-serviciosimpl/dali-divint-serviciosimpl.iml" filepath="$PROJECT_DIR$/dali-divint-serviciosimpl/dali-divint-serviciosimpl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dali-divint-vo/dali-divint-vo.iml" filepath="$PROJECT_DIR$/dali-divint-vo/dali-divint-vo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dali-divint-webapp/dali-divint-webapp.iml" filepath="$PROJECT_DIR$/dali-divint-webapp/dali-divint-webapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dali-divint-ws/dali-divint-ws.iml" filepath="$PROJECT_DIR$/dali-divint-ws/dali-divint-ws.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dali-divint-ws-servicios/dali-divint-ws-servicios.iml" filepath="$PROJECT_DIR$/dali-divint-ws-servicios/dali-divint-ws-servicios.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/portalinternacional.iml" filepath="$PROJECT_DIR$/.idea/portalinternacional.iml" />
+    </modules>
+  </component>
+</project>
