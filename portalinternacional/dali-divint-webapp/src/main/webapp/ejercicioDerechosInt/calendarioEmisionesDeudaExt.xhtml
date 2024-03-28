@@ -860,13 +860,28 @@
 											</td></tr>
 											<tr><td>
 												<a4j:commandButton id="botonPreliquidar" title="Preliquidar"
-														action="#{calendarioEmisionesDeudaExtBean.preliquidaDerechos}"														
+														action="#{calendarioEmisionesDeudaExtBean.preliquidaDerechos}"
+																   actionListener="#{calendarioEmisionesDeudaExtBean.preliquidaDerechosEvent}"
 														image="/images/accept.png" 
 														onclick="lockBotones('botonPreliquidar');agregaPreliquida('chk_preliquida_#{derecho.idCalendario}' , true);if(!validarAccion('preliquidar')){unlockBotones('botonPreliquidar');return false;}"
 														reRender="resultados,containerResultados,tablaResultados,panelResumen"
 														limitToList="true"
 														oncomplete="limpiar('chk_preliquida_#{derecho.idCalendario}');unlockBotones('botonPreliquidar');refresco();window.scrollTo(0,0);"
 														>
+													<f:param id="idCalendarioID" name="idCalendarioID"
+															 value="#{derecho.idCalendario}" />
+													<f:param id="montoConfirmadoID" name="montoConfirmadoID"
+															 value="#{derecho.montoConfirmado}" />
+													<f:param id="citiBanID" name="citiBanID"
+															 value="#{derecho.citiBank}" />
+													<f:param id="euroclearAndFechaPagoValorID" name="euroclearAndFechaPagoValorID"
+															 value="#{derecho.euroclearAndFechaPagoValor}" />
+													<f:param id="hasM567ID" name="hasM567ID"
+															 value="#{derecho.hasM567}" />
+													<f:param id="puedePagarID" name="puedePagarID"
+															 value="#{derecho.puedePagar}" />
+													<f:param id="euroclearID" name="euroclearID"
+															 value="#{derecho.euroclear}" />
 													</a4j:commandButton>
 											</td></tr></table>
 									</h:panelGroup>
@@ -891,20 +906,7 @@
 													limitToList="true"
 													oncomplete="limpiar('chk_liquida_#{derecho.idCalendario}');unlockBotones('botonLiquidar');refrescoLiquidar();window.scrollTo(0,0);"
 													>
-												<f:param id="idCalendarioID" name="idCalendarioID"
-														 value="#{derecho.idCalendario}" />
-												<f:param id="montoConfirmadoID" name="montoConfirmadoID"
-														 value="#{derecho.montoConfirmado}" />
-												<f:param id="citiBanID" name="citiBanID"
-														 value="#{derecho.citiBank}" />
-												<f:param id="euroclearAndFechaPagoValorID" name="euroclearAndFechaPagoValorID"
-														 value="#{derecho.euroclearAndFechaPagoValor}" />
-												<f:param id="hasM567ID" name="hasM567ID"
-														 value="#{derecho.hasM567}" />
-												<f:param id="puedePagarID" name="puedePagarID"
-														 value="#{derecho.puedePagar}" />
-												<f:param id="euroclearID" name="euroclearID"
-														 value="#{derecho.euroclear}" />
+
 											</a4j:commandButton>
 										</td></tr></table>
 									</h:panelGroup>	

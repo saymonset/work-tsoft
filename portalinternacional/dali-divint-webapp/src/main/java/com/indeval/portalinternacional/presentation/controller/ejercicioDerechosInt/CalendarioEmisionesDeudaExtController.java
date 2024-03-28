@@ -828,18 +828,11 @@ public class CalendarioEmisionesDeudaExtController extends ControllerBase{
 		return null;
 	}
 	public String preliquidaDerechos(){
-		Set<Long> ids = getIdsModificar("daliForm:calIdDerechoPreliquidar");
-		log.debug("ids "+ids);
-		Integer regactualizados=divisionInternacionalService.actualizarEstadosDerechoInt(ids, Constantes.CALENDARIO_DERECHOS_PRELIQUIDADO, isUserInRoll("INT_CAL_INDEVAL_SU"));
-		return null;
-	}
-	public String liquidaDerechos(){
 
 		return null;
 	}
 
-	public void liquidaDerechosEvent(ActionEvent event) {
-
+	public void preliquidaDerechosEvent(ActionEvent event) {
 
 		UIParameter idCalendarioIDC = (UIParameter) event.getComponent()
 				.findComponent("idCalendarioID");
@@ -853,7 +846,7 @@ public class CalendarioEmisionesDeudaExtController extends ControllerBase{
 				.findComponent("hasM567ID");
 		UIParameter puedePagarID = (UIParameter) event.getComponent()
 				.findComponent("puedePagarID");
-	UIParameter euroclearID = (UIParameter) event.getComponent()
+		UIParameter euroclearID = (UIParameter) event.getComponent()
 				.findComponent("euroclearID");
 
 
@@ -882,15 +875,14 @@ public class CalendarioEmisionesDeudaExtController extends ControllerBase{
 
 
 		this.isLiquidando = true;
-		Set<Long> ids = getIdsModificar("daliForm:calIdDerechoLiquidar");
+		Set<Long> ids = getIdsModificar("daliForm:calIdDerechoPreliquidar");
 		log.debug("ids "+ids);
-
 
 		boolean cumpleReglaEuroclear = true;
 		//Solo evaluamos a eurclear si fecha de pago y fecha valor so iguales, de lo contraio lo dejamos pasar
 		if (this.isEuroclearAndFechaPagoValor){
 			//Si es euroclear y fecha de pago , fecha de valor son iguales, debe tener a fuerza el M57
-			 cumpleReglaEuroclear = this.isEuroclearAndFechaPagoValor && this.hasM567;
+			cumpleReglaEuroclear = this.isEuroclearAndFechaPagoValor && this.hasM567;
 		}
 
 		//Si es cualquier bovedad que no sea Citibank o Euroclear pasa.
@@ -898,9 +890,21 @@ public class CalendarioEmisionesDeudaExtController extends ControllerBase{
 		if ((!this.isCitiBank && !(this.isEuroclear) || (cumpleReglaEuroclear) )){
 			if (this.isPuedePagar){
 				//Paso los filros anteriores, liquidamos
-				Integer regactualizados=divisionInternacionalService.actualizarEstadosDerechoInt(ids, Constantes.CALENDARIO_DERECHOS_LIQUIDADO, isUserInRoll("INT_CAL_INDEVAL_SU"));
+				Integer regactualizados=divisionInternacionalService.actualizarEstadosDerechoInt(ids, Constantes.CALENDARIO_DERECHOS_PRELIQUIDADO, isUserInRoll("INT_CAL_INDEVAL_SU"));
+
 			}
 		}
+
+
+	}
+	public String liquidaDerechos(){
+		Set<Long> ids = getIdsModificar("daliForm:calIdDerechoLiquidar");
+		log.debug("ids "+ids);
+		Integer regactualizados=divisionInternacionalService.actualizarEstadosDerechoInt(ids, Constantes.CALENDARIO_DERECHOS_LIQUIDADO, isUserInRoll("INT_CAL_INDEVAL_SU"));
+		return null;
+	}
+
+	public void liquidaDerechosEvent(ActionEvent event) {
 
 
 

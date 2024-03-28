@@ -257,12 +257,14 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 
 
 //			Vemos si hay saldo disponible y el importe para pagar
-			BigDecimal importe = calendarioDerechosVO.getImporte() !=null
-					? calendarioDerechosVO.getImporte()
+			BigDecimal importePTSA = calendarioDerechosVO.getImportePTSA() !=null
+					? calendarioDerechosVO.getImportePTSA()
 					: new BigDecimal(0);
 
-			boolean isPuedePagar = (saldoNombradaIntVO !=null && saldoNombradaIntVO.getSaldoDisponible()!=null)?
-					saldoNombradaIntVO.getSaldoDisponible().subtract(importe).compareTo(BigDecimal.ZERO) >= 0 : false;
+//			boolean isPuedePagar = (saldoNombradaIntVO !=null && saldoNombradaIntVO.getSaldoDisponible()!=null)?
+//					saldoNombradaIntVO.getSaldoDisponible().subtract(importe).compareTo(BigDecimal.ZERO) >= 0 : false;
+	boolean isPuedePagar = (saldoNombradaIntVO !=null && saldoNombradaIntVO.getSaldoDisponible()!=null)?
+					saldoNombradaIntVO.getSaldoDisponible().subtract(importePTSA).compareTo(BigDecimal.ZERO) >= 0 : false;
 
 			calendarioDerechosVO.setPuedePagar(isPuedePagar);
 			calendarioDerechosVO.setMontoConfirmado(monto566);
@@ -478,7 +480,7 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 		query.append( " FROM T_CUENTA_TRANSITORIA ");
 		query.append( " INNER JOIN C_CUSTODIO ON ");
 		query.append( " T_CUENTA_TRANSITORIA.ID_CUSTODIO = C_CUSTODIO.ID_CUSTODIO ");
-		query.append( " WHERE T_CUENTA_TRANSITORIA.ID_CALENDARIO_INT IN (:ids)");
+		query.append( " WHERE T_CUENTA_TRANSITORIA.ESTADO_OPERACION = 1 AND T_CUENTA_TRANSITORIA.ID_CALENDARIO_INT IN (:ids)");
 		List<TcuentaTransitoriaVO> lista = (List) getHibernateTemplate().execute(new HibernateCallback() {
 
 			public Object doInHibernate(Session session) throws HibernateException, SQLException {
