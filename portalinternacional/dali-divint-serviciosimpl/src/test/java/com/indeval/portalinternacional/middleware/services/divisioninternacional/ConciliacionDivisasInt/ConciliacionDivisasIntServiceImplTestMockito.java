@@ -43,7 +43,7 @@ public class ConciliacionDivisasIntServiceImplTestMockito {
         conciliacionDivisasIntVO.setMontoCustodio(BigDecimal.valueOf(135));
         conciliacionDivisasIntVO.setMontoIndeval(BigDecimal.valueOf(164));
         conciliacionDivisasIntVO.setMontoDiferencia(BigDecimal.valueOf(432));
-        conciliacionDivisasIntVO.setFecha(new Date());
+        conciliacionDivisasIntVO.setFecha(String.valueOf(new Date()));
         conciliacionDivisasIntVOs.add(conciliacionDivisasIntVO);
         return conciliacionDivisasIntVOs;
     }

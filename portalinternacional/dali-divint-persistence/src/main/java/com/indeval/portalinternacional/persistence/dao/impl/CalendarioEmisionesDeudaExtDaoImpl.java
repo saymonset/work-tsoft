@@ -358,6 +358,24 @@ public class CalendarioEmisionesDeudaExtDaoImpl extends BaseDaoHibernateImpl imp
 			query.append("        C_CUSTODIO.CODIGO_BANCO AS origen, CAST(T_CUENTA_TRANSITORIA.XML AS varchar(4000)) as mensaje  ");
 			query.append(" FROM T_CUENTA_TRANSITORIA INNER JOIN C_CUSTODIO ON T_CUENTA_TRANSITORIA.ID_CUSTODIO = C_CUSTODIO.ID_CUSTODIO ");
 			query.append(" WHERE T_CUENTA_TRANSITORIA.ID_CALENDARIO_INT =  "+id);
+			query.append(" UNION ");
+			query.append(" select T_BITACORA_mensaje_SWIFT.id_calendario_int as id, ");
+			query.append(" T_BITACORA_mensaje_SWIFT.id_calendario_int as idCalendario, ");
+			query.append(" T_BITACORA_mensaje_SWIFT.tipo_mensaje AS tipoMensaje, ");
+			query.append(" T_BITACORA_mensaje_SWIFT.fecha_notificacion as fecha, ");
+			query.append(" T_BITACORA_mensaje_SWIFT.custodio_origen as origen, ");
+			query.append(" CAST(T_BITACORA_mensaje_SWIFT.XML AS varchar(4000)) as mensaje ");
+			query.append(" from T_BITACORA_mensaje_SWIFT ");
+			query.append(" WHERE T_BITACORA_mensaje_SWIFT.ID_CALENDARIO_INT = " + id);
+
+
+
+
+
+
+
+
+
 
 		List<BitacoraMensajeSwiftVO> lista = (List) getHibernateTemplate().execute(new HibernateCallback() {
 
